@@ -42,18 +42,18 @@
   - 全部支持 `--json`（JSON 到 stdout，日志到 stderr）
   - 退出码：`0` 成功 / `1` 错误 / `2` 缺必填 env（`--json` 含 `missing_env[]`）/ `3` 探测失败已保存为 disabled
   - `install` 旗标：`--env K=V ... --runtime ID --yes --no-probe --disabled --allow-unverified --overwrite --json`
-- [ ] **A2.2** `mcp catalog` 改为 `mcp search` 的别名；`mcp presets` 保留为离线回退入口（数据源仍是 `mcp_presets`）
+- [ ] **A2.2**（保留原样，未做）`mcp catalog` 改为 `mcp search` 的别名；`mcp presets` 保留为离线回退入口（数据源仍是 `mcp_presets`）
 - [ ] **A2.3** shell 补全与 `/help`：`_profiles_impl.py` 补全表、`_commands_impl.py` CommandDef 补新子命令
 
 ### A3. qiye_api 接口
-- [ ] **A3.1** 新建 `totalclaw_qiye_api/mcp_hub_api.py`（对标 `skill_shop_api.py`，`build_router()` + `register` 进 `server.py:1454` 的 GA 路由表）：
+- [x] **A3.1** 已实现 `totalclaw_qiye_api/mcp_hub_api.py`，11 个端点已挂进 GA 路由表（对标 `skill_shop_api.py`，`build_router()` + `register` 进 `server.py:1454` 的 GA 路由表）：
   - `GET /v1/mcp/registry`（代理+缓存，响应含 `source: remote|cache|builtin`）
   - `GET /v1/mcp/registry/{id}`、`POST /v1/mcp/plan`
   - `POST /v1/mcp/install` → **202** `{job_id, poll_url}`；409 同名作业进行中；422 `{detail:"missing_env", missing_env:[]}`
   - `GET /v1/mcp/jobs`、`GET /v1/mcp/jobs/{job_id}?tail=200`（job 结构见 API.md §②）
   - `GET /v1/mcp/installed`（installed.json + `get_mcp_status()` 合并）
   - `POST /v1/mcp/servers/{name}/update`（202）、`POST /v1/mcp/reload`、`GET /v1/mcp/status`
-- [ ] **A3.2** `_notify_mcp_change()`：安装/卸载/更新作业末尾执行 `reload_mcp_servers()` + 对热池 agent `refresh_tools()`（对标 `skill_shop_api._notify_skill_change`）
+- [x] **A3.2** `_notify_mcp_change()` 已实现，作业末尾热重载，装完当轮可用：安装/卸载/更新作业末尾执行 `reload_mcp_servers()` + 对热池 agent `refresh_tools()`（对标 `skill_shop_api._notify_skill_change`）
 - [ ] **A3.3** 既有 `DELETE /v1/mcp/servers/{name}` 扩展为调用 A1.5 的完整清理（保持响应形状兼容）
 - [ ] **A3.4** 契约文档：更新 agent 仓 `docs/integration/MCP_SERVER_MANAGEMENT.md`（新增端点 + 「热加载已由作业完成」说明）
 
@@ -85,6 +85,13 @@
   两者 npx 都是拉不到又不快退，一路挂到 timeout。已同时加进
   `RETIRED_LAUNCH_SPECS`，`totalclaw migrate mcp` 可修存量用户的坏配置。
 
+### A4.9（新增，已完成）离线回退丢凭据声明
+
+- [x] **A4.9** 内置 presets 回退路径下，preset 的 `${VAR}` 凭据引用被丢掉，
+  `requires_env` 恒为空 —— 「缺凭据」对离线条目永远算不出来，装上就是个连不上的
+  条目。现在会从 `args`/`env`/`headers` 抽取（带默认值的 `${VAR:-x}` 不算必填）。
+  26 条内置里 10 条需要凭据。
+
 ### A5. 环境变量与文档
 - [ ] **A5.1** 注册 env：`TOTALCLAW_MCP_REGISTRY / TOTALCLAW_MCP_API_BASE / TOTALCLAW_MCP_REGISTRY_TTL / TOTALCLAW_MCP_REQUIRE_SIGNATURE / TOTALCLAW_MCP_TELEMETRY / TOTALCLAW_MCP_ORG`，补进 `website/docs/reference/environment-variables.md`
 - [ ] **A5.2** `totalclaw doctor` MCP 段增加：installed.json 与 config 的一致性、update_available 提示
@@ -92,7 +99,7 @@
 ### A6. 测试
 - [x] **A6.1** `test_mcp_hub_render.py` 10 个用例；44 条真实清单逐条渲染均过 `_normalize_server_spec`：本仓 27 条种子逐条渲染 → 必须通过 `_normalize_server_spec`；`env_key` 保留断言；runtime 选择矩阵
 - [ ] **A6.2** `test_mcp_hub_install.py`：本地假注册表（http.server）端到端；sha256 篡改必须失败；未 verified 需 `--allow-unverified`；卸载清理完整性
-- [ ] **A6.3** `test_mcp_hub_api.py`：202 + 轮询、409、422 missing_env、reload 响应形状
+- [x] **A6.3** `test_mcp_hub_api.py` 11 个用例（含 422/409/作业阶段日志/卸载清理）：202 + 轮询、409、422 missing_env、reload 响应形状
 - [ ] **A6.4** CLI 退出码矩阵（0/1/2/3）
 
 ---
