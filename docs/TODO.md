@@ -107,10 +107,15 @@
 - [ ] **C2** `scripts/probe_server.py`：沙箱启动 → `list_tools` → 生成 `tools.json` + `security` 块（注入扫描 10 模式 + 出网域名）；先手动跑 dev/web 两类
 - [ ] **C3** Ed25519 签名：移植 `totalclaw-plugins/scripts/sign_registry.sh` → 产出 `registry.json.sig`
 - [x] **C4.1** 推送 Gitee 仓库 `jlzdyx/totalclaw-mcp`（分支 **master**，与 `registry.json` 的 `raw_base` 路径一致）
-- [ ] **C4.2** ⚠️ **仓库改为公开** —— 当前是私有仓库，匿名访问返回 403，`raw/master/registry.json` 拉不到，M1 分发通道无法工作
-  - 验证：`curl -o /dev/null -w "%{http_code}" https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry.json` 应为 `302`（对照 totalclaw-plugins/tools 均为 302），当前为 `403`
-  - 操作：Gitee 仓库 → 管理 → 仓库设置 → 开源（公开）
-  - 若决定保持私有：`mcp_hub.fetch_registry` 需支持带 token 拉取（新增 env `TOTALCLAW_MCP_REGISTRY_TOKEN` → `PRIVATE-TOKEN` 头），并在 A1.1 中一并实现
+- [ ] **C4.2** 分发通道的可见性方案 —— **决策推迟到对接时**（当前仓库为私有）
+  - 已实测（2026-08-22）：
+    - 匿名 `raw/master/registry.json` → **403**（对照 totalclaw-plugins/tools 均为 302，它们是公开仓）
+    - 匿名 Gitee API v5 contents → **404**
+    - **认证 sparse clone → 可用**：`git clone --depth 1 --filter=blob:none --sparse` + 凭据可正常拉取私有仓文件。agent 侧 `plugin_hub._download_sparse` 走的正是这条路，**私有分发有现成通道**
+    - 整仓体积：`registry.json` gzip 后 10 KB，`registry.json + registry/` 打包 22 KB → 单个签名 bundle 分发完全可行，无需逐文件取数
+  - 对接时二选一：
+    - **(a) 转公开**：Gitee → 管理 → 仓库设置 → 开源；`mcp_hub` 直接匿名拉 raw，无需改动
+    - **(b) 保持私有**：客户端**不得**携带 Gitee token（个人令牌是账号级的，且桌面端可被提取）。走平台中转：`api/` 服务端持 token 同步私有仓 → 对外发签名 bundle，客户端用自身已有身份（qiye-app 的平台 JWT / agent 的 license）鉴权。此方案把 `api/` 从 M2 提前到 M1
 - [ ] **C4.3** CI：`gen_registry.py --check`（推荐同时 `--strict`，待 C1 完成后启用）
 - [ ] **C5** 为高频条目补 `description` 英文与 `icon.svg`（mcp_github 为参考范例）
 
@@ -125,3 +130,220 @@
 - [ ] **V5** 卸载后：config.yaml / .env / installed.json / schema-cache 全部干净
 - [ ] **V6** 断网：`/v1/mcp/registry` 返回 `source:"builtin"`，presets 仍可安装
 - [ ] **V7** 双账号互不可见对方安装的 MCP
+
+---
+
+## D 组 · 自研 MCP 服务器实现（`servers/`）
+
+> **方向**：把这些连接器**在本系统里实现一遍**，让 agent / qiye-app 用我们自己的服务器，
+> 不依赖任何第三方托管端点。能力清单取自 WorkBuddy 连接器目录（126 个），
+> 其上游端点配置仅作为「背后是哪家 API」的佐证，不作为实现。
+>
+> 实现方式二选一（见 [PACKS.md](PACKS.md)）：
+> - **声明式 pack**（绝大多数）：`servers/totalclaw_mcp_servers/packs/<name>.yaml`，零代码
+> - **原生服务器**（有状态协议）：`servers/totalclaw_mcp_servers/native/<name>.py`
+>
+> 每完成一个：`totalclaw-mcp-server --check <name>` → `scripts/gen_manifests.py --force`
+> → `scripts/gen_registry.py` → 勾选。
+
+### D0. 引擎与骨架
+
+- [x] **D0.1** REST→MCP 引擎：pack 规范、模板渲染、鉴权、响应裁剪、脱敏（`servers/totalclaw_mcp_servers/engine/`）
+- [x] **D0.2** 令牌交换（`token_exchange`）+ 进程内过期缓存 —— 企业微信/飞书/钉钉必需
+- [x] **D0.3** 业务错误码检查（`response.error_field`）—— 国内 API 常见的 `HTTP 200 + errcode!=0`
+- [x] **D0.4** 原生服务器装配层（`native_server.py`）与模块契约
+- [x] **D0.5** CLI：`totalclaw-mcp-server <name> | --list | --check | --describe`
+- [x] **D0.6** 打包：`servers/pyproject.toml`，控制台脚本 `totalclaw-mcp-server`
+- [x] **D0.7** 测试：31 个用例，含类型保留、缺参、业务错误码、令牌缓存、脱敏（`servers/tests/`）
+- [x] **D0.8** `scripts/gen_manifests.py`：从实现自动生成 registry 清单 + `tools.json`
+- [ ] **D0.9** CI：`totalclaw-mcp-server --check` + `pytest` + `gen_registry.py --check`
+- [ ] **D0.10** 发布 `totalclaw-mcp-servers` 到 PyPI（registry 的 `uvx` runtime 依赖它）
+
+### D1. 连接器实现进度（126）
+
+已实现 8 个：`github` `gitee` `notion` `tencent_map` `wecom` `feishu` `dingtalk` `imap_mail`（覆盖 QQ/网易邮箱）
+
+#### 办公协同 / 文档 / 表单 / 网盘（16）
+
+- [ ] **tencent-docs** 腾讯文档 — 上游类型 MCP，鉴权 -
+- [ ] **tencent-docs-oa** 腾讯文档企业版 — 上游类型 MCP，鉴权 oneid-token
+- [ ] **kdocs** 金山文档 — 上游类型 MCP，鉴权 server-side
+- [ ] **tencent-survey** 腾讯问卷 — 上游类型 MCP，鉴权 -
+- [ ] **tencent-weiyun** 微云 — 上游类型 MCP，鉴权 -
+- [ ] **baidu-netdisk** 百度网盘 — 上游类型 MCP，鉴权 server-side
+- [ ] **jinshuju** 金数据 — 上游类型 MCP，鉴权 server-side
+- [ ] **qingflow** 轻流 — 上游类型 MCP，鉴权 -
+- [ ] **jiandaoyun** 简道云 — 上游类型 MCP，鉴权 -
+- [ ] **h3yun-connector** 氚云 — 上游类型 MCP，鉴权 token
+- [ ] **wisenote** 百智WiseNote — 上游类型 MCP，鉴权 -
+- [ ] **camscanner-mcp** 扫描全能王 — 上游类型 MCP，鉴权 -
+- [ ] **ima-mcp** ima知识库 — 上游类型 MCP，鉴权 -
+- [ ] **lexiang** 乐享知识库 — 上游类型 MCP，鉴权 -
+- [ ] **wps-knowledgebase** WPS知识库 — 上游类型 CLI，鉴权 -
+- [ ] **zsxq** 知识星球 — 上游类型 CLI，鉴权 -
+
+#### 通讯 / 会议 / 客服（6）
+
+- [x] **qq-mail** QQ邮箱 — 已实现 `imap_mail`
+- [x] **netease-mail** 网易邮箱 — 已实现 `imap_mail`
+- [ ] **tencent-qidian-cs** 腾讯企点客服 — 上游类型 MCP，鉴权 mcp
+- [ ] **ezjoin-meeting** EzyJoin智慧会议 — 上游类型 MCP，鉴权 -
+- [ ] **tmeet** 腾讯会议 — 上游类型 CLI，鉴权 -
+- [ ] **fbs-connector** 福帮手 — 上游类型 MCP，鉴权 -
+
+#### 研发 / 运维（14）
+
+- [x] **github** GitHub — 已实现 `github`
+- [ ] **tapd** TAPD — 上游类型 MCP，鉴权 -
+- [ ] **cnb-api** CNB — 上游类型 CLI，鉴权 -
+- [ ] **bugly-token** Bugly 质量概览 — 上游类型 MCP，鉴权 token
+- [ ] **cloudbase** 腾讯云 CloudBase — 上游类型 MCP，鉴权 -
+- [ ] **edgeone-pages** EdgeOne Makers — 上游类型 MCP，鉴权 -
+- [ ] **agentkey** AgentKey — 上游类型 MCP，鉴权 -
+- [ ] **dcs-cloud** DCS Cloud — 上游类型 MCP，鉴权 token
+- [ ] **tencent-tchouse-c** 腾讯云数据仓库 TCHouse-C — 上游类型 MCP，鉴权 -
+- [ ] **miaoda** 秒哒应用搭建 — 上游类型 CLI，鉴权 -
+- [ ] **woscli** 微盟 WOS CLI — 上游类型 CLI，鉴权 -
+- [ ] **ioa** 零信任安全 iOA — 上游类型 MCP，鉴权 -
+- [ ] **awesun** 向日葵远程控制 — 上游类型 CLI，鉴权 -
+- [ ] **77ircloud** 铱云AI供应链 — 上游类型 CLI，鉴权 -
+
+#### 金融 / 财税 / 投研（16）
+
+- [ ] **tdx-connector** 通达信 — 上游类型 MCP，鉴权 server-side
+- [ ] **westock-mcp** 腾讯自选股 — 上游类型 MCP，鉴权 -
+- [ ] **gildata** 恒生聚源 MCP — 上游类型 MCP，鉴权 token
+- [ ] **wind-finance** Wind 金融数据 — 上游类型 MCP，鉴权 token
+- [ ] **yingmi-mcp** 盈米MCP — 上游类型 MCP，鉴权 token
+- [ ] **tongzhou-fin-research** 同舟金融研究 — 上游类型 MCP，鉴权 -
+- [ ] **gangtise-mcp** Gangtise投研 — 上游类型 MCP，鉴权 token
+- [ ] **morningstar** 晨星 Morningstar — 上游类型 MCP，鉴权 -
+- [ ] **finenter** 进门投研 — 上游类型 MCP，鉴权 -
+- [ ] **jiushuyun** 九数云BI — 上游类型 MCP，鉴权 -
+- [ ] **zfs-fssc-ai** 中兴新云AI智报 — 上游类型 MCP，鉴权 token
+- [ ] **yzf-invoice-mcp-server** 云帐房AI开票 — 上游类型 MCP，鉴权 -
+- [ ] **mx-ds-mcp** 东方财富妙想MCP — 上游类型 MCP，鉴权 -
+- [ ] **pandadata** PandaData 金融数据 — 上游类型 MCP，鉴权 -
+- [ ] **tplus-api** 畅捷通T+ — 上游类型 MCP，鉴权 -
+- [ ] **shanglv-mcp-gateway** 用友智能服务（AI BaaS） — 上游类型 MCP，鉴权 -
+
+#### 法律 / 合规（9）
+
+- [ ] **pkulaw** 北大法宝·法律智能检索 — 上游类型 MCP，鉴权 -
+- [ ] **qcc-legal** 企查查·法律数据 — 上游类型 MCP，鉴权 -
+- [ ] **fyopen-lawsearch** 法研·法律法规检索 — 上游类型 MCP，鉴权 -
+- [ ] **fazhi-law** 同花顺法律AI助手 — 上游类型 MCP，鉴权 token
+- [ ] **fadada-richee** 法大大睿契 — 上游类型 MCP，鉴权 -
+- [ ] **mzl-trademark** 摩知轮商标查询 — 上游类型 MCP，鉴权 -
+- [ ] **yuandian-mcp** 华宇元典法律数据 — 上游类型 MCP，鉴权 -
+- [ ] **wk-workbuddy** 威科先行 — 上游类型 MCP，鉴权 -
+- [ ] **dknowc-mcp** 深知可信工作台 — 上游类型 MCP，鉴权 -
+
+#### 企业数据 / 征信 / 风险（11）
+
+- [ ] **qcc-company** 企查查 — 上游类型 MCP，鉴权 -
+- [ ] **tyc-mcp** 天眼查 — 上游类型 MCP，鉴权 -
+- [ ] **qixinhuiyan-mcp** 启信慧眼 — 上游类型 MCP，鉴权 -
+- [ ] **kuaicha-search** 同花顺快查企业数据 — 上游类型 MCP，鉴权 token
+- [ ] **sq-company-dynamic** 上奇产业通-企业动态追踪 — 上游类型 MCP，鉴权 token
+- [ ] **opendata** 及刻智能·时空数据MCP — 上游类型 MCP，鉴权 token
+- [ ] **cisp-mcp** 水滴征信 — 上游类型 MCP，鉴权 token
+- [ ] **xingtu-claw-risk** 天创信用星图MCP — 上游类型 MCP，鉴权 -
+- [ ] **fanruan-growth-advisor** 帆软增长谋士 — 上游类型 MCP，鉴权 token
+- [ ] **bazhuayu** 八爪鱼 — 上游类型 MCP，鉴权 -
+- [ ] **tc-chengxin** 同程程心 — 上游类型 CLI，鉴权 -
+
+#### CRM / 销售（6）
+
+- [ ] **neo-crm** 销售易CRM — 上游类型 MCP，鉴权 -
+- [ ] **weisheng-scrm** 微盛企微管家SCRM — 上游类型 MCP，鉴权 token
+- [ ] **sharecrm** 纷享销客CRM — 上游类型 MCP，鉴权 -
+- [ ] **salesnail-instructor** SalesNail 讲师 — 上游类型 MCP，鉴权 -
+- [ ] **salestouch** SalesTouch 经营执行 — 上游类型 MCP，鉴权 -
+- [ ] **youshu-bd-mate** 智客AI · 对公(To B)营销助手 — 上游类型 MCP，鉴权 token
+
+#### 电商 / 跨境（7）
+
+- [ ] **lingxing-mcp** 领星ERP — 上游类型 MCP，鉴权 token
+- [ ] **linkfox-product-selection** Linkfox 选品 — 上游类型 MCP，鉴权 token
+- [ ] **infimind-ecommerce-image** 极睿电商生图 — 上游类型 MCP，鉴权 token
+- [ ] **chuhaijiang** 出海匠 — 上游类型 MCP，鉴权 -
+- [ ] **xiaoe-cloud-cli** 小鹅通 — 上游类型 MCP，鉴权 -
+- [ ] **proboost** OpenBoost 跨境数据 — 上游类型 MCP，鉴权 -
+- [ ] **picset-commerce-images** Picset AI 电商图片 — 上游类型 MCP，鉴权 token
+
+#### 营销 / 广告（4）
+
+- [ ] **tencentads** 腾讯营销投放 — 上游类型 CLI，鉴权 -
+- [ ] **duoguan-fengchao** 夺冠蜂巢 — 上游类型 MCP，鉴权 token
+- [ ] **tec-do** Tec-Do 2.0 广告与增长情报 — 上游类型 MCP，鉴权 -
+- [ ] **seeyon-office-marketing-suite** 致远互联协同办公服务 — 上游类型 CLI，鉴权 -
+
+#### 创意 / 设计 / 音视频（11）
+
+- [ ] **canva** Canva可画 — 上游类型 MCP，鉴权 -
+- [ ] **canva-ai** Canva可画 — 上游类型 MCP，鉴权 -
+- [ ] **mastergo-vibe-mcp** MasterGo 莫高设计 — 上游类型 MCP，鉴权 -
+- [ ] **kling-ai-plugin** 可灵 AI — 上游类型 MCP，鉴权 -
+- [ ] **kling-ai-plugin-ai** 可灵 AI — 上游类型 MCP，鉴权 -
+- [ ] **picset-video-generation** Picset AI 视频创作 — 上游类型 MCP，鉴权 token
+- [ ] **infimind-video** 极睿视频 — 上游类型 MCP，鉴权 token
+- [ ] **flova** Flova — 上游类型 MCP，鉴权 oauth
+- [ ] **ai-hive** AI-HIVE — 上游类型 MCP，鉴权 -
+- [ ] **designkit-buddy-cli** 美图设计室 AI设计 CLI — 上游类型 CLI，鉴权 -
+- [ ] **lemonclaw** 柠檬云 — 上游类型 CLI，鉴权 -
+
+#### 人力 / 教育（6）
+
+- [ ] **moka** Moka HR 智能体 — 上游类型 MCP，鉴权 -
+- [ ] **beisen-cli** 北森AI · HR专家 — 上游类型 CLI，鉴权 -
+- [ ] **ihr-cli** i人事AI·HR专家 — 上游类型 CLI，鉴权 -
+- [ ] **gaodun-job** 大学生实习就业助手 — 上游类型 MCP，鉴权 -
+- [ ] **fenbi-baokao-decision** 报考决策 — 上游类型 MCP，鉴权 -
+- [ ] **teacher-assistant** 企鹅教师助手 — 上游类型 MCP，鉴权 -
+
+#### 医疗健康（3）
+
+- [ ] **archive-hospital-mcp** 腾讯健康全周期管理平台 — 上游类型 MCP，鉴权 -
+- [ ] **tencent-health-nges** 腾讯健康NGES — 上游类型 MCP，鉴权 -
+- [ ] **emr-query** 弹性MapReduce — 上游类型 CLI，鉴权 -
+
+#### 研究 / 知识（3）
+
+- [ ] **patsnap-search** 智慧芽专利&文献融合检索 — 上游类型 MCP，鉴权 token
+- [ ] **tanyuan-assistant** TDC 文化智能体 — 上游类型 MCP，鉴权 -
+- [ ] **gongyi-open-mcp** 腾讯公益机构服务平台 — 上游类型 MCP，鉴权 -
+
+#### 其他（14）
+
+- [ ] **ctrip-wendao** 携程问道 — 上游类型 —，鉴权 token
+- [ ] **uupt** UU跑腿 — 上游类型 CLI，鉴权 -
+- [ ] **mglc** 芒果灵创 CLI — 上游类型 CLI，鉴权 -
+- [ ] **textin-xparse** TextIn xParse·智能文档解析 — 上游类型 CLI，鉴权 -
+- [ ] **textin-xparse-ai** TextIn xParse·智能文档解析 — 上游类型 CLI，鉴权 -
+- [ ] **lovrabet-cli** Lovrabet CLI — 上游类型 CLI，鉴权 -
+- [ ] **shanlong-claw** 商龙经营洞察 — 上游类型 CLI，鉴权 -
+- [ ] **yunke-cli** 云客AI工作手机 — 上游类型 CLI，鉴权 -
+- [ ] **linear-mcp** Linear — 上游类型 MCP，鉴权 server-side
+- [x] **notion** Notion — 已实现 `notion`
+- [x] **tencent-map** 腾讯地图 — 已实现 `tencent_map`
+- [x] **wecom** 企业微信 — 已实现 `wecom`
+- [x] **feishu** 飞书 — 已实现 `feishu`
+- [x] **dingtalk** 钉钉 — 已实现 `dingtalk`
+
+
+### D2. 实现优先级建议
+
+1. **先做凭据门槛低、通用性强的**：`tencent-survey` `jiandaoyun` `qingflow` `jinshuju`（表单类 API 简单且文档公开）
+2. **再做企业刚需**：`tencent-docs` `kdocs` `tapd` `cnb-api` `tencent-weiyun` `baidu-netdisk`
+3. **数据类按需**：`qcc-company` `tyc-mcp` `qixinhuiyan-mcp` 等需商业授权，先做 pack 骨架，凭据由客户自备
+4. **`auth_mode: server-side` 的**（`kdocs` `jinshuju` `baidu-netdisk` `linear-mcp` `github` `tdx-connector`）
+   上游由 WorkBuddy 服务端注入凭据，我们必须让用户自备 API Key，pack 里按标准 OAuth/Key 处理
+5. **CLI 型连接器**（上游 26 个是 `cli.json` 而非 MCP）：这些在 WorkBuddy 里是命令行封装，
+   我们要么实现为 REST pack，要么跳过 —— 逐个判断，不必强行对齐
+
+### D3. 已知差异与注意
+
+- [ ] **D3.1** 上游 7 个连接器用 SSE 传输，**agent 只实现了 stdio 与 streamable-HTTP**；我们自研的一律 stdio，不受影响
+- [ ] **D3.2** 上游 `timeout` 秒/毫秒混用（600 与 30000 并存），自研统一用秒
+- [ ] **D3.3** 已删除两条被自研实现取代的外链条目：`biz/notion`、`dev/mcp_github`（上游该 server 已归档）

@@ -1,0 +1,101 @@
+[
+  {
+    "name": "list_folders",
+    "description": "列出邮箱中的所有邮件夹（收件箱、已发送、垃圾邮件等）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "search_emails",
+    "description": "搜索邮件，返回摘要列表（不含正文），按时间从新到旧。可按发件人、主题、关键词、未读状态和最近天数过滤。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "folder": {
+          "type": "string",
+          "description": "邮件夹名，默认 INBOX"
+        },
+        "query": {
+          "type": "string",
+          "description": "全文关键词（匹配主题与正文）"
+        },
+        "sender": {
+          "type": "string",
+          "description": "发件人邮箱或名称片段"
+        },
+        "subject": {
+          "type": "string",
+          "description": "主题关键词"
+        },
+        "unseen": {
+          "type": "boolean",
+          "description": "只看未读邮件"
+        },
+        "days": {
+          "type": "integer",
+          "description": "只看最近 N 天的邮件"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "返回条数，1-50，默认 20"
+        }
+      }
+    }
+  },
+  {
+    "name": "read_email",
+    "description": "读取单封邮件的完整内容，含正文与附件清单。uid 来自 search_emails。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "邮件 UID，来自 search_emails 的结果"
+        },
+        "folder": {
+          "type": "string",
+          "description": "邮件夹名，默认 INBOX"
+        }
+      },
+      "required": [
+        "uid"
+      ]
+    }
+  },
+  {
+    "name": "send_email",
+    "description": "发送一封纯文本邮件。这会真实投递邮件给收件人，发出后无法撤回。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "string",
+          "description": "收件人邮箱，多个用逗号分隔"
+        },
+        "subject": {
+          "type": "string",
+          "description": "邮件主题"
+        },
+        "body": {
+          "type": "string",
+          "description": "邮件正文（纯文本）"
+        },
+        "cc": {
+          "type": "string",
+          "description": "抄送邮箱，多个用逗号分隔"
+        }
+      },
+      "required": [
+        "to",
+        "subject",
+        "body"
+      ]
+    }
+  }
+]

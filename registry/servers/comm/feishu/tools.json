@@ -1,0 +1,268 @@
+[
+  {
+    "name": "send_message",
+    "description": "向用户、群聊发送消息。这会真实推送消息到飞书。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "receive_id": {
+          "type": "string",
+          "description": "接收方 ID，类型由 receive_id_type 决定"
+        },
+        "receive_id_type": {
+          "type": "string",
+          "enum": [
+            "open_id",
+            "user_id",
+            "union_id",
+            "email",
+            "chat_id"
+          ],
+          "description": "receive_id 的类型"
+        },
+        "msg_type": {
+          "type": "string",
+          "enum": [
+            "text",
+            "post",
+            "interactive"
+          ],
+          "description": "消息类型，默认 text"
+        },
+        "content": {
+          "type": "string",
+          "description": "消息内容的 JSON 字符串，text 类型如 {\"text\":\"你好\"}"
+        }
+      },
+      "required": [
+        "receive_id",
+        "receive_id_type",
+        "content"
+      ]
+    }
+  },
+  {
+    "name": "list_chats",
+    "description": "获取机器人所在的群列表。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "integer",
+          "description": "每页条数，1-100，默认 20"
+        },
+        "page_token": {
+          "type": "string",
+          "description": "翻页标记"
+        }
+      }
+    }
+  },
+  {
+    "name": "get_chat_messages",
+    "description": "读取指定群聊的历史消息。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "chat_id": {
+          "type": "string",
+          "description": "群 ID"
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "每页条数，1-50"
+        },
+        "page_token": {
+          "type": "string",
+          "description": "翻页标记"
+        }
+      },
+      "required": [
+        "chat_id"
+      ]
+    }
+  },
+  {
+    "name": "get_user_by_mobile_or_email",
+    "description": "通过手机号或邮箱批量查询用户的 open_id / user_id。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "mobiles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "手机号列表"
+        },
+        "emails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "邮箱列表"
+        },
+        "user_id_type": {
+          "type": "string",
+          "enum": [
+            "open_id",
+            "user_id",
+            "union_id"
+          ],
+          "description": "返回的 ID 类型"
+        }
+      }
+    }
+  },
+  {
+    "name": "list_department_users",
+    "description": "获取部门下的用户列表。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "department_id": {
+          "type": "string",
+          "description": "部门 ID，根部门传 0"
+        },
+        "department_id_type": {
+          "type": "string",
+          "enum": [
+            "department_id",
+            "open_department_id"
+          ],
+          "description": "部门 ID 类型"
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "每页条数，1-50"
+        }
+      },
+      "required": [
+        "department_id"
+      ]
+    }
+  },
+  {
+    "name": "list_bitable_records",
+    "description": "查询多维表格（Bitable）某数据表中的记录。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "app_token": {
+          "type": "string",
+          "description": "多维表格的 app_token"
+        },
+        "table_id": {
+          "type": "string",
+          "description": "数据表 ID"
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "每页条数，1-500"
+        },
+        "page_token": {
+          "type": "string",
+          "description": "翻页标记"
+        },
+        "filter": {
+          "type": "string",
+          "description": "筛选公式，可选"
+        }
+      },
+      "required": [
+        "app_token",
+        "table_id"
+      ]
+    }
+  },
+  {
+    "name": "create_bitable_record",
+    "description": "向多维表格数据表中新增一条记录。这会写入飞书文档。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "app_token": {
+          "type": "string",
+          "description": "多维表格的 app_token"
+        },
+        "table_id": {
+          "type": "string",
+          "description": "数据表 ID"
+        },
+        "fields": {
+          "type": "object",
+          "description": "字段名到值的映射，如 {\"标题\":\"周报\",\"状态\":\"进行中\"}"
+        }
+      },
+      "required": [
+        "app_token",
+        "table_id",
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "list_calendar_events",
+    "description": "查询日历上的日程安排。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "calendar_id": {
+          "type": "string",
+          "description": "日历 ID"
+        },
+        "start_time": {
+          "type": "string",
+          "description": "起始时间的 Unix 时间戳（秒）"
+        },
+        "end_time": {
+          "type": "string",
+          "description": "结束时间的 Unix 时间戳（秒）"
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "每页条数，1-500"
+        }
+      },
+      "required": [
+        "calendar_id"
+      ]
+    }
+  },
+  {
+    "name": "search_docs",
+    "description": "搜索云文档（文档、表格、多维表格等）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "搜索关键词"
+        },
+        "count": {
+          "type": "integer",
+          "description": "返回条数，1-50"
+        },
+        "docs_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "文档类型过滤，如 [doc, sheet, bitable]"
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  }
+]

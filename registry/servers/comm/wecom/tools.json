@@ -1,0 +1,169 @@
+[
+  {
+    "name": "list_departments",
+    "description": "获取部门列表。不传 department_id 则返回全部部门。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "department_id": {
+          "type": "integer",
+          "description": "部门 ID；不传则拉取全部部门"
+        }
+      }
+    }
+  },
+  {
+    "name": "list_department_users",
+    "description": "获取部门成员的详细信息（姓名、职位、手机、邮箱等）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "department_id": {
+          "type": "integer",
+          "description": "部门 ID"
+        },
+        "fetch_child": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "是否递归获取子部门成员，1 为递归"
+        }
+      },
+      "required": [
+        "department_id"
+      ]
+    }
+  },
+  {
+    "name": "get_user",
+    "description": "获取单个成员的详细信息。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "userid": {
+          "type": "string",
+          "description": "成员 UserID"
+        }
+      },
+      "required": [
+        "userid"
+      ]
+    }
+  },
+  {
+    "name": "send_text_message",
+    "description": "向指定成员、部门或标签发送应用文本消息。这会真实推送消息给企业成员。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "消息正文"
+        },
+        "agentid": {
+          "type": "integer",
+          "description": "企业应用的 AgentId"
+        },
+        "touser": {
+          "type": "string",
+          "description": "接收成员 UserID，多个用 | 分隔，@all 表示全员"
+        },
+        "toparty": {
+          "type": "string",
+          "description": "接收部门 ID，多个用 | 分隔"
+        }
+      },
+      "required": [
+        "content",
+        "agentid"
+      ]
+    }
+  },
+  {
+    "name": "send_markdown_message",
+    "description": "发送 Markdown 格式的应用消息（仅企业微信客户端可见渲染效果）。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "Markdown 内容，支持标题、加粗、链接、引用"
+        },
+        "agentid": {
+          "type": "integer",
+          "description": "企业应用的 AgentId"
+        },
+        "touser": {
+          "type": "string",
+          "description": "接收成员 UserID，多个用 | 分隔，@all 表示全员"
+        },
+        "toparty": {
+          "type": "string",
+          "description": "接收部门 ID，多个用 | 分隔"
+        }
+      },
+      "required": [
+        "content",
+        "agentid"
+      ]
+    }
+  },
+  {
+    "name": "list_external_contacts",
+    "description": "获取指定成员名下的外部联系人 UserID 列表（需要客户联系权限）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "userid": {
+          "type": "string",
+          "description": "企业成员的 UserID"
+        }
+      },
+      "required": [
+        "userid"
+      ]
+    }
+  },
+  {
+    "name": "get_external_contact",
+    "description": "获取外部联系人的详情（昵称、企业、添加时间、跟进人）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "external_userid": {
+          "type": "string",
+          "description": "外部联系人的 external_userid"
+        }
+      },
+      "required": [
+        "external_userid"
+      ]
+    }
+  },
+  {
+    "name": "get_user_id_by_mobile",
+    "description": "通过手机号查询企业成员的 UserID。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "string",
+          "description": "成员手机号"
+        }
+      },
+      "required": [
+        "mobile"
+      ]
+    }
+  }
+]

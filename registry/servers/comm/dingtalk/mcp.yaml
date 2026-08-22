@@ -1,0 +1,67 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: dingtalk
+display_name: 钉钉
+version: 0.1.0
+description: 查询钉钉通讯录与部门，发送工作通知，查询考勤与审批实例。
+description_zh: 查询钉钉通讯录与部门，发送工作通知，查询考勤与审批实例。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: comm
+tags:
+- totalclaw
+- self-hosted
+- 钉钉
+- 通讯录
+- 考勤
+- 审批
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - dingtalk
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - dingtalk
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: DINGTALK_APP_KEY
+  env_key: DINGTALK_APP_KEY
+  description: 钉钉 所需的 DINGTALK_APP_KEY
+  prompt: 请输入 DINGTALK_APP_KEY
+  secret: true
+  required: true
+- name: DINGTALK_APP_SECRET
+  env_key: DINGTALK_APP_SECRET
+  description: 钉钉 所需的 DINGTALK_APP_SECRET
+  prompt: 请输入 DINGTALK_APP_SECRET
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 8
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

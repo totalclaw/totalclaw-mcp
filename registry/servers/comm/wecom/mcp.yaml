@@ -1,0 +1,67 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: wecom
+display_name: 企业微信
+version: 0.1.0
+description: 查询企业微信通讯录、部门与成员，发送应用消息，管理外部联系人。
+description_zh: 查询企业微信通讯录、部门与成员，发送应用消息，管理外部联系人。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: comm
+tags:
+- totalclaw
+- self-hosted
+- 企业微信
+- 通讯录
+- 消息
+- scrm
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - wecom
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - wecom
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: WECOM_CORP_ID
+  env_key: WECOM_CORP_ID
+  description: 企业微信 所需的 WECOM_CORP_ID
+  prompt: 请输入 WECOM_CORP_ID
+  secret: false
+  required: true
+- name: WECOM_SECRET
+  env_key: WECOM_SECRET
+  description: 企业微信 所需的 WECOM_SECRET
+  prompt: 请输入 WECOM_SECRET
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 8
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

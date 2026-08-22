@@ -1,0 +1,194 @@
+[
+  {
+    "name": "list_departments",
+    "description": "获取部门列表。默认从根部门开始。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "dept_id": {
+          "type": "integer",
+          "description": "父部门 ID，根部门为 1"
+        }
+      }
+    }
+  },
+  {
+    "name": "list_department_users",
+    "description": "获取部门下的成员详情列表。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "dept_id": {
+          "type": "integer",
+          "description": "部门 ID"
+        },
+        "cursor": {
+          "type": "integer",
+          "description": "分页游标，首次传 0"
+        },
+        "size": {
+          "type": "integer",
+          "description": "每页条数，1-100，默认 20"
+        }
+      },
+      "required": [
+        "dept_id"
+      ]
+    }
+  },
+  {
+    "name": "get_user",
+    "description": "获取单个成员的详细信息。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "userid": {
+          "type": "string",
+          "description": "成员的 userid"
+        }
+      },
+      "required": [
+        "userid"
+      ]
+    }
+  },
+  {
+    "name": "get_userid_by_mobile",
+    "description": "通过手机号查询成员 userid。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "string",
+          "description": "成员手机号"
+        }
+      },
+      "required": [
+        "mobile"
+      ]
+    }
+  },
+  {
+    "name": "send_work_notification",
+    "description": "发送工作通知给指定成员或部门。这会真实推送通知到钉钉。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "agent_id": {
+          "type": "integer",
+          "description": "微应用的 AgentId"
+        },
+        "content": {
+          "type": "string",
+          "description": "通知正文"
+        },
+        "userid_list": {
+          "type": "string",
+          "description": "接收成员的 userid 列表，逗号分隔，最多 100 个"
+        },
+        "dept_id_list": {
+          "type": "string",
+          "description": "接收部门 ID 列表，逗号分隔"
+        }
+      },
+      "required": [
+        "agent_id",
+        "content"
+      ]
+    }
+  },
+  {
+    "name": "list_attendance_records",
+    "description": "查询指定成员在某时间段内的考勤打卡结果。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "work_date_from": {
+          "type": "string",
+          "description": "起始日期，格式 yyyy-MM-dd hh:mm:ss"
+        },
+        "work_date_to": {
+          "type": "string",
+          "description": "结束日期，格式 yyyy-MM-dd hh:mm:ss，与起始相隔不超过 7 天"
+        },
+        "userid_list": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "成员 userid 列表，最多 50 个"
+        },
+        "offset": {
+          "type": "integer",
+          "description": "偏移量，首次传 0"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "每页条数，最大 50"
+        }
+      },
+      "required": [
+        "work_date_from",
+        "work_date_to",
+        "userid_list"
+      ]
+    }
+  },
+  {
+    "name": "get_approval_instance",
+    "description": "查询单个审批实例的详情（申请人、表单内容、审批流程与结果）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "process_instance_id": {
+          "type": "string",
+          "description": "审批实例 ID"
+        }
+      },
+      "required": [
+        "process_instance_id"
+      ]
+    }
+  },
+  {
+    "name": "list_approval_instance_ids",
+    "description": "按审批模板与时间范围查询审批实例 ID 列表。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "process_code": {
+          "type": "string",
+          "description": "审批模板的 process_code"
+        },
+        "start_time": {
+          "type": "integer",
+          "description": "起始时间的毫秒时间戳"
+        },
+        "end_time": {
+          "type": "integer",
+          "description": "结束时间的毫秒时间戳"
+        },
+        "size": {
+          "type": "integer",
+          "description": "每页条数，最大 20"
+        },
+        "cursor": {
+          "type": "integer",
+          "description": "分页游标，首次传 0"
+        }
+      },
+      "required": [
+        "process_code",
+        "start_time"
+      ]
+    }
+  }
+]

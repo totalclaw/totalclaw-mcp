@@ -1,0 +1,120 @@
+name: tencent_map
+display_name: 腾讯地图
+description: 地点搜索、路线规划、地址与坐标互转、行政区划查询、距离矩阵计算。
+base_url: https://apis.map.qq.com
+docs: https://lbs.qq.com/service/webService/webServiceGuide/webServiceOverview
+auth:
+  type: query
+  name: key
+  env: TENCENT_MAP_KEY
+defaults:
+  timeout: 20
+
+tools:
+  - name: search_place
+    description: 按关键词搜索地点（POI），可限定城市或在指定坐标附近搜索。
+    read_only: true
+    method: GET
+    path: /ws/place/v1/search
+    query:
+      keyword: "{keyword}"
+      boundary: "{boundary}"
+      page_size: "{page_size}"
+      page_index: "{page_index}"
+    pick: data
+    max_items: 20
+    params:
+      type: object
+      properties:
+        keyword: {type: string, description: 搜索关键词，如「星巴克」「三甲医院」}
+        boundary:
+          type: string
+          description: >-
+            检索范围。城市检索用 region(城市名)，如 region(北京)；
+            周边检索用 nearby(纬度,经度,半径米)，如 nearby(39.908,116.397,1000)
+        page_size: {type: integer, description: "每页条数，1-20，默认 10"}
+        page_index: {type: integer, description: 页码，从 1 开始}
+      required: [keyword, boundary]
+
+  - name: geocoder
+    description: 地址转坐标（正解析）：把中文地址解析成经纬度。
+    read_only: true
+    method: GET
+    path: /ws/geocoder/v1/
+    query: {address: "{address}", region: "{region}"}
+    pick: result
+    params:
+      type: object
+      properties:
+        address: {type: string, description: 结构化中文地址，如「北京市海淀区彩和坊路 8 号」}
+        region: {type: string, description: 指定城市名，可提高解析准确度}
+      required: [address]
+
+  - name: reverse_geocoder
+    description: 坐标转地址（逆解析）：把经纬度解析成地址与周边 POI。
+    read_only: true
+    method: GET
+    path: /ws/geocoder/v1/
+    query: {location: "{location}", get_poi: "{get_poi}"}
+    pick: result
+    params:
+      type: object
+      properties:
+        location: {type: string, description: "纬度,经度，如 39.984154,116.307490"}
+        get_poi: {type: integer, enum: [0, 1], description: 是否返回周边 POI，1 为返回}
+      required: [location]
+
+  - name: direction
+    description: 路线规划，支持驾车、步行、骑行、公交四种方式，返回距离、耗时与路线。
+    read_only: true
+    method: GET
+    path: /ws/direction/v1/{mode}/
+    query: {from: "{from_location}", to: "{to_location}", policy: "{policy}"}
+    pick: result
+    params:
+      type: object
+      properties:
+        mode: {type: string, enum: [driving, walking, bicycling, transit], description: 出行方式}
+        from_location: {type: string, description: "起点，纬度,经度"}
+        to_location: {type: string, description: "终点，纬度,经度"}
+        policy: {type: string, description: "策略，如驾车 LEAST_TIME/LEAST_FEE，公交 LEAST_WALKING"}
+      required: [mode, from_location, to_location]
+
+  - name: distance_matrix
+    description: 批量计算多个起点到多个终点的距离与耗时。
+    read_only: true
+    method: GET
+    path: /ws/distance/v1/matrix
+    query: {mode: "{mode}", from: "{from_locations}", to: "{to_locations}"}
+    pick: result
+    params:
+      type: object
+      properties:
+        mode: {type: string, enum: [driving, walking, bicycling], description: 出行方式}
+        from_locations: {type: string, description: "起点列表，多个用分号分隔：纬度,经度;纬度,经度"}
+        to_locations: {type: string, description: 终点列表，格式同起点}
+      required: [mode, from_locations, to_locations]
+
+  - name: suggestion
+    description: 地点输入联想补全，用于把用户模糊输入变成候选地点。
+    read_only: true
+    method: GET
+    path: /ws/place/v1/suggestion
+    query: {keyword: "{keyword}", region: "{region}", region_fix: "{region_fix}"}
+    pick: data
+    max_items: 20
+    params:
+      type: object
+      properties:
+        keyword: {type: string, description: 用户输入的关键词}
+        region: {type: string, description: 限定城市名}
+        region_fix: {type: integer, enum: [0, 1], description: 是否固定在该城市，1 为固定}
+      required: [keyword]
+
+  - name: district_list
+    description: 获取中国行政区划列表（省市区三级）。
+    read_only: true
+    method: GET
+    path: /ws/district/v1/list
+    pick: result
+    params: {type: object, properties: {}}

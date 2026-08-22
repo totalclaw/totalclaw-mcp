@@ -1,0 +1,77 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: imap_mail
+display_name: 邮箱（IMAP/SMTP）
+version: 0.1.0
+description: 收发、搜索和整理邮件，支持 QQ 邮箱、网易邮箱及任意 IMAP 邮箱。
+description_zh: 收发、搜索和整理邮件，支持 QQ 邮箱、网易邮箱及任意 IMAP 邮箱。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: comm
+tags:
+- totalclaw
+- self-hosted
+- 邮箱
+- imap
+- smtp
+- qq邮箱
+- 网易邮箱
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - imap_mail
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - imap_mail
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: MAIL_IMAP_HOST
+  env_key: MAIL_IMAP_HOST
+  description: 邮箱（IMAP/SMTP） 所需的 MAIL_IMAP_HOST
+  prompt: 请输入 MAIL_IMAP_HOST
+  secret: false
+  required: true
+- name: MAIL_USERNAME
+  env_key: MAIL_USERNAME
+  description: 邮箱（IMAP/SMTP） 所需的 MAIL_USERNAME
+  prompt: 请输入 MAIL_USERNAME
+  secret: false
+  required: true
+- name: MAIL_PASSWORD
+  env_key: MAIL_PASSWORD
+  description: 邮箱（IMAP/SMTP） 所需的 MAIL_PASSWORD
+  prompt: 请输入 MAIL_PASSWORD
+  secret: true
+  required: true
+optional_env:
+- MAIL_IMAP_PORT
+- MAIL_SMTP_HOST
+- MAIL_SMTP_PORT
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 4
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

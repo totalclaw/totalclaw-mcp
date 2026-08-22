@@ -1,0 +1,230 @@
+[
+  {
+    "name": "get_repository",
+    "description": "获取仓库详情：描述、默认分支、star/fork 数、可见性。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所属空间地址（个人或组织的 path）"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库路径 path"
+        }
+      },
+      "required": [
+        "owner",
+        "repo"
+      ]
+    }
+  },
+  {
+    "name": "list_user_repos",
+    "description": "列出当前授权用户的仓库。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sort": {
+          "type": "string",
+          "enum": [
+            "created",
+            "updated",
+            "pushed",
+            "full_name"
+          ],
+          "description": "排序字段"
+        },
+        "per_page": {
+          "type": "integer",
+          "description": "每页条数，1-100，默认 20"
+        },
+        "page": {
+          "type": "integer",
+          "description": "页码"
+        }
+      }
+    }
+  },
+  {
+    "name": "list_issues",
+    "description": "列出仓库 Issue，可按状态过滤。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所属空间地址"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库路径"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "progressing",
+            "closed",
+            "rejected",
+            "all"
+          ],
+          "description": "Issue 状态，默认 open"
+        },
+        "per_page": {
+          "type": "integer",
+          "description": "每页条数，1-100"
+        }
+      },
+      "required": [
+        "owner",
+        "repo"
+      ]
+    }
+  },
+  {
+    "name": "create_issue",
+    "description": "在仓库中创建 Issue。这会产生对仓库可见的写入。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所属空间地址"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库路径"
+        },
+        "title": {
+          "type": "string",
+          "description": "Issue 标题"
+        },
+        "body": {
+          "type": "string",
+          "description": "Issue 正文"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "title"
+      ]
+    }
+  },
+  {
+    "name": "list_pull_requests",
+    "description": "列出仓库的 Pull Request。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所属空间地址"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库路径"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "closed",
+            "merged",
+            "all"
+          ],
+          "description": "PR 状态，默认 open"
+        },
+        "per_page": {
+          "type": "integer",
+          "description": "每页条数，1-100"
+        }
+      },
+      "required": [
+        "owner",
+        "repo"
+      ]
+    }
+  },
+  {
+    "name": "get_file_content",
+    "description": "读取仓库中某个文件的内容（content 字段为 base64）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所属空间地址"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库路径"
+        },
+        "path": {
+          "type": "string",
+          "description": "文件在仓库中的路径"
+        },
+        "ref": {
+          "type": "string",
+          "description": "分支、标签或 commit SHA"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "path"
+      ]
+    }
+  },
+  {
+    "name": "list_commits",
+    "description": "列出仓库提交历史。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所属空间地址"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库路径"
+        },
+        "branch": {
+          "type": "string",
+          "description": "分支名或 SHA"
+        },
+        "path": {
+          "type": "string",
+          "description": "只看影响该路径的提交"
+        },
+        "per_page": {
+          "type": "integer",
+          "description": "每页条数，1-100"
+        }
+      },
+      "required": [
+        "owner",
+        "repo"
+      ]
+    }
+  },
+  {
+    "name": "get_me",
+    "description": "获取当前令牌对应的 Gitee 账号信息，用于验证凭据。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

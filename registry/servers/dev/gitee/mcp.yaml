@@ -1,0 +1,60 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: gitee
+display_name: Gitee 码云
+version: 0.1.0
+description: 查询和管理 Gitee 仓库、Issue、Pull Request 与文件内容。
+description_zh: 查询和管理 Gitee 仓库、Issue、Pull Request 与文件内容。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: dev
+tags:
+- totalclaw
+- self-hosted
+- git
+- 码云
+- issues
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - gitee
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - gitee
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: GITEE_ACCESS_TOKEN
+  env_key: GITEE_ACCESS_TOKEN
+  description: Gitee 码云 所需的 GITEE_ACCESS_TOKEN
+  prompt: 请输入 GITEE_ACCESS_TOKEN
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 8
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

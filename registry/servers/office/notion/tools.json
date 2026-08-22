@@ -1,0 +1,211 @@
+[
+  {
+    "name": "search",
+    "description": "在工作区内搜索页面和数据库标题。不传 query 则返回最近编辑的内容。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "标题关键词；留空返回最近编辑项"
+        },
+        "object_type": {
+          "type": "string",
+          "enum": [
+            "page",
+            "database"
+          ],
+          "description": "只搜页面或只搜数据库"
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "返回条数，1-100，默认 20"
+        }
+      }
+    }
+  },
+  {
+    "name": "get_page",
+    "description": "获取页面的属性（不含正文块，正文用 get_block_children）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "page_id": {
+          "type": "string",
+          "description": "页面 ID（32 位十六进制，可含连字符）"
+        }
+      },
+      "required": [
+        "page_id"
+      ]
+    }
+  },
+  {
+    "name": "get_block_children",
+    "description": "读取页面或块的子块，即页面正文内容。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "block_id": {
+          "type": "string",
+          "description": "页面 ID 或块 ID"
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "返回条数，1-100，默认 100"
+        },
+        "start_cursor": {
+          "type": "string",
+          "description": "上一次返回的 next_cursor，用于翻页"
+        }
+      },
+      "required": [
+        "block_id"
+      ]
+    }
+  },
+  {
+    "name": "query_database",
+    "description": "查询数据库中的条目，支持过滤与排序。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "database_id": {
+          "type": "string",
+          "description": "数据库 ID"
+        },
+        "filter": {
+          "type": "object",
+          "description": "Notion 过滤器对象，见官方 filter 文档"
+        },
+        "sorts": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "排序数组，如 [{property: Name, direction: ascending}]"
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "返回条数，1-100，默认 50"
+        },
+        "start_cursor": {
+          "type": "string",
+          "description": "翻页游标"
+        }
+      },
+      "required": [
+        "database_id"
+      ]
+    }
+  },
+  {
+    "name": "get_database",
+    "description": "获取数据库的结构定义（有哪些字段、字段类型）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "database_id": {
+          "type": "string",
+          "description": "数据库 ID"
+        }
+      },
+      "required": [
+        "database_id"
+      ]
+    }
+  },
+  {
+    "name": "create_page",
+    "description": "在指定数据库或父页面下创建新页面。这会写入 Notion 工作区。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "object",
+          "description": "父级，如 {database_id: xxx} 或 {page_id: xxx}"
+        },
+        "properties": {
+          "type": "object",
+          "description": "页面属性；数据库页面必须匹配库字段，如 {Name: {title: [{text: {content: 标题}}]}}"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "正文块数组，可选"
+        }
+      },
+      "required": [
+        "parent",
+        "properties"
+      ]
+    }
+  },
+  {
+    "name": "append_blocks",
+    "description": "向页面末尾追加内容块。这会修改 Notion 页面。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "block_id": {
+          "type": "string",
+          "description": "目标页面 ID 或块 ID"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "要追加的块数组，如 [{paragraph: {rich_text: [{text: {content: 内容}}]}}]"
+        }
+      },
+      "required": [
+        "block_id",
+        "children"
+      ]
+    }
+  },
+  {
+    "name": "update_page_properties",
+    "description": "更新页面属性，也可用于归档（设 archived=true）。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "page_id": {
+          "type": "string",
+          "description": "页面 ID"
+        },
+        "properties": {
+          "type": "object",
+          "description": "要更新的属性"
+        },
+        "archived": {
+          "type": "boolean",
+          "description": "设为 true 即归档（相当于删除到回收站）"
+        }
+      },
+      "required": [
+        "page_id"
+      ]
+    }
+  },
+  {
+    "name": "get_me",
+    "description": "获取当前集成的 bot 信息，用于验证凭据是否有效。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

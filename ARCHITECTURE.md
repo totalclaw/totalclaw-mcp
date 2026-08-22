@@ -156,7 +156,41 @@ registry.json.sig              # Ed25519，复用 totalclaw-plugins 签名方案
 - 价值：**企业终端零运行时依赖（不装 node/uvx/docker）**、凭据集中托管不落终端、多端共享同一实例、统一审计。
 - 技术选型 Python：与 agent 同一套 `mcp` SDK 与 `server_task.py` 连接经验；spawn `npx` 子进程与语言无关。
 
-### 3.4 `web/` — SSR 市场站（Express，复用 skill-shop `server/`，M4）
+### 3.4 `servers/` — 自研 MCP 服务器（M1，已落地）
+
+**registry 里的清单指向的是这里的代码，不是任何第三方托管端点。**
+能力清单对标 WorkBuddy 的 126 个连接器目录，但实现全部自研 —— 这样凭据、
+限流、审计、可用性都在自己手里，也不受上游改端点/改鉴权影响。
+
+```
+servers/
+  totalclaw_mcp_servers/
+    engine/            REST→MCP 引擎：spec / render / client / token_exchange / server
+    packs/<name>.yaml  声明式连接器（绝大多数）
+    native/<name>.py   原生服务器（有状态协议，如 IMAP）
+  tests/               31 个用例，不发真实网络请求
+  pyproject.toml       控制台脚本 totalclaw-mcp-server
+```
+
+为什么做成声明式：上百个连接器的共性都是「带密钥调 REST API，把 N 个操作暴露成 N 个工具」。
+一份引擎 + N 份 YAML，比 N 份互相复制的样板代码好维护得多；新增一个连接器是写配置不是写代码。
+
+三个决定可用性的实现细节：
+
+| 问题 | 处理 |
+|---|---|
+| 国内 API 失败时返回 `HTTP 200 + errcode!=0` | pack 声明 `response.error_field`，引擎判定业务错误码，不让失败伪装成成功 |
+| 企业微信/飞书/钉钉必须先换 `access_token` | `auth.type: token_exchange`，引擎负责换取并缓存到过期前 60 秒 |
+| 模板占位符把数字变成字符串 | 整串占位符保留原始类型；缺失的可选参数整项丢弃而非发空串；路径缺参直接报错 |
+
+凭据只能来自环境变量（pack 里写死密钥会被校验拒绝），错误信息里的密钥自动脱敏，
+处理器永不抛裸异常 —— 一律返回 `{"success": false, "error": "<人话>"}`。
+
+已实现 8 个：`github` `gitee` `notion` `tencent_map` `wecom` `feishu` `dingtalk`
+`imap_mail`（覆盖 QQ / 网易邮箱）。规范见 [docs/PACKS.md](docs/PACKS.md)，
+剩余连接器进度见 [docs/TODO.md](docs/TODO.md) D 组。
+
+### 3.5 `web/` — SSR 市场站（Express，复用 skill-shop `server/`，M4）
 
 列表 / 详情 / 一键复制 `totalclaw mcp install <name>` 与各客户端 JSON；SSO 登录后可见私有条目与托管端点。
 
@@ -420,12 +454,16 @@ totalclaw-mcp/
 ├── registry/
 │   ├── _TEMPLATE/mcp.yaml
 │   └── servers/<category>/<name>/mcp.yaml
+├── servers/                 # 自研 MCP 服务器（引擎 + packs + native + tests）
 ├── scripts/
 │   ├── gen_registry.py      # 索引生成 / --check
+│   ├── gen_manifests.py     # 从 servers/ 实现生成 registry 清单
 │   ├── import_presets.py    # 从 agent presets/catalog 导入种子
 │   └── probe_server.py      # CI：探测 tools.json + 安全扫描（M2）
 ├── docs/
 │   ├── API.md               # 平台 API + qiye_api 合约 + CLI 合约
+│   ├── PACKS.md             # pack 规范（怎么新增一个连接器）
+│   ├── TODO.md              # 对接与实现任务清单
 │   ├── AGENT_INTEGRATION.md # agent 侧改造清单
 │   └── QIYE_APP_INTEGRATION.md
 ├── api/README.md            # NestJS 服务（M2）

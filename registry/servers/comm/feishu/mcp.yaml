@@ -1,0 +1,68 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: feishu
+display_name: 飞书 / Lark
+version: 0.1.0
+description: 查询飞书通讯录、日历与云文档，发送消息，读写多维表格（Bitable）。
+description_zh: 查询飞书通讯录、日历与云文档，发送消息，读写多维表格（Bitable）。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: comm
+tags:
+- totalclaw
+- self-hosted
+- 飞书
+- lark
+- 多维表格
+- 日历
+- 消息
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - feishu
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - feishu
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: FEISHU_APP_ID
+  env_key: FEISHU_APP_ID
+  description: 飞书 / Lark 所需的 FEISHU_APP_ID
+  prompt: 请输入 FEISHU_APP_ID
+  secret: false
+  required: true
+- name: FEISHU_APP_SECRET
+  env_key: FEISHU_APP_SECRET
+  description: 飞书 / Lark 所需的 FEISHU_APP_SECRET
+  prompt: 请输入 FEISHU_APP_SECRET
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 9
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

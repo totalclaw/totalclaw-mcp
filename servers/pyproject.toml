@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "totalclaw-mcp-servers"
+version = "0.1.0"
+description = "TotalClaw 自研 MCP 服务器集合：声明式 pack 引擎 + 原生服务器"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "TotalClaw" }]
+keywords = ["mcp", "model-context-protocol", "totalclaw", "connectors"]
+dependencies = [
+    "mcp>=1.10",
+    "httpx>=0.27",
+    "PyYAML>=6.0",
+    "anyio>=4.0",
+]
+
+[project.scripts]
+totalclaw-mcp-server = "totalclaw_mcp_servers.__main__:main"
+
+[project.urls]
+Homepage = "https://gitee.com/jlzdyx/totalclaw-mcp"
+
+[tool.setuptools.packages.find]
+include = ["totalclaw_mcp_servers*"]
+
+[tool.setuptools.package-data]
+totalclaw_mcp_servers = ["packs/*.yaml"]

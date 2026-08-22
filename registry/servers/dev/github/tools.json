@@ -1,0 +1,355 @@
+[
+  {
+    "name": "search_repositories",
+    "description": "按关键词搜索 GitHub 仓库，返回名称、描述、star 数与主语言。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "搜索关键词，支持 GitHub 检索语法，如 language:python stars:>1000"
+        },
+        "sort": {
+          "type": "string",
+          "enum": [
+            "stars",
+            "forks",
+            "updated"
+          ],
+          "description": "排序字段，默认按最佳匹配"
+        },
+        "order": {
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "description": "排序方向"
+        },
+        "per_page": {
+          "type": "integer",
+          "description": "每页条数，1-100，默认 20"
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "get_repository",
+    "description": "获取单个仓库的详情：描述、默认分支、star/fork 数、开启的 issue 数等。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所有者（用户名或组织名）"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库名"
+        }
+      },
+      "required": [
+        "owner",
+        "repo"
+      ]
+    }
+  },
+  {
+    "name": "list_issues",
+    "description": "列出仓库的 Issue。默认只返回 open 状态，按更新时间倒序。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所有者"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库名"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "closed",
+            "all"
+          ],
+          "description": "Issue 状态，默认 open"
+        },
+        "labels": {
+          "type": "string",
+          "description": "按标签过滤，多个用英文逗号分隔"
+        },
+        "per_page": {
+          "type": "integer",
+          "description": "每页条数，1-100，默认 30"
+        }
+      },
+      "required": [
+        "owner",
+        "repo"
+      ]
+    }
+  },
+  {
+    "name": "get_issue",
+    "description": "获取单个 Issue 的完整内容，包括正文、状态、标签与指派人。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所有者"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库名"
+        },
+        "issue_number": {
+          "type": "integer",
+          "description": "Issue 编号"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "issue_number"
+      ]
+    }
+  },
+  {
+    "name": "create_issue",
+    "description": "在仓库中创建一个新 Issue。这会在 GitHub 上产生公开可见的写入。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所有者"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库名"
+        },
+        "title": {
+          "type": "string",
+          "description": "Issue 标题"
+        },
+        "body": {
+          "type": "string",
+          "description": "Issue 正文，支持 Markdown"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "要打的标签列表"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "title"
+      ]
+    }
+  },
+  {
+    "name": "comment_issue",
+    "description": "给指定 Issue 或 Pull Request 添加一条评论。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所有者"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库名"
+        },
+        "issue_number": {
+          "type": "integer",
+          "description": "Issue 或 PR 编号"
+        },
+        "body": {
+          "type": "string",
+          "description": "评论内容，支持 Markdown"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "issue_number",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "list_pull_requests",
+    "description": "列出仓库的 Pull Request，按更新时间倒序。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所有者"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库名"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "closed",
+            "all"
+          ],
+          "description": "PR 状态，默认 open"
+        },
+        "per_page": {
+          "type": "integer",
+          "description": "每页条数，1-100，默认 30"
+        }
+      },
+      "required": [
+        "owner",
+        "repo"
+      ]
+    }
+  },
+  {
+    "name": "get_pull_request",
+    "description": "获取单个 PR 的详情，含变更行数、可合并状态与关联分支。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所有者"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库名"
+        },
+        "pull_number": {
+          "type": "integer",
+          "description": "PR 编号"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "pull_number"
+      ]
+    }
+  },
+  {
+    "name": "list_commits",
+    "description": "列出仓库某分支的提交历史。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所有者"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库名"
+        },
+        "branch": {
+          "type": "string",
+          "description": "分支名或 commit SHA，默认仓库默认分支"
+        },
+        "path": {
+          "type": "string",
+          "description": "只看影响该路径的提交"
+        },
+        "per_page": {
+          "type": "integer",
+          "description": "每页条数，1-100，默认 30"
+        }
+      },
+      "required": [
+        "owner",
+        "repo"
+      ]
+    }
+  },
+  {
+    "name": "get_file_content",
+    "description": "读取仓库中某个文件的内容（返回 base64 编码的 content 字段）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "仓库所有者"
+        },
+        "repo": {
+          "type": "string",
+          "description": "仓库名"
+        },
+        "path": {
+          "type": "string",
+          "description": "文件在仓库中的路径"
+        },
+        "ref": {
+          "type": "string",
+          "description": "分支、标签或 commit SHA，默认默认分支"
+        }
+      },
+      "required": [
+        "owner",
+        "repo",
+        "path"
+      ]
+    }
+  },
+  {
+    "name": "search_code",
+    "description": "在 GitHub 上搜索代码。需要登录态，匿名不可用。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "代码检索语法，如 addClass repo:jquery/jquery"
+        },
+        "per_page": {
+          "type": "integer",
+          "description": "每页条数，1-100，默认 20"
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "get_me",
+    "description": "获取当前令牌对应的 GitHub 账号信息，可用于验证凭据是否有效。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

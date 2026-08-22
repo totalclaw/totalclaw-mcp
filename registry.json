@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T10:12:31Z",
+  "generated_at": "2026-08-22T11:09:55Z",
   "servers": [
     {
       "name": "composio",
@@ -201,20 +201,25 @@
       "bundle_sha256": "a9d01ea2467f0fa85297186ab96d846a8574d706a634a01e2d7d950096b5dcdc"
     },
     {
-      "name": "notion",
-      "id": "totalclaw-mcp/biz/notion",
-      "display_name": "Notion",
-      "description": "Notion MCP server.",
-      "description_zh": "Notion API 全套集成 — 页面 / 数据库 / 搜索 / 评论 / 用户 / 块级编辑。Notion 官方维护。",
+      "name": "dingtalk",
+      "id": "totalclaw-mcp/comm/dingtalk",
+      "display_name": "钉钉",
+      "description": "查询钉钉通讯录与部门，发送工作通知，查询考勤与审批实例。",
+      "description_zh": "查询钉钉通讯录与部门，发送工作通知，查询考勤与审批实例。",
       "version": "0.1.0",
-      "author": "upstream",
-      "homepage": "https://github.com/makenotion/notion-mcp-server",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
       "verified": true,
       "tested_with": ">=0.63.72",
-      "category": "biz",
+      "category": "comm",
       "tags": [
-        "biz",
-        "preset"
+        "totalclaw",
+        "self-hosted",
+        "钉钉",
+        "通讯录",
+        "考勤",
+        "审批"
       ],
       "kind": "mcp_server",
       "platforms": [
@@ -226,49 +231,299 @@
         "stdio"
       ],
       "launchers": [
-        "npx"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
-          "id": "npx",
+          "id": "console",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
         }
       ],
       "requires_env": [
         {
-          "name": "NOTION_API_KEY",
-          "description": "NOTION_API_KEY for notion",
-          "prompt": "请输入 NOTION_API_KEY",
+          "name": "DINGTALK_APP_KEY",
+          "description": "钉钉 所需的 DINGTALK_APP_KEY",
+          "prompt": "请输入 DINGTALK_APP_KEY",
+          "secret": true,
+          "required": true
+        },
+        {
+          "name": "DINGTALK_APP_SECRET",
+          "description": "钉钉 所需的 DINGTALK_APP_SECRET",
+          "prompt": "请输入 DINGTALK_APP_SECRET",
           "secret": true,
           "required": true
         }
       ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 8,
+      "tools": [
+        "list_departments",
+        "list_department_users",
+        "get_user",
+        "get_userid_by_mobile",
+        "send_work_notification",
+        "list_attendance_records",
+        "get_approval_instance",
+        "list_approval_instance_ids"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
       },
-      "path": "registry/servers/biz/notion",
-      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/notion",
+      "path": "registry/servers/comm/dingtalk",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/comm/dingtalk",
       "git_sparse": {
         "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
-        "subdir": "registry/servers/biz/notion"
+        "subdir": "registry/servers/comm/dingtalk"
       },
       "files": [
         {
           "path": "README.md",
-          "sha256": "5e47d515a7ca134c8087114a046bdf340c40b0daa6289c15be9690b509e0ae69",
-          "size": 469
+          "sha256": "f763e129169e46c2bb3760fb572314da8ab80c3328e68f3b2412379d7c4fe5a3",
+          "size": 1393
         },
         {
           "path": "mcp.yaml",
-          "sha256": "53907062fb7926b6e18f7dee793fe15fd7b3fc8069e2bef412fc84da8c66679a",
-          "size": 980
+          "sha256": "bb58aa83c56055b3e4e6dc9425c0904b9ec9a188828245dc931ed2f7900c080e",
+          "size": 1593
+        },
+        {
+          "path": "tools.json",
+          "sha256": "7c12655926cc6488a324893c34c7ee1ff41b02ed02c4b58a1adf401917ad985f",
+          "size": 4832
         }
       ],
-      "bundle_sha256": "09ce8eb4fe31833269bf1255e857e5f72d08b908e379d8f62507701e3f91c703"
+      "bundle_sha256": "db8d92fd46fcfaa9dcd8c03f696cd890be86e5d9c27807cf95cd97c8e15f6541"
+    },
+    {
+      "name": "feishu",
+      "id": "totalclaw-mcp/comm/feishu",
+      "display_name": "飞书 / Lark",
+      "description": "查询飞书通讯录、日历与云文档，发送消息，读写多维表格（Bitable）。",
+      "description_zh": "查询飞书通讯录、日历与云文档，发送消息，读写多维表格（Bitable）。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "comm",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "飞书",
+        "lark",
+        "多维表格",
+        "日历",
+        "消息"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "FEISHU_APP_ID",
+          "description": "飞书 / Lark 所需的 FEISHU_APP_ID",
+          "prompt": "请输入 FEISHU_APP_ID",
+          "secret": false,
+          "required": true
+        },
+        {
+          "name": "FEISHU_APP_SECRET",
+          "description": "飞书 / Lark 所需的 FEISHU_APP_SECRET",
+          "prompt": "请输入 FEISHU_APP_SECRET",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 9,
+      "tools": [
+        "send_message",
+        "list_chats",
+        "get_chat_messages",
+        "get_user_by_mobile_or_email",
+        "list_department_users",
+        "list_bitable_records",
+        "create_bitable_record",
+        "list_calendar_events",
+        "search_docs"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/comm/feishu",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/comm/feishu",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/comm/feishu"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "5989363299f7317279247eafeff5d4d99839985b48576576a762a6cbd34fcb39",
+          "size": 1442
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "d558b4ed1006405c3e465bd7079c225cb7c7f4ace0057812fc04085d05074516",
+          "size": 1619
+        },
+        {
+          "path": "tools.json",
+          "sha256": "949a280dd01bd6bce251787e50312d43ada19b7e5e7c3e0c8f04ace9c2bd7153",
+          "size": 6523
+        }
+      ],
+      "bundle_sha256": "ffaa146abd8bbc169b244541444e319b5a3a93e1651f73412e05a3b32d43d960"
+    },
+    {
+      "name": "imap_mail",
+      "id": "totalclaw-mcp/comm/imap_mail",
+      "display_name": "邮箱（IMAP/SMTP）",
+      "description": "收发、搜索和整理邮件，支持 QQ 邮箱、网易邮箱及任意 IMAP 邮箱。",
+      "description_zh": "收发、搜索和整理邮件，支持 QQ 邮箱、网易邮箱及任意 IMAP 邮箱。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "comm",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "邮箱",
+        "imap",
+        "smtp",
+        "qq邮箱",
+        "网易邮箱"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "MAIL_IMAP_HOST",
+          "description": "邮箱（IMAP/SMTP） 所需的 MAIL_IMAP_HOST",
+          "prompt": "请输入 MAIL_IMAP_HOST",
+          "secret": false,
+          "required": true
+        },
+        {
+          "name": "MAIL_USERNAME",
+          "description": "邮箱（IMAP/SMTP） 所需的 MAIL_USERNAME",
+          "prompt": "请输入 MAIL_USERNAME",
+          "secret": false,
+          "required": true
+        },
+        {
+          "name": "MAIL_PASSWORD",
+          "description": "邮箱（IMAP/SMTP） 所需的 MAIL_PASSWORD",
+          "prompt": "请输入 MAIL_PASSWORD",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [
+        "MAIL_IMAP_PORT",
+        "MAIL_SMTP_HOST",
+        "MAIL_SMTP_PORT"
+      ],
+      "tools_count": 4,
+      "tools": [
+        "list_folders",
+        "search_emails",
+        "read_email",
+        "send_email"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/comm/imap_mail",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/comm/imap_mail",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/comm/imap_mail"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "cfdcf4fad560084409cd3791e3d95fd6b2030887e1190b037902a58aff1671a5",
+          "size": 1104
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "cc5c1bc004557bbe3dab81ec93a421752b9c0b91b931c8faa8efa7ecc383566c",
+          "size": 1851
+        },
+        {
+          "path": "tools.json",
+          "sha256": "1c193aa809fc95c9c635b0c36183fddf687c32c3e930bdb618896bd040a198a9",
+          "size": 2681
+        }
+      ],
+      "bundle_sha256": "499f5c80ed5b752c823608fc61039f79bbbfdb606db5fe650e48025a7f1d798c"
     },
     {
       "name": "wechat-desktop",
@@ -330,6 +585,111 @@
         }
       ],
       "bundle_sha256": "1e1a114c265bbbcccc0306024109c8aa87ebe02d9b4fe53caa5605fd992e6891"
+    },
+    {
+      "name": "wecom",
+      "id": "totalclaw-mcp/comm/wecom",
+      "display_name": "企业微信",
+      "description": "查询企业微信通讯录、部门与成员，发送应用消息，管理外部联系人。",
+      "description_zh": "查询企业微信通讯录、部门与成员，发送应用消息，管理外部联系人。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "comm",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "企业微信",
+        "通讯录",
+        "消息",
+        "scrm"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "WECOM_CORP_ID",
+          "description": "企业微信 所需的 WECOM_CORP_ID",
+          "prompt": "请输入 WECOM_CORP_ID",
+          "secret": false,
+          "required": true
+        },
+        {
+          "name": "WECOM_SECRET",
+          "description": "企业微信 所需的 WECOM_SECRET",
+          "prompt": "请输入 WECOM_SECRET",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 8,
+      "tools": [
+        "list_departments",
+        "list_department_users",
+        "get_user",
+        "send_text_message",
+        "send_markdown_message",
+        "list_external_contacts",
+        "get_external_contact",
+        "get_user_id_by_mobile"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/comm/wecom",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/comm/wecom",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/comm/wecom"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "fd5d30eabffde316133bc6c38f782aac22b743da6d2471799fa765c532e43d9b",
+          "size": 1512
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "c64476f353f1264b82a5111ab6993f27ef2334626776de540f3c70d0f9401733",
+          "size": 1585
+        },
+        {
+          "path": "tools.json",
+          "sha256": "649a7354479466b71b38fc460ce77dd5000b0dfaf97f6028d146ac1da82d0df1",
+          "size": 4223
+        }
+      ],
+      "bundle_sha256": "e3121db05d789a33d24962f9e080020e6f272b05faa9ecf1a71096d32987a3e1"
     },
     {
       "name": "blender",
@@ -584,6 +944,205 @@
       "bundle_sha256": "082281e57766838567feafb4a01b95b71f5fcfee2d24566aea8abe363e13ee63"
     },
     {
+      "name": "gitee",
+      "id": "totalclaw-mcp/dev/gitee",
+      "display_name": "Gitee 码云",
+      "description": "查询和管理 Gitee 仓库、Issue、Pull Request 与文件内容。",
+      "description_zh": "查询和管理 Gitee 仓库、Issue、Pull Request 与文件内容。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "dev",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "git",
+        "码云",
+        "issues"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "GITEE_ACCESS_TOKEN",
+          "description": "Gitee 码云 所需的 GITEE_ACCESS_TOKEN",
+          "prompt": "请输入 GITEE_ACCESS_TOKEN",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 8,
+      "tools": [
+        "get_repository",
+        "list_user_repos",
+        "list_issues",
+        "create_issue",
+        "list_pull_requests",
+        "get_file_content",
+        "list_commits",
+        "get_me"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/dev/gitee",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/gitee",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/dev/gitee"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "e5f289653e3c934ae7d17597729f3f5e300175a5326896b88bde5c86f83c1c3b",
+          "size": 1235
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "93c635a438e204a57fbc7de144530283d79121847473b38bd2479160482f5050",
+          "size": 1377
+        },
+        {
+          "path": "tools.json",
+          "sha256": "b7a3bbbfc215c5fec149b59ed154bfdbc41464924ea845c5684e96b97702c947",
+          "size": 5291
+        }
+      ],
+      "bundle_sha256": "c829e5b53001240f14b75af63adda587ada0d74f6f35a573aa259ebc7dc552cd"
+    },
+    {
+      "name": "github",
+      "id": "totalclaw-mcp/dev/github",
+      "display_name": "GitHub",
+      "description": "在 GitHub 上查询和管理仓库、Issue、Pull Request、提交与代码搜索。",
+      "description_zh": "在 GitHub 上查询和管理仓库、Issue、Pull Request、提交与代码搜索。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "dev",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "git",
+        "issues",
+        "pull-requests",
+        "code"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "GITHUB_TOKEN",
+          "description": "GitHub 所需的 GITHUB_TOKEN",
+          "prompt": "请输入 GITHUB_TOKEN",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 12,
+      "tools": [
+        "search_repositories",
+        "get_repository",
+        "list_issues",
+        "get_issue",
+        "create_issue",
+        "comment_issue",
+        "list_pull_requests",
+        "get_pull_request",
+        "list_commits",
+        "get_file_content",
+        "search_code",
+        "get_me"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/dev/github",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/github",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/dev/github"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "9afbd89bdc8e150f0d44243b6d0a383fc9109aba0c194b87868f19cc31c29c95",
+          "size": 1848
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "546b66efef0077f7f50c384b61a7770068aa2ce01a573a8d8f82837270121e27",
+          "size": 1389
+        },
+        {
+          "path": "tools.json",
+          "sha256": "3026edbd9ff0f1da98d6b2e32af0bb1bee8bf630f69b5769523c64b2b26e96e1",
+          "size": 8560
+        }
+      ],
+      "bundle_sha256": "0697d42b941a41356ac38972ac6a4c3fefb89cf0a8ba00efe15a0361f59d9053"
+    },
+    {
       "name": "linear",
       "id": "totalclaw-mcp/dev/linear",
       "display_name": "Linear",
@@ -778,97 +1337,6 @@
         }
       ],
       "bundle_sha256": "ade47a5b5e50cd295be900b57a3263da46e7796019751b1cc15b857ae4247d31"
-    },
-    {
-      "name": "mcp_github",
-      "id": "totalclaw-mcp/dev/mcp_github",
-      "display_name": "GitHub",
-      "description": "GitHub REST API integration — repos, issues, PRs, commits, search, releases, branches, forks (~30 tools).",
-      "description_zh": "GitHub REST API 集成 — 仓库 / issue / PR / commit / search / release / branch / fork，约 30 个工具。",
-      "version": "2025.4.8",
-      "author": "modelcontextprotocol",
-      "license": "MIT",
-      "homepage": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/github",
-      "verified": true,
-      "tested_with": ">=0.63.72",
-      "category": "dev",
-      "tags": [
-        "dev",
-        "git",
-        "github",
-        "issues",
-        "pull-requests",
-        "preset"
-      ],
-      "kind": "mcp_server",
-      "platforms": [
-        "darwin",
-        "linux",
-        "win32"
-      ],
-      "transports": [
-        "http",
-        "stdio"
-      ],
-      "launchers": [
-        "npx"
-      ],
-      "runtimes": [
-        {
-          "id": "npx",
-          "type": "stdio",
-          "launcher": "npx"
-        },
-        {
-          "id": "remote",
-          "type": "http",
-          "auth": "header"
-        },
-        {
-          "id": "hosted",
-          "type": "http",
-          "auth": "header",
-          "hosted": true
-        }
-      ],
-      "requires_env": [
-        {
-          "name": "GITHUB_PERSONAL_ACCESS_TOKEN",
-          "description": "GitHub Personal Access Token (repo / read:org scope)",
-          "prompt": "请输入 GitHub Personal Access Token",
-          "secret": true,
-          "required": true,
-          "runtimes": [
-            "npx",
-            "remote"
-          ]
-        }
-      ],
-      "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
-      "security": {
-        "scan_verdict": "unscanned"
-      },
-      "path": "registry/servers/dev/mcp_github",
-      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/mcp_github",
-      "git_sparse": {
-        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
-        "subdir": "registry/servers/dev/mcp_github"
-      },
-      "files": [
-        {
-          "path": "README.md",
-          "sha256": "126c8592f56dca40e22ba3522e86ac9582666b3f964675607197d176a3b650a8",
-          "size": 566
-        },
-        {
-          "path": "mcp.yaml",
-          "sha256": "b13fd5131ca37991f42b902cebbd7c2d9aa70ba397dffa675e10a3425ee2ce9f",
-          "size": 2246
-        }
-      ],
-      "bundle_sha256": "2414a6ea9ab2e01a853accd7725d00bcb251c4dde1d62f2b2b19f5a1cd9f14b5"
     },
     {
       "name": "sentry",
@@ -1136,6 +1604,104 @@
         }
       ],
       "bundle_sha256": "9987f8b40fffceade9dcae880f7bfba056ded2c702317cbfe1ad4463f39dfb23"
+    },
+    {
+      "name": "notion",
+      "id": "totalclaw-mcp/office/notion",
+      "display_name": "Notion",
+      "description": "搜索、读取和管理 Notion 工作区中的页面与数据库。",
+      "description_zh": "搜索、读取和管理 Notion 工作区中的页面与数据库。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "office",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "笔记",
+        "知识库",
+        "数据库"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "NOTION_API_KEY",
+          "description": "Notion 所需的 NOTION_API_KEY",
+          "prompt": "请输入 NOTION_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 9,
+      "tools": [
+        "search",
+        "get_page",
+        "get_block_children",
+        "query_database",
+        "get_database",
+        "create_page",
+        "append_blocks",
+        "update_page_properties",
+        "get_me"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/office/notion",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/notion",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/office/notion"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "91d06f75ab1a873192b1cc02a1f2358839f09cb8eb4a826f9b9ac45f9ef820ce",
+          "size": 1483
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "6173a53f2dc7e4622bb0c5d60e85bb4dc7c381c808981c112cc9b63c04627fbd",
+          "size": 1360
+        },
+        {
+          "path": "tools.json",
+          "sha256": "0e4c5b75ee27038ec346f2ba828b0a256a9525df5f68c903716551c58697ae92",
+          "size": 5425
+        }
+      ],
+      "bundle_sha256": "3c5497bc14e92ee8552839c488d1824b5bcd83636c522a63a176e3f7b6f80fa7"
     },
     {
       "name": "aitoearn",
@@ -1783,6 +2349,103 @@
         }
       ],
       "bundle_sha256": "caec2c6462b3cbc92c3003ee2cadcf5fa8c346c3e7daa48c5f23dfd1449323ae"
+    },
+    {
+      "name": "tencent_map",
+      "id": "totalclaw-mcp/web/tencent_map",
+      "display_name": "腾讯地图",
+      "description": "地点搜索、路线规划、地址与坐标互转、行政区划查询、距离矩阵计算。",
+      "description_zh": "地点搜索、路线规划、地址与坐标互转、行政区划查询、距离矩阵计算。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "web",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "地图",
+        "poi",
+        "路线规划",
+        "地理编码"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "TENCENT_MAP_KEY",
+          "description": "腾讯地图 所需的 TENCENT_MAP_KEY",
+          "prompt": "请输入 TENCENT_MAP_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 7,
+      "tools": [
+        "search_place",
+        "geocoder",
+        "reverse_geocoder",
+        "direction",
+        "distance_matrix",
+        "suggestion",
+        "district_list"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/web/tencent_map",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/tencent_map",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/web/tencent_map"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "7ba1f05a49fab5f6f97c64d5f065f2c26ac53b0c837ccb47cd597f3631ee4352",
+          "size": 1364
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "67adaaa6a730275c6f93503a81d389bd71de4c6dd9835bf321b353566d28b936",
+          "size": 1456
+        },
+        {
+          "path": "tools.json",
+          "sha256": "99bce80e8079e6da845940f8b002afe84fcb9c5894288bdc3b3e2e05c5285006",
+          "size": 4773
+        }
+      ],
+      "bundle_sha256": "dc83ea89c258a0b2d25af5513bfef31a7fb160dc0492619055bc1823530bed31"
     }
   ]
 }

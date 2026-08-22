@@ -1,0 +1,61 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: github
+display_name: GitHub
+version: 0.1.0
+description: 在 GitHub 上查询和管理仓库、Issue、Pull Request、提交与代码搜索。
+description_zh: 在 GitHub 上查询和管理仓库、Issue、Pull Request、提交与代码搜索。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: dev
+tags:
+- totalclaw
+- self-hosted
+- git
+- issues
+- pull-requests
+- code
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - github
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - github
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: GITHUB_TOKEN
+  env_key: GITHUB_TOKEN
+  description: GitHub 所需的 GITHUB_TOKEN
+  prompt: 请输入 GITHUB_TOKEN
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 12
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点
