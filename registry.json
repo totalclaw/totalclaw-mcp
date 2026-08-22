@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T11:09:55Z",
+  "generated_at": "2026-08-22T11:17:45Z",
   "servers": [
     {
       "name": "composio",
@@ -1416,6 +1416,112 @@
       "bundle_sha256": "6edd292317f43e865a33817a6e109f935ff0e1318f92666cc192b74359e64c21"
     },
     {
+      "name": "tapd",
+      "id": "totalclaw-mcp/dev/tapd",
+      "display_name": "TAPD",
+      "description": "查询和管理 TAPD 的需求、缺陷、任务与迭代，跟踪研发进度。",
+      "description_zh": "查询和管理 TAPD 的需求、缺陷、任务与迭代，跟踪研发进度。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "dev",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "需求",
+        "缺陷",
+        "迭代",
+        "研发管理"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "TAPD_API_PASSWORD",
+          "description": "TAPD 所需的 TAPD_API_PASSWORD",
+          "prompt": "请输入 TAPD_API_PASSWORD",
+          "secret": true,
+          "required": true
+        },
+        {
+          "name": "TAPD_API_USER",
+          "description": "TAPD 所需的 TAPD_API_USER",
+          "prompt": "请输入 TAPD_API_USER",
+          "secret": false,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 9,
+      "tools": [
+        "list_stories",
+        "get_story",
+        "count_stories",
+        "list_bugs",
+        "count_bugs",
+        "list_tasks",
+        "list_iterations",
+        "create_story",
+        "create_bug"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/dev/tapd",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/tapd",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/dev/tapd"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "86004289ac72569dabd367a7511a72d06782fd9bd0e421968111abc4a77f84fb",
+          "size": 1463
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "7a63277df638879cc35a471a75dd70aa6028b002c0fe948657c25758bc2d6c79",
+          "size": 1552
+        },
+        {
+          "path": "tools.json",
+          "sha256": "aa664e742e1508fb6fc60d6742237d47da51e9772594d11baaca71e3f65d9aa4",
+          "size": 8574
+        }
+      ],
+      "bundle_sha256": "2599b00221d95a61a3e081fff73ceac5530f4dbfd303f9872406f3e41cf85e18"
+    },
+    {
       "name": "docker",
       "id": "totalclaw-mcp/infra/docker",
       "display_name": "Docker",
@@ -1542,6 +1648,102 @@
         }
       ],
       "bundle_sha256": "5c6e9d75e13a6e394a28a56850369185a5fe956e18e6259a482f0c6c2582158a"
+    },
+    {
+      "name": "jiandaoyun",
+      "id": "totalclaw-mcp/office/jiandaoyun",
+      "display_name": "简道云",
+      "description": "查询和填写简道云表单数据：检索记录、读取单条、查看表单字段结构、新建记录。",
+      "description_zh": "查询和填写简道云表单数据：检索记录、读取单条、查看表单字段结构、新建记录。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "office",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "简道云",
+        "表单",
+        "低代码",
+        "数据"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "JIANDAOYUN_API_KEY",
+          "description": "简道云 所需的 JIANDAOYUN_API_KEY",
+          "prompt": "请输入 JIANDAOYUN_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 6,
+      "tools": [
+        "list_apps",
+        "list_forms",
+        "list_form_fields",
+        "query_records",
+        "get_record",
+        "create_record"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/office/jiandaoyun",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/jiandaoyun",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/office/jiandaoyun"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "845d273c9277789b5a41f0e22cf40df8cbf8edc7f350443616f61f7dd1daaa26",
+          "size": 1574
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "6486a8acd5e565a4e83c4c5f9c9dd8a459922325bf71034b959f52de8fa41e84",
+          "size": 1489
+        },
+        {
+          "path": "tools.json",
+          "sha256": "dd6f55f806ad311cb4fe13ac858ae17ef162685eef3014912b216c3c0d6b9c01",
+          "size": 4224
+        }
+      ],
+      "bundle_sha256": "5a5e490aad1853cdacc7e488275ad072cadaabe18d70dd80b5c96d225f7a145d"
     },
     {
       "name": "mcp_time",

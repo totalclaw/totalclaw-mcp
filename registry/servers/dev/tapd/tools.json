@@ -1,0 +1,342 @@
+[
+  {
+    "name": "list_stories",
+    "description": "查询需求列表，按条件批量检索。返回的每项形如 {\"Story\": {...}}。 默认每页 30 条，最多 200。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "workspace_id": {
+          "type": "integer",
+          "description": "项目 ID（TAPD 里的 workspace_id）"
+        },
+        "status": {
+          "type": "string",
+          "description": "需求状态，支持枚举查询"
+        },
+        "name": {
+          "type": "string",
+          "description": "需求标题，支持模糊匹配"
+        },
+        "owner": {
+          "type": "string",
+          "description": "处理人，支持模糊匹配"
+        },
+        "iteration_id": {
+          "type": "string",
+          "description": "迭代 ID"
+        },
+        "priority_label": {
+          "type": "string",
+          "description": "优先级"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "每页条数，默认 30，最大 200"
+        },
+        "page": {
+          "type": "integer",
+          "description": "页码，从 1 开始"
+        },
+        "fields": {
+          "type": "string",
+          "description": "只取这些字段，英文逗号分隔"
+        },
+        "order": {
+          "type": "string",
+          "description": "排序规则，如 created desc"
+        }
+      },
+      "required": [
+        "workspace_id"
+      ]
+    }
+  },
+  {
+    "name": "get_story",
+    "description": "按需求 ID 查询单个需求的详情。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "workspace_id": {
+          "type": "integer",
+          "description": "项目 ID"
+        },
+        "story_id": {
+          "type": "string",
+          "description": "需求 ID"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "story_id"
+      ]
+    }
+  },
+  {
+    "name": "count_stories",
+    "description": "统计满足条件的需求数量，用于快速了解规模而不拉全量数据。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "workspace_id": {
+          "type": "integer",
+          "description": "项目 ID"
+        },
+        "status": {
+          "type": "string",
+          "description": "需求状态"
+        },
+        "owner": {
+          "type": "string",
+          "description": "处理人"
+        },
+        "iteration_id": {
+          "type": "string",
+          "description": "迭代 ID"
+        }
+      },
+      "required": [
+        "workspace_id"
+      ]
+    }
+  },
+  {
+    "name": "list_bugs",
+    "description": "查询缺陷列表。返回的每项形如 {\"Bug\": {...}}。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "workspace_id": {
+          "type": "integer",
+          "description": "项目 ID"
+        },
+        "status": {
+          "type": "string",
+          "description": "缺陷状态"
+        },
+        "title": {
+          "type": "string",
+          "description": "缺陷标题，支持模糊匹配"
+        },
+        "current_owner": {
+          "type": "string",
+          "description": "当前处理人"
+        },
+        "severity": {
+          "type": "string",
+          "description": "严重程度"
+        },
+        "priority_label": {
+          "type": "string",
+          "description": "优先级"
+        },
+        "iteration_id": {
+          "type": "string",
+          "description": "迭代 ID"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "每页条数，默认 30，最大 200"
+        },
+        "page": {
+          "type": "integer",
+          "description": "页码"
+        },
+        "order": {
+          "type": "string",
+          "description": "排序规则，如 created desc"
+        }
+      },
+      "required": [
+        "workspace_id"
+      ]
+    }
+  },
+  {
+    "name": "count_bugs",
+    "description": "统计满足条件的缺陷数量。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "workspace_id": {
+          "type": "integer",
+          "description": "项目 ID"
+        },
+        "status": {
+          "type": "string",
+          "description": "缺陷状态"
+        },
+        "current_owner": {
+          "type": "string",
+          "description": "当前处理人"
+        },
+        "iteration_id": {
+          "type": "string",
+          "description": "迭代 ID"
+        }
+      },
+      "required": [
+        "workspace_id"
+      ]
+    }
+  },
+  {
+    "name": "list_tasks",
+    "description": "查询任务列表。返回的每项形如 {\"Task\": {...}}。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "workspace_id": {
+          "type": "integer",
+          "description": "项目 ID"
+        },
+        "status": {
+          "type": "string",
+          "description": "任务状态"
+        },
+        "owner": {
+          "type": "string",
+          "description": "处理人"
+        },
+        "story_id": {
+          "type": "string",
+          "description": "所属需求 ID"
+        },
+        "iteration_id": {
+          "type": "string",
+          "description": "迭代 ID"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "每页条数，默认 30，最大 200"
+        },
+        "page": {
+          "type": "integer",
+          "description": "页码"
+        }
+      },
+      "required": [
+        "workspace_id"
+      ]
+    }
+  },
+  {
+    "name": "list_iterations",
+    "description": "查询迭代列表，用于了解项目的迭代规划与起止时间。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "workspace_id": {
+          "type": "integer",
+          "description": "项目 ID"
+        },
+        "status": {
+          "type": "string",
+          "description": "迭代状态，如 open / done"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "每页条数，默认 30，最大 200"
+        },
+        "page": {
+          "type": "integer",
+          "description": "页码"
+        }
+      },
+      "required": [
+        "workspace_id"
+      ]
+    }
+  },
+  {
+    "name": "create_story",
+    "description": "在项目中创建一条需求。这会真实写入 TAPD。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "workspace_id": {
+          "type": "integer",
+          "description": "项目 ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "需求标题"
+        },
+        "description": {
+          "type": "string",
+          "description": "需求详情，支持 HTML"
+        },
+        "owner": {
+          "type": "string",
+          "description": "处理人（TAPD 用户名）"
+        },
+        "priority_label": {
+          "type": "string",
+          "description": "优先级"
+        },
+        "iteration_id": {
+          "type": "string",
+          "description": "归属迭代 ID"
+        },
+        "creator": {
+          "type": "string",
+          "description": "创建人（TAPD 用户名）"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "create_bug",
+    "description": "在项目中提交一个缺陷。这会真实写入 TAPD。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "workspace_id": {
+          "type": "integer",
+          "description": "项目 ID"
+        },
+        "title": {
+          "type": "string",
+          "description": "缺陷标题"
+        },
+        "description": {
+          "type": "string",
+          "description": "缺陷详情，支持 HTML"
+        },
+        "current_owner": {
+          "type": "string",
+          "description": "当前处理人（TAPD 用户名）"
+        },
+        "severity": {
+          "type": "string",
+          "description": "严重程度，如 fatal / serious / normal / prompt"
+        },
+        "priority_label": {
+          "type": "string",
+          "description": "优先级"
+        },
+        "reporter": {
+          "type": "string",
+          "description": "报告人（TAPD 用户名）"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "title"
+      ]
+    }
+  }
+]

@@ -161,7 +161,7 @@
 
 ### D1. 连接器实现进度（126）
 
-已实现 8 个：`github` `gitee` `notion` `tencent_map` `wecom` `feishu` `dingtalk` `imap_mail`（覆盖 QQ/网易邮箱）
+已实现 10 个：`github` `gitee` `notion` `tencent_map` `wecom` `feishu` `dingtalk` `imap_mail`（覆盖 QQ/网易邮箱）`jiandaoyun` `tapd`
 
 #### 办公协同 / 文档 / 表单 / 网盘（16）
 
@@ -173,7 +173,7 @@
 - [ ] **baidu-netdisk** 百度网盘 — 上游类型 MCP，鉴权 server-side
 - [ ] **jinshuju** 金数据 — 上游类型 MCP，鉴权 server-side
 - [ ] **qingflow** 轻流 — 上游类型 MCP，鉴权 -
-- [ ] **jiandaoyun** 简道云 — 上游类型 MCP，鉴权 -
+- [x] **jiandaoyun** 简道云 — 已实现 `jiandaoyun`
 - [ ] **h3yun-connector** 氚云 — 上游类型 MCP，鉴权 token
 - [ ] **wisenote** 百智WiseNote — 上游类型 MCP，鉴权 -
 - [ ] **camscanner-mcp** 扫描全能王 — 上游类型 MCP，鉴权 -
@@ -194,7 +194,7 @@
 #### 研发 / 运维（14）
 
 - [x] **github** GitHub — 已实现 `github`
-- [ ] **tapd** TAPD — 上游类型 MCP，鉴权 -
+- [x] **tapd** TAPD — 已实现 `tapd`
 - [ ] **cnb-api** CNB — 上游类型 CLI，鉴权 -
 - [ ] **bugly-token** Bugly 质量概览 — 上游类型 MCP，鉴权 token
 - [ ] **cloudbase** 腾讯云 CloudBase — 上游类型 MCP，鉴权 -

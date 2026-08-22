@@ -1,0 +1,67 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tapd
+display_name: TAPD
+version: 0.1.0
+description: 查询和管理 TAPD 的需求、缺陷、任务与迭代，跟踪研发进度。
+description_zh: 查询和管理 TAPD 的需求、缺陷、任务与迭代，跟踪研发进度。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: dev
+tags:
+- totalclaw
+- self-hosted
+- 需求
+- 缺陷
+- 迭代
+- 研发管理
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - tapd
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - tapd
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: TAPD_API_PASSWORD
+  env_key: TAPD_API_PASSWORD
+  description: TAPD 所需的 TAPD_API_PASSWORD
+  prompt: 请输入 TAPD_API_PASSWORD
+  secret: true
+  required: true
+- name: TAPD_API_USER
+  env_key: TAPD_API_USER
+  description: TAPD 所需的 TAPD_API_USER
+  prompt: 请输入 TAPD_API_USER
+  secret: false
+  required: true
+optional_env: []
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 9
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

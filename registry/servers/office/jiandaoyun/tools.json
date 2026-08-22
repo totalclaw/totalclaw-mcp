@@ -1,0 +1,149 @@
+[
+  {
+    "name": "list_apps",
+    "description": "列出当前 API Key 可访问的所有应用，返回应用 ID 与名称。先用它拿到 app_id。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "list_forms",
+    "description": "列出某个应用下的全部表单，返回表单 ID 与名称。先用它拿到 entry_id。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "app_id": {
+          "type": "string",
+          "description": "应用 ID，来自 list_apps"
+        }
+      },
+      "required": [
+        "app_id"
+      ]
+    }
+  },
+  {
+    "name": "list_form_fields",
+    "description": "查询表单的字段结构，返回每个字段的内部名（形如 _widget_1234567890）、 标签与类型。查数据或新建记录前必须先看它，字段名不能猜。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "app_id": {
+          "type": "string",
+          "description": "应用 ID"
+        },
+        "entry_id": {
+          "type": "string",
+          "description": "表单 ID"
+        }
+      },
+      "required": [
+        "app_id",
+        "entry_id"
+      ]
+    }
+  },
+  {
+    "name": "query_records",
+    "description": "查询表单的多条数据，按数据 ID 升序返回。翻页方式是把上一页最后一条的 _id 作为下一次的 data_id 传入（游标翻页，不是页码）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "app_id": {
+          "type": "string",
+          "description": "应用 ID"
+        },
+        "entry_id": {
+          "type": "string",
+          "description": "表单 ID"
+        },
+        "data_id": {
+          "type": "string",
+          "description": "翻页游标：上一页最后一条记录的 _id；首次查询不传"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "只返回这些字段（字段内部名，来自 list_form_fields）；不传则返回全部"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "本次返回条数，1-100，默认 10"
+        },
+        "filter": {
+          "type": "object",
+          "description": "筛选条件，形如 {\"rel\":\"and\",\"cond\":[{\"field\":\"_widget_123\",\"type\":\"text\",\"method\":\"eq\",\"value\":[\"待处理\"]}]}。 method 可选 eq/ne/in/nin/like/gt/lt/range/empty/not_empty。"
+        }
+      },
+      "required": [
+        "app_id",
+        "entry_id"
+      ]
+    }
+  },
+  {
+    "name": "get_record",
+    "description": "按数据 ID 读取单条记录的完整内容。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "app_id": {
+          "type": "string",
+          "description": "应用 ID"
+        },
+        "entry_id": {
+          "type": "string",
+          "description": "表单 ID"
+        },
+        "data_id": {
+          "type": "string",
+          "description": "数据 ID"
+        }
+      },
+      "required": [
+        "app_id",
+        "entry_id",
+        "data_id"
+      ]
+    }
+  },
+  {
+    "name": "create_record",
+    "description": "在表单中新建一条数据。这会真实写入简道云。data 的键必须是字段内部名 （先用 list_form_fields 查），值形如 {\"_widget_123\": {\"value\": \"内容\"}}。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "app_id": {
+          "type": "string",
+          "description": "应用 ID"
+        },
+        "entry_id": {
+          "type": "string",
+          "description": "表单 ID"
+        },
+        "data": {
+          "type": "object",
+          "description": "字段内部名到值的映射，形如 {\"_widget_1234567890\": {\"value\": \"张三\"}}"
+        },
+        "is_start_workflow": {
+          "type": "boolean",
+          "description": "是否触发流程，默认 false"
+        }
+      },
+      "required": [
+        "app_id",
+        "entry_id",
+        "data"
+      ]
+    }
+  }
+]

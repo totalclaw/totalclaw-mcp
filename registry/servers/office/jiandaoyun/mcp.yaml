@@ -1,0 +1,61 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: jiandaoyun
+display_name: 简道云
+version: 0.1.0
+description: 查询和填写简道云表单数据：检索记录、读取单条、查看表单字段结构、新建记录。
+description_zh: 查询和填写简道云表单数据：检索记录、读取单条、查看表单字段结构、新建记录。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: office
+tags:
+- totalclaw
+- self-hosted
+- 简道云
+- 表单
+- 低代码
+- 数据
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - jiandaoyun
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - jiandaoyun
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: JIANDAOYUN_API_KEY
+  env_key: JIANDAOYUN_API_KEY
+  description: 简道云 所需的 JIANDAOYUN_API_KEY
+  prompt: 请输入 JIANDAOYUN_API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 6
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

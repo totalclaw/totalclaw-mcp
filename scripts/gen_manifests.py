@@ -33,6 +33,8 @@ META: dict[str, dict] = {
     "feishu":      {"category": "comm",    "tags": ["飞书", "lark", "多维表格", "日历", "消息"]},
     "dingtalk":    {"category": "comm",    "tags": ["钉钉", "通讯录", "考勤", "审批"]},
     "imap_mail":   {"category": "comm",    "tags": ["邮箱", "imap", "smtp", "qq邮箱", "网易邮箱"]},
+    "jiandaoyun":  {"category": "office",  "tags": ["简道云", "表单", "低代码", "数据"]},
+    "tapd":        {"category": "dev",     "tags": ["需求", "缺陷", "迭代", "研发管理"]},
 }
 DEFAULT_CATEGORY = "misc"
 
