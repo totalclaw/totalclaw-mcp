@@ -42,7 +42,9 @@
   - 全部支持 `--json`（JSON 到 stdout，日志到 stderr）
   - 退出码：`0` 成功 / `1` 错误 / `2` 缺必填 env（`--json` 含 `missing_env[]`）/ `3` 探测失败已保存为 disabled
   - `install` 旗标：`--env K=V ... --runtime ID --yes --no-probe --disabled --allow-unverified --overwrite --json`
-- [ ] **A2.2**（保留原样，未做）`mcp catalog` 改为 `mcp search` 的别名；`mcp presets` 保留为离线回退入口（数据源仍是 `mcp_presets`）
+- [x] **A2.2** `mcp catalog` 保留可用（`--install KEY` 是既有流程，改成别名会打断脚本），
+  改为在命令开头指向能力更全的 `mcp search`；顺带透传其退出码（此前不存在的 key 也退 0）。
+  `mcp presets` 仍是离线回退入口
 - [x] **A2.3** bash 补全已支持 `mcp <TAB>` 二级子命令，且从安装账本补全已装 server 名
 
 ### A3. qiye_api 接口
