@@ -1,0 +1,204 @@
+[
+  {
+    "name": "list_designs",
+    "description": "搜索用户的设计稿（含共享给他）。返回标题、缩略图、编辑/查看链接与页数。 翻页用响应里的 continuation 传回 continuation 参数。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "搜索关键词，最长 255 字符；不传则列出全部"
+        },
+        "ownership": {
+          "type": "string",
+          "enum": [
+            "any",
+            "owned",
+            "shared"
+          ],
+          "description": "归属过滤，默认 any"
+        },
+        "sort_by": {
+          "type": "string",
+          "enum": [
+            "relevance",
+            "modified_descending",
+            "modified_ascending",
+            "title_descending",
+            "title_ascending"
+          ],
+          "description": "排序方式，默认 relevance"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "每页条数，1-100，默认 25"
+        },
+        "continuation": {
+          "type": "string",
+          "description": "翻页令牌，来自上一次响应的 continuation"
+        }
+      }
+    }
+  },
+  {
+    "name": "get_design",
+    "description": "获取单个设计稿的详情：标题、页数、缩略图与编辑/查看链接。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "design_id": {
+          "type": "string",
+          "description": "设计稿 ID，来自 list_designs"
+        }
+      },
+      "required": [
+        "design_id"
+      ]
+    }
+  },
+  {
+    "name": "list_brand_templates",
+    "description": "列出企业组织内的品牌模板。套用模板（autofill）前先用它拿 brand_template_id。 需要 Canva 企业版成员身份。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "模板名关键词"
+        },
+        "ownership": {
+          "type": "string",
+          "enum": [
+            "any",
+            "owned",
+            "shared"
+          ],
+          "description": "归属过滤"
+        },
+        "sort_by": {
+          "type": "string",
+          "description": "排序方式"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "每页条数，1-100"
+        },
+        "continuation": {
+          "type": "string",
+          "description": "翻页令牌"
+        }
+      }
+    }
+  },
+  {
+    "name": "get_brand_template_dataset",
+    "description": "查询品牌模板里可填充的字段（数据集）。做 autofill 前必须先看它， data 的键名就来自这里，不能猜。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "brand_template_id": {
+          "type": "string",
+          "description": "品牌模板 ID"
+        }
+      },
+      "required": [
+        "brand_template_id"
+      ]
+    }
+  },
+  {
+    "name": "create_autofill_job",
+    "description": "用品牌模板生成一张新设计稿：把 data 里的文本/图片填进模板。这会在用户 账号下创建新设计稿。异步任务，返回 job id，再用 get_autofill_job 查结果。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "brand_template_id": {
+          "type": "string",
+          "description": "品牌模板 ID"
+        },
+        "data": {
+          "type": "object",
+          "description": "字段名到内容的映射，字段名来自 get_brand_template_dataset。 文本用 {\"type\":\"text\",\"text\":\"内容\"}，图片用 {\"type\":\"image\",\"asset_id\":\"...\"}"
+        },
+        "title": {
+          "type": "string",
+          "description": "新设计稿的标题"
+        }
+      },
+      "required": [
+        "brand_template_id",
+        "data"
+      ]
+    }
+  },
+  {
+    "name": "get_autofill_job",
+    "description": "查询套用模板任务的状态与结果。完成后返回新建设计稿的 id 与链接。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "description": "任务 ID，来自 create_autofill_job"
+        }
+      },
+      "required": [
+        "job_id"
+      ]
+    }
+  },
+  {
+    "name": "create_export_job",
+    "description": "把设计稿导出为文件。异步任务，返回 job id，再用 get_export_job 取下载链接。 format 形如 {\"type\":\"pdf\",\"size\":\"a4\"} 或 {\"type\":\"png\",\"width\":1200}； jpg 必须带 quality(1-100)，mp4 必须带 quality(如 horizontal_1080p)。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "design_id": {
+          "type": "string",
+          "description": "要导出的设计稿 ID"
+        },
+        "format": {
+          "type": "object",
+          "description": "导出格式对象。type 可选 pdf / jpg / png / pptx / gif / mp4 / html_bundle / html_standalone / csv；可带 pages 数组只导指定页"
+        }
+      },
+      "required": [
+        "design_id",
+        "format"
+      ]
+    }
+  },
+  {
+    "name": "get_export_job",
+    "description": "查询导出任务状态。完成后返回可下载的文件 URL（有时效）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "description": "任务 ID，来自 create_export_job"
+        }
+      },
+      "required": [
+        "job_id"
+      ]
+    }
+  },
+  {
+    "name": "get_me",
+    "description": "获取当前令牌对应的 Canva 用户与团队信息，可用于验证凭据是否有效。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

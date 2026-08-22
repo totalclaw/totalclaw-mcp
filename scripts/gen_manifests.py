@@ -38,6 +38,8 @@ META: dict[str, dict] = {
     "jinshuju":    {"category": "office",  "tags": ["金数据", "表单", "问卷", "报名"]},
     "baidu_netdisk": {"category": "office", "tags": ["百度网盘", "网盘", "文件", "存储"]},
     "linear":      {"category": "dev",     "tags": ["issue", "项目管理", "研发协作"]},
+    "canva":       {"category": "creative", "tags": ["设计", "海报", "品牌模板", "导出"]},
+    "qcc":         {"category": "data",    "tags": ["企查查", "工商", "股东", "企业信息"]},
 }
 DEFAULT_CATEGORY = "misc"
 

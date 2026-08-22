@@ -18,6 +18,8 @@ _REDACT_KEYS = ("authorization", "token", "key", "secret", "password", "cookie")
 
 
 def resolve_auth_value(auth: Auth) -> str | None:
+    if auth.type == "signature":
+        return None      # 签名在 build_request 里直接算并注入
     if auth.type == "token_exchange" and auth.exchange is not None:
         from .token_exchange import get_token
 
@@ -50,7 +52,14 @@ def build_request(pack: Pack, tool: Tool, params: dict[str, Any]) -> dict[str, A
     headers.update(render_value(tool.headers, params, auth_value) if tool.headers else {})
 
     a = pack.auth
-    if a.type == "token_exchange" and auth_value:
+    if a.type == "signature" and a.signature is not None:
+        from .signing import compute
+
+        signed = compute(a.signature)
+        headers.update(signed["headers"])
+        if signed["query"]:
+            query = {**dict(query), **signed["query"]}
+    elif a.type == "token_exchange" and auth_value:
         tx = a.exchange
         if tx.place == "header":
             headers[tx.name] = f"{tx.prefix}{auth_value}"
@@ -109,13 +118,14 @@ def call_tool(pack: Pack, tool: Tool, params: dict[str, Any]) -> dict[str, Any]:
                      f"请在 $TOTALCLAW_HOME/.env 中设置后重新加载 MCP 服务器。",
         }
 
+    from .signing import SigningError
     from .token_exchange import TokenExchangeError
 
     try:
         req = build_request(pack, tool, params)
     except MissingValue as e:
         return {"success": False, "error": f"缺少必填参数：{e.key}"}
-    except TokenExchangeError as e:
+    except (TokenExchangeError, SigningError) as e:
         return {"success": False, "error": str(e)}
     except Exception as e:  # noqa: BLE001
         return {"success": False, "error": f"构造请求失败：{type(e).__name__}: {e}"}

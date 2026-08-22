@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T11:21:26Z",
+  "generated_at": "2026-08-22T11:25:45Z",
   "servers": [
     {
       "name": "composio",
@@ -752,6 +752,105 @@
       "bundle_sha256": "63430a0db48b2d3362571d5fbe6718ebd09c634470a8412f9724f52faa2d9a40"
     },
     {
+      "name": "canva",
+      "id": "totalclaw-mcp/creative/canva",
+      "display_name": "Canva 可画",
+      "description": "搜索与管理 Canva 设计稿，用品牌模板批量套用内容，导出为 PDF / 图片 / PPTX。",
+      "description_zh": "搜索与管理 Canva 设计稿，用品牌模板批量套用内容，导出为 PDF / 图片 / PPTX。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "设计",
+        "海报",
+        "品牌模板",
+        "导出"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "CANVA_ACCESS_TOKEN",
+          "description": "Canva 可画 所需的 CANVA_ACCESS_TOKEN",
+          "prompt": "请输入 CANVA_ACCESS_TOKEN",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 9,
+      "tools": [
+        "list_designs",
+        "get_design",
+        "list_brand_templates",
+        "get_brand_template_dataset",
+        "create_autofill_job",
+        "get_autofill_job",
+        "create_export_job",
+        "get_export_job",
+        "get_me"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/creative/canva",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/canva",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/canva"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "823561d2622d1d369570504b9e61bec4b34c5384a4d8adc57b6ada908bcf520e",
+          "size": 2171
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "9b45b7ae5206bc914c2fa4b8cd7a96e723c7c7cc62f5963509a5b7f3f1f85f82",
+          "size": 1464
+        },
+        {
+          "path": "tools.json",
+          "sha256": "3c2a4a43e95b24947dfed5b64d4feb2186814e24af952f43cdbc6b69999078da",
+          "size": 5963
+        }
+      ],
+      "bundle_sha256": "826bb8998e3bdd6afa5601fc0afdcff77f1c13117cb19fa4d86d069560977e4f"
+    },
+    {
       "name": "unreal_engine",
       "id": "totalclaw-mcp/creative/unreal_engine",
       "display_name": "Unreal Engine",
@@ -942,6 +1041,110 @@
         }
       ],
       "bundle_sha256": "082281e57766838567feafb4a01b95b71f5fcfee2d24566aea8abe363e13ee63"
+    },
+    {
+      "name": "qcc",
+      "id": "totalclaw-mcp/data/qcc",
+      "display_name": "企查查",
+      "description": "查询企业工商登记、股东结构、主要人员与经营风险等公开企业信息。",
+      "description_zh": "查询企业工商登记、股东结构、主要人员与经营风险等公开企业信息。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "企查查",
+        "工商",
+        "股东",
+        "企业信息"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "QCC_APP_KEY",
+          "description": "企查查 所需的 QCC_APP_KEY",
+          "prompt": "请输入 QCC_APP_KEY",
+          "secret": true,
+          "required": true
+        },
+        {
+          "name": "QCC_SECRET_KEY",
+          "description": "企查查 所需的 QCC_SECRET_KEY",
+          "prompt": "请输入 QCC_SECRET_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 7,
+      "tools": [
+        "search_company",
+        "get_company_basic",
+        "verify_company",
+        "get_shareholders",
+        "get_key_persons",
+        "get_branches",
+        "get_investments"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/data/qcc",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/qcc",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/qcc"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "aea3d1da8f40f63229c1fc3bc811d71543b2ef27c978372376aedc7ea9692efc",
+          "size": 1478
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "79a108758846bc295d3d22528b0b0b20653f748941c141882fe10444635755c0",
+          "size": 1571
+        },
+        {
+          "path": "tools.json",
+          "sha256": "3a6f698448676b27dded55086a5d1099d9f8d96a841d5629d63b2197e53a53c8",
+          "size": 3699
+        }
+      ],
+      "bundle_sha256": "a584747c116c0c0e174a9dc2fe2c92adc67336c2c86e77209494ef1397e5724c"
     },
     {
       "name": "gitee",

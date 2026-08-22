@@ -1,0 +1,67 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: qcc
+display_name: 企查查
+version: 0.1.0
+description: 查询企业工商登记、股东结构、主要人员与经营风险等公开企业信息。
+description_zh: 查询企业工商登记、股东结构、主要人员与经营风险等公开企业信息。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: data
+tags:
+- totalclaw
+- self-hosted
+- 企查查
+- 工商
+- 股东
+- 企业信息
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - qcc
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - qcc
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: QCC_APP_KEY
+  env_key: QCC_APP_KEY
+  description: 企查查 所需的 QCC_APP_KEY
+  prompt: 请输入 QCC_APP_KEY
+  secret: true
+  required: true
+- name: QCC_SECRET_KEY
+  env_key: QCC_SECRET_KEY
+  description: 企查查 所需的 QCC_SECRET_KEY
+  prompt: 请输入 QCC_SECRET_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 7
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

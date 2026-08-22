@@ -1,0 +1,145 @@
+[
+  {
+    "name": "search_company",
+    "description": "按关键词模糊搜索企业，返回企业名、统一社会信用代码、法定代表人与经营状态。 拿到企业名或信用代码后，再用其他工具查详情。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "description": "企业名称关键词"
+        },
+        "page_index": {
+          "type": "integer",
+          "description": "页码，从 1 开始"
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "每页条数，默认 10"
+        }
+      },
+      "required": [
+        "keyword"
+      ]
+    }
+  },
+  {
+    "name": "get_company_basic",
+    "description": "按企业全名或统一社会信用代码查询工商基本信息（注册资本、成立日期、经营范围等）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "description": "企业全名或统一社会信用代码"
+        }
+      },
+      "required": [
+        "keyword"
+      ]
+    }
+  },
+  {
+    "name": "verify_company",
+    "description": "校验企业信息是否真实存在，用于核验对方提供的企业名或信用代码。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "description": "企业全名或统一社会信用代码"
+        }
+      },
+      "required": [
+        "keyword"
+      ]
+    }
+  },
+  {
+    "name": "get_shareholders",
+    "description": "查询企业的股东与出资信息（股东名称、出资额、持股比例）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "description": "企业全名或统一社会信用代码"
+        },
+        "page_index": {
+          "type": "integer",
+          "description": "页码，从 1 开始"
+        }
+      },
+      "required": [
+        "keyword"
+      ]
+    }
+  },
+  {
+    "name": "get_key_persons",
+    "description": "查询企业主要人员（董监高）的姓名与职务。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "description": "企业全名或统一社会信用代码"
+        },
+        "page_index": {
+          "type": "integer",
+          "description": "页码，从 1 开始"
+        }
+      },
+      "required": [
+        "keyword"
+      ]
+    }
+  },
+  {
+    "name": "get_branches",
+    "description": "查询企业的分支机构列表。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "description": "企业全名或统一社会信用代码"
+        },
+        "page_index": {
+          "type": "integer",
+          "description": "页码，从 1 开始"
+        }
+      },
+      "required": [
+        "keyword"
+      ]
+    }
+  },
+  {
+    "name": "get_investments",
+    "description": "查询企业的对外投资情况（投资了哪些企业、持股比例）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "description": "企业全名或统一社会信用代码"
+        },
+        "page_index": {
+          "type": "integer",
+          "description": "页码，从 1 开始"
+        }
+      },
+      "required": [
+        "keyword"
+      ]
+    }
+  }
+]

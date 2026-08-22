@@ -44,7 +44,7 @@ from typing import Any
 
 NAME_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 TOOL_NAME_RE = re.compile(r"^[a-z][a-z0-9_]*$")
-AUTH_TYPES = {"none", "header", "bearer", "query", "basic", "token_exchange"}
+AUTH_TYPES = {"none", "header", "bearer", "query", "basic", "token_exchange", "signature"}
 METHODS = {"GET", "POST", "PUT", "PATCH", "DELETE"}
 
 
@@ -60,11 +60,14 @@ class Auth:
     env_user: str | None = None      # basic: 用户名环境变量
     prefix: str = ""                 # header 值前缀，如 "Bearer "
     exchange: Any = None             # type=token_exchange 时的 TokenExchange
+    signature: Any = None            # type=signature 时的 Signature
 
     @property
     def required_env(self) -> list[str]:
         if self.type == "token_exchange" and self.exchange is not None:
             return list(self.exchange.requires_env)
+        if self.type == "signature" and self.signature is not None:
+            return list(self.signature.requires_env)
         return [e for e in (self.env, self.env_user) if e]
 
 
@@ -136,6 +139,10 @@ def _parse_auth(raw: Any, where: str) -> Auth:
     t = str(raw.get("type") or "none")
     if t not in AUTH_TYPES:
         raise PackError(f"{where}: auth.type={t!r} 非法，可选 {sorted(AUTH_TYPES)}")
+    if t == "signature":
+        from .signing import parse_signature
+
+        return Auth(type=t, signature=parse_signature(raw, where))
     if t == "token_exchange":
         from .token_exchange import parse_token_exchange
 

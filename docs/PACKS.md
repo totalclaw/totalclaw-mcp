@@ -50,6 +50,27 @@ auth:
   requires_env: [WECOM_CORP_ID, WECOM_SECRET]   # 必填，用于缺凭据时提前报错
 ```
 
+### `signature` — 签名鉴权
+
+一整类国内 API 不直接传密钥，而是要求 `MD5(AppKey + 时间戳 + SecretKey)` 这样的一次性签名
+（企查查是典型）。引擎负责按规则算并注入。
+
+```yaml
+auth:
+  type: signature
+  algorithm: md5                 # md5 | sha1 | sha256 | hmac_sha256
+  parts: ["${QCC_APP_KEY}", "{timestamp}", "${QCC_SECRET_KEY}"]
+  uppercase: true                # 签名结果转大写
+  # hmac_key: ${SECRET}          # algorithm=hmac_sha256 时的密钥
+  inject:
+    headers: {Token: "{signature}", Timespan: "{timestamp}"}
+    query: {key: ${QCC_APP_KEY}}
+  requires_env: [QCC_APP_KEY, QCC_SECRET_KEY]
+```
+
+可用占位符：`${ENV}` 环境变量、`{timestamp}` 秒级时间戳、`{timestamp_ms}` 毫秒、
+`{nonce}` 随机串、`{signature}` 算出的签名（只能出现在 `inject` 里）。
+
 ## `response` — 业务错误码
 
 **这是国内 API 接入最容易踩的坑**：失败时返回 `HTTP 200 + errcode != 0`，

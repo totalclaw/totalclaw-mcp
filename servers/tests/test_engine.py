@@ -299,6 +299,61 @@ def test_token_exchange_requires_env_declared():
             "token_pick": "access_token"}})
 
 
+# ── 签名鉴权 ─────────────────────────────────────────────────────────────
+
+def test_signature_md5_matches_manual(monkeypatch):
+    """MD5(key+timestamp+secret) 大写 —— 企查查这类签名 API 的通用形态。"""
+    import hashlib
+
+    monkeypatch.setenv("SIG_KEY", "appkey123")
+    monkeypatch.setenv("SIG_SECRET", "secret456")
+    p = parse_pack({**MINIMAL, "auth": {
+        "type": "signature", "algorithm": "md5",
+        "parts": ["${SIG_KEY}", "{timestamp}", "${SIG_SECRET}"], "uppercase": True,
+        "inject": {"headers": {"Token": "{signature}", "Timespan": "{timestamp}"},
+                   "query": {"key": "${SIG_KEY}"}},
+        "requires_env": ["SIG_KEY", "SIG_SECRET"]}})
+    req = build_request(p, p.tools[0], {"id": "1"})
+    ts = req["headers"]["Timespan"]
+    expect = hashlib.md5(f"appkey123{ts}secret456".encode()).hexdigest().upper()
+    assert req["headers"]["Token"] == expect
+    assert req["params"]["key"] == "appkey123"
+
+
+def test_signature_hmac_sha256(monkeypatch):
+    import hashlib
+    import hmac
+
+    monkeypatch.setenv("SIG_ID", "id1")
+    monkeypatch.setenv("SIG_SECRET", "s3cr3t")
+    p = parse_pack({**MINIMAL, "auth": {
+        "type": "signature", "algorithm": "hmac_sha256",
+        "parts": ["${SIG_ID}", "{timestamp}"], "hmac_key": "${SIG_SECRET}", "uppercase": False,
+        "inject": {"headers": {"X-Sign": "{signature}", "X-Ts": "{timestamp}"}},
+        "requires_env": ["SIG_ID", "SIG_SECRET"]}})
+    req = build_request(p, p.tools[0], {"id": "1"})
+    ts = req["headers"]["X-Ts"]
+    expect = hmac.new(b"s3cr3t", f"id1{ts}".encode(), hashlib.sha256).hexdigest()
+    assert req["headers"]["X-Sign"] == expect
+
+
+def test_signature_missing_env_reported(monkeypatch):
+    monkeypatch.delenv("SIG_KEY", raising=False)
+    monkeypatch.delenv("SIG_SECRET", raising=False)
+    p = parse_pack({**MINIMAL, "auth": {
+        "type": "signature", "parts": ["${SIG_KEY}"],
+        "inject": {"headers": {"Token": "{signature}"}},
+        "requires_env": ["SIG_KEY", "SIG_SECRET"]}})
+    r = call_tool(p, p.tools[0], {"id": "1"})
+    assert r["success"] is False and "SIG_KEY" in r["error"]
+
+
+def test_signature_requires_inject():
+    with pytest.raises(PackError, match="inject"):
+        parse_pack({**MINIMAL, "auth": {
+            "type": "signature", "parts": ["${A}"], "requires_env": ["A"]}})
+
+
 # ── 原生服务器 ───────────────────────────────────────────────────────────
 
 def test_native_modules_expose_contract():
