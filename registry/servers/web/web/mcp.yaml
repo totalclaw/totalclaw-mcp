@@ -1,0 +1,55 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: web
+display_name: 网页抓取
+version: 0.1.0
+description: 抓取网页并抽取正文纯文本，支持批量抓取与 JSON 接口，零凭据。
+description_zh: 抓取网页并抽取正文纯文本，支持批量抓取与 JSON 接口，零凭据。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: web
+tags:
+- totalclaw
+- self-hosted
+- 网页抓取
+- 正文抽取
+- 无需凭据
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - web
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - web
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env:
+- TOTALCLAW_MCP_WEB_ALLOW_PRIVATE
+defaults:
+  enabled: true
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 2
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

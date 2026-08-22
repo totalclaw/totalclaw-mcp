@@ -161,7 +161,8 @@
 
 ### D1. 连接器实现进度（126）
 
-已实现 10 个：`github` `gitee` `notion` `tencent_map` `wecom` `feishu` `dingtalk` `imap_mail`（覆盖 QQ/网易邮箱）`jiandaoyun` `tapd`
+已实现 17 个：`github` `gitee` `notion` `linear` `tapd` `canva` `tencent_map` `wecom` `feishu` `dingtalk`
+`imap_mail`（QQ/网易邮箱）`web`（网页抓取，零凭据）`jiandaoyun` `jinshuju` `baidu_netdisk` `qcc` `tianyancha`
 
 #### 办公协同 / 文档 / 表单 / 网盘（16）
 
@@ -199,7 +200,7 @@
 - [ ] **bugly-token** Bugly 质量概览 — 上游类型 MCP，鉴权 token
 - [ ] **cloudbase** 腾讯云 CloudBase — 上游类型 MCP，鉴权 -
 - [ ] **edgeone-pages** EdgeOne Makers — 上游类型 MCP，鉴权 -
-- [ ] **agentkey** AgentKey — 上游类型 MCP，鉴权 -
+- [x] **agentkey** AgentKey — 已实现 `web（抓取部分）`
 - [ ] **dcs-cloud** DCS Cloud — 上游类型 MCP，鉴权 token
 - [ ] **tencent-tchouse-c** 腾讯云数据仓库 TCHouse-C — 上游类型 MCP，鉴权 -
 - [ ] **miaoda** 秒哒应用搭建 — 上游类型 CLI，鉴权 -
@@ -241,8 +242,8 @@
 
 #### 企业数据 / 征信 / 风险（11）
 
-- [ ] **qcc-company** 企查查 — 上游类型 MCP，鉴权 -
-- [ ] **tyc-mcp** 天眼查 — 上游类型 MCP，鉴权 -
+- [x] **qcc-company** 企查查 — 已实现 `qcc`
+- [x] **tyc-mcp** 天眼查 — 已实现 `tianyancha`
 - [ ] **qixinhuiyan-mcp** 启信慧眼 — 上游类型 MCP，鉴权 -
 - [ ] **kuaicha-search** 同花顺快查企业数据 — 上游类型 MCP，鉴权 token
 - [ ] **sq-company-dynamic** 上奇产业通-企业动态追踪 — 上游类型 MCP，鉴权 token
@@ -341,6 +342,19 @@
    上游由 WorkBuddy 服务端注入凭据，我们必须让用户自备 API Key，pack 里按标准 OAuth/Key 处理
 5. **CLI 型连接器**（上游 26 个是 `cli.json` 而非 MCP）：这些在 WorkBuddy 里是命令行封装，
    我们要么实现为 REST pack，要么跳过 —— 逐个判断，不必强行对齐
+
+### D2.5 已核查但受阻的连接器
+
+这些查过官方文档但**拿不到可验证的接口契约**，不猜端点、不写假 pack：
+
+- **cnb-api**（CNB）：`https://api.cnb.cool/openapi.json` 返回 401，规范需登录才能取
+- **h3yun-connector**（氚云）：开放平台文档页报「系统加载错误」，需登录
+- **xiaoe-cloud-cli**（小鹅通）：文档站只暴露目录结构，具体端点页需逐页登录查看
+- **tencent-docs**（腾讯文档）：v3 只给了三元组请求头（Client-Id / Open-Id / Access-Token），
+  具体文件管理端点在 v2 文档，页面 404
+- **qingflow**（轻流）：Open API 需在应用内安装扩展后才能看到文档与 Access Token
+
+拿到任一账号的开发者文档访问权后即可按 [PACKS.md](PACKS.md) 补 pack，引擎无需改动。
 
 ### D3. 已知差异与注意
 

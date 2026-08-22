@@ -1,0 +1,55 @@
+[
+  {
+    "name": "fetch_url",
+    "description": "抓取一个网页并返回标题与正文纯文本。JSON 接口会直接返回解析后的 JSON；非文本内容只返回元信息。拒绝访问内网地址。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "目标网页 URL，必须是 http/https"
+        },
+        "max_chars": {
+          "type": "integer",
+          "description": "正文最大返回字符数，默认 16000，上限 60000"
+        },
+        "include_links": {
+          "type": "boolean",
+          "description": "是否同时返回页面里的链接（最多 100 条）"
+        },
+        "timeout": {
+          "type": "number",
+          "description": "超时秒数，默认 20"
+        }
+      },
+      "required": [
+        "url"
+      ]
+    }
+  },
+  {
+    "name": "fetch_many",
+    "description": "一次抓取多个网页（最多 10 个），每个只返回较短的正文摘要，适合快速比较多个来源。单个失败不影响其余。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "URL 列表，最多 10 个"
+        },
+        "max_chars": {
+          "type": "integer",
+          "description": "每个页面的正文上限，默认 4000"
+        }
+      },
+      "required": [
+        "urls"
+      ]
+    }
+  }
+]

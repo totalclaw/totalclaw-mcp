@@ -40,6 +40,8 @@ META: dict[str, dict] = {
     "linear":      {"category": "dev",     "tags": ["issue", "项目管理", "研发协作"]},
     "canva":       {"category": "creative", "tags": ["设计", "海报", "品牌模板", "导出"]},
     "qcc":         {"category": "data",    "tags": ["企查查", "工商", "股东", "企业信息"]},
+    "tianyancha":  {"category": "data",    "tags": ["天眼查", "工商", "股东", "诉讼", "企业信息"]},
+    "web":         {"category": "web",     "tags": ["网页抓取", "正文抽取", "无需凭据"]},
 }
 DEFAULT_CATEGORY = "misc"
 

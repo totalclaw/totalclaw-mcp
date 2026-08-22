@@ -11,14 +11,14 @@
 | `display_name` | ✅ | 展示名（中文优先） |
 | `description` | ✅ | 一句话说清能做什么 |
 | `base_url` | ✅ | API 根地址。非回环地址必须 `https://` |
-| `auth` | | 鉴权，见下 |
+| `auth` | | 鉴权（none/header/bearer/query/basic/token_exchange/signature），见下 |
 | `defaults` | | `{timeout: 30, headers: {...}}` |
 | `response` | | 业务错误码检查，见下 |
 | `tools` | ✅ | 至少 1 个 |
 | `optional_env` | | 可选环境变量名列表 |
 | `docs` | | 上游 API 文档链接 |
 
-## `auth` — 五种鉴权
+## `auth` — 七种鉴权
 
 凭据**只能**来自环境变量，pack 里写死密钥会被校验拒绝。
 

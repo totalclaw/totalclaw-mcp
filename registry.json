@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T11:25:45Z",
+  "generated_at": "2026-08-22T11:35:45Z",
   "servers": [
     {
       "name": "composio",
@@ -1145,6 +1145,107 @@
         }
       ],
       "bundle_sha256": "a584747c116c0c0e174a9dc2fe2c92adc67336c2c86e77209494ef1397e5724c"
+    },
+    {
+      "name": "tianyancha",
+      "id": "totalclaw-mcp/data/tianyancha",
+      "display_name": "天眼查",
+      "description": "查询企业工商登记、股东出资、主要人员、对外投资、变更记录与法律诉讼等公开企业数据。",
+      "description_zh": "查询企业工商登记、股东出资、主要人员、对外投资、变更记录与法律诉讼等公开企业数据。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "天眼查",
+        "工商",
+        "股东",
+        "诉讼",
+        "企业信息"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "TIANYANCHA_TOKEN",
+          "description": "天眼查 所需的 TIANYANCHA_TOKEN",
+          "prompt": "请输入 TIANYANCHA_TOKEN",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 10,
+      "tools": [
+        "search_company",
+        "get_company_baseinfo",
+        "get_company_contact",
+        "verify_company",
+        "get_shareholders",
+        "get_staff",
+        "get_investments",
+        "get_change_records",
+        "get_lawsuits",
+        "get_annual_report"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/data/tianyancha",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/tianyancha",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/tianyancha"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "35829b3c66b1439e3e3361d605258483329c91fd2cfee1967c3288a927afc6e8",
+          "size": 1922
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "45d7f92002f279fd987230aa05eb542821e3a1d99cd1c38babbc703dba7828eb",
+          "size": 1516
+        },
+        {
+          "path": "tools.json",
+          "sha256": "75d4614d7974fd6cacbc5ad456e99b9f42bcc7d85e1f80f7c1fd282c637c8846",
+          "size": 5832
+        }
+      ],
+      "bundle_sha256": "1024da52c73e695692bcc77bd496400d9043716c2ca1c412208a4c65242c1ab7"
     },
     {
       "name": "gitee",
@@ -3068,6 +3169,91 @@
         }
       ],
       "bundle_sha256": "dc83ea89c258a0b2d25af5513bfef31a7fb160dc0492619055bc1823530bed31"
+    },
+    {
+      "name": "web",
+      "id": "totalclaw-mcp/web/web",
+      "display_name": "网页抓取",
+      "description": "抓取网页并抽取正文纯文本，支持批量抓取与 JSON 接口，零凭据。",
+      "description_zh": "抓取网页并抽取正文纯文本，支持批量抓取与 JSON 接口，零凭据。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "web",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "网页抓取",
+        "正文抽取",
+        "无需凭据"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [
+        "TOTALCLAW_MCP_WEB_ALLOW_PRIVATE"
+      ],
+      "tools_count": 2,
+      "tools": [
+        "fetch_url",
+        "fetch_many"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/web/web",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/web",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/web/web"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "e9a554cc9027b6ec71fac6098efc384e091675e9958e3c1634cefddfa9d91514",
+          "size": 739
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "03093cd75fa72d916e0c97e2aa73d6a08e68ca0c9b59a59f42763833eb1875ab",
+          "size": 1274
+        },
+        {
+          "path": "tools.json",
+          "sha256": "3f3bdc22e311cf8d4fc1bbc539e8346d762ed94b16873b17b4eae12805cfa492",
+          "size": 1563
+        }
+      ],
+      "bundle_sha256": "672d1820d90c4c530554a36ece6bd70e7d6991e13e1432a16735ccc7f93bf29a"
     }
   ]
 }

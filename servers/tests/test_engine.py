@@ -378,3 +378,44 @@ def test_native_handler_errors_are_returned_not_raised(monkeypatch):
         imap_mail.list_folders()
     # 装配层负责兜住并转成 {"success": False}
     assert imap_mail.MailError.clean is True
+
+
+# ── 网页抓取（原生） ──────────────────────────────────────────────────────
+
+def test_web_blocks_private_and_non_http(monkeypatch):
+    """默认拒绝内网与非 http(s)，避免被当成打内网的跳板。"""
+    from totalclaw_mcp_servers.native.web import WebError, _check_url
+
+    monkeypatch.delenv("TOTALCLAW_MCP_WEB_ALLOW_PRIVATE", raising=False)
+    for bad in ("http://127.0.0.1:8000", "http://192.168.1.1/x", "file:///etc/passwd"):
+        with pytest.raises(WebError):
+            _check_url(bad)
+
+
+def test_web_allow_private_escape_hatch(monkeypatch):
+    """代理环境（Clash 把公网域名解析到保留段）需要能关掉校验。"""
+    from totalclaw_mcp_servers.native.web import _check_url
+
+    monkeypatch.setenv("TOTALCLAW_MCP_WEB_ALLOW_PRIVATE", "1")
+    assert _check_url("http://127.0.0.1:8000").startswith("http://")
+
+
+def test_web_html_extraction_drops_script_and_style():
+    from totalclaw_mcp_servers.native.web import _Extractor
+
+    ex = _Extractor()
+    ex.feed("<html><head><title>标题</title><style>a{color:red}</style></head>"
+            "<body><script>var x=1</script><p>正文一</p><p>正文二</p>"
+            '<a href="/x">链接</a></body></html>')
+    assert ex.title == "标题"
+    text = ex.text()
+    assert "正文一" in text and "正文二" in text
+    assert "color:red" not in text and "var x" not in text
+    assert ex.links == [("链接", "/x")]
+
+
+def test_web_fetch_many_rejects_oversized_batch():
+    from totalclaw_mcp_servers.native.web import fetch_many
+
+    r = fetch_many(urls=[f"https://e{i}.com" for i in range(11)])
+    assert r["success"] is False and "最多 10" in r["error"]
