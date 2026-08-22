@@ -8,7 +8,7 @@ Project-URL: Homepage, https://gitee.com/jlzdyx/totalclaw-mcp
 Keywords: mcp,model-context-protocol,totalclaw,connectors
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
-Requires-Dist: mcp>=1.10
+Requires-Dist: mcp<2,>=1.10
 Requires-Dist: httpx>=0.27
 Requires-Dist: PyYAML>=6.0
 Requires-Dist: anyio>=4.0

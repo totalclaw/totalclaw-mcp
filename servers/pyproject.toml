@@ -12,7 +12,10 @@ license = { text = "Apache-2.0" }
 authors = [{ name = "TotalClaw" }]
 keywords = ["mcp", "model-context-protocol", "totalclaw", "connectors"]
 dependencies = [
-    "mcp>=1.10",
+    # 上界不能省:mcp 2.0 重做了低层 Server API(没有 list_tools/call_tool 装饰器),
+    # 我们的引擎按 1.x 的低层 API 写的。agent 自身跑的也是 1.x。
+    # 这个 bug 只有干净安装才会现形 —— 开发环境早就装着 1.27,永远撞不到。
+    "mcp>=1.10,<2",
     "httpx>=0.27",
     "PyYAML>=6.0",
     "anyio>=4.0",

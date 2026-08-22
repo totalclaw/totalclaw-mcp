@@ -419,8 +419,14 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
 
 拿到任一账号的开发者文档访问权后即可按 [PACKS.md](PACKS.md) 补 pack，引擎无需改动。
 
-### D3. 已知差异与注意
+### D3. 已知差异与注意（说明性条目，非待办）
 
-- [ ] **D3.1** 上游 7 个连接器用 SSE 传输，**agent 只实现了 stdio 与 streamable-HTTP**；我们自研的一律 stdio，不受影响
-- [ ] **D3.2** 上游 `timeout` 秒/毫秒混用（600 与 30000 并存），自研统一用秒
-- [ ] **D3.3** 已删除两条被自研实现取代的外链条目：`biz/notion`、`dev/mcp_github`（上游该 server 已归档）
+这三条是**记录**，不是要做的事 —— 写在这里是为了让后来者不必重新发现：
+
+- 上游 7 个连接器用 SSE 传输，**agent 只实现了 stdio 与 streamable-HTTP**
+  （`server_task.py` 没有 SSE 客户端，配置里的 `transport: sse` 是惰性字段）。
+  我们自研的一律 stdio，不受影响。
+- 上游 `timeout` 秒/毫秒混用（600 与 30000 并存）。自研统一用秒；
+  从上游导入时 `> 3600` 一律按毫秒换算。
+- 已删除两条被自研实现取代的外链条目：`biz/notion`、`dev/mcp_github`
+  （后者上游 server 本身已归档）。

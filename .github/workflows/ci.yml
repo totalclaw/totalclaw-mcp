@@ -40,6 +40,43 @@ jobs:
             exit 1
           }
 
+  clean-install:
+    name: 干净环境安装（wheel 真能跑起来）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      # 只装 wheel、不装开发依赖 —— 依赖声明写松了（比如放行了不兼容的大版本）
+      # 只有在这种干净环境里才会暴露；开发机上早就装着能用的版本，永远撞不到。
+      - name: 构建并在干净 venv 里安装
+        run: |
+          pip install -q build
+          python -m build --wheel --outdir dist_check servers
+          python -m venv /tmp/clean
+          /tmp/clean/bin/pip install -q dist_check/*.whl
+      - name: 校验 + 真实 MCP 握手
+        run: |
+          /tmp/clean/bin/totalclaw-mcp-server --check
+          /tmp/clean/bin/python - <<'PY'
+          import asyncio, os
+          from mcp import ClientSession, StdioServerParameters
+          from mcp.client.stdio import stdio_client
+
+          async def main():
+              p = StdioServerParameters(
+                  command="/tmp/clean/bin/totalclaw-mcp-server",
+                  args=["web"], env=dict(os.environ))
+              async with stdio_client(p) as (r, w):
+                  async with ClientSession(r, w) as s:
+                      await s.initialize()
+                      tools = (await s.list_tools()).tools
+                      assert tools, "list_tools 返回空"
+                      print(f"握手成功，{len(tools)} 个工具")
+
+          asyncio.run(main())
+          PY
+
   acceptance:
     name: 端到端验收（V1–V7）
     runs-on: ubuntu-latest
