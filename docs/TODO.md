@@ -43,7 +43,7 @@
   - 退出码：`0` 成功 / `1` 错误 / `2` 缺必填 env（`--json` 含 `missing_env[]`）/ `3` 探测失败已保存为 disabled
   - `install` 旗标：`--env K=V ... --runtime ID --yes --no-probe --disabled --allow-unverified --overwrite --json`
 - [ ] **A2.2**（保留原样，未做）`mcp catalog` 改为 `mcp search` 的别名；`mcp presets` 保留为离线回退入口（数据源仍是 `mcp_presets`）
-- [ ] **A2.3** shell 补全与 `/help`：`_profiles_impl.py` 补全表、`_commands_impl.py` CommandDef 补新子命令
+- [ ] **A2.3**（未做）shell 补全与 `/help`：`_profiles_impl.py` 补全表、`_commands_impl.py` CommandDef 补新子命令
 
 ### A3. qiye_api 接口
 - [x] **A3.1** 已实现 `totalclaw_qiye_api/mcp_hub_api.py`，11 个端点已挂进 GA 路由表（对标 `skill_shop_api.py`，`build_router()` + `register` 进 `server.py:1454` 的 GA 路由表）：
@@ -55,7 +55,7 @@
   - `POST /v1/mcp/servers/{name}/update`（202）、`POST /v1/mcp/reload`、`GET /v1/mcp/status`
 - [x] **A3.2** `_notify_mcp_change()` 已实现，作业末尾热重载，装完当轮可用：安装/卸载/更新作业末尾执行 `reload_mcp_servers()` + 对热池 agent `refresh_tools()`（对标 `skill_shop_api._notify_skill_change`）
 - [x] **A3.3** `DELETE /v1/mcp/servers/{name}` 已改为完整清理（账本+schema-cache+令牌+.env），响应形状兼容
-- [ ] **A3.4** 契约文档：更新 agent 仓 `docs/integration/MCP_SERVER_MANAGEMENT.md`（新增端点 + 「热加载已由作业完成」说明）
+- [ ] **A3.4**（未做）契约文档：更新 agent 仓 `docs/integration/MCP_SERVER_MANAGEMENT.md`（新增端点 + 「热加载已由作业完成」说明）
 
 ### A4. 既有 bug 顺手修（清单与行号见 AGENT_INTEGRATION.md §5）
 - [x] **A4.1** `cmd_mcp` 已透传退出码（此前返回值被丢弃，`mcp test` 连不上也退 0）
@@ -106,9 +106,9 @@
 
 ### A6. 测试
 - [x] **A6.1** `test_mcp_hub_render.py` 10 个用例；44 条真实清单逐条渲染均过 `_normalize_server_spec`：本仓 27 条种子逐条渲染 → 必须通过 `_normalize_server_spec`；`env_key` 保留断言；runtime 选择矩阵
-- [ ] **A6.2** `test_mcp_hub_install.py`：本地假注册表（http.server）端到端；sha256 篡改必须失败；未 verified 需 `--allow-unverified`；卸载清理完整性
+- [x] **A6.2** `test_mcp_hub_install.py` 10 个用例（含篡改拒绝、未审核门禁、探测失败降级、卸载清理）：本地假注册表（http.server）端到端；sha256 篡改必须失败；未 verified 需 `--allow-unverified`；卸载清理完整性
 - [x] **A6.3** `test_mcp_hub_api.py` 11 个用例（含 422/409/作业阶段日志/卸载清理）：202 + 轮询、409、422 missing_env、reload 响应形状
-- [ ] **A6.4** CLI 退出码矩阵（0/1/2/3）
+- [x] **A6.4** `test_mcp_hub_cli.py` 12 个用例，退出码 0/1/2/3 + `--json` 单对象契约
 
 ---
 
