@@ -274,10 +274,19 @@
 - [x] **tyc-mcp** 天眼查 — 已实现 `tianyancha`
 - [x] **wecom** 企业微信 — 已实现 `wecom`
 
-#### B · 待实现，需先取得可验证的接口契约（75）
+#### B · 待厂商开发者账号（73）
 
-拿到任一家的开发者文档或沙箱账号后，照 [PACKS.md](PACKS.md) 写 pack 即可，引擎无需改动。
-优先级参考 D2。
+**不是「还没动手」，是「拿不到可验证的接口契约」。** 已用
+`scripts/probe_vendor_docs.py` 对 18 家做过可复查的探测（抓文档入口，看有无
+`GET /`、`/api/v1`、`access_token` 这类具体接口痕迹）：**可继续 0 家**。
+其中 8 家还逐个人工攻过，具体阻塞原因记在脚本的 `KNOWN_BLOCKED` 里。
+
+这些站点绝大多数是需登录的 SPA 或服务商注册墙。**不猜端点、不写假 pack** ——
+一个调不通的 pack 比没有更糟：它会出现在市场里、被装上、然后在用户面前失败。
+
+拿到任一家的开发者账号后：照 [PACKS.md](PACKS.md) 写 pack 即可，**引擎无需改动**
+（八种鉴权已覆盖 bearer / header / query / basic / 令牌交换 / 签名 / 腾讯云 TC3）。
+重跑 `probe_vendor_docs.py` 可确认厂商是否已开放文档。
 
 - [ ] **ai-hive** AI-HIVE
 - [ ] **archive-hospital-mcp** 腾讯健康全周期管理平台
@@ -354,6 +363,7 @@
 - [ ] **yuandian-mcp** 华宇元典法律数据
 - [ ] **yzf-invoice-mcp-server** 云帐房AI开票
 - [ ] **zfs-fssc-ai** 中兴新云AI智报（上游 auth_mode=token）
+
 
 #### C · 已核查受阻（8）
 
