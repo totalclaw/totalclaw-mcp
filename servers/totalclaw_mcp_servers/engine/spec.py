@@ -116,6 +116,7 @@ class Pack:
     description: str
     base_url: str
     tools: tuple[Tool, ...]
+    description_en: str = ""
     auth: Auth = Auth()
     default_headers: dict[str, str] = field(default_factory=dict)
     default_timeout: float = 30.0
@@ -241,6 +242,7 @@ def parse_pack(raw: dict, where: str = "<pack>") -> Pack:
         name=name,
         display_name=str(raw.get("display_name") or name),
         description=str(raw.get("description") or ""),
+        description_en=str(raw.get("description_en") or ""),
         base_url=base_url,
         tools=tools,
         auth=_parse_auth(raw.get("auth"), where),

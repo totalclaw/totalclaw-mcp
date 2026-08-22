@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T18:26:17Z",
+  "generated_at": "2026-08-22T18:33:51Z",
   "servers": [
     {
       "name": "composio",
@@ -230,7 +230,7 @@
       "name": "dingtalk",
       "id": "totalclaw-mcp/comm/dingtalk",
       "display_name": "钉钉",
-      "description": "查询钉钉通讯录与部门，发送工作通知，查询考勤与审批实例。",
+      "description": "Query DingTalk contacts and departments, send work notices, read attendance and approvals.",
       "description_zh": "查询钉钉通讯录与部门，发送工作通知，查询考勤与审批实例。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -320,8 +320,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "bb58aa83c56055b3e4e6dc9425c0904b9ec9a188828245dc931ed2f7900c080e",
-          "size": 1593
+          "sha256": "a1e914e2b4d1a33fb77fb0bb97f2ba7c031a36c0d53174b3db413777805696c9",
+          "size": 1599
         },
         {
           "path": "tools.json",
@@ -329,13 +329,13 @@
           "size": 4832
         }
       ],
-      "bundle_sha256": "db8d92fd46fcfaa9dcd8c03f696cd890be86e5d9c27807cf95cd97c8e15f6541"
+      "bundle_sha256": "2df75996633a0098cdeee0a4634e08b4e89de41e6ce7ecd027b62acc2cefbad6"
     },
     {
       "name": "feishu",
       "id": "totalclaw-mcp/comm/feishu",
       "display_name": "飞书 / Lark",
-      "description": "查询飞书通讯录、日历与云文档，发送消息，读写多维表格（Bitable）。",
+      "description": "Query Feishu/Lark contacts, calendar and docs; send messages; read and write Bitable.",
       "description_zh": "查询飞书通讯录、日历与云文档，发送消息，读写多维表格（Bitable）。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -427,8 +427,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "d558b4ed1006405c3e465bd7079c225cb7c7f4ace0057812fc04085d05074516",
-          "size": 1619
+          "sha256": "fe437efb81eb1c3964752d87981cefb7b9f4e3a804814e33523b0015d3ba65b1",
+          "size": 1610
         },
         {
           "path": "tools.json",
@@ -436,13 +436,13 @@
           "size": 6523
         }
       ],
-      "bundle_sha256": "ffaa146abd8bbc169b244541444e319b5a3a93e1651f73412e05a3b32d43d960"
+      "bundle_sha256": "85b9a0b77f9fe3887fe876521bddee59b2db35147a3cdc41fc6371538fa1f62d"
     },
     {
       "name": "imap_mail",
       "id": "totalclaw-mcp/comm/imap_mail",
       "display_name": "邮箱（IMAP/SMTP）",
-      "description": "收发、搜索和整理邮件，支持 QQ 邮箱、网易邮箱及任意 IMAP 邮箱。",
+      "description": "Read, search and send email over IMAP/SMTP — works with QQ Mail, NetEase Mail and any IMAP mailbox.",
       "description_zh": "收发、搜索和整理邮件，支持 QQ 邮箱、网易邮箱及任意 IMAP 邮箱。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -540,8 +540,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "cc5c1bc004557bbe3dab81ec93a421752b9c0b91b931c8faa8efa7ecc383566c",
-          "size": 1851
+          "sha256": "f6fc99e25c383e0c3e1d39266710e2586d13305cc24596bea7d92aaac0bcc169",
+          "size": 1866
         },
         {
           "path": "tools.json",
@@ -549,7 +549,7 @@
           "size": 2681
         }
       ],
-      "bundle_sha256": "499f5c80ed5b752c823608fc61039f79bbbfdb606db5fe650e48025a7f1d798c"
+      "bundle_sha256": "540c84fa9eacd77f7763cf32c6c2a25cf566840ec338215564fd213ac98dfdda"
     },
     {
       "name": "wechat-desktop",
@@ -616,7 +616,7 @@
       "name": "wecom",
       "id": "totalclaw-mcp/comm/wecom",
       "display_name": "企业微信",
-      "description": "查询企业微信通讯录、部门与成员，发送应用消息，管理外部联系人。",
+      "description": "Query WeCom contacts and departments, send app messages, manage external contacts.",
       "description_zh": "查询企业微信通讯录、部门与成员，发送应用消息，管理外部联系人。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -706,8 +706,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "c64476f353f1264b82a5111ab6993f27ef2334626776de540f3c70d0f9401733",
-          "size": 1585
+          "sha256": "384f3ca9c88c1214a43cb4f8a94aff81d9ff3b330d1bb031a18c24999e37a54b",
+          "size": 1574
         },
         {
           "path": "tools.json",
@@ -715,7 +715,7 @@
           "size": 4223
         }
       ],
-      "bundle_sha256": "e3121db05d789a33d24962f9e080020e6f272b05faa9ecf1a71096d32987a3e1"
+      "bundle_sha256": "3a5477657ad3c3f98248be063ed39cb9781e4f9f8dc8286dda0b5866477736d3"
     },
     {
       "name": "blender",
@@ -781,7 +781,7 @@
       "name": "canva",
       "id": "totalclaw-mcp/creative/canva",
       "display_name": "Canva 可画",
-      "description": "搜索与管理 Canva 设计稿，用品牌模板批量套用内容，导出为 PDF / 图片 / PPTX。",
+      "description": "Search and manage Canva designs, autofill from brand templates, export to PDF/image/PPTX.",
       "description_zh": "搜索与管理 Canva 设计稿，用品牌模板批量套用内容，导出为 PDF / 图片 / PPTX。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -865,8 +865,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "9b45b7ae5206bc914c2fa4b8cd7a96e723c7c7cc62f5963509a5b7f3f1f85f82",
-          "size": 1464
+          "sha256": "9fed2ee711a4fd40db4cdd923f6fc793aa093db3f75d8a89b7d7fff7b8691108",
+          "size": 1451
         },
         {
           "path": "tools.json",
@@ -874,7 +874,7 @@
           "size": 5963
         }
       ],
-      "bundle_sha256": "826bb8998e3bdd6afa5601fc0afdcff77f1c13117cb19fa4d86d069560977e4f"
+      "bundle_sha256": "231d915a1b7120eb011c04bd971be5f53156e7a0ad5f36dd608e74f29da8fe46"
     },
     {
       "name": "unreal_engine",
@@ -1072,7 +1072,7 @@
       "name": "qcc",
       "id": "totalclaw-mcp/data/qcc",
       "display_name": "企查查",
-      "description": "查询企业工商登记、股东结构、主要人员与经营风险等公开企业信息。",
+      "description": "Look up Chinese company registration, shareholders, key personnel and risk data via Qichacha.",
       "description_zh": "查询企业工商登记、股东结构、主要人员与经营风险等公开企业信息。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -1161,7 +1161,7 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "79a108758846bc295d3d22528b0b0b20653f748941c141882fe10444635755c0",
+          "sha256": "57c4f24d39c21813659f8820abf38dbc615ac86675ba9e52993bf893ce0c2799",
           "size": 1571
         },
         {
@@ -1170,13 +1170,13 @@
           "size": 3699
         }
       ],
-      "bundle_sha256": "a584747c116c0c0e174a9dc2fe2c92adc67336c2c86e77209494ef1397e5724c"
+      "bundle_sha256": "50f5a889006e53e7d4025f644144958c5cf25546c15f911cd111aff26f0e6844"
     },
     {
       "name": "tianyancha",
       "id": "totalclaw-mcp/data/tianyancha",
       "display_name": "天眼查",
-      "description": "查询企业工商登记、股东出资、主要人员、对外投资、变更记录与法律诉讼等公开企业数据。",
+      "description": "Look up Chinese company registration, shareholders, staff, investments, changes and lawsuits via Tianyancha.",
       "description_zh": "查询企业工商登记、股东出资、主要人员、对外投资、变更记录与法律诉讼等公开企业数据。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -1262,8 +1262,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "45d7f92002f279fd987230aa05eb542821e3a1d99cd1c38babbc703dba7828eb",
-          "size": 1516
+          "sha256": "8aece33ea0688c540681cb4ab0961d8b0807a74370a240c65bdc41eb94f54570",
+          "size": 1503
         },
         {
           "path": "tools.json",
@@ -1271,13 +1271,13 @@
           "size": 5832
         }
       ],
-      "bundle_sha256": "1024da52c73e695692bcc77bd496400d9043716c2ca1c412208a4c65242c1ab7"
+      "bundle_sha256": "2b9f67175134dd6524542015f503d86ad45b68679ee4f8a1fa598404c3b7795b"
     },
     {
       "name": "gitee",
       "id": "totalclaw-mcp/dev/gitee",
       "display_name": "Gitee 码云",
-      "description": "查询和管理 Gitee 仓库、Issue、Pull Request 与文件内容。",
+      "description": "Query and manage Gitee repositories, issues, pull requests and file contents.",
       "description_zh": "查询和管理 Gitee 仓库、Issue、Pull Request 与文件内容。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -1359,8 +1359,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "93c635a438e204a57fbc7de144530283d79121847473b38bd2479160482f5050",
-          "size": 1377
+          "sha256": "1d701af3f4748e5a99510b117b59ae4771fcb90d2ede8b278374a56d7b45170b",
+          "size": 1384
         },
         {
           "path": "tools.json",
@@ -1368,13 +1368,13 @@
           "size": 5291
         }
       ],
-      "bundle_sha256": "c829e5b53001240f14b75af63adda587ada0d74f6f35a573aa259ebc7dc552cd"
+      "bundle_sha256": "bd3acf4e21cd1e3afcb9aee0e13037003fa81b29fe934b2f08a15bf0576c7164"
     },
     {
       "name": "github",
       "id": "totalclaw-mcp/dev/github",
       "display_name": "GitHub",
-      "description": "在 GitHub 上查询和管理仓库、Issue、Pull Request、提交与代码搜索。",
+      "description": "Search and manage GitHub repositories, issues, pull requests, commits and file contents.",
       "description_zh": "在 GitHub 上查询和管理仓库、Issue、Pull Request、提交与代码搜索。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -1461,8 +1461,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "546b66efef0077f7f50c384b61a7770068aa2ce01a573a8d8f82837270121e27",
-          "size": 1389
+          "sha256": "ba7bce2e16d65e368bb494d3ba174cbd979eae02e37fb591036f4fcdd056acc6",
+          "size": 1392
         },
         {
           "path": "tools.json",
@@ -1470,13 +1470,13 @@
           "size": 8560
         }
       ],
-      "bundle_sha256": "0697d42b941a41356ac38972ac6a4c3fefb89cf0a8ba00efe15a0361f59d9053"
+      "bundle_sha256": "c53f940fadfd16e0d2128de6bf75e5cbd30a2837241af183e0458302780854ed"
     },
     {
       "name": "linear",
       "id": "totalclaw-mcp/dev/linear",
       "display_name": "Linear",
-      "description": "查询和管理 Linear 的 Issue、项目、团队与周期（Cycle）。",
+      "description": "Query and manage Linear issues, projects, teams and cycles.",
       "description_zh": "查询和管理 Linear 的 Issue、项目、团队与周期（Cycle）。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -1558,8 +1558,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "adfa057042017fcf8690b7c0dfc826d5e9487197421d890c28171282528ac07e",
-          "size": 1372
+          "sha256": "74b32435361c13ac72bbe2007a129abbf74e1324e8846b39875f8468a3005639",
+          "size": 1358
         },
         {
           "path": "tools.json",
@@ -1567,7 +1567,7 @@
           "size": 3856
         }
       ],
-      "bundle_sha256": "f8e142677929dc06b13787ad9619dcaa6fcd22c5ef81954e89f89de99ea11b59"
+      "bundle_sha256": "48f35bdbcc50051559e860361fa52c5943ac4a32f2f2aa6799af63bc99b3ccf8"
     },
     {
       "name": "mcp_everything",
@@ -1797,7 +1797,7 @@
       "name": "tapd",
       "id": "totalclaw-mcp/dev/tapd",
       "display_name": "TAPD",
-      "description": "查询和管理 TAPD 的需求、缺陷、任务与迭代，跟踪研发进度。",
+      "description": "Query and manage TAPD stories, bugs, tasks and iterations.",
       "description_zh": "查询和管理 TAPD 的需求、缺陷、任务与迭代，跟踪研发进度。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -1888,8 +1888,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "7a63277df638879cc35a471a75dd70aa6028b002c0fe948657c25758bc2d6c79",
-          "size": 1552
+          "sha256": "c0822ff86ffe5c7a307d5a8b8227d3ff28c166eab2ee2f98139fa96d77be1828",
+          "size": 1529
         },
         {
           "path": "tools.json",
@@ -1897,13 +1897,13 @@
           "size": 8574
         }
       ],
-      "bundle_sha256": "2599b00221d95a61a3e081fff73ceac5530f4dbfd303f9872406f3e41cf85e18"
+      "bundle_sha256": "c53a6b4549a434569adee1cb097d4e1279fbc27f5fd3280736d6c30dfc6a5dd8"
     },
     {
       "name": "tencent_cloudbase",
       "id": "totalclaw-mcp/dev/tencent_cloudbase",
       "display_name": "腾讯云 CloudBase",
-      "description": "查询与管理腾讯云开发 CloudBase 的环境、云函数、数据库集合与静态托管。",
+      "description": "Query and manage Tencent CloudBase environments, databases and static hosting.",
       "description_zh": "查询与管理腾讯云开发 CloudBase 的环境、云函数、数据库集合与静态托管。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -1990,8 +1990,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "9767178f13ac7ce7f52df879d274b3dae9dcc5f55494530da8a8f18865459f7a",
-          "size": 1735
+          "sha256": "c036552ea08cf55d1a74a6b34eccc36d27d2983f1b99327bad9020c98d532716",
+          "size": 1715
         },
         {
           "path": "tools.json",
@@ -1999,13 +1999,13 @@
           "size": 2366
         }
       ],
-      "bundle_sha256": "04d67077617c8996de423e448e430c32684e64e6768442ea832076728f20d8f4"
+      "bundle_sha256": "398d199d3d6e999bf83955569031fd146fd035d6dce3196ac344ff09fdeedc26"
     },
     {
       "name": "moka",
       "id": "totalclaw-mcp/hr/moka",
       "display_name": "Moka 招聘",
-      "description": "查询 Moka 招聘系统的职位、候选人投递记录与组织架构，跟踪招聘进展。",
+      "description": "Query Moka recruiting: jobs, candidate applications and org structure.",
       "description_zh": "查询 Moka 招聘系统的职位、候选人投递记录与组织架构，跟踪招聘进展。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -2090,8 +2090,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "ec79f85d9c0d98e1625d95611529f97dfb74338be5a23b20f4c4be2c7a43854c",
-          "size": 1592
+          "sha256": "ae4e6408dce93e955e40d4788eaf16e60e2aa281360b633c7747c5c9ac926140",
+          "size": 1568
         },
         {
           "path": "tools.json",
@@ -2099,7 +2099,7 @@
           "size": 2701
         }
       ],
-      "bundle_sha256": "b07169a1b536613a9542ed50ec4e6aa5923c728cc99390d6d145c1362b4f05e3"
+      "bundle_sha256": "1a8d6dac28adf1793ef5dd02cb85e88b4da3398dd202e81def23d5541eb6d201"
     },
     {
       "name": "docker",
@@ -2169,7 +2169,7 @@
       "name": "tencent_edgeone",
       "id": "totalclaw-mcp/infra/tencent_edgeone",
       "display_name": "腾讯云 EdgeOne",
-      "description": "查询与管理 EdgeOne 站点、加速域名，提交刷新与预热任务。",
+      "description": "Query EdgeOne sites and acceleration domains; submit purge and prefetch tasks.",
       "description_zh": "查询与管理 EdgeOne 站点、加速域名，提交刷新与预热任务。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -2258,7 +2258,7 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "14ab97f1be702356e4de2e1288f4eb9cf6d137f990f21ceb8bda13618ef228b8",
+          "sha256": "436abe0efd3915f0045ce85f78f2cd592ecca9e2094c1bec075161264890cd53",
           "size": 1689
         },
         {
@@ -2267,7 +2267,7 @@
           "size": 5348
         }
       ],
-      "bundle_sha256": "3e65f7ee62b2156f87784da636024d6c233b0bb3ae9e32cc121924c52ac17504"
+      "bundle_sha256": "fcb85c57b0c5439546608e8e140576217bf1647703ec4f43276eef40771e1499"
     },
     {
       "name": "mcp_filesystem",
@@ -2337,7 +2337,7 @@
       "name": "baidu_netdisk",
       "id": "totalclaw-mcp/office/baidu_netdisk",
       "display_name": "百度网盘",
-      "description": "浏览、搜索百度网盘文件与目录，查询文件详情、容量与分类文件列表。",
+      "description": "Browse and search Baidu Netdisk files, read file metadata, check quota.",
       "description_zh": "浏览、搜索百度网盘文件与目录，查询文件详情、容量与分类文件列表。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -2418,8 +2418,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "7f3491b533b66c4809a3e9e268925736ce4746363b6ad98dcf4ede42a8e89e9d",
-          "size": 1506
+          "sha256": "6ecb7e370555b90d5fc27b862b7759e38eca62efc332366a54aa94ab72885dd6",
+          "size": 1481
         },
         {
           "path": "tools.json",
@@ -2427,13 +2427,13 @@
           "size": 4894
         }
       ],
-      "bundle_sha256": "a0ced10317877c56a3af0e971fc1651e41fe20afe04d8440a886371585811d60"
+      "bundle_sha256": "f436e0fc5926fe4ae39395438f413c7e5bf019bd5909e969a6c20b947556b680"
     },
     {
       "name": "jiandaoyun",
       "id": "totalclaw-mcp/office/jiandaoyun",
       "display_name": "简道云",
-      "description": "查询和填写简道云表单数据：检索记录、读取单条、查看表单字段结构、新建记录。",
+      "description": "Query and fill JianDaoYun form data: search records, read one, inspect field schema, create.",
       "description_zh": "查询和填写简道云表单数据：检索记录、读取单条、查看表单字段结构、新建记录。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -2514,8 +2514,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "6486a8acd5e565a4e83c4c5f9c9dd8a459922325bf71034b959f52de8fa41e84",
-          "size": 1489
+          "sha256": "3faa9b6f6d0201500b3b19444c8347da2b5e123f2ff51e86836e500398fdc98f",
+          "size": 1472
         },
         {
           "path": "tools.json",
@@ -2523,13 +2523,13 @@
           "size": 4224
         }
       ],
-      "bundle_sha256": "5a5e490aad1853cdacc7e488275ad072cadaabe18d70dd80b5c96d225f7a145d"
+      "bundle_sha256": "29f58942d5d78197942c01ce193ce03c9190029576eeac995ffe589afaf0f9d0"
     },
     {
       "name": "jinshuju",
       "id": "totalclaw-mcp/office/jinshuju",
       "display_name": "金数据",
-      "description": "查询金数据的表单、字段结构与提交数据，用于汇总问卷、报名与收款记录。",
+      "description": "Query Jinshuju forms, field schema and submitted entries.",
       "description_zh": "查询金数据的表单、字段结构与提交数据，用于汇总问卷、报名与收款记录。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -2608,8 +2608,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "12ee070c18196c2d8467c7c24ec753b82cb374eaca0a0173b18f43bb3912094f",
-          "size": 1474
+          "sha256": "2b50bc71f730bede0130b4f71c8cb05e050e73b7b9e29aa8625d840865bc9936",
+          "size": 1429
         },
         {
           "path": "tools.json",
@@ -2617,7 +2617,7 @@
           "size": 2403
         }
       ],
-      "bundle_sha256": "5aacaa91045b104043b753a9463fd54d6d1c7a84ddbac6781c3c962a5168e017"
+      "bundle_sha256": "a9045a3407bdd4e7c777e2711f92d27338f2306e1f85945cc5bd4977a6fc526f"
     },
     {
       "name": "mcp_time",
@@ -2695,7 +2695,7 @@
       "name": "notion",
       "id": "totalclaw-mcp/office/notion",
       "display_name": "Notion",
-      "description": "搜索、读取和管理 Notion 工作区中的页面与数据库。",
+      "description": "Search, read and manage Notion pages and databases.",
       "description_zh": "搜索、读取和管理 Notion 工作区中的页面与数据库。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -2778,8 +2778,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "6173a53f2dc7e4622bb0c5d60e85bb4dc7c381c808981c112cc9b63c04627fbd",
-          "size": 1360
+          "sha256": "fc4a1d6c3127965e08b87f95497ea6aada0acd93d4a4ad9838290774faa3f25a",
+          "size": 1343
         },
         {
           "path": "tools.json",
@@ -2787,13 +2787,13 @@
           "size": 5425
         }
       ],
-      "bundle_sha256": "3c5497bc14e92ee8552839c488d1824b5bcd83636c522a63a176e3f7b6f80fa7"
+      "bundle_sha256": "7e2145b92c2de11d918c5a86d2b612fac03dbc7dc57f2f2310af1d048a0993e1"
     },
     {
       "name": "tencent_survey",
       "id": "totalclaw-mcp/office/tencent_survey",
       "display_name": "腾讯问卷",
-      "description": "查询腾讯问卷的问卷详情与回收的答卷数据。",
+      "description": "Read Tencent Survey questionnaires and their collected answers.",
       "description_zh": "查询腾讯问卷的问卷详情与回收的答卷数据。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -2872,8 +2872,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "05b6a76fdda9a8913bbe95f97b91dd7d4df4f65413d343f26b985f18d83fa3da",
-          "size": 1461
+          "sha256": "889a43f2fdc590b73689e772fca3d3ae36700d6f8c6594b851193300041b0f16",
+          "size": 1464
         },
         {
           "path": "tools.json",
@@ -2881,7 +2881,7 @@
           "size": 1173
         }
       ],
-      "bundle_sha256": "e3b66be6b1168cf3a1e686da17f561f9ed37f87f5f77648bc08c80c0b3624456"
+      "bundle_sha256": "9b89b3114f67b599c1f51599c47f9c6ff652bbcb370635857b679c3360858582"
     },
     {
       "name": "aitoearn",
@@ -3543,7 +3543,7 @@
       "name": "tencent_map",
       "id": "totalclaw-mcp/web/tencent_map",
       "display_name": "腾讯地图",
-      "description": "地点搜索、路线规划、地址与坐标互转、行政区划查询、距离矩阵计算。",
+      "description": "Place search, route planning, geocoding, district lookup and distance matrix.",
       "description_zh": "地点搜索、路线规划、地址与坐标互转、行政区划查询、距离矩阵计算。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -3625,8 +3625,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "67adaaa6a730275c6f93503a81d389bd71de4c6dd9835bf321b353566d28b936",
-          "size": 1456
+          "sha256": "a6856e1aa0ca13af89b56a373d71b3138cc00a63f9904758d2c1a4de0f8f3224",
+          "size": 1437
         },
         {
           "path": "tools.json",
@@ -3634,13 +3634,13 @@
           "size": 4773
         }
       ],
-      "bundle_sha256": "dc83ea89c258a0b2d25af5513bfef31a7fb160dc0492619055bc1823530bed31"
+      "bundle_sha256": "40a52a29f254c9fed47310e7c55091ce9de77f3df65339cd5b29bcd2aba75fe0"
     },
     {
       "name": "web",
       "id": "totalclaw-mcp/web/web",
       "display_name": "网页抓取",
-      "description": "抓取网页并抽取正文纯文本，支持批量抓取与 JSON 接口，零凭据。",
+      "description": "Fetch web pages and extract readable text; supports batch fetch and JSON endpoints. No credentials.",
       "description_zh": "抓取网页并抽取正文纯文本，支持批量抓取与 JSON 接口，零凭据。",
       "version": "0.1.0",
       "author": "totalclaw",
@@ -3710,8 +3710,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "03093cd75fa72d916e0c97e2aa73d6a08e68ca0c9b59a59f42763833eb1875ab",
-          "size": 1274
+          "sha256": "d0f8e8fb89aa4325c64f79df9d9e914b5dbe27e6952d9d19b261cfaef333a079",
+          "size": 1286
         },
         {
           "path": "tools.json",
@@ -3719,7 +3719,7 @@
           "size": 1563
         }
       ],
-      "bundle_sha256": "672d1820d90c4c530554a36ece6bd70e7d6991e13e1432a16735ccc7f93bf29a"
+      "bundle_sha256": "1f974148abf1092c10d5e26935e80b4c03bd2404e3d7582415a84d9c545f0c9c"
     }
   ]
 }

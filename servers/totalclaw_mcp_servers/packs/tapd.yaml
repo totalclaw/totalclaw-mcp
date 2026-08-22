@@ -1,6 +1,7 @@
 name: tapd
 display_name: TAPD
 description: 查询和管理 TAPD 的需求、缺陷、任务与迭代，跟踪研发进度。
+description_en: Query and manage TAPD stories, bugs, tasks and iterations.
 base_url: https://api.tapd.cn
 docs: https://open.tapd.cn/document/api-doc/
 auth:

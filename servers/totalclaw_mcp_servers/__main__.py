@@ -74,7 +74,8 @@ def _describe(pack_name: str) -> int:
         mod = native.load_native(pack_name)
         print(json.dumps({
             "name": mod.SERVER_NAME, "display_name": mod.DISPLAY_NAME,
-            "description": mod.DESCRIPTION, "kind": "native",
+            "description": mod.DESCRIPTION,
+            "description_en": getattr(mod, "DESCRIPTION_EN", ""), "kind": "native",
             "required_env": list(mod.REQUIRED_ENV), "optional_env": list(mod.OPTIONAL_ENV),
             "tools": [{"name": t["name"], "description": t["description"],
                        "read_only": t.get("read_only", True), "params": t["schema"]}
@@ -90,6 +91,7 @@ def _describe(pack_name: str) -> int:
         "name": p.name,
         "display_name": p.display_name,
         "description": p.description,
+        "description_en": p.description_en,
         "base_url": p.base_url,
         "required_env": p.required_env,
         "optional_env": list(p.optional_env),

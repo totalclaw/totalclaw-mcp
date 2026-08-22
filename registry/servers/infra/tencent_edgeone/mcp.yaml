@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: tencent_edgeone
 display_name: 腾讯云 EdgeOne
 version: 0.1.0
-description: 查询与管理 EdgeOne 站点、加速域名，提交刷新与预热任务。
+description: Query EdgeOne sites and acceleration domains; submit purge and prefetch tasks.
 description_zh: 查询与管理 EdgeOne 站点、加速域名，提交刷新与预热任务。
 author: totalclaw
 license: Apache-2.0

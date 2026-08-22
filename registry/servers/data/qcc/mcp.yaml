@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: qcc
 display_name: 企查查
 version: 0.1.0
-description: 查询企业工商登记、股东结构、主要人员与经营风险等公开企业信息。
+description: Look up Chinese company registration, shareholders, key personnel and risk data via Qichacha.
 description_zh: 查询企业工商登记、股东结构、主要人员与经营风险等公开企业信息。
 author: totalclaw
 license: Apache-2.0

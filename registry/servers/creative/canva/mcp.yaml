@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: canva
 display_name: Canva 可画
 version: 0.1.0
-description: 搜索与管理 Canva 设计稿，用品牌模板批量套用内容，导出为 PDF / 图片 / PPTX。
+description: Search and manage Canva designs, autofill from brand templates, export to PDF/image/PPTX.
 description_zh: 搜索与管理 Canva 设计稿，用品牌模板批量套用内容，导出为 PDF / 图片 / PPTX。
 author: totalclaw
 license: Apache-2.0

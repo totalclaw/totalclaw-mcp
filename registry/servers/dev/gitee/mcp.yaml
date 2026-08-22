@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: gitee
 display_name: Gitee 码云
 version: 0.1.0
-description: 查询和管理 Gitee 仓库、Issue、Pull Request 与文件内容。
+description: Query and manage Gitee repositories, issues, pull requests and file contents.
 description_zh: 查询和管理 Gitee 仓库、Issue、Pull Request 与文件内容。
 author: totalclaw
 license: Apache-2.0

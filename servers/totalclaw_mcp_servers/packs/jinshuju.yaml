@@ -1,6 +1,7 @@
 name: jinshuju
 display_name: 金数据
 description: 查询金数据的表单、字段结构与提交数据，用于汇总问卷、报名与收款记录。
+description_en: Query Jinshuju forms, field schema and submitted entries.
 base_url: https://api.jinshuju.net
 docs: https://github.com/jinshuju/jinshuju-api-docs
 auth:

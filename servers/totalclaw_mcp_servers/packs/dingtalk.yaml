@@ -1,6 +1,7 @@
 name: dingtalk
 display_name: 钉钉
 description: 查询钉钉通讯录与部门，发送工作通知，查询考勤与审批实例。
+description_en: Query DingTalk contacts and departments, send work notices, read attendance and approvals.
 base_url: https://oapi.dingtalk.com
 docs: https://open.dingtalk.com/document/orgapp/api-overview
 auth:

@@ -1,6 +1,7 @@
 name: qcc
 display_name: 企查查
 description: 查询企业工商登记、股东结构、主要人员与经营风险等公开企业信息。
+description_en: Look up Chinese company registration, shareholders, key personnel and risk data via Qichacha.
 base_url: https://api.qichacha.com
 docs: https://openapi.qcc.com/
 auth:

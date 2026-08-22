@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: github
 display_name: GitHub
 version: 0.1.0
-description: 在 GitHub 上查询和管理仓库、Issue、Pull Request、提交与代码搜索。
+description: Search and manage GitHub repositories, issues, pull requests, commits and file contents.
 description_zh: 在 GitHub 上查询和管理仓库、Issue、Pull Request、提交与代码搜索。
 author: totalclaw
 license: Apache-2.0

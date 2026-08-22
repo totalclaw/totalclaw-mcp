@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: notion
 display_name: Notion
 version: 0.1.0
-description: 搜索、读取和管理 Notion 工作区中的页面与数据库。
+description: Search, read and manage Notion pages and databases.
 description_zh: 搜索、读取和管理 Notion 工作区中的页面与数据库。
 author: totalclaw
 license: Apache-2.0

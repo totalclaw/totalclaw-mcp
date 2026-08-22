@@ -194,7 +194,10 @@
   - `totalclaw-mcp-server --check` + `pytest`
   - 生成物一致性：跑完 `gen_manifests.py --force` 与 `gen_registry.py` 后必须无 diff，
     防止改了 servers/ 却忘了重新生成清单
-- [ ] **C5** 为高频条目补 `description` 英文与 `icon.svg`（mcp_github 为参考范例）
+- [x] **C5（英文描述部分）** pack 规范加 `description_en`，21 条自研条目全部补齐；
+  `gen_manifests` 改为 `description` 取英文、`description_zh` 取中文 —— 此前两处都填中文，
+  英文界面上就只能看到中文
+- [ ] **C5.1** 图标 `icon.svg`：需要设计资源，不自造
 
 ---
 

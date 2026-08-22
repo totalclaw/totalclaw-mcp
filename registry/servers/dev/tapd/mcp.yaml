@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: tapd
 display_name: TAPD
 version: 0.1.0
-description: 查询和管理 TAPD 的需求、缺陷、任务与迭代，跟踪研发进度。
+description: Query and manage TAPD stories, bugs, tasks and iterations.
 description_zh: 查询和管理 TAPD 的需求、缺陷、任务与迭代，跟踪研发进度。
 author: totalclaw
 license: Apache-2.0

@@ -1,6 +1,7 @@
 name: notion
 display_name: Notion
 description: 搜索、读取和管理 Notion 工作区中的页面与数据库。
+description_en: Search, read and manage Notion pages and databases.
 base_url: https://api.notion.com
 docs: https://developers.notion.com/reference/intro
 auth:

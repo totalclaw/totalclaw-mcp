@@ -9,7 +9,8 @@
 |---|---|---|
 | `name` | ✅ | `^[a-z][a-z0-9_]*$`，等于文件名，也是 agent 里的 `mcp_servers.<name>` 键 |
 | `display_name` | ✅ | 展示名（中文优先） |
-| `description` | ✅ | 一句话说清能做什么 |
+| `description` | ✅ | 一句话说清能做什么（中文） |
+| `description_en` | 推荐 | 英文描述。registry 的 `description` 取它、`description_zh` 取中文 —— 两处都填中文的话，英文界面上就只能看到中文。**含冒号要加引号**，否则 YAML 会当成映射 |
 | `base_url` | ✅ | API 根地址。非回环地址必须 `https://` |
 | `auth` | | 鉴权（none/header/bearer/query/basic/token_exchange/signature/tencent_cloud），见下 |
 | `defaults` | | `{timeout: 30, headers: {...}}` |

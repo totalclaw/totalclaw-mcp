@@ -6,7 +6,8 @@ tested_with: '>=0.63.72'
 name: tianyancha
 display_name: 天眼查
 version: 0.1.0
-description: 查询企业工商登记、股东出资、主要人员、对外投资、变更记录与法律诉讼等公开企业数据。
+description: Look up Chinese company registration, shareholders, staff, investments, changes and lawsuits
+  via Tianyancha.
 description_zh: 查询企业工商登记、股东出资、主要人员、对外投资、变更记录与法律诉讼等公开企业数据。
 author: totalclaw
 license: Apache-2.0

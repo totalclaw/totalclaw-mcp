@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: linear
 display_name: Linear
 version: 0.1.0
-description: 查询和管理 Linear 的 Issue、项目、团队与周期（Cycle）。
+description: Query and manage Linear issues, projects, teams and cycles.
 description_zh: 查询和管理 Linear 的 Issue、项目、团队与周期（Cycle）。
 author: totalclaw
 license: Apache-2.0

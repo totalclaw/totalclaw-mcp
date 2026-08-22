@@ -6,7 +6,8 @@ tested_with: '>=0.63.72'
 name: imap_mail
 display_name: 邮箱（IMAP/SMTP）
 version: 0.1.0
-description: 收发、搜索和整理邮件，支持 QQ 邮箱、网易邮箱及任意 IMAP 邮箱。
+description: Read, search and send email over IMAP/SMTP — works with QQ Mail, NetEase Mail and any IMAP
+  mailbox.
 description_zh: 收发、搜索和整理邮件，支持 QQ 邮箱、网易邮箱及任意 IMAP 邮箱。
 author: totalclaw
 license: Apache-2.0

@@ -105,7 +105,11 @@ def build_manifest(desc: dict) -> tuple[dict, str]:
         "name": name,
         "display_name": desc["display_name"],
         "version": PKG_VERSION,
-        "description": desc.get("description") or f"{desc['display_name']} MCP server.",
+        # description 走英文(目录/市场的通用语言)，中文另放 description_zh。
+        # 此前两处都填中文,英文界面上就只能看到中文。
+        "description": (desc.get("description_en")
+                        or desc.get("description")
+                        or f"{desc['display_name']} MCP server."),
         "description_zh": desc.get("description") or "",
         "author": "totalclaw",
         "license": "Apache-2.0",

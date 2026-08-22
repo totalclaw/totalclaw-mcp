@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: dingtalk
 display_name: 钉钉
 version: 0.1.0
-description: 查询钉钉通讯录与部门，发送工作通知，查询考勤与审批实例。
+description: Query DingTalk contacts and departments, send work notices, read attendance and approvals.
 description_zh: 查询钉钉通讯录与部门，发送工作通知，查询考勤与审批实例。
 author: totalclaw
 license: Apache-2.0

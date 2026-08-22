@@ -1,6 +1,7 @@
 name: moka
 display_name: Moka 招聘
 description: 查询 Moka 招聘系统的职位、候选人投递记录与组织架构，跟踪招聘进展。
+description_en: "Query Moka recruiting: jobs, candidate applications and org structure."
 base_url: https://api.mokahr.com/api-platform/v1
 docs: https://mokahr.moyincloud.com/
 auth:

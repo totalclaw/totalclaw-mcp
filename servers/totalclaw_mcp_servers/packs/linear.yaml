@@ -1,6 +1,7 @@
 name: linear
 display_name: Linear
 description: 查询和管理 Linear 的 Issue、项目、团队与周期（Cycle）。
+description_en: Query and manage Linear issues, projects, teams and cycles.
 base_url: https://api.linear.app
 docs: https://developers.linear.app/docs/graphql/working-with-the-graphql-api
 auth:

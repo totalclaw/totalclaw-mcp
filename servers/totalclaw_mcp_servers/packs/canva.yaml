@@ -1,6 +1,7 @@
 name: canva
 display_name: Canva 可画
 description: 搜索与管理 Canva 设计稿，用品牌模板批量套用内容，导出为 PDF / 图片 / PPTX。
+description_en: Search and manage Canva designs, autofill from brand templates, export to PDF/image/PPTX.
 base_url: https://api.canva.com
 docs: https://www.canva.dev/docs/connect/
 auth:

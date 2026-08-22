@@ -266,5 +266,6 @@ TOOLS: list[dict[str, Any]] = [
 SERVER_NAME = "web"
 DISPLAY_NAME = "网页抓取"
 DESCRIPTION = "抓取网页并抽取正文纯文本，支持批量抓取与 JSON 接口，零凭据。"
+DESCRIPTION_EN = 'Fetch web pages and extract readable text; supports batch fetch and JSON endpoints. No credentials.'
 REQUIRED_ENV: list[str] = []
 OPTIONAL_ENV: list[str] = ["TOTALCLAW_MCP_WEB_ALLOW_PRIVATE"]

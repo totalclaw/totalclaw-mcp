@@ -1,6 +1,7 @@
 name: feishu
 display_name: 飞书 / Lark
 description: 查询飞书通讯录、日历与云文档，发送消息，读写多维表格（Bitable）。
+description_en: Query Feishu/Lark contacts, calendar and docs; send messages; read and write Bitable.
 base_url: https://open.feishu.cn
 docs: https://open.feishu.cn/document/server-docs/api-call-guide/overview
 auth:

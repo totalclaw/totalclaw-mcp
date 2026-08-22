@@ -1,6 +1,7 @@
 name: wecom
 display_name: 企业微信
 description: 查询企业微信通讯录、部门与成员，发送应用消息，管理外部联系人。
+description_en: Query WeCom contacts and departments, send app messages, manage external contacts.
 base_url: https://qyapi.weixin.qq.com
 docs: https://developer.work.weixin.qq.com/document/path/90664
 auth:

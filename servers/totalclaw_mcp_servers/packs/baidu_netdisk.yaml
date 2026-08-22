@@ -1,6 +1,7 @@
 name: baidu_netdisk
 display_name: 百度网盘
 description: 浏览、搜索百度网盘文件与目录，查询文件详情、容量与分类文件列表。
+description_en: Browse and search Baidu Netdisk files, read file metadata, check quota.
 base_url: https://pan.baidu.com
 docs: https://pan.baidu.com/union/doc/
 auth:

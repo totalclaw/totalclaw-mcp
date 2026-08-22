@@ -383,5 +383,6 @@ TOOLS: list[dict[str, Any]] = [
 SERVER_NAME = "imap_mail"
 DISPLAY_NAME = "邮箱（IMAP/SMTP）"
 DESCRIPTION = "收发、搜索和整理邮件，支持 QQ 邮箱、网易邮箱及任意 IMAP 邮箱。"
+DESCRIPTION_EN = 'Read, search and send email over IMAP/SMTP — works with QQ Mail, NetEase Mail and any IMAP mailbox.'
 REQUIRED_ENV = ["MAIL_IMAP_HOST", "MAIL_USERNAME", "MAIL_PASSWORD"]
 OPTIONAL_ENV = ["MAIL_IMAP_PORT", "MAIL_SMTP_HOST", "MAIL_SMTP_PORT"]

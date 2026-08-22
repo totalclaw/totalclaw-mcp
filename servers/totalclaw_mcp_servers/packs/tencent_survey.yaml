@@ -1,6 +1,7 @@
 name: tencent_survey
 display_name: 腾讯问卷
 description: 查询腾讯问卷的问卷详情与回收的答卷数据。
+description_en: Read Tencent Survey questionnaires and their collected answers.
 base_url: https://open.wj.qq.com
 docs: https://wj.qq.com/docs/openapi/
 auth:

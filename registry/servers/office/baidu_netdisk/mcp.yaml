@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: baidu_netdisk
 display_name: 百度网盘
 version: 0.1.0
-description: 浏览、搜索百度网盘文件与目录，查询文件详情、容量与分类文件列表。
+description: Browse and search Baidu Netdisk files, read file metadata, check quota.
 description_zh: 浏览、搜索百度网盘文件与目录，查询文件详情、容量与分类文件列表。
 author: totalclaw
 license: Apache-2.0

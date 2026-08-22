@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: tencent_map
 display_name: 腾讯地图
 version: 0.1.0
-description: 地点搜索、路线规划、地址与坐标互转、行政区划查询、距离矩阵计算。
+description: Place search, route planning, geocoding, district lookup and distance matrix.
 description_zh: 地点搜索、路线规划、地址与坐标互转、行政区划查询、距离矩阵计算。
 author: totalclaw
 license: Apache-2.0
