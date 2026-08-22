@@ -37,7 +37,7 @@
 - [x] **A1.5** `uninstall_mcp_server()` 已实现完整清理：`mcp_admin.remove_server` + `installed.json` 条目 + `mcp/schema-cache/<name>.json` + `mcp-tokens/<name>*.json` + `.env` 中 `MCP_<NAME>_*` 键
 
 ### A2. CLI 子命令
-- [ ] **A2.1** 新建 `totalclaw_cli/_mcp_hub_impl.py`，挂到既有 `mcp` 子命令树（`_main_impl.py` 的 mcp parser）：
+- [x] **A2.1** 已实现 `totalclaw_cli/_mcp_hub_impl.py`，9 个子命令全部带 `--json` 与语义化退出码，挂到既有 `mcp` 子命令树（`_main_impl.py` 的 mcp parser）：
   `search / info / plan / install / update / uninstall / installed / status / reload`
   - 全部支持 `--json`（JSON 到 stdout，日志到 stderr）
   - 退出码：`0` 成功 / `1` 错误 / `2` 缺必填 env（`--json` 含 `missing_env[]`）/ `3` 探测失败已保存为 disabled
@@ -58,7 +58,7 @@
 - [ ] **A3.4** 契约文档：更新 agent 仓 `docs/integration/MCP_SERVER_MANAGEMENT.md`（新增端点 + 「热加载已由作业完成」说明）
 
 ### A4. 既有 bug 顺手修（清单与行号见 AGENT_INTEGRATION.md §5）
-- [ ] **A4.1** `_mcp_config_impl.py` 各 `cmd_mcp_*` 失败返回非零退出码；`catalog --install` 返回值透传
+- [x] **A4.1** `cmd_mcp` 已透传退出码（此前返回值被丢弃，`mcp test` 连不上也退 0）
 - [ ] **A4.2** `_dump_impl.py` MCP 计数改读 `mcp_servers`（当前恒为 0）
 - [ ] **A4.3** `is_mcp_tool_parallel_safe` 改用 `mcp_naming` 解析（当前旧前缀判断，`supports_parallel_tool_calls` 失效）
 - [ ] **A4.4** `prompt_builder_body.py` 两处 playwright 工具名改双下划线 `mcp__playwright__*`
@@ -74,6 +74,16 @@
   **qiye-app 的 MCP 面板走的正是这条**）配的这些字段从来没生效过，接口还返回成功。
   `tools.exclude` 尤其要紧：它是把危险工具挡在模型视野外的手段，被静默丢掉
   意味着「以为排除了、实际没有」。已修 + 11 个回归用例。
+
+### A4.8（新增，已完成）两个装上就挂的 preset
+
+- [x] **A4.8** 实跑发现并修复，与已知的 `mcp_fetch` 同类：
+  - `mcp_time`：`@modelcontextprotocol/server-time` 在 npm 上不存在，
+    上游只发 PyPI 的 `mcp-server-time` → 改用 uvx
+  - `mcp_sequential_thinking`：包名少了连字符（应为 `server-sequential-thinking`）
+
+  两者 npx 都是拉不到又不快退，一路挂到 timeout。已同时加进
+  `RETIRED_LAUNCH_SPECS`，`totalclaw migrate mcp` 可修存量用户的坏配置。
 
 ### A5. 环境变量与文档
 - [ ] **A5.1** 注册 env：`TOTALCLAW_MCP_REGISTRY / TOTALCLAW_MCP_API_BASE / TOTALCLAW_MCP_REGISTRY_TTL / TOTALCLAW_MCP_REQUIRE_SIGNATURE / TOTALCLAW_MCP_TELEMETRY / TOTALCLAW_MCP_ORG`，补进 `website/docs/reference/environment-variables.md`
