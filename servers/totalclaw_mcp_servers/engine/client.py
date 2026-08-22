@@ -167,11 +167,12 @@ def call_tool(pack: Pack, tool: Tool, params: dict[str, Any]) -> dict[str, Any]:
                 m = pick_path(data, ec.message_field)
                 if m is not data and m is not None:
                     msg = str(m)
-            return {
-                "success": False,
-                "error": f"上游业务错误 {ec.error_field}={code}。{msg}".strip(),
-                "code": code,
-            }
+            if msg and str(msg) == str(code):
+                # 错误码字段与消息字段是同一处（GraphQL 的 errors[0].message 就是这种）
+                err = f"上游返回错误：{msg}"
+            else:
+                err = f"上游业务错误 {ec.error_field}={code}。{msg}".strip()
+            return {"success": False, "error": err, "code": code}
 
     data = pick_path(data, tool.pick)
     data, note = clip(data, tool.max_items, tool.max_chars)

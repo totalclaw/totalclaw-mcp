@@ -1,0 +1,206 @@
+name: linear
+display_name: Linear
+description: 查询和管理 Linear 的 Issue、项目、团队与周期（Cycle）。
+base_url: https://api.linear.app
+docs: https://developers.linear.app/docs/graphql/working-with-the-graphql-api
+auth:
+  type: header
+  name: Authorization
+  env: LINEAR_API_KEY
+defaults:
+  timeout: 30
+  headers:
+    Content-Type: application/json
+
+response:
+  # GraphQL 的错误在 HTTP 200 里，errors 非空即失败
+  error_field: errors.0.message
+  ok_value: "__never__"
+  message_field: errors.0.message
+
+tools:
+  - name: list_issues
+    description: >-
+      查询 Issue 列表，按更新时间倒序。可按团队、状态类型、负责人过滤。
+      状态类型取值：backlog / unstarted / started / completed / canceled。
+    read_only: true
+    method: POST
+    path: /graphql
+    pick: data.issues.nodes
+    max_items: 50
+    body:
+      query: |
+        query Issues($first: Int, $filter: IssueFilter) {
+          issues(first: $first, filter: $filter, orderBy: updatedAt) {
+            nodes {
+              id identifier title description priority url createdAt updatedAt
+              state { name type }
+              assignee { name email }
+              team { key name }
+              labels { nodes { name } }
+            }
+          }
+        }
+      variables:
+        first: "{first}"
+        filter: "{filter}"
+    params:
+      type: object
+      properties:
+        first: {type: integer, description: "返回条数，1-100，默认 50"}
+        filter:
+          type: object
+          description: >-
+            Linear 的 IssueFilter 对象，如
+            {"team":{"key":{"eq":"ENG"}},"state":{"type":{"eq":"started"}}}；
+            不传则返回全部
+
+  - name: search_issues
+    description: 按关键词全文搜索 Issue，匹配标题与描述。
+    read_only: true
+    method: POST
+    path: /graphql
+    pick: data.searchIssues.nodes
+    max_items: 30
+    body:
+      query: |
+        query Search($term: String!, $first: Int) {
+          searchIssues(term: $term, first: $first) {
+            nodes {
+              id identifier title url priority
+              state { name type }
+              assignee { name }
+              team { key }
+            }
+          }
+        }
+      variables:
+        term: "{query}"
+        first: "{first}"
+    params:
+      type: object
+      properties:
+        query: {type: string, description: 搜索关键词}
+        first: {type: integer, description: "返回条数，1-50，默认 30"}
+      required: [query]
+
+  - name: get_issue
+    description: 按 Issue 标识（如 ENG-123）查询单个 Issue 的完整详情与评论。
+    read_only: true
+    method: POST
+    path: /graphql
+    pick: data.issue
+    body:
+      query: |
+        query Issue($id: String!) {
+          issue(id: $id) {
+            id identifier title description priority url createdAt updatedAt
+            state { name type }
+            assignee { name email }
+            creator { name }
+            team { key name }
+            labels { nodes { name } }
+            comments { nodes { body createdAt user { name } } }
+          }
+        }
+      variables: {id: "{issue_id}"}
+    params:
+      type: object
+      properties:
+        issue_id: {type: string, description: "Issue 标识，如 ENG-123，或 Issue 的 UUID"}
+      required: [issue_id]
+
+  - name: list_teams
+    description: 列出全部团队，返回 key 与名称。过滤 Issue 时要用团队 key。
+    read_only: true
+    method: POST
+    path: /graphql
+    pick: data.teams.nodes
+    max_items: 50
+    body:
+      query: |
+        query { teams(first: 50) { nodes { id key name description } } }
+    params: {type: object, properties: {}}
+
+  - name: list_projects
+    description: 列出项目及其进度、状态与目标日期。
+    read_only: true
+    method: POST
+    path: /graphql
+    pick: data.projects.nodes
+    max_items: 50
+    body:
+      query: |
+        query Projects($first: Int) {
+          projects(first: $first) {
+            nodes { id name description state progress targetDate url
+                    lead { name } teams { nodes { key } } }
+          }
+        }
+      variables: {first: "{first}"}
+    params:
+      type: object
+      properties:
+        first: {type: integer, description: "返回条数，1-50，默认 50"}
+
+  - name: create_issue
+    description: 创建一个 Issue。这会真实写入 Linear，团队成员可见。
+    read_only: false
+    method: POST
+    path: /graphql
+    pick: data.issueCreate
+    body:
+      query: |
+        mutation Create($input: IssueCreateInput!) {
+          issueCreate(input: $input) {
+            success
+            issue { id identifier title url }
+          }
+        }
+      variables:
+        input:
+          teamId: "{team_id}"
+          title: "{title}"
+          description: "{description}"
+          priority: "{priority}"
+          assigneeId: "{assignee_id}"
+    params:
+      type: object
+      properties:
+        team_id: {type: string, description: 团队 UUID（不是 key），来自 list_teams 的 id}
+        title: {type: string, description: Issue 标题}
+        description: {type: string, description: "Issue 描述，支持 Markdown"}
+        priority: {type: integer, description: "优先级：0 无 1 紧急 2 高 3 中 4 低"}
+        assignee_id: {type: string, description: 负责人 UUID，可选}
+      required: [team_id, title]
+
+  - name: comment_issue
+    description: 给指定 Issue 添加一条评论。这会真实写入 Linear。
+    read_only: false
+    method: POST
+    path: /graphql
+    pick: data.commentCreate
+    body:
+      query: |
+        mutation Comment($input: CommentCreateInput!) {
+          commentCreate(input: $input) { success comment { id url } }
+        }
+      variables:
+        input: {issueId: "{issue_id}", body: "{body}"}
+    params:
+      type: object
+      properties:
+        issue_id: {type: string, description: Issue 的 UUID（不是 ENG-123 这种标识）}
+        body: {type: string, description: "评论内容，支持 Markdown"}
+      required: [issue_id, body]
+
+  - name: get_me
+    description: 获取当前 API Key 对应的 Linear 账号与所属组织，可用于验证凭据。
+    read_only: true
+    method: POST
+    path: /graphql
+    pick: data.viewer
+    body:
+      query: |
+        query { viewer { id name email organization { name urlKey } } }
+    params: {type: object, properties: {}}

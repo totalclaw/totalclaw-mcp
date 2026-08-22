@@ -1,0 +1,136 @@
+name: baidu_netdisk
+display_name: 百度网盘
+description: 浏览、搜索百度网盘文件与目录，查询文件详情、容量与分类文件列表。
+base_url: https://pan.baidu.com
+docs: https://pan.baidu.com/union/doc/
+auth:
+  type: query
+  name: access_token
+  env: BAIDU_NETDISK_ACCESS_TOKEN
+defaults:
+  timeout: 30
+
+response:
+  error_field: errno
+  ok_value: 0
+  message_field: errmsg
+
+tools:
+  - name: list_files
+    description: 列出指定目录下的文件与子目录。根目录传 "/"。
+    read_only: true
+    method: GET
+    path: /rest/2.0/xpan/file
+    query:
+      method: list
+      dir: "{dir}"
+      start: "{start}"
+      limit: "{limit}"
+      order: "{order}"
+      desc: "{desc}"
+      folder: "{folder}"
+    pick: list
+    max_items: 100
+    params:
+      type: object
+      properties:
+        dir: {type: string, description: '目录路径，根目录为 "/"'}
+        start: {type: integer, description: "起始位置，从 0 开始，用于翻页"}
+        limit: {type: integer, description: "返回条数，默认 1000，建议 100 以内"}
+        order: {type: string, enum: [time, name, size], description: 排序字段}
+        desc: {type: integer, enum: [0, 1], description: "1 为降序，0 为升序"}
+        folder: {type: integer, enum: [0, 1], description: "1 表示只返回文件夹"}
+      required: [dir]
+
+  - name: search_files
+    description: 在指定目录下按关键词搜索文件，可递归搜索子目录。
+    read_only: true
+    method: GET
+    path: /rest/2.0/xpan/file
+    query:
+      method: search
+      key: "{keyword}"
+      dir: "{dir}"
+      recursion: "{recursion}"
+      num: "{num}"
+      page: "{page}"
+    pick: list
+    max_items: 100
+    params:
+      type: object
+      properties:
+        keyword: {type: string, description: 搜索关键词（文件名片段）}
+        dir: {type: string, description: '搜索起始目录，默认根目录 "/"'}
+        recursion: {type: integer, enum: [0, 1], description: "1 表示递归搜索子目录"}
+        num: {type: integer, description: "每页条数，默认 100"}
+        page: {type: integer, description: "页码，从 1 开始"}
+      required: [keyword]
+
+  - name: get_file_metas
+    description: >-
+      按文件 ID（fsid）批量查询文件详情。fsid 来自 list_files / search_files 的结果。
+      dlink=1 可同时取下载直链（直链有时效）。
+    read_only: true
+    method: GET
+    path: /rest/2.0/xpan/multimedia
+    query:
+      method: filemetas
+      fsids: "{fsids}"
+      dlink: "{dlink}"
+      thumb: "{thumb}"
+      extra: "{extra}"
+    pick: list
+    max_items: 100
+    params:
+      type: object
+      properties:
+        fsids: {type: string, description: 'fsid 数组的 JSON 字符串，如 [123456789,987654321]'}
+        dlink: {type: integer, enum: [0, 1], description: "1 表示返回下载直链"}
+        thumb: {type: integer, enum: [0, 1], description: "1 表示返回缩略图地址"}
+        extra: {type: integer, enum: [0, 1], description: "1 表示返回额外信息"}
+      required: [fsids]
+
+  - name: list_category_files
+    description: 按文件类型列出文件（视频、音频、图片、文档、应用、种子）。
+    read_only: true
+    method: GET
+    path: /rest/2.0/xpan/multimedia
+    query:
+      method: categorylist
+      category: "{category}"
+      parent_path: "{parent_path}"
+      recursion: "{recursion}"
+      num: "{num}"
+      page: "{page}"
+      order: "{order}"
+    pick: list
+    max_items: 100
+    params:
+      type: object
+      properties:
+        category:
+          type: integer
+          enum: [1, 2, 3, 4, 5, 6, 7]
+          description: "文件类型：1 视频 2 音频 3 图片 4 文档 5 应用 6 其他 7 种子"
+        parent_path: {type: string, description: 目录路径，可选}
+        recursion: {type: integer, enum: [0, 1], description: "1 表示递归子目录"}
+        num: {type: integer, description: "每页条数，默认 1000"}
+        page: {type: integer, description: 页码}
+        order: {type: string, enum: [time, name, size], description: 排序字段}
+      required: [category]
+
+  - name: get_quota
+    description: 查询网盘的总容量与已用容量。
+    read_only: true
+    method: GET
+    path: /api/quota
+    query: {checkfree: 1, checkexpire: 1}
+    params: {type: object, properties: {}}
+
+  - name: get_user_info
+    description: 获取当前授权用户的网盘账号信息，可用于验证凭据是否有效。
+    read_only: true
+    method: GET
+    path: /rest/2.0/xpan/nas
+    query: {method: uinfo}
+    params: {type: object, properties: {}}

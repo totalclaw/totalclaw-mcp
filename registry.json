@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T11:17:45Z",
+  "generated_at": "2026-08-22T11:21:26Z",
   "servers": [
     {
       "name": "composio",
@@ -1146,17 +1146,21 @@
       "name": "linear",
       "id": "totalclaw-mcp/dev/linear",
       "display_name": "Linear",
-      "description": "Linear MCP server.",
-      "description_zh": "Linear issue tracker 集成 — issue CRUD / 项目 / cycle / team / labels / comments / search。",
+      "description": "查询和管理 Linear 的 Issue、项目、团队与周期（Cycle）。",
+      "description_zh": "查询和管理 Linear 的 Issue、项目、团队与周期（Cycle）。",
       "version": "0.1.0",
-      "author": "upstream",
-      "homepage": "https://github.com/tacticlaunch/mcp-linear",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "dev",
       "tags": [
-        "dev",
-        "preset"
+        "totalclaw",
+        "self-hosted",
+        "issue",
+        "项目管理",
+        "研发协作"
       ],
       "kind": "mcp_server",
       "platforms": [
@@ -1168,29 +1172,47 @@
         "stdio"
       ],
       "launchers": [
-        "npx"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
-          "id": "npx",
+          "id": "console",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
         }
       ],
       "requires_env": [
         {
           "name": "LINEAR_API_KEY",
-          "description": "LINEAR_API_KEY for linear",
+          "description": "Linear 所需的 LINEAR_API_KEY",
           "prompt": "请输入 LINEAR_API_KEY",
           "secret": true,
           "required": true
         }
       ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 8,
+      "tools": [
+        "list_issues",
+        "search_issues",
+        "get_issue",
+        "list_teams",
+        "list_projects",
+        "create_issue",
+        "comment_issue",
+        "get_me"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
       },
       "path": "registry/servers/dev/linear",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/linear",
@@ -1201,16 +1223,21 @@
       "files": [
         {
           "path": "README.md",
-          "sha256": "4ab3a2b28f3169f657e672b6eea82b7fb6d72d0479cf172cccba118c1b10b881",
-          "size": 397
+          "sha256": "66bb3c751b9d4636cb5c5262461a8ba24443ad782325011a47214fb9347804f5",
+          "size": 1499
         },
         {
           "path": "mcp.yaml",
-          "sha256": "35b5e132e1f24cb3afa2b86e5872962068a9c057b0a0e180e16c5598e4036e32",
-          "size": 893
+          "sha256": "adfa057042017fcf8690b7c0dfc826d5e9487197421d890c28171282528ac07e",
+          "size": 1372
+        },
+        {
+          "path": "tools.json",
+          "sha256": "37d03932e08c78fc62879942ad16d6cd48797e0bf79264b188d06523bbd0f1bc",
+          "size": 3856
         }
       ],
-      "bundle_sha256": "cf7303918ed19d207bd0ed446bfe1854461b9c0e45b6ed9e5aa61adb6238a0d7"
+      "bundle_sha256": "f8e142677929dc06b13787ad9619dcaa6fcd22c5ef81954e89f89de99ea11b59"
     },
     {
       "name": "mcp_everything",
@@ -1650,6 +1677,102 @@
       "bundle_sha256": "5c6e9d75e13a6e394a28a56850369185a5fe956e18e6259a482f0c6c2582158a"
     },
     {
+      "name": "baidu_netdisk",
+      "id": "totalclaw-mcp/office/baidu_netdisk",
+      "display_name": "百度网盘",
+      "description": "浏览、搜索百度网盘文件与目录，查询文件详情、容量与分类文件列表。",
+      "description_zh": "浏览、搜索百度网盘文件与目录，查询文件详情、容量与分类文件列表。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "office",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "百度网盘",
+        "网盘",
+        "文件",
+        "存储"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "BAIDU_NETDISK_ACCESS_TOKEN",
+          "description": "百度网盘 所需的 BAIDU_NETDISK_ACCESS_TOKEN",
+          "prompt": "请输入 BAIDU_NETDISK_ACCESS_TOKEN",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 6,
+      "tools": [
+        "list_files",
+        "search_files",
+        "get_file_metas",
+        "list_category_files",
+        "get_quota",
+        "get_user_info"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/office/baidu_netdisk",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/baidu_netdisk",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/office/baidu_netdisk"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "23d963890bcb24c0e09a0ffb8efd0df09c1c052356b2b076c5e9656843f331ca",
+          "size": 1295
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "7f3491b533b66c4809a3e9e268925736ce4746363b6ad98dcf4ede42a8e89e9d",
+          "size": 1506
+        },
+        {
+          "path": "tools.json",
+          "sha256": "760d96d6771c3f16366e014579e0c7b4162a8c301d9b963bd5779b2021438de9",
+          "size": 4894
+        }
+      ],
+      "bundle_sha256": "a0ced10317877c56a3af0e971fc1651e41fe20afe04d8440a886371585811d60"
+    },
+    {
       "name": "jiandaoyun",
       "id": "totalclaw-mcp/office/jiandaoyun",
       "display_name": "简道云",
@@ -1744,6 +1867,100 @@
         }
       ],
       "bundle_sha256": "5a5e490aad1853cdacc7e488275ad072cadaabe18d70dd80b5c96d225f7a145d"
+    },
+    {
+      "name": "jinshuju",
+      "id": "totalclaw-mcp/office/jinshuju",
+      "display_name": "金数据",
+      "description": "查询金数据的表单、字段结构与提交数据，用于汇总问卷、报名与收款记录。",
+      "description_zh": "查询金数据的表单、字段结构与提交数据，用于汇总问卷、报名与收款记录。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "office",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "金数据",
+        "表单",
+        "问卷",
+        "报名"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "JINSHUJU_ACCESS_TOKEN",
+          "description": "金数据 所需的 JINSHUJU_ACCESS_TOKEN",
+          "prompt": "请输入 JINSHUJU_ACCESS_TOKEN",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 4,
+      "tools": [
+        "list_forms",
+        "get_form",
+        "list_entries",
+        "get_entry"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/office/jinshuju",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/jinshuju",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/office/jinshuju"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "c359aad69e85151bd4c57f00cdee3c416a8a7ba0a2319a08f326bdd9d9562b59",
+          "size": 1208
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "12ee070c18196c2d8467c7c24ec753b82cb374eaca0a0173b18f43bb3912094f",
+          "size": 1474
+        },
+        {
+          "path": "tools.json",
+          "sha256": "a67bdf21c98df2951bbf26e54f179303b70c6b6169c343dc0bb319f5dc08e5a6",
+          "size": 2403
+        }
+      ],
+      "bundle_sha256": "5aacaa91045b104043b753a9463fd54d6d1c7a84ddbac6781c3c962a5168e017"
     },
     {
       "name": "mcp_time",

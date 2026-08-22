@@ -212,6 +212,17 @@ def test_business_error_code_detected(fake_http):
     assert r["success"] is False and r["code"] == 40013 and "invalid corpid" in r["error"]
 
 
+def test_graphql_style_error_not_duplicated(fake_http):
+    """error_field 与 message_field 同源时（GraphQL errors[0].message），别把同一句话说两遍。"""
+    fake_http["resp"] = _Resp(payload={"errors": [{"message": "Authentication required"}]})
+    p = parse_pack({**MINIMAL, "response": {
+        "error_field": "errors.0.message", "ok_value": "__never__",
+        "message_field": "errors.0.message"}})
+    r = call_tool(p, p.tools[0], {"id": "1"})
+    assert r["success"] is False
+    assert r["error"].count("Authentication required") == 1
+
+
 def test_business_ok_code_passes(fake_http):
     fake_http["resp"] = _Resp(payload={"errcode": 0, "data": [1, 2]})
     p = parse_pack({**MINIMAL, "response": {"error_field": "errcode", "ok_value": 0}})

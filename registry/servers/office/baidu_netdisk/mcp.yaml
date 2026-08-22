@@ -1,0 +1,61 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: baidu_netdisk
+display_name: 百度网盘
+version: 0.1.0
+description: 浏览、搜索百度网盘文件与目录，查询文件详情、容量与分类文件列表。
+description_zh: 浏览、搜索百度网盘文件与目录，查询文件详情、容量与分类文件列表。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: office
+tags:
+- totalclaw
+- self-hosted
+- 百度网盘
+- 网盘
+- 文件
+- 存储
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - baidu_netdisk
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - baidu_netdisk
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: BAIDU_NETDISK_ACCESS_TOKEN
+  env_key: BAIDU_NETDISK_ACCESS_TOKEN
+  description: 百度网盘 所需的 BAIDU_NETDISK_ACCESS_TOKEN
+  prompt: 请输入 BAIDU_NETDISK_ACCESS_TOKEN
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 6
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

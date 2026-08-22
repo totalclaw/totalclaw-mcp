@@ -35,6 +35,9 @@ META: dict[str, dict] = {
     "imap_mail":   {"category": "comm",    "tags": ["邮箱", "imap", "smtp", "qq邮箱", "网易邮箱"]},
     "jiandaoyun":  {"category": "office",  "tags": ["简道云", "表单", "低代码", "数据"]},
     "tapd":        {"category": "dev",     "tags": ["需求", "缺陷", "迭代", "研发管理"]},
+    "jinshuju":    {"category": "office",  "tags": ["金数据", "表单", "问卷", "报名"]},
+    "baidu_netdisk": {"category": "office", "tags": ["百度网盘", "网盘", "文件", "存储"]},
+    "linear":      {"category": "dev",     "tags": ["issue", "项目管理", "研发协作"]},
 }
 DEFAULT_CATEGORY = "misc"
 

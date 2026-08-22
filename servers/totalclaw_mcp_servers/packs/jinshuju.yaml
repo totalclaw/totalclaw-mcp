@@ -1,0 +1,71 @@
+name: jinshuju
+display_name: 金数据
+description: 查询金数据的表单、字段结构与提交数据，用于汇总问卷、报名与收款记录。
+base_url: https://api.jinshuju.net
+docs: https://github.com/jinshuju/jinshuju-api-docs
+auth:
+  type: bearer
+  env: JINSHUJU_ACCESS_TOKEN
+  prefix: "bearer "
+defaults:
+  timeout: 30
+
+tools:
+  - name: list_forms
+    description: 列出账号下的全部表单，返回表单标识（form_token）与名称。先用它拿到 form_token。
+    read_only: true
+    method: GET
+    path: /v4/forms
+    query: {per_page: "{per_page}", openid: "{openid}"}
+    max_items: 50
+    params:
+      type: object
+      properties:
+        per_page: {type: integer, description: "每页条数，最大 50"}
+        openid: {type: string, description: 企业版令牌下指定成员的 openid，可选}
+
+  - name: get_form
+    description: >-
+      查询单个表单的详情与字段结构。返回的字段标识形如 field_1、field_2，
+      查数据或做筛选前必须先看它，字段名不能猜。
+    read_only: true
+    method: GET
+    path: /v4/forms/{form_token}
+    params:
+      type: object
+      properties:
+        form_token: {type: string, description: 表单标识，来自 list_forms}
+      required: [form_token]
+
+  - name: list_entries
+    description: >-
+      查询表单的提交数据。翻页用游标（响应的 Link 头里带 cursor），
+      也可按字段值过滤 —— 字段名用 field_1 这种标识，先用 get_form 查。
+    read_only: true
+    method: GET
+    path: /v4/forms/{form_token}/entries
+    query:
+      per_page: "{per_page}"
+      cursor: "{cursor}"
+      created_at: "{created_at}"
+    max_items: 50
+    params:
+      type: object
+      properties:
+        form_token: {type: string, description: 表单标识}
+        per_page: {type: integer, description: "每页条数，最大 50"}
+        cursor: {type: string, description: 翻页游标，来自上一页响应的 Link 头}
+        created_at: {type: string, description: 按提交时间过滤，如 "2026-08-01"}
+      required: [form_token]
+
+  - name: get_entry
+    description: 按序号读取单条提交数据的完整内容。
+    read_only: true
+    method: GET
+    path: /v4/forms/{form_token}/entries/{serial_number}
+    params:
+      type: object
+      properties:
+        form_token: {type: string, description: 表单标识}
+        serial_number: {type: string, description: 数据序号（serial_number）}
+      required: [form_token, serial_number]
