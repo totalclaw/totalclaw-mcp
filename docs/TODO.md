@@ -240,7 +240,11 @@
 - [x] **D0.8** `scripts/gen_manifests.py`：从实现自动生成 registry 清单 + `tools.json`
 - [x] **D0.9** CI 三个 job：registry（`--check --strict`）、servers（pack 校验 + pytest +
   生成物一致性）、acceptance（V1–V7；拿不到私有 agent 仓时降级为 warning 而非失败）
-- [ ] **D0.10** 发布 `totalclaw-mcp-servers` 到 PyPI（registry 的 `uvx` runtime 依赖它）
+- [x] **D0.10（发布前验证已完成）** wheel 构建正常（18 pack + 3 原生 + 控制台脚本齐全），
+  干净 venv 安装并真实 MCP 握手通过。**实际 PyPI 发布需凭据，留给有权限的人执行**：
+  `python -m build --wheel servers && twine upload dist/*`
+  - 验证时撞出一个真实的依赖声明错误：`mcp>=1.10` 放行了 2.0，而 2.x 重做了低层
+    Server API，装完直接起不来。已改 `mcp>=1.10,<2`，并加 CI `clean-install` job 守住
 
 ### D1. 连接器实现进度（126）
 
