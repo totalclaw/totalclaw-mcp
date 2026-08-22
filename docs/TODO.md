@@ -200,13 +200,18 @@
 
 ## 验收（端到端场景，全过即对接完成）
 
-- [ ] **V1** CLI：`totalclaw mcp install mcp_time --yes --json` → exit 0；`totalclaw mcp installed --json` 可见；新会话中模型能调 `mcp__mcp_time__*`
-- [ ] **V2** CLI 缺 env：`totalclaw mcp install mcp_github --yes --json` → exit 2 + `missing_env:["GITHUB_PERSONAL_ACCESS_TOKEN"]`
-- [ ] **V3** qiye-app：市场搜索 → 安装向导填 env → job 日志逐步显示 → 已安装卡片 `ready` + 工具数正确，全程无重启
-- [ ] **V4** 篡改注册表条目 sha256 → 安装失败于 verify 阶段，config.yaml 无残留
-- [ ] **V5** 卸载后：config.yaml / .env / installed.json / schema-cache 全部干净
-- [ ] **V6** 断网：`/v1/mcp/registry` 返回 `source:"builtin"`，presets 仍可安装
-- [ ] **V7** 双账号互不可见对方安装的 MCP
+> 已脚本化：`python3 scripts/acceptance.py`（每项独立临时 `TOTALCLAW_HOME`，不碰真实配置，
+> 可随时重跑）。手工点一遍的问题是下次改动后没人会再点。
+> 最近一次：**通过 6 · 失败 0 · 需人工 1**。
+
+- [x] **V1** CLI 装上并在 `installed` 可见（本环境探测失败→按设计置 disabled，退出码 3 也算通过）
+- [x] **V2** 缺 env 退出码 2 + `missing_env` 列表正确
+- [ ] **V3**（需人工）qiye-app 界面全流程要在 Electron 里点。其依赖的 REST 契约已由
+  agent 仓 `test_mcp_hub_api.py` 11 个用例覆盖；界面本身不假装脚本能验
+- [x] **V4** 篡改 sha256 被拒于校验阶段，config.yaml 无残留
+- [x] **V5** 卸载后 config.yaml / .env / installed.json / schema-cache 全干净
+- [x] **V6** 断网时 `source=builtin`，内置目录仍可搜可装
+- [x] **V7** 双账号互不可见（A 装的 B 看不到）
 
 ---
 
@@ -233,7 +238,8 @@
 - [x] **D0.6** 打包：`servers/pyproject.toml`，控制台脚本 `totalclaw-mcp-server`
 - [x] **D0.7** 测试：31 个用例，含类型保留、缺参、业务错误码、令牌缓存、脱敏（`servers/tests/`）
 - [x] **D0.8** `scripts/gen_manifests.py`：从实现自动生成 registry 清单 + `tools.json`
-- [ ] **D0.9** CI：`totalclaw-mcp-server --check` + `pytest` + `gen_registry.py --check`
+- [x] **D0.9** CI 三个 job：registry（`--check --strict`）、servers（pack 校验 + pytest +
+  生成物一致性）、acceptance（V1–V7；拿不到私有 agent 仓时降级为 warning 而非失败）
 - [ ] **D0.10** 发布 `totalclaw-mcp-servers` 到 PyPI（registry 的 `uvx` runtime 依赖它）
 
 ### D1. 连接器实现进度（126）

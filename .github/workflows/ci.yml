@@ -39,3 +39,30 @@ jobs:
             echo "::error::registry 清单与 servers/ 实现不一致，请本地跑 gen_manifests.py --force && gen_registry.py 后提交"
             exit 1
           }
+
+  acceptance:
+    name: 端到端验收（V1–V7）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { path: totalclaw-mcp }
+      # 验收要驱动 agent 的 CLI；agent 是私有仓，CI 里需要一个只读部署令牌
+      - uses: actions/checkout@v4
+        continue-on-error: true
+        id: agent
+        with:
+          repository: jlzdyx/totalclaw-agent
+          path: totalclaw-agent
+          token: ${{ secrets.AGENT_REPO_TOKEN }}
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: 跑验收
+        if: steps.agent.outcome == 'success'
+        run: |
+          pip install -q -e totalclaw-agent
+          pip install -q -e totalclaw-mcp/servers
+          python3 totalclaw-mcp/scripts/acceptance.py --agent ../totalclaw-agent
+        working-directory: .
+      - name: 跳过说明
+        if: steps.agent.outcome != 'success'
+        run: echo "::warning::拿不到 agent 仓（需 AGENT_REPO_TOKEN），端到端验收已跳过"
