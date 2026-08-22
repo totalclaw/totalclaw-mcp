@@ -142,8 +142,14 @@
   `packages/mcp-market` 暂留并标注 `@deprecated` —— packaging-manifest 仍用同名模块开关做裁剪
 
 ### B3. 企业与多账号
-- [ ] **B3.1** 多账号验证：切换账号（不同 `TOTALCLAW_HOME`）后市场/已安装状态各自独立
-- [ ] **B3.2** （M3 联动）登录态含 org 时：`/v1/mcp/registry?org=` 透传 + `bearer_token` 传平台 JWT；`qiyeApiProc.ts` `extraEnv` 注入 `TOTALCLAW_MCP_ORG`
+- [x] **B3.1** 已写成回归测试而非手工验证（agent 仓 `test_mcp_hub_account_isolation.py`，5 项断言：
+  配置 / 安装账本 / 状态目录 / **目录缓存** / 卸载互不影响）。
+  目录缓存那条尤其要紧：企业私有目录混进别人的缓存等于越权可见
+- [x] **B3.2** `?org=` 已按请求透传（IPC 从 payload 或登录态取）。
+  **`extraEnv` 注入 `TOTALCLAW_MCP_ORG` 这条行不通并已放弃**：qiye-api 进程在登录之前
+  就已经起来了，那时还不知道 org 是谁，注入空值反而会让 mcp_hub 误以为配了托管
+  而去替换端点里的 `{org}`。
+- [ ] **B3.2.1**（M3 联动，待平台就绪）付费/私有条目的 `bearer_token` 传平台 JWT
 
 ---
 
