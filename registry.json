@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T11:37:49Z",
+  "generated_at": "2026-08-22T11:41:01Z",
   "servers": [
     {
       "name": "composio",
@@ -1953,6 +1953,106 @@
         }
       ],
       "bundle_sha256": "04d67077617c8996de423e448e430c32684e64e6768442ea832076728f20d8f4"
+    },
+    {
+      "name": "moka",
+      "id": "totalclaw-mcp/hr/moka",
+      "display_name": "Moka 招聘",
+      "description": "查询 Moka 招聘系统的职位、候选人投递记录与组织架构，跟踪招聘进展。",
+      "description_zh": "查询 Moka 招聘系统的职位、候选人投递记录与组织架构，跟踪招聘进展。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "hr",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "招聘",
+        "候选人",
+        "职位",
+        "组织架构"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "MOKA_API_SECRET",
+          "description": "Moka 招聘 所需的 MOKA_API_SECRET",
+          "prompt": "请输入 MOKA_API_SECRET",
+          "secret": true,
+          "required": true
+        },
+        {
+          "name": "MOKA_API_KEY",
+          "description": "Moka 招聘 所需的 MOKA_API_KEY",
+          "prompt": "请输入 MOKA_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 3,
+      "tools": [
+        "list_jobs",
+        "list_applications",
+        "list_departments"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/hr/moka",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/hr/moka",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/hr/moka"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "17c0a5fa3b026937534d0de06804a7c9993cbbcfe8ed82405c2dc354be3c3fd2",
+          "size": 1147
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "ec79f85d9c0d98e1625d95611529f97dfb74338be5a23b20f4c4be2c7a43854c",
+          "size": 1592
+        },
+        {
+          "path": "tools.json",
+          "sha256": "2dd02a1a7c764d1558ead7a241c984efea12493dfbcc482f967460debf9ef978",
+          "size": 2701
+        }
+      ],
+      "bundle_sha256": "b07169a1b536613a9542ed50ec4e6aa5923c728cc99390d6d145c1362b4f05e3"
     },
     {
       "name": "docker",

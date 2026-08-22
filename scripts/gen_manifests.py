@@ -43,6 +43,7 @@ META: dict[str, dict] = {
     "tianyancha":  {"category": "data",    "tags": ["天眼查", "工商", "股东", "诉讼", "企业信息"]},
     "web":         {"category": "web",     "tags": ["网页抓取", "正文抽取", "无需凭据"]},
     "tencent_cloudbase": {"category": "dev", "tags": ["腾讯云", "云开发", "cloudbase", "小程序"]},
+    "moka":        {"category": "hr",      "tags": ["招聘", "候选人", "职位", "组织架构"]},
 }
 DEFAULT_CATEGORY = "misc"
 

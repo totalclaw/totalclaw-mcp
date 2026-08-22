@@ -1,0 +1,71 @@
+name: moka
+display_name: Moka 招聘
+description: 查询 Moka 招聘系统的职位、候选人投递记录与组织架构，跟踪招聘进展。
+base_url: https://api.mokahr.com/api-platform/v1
+docs: https://mokahr.moyincloud.com/
+auth:
+  # Moka 用 HTTP Basic：API Key 作用户名，密码留空
+  type: basic
+  env_user: MOKA_API_KEY
+  env: MOKA_API_SECRET
+defaults:
+  timeout: 30
+  headers:
+    Content-Type: application/json
+
+tools:
+  - name: list_jobs
+    description: >-
+      查询职位列表。hireMode 必填：social 社招 / campus 校招。
+      返回职位名、薪资区间、经验要求、部门与工作地。
+    read_only: true
+    method: POST
+    path: /jobs/getJobs
+    body:
+      hireMode: "{hire_mode}"
+      status: "{status}"
+      limit: "{limit}"
+      offset: "{offset}"
+      jobId: "{job_id}"
+      departmentCodes: "{department_codes}"
+      locationIds: "{location_ids}"
+      updatedFromAt: "{updated_from}"
+      updatedEndAt: "{updated_end}"
+    max_items: 50
+    params:
+      type: object
+      properties:
+        hire_mode: {type: string, enum: [social, campus], description: "招聘类型：social 社招 / campus 校招"}
+        status: {type: string, enum: [open, closed], description: 职位状态}
+        limit: {type: integer, description: "每页条数，默认 20"}
+        offset: {type: integer, description: "偏移量，从 0 开始"}
+        job_id: {type: string, description: 只查某个职位}
+        department_codes: {type: array, items: {type: string}, description: 按部门编码过滤}
+        location_ids: {type: array, items: {type: string}, description: 按工作地过滤}
+        updated_from: {type: string, description: "更新时间起，格式 yyyy-MM-dd"}
+        updated_end: {type: string, description: "更新时间止，格式 yyyy-MM-dd"}
+      required: [hire_mode]
+
+  - name: list_applications
+    description: >-
+      查询候选人投递记录，返回投递 ID、来源渠道、当前阶段、职位 ID 与更新时间。
+      翻页用游标：首次传 fromTime，之后把响应里的 next 传回 next 参数（两者不能同时传）。
+    read_only: true
+    method: GET
+    path: /data/applications
+    query: {fromTime: "{from_time}", next: "{next}", limit: "{limit}"}
+    max_items: 100
+    params:
+      type: object
+      properties:
+        from_time: {type: string, description: 起始时间，仅首次查询传}
+        next: {type: string, description: 翻页游标，来自上一次响应的 next；与 from_time 二选一}
+        limit: {type: string, description: "每页条数，默认 100"}
+
+  - name: list_departments
+    description: 查询完整组织架构，返回部门编码、名称与层级关系。无需参数。
+    read_only: true
+    method: GET
+    path: /departments
+    max_items: 200
+    params: {type: object, properties: {}}

@@ -171,8 +171,8 @@
 - [ ] **kdocs** 金山文档 — 上游类型 MCP，鉴权 server-side
 - [ ] **tencent-survey** 腾讯问卷 — 上游类型 MCP，鉴权 -
 - [ ] **tencent-weiyun** 微云 — 上游类型 MCP，鉴权 -
-- [ ] **baidu-netdisk** 百度网盘 — 上游类型 MCP，鉴权 server-side
-- [ ] **jinshuju** 金数据 — 上游类型 MCP，鉴权 server-side
+- [x] **baidu-netdisk** 百度网盘 — 已实现 `baidu_netdisk`
+- [x] **jinshuju** 金数据 — 已实现 `jinshuju`
 - [ ] **qingflow** 轻流 — 上游类型 MCP，鉴权 -
 - [x] **jiandaoyun** 简道云 — 已实现 `jiandaoyun`
 - [ ] **h3yun-connector** 氚云 — 上游类型 MCP，鉴权 token
@@ -198,7 +198,7 @@
 - [x] **tapd** TAPD — 已实现 `tapd`
 - [ ] **cnb-api** CNB — 上游类型 CLI，鉴权 -
 - [ ] **bugly-token** Bugly 质量概览 — 上游类型 MCP，鉴权 token
-- [ ] **cloudbase** 腾讯云 CloudBase — 上游类型 MCP，鉴权 -
+- [x] **cloudbase** 腾讯云 CloudBase — 已实现 `tencent_cloudbase`
 - [ ] **edgeone-pages** EdgeOne Makers — 上游类型 MCP，鉴权 -
 - [x] **agentkey** AgentKey — 已实现 `web（抓取部分）`
 - [ ] **dcs-cloud** DCS Cloud — 上游类型 MCP，鉴权 token
@@ -282,8 +282,8 @@
 
 #### 创意 / 设计 / 音视频（11）
 
-- [ ] **canva** Canva可画 — 上游类型 MCP，鉴权 -
-- [ ] **canva-ai** Canva可画 — 上游类型 MCP，鉴权 -
+- [x] **canva** Canva可画 — 已实现 `canva`
+- [x] **canva-ai** Canva可画 — 已实现 `canva`
 - [ ] **mastergo-vibe-mcp** MasterGo 莫高设计 — 上游类型 MCP，鉴权 -
 - [ ] **kling-ai-plugin** 可灵 AI — 上游类型 MCP，鉴权 -
 - [ ] **kling-ai-plugin-ai** 可灵 AI — 上游类型 MCP，鉴权 -
@@ -296,7 +296,7 @@
 
 #### 人力 / 教育（6）
 
-- [ ] **moka** Moka HR 智能体 — 上游类型 MCP，鉴权 -
+- [x] **moka** Moka HR 智能体 — 已实现 `moka`
 - [ ] **beisen-cli** 北森AI · HR专家 — 上游类型 CLI，鉴权 -
 - [ ] **ihr-cli** i人事AI·HR专家 — 上游类型 CLI，鉴权 -
 - [ ] **gaodun-job** 大学生实习就业助手 — 上游类型 MCP，鉴权 -
@@ -325,7 +325,7 @@
 - [ ] **lovrabet-cli** Lovrabet CLI — 上游类型 CLI，鉴权 -
 - [ ] **shanlong-claw** 商龙经营洞察 — 上游类型 CLI，鉴权 -
 - [ ] **yunke-cli** 云客AI工作手机 — 上游类型 CLI，鉴权 -
-- [ ] **linear-mcp** Linear — 上游类型 MCP，鉴权 server-side
+- [x] **linear-mcp** Linear — 已实现 `linear`
 - [x] **notion** Notion — 已实现 `notion`
 - [x] **tencent-map** 腾讯地图 — 已实现 `tencent_map`
 - [x] **wecom** 企业微信 — 已实现 `wecom`
