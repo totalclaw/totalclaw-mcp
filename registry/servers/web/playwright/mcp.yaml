@@ -1,0 +1,32 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: playwright
+display_name: Playwright
+version: 0.1.0
+description: Playwright MCP server.
+description_zh: 微软 Playwright MCP — 跨浏览器(Chromium/Firefox/WebKit)自动化 + 截图 + 网络拦截 + accessibility tree。比
+  chrome_devtools 跨浏览器、accessibility 信息更丰富。由微软官方维护。
+author: upstream
+homepage: https://github.com/microsoft/playwright-mcp
+category: web
+tags:
+- web
+- preset
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@playwright/mcp@latest'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 180

@@ -1,0 +1,41 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mcp_memory
+display_name: Memory
+version: 0.1.0
+description: Memory MCP server.
+description_zh: 知识图谱式持久记忆 — 实体 / 关系 / 观察三元组,跨会话保留。与 totalclaw_core.memory.long_term_memory 互补:本 server
+  走图谱模型,核内 LTM 走衰减表模型。
+author: upstream
+homepage: https://github.com/modelcontextprotocol/servers
+category: biz
+tags:
+- biz
+- preset
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@modelcontextprotocol/server-memory'
+  env:
+    MEMORY_FILE_PATH: ${MEMORY_FILE_PATH:-${HOME}/.totalclaw/mcp_memory.json}
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env:
+- name: MEMORY_FILE_PATH
+  env_key: MEMORY_FILE_PATH
+  description: MEMORY_FILE_PATH for mcp_memory
+  prompt: 请输入 MEMORY_FILE_PATH
+  secret: false
+  default: ${HOME
+  required: false
+defaults:
+  enabled: true
+  timeout: 60

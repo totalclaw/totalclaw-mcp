@@ -1,0 +1,40 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mcp_git
+display_name: Git
+version: 0.1.0
+description: Git MCP server.
+description_zh: git 仓库读取 / 搜索 / 操作 — log / diff / blame / branch / show / stage / commit / status。对 LLM
+  暴露完整 git 工作流。
+author: upstream
+homepage: https://github.com/modelcontextprotocol/servers
+category: dev
+tags:
+- dev
+- preset
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - mcp-server-git
+  env:
+    MCP_GIT_REPO: ${MCP_GIT_REPO:-${PWD}}
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env:
+- name: MCP_GIT_REPO
+  env_key: MCP_GIT_REPO
+  description: MCP_GIT_REPO for mcp_git
+  prompt: 请输入 MCP_GIT_REPO
+  secret: false
+  default: ${PWD
+  required: false
+defaults:
+  enabled: true
+  timeout: 120

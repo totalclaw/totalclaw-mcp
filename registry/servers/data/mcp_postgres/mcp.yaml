@@ -1,0 +1,38 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mcp_postgres
+display_name: PostgreSQL
+version: 0.1.0
+description: PostgreSQL MCP server.
+description_zh: PostgreSQL 只读查询 — 暴露 query / schema / 表元信息工具。Connection string 在 args 末。已归档但仍可用。
+author: upstream
+homepage: https://github.com/modelcontextprotocol/servers-archived
+category: data
+tags:
+- data
+- preset
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@modelcontextprotocol/server-postgres'
+  - ${POSTGRES_URL}
+  requires:
+    node: '>=18'
+requires_env:
+- name: POSTGRES_URL
+  env_key: POSTGRES_URL
+  description: POSTGRES_URL for mcp_postgres
+  prompt: 请输入 POSTGRES_URL
+  secret: false
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60

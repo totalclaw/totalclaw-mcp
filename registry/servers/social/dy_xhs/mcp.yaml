@@ -1,0 +1,41 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: dy_xhs
+display_name: 抖音 / 小红书
+version: 0.1.0
+description: 抖音 / 小红书 MCP server.
+description_zh: 抖音+小红书内容提取/去水印/语音转文字:get_douyin_download_link / extract_douyin_text / parse_douyin_video_info
+  / get_xiaohongshu_content / extract_xiaohongshu_text / extract_xiaohongshu_video_text / get_xiaohongshu_images
+  / remove_xiaohongshu_video_watermark(8 工具)。
+author: upstream
+homepage: https://github.com/AshinH/dy-xhs-mcp-server
+category: social
+tags:
+- social
+- preset
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - douyin-mcp-server
+  env:
+    DOUYIN_MCP_CONFIG: ${DOUYIN_MCP_CONFIG:-${HOME}/.totalclaw/dy_xhs_config.json}
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env:
+- name: DOUYIN_MCP_CONFIG
+  env_key: DOUYIN_MCP_CONFIG
+  description: DOUYIN_MCP_CONFIG for dy_xhs
+  prompt: 请输入 DOUYIN_MCP_CONFIG
+  secret: false
+  default: ${HOME
+  required: false
+defaults:
+  enabled: true
+  timeout: 240

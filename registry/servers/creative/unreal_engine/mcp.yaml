@@ -1,0 +1,26 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: unreal_engine
+display_name: Unreal Engine
+version: 0.1.0
+description: 'Drive Unreal Editor 5.8+ through Epic''s experimental MCP toolset registry: scene, asset,
+  Blueprint, Sequencer, PIE, automation, capture, and editor scripting workflows.'
+author: upstream
+homepage: https://dev.epicgames.com/documentation/unreal-engine/unreal-mcp-in-unreal-editor
+category: creative
+tags:
+- creative
+- preset
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: http://127.0.0.1:8000/mcp
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 300
+  supports_parallel_tool_calls: false

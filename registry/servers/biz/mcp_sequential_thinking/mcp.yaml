@@ -1,0 +1,31 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mcp_sequential_thinking
+display_name: Sequential Thinking
+version: 0.1.0
+description: Sequential Thinking MCP server.
+description_zh: 动态反思式问题分解 — 把复杂任务拆成有序思考序列,支持回溯 / 修正 / 分支。适合长 horizon planning。
+author: upstream
+homepage: https://github.com/modelcontextprotocol/servers
+category: biz
+tags:
+- biz
+- preset
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@modelcontextprotocol/server-sequentialthinking'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60

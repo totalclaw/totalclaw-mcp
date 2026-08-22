@@ -1,0 +1,32 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mcp_fetch
+display_name: Fetch
+version: 0.1.0
+description: Fetch MCP server.
+description_zh: 抓取任意 URL 网页内容 + 自动 HTML→markdown 转换 + 节流。LLM 即时阅读 web 内容的标准入口。
+author: upstream
+homepage: https://github.com/modelcontextprotocol/servers
+category: web
+tags:
+- web
+- preset
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --with
+  - mcp<2
+  - mcp-server-fetch
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

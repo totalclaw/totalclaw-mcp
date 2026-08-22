@@ -1,0 +1,32 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: wechat-desktop
+display_name: WeChat Desktop (built-in)
+version: 0.1.0
+description: WeChat Desktop (built-in) MCP server.
+description_zh: 桌面微信自控 —— 自动检测 OS(Windows/macOS/Linux)调对应底层:wechat_capabilities/list_unread/open_chat/read_chat/screenshot_chat/send_message。分层读取:native_text(AX/UIA
+  免模型)→ ocr → clipboard → screenshot(交 agent 视觉)。发送用确定性几何。
+author: totalclaw
+category: comm
+tags:
+- comm
+- preset
+kind: mcp_server
+runtimes:
+- id: totalclaw
+  type: stdio
+  launcher: totalclaw
+  command: totalclaw
+  args:
+  - __mcp-server
+  - wechat-desktop
+  env:
+    TOTALCLAW_WECHAT_ALLOW_NATIVE_TEXT: '0'
+    TOTALCLAW_WECHAT_ATTACH_ONLY: '0'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

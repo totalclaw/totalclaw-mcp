@@ -1,0 +1,40 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: socialcrawl
+display_name: SocialCrawl
+version: 0.1.0
+description: SocialCrawl MCP server.
+description_zh: 27 社交平台公开数据爬取:账号资料、帖子、搜索、分析。5 工具:list_platforms / list_endpoints / request / check_balance
+  / get_docs。前 3 个无 key 可用,request + balance 需 key。
+author: upstream
+homepage: https://github.com/socialcrawl/mcp
+category: social
+tags:
+- social
+- preset
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - socialcrawl-mcp
+  env:
+    SOCIALCRAWL_API_KEY: ${SOCIALCRAWL_API_KEY}
+  requires:
+    node: '>=18'
+requires_env:
+- name: SOCIALCRAWL_API_KEY
+  env_key: SOCIALCRAWL_API_KEY
+  description: SOCIALCRAWL_API_KEY for socialcrawl
+  prompt: 请输入 SOCIALCRAWL_API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 180

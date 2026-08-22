@@ -1,0 +1,31 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mcp_time
+display_name: Time
+version: 0.1.0
+description: Time MCP server.
+description_zh: 时间 + 时区转换 — get_current_time(timezone) / convert_time(time, from_tz, to_tz)。补 LLM 时间盲区。
+author: upstream
+homepage: https://github.com/modelcontextprotocol/servers
+category: office
+tags:
+- office
+- preset
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@modelcontextprotocol/server-time'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30

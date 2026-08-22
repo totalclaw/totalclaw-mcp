@@ -1,0 +1,39 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mcp_sqlite
+display_name: SQLite
+version: 0.1.0
+description: SQLite MCP server.
+description_zh: SQLite 本地数据库读写 — list_tables / describe_table / read_query / write_query / create_table。轻量本地存储工作流。已归档但仍可用。
+author: upstream
+homepage: https://github.com/modelcontextprotocol/servers-archived
+category: data
+tags:
+- data
+- preset
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - mcp-server-sqlite
+  - --db-path
+  - ${SQLITE_DB_PATH:-${HOME}/.totalclaw/mcp_sqlite.db}
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env:
+- name: SQLITE_DB_PATH
+  env_key: SQLITE_DB_PATH
+  description: SQLITE_DB_PATH for mcp_sqlite
+  prompt: 请输入 SQLITE_DB_PATH
+  secret: false
+  default: ${HOME
+  required: false
+defaults:
+  enabled: true
+  timeout: 60

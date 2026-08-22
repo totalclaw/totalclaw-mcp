@@ -1,0 +1,33 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: blender
+display_name: Blender
+version: 0.1.0
+description: Drive a live Blender session for modeling, scenes, and renders.
+author: upstream
+category: creative
+tags:
+- creative
+- catalog
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - blender-mcp==1.6.4
+  env:
+    DISABLE_TELEMETRY: 'true'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  tools:
+    include:
+    - get_scene_info
+    - get_object_info
+    - get_viewport_screenshot
+    - execute_blender_code

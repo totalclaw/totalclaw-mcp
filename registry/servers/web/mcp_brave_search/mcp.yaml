@@ -1,0 +1,39 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mcp_brave_search
+display_name: Brave Search
+version: 0.1.0
+description: Brave Search MCP server.
+description_zh: Brave 搜索 API — web_search / local_search。隐私友好的搜索后端,与 LLM 主搜索流互补。已归档但仍可用。
+author: upstream
+homepage: https://github.com/modelcontextprotocol/servers-archived
+category: web
+tags:
+- web
+- preset
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@modelcontextprotocol/server-brave-search'
+  env:
+    BRAVE_API_KEY: ${BRAVE_API_KEY}
+  requires:
+    node: '>=18'
+requires_env:
+- name: BRAVE_API_KEY
+  env_key: BRAVE_API_KEY
+  description: BRAVE_API_KEY for mcp_brave_search
+  prompt: 请输入 BRAVE_API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60

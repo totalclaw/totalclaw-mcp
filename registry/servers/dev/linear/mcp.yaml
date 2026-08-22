@@ -1,0 +1,39 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: linear
+display_name: Linear
+version: 0.1.0
+description: Linear MCP server.
+description_zh: Linear issue tracker 集成 — issue CRUD / 项目 / cycle / team / labels / comments / search。
+author: upstream
+homepage: https://github.com/tacticlaunch/mcp-linear
+category: dev
+tags:
+- dev
+- preset
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@tacticlaunch/mcp-linear'
+  env:
+    LINEAR_API_KEY: ${LINEAR_API_KEY}
+  requires:
+    node: '>=18'
+requires_env:
+- name: LINEAR_API_KEY
+  env_key: LINEAR_API_KEY
+  description: LINEAR_API_KEY for linear
+  prompt: 请输入 LINEAR_API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

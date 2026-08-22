@@ -1,0 +1,67 @@
+# mcp.yaml 模板 —— 复制到 registry/servers/<category>/<name>/mcp.yaml 后按 SPEC.md 填写。
+# name 必须与目录名一致；发布后永不改名。
+
+manifest_version: 1
+requires_protocol_version: ">=1"
+tested_with: ">=0.63.72"
+
+name: example_server                 # ^[a-z0-9][a-z0-9_-]*$
+display_name: Example Server
+version: 1.0.0                       # 任何改动必须递增
+description: One-line capability and boundary (English).
+description_zh: 一句话能力与边界。
+author: upstream-org
+license: MIT
+homepage: https://github.com/upstream-org/example-mcp
+repository: https://github.com/upstream-org/example-mcp
+category: dev                        # 等于上级目录名
+tags: [example]
+kind: mcp_server
+platforms: [darwin, linux, win32]
+
+runtimes:
+  - id: npx
+    type: stdio
+    launcher: npx
+    command: npx
+    args: ["-y", "@upstream-org/example-mcp@1.0.0"]   # 必须 pin 版本
+    requires: { node: ">=18" }
+  # - id: uvx
+  #   type: stdio
+  #   launcher: uvx
+  #   command: uvx
+  #   args: ["example-mcp==1.0.0"]
+  # - id: remote
+  #   type: http
+  #   url: https://mcp.example.com/mcp
+  #   auth: header                   # none | header | oauth
+
+requires_env:
+  - name: EXAMPLE_API_KEY
+    description: API key for example.com
+    prompt: 请输入 example.com API Key
+    secret: true
+    required: true
+    # runtimes: [npx]                # 省略 = 所有运行时都需要
+optional_env: []
+
+defaults:
+  enabled: true
+  timeout: 120
+  connect_timeout: 60
+  tools:
+    exclude: []
+    resources: true
+    prompts: false
+
+# 以下两块由 CI（scripts/probe_server.py）生成，人工不要手改
+# tools:
+#   probed_at: "2026-01-01T00:00:00Z"
+#   probed_runtime: npx
+#   count: 0
+#   file: tools.json
+# security:
+#   scan_verdict: allow
+#   prompt_injection_findings: []
+#   osv: clean
+#   egress: []

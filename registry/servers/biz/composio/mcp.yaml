@@ -1,0 +1,35 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: composio
+display_name: Composio
+version: 0.1.0
+description: Composio MCP server.
+description_zh: 500+ SaaS 工具统一接入枢纽:Gmail / Slack / GitHub / Notion / Linear / Jira / HubSpot / Salesforce
+  / Calendar / Drive 等。支持 OAuth 流程 + 多账号上下文 + 沙箱工作台。
+author: upstream
+homepage: https://github.com/composiohq/composio
+category: biz
+tags:
+- biz
+- preset
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://rube.composio.dev/mcp
+  headers:
+    Authorization: Bearer ${COMPOSIO_API_KEY}
+  auth: header
+requires_env:
+- name: COMPOSIO_API_KEY
+  env_key: COMPOSIO_API_KEY
+  description: COMPOSIO_API_KEY for composio
+  prompt: 请输入 COMPOSIO_API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 240

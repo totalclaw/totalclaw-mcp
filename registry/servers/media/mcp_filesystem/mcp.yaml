@@ -1,0 +1,39 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mcp_filesystem
+display_name: Filesystem
+version: 0.1.0
+description: Filesystem MCP server.
+description_zh: 受控文件系统读写 — 强制根目录沙箱,支持 list / read / write / edit / search / move。args 末 path 是允许根(可多个)。
+author: upstream
+homepage: https://github.com/modelcontextprotocol/servers
+category: media
+tags:
+- media
+- preset
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@modelcontextprotocol/server-filesystem'
+  - ${MCP_FS_ROOT:-/tmp}
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env:
+- name: MCP_FS_ROOT
+  env_key: MCP_FS_ROOT
+  description: MCP_FS_ROOT for mcp_filesystem
+  prompt: 请输入 MCP_FS_ROOT
+  secret: false
+  default: /tmp
+  required: false
+defaults:
+  enabled: true
+  timeout: 60

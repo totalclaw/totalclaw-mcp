@@ -1,0 +1,36 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: matrixmedia
+display_name: MatrixMedia 媒体矩阵
+version: 0.1.0
+description: MatrixMedia 媒体矩阵 MCP server.
+description_zh: 媒体矩阵账号管理 + 视频跨平台批量发布 + 发布历史查询;提供 list_accounts / list_history / publish_video 3 个工具。
+author: upstream
+homepage: https://github.com/hanliang97/MatrixMedia
+category: social
+tags:
+- social
+- preset
+kind: mcp_server
+runtimes:
+- id: node
+  type: stdio
+  launcher: node
+  command: node
+  args:
+  - ${MATRIXMEDIA_DIR}/mcp/dist/index.js
+  env:
+    MATRIXMEDIA_DIR: ${MATRIXMEDIA_DIR}
+requires_env:
+- name: MATRIXMEDIA_DIR
+  env_key: MATRIXMEDIA_DIR
+  description: MATRIXMEDIA_DIR for matrixmedia
+  prompt: 请输入 MATRIXMEDIA_DIR
+  secret: false
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

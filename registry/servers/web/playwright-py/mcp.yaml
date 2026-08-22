@@ -1,0 +1,29 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: playwright-py
+display_name: Playwright (built-in Python)
+version: 0.1.0
+description: Playwright (built-in Python) MCP server.
+description_zh: 纯 Python Playwright MCP —— 浏览器自动化首选(零 Node)。navigate/snapshot/click/type/eval/screenshot/back。BROWSER_CDP_URL
+  设了则接管用户已开 Chrome,否则自启 Chromium。
+author: totalclaw
+category: web
+tags:
+- web
+- preset
+kind: mcp_server
+runtimes:
+- id: totalclaw
+  type: stdio
+  launcher: totalclaw
+  command: totalclaw
+  args:
+  - __mcp-server
+  - playwright-py
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

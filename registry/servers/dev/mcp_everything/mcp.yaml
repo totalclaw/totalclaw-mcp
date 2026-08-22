@@ -1,0 +1,32 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mcp_everything
+display_name: Everything (reference)
+version: 0.1.0
+description: Everything (reference) MCP server.
+description_zh: 官方参考实现 + 测试服 — 提供 prompts / resources / tools 三类 MCP capability 完整示例,用于 MCP client 兼容性验证
+  + 学习。
+author: upstream
+homepage: https://github.com/modelcontextprotocol/servers
+category: dev
+tags:
+- dev
+- preset
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@modelcontextprotocol/server-everything'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60

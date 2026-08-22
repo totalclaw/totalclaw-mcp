@@ -1,0 +1,33 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: aitoearn
+display_name: AiToEarn
+version: 0.1.0
+description: AiToEarn MCP server.
+description_zh: 13+ 社交平台统一发布(视频/图文) + 自动点赞/评论/回复 + AI 文案生成 + 任务化变现执行。统一 unified MCP 接口。国内站点改 base 为 https://aitoearn.cn/api。
+author: upstream
+homepage: https://github.com/yikart/AiToEarn
+category: social
+tags:
+- social
+- preset
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://aitoearn.ai/api/unified/mcp
+  headers:
+    x-api-key: ${RELAY_API_KEY}
+requires_env:
+- name: RELAY_API_KEY
+  env_key: RELAY_API_KEY
+  description: RELAY_API_KEY for aitoearn
+  prompt: 请输入 RELAY_API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 240

@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Node（api/ web/ 子系统落地后使用）
+node_modules/
+dist/
+build/
+*.log
+
+# 本地环境与密钥
+.env
+.env.local
+*.pem
+*.key
+registry.json.sig.tmp
+
+# 编辑器
+.idea/
+.vscode/
+*.swp

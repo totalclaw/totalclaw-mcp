@@ -1,0 +1,47 @@
+# 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: sentry
+display_name: Sentry
+version: 0.1.0
+description: Sentry MCP server.
+description_zh: Sentry 错误监控集成 — issue 查询 / event 详情 / release / project / team / 性能 / AI Codegen 错误分析。Sentry
+  官方维护。
+author: upstream
+homepage: https://github.com/getsentry/sentry-mcp
+category: dev
+tags:
+- dev
+- preset
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@sentry/mcp-server'
+  env:
+    SENTRY_AUTH_TOKEN: ${SENTRY_AUTH_TOKEN}
+    SENTRY_ORG: ${SENTRY_ORG}
+  requires:
+    node: '>=18'
+requires_env:
+- name: SENTRY_AUTH_TOKEN
+  env_key: SENTRY_AUTH_TOKEN
+  description: SENTRY_AUTH_TOKEN for sentry
+  prompt: 请输入 SENTRY_AUTH_TOKEN
+  secret: true
+  required: true
+- name: SENTRY_ORG
+  env_key: SENTRY_ORG
+  description: SENTRY_ORG for sentry
+  prompt: 请输入 SENTRY_ORG
+  secret: false
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

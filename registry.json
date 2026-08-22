@@ -1,0 +1,1788 @@
+{
+  "schema_version": 1,
+  "registry": "totalclaw-mcp",
+  "id_scheme": "<registry>/<category>/<name>",
+  "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+  "api_base": "https://mcp.taituai.com/api",
+  "generated_at": "2026-08-22T10:12:31Z",
+  "servers": [
+    {
+      "name": "composio",
+      "id": "totalclaw-mcp/biz/composio",
+      "display_name": "Composio",
+      "description": "Composio MCP server.",
+      "description_zh": "500+ SaaS 工具统一接入枢纽:Gmail / Slack / GitHub / Notion / Linear / Jira / HubSpot / Salesforce / Calendar / Drive 等。支持 OAuth 流程 + 多账号上下文 + 沙箱工作台。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/composiohq/composio",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "header"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "COMPOSIO_API_KEY",
+          "description": "COMPOSIO_API_KEY for composio",
+          "prompt": "请输入 COMPOSIO_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/biz/composio",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/composio",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/composio"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "99142c93120ff0c3abdd4cb845edeedf17d428f5c238b1b10e94b3e345f0ae50",
+          "size": 555
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "eeb40165f38a1b3c714026fba72fdd2ff9ee7f661c7a6e4eebff17b89f726332",
+          "size": 961
+        }
+      ],
+      "bundle_sha256": "7201b74b25e94cd263a04e18d2431d67be239ebb6578694c51b172ab3b0c8fb5"
+    },
+    {
+      "name": "mcp_memory",
+      "id": "totalclaw-mcp/biz/mcp_memory",
+      "display_name": "Memory",
+      "description": "Memory MCP server.",
+      "description_zh": "知识图谱式持久记忆 — 实体 / 关系 / 观察三元组,跨会话保留。与 totalclaw_core.memory.long_term_memory 互补:本 server 走图谱模型,核内 LTM 走衰减表模型。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/modelcontextprotocol/servers",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [
+        "MEMORY_FILE_PATH"
+      ],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/biz/mcp_memory",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/mcp_memory",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/mcp_memory"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "984ef79ebf9e697e435254f7f2c4dd2e33e7ee0673231ae3f6c4803fd6aeb57f",
+          "size": 457
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "7addfe133591602420823cc85de6a2314b8367a75f0279cb200992e38db4414d",
+          "size": 1081
+        }
+      ],
+      "bundle_sha256": "7e0b3b0a561f31821d1ee058bd85e4648d4cfafa5a7fa84e0911a9adda93613d"
+    },
+    {
+      "name": "mcp_sequential_thinking",
+      "id": "totalclaw-mcp/biz/mcp_sequential_thinking",
+      "display_name": "Sequential Thinking",
+      "description": "Sequential Thinking MCP server.",
+      "description_zh": "动态反思式问题分解 — 把复杂任务拆成有序思考序列,支持回溯 / 修正 / 分支。适合长 horizon planning。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/modelcontextprotocol/servers",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/biz/mcp_sequential_thinking",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/mcp_sequential_thinking",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/mcp_sequential_thinking"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "0edd57261c1ad6746860166146513dd0695df5e29f6a6c0e63213544e0f1ddb3",
+          "size": 395
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "d1eae65f41ce1d64543a7696dcd658d95210f246f9f15f6a22d15d6126522384",
+          "size": 800
+        }
+      ],
+      "bundle_sha256": "a9d01ea2467f0fa85297186ab96d846a8574d706a634a01e2d7d950096b5dcdc"
+    },
+    {
+      "name": "notion",
+      "id": "totalclaw-mcp/biz/notion",
+      "display_name": "Notion",
+      "description": "Notion MCP server.",
+      "description_zh": "Notion API 全套集成 — 页面 / 数据库 / 搜索 / 评论 / 用户 / 块级编辑。Notion 官方维护。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/makenotion/notion-mcp-server",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "NOTION_API_KEY",
+          "description": "NOTION_API_KEY for notion",
+          "prompt": "请输入 NOTION_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/biz/notion",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/notion",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/notion"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "5e47d515a7ca134c8087114a046bdf340c40b0daa6289c15be9690b509e0ae69",
+          "size": 469
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "53907062fb7926b6e18f7dee793fe15fd7b3fc8069e2bef412fc84da8c66679a",
+          "size": 980
+        }
+      ],
+      "bundle_sha256": "09ce8eb4fe31833269bf1255e857e5f72d08b908e379d8f62507701e3f91c703"
+    },
+    {
+      "name": "wechat-desktop",
+      "id": "totalclaw-mcp/comm/wechat-desktop",
+      "display_name": "WeChat Desktop (built-in)",
+      "description": "WeChat Desktop (built-in) MCP server.",
+      "description_zh": "桌面微信自控 —— 自动检测 OS(Windows/macOS/Linux)调对应底层:wechat_capabilities/list_unread/open_chat/read_chat/screenshot_chat/send_message。分层读取:native_text(AX/UIA 免模型)→ ocr → clipboard → screenshot(交 agent 视觉)。发送用确定性几何。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "comm",
+      "tags": [
+        "comm",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "totalclaw"
+      ],
+      "runtimes": [
+        {
+          "id": "totalclaw",
+          "type": "stdio",
+          "launcher": "totalclaw"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/comm/wechat-desktop",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/comm/wechat-desktop",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/comm/wechat-desktop"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "5e1269f2b2a04bafacec2e7c2267b4205eba75e7c14db98b8556a7a6c48868fa",
+          "size": 809
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "3600be4e269d2e1d563d0c2cf5de98a022e605abb8b6f3ca52e5746d5e035e3e",
+          "size": 957
+        }
+      ],
+      "bundle_sha256": "1e1a114c265bbbcccc0306024109c8aa87ebe02d9b4fe53caa5605fd992e6891"
+    },
+    {
+      "name": "blender",
+      "id": "totalclaw-mcp/creative/blender",
+      "display_name": "Blender",
+      "description": "Drive a live Blender session for modeling, scenes, and renders.",
+      "version": "0.1.0",
+      "author": "upstream",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "creative",
+        "catalog"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/creative/blender",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/blender",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/blender"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "bb9e6a3d70d30d0f58d41538554a2ad1411548e4847354f9a26fd832243262ab",
+          "size": 148
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "b65fe205fe29a4be75c39be45d7d71bac82fca629df9e3a817018fa09bca6d2a",
+          "size": 684
+        }
+      ],
+      "bundle_sha256": "63430a0db48b2d3362571d5fbe6718ebd09c634470a8412f9724f52faa2d9a40"
+    },
+    {
+      "name": "unreal_engine",
+      "id": "totalclaw-mcp/creative/unreal_engine",
+      "display_name": "Unreal Engine",
+      "description": "Drive Unreal Editor 5.8+ through Epic's experimental MCP toolset registry: scene, asset, Blueprint, Sequencer, PIE, automation, capture, and editor scripting workflows.",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://dev.epicgames.com/documentation/unreal-engine/unreal-mcp-in-unreal-editor",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "creative",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/creative/unreal_engine",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/unreal_engine",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/unreal_engine"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "1925e67084843160c39b983f5e90fca5a58695c431ba3e9ae02e4e5921bc1f6a",
+          "size": 630
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "b550f6d5a366cbe1ae6c40e0824e62c48988d0a88ac5034112bcbefeb5905d3f",
+          "size": 764
+        }
+      ],
+      "bundle_sha256": "0d9fa77b912227f792f09b790a45caaab8c86b8846d372fecc9043860e0fcf92"
+    },
+    {
+      "name": "mcp_postgres",
+      "id": "totalclaw-mcp/data/mcp_postgres",
+      "display_name": "PostgreSQL",
+      "description": "PostgreSQL MCP server.",
+      "description_zh": "PostgreSQL 只读查询 — 暴露 query / schema / 表元信息工具。Connection string 在 args 末。已归档但仍可用。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/modelcontextprotocol/servers-archived",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "POSTGRES_URL",
+          "description": "POSTGRES_URL for mcp_postgres",
+          "prompt": "请输入 POSTGRES_URL",
+          "secret": false,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/data/mcp_postgres",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/mcp_postgres",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/mcp_postgres"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "ef753ac699dec0c34dfeb4d4fc699f02cc30ebca42321779b32c864e116a2776",
+          "size": 460
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "02b6f3f782acf9a6ba2008aaa54a90c3367d060a9f5bb4d4800e77b9a0427529",
+          "size": 941
+        }
+      ],
+      "bundle_sha256": "67114ca7c0a342dfbc075d279ace002203b258b22b42a81b4341814d099039e2"
+    },
+    {
+      "name": "mcp_sqlite",
+      "id": "totalclaw-mcp/data/mcp_sqlite",
+      "display_name": "SQLite",
+      "description": "SQLite MCP server.",
+      "description_zh": "SQLite 本地数据库读写 — list_tables / describe_table / read_query / write_query / create_table。轻量本地存储工作流。已归档但仍可用。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/modelcontextprotocol/servers-archived",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [
+        "SQLITE_DB_PATH"
+      ],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/data/mcp_sqlite",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/mcp_sqlite",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/mcp_sqlite"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "7cd7cdcf891923af63a7ef3676cc1fd7c989052cc845b569ed4e8cd0723aead9",
+          "size": 435
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "6afa25a0ccad8492c7396bcdaf83ba3fba3fcb2396888617d772baf7959130a0",
+          "size": 1011
+        }
+      ],
+      "bundle_sha256": "082281e57766838567feafb4a01b95b71f5fcfee2d24566aea8abe363e13ee63"
+    },
+    {
+      "name": "linear",
+      "id": "totalclaw-mcp/dev/linear",
+      "display_name": "Linear",
+      "description": "Linear MCP server.",
+      "description_zh": "Linear issue tracker 集成 — issue CRUD / 项目 / cycle / team / labels / comments / search。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/tacticlaunch/mcp-linear",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "dev",
+      "tags": [
+        "dev",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "LINEAR_API_KEY",
+          "description": "LINEAR_API_KEY for linear",
+          "prompt": "请输入 LINEAR_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/dev/linear",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/linear",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/dev/linear"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "4ab3a2b28f3169f657e672b6eea82b7fb6d72d0479cf172cccba118c1b10b881",
+          "size": 397
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "35b5e132e1f24cb3afa2b86e5872962068a9c057b0a0e180e16c5598e4036e32",
+          "size": 893
+        }
+      ],
+      "bundle_sha256": "cf7303918ed19d207bd0ed446bfe1854461b9c0e45b6ed9e5aa61adb6238a0d7"
+    },
+    {
+      "name": "mcp_everything",
+      "id": "totalclaw-mcp/dev/mcp_everything",
+      "display_name": "Everything (reference)",
+      "description": "Everything (reference) MCP server.",
+      "description_zh": "官方参考实现 + 测试服 — 提供 prompts / resources / tools 三类 MCP capability 完整示例,用于 MCP client 兼容性验证 + 学习。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/modelcontextprotocol/servers",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "dev",
+      "tags": [
+        "dev",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/dev/mcp_everything",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/mcp_everything",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/dev/mcp_everything"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "edd026c7cdff3b194cc3d91c6dac4e50c0031d35ca4d3dcd749ab5b40f1f3511",
+          "size": 414
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "a4a662e721ff65d6b216268ffc4231a452f689989e5b929a0cf4adf53ef61158",
+          "size": 807
+        }
+      ],
+      "bundle_sha256": "85b3ae0ac7c064b41126b0acd6991961e48d225a62f869ca1af69d546dc37c2a"
+    },
+    {
+      "name": "mcp_git",
+      "id": "totalclaw-mcp/dev/mcp_git",
+      "display_name": "Git",
+      "description": "Git MCP server.",
+      "description_zh": "git 仓库读取 / 搜索 / 操作 — log / diff / blame / branch / show / stage / commit / status。对 LLM 暴露完整 git 工作流。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/modelcontextprotocol/servers",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "dev",
+      "tags": [
+        "dev",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [
+        "MCP_GIT_REPO"
+      ],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/dev/mcp_git",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/mcp_git",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/dev/mcp_git"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "139c59177a7242c613fd856ea1f48528633105f9f655f866d36551ec03f102fb",
+          "size": 416
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "ce00e24e9ca5294b7f38a140ccdf5d18633513cb8da249f64c3b67aaf8d4a1d9",
+          "size": 937
+        }
+      ],
+      "bundle_sha256": "ade47a5b5e50cd295be900b57a3263da46e7796019751b1cc15b857ae4247d31"
+    },
+    {
+      "name": "mcp_github",
+      "id": "totalclaw-mcp/dev/mcp_github",
+      "display_name": "GitHub",
+      "description": "GitHub REST API integration — repos, issues, PRs, commits, search, releases, branches, forks (~30 tools).",
+      "description_zh": "GitHub REST API 集成 — 仓库 / issue / PR / commit / search / release / branch / fork，约 30 个工具。",
+      "version": "2025.4.8",
+      "author": "modelcontextprotocol",
+      "license": "MIT",
+      "homepage": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/github",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "dev",
+      "tags": [
+        "dev",
+        "git",
+        "github",
+        "issues",
+        "pull-requests",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http",
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        },
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "header"
+        },
+        {
+          "id": "hosted",
+          "type": "http",
+          "auth": "header",
+          "hosted": true
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "GITHUB_PERSONAL_ACCESS_TOKEN",
+          "description": "GitHub Personal Access Token (repo / read:org scope)",
+          "prompt": "请输入 GitHub Personal Access Token",
+          "secret": true,
+          "required": true,
+          "runtimes": [
+            "npx",
+            "remote"
+          ]
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/dev/mcp_github",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/mcp_github",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/dev/mcp_github"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "126c8592f56dca40e22ba3522e86ac9582666b3f964675607197d176a3b650a8",
+          "size": 566
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "b13fd5131ca37991f42b902cebbd7c2d9aa70ba397dffa675e10a3425ee2ce9f",
+          "size": 2246
+        }
+      ],
+      "bundle_sha256": "2414a6ea9ab2e01a853accd7725d00bcb251c4dde1d62f2b2b19f5a1cd9f14b5"
+    },
+    {
+      "name": "sentry",
+      "id": "totalclaw-mcp/dev/sentry",
+      "display_name": "Sentry",
+      "description": "Sentry MCP server.",
+      "description_zh": "Sentry 错误监控集成 — issue 查询 / event 详情 / release / project / team / 性能 / AI Codegen 错误分析。Sentry 官方维护。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/getsentry/sentry-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "dev",
+      "tags": [
+        "dev",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "SENTRY_AUTH_TOKEN",
+          "description": "SENTRY_AUTH_TOKEN for sentry",
+          "prompt": "请输入 SENTRY_AUTH_TOKEN",
+          "secret": true,
+          "required": true
+        },
+        {
+          "name": "SENTRY_ORG",
+          "description": "SENTRY_ORG for sentry",
+          "prompt": "请输入 SENTRY_ORG",
+          "secret": false,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/dev/sentry",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/sentry",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/dev/sentry"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "0dc3ba16e53832a56f197ef5011ea327cd4d0d457c2748371ea0706bf35af62e",
+          "size": 481
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "da33b755aaccccbff6ca3c16f76ccde0d80c89fb891e1155a2a97c94167e9f33",
+          "size": 1122
+        }
+      ],
+      "bundle_sha256": "6edd292317f43e865a33817a6e109f935ff0e1318f92666cc192b74359e64c21"
+    },
+    {
+      "name": "docker",
+      "id": "totalclaw-mcp/infra/docker",
+      "display_name": "Docker",
+      "description": "Docker MCP server.",
+      "description_zh": "Docker 容器管理 — ps / images / run / stop / logs / exec / inspect / network / volume。LLM 直接调度本地或远端 Docker daemon。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/QuantGeekDev/docker-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "infra",
+      "tags": [
+        "infra",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [
+        "DOCKER_HOST"
+      ],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/infra/docker",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/docker",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/infra/docker"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "f5db3d4d2743f167857676bbb098779f69805ad927622c746865ee8fc081c5bf",
+          "size": 460
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "6b14de750efebf150a0927212e41085271f51a9da3860a6bd430996f85fd9b85",
+          "size": 976
+        }
+      ],
+      "bundle_sha256": "bb7be7a4e8979703aa565d99299ab342acfb1076831c4c6ec860df2838a4de14"
+    },
+    {
+      "name": "mcp_filesystem",
+      "id": "totalclaw-mcp/media/mcp_filesystem",
+      "display_name": "Filesystem",
+      "description": "Filesystem MCP server.",
+      "description_zh": "受控文件系统读写 — 强制根目录沙箱,支持 list / read / write / edit / search / move。args 末 path 是允许根(可多个)。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/modelcontextprotocol/servers",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "media",
+      "tags": [
+        "media",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [
+        "MCP_FS_ROOT"
+      ],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/media/mcp_filesystem",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/media/mcp_filesystem",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/media/mcp_filesystem"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "1d7c3e0443d0d9e7214ef5edc72234e96220df947314623cd2e100b4ed06e677",
+          "size": 434
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "fc12c7f0d16ec20aca9e579824265506dce354f73218535665b6c454fb8a479b",
+          "size": 971
+        }
+      ],
+      "bundle_sha256": "5c6e9d75e13a6e394a28a56850369185a5fe956e18e6259a482f0c6c2582158a"
+    },
+    {
+      "name": "mcp_time",
+      "id": "totalclaw-mcp/office/mcp_time",
+      "display_name": "Time",
+      "description": "Time MCP server.",
+      "description_zh": "时间 + 时区转换 — get_current_time(timezone) / convert_time(time, from_tz, to_tz)。补 LLM 时间盲区。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/modelcontextprotocol/servers",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "office",
+      "tags": [
+        "office",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/office/mcp_time",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/mcp_time",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/office/mcp_time"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "fef7bab75db9e73af2fc005d6ba9a6e642f52833c24e18825f76158c4193b256",
+          "size": 342
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "01aaefd22adfdc8463c36ad773b4e8dfa0c563b96d234363e5610b4079037068",
+          "size": 728
+        }
+      ],
+      "bundle_sha256": "9987f8b40fffceade9dcae880f7bfba056ded2c702317cbfe1ad4463f39dfb23"
+    },
+    {
+      "name": "aitoearn",
+      "id": "totalclaw-mcp/social/aitoearn",
+      "display_name": "AiToEarn",
+      "description": "AiToEarn MCP server.",
+      "description_zh": "13+ 社交平台统一发布(视频/图文) + 自动点赞/评论/回复 + AI 文案生成 + 任务化变现执行。统一 unified MCP 接口。国内站点改 base 为 https://aitoearn.cn/api。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/yikart/AiToEarn",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "social",
+      "tags": [
+        "social",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "RELAY_API_KEY",
+          "description": "RELAY_API_KEY for aitoearn",
+          "prompt": "请输入 RELAY_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/social/aitoearn",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/social/aitoearn",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/social/aitoearn"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "13e50f24b2bd588f3e68d6ab97d1b198b5ca6586dfdc17217e3515df17e4fb6f",
+          "size": 502
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "3d7a9325a5d6bffce22692987bb5b0a858533ca018a9734697c03b0a3382c37d",
+          "size": 930
+        }
+      ],
+      "bundle_sha256": "09a0ea98ec61cbd49c2b7ff46faa9d1ec8341f73a7f9c03f9a6ffee25cbf43b1"
+    },
+    {
+      "name": "dy_xhs",
+      "id": "totalclaw-mcp/social/dy_xhs",
+      "display_name": "抖音 / 小红书",
+      "description": "抖音 / 小红书 MCP server.",
+      "description_zh": "抖音+小红书内容提取/去水印/语音转文字:get_douyin_download_link / extract_douyin_text / parse_douyin_video_info / get_xiaohongshu_content / extract_xiaohongshu_text / extract_xiaohongshu_video_text / get_xiaohongshu_images / remove_xiaohongshu_video_watermark(8 工具)。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/AshinH/dy-xhs-mcp-server",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "social",
+      "tags": [
+        "social",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [
+        "DOUYIN_MCP_CONFIG"
+      ],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/social/dy_xhs",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/social/dy_xhs",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/social/dy_xhs"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "702a80ae5f3a7145653e83129cccad0b3d1cfa598d15338eb8a52d7dda92029f",
+          "size": 719
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "551ac717872028c99117e1d45a0d1d253189f84750a75cc135880adc1bc56c13",
+          "size": 1183
+        }
+      ],
+      "bundle_sha256": "efd69f841af326376f09377408f415ce3dcc9a93b496145c67dd15727337ae39"
+    },
+    {
+      "name": "matrixmedia",
+      "id": "totalclaw-mcp/social/matrixmedia",
+      "display_name": "MatrixMedia 媒体矩阵",
+      "description": "MatrixMedia 媒体矩阵 MCP server.",
+      "description_zh": "媒体矩阵账号管理 + 视频跨平台批量发布 + 发布历史查询;提供 list_accounts / list_history / publish_video 3 个工具。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/hanliang97/MatrixMedia",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "social",
+      "tags": [
+        "social",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "node"
+      ],
+      "runtimes": [
+        {
+          "id": "node",
+          "type": "stdio",
+          "launcher": "node"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "MATRIXMEDIA_DIR",
+          "description": "MATRIXMEDIA_DIR for matrixmedia",
+          "prompt": "请输入 MATRIXMEDIA_DIR",
+          "secret": false,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/social/matrixmedia",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/social/matrixmedia",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/social/matrixmedia"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "39f53abec6d0272cb49cf2dba30d4c7f1f8e6f1a7d0aae3afc032250a84e7461",
+          "size": 572
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "7c5ee2b6428a5136114e7357f4b345d01047430cbc6c93f3e073c6137febcf17",
+          "size": 972
+        }
+      ],
+      "bundle_sha256": "8d44c1383d31d883d7f1efb69d501f0f7aa9c81c6a4edf4d3ddf4931411ce20d"
+    },
+    {
+      "name": "socialcrawl",
+      "id": "totalclaw-mcp/social/socialcrawl",
+      "display_name": "SocialCrawl",
+      "description": "SocialCrawl MCP server.",
+      "description_zh": "27 社交平台公开数据爬取:账号资料、帖子、搜索、分析。5 工具:list_platforms / list_endpoints / request / check_balance / get_docs。前 3 个无 key 可用,request + balance 需 key。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/socialcrawl/mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "social",
+      "tags": [
+        "social",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "SOCIALCRAWL_API_KEY",
+          "description": "SOCIALCRAWL_API_KEY for socialcrawl",
+          "prompt": "请输入 SOCIALCRAWL_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/social/socialcrawl",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/social/socialcrawl",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/social/socialcrawl"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "fa918085a8c4c8f455724dd6f18544fe7285d9f82c087470f7009cf20018787c",
+          "size": 515
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "043c6e4fc4a74f1a0402794d1a11a02b1de1e427d4020a1319791989b315aed7",
+          "size": 1042
+        }
+      ],
+      "bundle_sha256": "76da44e53127272a2a03b6c539e989a2590cc532b58b6981feae56b104850460"
+    },
+    {
+      "name": "xiaohongshu",
+      "id": "totalclaw-mcp/social/xiaohongshu",
+      "display_name": "小红书",
+      "description": "小红书 MCP server.",
+      "description_zh": "小红书图文/视频发布、关键词搜索、推荐流获取、帖子详情、评论(发表/回复/点赞)、收藏、用户主页、登录状态检查(13 工具)。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/xpzouying/xiaohongshu-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "social",
+      "tags": [
+        "social",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/social/xiaohongshu",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/social/xiaohongshu",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/social/xiaohongshu"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "195b8bf39198c6ecf4eee773ccdefee90916ecb3718b459c5ac9de5ceedef9e1",
+          "size": 620
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "3fce1f4bb1bf1ab33b76c3a5c0c60fe5dece83edf0d98a966a84197f35b7e982",
+          "size": 714
+        }
+      ],
+      "bundle_sha256": "45e39d80222ade09f60641f95c683d751fb1eef30233f3ef2fe59ba699ba48fe"
+    },
+    {
+      "name": "chrome_devtools",
+      "id": "totalclaw-mcp/web/chrome_devtools",
+      "display_name": "Chrome DevTools",
+      "description": "Chrome DevTools MCP server.",
+      "description_zh": "谷歌浏览器(Chrome)DevTools 控制 — 自动化导航/点击/填表、性能 trace + Lighthouse 审计、网络请求观察、控制台日志读取、JS 执行、heap snapshot、屏幕截图、扩展安装。支持 --headless / --isolated / --browser-url 接已有 Chrome。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "web",
+      "tags": [
+        "web",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/web/chrome_devtools",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/chrome_devtools",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/web/chrome_devtools"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "c9e87848d32bd2a27fcbcb73a851c065168f282be04475d3e8323d62db6bc411",
+          "size": 710
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "a309cfcaabfee9a1460770ed57e99b29ca78800b4052c395455ee69808255668",
+          "size": 1017
+        }
+      ],
+      "bundle_sha256": "a0bc87652912df2ac499f2e7ba620743368798ea6c61ba58fce11159b5f27a1f"
+    },
+    {
+      "name": "mcp_brave_search",
+      "id": "totalclaw-mcp/web/mcp_brave_search",
+      "display_name": "Brave Search",
+      "description": "Brave Search MCP server.",
+      "description_zh": "Brave 搜索 API — web_search / local_search。隐私友好的搜索后端,与 LLM 主搜索流互补。已归档但仍可用。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/modelcontextprotocol/servers-archived",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "web",
+      "tags": [
+        "web",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "BRAVE_API_KEY",
+          "description": "BRAVE_API_KEY for mcp_brave_search",
+          "prompt": "请输入 BRAVE_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/web/mcp_brave_search",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/mcp_brave_search",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/web/mcp_brave_search"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "716e59cca6dab848b9f92f50e277e8fe8563a6c16a22e069c8944e68f0a84df3",
+          "size": 454
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "4dca1df8fa9cde7b22473febbdbf7450e636bb8c194f1251f0003d3eb10f4687",
+          "size": 981
+        }
+      ],
+      "bundle_sha256": "900516e84312eaded839b1681d5c1fee875c40d1725689dc30d010d8acd3347c"
+    },
+    {
+      "name": "mcp_fetch",
+      "id": "totalclaw-mcp/web/mcp_fetch",
+      "display_name": "Fetch",
+      "description": "Fetch MCP server.",
+      "description_zh": "抓取任意 URL 网页内容 + 自动 HTML→markdown 转换 + 节流。LLM 即时阅读 web 内容的标准入口。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/modelcontextprotocol/servers",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "web",
+      "tags": [
+        "web",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/web/mcp_fetch",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/mcp_fetch",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/web/mcp_fetch"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "8847bd53431da08b652cca15555703ee92e29fc4141edf67d3186f510af102af",
+          "size": 379
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "10e03050adfb404eda5f24cfb3777690f79a01749d2a21004996f1153c981389",
+          "size": 728
+        }
+      ],
+      "bundle_sha256": "758855612e2d9404a2a0e1a03933a0f76cce99304ae3015ea038a802490b98f4"
+    },
+    {
+      "name": "playwright",
+      "id": "totalclaw-mcp/web/playwright",
+      "display_name": "Playwright",
+      "description": "Playwright MCP server.",
+      "description_zh": "微软 Playwright MCP — 跨浏览器(Chromium/Firefox/WebKit)自动化 + 截图 + 网络拦截 + accessibility tree。比 chrome_devtools 跨浏览器、accessibility 信息更丰富。由微软官方维护。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/microsoft/playwright-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "web",
+      "tags": [
+        "web",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/web/playwright",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/playwright",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/web/playwright"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "2c3d3a60c7bcaf7c1a22bf461a7b61a2d896f14c81ffdad4d61c5fe0373ed605",
+          "size": 542
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "6c2f6c1c5c0c965ebd319b8a83efd3bf0d9130dee97ee71b94c37bd9cd0e4d43",
+          "size": 820
+        }
+      ],
+      "bundle_sha256": "0b81dd7b7219be059a6dee2c6b80095fff129cb729b04d0ba8e7ca4fd88cbd31"
+    },
+    {
+      "name": "playwright-py",
+      "id": "totalclaw-mcp/web/playwright-py",
+      "display_name": "Playwright (built-in Python)",
+      "description": "Playwright (built-in Python) MCP server.",
+      "description_zh": "纯 Python Playwright MCP —— 浏览器自动化首选(零 Node)。navigate/snapshot/click/type/eval/screenshot/back。BROWSER_CDP_URL 设了则接管用户已开 Chrome,否则自启 Chromium。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "web",
+      "tags": [
+        "web",
+        "preset"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "totalclaw"
+      ],
+      "runtimes": [
+        {
+          "id": "totalclaw",
+          "type": "stdio",
+          "launcher": "totalclaw"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned"
+      },
+      "path": "registry/servers/web/playwright-py",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/playwright-py",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/web/playwright-py"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "4395e955e7dd0de34d0b8e1d4a85f3f06d9e7a3389ca3cdf96fb7518b29ce447",
+          "size": 576
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "7aecc904eef90222312af5472b54969bbac166bd3b468b7778a7ece07d5adfed",
+          "size": 780
+        }
+      ],
+      "bundle_sha256": "caec2c6462b3cbc92c3003ee2cadcf5fa8c346c3e7daa48c5f23dfd1449323ae"
+    }
+  ]
+}
