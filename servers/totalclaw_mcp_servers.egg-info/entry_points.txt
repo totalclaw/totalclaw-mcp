@@ -1,0 +1,2 @@
+[console_scripts]
+totalclaw-mcp-server = totalclaw_mcp_servers.__main__:main

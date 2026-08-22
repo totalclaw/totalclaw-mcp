@@ -109,7 +109,14 @@
     `@modelcontextprotocol/server-time` 在 npm 上根本没有，该服务器是 PyPI 的
     `mcp-server-time`，runtime 已从 npx 改为 uvx —— 正是 agent `RETIRED_LAUNCH_SPECS`
     要防的「包不存在 → 挂到超时」那类问题
-- [ ] **C2** `scripts/probe_server.py`：沙箱启动 → `list_tools` → 生成 `tools.json` + `security` 块（注入扫描 10 模式 + 出网域名）；先手动跑 dev/web 两类
+- [x] **C2** `scripts/probe_server.py`：真实启动 → `list_tools` → 写回 `tools.json` + `security` 块
+  - 注入扫描 10 条模式（与 agent `helpers.py` 同源），命中即把 `scan_verdict` 置 `warn`
+  - 子进程 env 白名单，与 agent 的做法一致；`--dry-run` / `--skip-auth` / `--runtime`
+  - 自研服务器自动跳过（其 `tools.json` 由 `gen_manifests.py` 从实现直接生成）
+  - 已实跑 5 个上游条目：`mcp_time`(2) `mcp_fetch`(1) `mcp_sequential_thinking`(1)
+    `mcp_memory`(9) `mcp_everything`(13)，全部连通、无注入嫌疑
+  - 这轮实跑同时验证了 C1 的两处包名修复确实可用（原规格会挂到超时）
+- [ ] **C2.1** 把余下需凭据的上游条目在有凭据的环境里补跑一遍
 - [ ] **C3** Ed25519 签名：移植 `totalclaw-plugins/scripts/sign_registry.sh` → 产出 `registry.json.sig`
 - [x] **C4.1** 推送 Gitee 仓库 `jlzdyx/totalclaw-mcp`（分支 **master**，与 `registry.json` 的 `raw_base` 路径一致）
 - [ ] **C4.2** 分发通道的可见性方案 —— **决策推迟到对接时**（当前仓库为私有）

@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T11:49:25Z",
+  "generated_at": "2026-08-22T11:53:22Z",
   "servers": [
     {
       "name": "composio",
@@ -113,10 +113,22 @@
       "optional_env": [
         "MEMORY_FILE_PATH"
       ],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 9,
+      "tools": [
+        "create_entities",
+        "create_relations",
+        "add_observations",
+        "delete_entities",
+        "delete_observations",
+        "delete_relations",
+        "read_graph",
+        "search_nodes",
+        "open_nodes"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/biz/mcp_memory",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/mcp_memory",
@@ -132,11 +144,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "5b588e07405bd8638fde7c4d9ba52575610d8f47bfe160bd9edfa4b72ce0fad1",
-          "size": 1090
+          "sha256": "b36876322fb58a1fc471b6b857a938ddb5579d40c7d7d6ae2ba3b39241b7c85c",
+          "size": 1266
+        },
+        {
+          "path": "tools.json",
+          "sha256": "24028121892df3dee474d4f44c1b93d92fabf4517d9aa6fcad653aa33759df18",
+          "size": 7165
         }
       ],
-      "bundle_sha256": "3612b95c62a9eed38ec14e2b38aecd1b0da4ee86f9faf0ba3ed516028d85ffab"
+      "bundle_sha256": "c759fc709a3058ed28f24ce5265eedb90e1e80db7bc6d46e45474ad6097dcb0a"
     },
     {
       "name": "mcp_sequential_thinking",
@@ -175,10 +192,14 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 1,
+      "tools": [
+        "sequentialthinking"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/biz/mcp_sequential_thinking",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/mcp_sequential_thinking",
@@ -194,11 +215,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "393d7a4a523757456f5e3f03842b7bdecad6d7c4742aa2c89a99b28cc2513ad4",
-          "size": 810
+          "sha256": "34ced9d9a015f4beaacf013427479f3a997c5bf8008b098bff2a23695c49cace",
+          "size": 986
+        },
+        {
+          "path": "tools.json",
+          "sha256": "4d7be52ecc4996e6ac7b06266f7d61438d6225ee1d0938ead3050c6457889a2c",
+          "size": 4594
         }
       ],
-      "bundle_sha256": "7fc4df6c7f6b3668b29a235784627b7f57e9941715b627e8dd786e7361a4427b"
+      "bundle_sha256": "7e521f46155f8e38582b6298bc2bb4c94a9144f8fba5bc772086fe8b7742aea9"
     },
     {
       "name": "dingtalk",
@@ -1580,10 +1606,26 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 13,
+      "tools": [
+        "echo",
+        "get-annotated-message",
+        "get-env",
+        "get-resource-links",
+        "get-resource-reference",
+        "get-structured-content",
+        "get-sum",
+        "get-tiny-image",
+        "gzip-file-as-resource",
+        "toggle-simulated-logging",
+        "toggle-subscriber-updates",
+        "trigger-long-running-operation",
+        "simulate-research-query"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/dev/mcp_everything",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/mcp_everything",
@@ -1599,11 +1641,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "212d66d58650234c9fe8ff6fd43425d109e67e1e4b23293fcadf7f1bfda1b1f5",
-          "size": 817
+          "sha256": "c137799808bc9c2891949c1e7a83b2208d039da56312abf87cda5c2abfaf9d4b",
+          "size": 994
+        },
+        {
+          "path": "tools.json",
+          "sha256": "478490e58ba9db0827f985ee0d2a32b9d4d58dfdb23f1194e6330ad99874864e",
+          "size": 7194
         }
       ],
-      "bundle_sha256": "1dbf6d909d0c51893dce11467e5f8a86b7ba7125b50d8bb82c62122b7a5d9b4d"
+      "bundle_sha256": "e0868be78ff620e868f5b08f1bd61221271135c8ec8b6a95be96b56d8850b1bd"
     },
     {
       "name": "mcp_git",
@@ -2609,10 +2656,15 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 2,
+      "tools": [
+        "get_current_time",
+        "convert_time"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/office/mcp_time",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/mcp_time",
@@ -2628,11 +2680,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "929b316b8922d07a594b97474bd0d14da90815d19be868ca9d54f94d451bc898",
-          "size": 716
+          "sha256": "a6a476ac4d0eafcda83d7791b4aadbd6f713e5930783560b485c3930801a7536",
+          "size": 892
+        },
+        {
+          "path": "tools.json",
+          "sha256": "7e3042eaab16f83222cd161f973b998653a5ec56b4123f0c4fa9ccb6b7f417ea",
+          "size": 1410
         }
       ],
-      "bundle_sha256": "707738f6112829abf17b4d8dba823cabc3a2ebcad3106c1eb801f066a269d20d"
+      "bundle_sha256": "3525bc1cd005c46df2b1abcffa7cab0adc6a7044a14db7a378ccb74c976e3d36"
     },
     {
       "name": "notion",
@@ -3231,10 +3288,14 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 1,
+      "tools": [
+        "fetch"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/web/mcp_fetch",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/mcp_fetch",
@@ -3250,11 +3311,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "170b1c4361117d8c0b99984e80dd1446c8a2eae202e7f1e7e84aa7085e54c470",
-          "size": 739
+          "sha256": "e4c294adb118b8bc4025b855abe9f91a8383964cabfd7071e2a8c45e5f8cd95a",
+          "size": 915
+        },
+        {
+          "path": "tools.json",
+          "sha256": "8524ad8a50e4cfd8301b29958aa4af011e9ce9575d0689e0be096e8d760733e0",
+          "size": 1539
         }
       ],
-      "bundle_sha256": "0f9220003707b8ed4c3fe50986755a8ad21e582f1112c7ef0375f7e5470ea617"
+      "bundle_sha256": "03c0b378ef1ac7fd58fa2b79ce56a083350773d888720806e40dd88ff0f75c68"
     },
     {
       "name": "playwright",
