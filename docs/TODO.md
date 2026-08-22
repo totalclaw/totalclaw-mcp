@@ -121,14 +121,17 @@
   `QIYE_API_MCP_REGISTRY / REGISTRY_INFO / PLAN / INSTALL / JOB / INSTALLED / UPDATE / RELOAD / STATUS`
 - [x] **B1.2** handler 已实现：**一律 `postRaw / getRaw`**（camel→snake 会把 `GITHUB_TOKEN` 折成 `github_token`，参照既有 `QIYE_API_MCP_UPSERT` 的注释）；限流 install=10 / reload=6
 - [x] **B1.3** preload 已暴露 10 个方法
-- [ ] **B1.4** 配额门控：INSTALL handler 里按版本矩阵（专业 5 / 旗舰不限）计数，超限返回 `{code:'QUOTA_EXCEEDED', limit}`
+- [x] **B1.4** 配额门控已实现（`packages/edition-features/src/mcp-quotas.ts` + INSTALL handler）
+  - 沿用 group-quotas 既有约定：`null` = 不限、按 tier 兜底、服务端非 null 覆盖
+  - **重装已装过的不占新名额**（否则配额用满时连修都修不了）；取已装列表失败时不拦
+  - 9 个单测覆盖 baseline / 合并 / 解析边界 / 重装豁免
 
 ### B2. 统一市场页
 - [x] **B2.1** 已实现 `renderer/views/McpMarketView.vue`：Tab「市场」（registry 搜索 + 分类 chips + verified 徽标 + 工具数）/ Tab「已安装」（状态卡 ready/connecting/failed/disabled/needs_setup/update_available；操作：启停/更新/卸载/重新探测/OAuth 登录；顶部「重载 MCP」按钮）
 - [x] **B2.2** 已实现 `renderer/components/mcp/McpInstallDialog.vue` 四步向导：
   选 runtime（灰掉 `available=false` 并显示 reason）→ `requires_env` 表单（复用 plugin requires_env 渲染器，`secret` 密码框）→ `plan` 预览（脱敏配置块/工具列表/安全结论/覆盖提示）→ install + 轮询 job 逐行日志；422 `missing_env` 回到表单
 - [x] **B2.3** 路由 `/mcp` 已加，门控沿用 feature id `mcp-market`
-- [ ] **B2.4** `McpServerPanel.vue` 降级为「高级：手动添加」折叠区（保留既有 preset/custom 能力）
+- [x] **B2.4** `McpServerPanel.vue` 已降级为「已安装」页底部的折叠区，并写清何时才该用它
 - [x] **B2.5** `PluginsView.vue` 的内存版 MCP 段已替换为指向 `/mcp` 的引导卡（并注明为何迁走）。
   `packages/mcp-market` 与 `feature-handlers.ts` 的 5 个通道**暂留**：直接删有连带风险，
   而用户可见的「两处入口互相矛盾」问题已由引导卡消除。彻底移除见 B2.5.1
