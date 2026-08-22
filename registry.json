@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T11:41:01Z",
+  "generated_at": "2026-08-22T11:47:13Z",
   "servers": [
     {
       "name": "composio",
@@ -2117,6 +2117,110 @@
         }
       ],
       "bundle_sha256": "bb7be7a4e8979703aa565d99299ab342acfb1076831c4c6ec860df2838a4de14"
+    },
+    {
+      "name": "tencent_edgeone",
+      "id": "totalclaw-mcp/infra/tencent_edgeone",
+      "display_name": "腾讯云 EdgeOne",
+      "description": "查询与管理 EdgeOne 站点、加速域名，提交刷新与预热任务。",
+      "description_zh": "查询与管理 EdgeOne 站点、加速域名，提交刷新与预热任务。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "infra",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "腾讯云",
+        "edgeone",
+        "cdn",
+        "加速",
+        "刷新预热"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "TENCENTCLOUD_SECRET_ID",
+          "description": "腾讯云 EdgeOne 所需的 TENCENTCLOUD_SECRET_ID",
+          "prompt": "请输入 TENCENTCLOUD_SECRET_ID",
+          "secret": true,
+          "required": true
+        },
+        {
+          "name": "TENCENTCLOUD_SECRET_KEY",
+          "description": "腾讯云 EdgeOne 所需的 TENCENTCLOUD_SECRET_KEY",
+          "prompt": "请输入 TENCENTCLOUD_SECRET_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 6,
+      "tools": [
+        "list_zones",
+        "list_acceleration_domains",
+        "list_purge_tasks",
+        "list_prefetch_tasks",
+        "create_purge_task",
+        "create_prefetch_task"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/infra/tencent_edgeone",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/tencent_edgeone",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/infra/tencent_edgeone"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "e2b79a001d4e3a50447411b2d477dd0d950ec0dc55bc3ded0985284282332ded",
+          "size": 1392
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "14ab97f1be702356e4de2e1288f4eb9cf6d137f990f21ceb8bda13618ef228b8",
+          "size": 1689
+        },
+        {
+          "path": "tools.json",
+          "sha256": "280dde84a4d7b2a820bef4b57e6a19bd18cdae1fcc154c9697a544be413f9045",
+          "size": 5348
+        }
+      ],
+      "bundle_sha256": "3e65f7ee62b2156f87784da636024d6c233b0bb3ae9e32cc121924c52ac17504"
     },
     {
       "name": "mcp_filesystem",

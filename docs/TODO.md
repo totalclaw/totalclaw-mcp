@@ -202,7 +202,7 @@
 - [ ] **dcs-cloud** DCS Cloud（上游 auth_mode=token）
 - [ ] **dknowc-mcp** 深知可信工作台
 - [ ] **duoguan-fengchao** 夺冠蜂巢（上游 auth_mode=token）
-- [ ] **edgeone-pages** EdgeOne Makers
+- [x] **edgeone-pages** EdgeOne Makers — 已实现 `tencent_edgeone`（站点/域名/刷新预热）
 - [ ] **ezjoin-meeting** EzyJoin智慧会议
 - [ ] **fadada-richee** 法大大睿契
 - [ ] **fanruan-growth-advisor** 帆软增长谋士（上游 auth_mode=token）
