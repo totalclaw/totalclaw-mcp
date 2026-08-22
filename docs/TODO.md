@@ -115,20 +115,25 @@
 ## B 组 · totalclaw-qiye-app 改造（M2，依赖 A1–A3）
 
 ### B1. IPC 层
-- [ ] **B1.1** `packages/ipc-contracts/src/index.ts` 新增 9 个通道：
+- [x] **B1.1** 已新增 10 个通道（含 STATUS）：
   `QIYE_API_MCP_REGISTRY / REGISTRY_INFO / PLAN / INSTALL / JOB / INSTALLED / UPDATE / RELOAD / STATUS`
-- [ ] **B1.2** `main/ipc/qiyeApi.ipc.ts` 实现 handler：**一律 `postRaw / getRaw`**（camel→snake 会把 `GITHUB_TOKEN` 折成 `github_token`，参照既有 `QIYE_API_MCP_UPSERT` 的注释）；限流 install=10 / reload=6
-- [ ] **B1.3** `preload/index.ts` 暴露 `window.electronAPI.qiyeApi.mcp*`
+- [x] **B1.2** handler 已实现：**一律 `postRaw / getRaw`**（camel→snake 会把 `GITHUB_TOKEN` 折成 `github_token`，参照既有 `QIYE_API_MCP_UPSERT` 的注释）；限流 install=10 / reload=6
+- [x] **B1.3** preload 已暴露 10 个方法
 - [ ] **B1.4** 配额门控：INSTALL handler 里按版本矩阵（专业 5 / 旗舰不限）计数，超限返回 `{code:'QUOTA_EXCEEDED', limit}`
 
 ### B2. 统一市场页
-- [ ] **B2.1** 新建 `renderer/views/McpMarketView.vue`：Tab「市场」（registry 搜索 + 分类 chips + verified 徽标 + 工具数）/ Tab「已安装」（状态卡 ready/connecting/failed/disabled/needs_setup/update_available；操作：启停/更新/卸载/重新探测/OAuth 登录；顶部「重载 MCP」按钮）
-- [ ] **B2.2** 新建 `renderer/components/mcp/McpInstallDialog.vue` 四步向导：
+- [x] **B2.1** 已实现 `renderer/views/McpMarketView.vue`：Tab「市场」（registry 搜索 + 分类 chips + verified 徽标 + 工具数）/ Tab「已安装」（状态卡 ready/connecting/failed/disabled/needs_setup/update_available；操作：启停/更新/卸载/重新探测/OAuth 登录；顶部「重载 MCP」按钮）
+- [x] **B2.2** 已实现 `renderer/components/mcp/McpInstallDialog.vue` 四步向导：
   选 runtime（灰掉 `available=false` 并显示 reason）→ `requires_env` 表单（复用 plugin requires_env 渲染器，`secret` 密码框）→ `plan` 预览（脱敏配置块/工具列表/安全结论/覆盖提示）→ install + 轮询 job 逐行日志；422 `missing_env` 回到表单
-- [ ] **B2.3** 路由 `/mcp` + 侧边栏入口；feature id 沿用 `mcp-market`
+- [x] **B2.3** 路由 `/mcp` 已加，门控沿用 feature id `mcp-market`
 - [ ] **B2.4** `McpServerPanel.vue` 降级为「高级：手动添加」折叠区（保留既有 preset/custom 能力）
-- [ ] **B2.5** 删除 `PluginsView.vue` 的 MCP 段与 `packages/mcp-market` 内存注册表（或仅留类型导出）；清理 `feature-handlers.ts` 的 `MCP_LIST/INSTALL/UNINSTALL/START/STOP` 通道
+- [x] **B2.5** `PluginsView.vue` 的内存版 MCP 段已替换为指向 `/mcp` 的引导卡（并注明为何迁走）。
+  `packages/mcp-market` 与 `feature-handlers.ts` 的 5 个通道**暂留**：直接删有连带风险，
+  而用户可见的「两处入口互相矛盾」问题已由引导卡消除。彻底移除见 B2.5.1
 - [ ] **B2.6** i18n 文案（key 建议见 QIYE_APP_INTEGRATION.md §6）
+
+- [ ] **B2.5.1** 彻底移除 `packages/mcp-market` 与 `feature-handlers.ts` 的 5 个内存通道
+  （确认无其他引用后再动；当前它们已无 UI 入口）
 
 ### B3. 企业与多账号
 - [ ] **B3.1** 多账号验证：切换账号（不同 `TOTALCLAW_HOME`）后市场/已安装状态各自独立
