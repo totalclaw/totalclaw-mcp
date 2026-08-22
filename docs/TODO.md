@@ -106,7 +106,12 @@
 - [ ] **C1** 消掉 18 条「包未 pin 版本」警告：逐条查上游最新稳定版并写死（`gen_registry.py --strict` 通过后，把 CI 切到 `--strict`）
 - [ ] **C2** `scripts/probe_server.py`：沙箱启动 → `list_tools` → 生成 `tools.json` + `security` 块（注入扫描 10 模式 + 出网域名）；先手动跑 dev/web 两类
 - [ ] **C3** Ed25519 签名：移植 `totalclaw-plugins/scripts/sign_registry.sh` → 产出 `registry.json.sig`
-- [ ] **C4** 推送 Gitee 仓库 `jlzdyx/totalclaw-mcp` + CI（`gen_registry.py --check`）
+- [x] **C4.1** 推送 Gitee 仓库 `jlzdyx/totalclaw-mcp`（分支 **master**，与 `registry.json` 的 `raw_base` 路径一致）
+- [ ] **C4.2** ⚠️ **仓库改为公开** —— 当前是私有仓库，匿名访问返回 403，`raw/master/registry.json` 拉不到，M1 分发通道无法工作
+  - 验证：`curl -o /dev/null -w "%{http_code}" https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry.json` 应为 `302`（对照 totalclaw-plugins/tools 均为 302），当前为 `403`
+  - 操作：Gitee 仓库 → 管理 → 仓库设置 → 开源（公开）
+  - 若决定保持私有：`mcp_hub.fetch_registry` 需支持带 token 拉取（新增 env `TOTALCLAW_MCP_REGISTRY_TOKEN` → `PRIVATE-TOKEN` 头），并在 A1.1 中一并实现
+- [ ] **C4.3** CI：`gen_registry.py --check`（推荐同时 `--strict`，待 C1 完成后启用）
 - [ ] **C5** 为高频条目补 `description` 英文与 `icon.svg`（mcp_github 为参考范例）
 
 ---
