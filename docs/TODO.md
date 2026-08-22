@@ -15,26 +15,26 @@
 ## A 组 · totalclaw-agent 改造（M1，地基）
 
 ### A1. `mcp_hub` 核心模块
-- [ ] **A1.1** 新建 `totalclaw_core/mcp_hub.py`（对标 `tool_hub.py`）：`fetch_registry / search / resolve / plan / install / update / remove / list_installed / check_updates / reload`
+- [x] **A1.1** 已实现 `totalclaw_core/mcp_hub.py`（对标 `tool_hub.py`）：`fetch_registry / search / resolve / plan / install / update / remove / list_installed / check_updates / reload`
   - 注册表 URL：env `TOTALCLAW_MCP_REGISTRY`，默认 `https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry.json`
   - 缓存：`$TOTALCLAW_HOME/mcp/registry-cache.json`，TTL `TOTALCLAW_MCP_REGISTRY_TTL`（默认 3600s）
   - 离线回退：注册表不可达且无缓存 → 用 `mcp_presets.PRESETS` 生成伪条目（`source: builtin`）
   - 复用（import，不复制）：`plugin_hub._download_raw / _download_sparse / _verify_files / _signature_gate / is_hub_entry`
-- [ ] **A1.2** 新建 `totalclaw_core/mcp_hub_render.py`：`mcp.yaml` → `mcp_servers.<name>` 渲染
+- [x] **A1.2** 已实现 `totalclaw_core/mcp_hub_render.py`：`mcp.yaml` → `mcp_servers.<name>` 渲染
   - runtime 选择顺序：显式 `--runtime` > `TOTALCLAW_MCP_ORG` 已设且清单含 `hosted` > `http` > 第一个 `shutil.which(launcher)` 可用的 `stdio`（docker 额外 `docker info`）
   - env 键：默认 `MCP_<NAME_UPPER>_<VAR>`；清单声明 `env_key` 则保留原变量名（27 条种子全部用 `env_key`，零迁移）
   - `auth: header` → `Authorization: Bearer ${MCP_<NAME>_API_KEY}`（与 `mcp_admin._provision_bearer` 同构）
   - 渲染结果必须能通过 `mcp_admin._normalize_server_spec`（写单测保证，见 A6.1）
-- [ ] **A1.3** 新建 `totalclaw_core/mcp_hub_lock.py`（对标 `skills_hub_cache_body.HubLockFile`）：
+- [x] **A1.3** 已实现 `totalclaw_core/mcp_hub_lock.py`（对标 `skills_hub_cache_body.HubLockFile`）：
   - `$TOTALCLAW_HOME/mcp/installed.json`：`{name: {id, version, runtime, source, bundle_sha256, installed_at, updated_at}}`
   - `$TOTALCLAW_HOME/mcp/audit.log`：`<ISO8601Z> <action> <name> <source> <verdict>`
-- [ ] **A1.4** `install()` 九步流水线（resolve → gate → download/verify → validate/render → security → write → probe → reload → finalize），每步 `on_log` 回调
+- [x] **A1.4** 九步流水线已实现并端到端验证（resolve → gate → download/verify → validate/render → security → write → probe → reload → finalize），每步 `on_log` 回调
   - security 步：`mcp_security.validate_mcp_server_entry` + `package_pin_problem` + `osv_check`
   - write 步：秘密 `save_env_value` → `.env`；`mcp_admin.add_server`；`tools.json` 预填 `mcp/schema-cache/<name>.json`
   - probe 步：复用 `_mcp_config_impl._probe_single_server`；失败 → `set_enabled(False)` + `needs_setup`
   - reload 步：进程内有 MCP loop → `reload_mcp_servers()`；否则交给 `cli.py` 5s 配置监视
   - 门禁：未 `verified` 需 `allow_unverified` 且默认 `enabled=False`；`scan_verdict: block` 永不安装、`ask` 需确认
-- [ ] **A1.5** `remove()` 同时清理：`mcp_admin.remove_server` + `installed.json` 条目 + `mcp/schema-cache/<name>.json` + `mcp-tokens/<name>*.json` + `.env` 中 `MCP_<NAME>_*` 键
+- [x] **A1.5** `uninstall_mcp_server()` 已实现完整清理：`mcp_admin.remove_server` + `installed.json` 条目 + `mcp/schema-cache/<name>.json` + `mcp-tokens/<name>*.json` + `.env` 中 `MCP_<NAME>_*` 键
 
 ### A2. CLI 子命令
 - [ ] **A2.1** 新建 `totalclaw_cli/_mcp_hub_impl.py`，挂到既有 `mcp` 子命令树（`_main_impl.py` 的 mcp parser）：
@@ -65,12 +65,22 @@
 - [ ] **A4.5** `website/docs` 两篇 MCP 文档的工具命名更新为 `mcp__<server>__<tool>`
 - [ ] **A4.6** 统一 `mcp add --preset` 命名空间（当前只认 `codex`，与 `mcp presets` 两套目录）
 
+### A4.7（新增，已完成）`mcp_admin` 静默丢配置
+
+- [x] **A4.7** `_normalize_server_spec` 只按白名单挑键，静默丢弃 `timeout` /
+  `connect_timeout` / `keepalive_interval` / `tools`（含 include/exclude 过滤）/
+  `sampling` / `elicitation` / mTLS 三件套 —— 而运行时 `server_task.py` 与
+  `registration.py` 明确读这些。经 `add_server`（以及 `POST /v1/mcp/servers`，
+  **qiye-app 的 MCP 面板走的正是这条**）配的这些字段从来没生效过，接口还返回成功。
+  `tools.exclude` 尤其要紧：它是把危险工具挡在模型视野外的手段，被静默丢掉
+  意味着「以为排除了、实际没有」。已修 + 11 个回归用例。
+
 ### A5. 环境变量与文档
 - [ ] **A5.1** 注册 env：`TOTALCLAW_MCP_REGISTRY / TOTALCLAW_MCP_API_BASE / TOTALCLAW_MCP_REGISTRY_TTL / TOTALCLAW_MCP_REQUIRE_SIGNATURE / TOTALCLAW_MCP_TELEMETRY / TOTALCLAW_MCP_ORG`，补进 `website/docs/reference/environment-variables.md`
 - [ ] **A5.2** `totalclaw doctor` MCP 段增加：installed.json 与 config 的一致性、update_available 提示
 
 ### A6. 测试
-- [ ] **A6.1** `test_mcp_hub_render.py`：本仓 27 条种子逐条渲染 → 必须通过 `_normalize_server_spec`；`env_key` 保留断言；runtime 选择矩阵
+- [x] **A6.1** `test_mcp_hub_render.py` 10 个用例；44 条真实清单逐条渲染均过 `_normalize_server_spec`：本仓 27 条种子逐条渲染 → 必须通过 `_normalize_server_spec`；`env_key` 保留断言；runtime 选择矩阵
 - [ ] **A6.2** `test_mcp_hub_install.py`：本地假注册表（http.server）端到端；sha256 篡改必须失败；未 verified 需 `--allow-unverified`；卸载清理完整性
 - [ ] **A6.3** `test_mcp_hub_api.py`：202 + 轮询、409、422 missing_env、reload 响应形状
 - [ ] **A6.4** CLI 退出码矩阵（0/1/2/3）
