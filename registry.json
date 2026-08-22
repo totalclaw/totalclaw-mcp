@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T11:47:13Z",
+  "generated_at": "2026-08-22T11:49:25Z",
   "servers": [
     {
       "name": "composio",
@@ -132,11 +132,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "7addfe133591602420823cc85de6a2314b8367a75f0279cb200992e38db4414d",
-          "size": 1081
+          "sha256": "5b588e07405bd8638fde7c4d9ba52575610d8f47bfe160bd9edfa4b72ce0fad1",
+          "size": 1090
         }
       ],
-      "bundle_sha256": "7e0b3b0a561f31821d1ee058bd85e4648d4cfafa5a7fa84e0911a9adda93613d"
+      "bundle_sha256": "3612b95c62a9eed38ec14e2b38aecd1b0da4ee86f9faf0ba3ed516028d85ffab"
     },
     {
       "name": "mcp_sequential_thinking",
@@ -194,11 +194,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "d1eae65f41ce1d64543a7696dcd658d95210f246f9f15f6a22d15d6126522384",
-          "size": 800
+          "sha256": "393d7a4a523757456f5e3f03842b7bdecad6d7c4742aa2c89a99b28cc2513ad4",
+          "size": 810
         }
       ],
-      "bundle_sha256": "a9d01ea2467f0fa85297186ab96d846a8574d706a634a01e2d7d950096b5dcdc"
+      "bundle_sha256": "7fc4df6c7f6b3668b29a235784627b7f57e9941715b627e8dd786e7361a4427b"
     },
     {
       "name": "dingtalk",
@@ -972,11 +972,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "02b6f3f782acf9a6ba2008aaa54a90c3367d060a9f5bb4d4800e77b9a0427529",
-          "size": 941
+          "sha256": "749971551b2b8f323681c69b07971f8cbcda4a6585fad77cb6ee2f391e7953e5",
+          "size": 947
         }
       ],
-      "bundle_sha256": "67114ca7c0a342dfbc075d279ace002203b258b22b42a81b4341814d099039e2"
+      "bundle_sha256": "a69af105c3aa0035253c137ca4ac215067173e0254fd096772aa170c7658b6a3"
     },
     {
       "name": "mcp_sqlite",
@@ -1036,11 +1036,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "6afa25a0ccad8492c7396bcdaf83ba3fba3fcb2396888617d772baf7959130a0",
-          "size": 1011
+          "sha256": "c2f9c0f4293cde0489edd2b5d4be5b47acd07a50eab28d0fdf063292efd5fdad",
+          "size": 1022
         }
       ],
-      "bundle_sha256": "082281e57766838567feafb4a01b95b71f5fcfee2d24566aea8abe363e13ee63"
+      "bundle_sha256": "9c7624d569994aa92a6bc9195d24182f187d25a2c73cb871c6f83c1207f14ff4"
     },
     {
       "name": "qcc",
@@ -1599,11 +1599,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "a4a662e721ff65d6b216268ffc4231a452f689989e5b929a0cf4adf53ef61158",
-          "size": 807
+          "sha256": "212d66d58650234c9fe8ff6fd43425d109e67e1e4b23293fcadf7f1bfda1b1f5",
+          "size": 817
         }
       ],
-      "bundle_sha256": "85b3ae0ac7c064b41126b0acd6991961e48d225a62f869ca1af69d546dc37c2a"
+      "bundle_sha256": "1dbf6d909d0c51893dce11467e5f8a86b7ba7125b50d8bb82c62122b7a5d9b4d"
     },
     {
       "name": "mcp_git",
@@ -1663,11 +1663,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "ce00e24e9ca5294b7f38a140ccdf5d18633513cb8da249f64c3b67aaf8d4a1d9",
-          "size": 937
+          "sha256": "fb765ec9cea642c6bd8c512432917d29480ad337a3bdb9cc9947e462a785db9e",
+          "size": 948
         }
       ],
-      "bundle_sha256": "ade47a5b5e50cd295be900b57a3263da46e7796019751b1cc15b857ae4247d31"
+      "bundle_sha256": "cc52ed086c15ca387613606c7e01eaf17a3b33c83e76eccd5cda7f89d4cfb94c"
     },
     {
       "name": "sentry",
@@ -1740,11 +1740,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "da33b755aaccccbff6ca3c16f76ccde0d80c89fb891e1155a2a97c94167e9f33",
-          "size": 1122
+          "sha256": "7b4fbaa6cfa4dedcc0a02273ca6f0380dc7d4ca04d57e1a36570ba0739446f35",
+          "size": 1129
         }
       ],
-      "bundle_sha256": "6edd292317f43e865a33817a6e109f935ff0e1318f92666cc192b74359e64c21"
+      "bundle_sha256": "383291535bc41bde7762200d0d1d15da2a2709f2a2c383db5a39ef3f8ed306f3"
     },
     {
       "name": "tapd",
@@ -2112,11 +2112,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "6b14de750efebf150a0927212e41085271f51a9da3860a6bd430996f85fd9b85",
-          "size": 976
+          "sha256": "59ec29db1af119332085506918caedaaec80f8ac9329065c0a5faff13ce2aa18",
+          "size": 983
         }
       ],
-      "bundle_sha256": "bb7be7a4e8979703aa565d99299ab342acfb1076831c4c6ec860df2838a4de14"
+      "bundle_sha256": "96e8808605f83b7257b4c664ade7a16cffb58d49f51ce218f55b278855dfff93"
     },
     {
       "name": "tencent_edgeone",
@@ -2280,11 +2280,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "fc12c7f0d16ec20aca9e579824265506dce354f73218535665b6c454fb8a479b",
-          "size": 971
+          "sha256": "7d8a8ddad81d80d0fa7ace92beb2325d55a90aed890164b842e4b278c847c342",
+          "size": 981
         }
       ],
-      "bundle_sha256": "5c6e9d75e13a6e394a28a56850369185a5fe956e18e6259a482f0c6c2582158a"
+      "bundle_sha256": "d8065eea981ab1f312c8c39397a900217bf2b59eb014313540172acb5ba0220e"
     },
     {
       "name": "baidu_netdisk",
@@ -2598,13 +2598,13 @@
         "stdio"
       ],
       "launchers": [
-        "npx"
+        "uvx"
       ],
       "runtimes": [
         {
-          "id": "npx",
+          "id": "uvx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "uvx"
         }
       ],
       "requires_env": [],
@@ -2628,11 +2628,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "01aaefd22adfdc8463c36ad773b4e8dfa0c563b96d234363e5610b4079037068",
-          "size": 728
+          "sha256": "929b316b8922d07a594b97474bd0d14da90815d19be868ca9d54f94d451bc898",
+          "size": 716
         }
       ],
-      "bundle_sha256": "9987f8b40fffceade9dcae880f7bfba056ded2c702317cbfe1ad4463f39dfb23"
+      "bundle_sha256": "707738f6112829abf17b4d8dba823cabc3a2ebcad3106c1eb801f066a269d20d"
     },
     {
       "name": "notion",
@@ -2857,11 +2857,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "551ac717872028c99117e1d45a0d1d253189f84750a75cc135880adc1bc56c13",
-          "size": 1183
+          "sha256": "8792a1439d4d25bd0244a1dac2bd5b60996c247ebc6cf9d75c5ef11b509e4e32",
+          "size": 1190
         }
       ],
-      "bundle_sha256": "efd69f841af326376f09377408f415ce3dcc9a93b496145c67dd15727337ae39"
+      "bundle_sha256": "d1e54239319232cc157f0e38adc47a1c17211f6b24cdc3e8098a4cd5c57c0653"
     },
     {
       "name": "matrixmedia",
@@ -2997,11 +2997,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "043c6e4fc4a74f1a0402794d1a11a02b1de1e427d4020a1319791989b315aed7",
-          "size": 1042
+          "sha256": "d82cc0cf51a37a1da36a272af89992dfd08f58fb7ab2ac5078f3565f8bf865bc",
+          "size": 1048
         }
       ],
-      "bundle_sha256": "76da44e53127272a2a03b6c539e989a2590cc532b58b6981feae56b104850460"
+      "bundle_sha256": "c4bbb70d68ddaa8c00047669f8d215208a9c127848e97b87eefa077e84a755ec"
     },
     {
       "name": "xiaohongshu",
@@ -3118,11 +3118,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "a309cfcaabfee9a1460770ed57e99b29ca78800b4052c395455ee69808255668",
-          "size": 1017
+          "sha256": "21a80b4cf8b938dd76e1e3d39384dfedfd82eb89dc6bd5cea4682ea96cd7632e",
+          "size": 1016
         }
       ],
-      "bundle_sha256": "a0bc87652912df2ac499f2e7ba620743368798ea6c61ba58fce11159b5f27a1f"
+      "bundle_sha256": "195f31d7bdb2deec50c0b65bba2f24dd2b14635a71ac1ef2310db56377d132c0"
     },
     {
       "name": "mcp_brave_search",
@@ -3188,11 +3188,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "4dca1df8fa9cde7b22473febbdbf7450e636bb8c194f1251f0003d3eb10f4687",
-          "size": 981
+          "sha256": "cc7d638989e813b45a187bff56f4284057a9d977533cbd7875f7e3f1f13ad0bf",
+          "size": 987
         }
       ],
-      "bundle_sha256": "900516e84312eaded839b1681d5c1fee875c40d1725689dc30d010d8acd3347c"
+      "bundle_sha256": "07610114bb930418d596897951ed4b524efd54a618c8fd00c66cb9b94f0b1ca6"
     },
     {
       "name": "mcp_fetch",
@@ -3250,11 +3250,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "10e03050adfb404eda5f24cfb3777690f79a01749d2a21004996f1153c981389",
-          "size": 728
+          "sha256": "170b1c4361117d8c0b99984e80dd1446c8a2eae202e7f1e7e84aa7085e54c470",
+          "size": 739
         }
       ],
-      "bundle_sha256": "758855612e2d9404a2a0e1a03933a0f76cce99304ae3015ea038a802490b98f4"
+      "bundle_sha256": "0f9220003707b8ed4c3fe50986755a8ad21e582f1112c7ef0375f7e5470ea617"
     },
     {
       "name": "playwright",
@@ -3312,11 +3312,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "6c2f6c1c5c0c965ebd319b8a83efd3bf0d9130dee97ee71b94c37bd9cd0e4d43",
+          "sha256": "ff1a0a62a7a70c22242d3c49ba8b530e4bd4351da8d0ee12f9b7d7618b550500",
           "size": 820
         }
       ],
-      "bundle_sha256": "0b81dd7b7219be059a6dee2c6b80095fff129cb729b04d0ba8e7ca4fd88cbd31"
+      "bundle_sha256": "f311a82db38b206f9046a61d90035835e35d49ffcc723850f5e2ee8824a1615c"
     },
     {
       "name": "playwright-py",

@@ -22,7 +22,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@sentry/mcp-server'
+  - '@sentry/mcp-server@0.37.0'
   env:
     SENTRY_AUTH_TOKEN: ${SENTRY_AUTH_TOKEN}
     SENTRY_ORG: ${SENTRY_ORG}

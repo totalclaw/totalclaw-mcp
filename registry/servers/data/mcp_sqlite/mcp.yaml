@@ -20,7 +20,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - mcp-server-sqlite
+  - mcp-server-sqlite==2025.4.25
   - --db-path
   - ${SQLITE_DB_PATH:-${HOME}/.totalclaw/mcp_sqlite.db}
   requires:

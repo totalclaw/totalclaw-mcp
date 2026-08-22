@@ -21,7 +21,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - docker-mcp
+  - docker-mcp==0.2.0
   env:
     DOCKER_HOST: ${DOCKER_HOST:-unix:///var/run/docker.sock}
   requires:

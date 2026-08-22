@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  registry:
+    name: 注册表一致性
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install PyYAML
+      # --strict：包版本未 pin 直接失败。不锁版本会让 npx 拉到不兼容的新版，
+      # 或（如已修的 server-time）拉到根本不存在的包而挂到超时
+      - name: gen_registry --check --strict
+        run: python3 scripts/gen_registry.py --check --strict
+
+  servers:
+    name: 自研服务器
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -e servers pytest
+      - name: pack 定义校验
+        run: cd servers && python3 -m totalclaw_mcp_servers --check
+      - name: 单元测试
+        run: cd servers && python3 -m pytest tests -q
+      - name: 清单与实现一致（生成后应无 diff）
+        run: |
+          python3 scripts/gen_manifests.py --force
+          python3 scripts/gen_registry.py
+          git diff --exit-code || {
+            echo "::error::registry 清单与 servers/ 实现不一致，请本地跑 gen_manifests.py --force && gen_registry.py 后提交"
+            exit 1
+          }

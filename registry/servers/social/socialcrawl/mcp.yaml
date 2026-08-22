@@ -22,7 +22,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - socialcrawl-mcp
+  - socialcrawl-mcp@1.9.0
   env:
     SOCIALCRAWL_API_KEY: ${SOCIALCRAWL_API_KEY}
   requires:

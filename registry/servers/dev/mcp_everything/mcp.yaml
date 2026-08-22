@@ -22,7 +22,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@modelcontextprotocol/server-everything'
+  - '@modelcontextprotocol/server-everything@2026.8.18'
   requires:
     node: '>=18'
 requires_env: []

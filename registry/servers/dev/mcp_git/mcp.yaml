@@ -21,7 +21,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - mcp-server-git
+  - mcp-server-git==2026.8.18
   env:
     MCP_GIT_REPO: ${MCP_GIT_REPO:-${PWD}}
   requires:

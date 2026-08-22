@@ -15,15 +15,14 @@ tags:
 - preset
 kind: mcp_server
 runtimes:
-- id: npx
+- id: uvx
   type: stdio
-  launcher: npx
-  command: npx
+  launcher: uvx
+  command: uvx
   args:
-  - -y
-  - '@modelcontextprotocol/server-time'
+  - mcp-server-time==2026.8.18
   requires:
-    node: '>=18'
+    python: '>=3.10'
 requires_env: []
 optional_env: []
 defaults:

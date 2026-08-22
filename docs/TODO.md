@@ -103,7 +103,12 @@
 
 ## C 组 · 本仓注册表数据（与 A 并行）
 
-- [ ] **C1** 消掉 18 条「包未 pin 版本」警告：逐条查上游最新稳定版并写死（`gen_registry.py --strict` 通过后，把 CI 切到 `--strict`）
+- [x] **C1** 包版本全部 pin 到实测最新稳定版，`--strict` 已零警告，CI 已切 `--strict`
+  - 顺带修出两个继承自 agent presets 的真 bug：
+    `@modelcontextprotocol/server-sequentialthinking` 少了连字符（npm 上不存在）；
+    `@modelcontextprotocol/server-time` 在 npm 上根本没有，该服务器是 PyPI 的
+    `mcp-server-time`，runtime 已从 npx 改为 uvx —— 正是 agent `RETIRED_LAUNCH_SPECS`
+    要防的「包不存在 → 挂到超时」那类问题
 - [ ] **C2** `scripts/probe_server.py`：沙箱启动 → `list_tools` → 生成 `tools.json` + `security` 块（注入扫描 10 模式 + 出网域名）；先手动跑 dev/web 两类
 - [ ] **C3** Ed25519 签名：移植 `totalclaw-plugins/scripts/sign_registry.sh` → 产出 `registry.json.sig`
 - [x] **C4.1** 推送 Gitee 仓库 `jlzdyx/totalclaw-mcp`（分支 **master**，与 `registry.json` 的 `raw_base` 路径一致）
@@ -116,7 +121,11 @@
   - 对接时二选一：
     - **(a) 转公开**：Gitee → 管理 → 仓库设置 → 开源；`mcp_hub` 直接匿名拉 raw，无需改动
     - **(b) 保持私有**：客户端**不得**携带 Gitee token（个人令牌是账号级的，且桌面端可被提取）。走平台中转：`api/` 服务端持 token 同步私有仓 → 对外发签名 bundle，客户端用自身已有身份（qiye-app 的平台 JWT / agent 的 license）鉴权。此方案把 `api/` 从 M2 提前到 M1
-- [ ] **C4.3** CI：`gen_registry.py --check`（推荐同时 `--strict`，待 C1 完成后启用）
+- [x] **C4.3** CI（`.github/workflows/ci.yml`）：
+  - `gen_registry.py --check --strict`（版本未 pin 直接失败）
+  - `totalclaw-mcp-server --check` + `pytest`
+  - 生成物一致性：跑完 `gen_manifests.py --force` 与 `gen_registry.py` 后必须无 diff，
+    防止改了 servers/ 却忘了重新生成清单
 - [ ] **C5** 为高频条目补 `description` 英文与 `icon.svg`（mcp_github 为参考范例）
 
 ---

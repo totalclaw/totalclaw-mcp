@@ -22,7 +22,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - douyin-mcp-server
+  - douyin-mcp-server==1.2.1
   env:
     DOUYIN_MCP_CONFIG: ${DOUYIN_MCP_CONFIG:-${HOME}/.totalclaw/dy_xhs_config.json}
   requires:

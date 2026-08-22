@@ -21,7 +21,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@modelcontextprotocol/server-filesystem'
+  - '@modelcontextprotocol/server-filesystem@2026.7.10'
   - ${MCP_FS_ROOT:-/tmp}
   requires:
     node: '>=18'
