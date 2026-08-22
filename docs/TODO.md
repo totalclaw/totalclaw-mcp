@@ -54,7 +54,7 @@
   - `GET /v1/mcp/installed`（installed.json + `get_mcp_status()` 合并）
   - `POST /v1/mcp/servers/{name}/update`（202）、`POST /v1/mcp/reload`、`GET /v1/mcp/status`
 - [x] **A3.2** `_notify_mcp_change()` 已实现，作业末尾热重载，装完当轮可用：安装/卸载/更新作业末尾执行 `reload_mcp_servers()` + 对热池 agent `refresh_tools()`（对标 `skill_shop_api._notify_skill_change`）
-- [ ] **A3.3** 既有 `DELETE /v1/mcp/servers/{name}` 扩展为调用 A1.5 的完整清理（保持响应形状兼容）
+- [x] **A3.3** `DELETE /v1/mcp/servers/{name}` 已改为完整清理（账本+schema-cache+令牌+.env），响应形状兼容
 - [ ] **A3.4** 契约文档：更新 agent 仓 `docs/integration/MCP_SERVER_MANAGEMENT.md`（新增端点 + 「热加载已由作业完成」说明）
 
 ### A4. 既有 bug 顺手修（清单与行号见 AGENT_INTEGRATION.md §5）
@@ -63,7 +63,7 @@
 - [x] **A4.3** `is_mcp_tool_parallel_safe` 已改用 `mcp_naming` 拆分，并保留旧形态兼容历史会话
 - [x] **A4.4** `prompt_builder_body.py` 8 处工具名已改双下划线
 - [x] **A4.5** `website/docs` 两篇文档共 11 处命名已更新
-- [ ] **A4.6** 统一 `mcp add --preset` 命名空间（当前只认 `codex`，与 `mcp presets` 两套目录）
+- [x] **A4.6** `--preset` 已统一：本地补充项 + 内置目录，可用数从 1 → 27
 
 ### A4.7（新增，已完成）`mcp_admin` 静默丢配置
 
@@ -101,8 +101,8 @@
   真实问题反而测不出来。已修前缀 + 测试改用 `mcp_prefixed_tool_name` 生成真实名。
 
 ### A5. 环境变量与文档
-- [ ] **A5.1** 注册 env：`TOTALCLAW_MCP_REGISTRY / TOTALCLAW_MCP_API_BASE / TOTALCLAW_MCP_REGISTRY_TTL / TOTALCLAW_MCP_REQUIRE_SIGNATURE / TOTALCLAW_MCP_TELEMETRY / TOTALCLAW_MCP_ORG`，补进 `website/docs/reference/environment-variables.md`
-- [ ] **A5.2** `totalclaw doctor` MCP 段增加：installed.json 与 config 的一致性、update_available 提示
+- [x] **A5.1** 6 个 `TOTALCLAW_MCP_*` 已补进 `environment-variables.md`：原文：`TOTALCLAW_MCP_REGISTRY / TOTALCLAW_MCP_API_BASE / TOTALCLAW_MCP_REGISTRY_TTL / TOTALCLAW_MCP_REQUIRE_SIGNATURE / TOTALCLAW_MCP_TELEMETRY / TOTALCLAW_MCP_ORG`，补进 `website/docs/reference/environment-variables.md`
+- [x] **A5.2** `doctor` 已加安装账本一致性检查（账本孤儿 / 手工配置 / 可查更新）
 
 ### A6. 测试
 - [x] **A6.1** `test_mcp_hub_render.py` 10 个用例；44 条真实清单逐条渲染均过 `_normalize_server_spec`：本仓 27 条种子逐条渲染 → 必须通过 `_normalize_server_spec`；`env_key` 保留断言；runtime 选择矩阵
