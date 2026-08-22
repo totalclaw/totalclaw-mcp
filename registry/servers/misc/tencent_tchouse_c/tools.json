@@ -1,0 +1,241 @@
+[
+  {
+    "name": "list_instances",
+    "description": "列出账号下的 TCHouse-C 实例，返回实例 ID、名称、状态、规格与地域。 先用它拿 InstanceId，其余工具都要用。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "search_instance_id": {
+          "type": "string",
+          "description": "按实例 ID 搜索"
+        },
+        "search_instance_name": {
+          "type": "string",
+          "description": "按实例名搜索"
+        },
+        "offset": {
+          "type": "integer",
+          "description": "分页偏移，第一页为 0"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "每页条数，默认 10"
+        },
+        "is_simple": {
+          "type": "boolean",
+          "description": "true 只返回精简信息，响应更小"
+        }
+      }
+    }
+  },
+  {
+    "name": "get_instance",
+    "description": "查询单个实例的详细信息（规格、版本、网络、计费方式、到期时间）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string",
+          "description": "实例 ID，来自 list_instances"
+        }
+      },
+      "required": [
+        "instance_id"
+      ]
+    }
+  },
+  {
+    "name": "get_instance_state",
+    "description": "查询实例当前状态与正在执行的操作进度。排查“实例卡在某个操作”时先看这个： 返回状态、流程名、进度百分比与错误信息。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string",
+          "description": "实例 ID"
+        }
+      },
+      "required": [
+        "instance_id"
+      ]
+    }
+  },
+  {
+    "name": "list_instance_clusters",
+    "description": "查询实例下的逻辑集群（vcluster）列表。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string",
+          "description": "实例 ID"
+        }
+      },
+      "required": [
+        "instance_id"
+      ]
+    }
+  },
+  {
+    "name": "list_instance_nodes",
+    "description": "查询实例的节点列表，返回节点 IP、规格、角色与状态。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string",
+          "description": "实例 ID"
+        },
+        "node_role": {
+          "type": "string",
+          "enum": [
+            "DATA",
+            "COMMON"
+          ],
+          "description": "节点角色：DATA 数据节点 / COMMON ZooKeeper 节点，默认 DATA"
+        },
+        "offset": {
+          "type": "integer",
+          "description": "分页偏移，第一页为 0"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "每页条数，默认 10"
+        },
+        "display_policy": {
+          "type": "string",
+          "description": "展现策略，传 \"All\" 显示所有"
+        }
+      },
+      "required": [
+        "instance_id"
+      ]
+    }
+  },
+  {
+    "name": "get_instance_shards",
+    "description": "查询实例的 shard 分片信息。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string",
+          "description": "实例 ID"
+        }
+      },
+      "required": [
+        "instance_id"
+      ]
+    }
+  },
+  {
+    "name": "query_metadata",
+    "description": "查询 ClickHouse 元数据。api_type 决定查什么： GetClusters 逻辑集群列表 / GetSystemUsers 系统用户 / GetClusterDatabases 库列表 / GetClusterTables 表列表 / GetPrivilegeUsers 授权用户。 查库表和用户时必须同时传 cluster（逻辑集群名，可用 GetClusters 先取）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string",
+          "description": "实例 ID"
+        },
+        "api_type": {
+          "type": "string",
+          "enum": [
+            "GetClusters",
+            "GetSystemUsers",
+            "CheckNodeCluster",
+            "GetClusterDatabases",
+            "GetClusterTables",
+            "GetPrivilegeUsers"
+          ],
+          "description": "要查询的元数据类型"
+        },
+        "cluster": {
+          "type": "string",
+          "description": "逻辑集群名，查库/表/用户时必填，如 default_cluster"
+        },
+        "user_name": {
+          "type": "string",
+          "description": "用户名，与用户相关的查询必填"
+        },
+        "user_type": {
+          "type": "string",
+          "description": "账户类型，可选"
+        }
+      },
+      "required": [
+        "instance_id",
+        "api_type"
+      ]
+    }
+  },
+  {
+    "name": "list_backup_jobs",
+    "description": "查询实例的备份任务列表与执行状态。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string",
+          "description": "实例 ID"
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "每页条数"
+        },
+        "page_num": {
+          "type": "integer",
+          "description": "页号"
+        },
+        "begin_time": {
+          "type": "string",
+          "description": "开始时间，如 2026-08-01 00:00:00"
+        },
+        "end_time": {
+          "type": "string",
+          "description": "结束时间"
+        }
+      },
+      "required": [
+        "instance_id"
+      ]
+    }
+  },
+  {
+    "name": "list_specs",
+    "description": "查询指定可用区可购买的节点规格与云盘选项，用于扩容前的规格选型。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "zone": {
+          "type": "string",
+          "description": "可用区，如 ap-guangzhou-1"
+        },
+        "pay_mode": {
+          "type": "string",
+          "enum": [
+            "PREPAID",
+            "POSTPAID_BY_HOUR"
+          ],
+          "description": "计费类型：PREPAID 包年包月 / POSTPAID_BY_HOUR 按量计费"
+        },
+        "is_elastic": {
+          "type": "boolean",
+          "description": "是否弹性 ClickHouse"
+        }
+      },
+      "required": [
+        "zone"
+      ]
+    }
+  }
+]

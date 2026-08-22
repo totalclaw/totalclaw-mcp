@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T18:33:51Z",
+  "generated_at": "2026-08-22T18:42:40Z",
   "servers": [
     {
       "name": "composio",
@@ -2332,6 +2332,207 @@
         }
       ],
       "bundle_sha256": "d8065eea981ab1f312c8c39397a900217bf2b59eb014313540172acb5ba0220e"
+    },
+    {
+      "name": "tencent_ioa",
+      "id": "totalclaw-mcp/misc/tencent_ioa",
+      "display_name": "腾讯云 iOA 零信任",
+      "description": "Query Tencent iOA zero-trust endpoints, installed software, local accounts and account groups.",
+      "description_zh": "查询 iOA 零信任管理的终端设备、终端软件、本地账号与账号分组，排查设备在线与合规状态。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "misc",
+      "tags": [
+        "totalclaw",
+        "self-hosted"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "TENCENTCLOUD_SECRET_ID",
+          "description": "腾讯云 iOA 零信任 所需的 TENCENTCLOUD_SECRET_ID",
+          "prompt": "请输入 TENCENTCLOUD_SECRET_ID",
+          "secret": true,
+          "required": true
+        },
+        {
+          "name": "TENCENTCLOUD_SECRET_KEY",
+          "description": "腾讯云 iOA 零信任 所需的 TENCENTCLOUD_SECRET_KEY",
+          "prompt": "请输入 TENCENTCLOUD_SECRET_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 6,
+      "tools": [
+        "list_devices",
+        "get_device_info",
+        "list_device_software",
+        "get_root_account_group",
+        "list_account_groups",
+        "list_local_accounts"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/misc/tencent_ioa",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/misc/tencent_ioa",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/misc/tencent_ioa"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "c1565906d3bb681ce08c248a74bece6be5299eb6ee3c7f67fc500426c91853e5",
+          "size": 1646
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "0c4fe396476abcf5570fd973276bf3561844c0bbc6864ecd679cd6650ec82cca",
+          "size": 1705
+        },
+        {
+          "path": "tools.json",
+          "sha256": "1f33e6d785c1a70602e69dcaae5b9b2761d11eb961b7384eaeb70389adf1ecb1",
+          "size": 5211
+        }
+      ],
+      "bundle_sha256": "ba98981f9f3018c7ed21c6eefcb5155217c16867ffade1144479ddddbf54ea3f"
+    },
+    {
+      "name": "tencent_tchouse_c",
+      "id": "totalclaw-mcp/misc/tencent_tchouse_c",
+      "display_name": "腾讯云数据仓库 TCHouse-C",
+      "description": "Inspect Tencent TCHouse-C (ClickHouse) instances, nodes, shards, clusters, schema metadata and backup jobs.",
+      "description_zh": "查询 TCHouse-C（ClickHouse）实例、节点、分片与逻辑集群，以及库表元数据和备份任务。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "misc",
+      "tags": [
+        "totalclaw",
+        "self-hosted"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "TENCENTCLOUD_SECRET_ID",
+          "description": "腾讯云数据仓库 TCHouse-C 所需的 TENCENTCLOUD_SECRET_ID",
+          "prompt": "请输入 TENCENTCLOUD_SECRET_ID",
+          "secret": true,
+          "required": true
+        },
+        {
+          "name": "TENCENTCLOUD_SECRET_KEY",
+          "description": "腾讯云数据仓库 TCHouse-C 所需的 TENCENTCLOUD_SECRET_KEY",
+          "prompt": "请输入 TENCENTCLOUD_SECRET_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 9,
+      "tools": [
+        "list_instances",
+        "get_instance",
+        "get_instance_state",
+        "list_instance_clusters",
+        "list_instance_nodes",
+        "get_instance_shards",
+        "query_metadata",
+        "list_backup_jobs",
+        "list_specs"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/misc/tencent_tchouse_c",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/misc/tencent_tchouse_c",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/misc/tencent_tchouse_c"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "9185b4dbc9a19ced3190b864935565ea04a476f3ce42bd44a6c0e9e7957d9383",
+          "size": 2046
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "2f2881c9a1f03847b04ab9ffb00f7d605ff7bd45f366a8636e65e1e9dcc2f94a",
+          "size": 1750
+        },
+        {
+          "path": "tools.json",
+          "sha256": "8003bb1baf5b27f1337282e709f33f2a9f8902cc2a40c25250d264060a38371f",
+          "size": 6533
+        }
+      ],
+      "bundle_sha256": "092a15dfd0024da01f7ad80eb086e6b7f7a350cff5acf6aa6f87bb8426c79d88"
     },
     {
       "name": "baidu_netdisk",

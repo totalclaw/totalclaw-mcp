@@ -1,0 +1,64 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tencent_tchouse_c
+display_name: 腾讯云数据仓库 TCHouse-C
+version: 0.1.0
+description: Inspect Tencent TCHouse-C (ClickHouse) instances, nodes, shards, clusters, schema metadata
+  and backup jobs.
+description_zh: 查询 TCHouse-C（ClickHouse）实例、节点、分片与逻辑集群，以及库表元数据和备份任务。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: misc
+tags:
+- totalclaw
+- self-hosted
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - tencent_tchouse_c
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - tencent_tchouse_c
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: TENCENTCLOUD_SECRET_ID
+  env_key: TENCENTCLOUD_SECRET_ID
+  description: 腾讯云数据仓库 TCHouse-C 所需的 TENCENTCLOUD_SECRET_ID
+  prompt: 请输入 TENCENTCLOUD_SECRET_ID
+  secret: true
+  required: true
+- name: TENCENTCLOUD_SECRET_KEY
+  env_key: TENCENTCLOUD_SECRET_KEY
+  description: 腾讯云数据仓库 TCHouse-C 所需的 TENCENTCLOUD_SECRET_KEY
+  prompt: 请输入 TENCENTCLOUD_SECRET_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 9
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

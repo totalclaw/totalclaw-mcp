@@ -318,7 +318,7 @@
 - [ ] **ima-mcp** ima知识库
 - [ ] **infimind-ecommerce-image** 极睿电商生图（上游 auth_mode=token）
 - [ ] **infimind-video** 极睿视频（上游 auth_mode=token）
-- [ ] **ioa** 零信任安全 iOA
+- [x] **ioa** 零信任安全 iOA —— `tencent_ioa` pack，6 工具（端点取自官方 SDK）
 - [ ] **jiushuyun** 九数云BI
 - [ ] **kdocs** 金山文档（上游 auth_mode=server-side）
 - [ ] **kling-ai-plugin** 可灵 AI
@@ -351,7 +351,7 @@
 - [ ] **tencent-health-nges** 腾讯健康NGES
 - [ ] **tencent-qidian-cs** 腾讯企点客服（上游 auth_mode=mcp）
 - [x] **tencent-survey** 腾讯问卷 — 已实现 `tencent_survey`（问卷详情 + 游标翻页取答卷；上游为尊享版付费功能）
-- [ ] **tencent-tchouse-c** 腾讯云数据仓库 TCHouse-C
+- [x] **tencent-tchouse-c** 腾讯云数据仓库 TCHouse-C —— `tencent_tchouse_c` pack，9 工具（端点取自官方 SDK）
 - [ ] **tencent-weiyun** 微云
 - [ ] **tongzhou-fin-research** 同舟金融研究
 - [ ] **tplus-api** 畅捷通T+

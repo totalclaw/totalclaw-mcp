@@ -159,3 +159,29 @@ cd servers && python -m pytest tests -q  # 全量回归
 
 新增 pack 后，跑 `scripts/gen_manifests.py --force` 与 `scripts/gen_registry.py`
 把它接进 registry，agent 才能 `totalclaw mcp install <name>`。
+
+## 怎么拿到可信的端点
+
+优先级从高到低，**都不包含「凭印象猜」**：
+
+1. **官方 SDK 源码** —— 最可靠。腾讯云 259 个产品的 action 名、参数名、类型、版本号全在
+   `TencentCloud/tencentcloud-sdk-python` 里，是机器可读的：
+
+   ```bash
+   B=https://raw.githubusercontent.com/TencentCloud/tencentcloud-sdk-python/master/tencentcloud
+   curl -sSL "$B/<产品>/<版本>/<产品>_client.py" | grep -oE '"[A-Z][A-Za-z]+", params'   # 全部 action
+   curl -sSL "$B/<产品>/<版本>/models.py"                                                # 参数与类型
+   ```
+
+   `models.py` 里每个 `XxxRequest` 的 docstring 有 `:param _Field:` 与 `:type Field:`，
+   直接对应 pack 的 `body` 与 `params`。`tencent_tchouse_c` 与 `tencent_ioa` 就是这么来的
+   —— 比读文档网页快，而且不会漏字段。
+
+   先确认产品是否在 SDK 里：`curl -sSL https://api.github.com/repos/TencentCloud/tencentcloud-sdk-python/contents/tencentcloud`
+
+2. **厂商文档页** —— 可读到就用，但注意文档 ID 会串到别的产品（`document/api/1387/85853`
+   看着像 TCHouse-C，实际是 TSF）。落 pack 前必须核对页面上的 host 与 version。
+
+3. **拿不到就不写。** 一个调不通的 pack 比没有更糟：它会出现在市场里、被装上、
+   然后在用户面前失败。已确认拿不到的记进 `scripts/probe_vendor_docs.py` 的
+   `KNOWN_BLOCKED`，附上原因，别人就不用重试一遍。

@@ -1,0 +1,145 @@
+name: tencent_ioa
+display_name: 腾讯云 iOA 零信任
+description: 查询 iOA 零信任管理的终端设备、终端软件、本地账号与账号分组，排查设备在线与合规状态。
+description_en: "Query Tencent iOA zero-trust endpoints, installed software, local accounts and account groups."
+base_url: https://ioa.tencentcloudapi.com
+docs: https://cloud.tencent.com/document/product/1092
+auth:
+  type: tencent_cloud
+  service: ioa
+  version: "2022-06-01"
+  secret_id_env: TENCENTCLOUD_SECRET_ID
+  secret_key_env: TENCENTCLOUD_SECRET_KEY
+  region_env: TENCENTCLOUD_REGION
+  region: ap-guangzhou
+defaults:
+  timeout: 60
+
+response:
+  error_field: Response.Error.Code
+  ok_value: "__never__"
+  message_field: Response.Error.Message
+
+tools:
+  - name: list_devices
+    description: >-
+      查询终端设备列表，返回终端 Mid、设备名、系统、在线状态与授权状态。
+      group_id 与 group_ids 必须给一个；未划分管理域时 domain_instance_id 传 "1"。
+      os_type 必须与分组匹配。设备的 Mid 是其他工具的入参。
+    read_only: true
+    method: POST
+    path: /
+    headers: {X-TC-Action: DescribeDevices}
+    body:
+      DomainInstanceId: "{domain_instance_id}"
+      GroupId: "{group_id}"
+      GroupIds: "{group_ids}"
+      OsType: "{os_type}"
+      OnlineStatus: "{online_status}"
+      Status: "{status}"
+      PageNum: "{page_num}"
+      PageSize: "{page_size}"
+    pick: Response.Data
+    params:
+      type: object
+      properties:
+        domain_instance_id: {type: string, description: '管理域实例 ID；未划分管理域时传 "1" 表示全企业'}
+        group_id: {type: integer, description: "设备分组 ID，需与 os_type 匹配；与 group_ids 二选一"}
+        group_ids: {type: array, items: {type: integer}, description: 设备分组 ID 列表；与 group_id 二选一}
+        os_type:
+          type: integer
+          enum: [0, 1, 2, 4, 5, -1]
+          description: "系统类型：0 Windows / 1 Linux / 2 macOS / 4 Android / 5 iOS / -1 全系统，默认 0"
+        online_status: {type: integer, enum: [0, 1, 2], description: "在线状态：2 在线，0 或 1 离线"}
+        status: {type: integer, enum: [4, 5], description: "授权状态：4 基础授权 / 5 高级授权"}
+        page_num: {type: integer, description: 页码}
+        page_size: {type: integer, description: 每页条数}
+      required: [domain_instance_id]
+
+  - name: get_device_info
+    description: >-
+      查询单台终端的运行时信息。type 决定查什么：
+      process_list 进程列表 / network_list 网络连接 / service_list 服务列表。
+    read_only: true
+    method: POST
+    path: /
+    headers: {X-TC-Action: DescribeDeviceInfo}
+    body:
+      DomainInstanceId: "{domain_instance_id}"
+      Mid: "{mid}"
+      Type: "{type}"
+    pick: Response.Data
+    params:
+      type: object
+      properties:
+        domain_instance_id: {type: string, description: '管理域实例 ID，未划分时传 "1"'}
+        mid: {type: string, description: 终端唯一标识 Mid，来自 list_devices}
+        type:
+          type: string
+          enum: [process_list, network_list, service_list]
+          description: 查询类型
+      required: [domain_instance_id, mid, type]
+
+  - name: list_device_software
+    description: 查询某台终端上已安装的软件清单。
+    read_only: true
+    method: POST
+    path: /
+    headers: {X-TC-Action: DescribeSoftwareInformation}
+    body:
+      DomainInstanceId: "{domain_instance_id}"
+      Mid: "{mid}"
+      OsType: "{os_type}"
+    pick: Response.Data
+    params:
+      type: object
+      properties:
+        domain_instance_id: {type: string, description: '管理域实例 ID，未划分时传 "1"'}
+        mid: {type: string, description: 终端唯一标识 Mid}
+        os_type: {type: integer, enum: [0, 2], description: "0 Windows / 2 macOS"}
+      required: [domain_instance_id, mid]
+
+  - name: get_root_account_group
+    description: 查询账号根分组，拿到根分组 ID 后再用 list_account_groups 逐层下钻。无需参数。
+    read_only: true
+    method: POST
+    path: /
+    headers: {X-TC-Action: DescribeRootAccountGroup}
+    body: {}
+    pick: Response.Data
+    params: {type: object, properties: {}}
+
+  - name: list_account_groups
+    description: 查询账号分组。默认查全网根分组下的直接子组，deepin 传 1 可递归查所有子组。
+    read_only: true
+    method: POST
+    path: /
+    headers: {X-TC-Action: DescribeAccountGroups}
+    body:
+      ParentId: "{parent_id}"
+      Deepin: "{deepin}"
+    pick: Response.Data
+    params:
+      type: object
+      properties:
+        parent_id: {type: integer, description: 父分组 ID，来自 get_root_account_group；不传则查全网根分组}
+        deepin: {type: integer, enum: [0, 1], description: "0 仅直接子组（默认）/ 1 所有子组"}
+
+  - name: list_local_accounts
+    description: 查询本地账号列表，返回姓名、账户名与所属分组。
+    read_only: true
+    method: POST
+    path: /
+    headers: {X-TC-Action: DescribeLocalAccounts}
+    body:
+      DomainInstanceId: "{domain_instance_id}"
+      AccountGroupId: "{account_group_id}"
+      ShowFlag: "{show_flag}"
+    pick: Response.Data
+    params:
+      type: object
+      properties:
+        domain_instance_id: {type: string, description: '管理域实例 ID，未划分时传 "1"'}
+        account_group_id: {type: integer, description: 账号分组 ID；不传则取全网根账号组}
+        show_flag: {type: integer, enum: [1, 2], description: "1 递归显示子目录用户 / 2 仅当前目录"}
+      required: [domain_instance_id]
