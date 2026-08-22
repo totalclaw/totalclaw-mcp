@@ -135,10 +135,11 @@
 - [x] **B2.5** `PluginsView.vue` 的内存版 MCP 段已替换为指向 `/mcp` 的引导卡（并注明为何迁走）。
   `packages/mcp-market` 与 `feature-handlers.ts` 的 5 个通道**暂留**：直接删有连带风险，
   而用户可见的「两处入口互相矛盾」问题已由引导卡消除。彻底移除见 B2.5.1
-- [ ] **B2.6** i18n 文案（key 建议见 QIYE_APP_INTEGRATION.md §6）
+- [x] **B2.6** 46 处用户可见文案已包进 `$t()`（带变量改具名参数），en.json 追加 36 条；
+  ar.json 未动 —— 不臆造译文，缺项按机制回落原文，留给母语者补
 
-- [ ] **B2.5.1** 彻底移除 `packages/mcp-market` 与 `feature-handlers.ts` 的 5 个内存通道
-  （确认无其他引用后再动；当前它们已无 UI 入口）
+- [x] **B2.5.1** 5 个 handler + 5 个 preload 绑定已移除（确认无 UI 引用后）；
+  `packages/mcp-market` 暂留并标注 `@deprecated` —— packaging-manifest 仍用同名模块开关做裁剪
 
 ### B3. 企业与多账号
 - [ ] **B3.1** 多账号验证：切换账号（不同 `TOTALCLAW_HOME`）后市场/已安装状态各自独立
