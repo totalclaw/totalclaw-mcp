@@ -43,7 +43,7 @@
   - 退出码：`0` 成功 / `1` 错误 / `2` 缺必填 env（`--json` 含 `missing_env[]`）/ `3` 探测失败已保存为 disabled
   - `install` 旗标：`--env K=V ... --runtime ID --yes --no-probe --disabled --allow-unverified --overwrite --json`
 - [ ] **A2.2**（保留原样，未做）`mcp catalog` 改为 `mcp search` 的别名；`mcp presets` 保留为离线回退入口（数据源仍是 `mcp_presets`）
-- [ ] **A2.3**（未做）shell 补全与 `/help`：`_profiles_impl.py` 补全表、`_commands_impl.py` CommandDef 补新子命令
+- [x] **A2.3** bash 补全已支持 `mcp <TAB>` 二级子命令，且从安装账本补全已装 server 名
 
 ### A3. qiye_api 接口
 - [x] **A3.1** 已实现 `totalclaw_qiye_api/mcp_hub_api.py`，11 个端点已挂进 GA 路由表（对标 `skill_shop_api.py`，`build_router()` + `register` 进 `server.py:1454` 的 GA 路由表）：
@@ -55,7 +55,7 @@
   - `POST /v1/mcp/servers/{name}/update`（202）、`POST /v1/mcp/reload`、`GET /v1/mcp/status`
 - [x] **A3.2** `_notify_mcp_change()` 已实现，作业末尾热重载，装完当轮可用：安装/卸载/更新作业末尾执行 `reload_mcp_servers()` + 对热池 agent `refresh_tools()`（对标 `skill_shop_api._notify_skill_change`）
 - [x] **A3.3** `DELETE /v1/mcp/servers/{name}` 已改为完整清理（账本+schema-cache+令牌+.env），响应形状兼容
-- [ ] **A3.4**（未做）契约文档：更新 agent 仓 `docs/integration/MCP_SERVER_MANAGEMENT.md`（新增端点 + 「热加载已由作业完成」说明）
+- [x] **A3.4** `MCP_SERVER_MANAGEMENT.md` 已补「3.5 从 MCP 仓安装」一节（10 个端点 + 三个语义化返回），并删掉已过期的「下个会话生效」提示
 
 ### A4. 既有 bug 顺手修（清单与行号见 AGENT_INTEGRATION.md §5）
 - [x] **A4.1** `cmd_mcp` 已透传退出码（此前返回值被丢弃，`mcp test` 连不上也退 0）
