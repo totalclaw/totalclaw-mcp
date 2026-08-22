@@ -1,0 +1,49 @@
+name: tencent_survey
+display_name: 腾讯问卷
+description: 查询腾讯问卷的问卷详情与回收的答卷数据。
+base_url: https://open.wj.qq.com
+docs: https://wj.qq.com/docs/openapi/
+auth:
+  # 腾讯问卷把 appid 与 access_token 都放在 query 里；这里用 query 型鉴权带 token，
+  # appid 作为普通环境变量在每个工具的 query 中引用。
+  type: query
+  name: access_token
+  env: TENCENT_SURVEY_ACCESS_TOKEN
+optional_env: [TENCENT_SURVEY_APPID]
+defaults:
+  timeout: 30
+
+tools:
+  - name: get_survey
+    description: >-
+      获取问卷详情（题目结构、设置等）。
+      注意：腾讯问卷的开放接口是尊享版付费功能，未开通时会返回权限错误。
+    read_only: true
+    method: GET
+    path: /api/surveys/{survey_id}/legacy
+    query: {appid: "${TENCENT_SURVEY_APPID}"}
+    params:
+      type: object
+      properties:
+        survey_id: {type: integer, description: 问卷 ID}
+      required: [survey_id]
+
+  - name: list_answers
+    description: >-
+      获取问卷的回答列表。翻页是游标式：把上一页最后一条的答卷 ID 作为
+      last_answer_id 传入，不是页码。
+    read_only: true
+    method: GET
+    path: /api/surveys/{survey_id}/answers
+    query:
+      appid: "${TENCENT_SURVEY_APPID}"
+      per_page: "{per_page}"
+      last_answer_id: "{last_answer_id}"
+    max_items: 100
+    params:
+      type: object
+      properties:
+        survey_id: {type: integer, description: 问卷 ID}
+        per_page: {type: integer, description: 每页条数}
+        last_answer_id: {type: integer, description: 翻页游标：上一页最后一条答卷的 ID；首次不传}
+      required: [survey_id]

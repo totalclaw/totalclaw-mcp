@@ -44,6 +44,7 @@ META: dict[str, dict] = {
     "web":         {"category": "web",     "tags": ["网页抓取", "正文抽取", "无需凭据"]},
     "tencent_cloudbase": {"category": "dev", "tags": ["腾讯云", "云开发", "cloudbase", "小程序"]},
     "moka":        {"category": "hr",      "tags": ["招聘", "候选人", "职位", "组织架构"]},
+    "tencent_survey": {"category": "office", "tags": ["腾讯问卷", "问卷", "调研", "答卷"]},
     "tencent_edgeone": {"category": "infra", "tags": ["腾讯云", "edgeone", "cdn", "加速", "刷新预热"]},
 }
 DEFAULT_CATEGORY = "misc"

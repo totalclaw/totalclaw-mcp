@@ -1,0 +1,62 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tencent_survey
+display_name: 腾讯问卷
+version: 0.1.0
+description: 查询腾讯问卷的问卷详情与回收的答卷数据。
+description_zh: 查询腾讯问卷的问卷详情与回收的答卷数据。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: office
+tags:
+- totalclaw
+- self-hosted
+- 腾讯问卷
+- 问卷
+- 调研
+- 答卷
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - tencent_survey
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - tencent_survey
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: TENCENT_SURVEY_ACCESS_TOKEN
+  env_key: TENCENT_SURVEY_ACCESS_TOKEN
+  description: 腾讯问卷 所需的 TENCENT_SURVEY_ACCESS_TOKEN
+  prompt: 请输入 TENCENT_SURVEY_ACCESS_TOKEN
+  secret: true
+  required: true
+optional_env:
+- TENCENT_SURVEY_APPID
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 2
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

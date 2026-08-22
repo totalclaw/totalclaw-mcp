@@ -338,7 +338,7 @@
 - [ ] **tec-do** Tec-Do 2.0 广告与增长情报
 - [ ] **tencent-health-nges** 腾讯健康NGES
 - [ ] **tencent-qidian-cs** 腾讯企点客服（上游 auth_mode=mcp）
-- [ ] **tencent-survey** 腾讯问卷
+- [x] **tencent-survey** 腾讯问卷 — 已实现 `tencent_survey`（问卷详情 + 游标翻页取答卷；上游为尊享版付费功能）
 - [ ] **tencent-tchouse-c** 腾讯云数据仓库 TCHouse-C
 - [ ] **tencent-weiyun** 微云
 - [ ] **tongzhou-fin-research** 同舟金融研究

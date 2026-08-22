@@ -1,0 +1,44 @@
+[
+  {
+    "name": "get_survey",
+    "description": "获取问卷详情（题目结构、设置等）。 注意：腾讯问卷的开放接口是尊享版付费功能，未开通时会返回权限错误。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "survey_id": {
+          "type": "integer",
+          "description": "问卷 ID"
+        }
+      },
+      "required": [
+        "survey_id"
+      ]
+    }
+  },
+  {
+    "name": "list_answers",
+    "description": "获取问卷的回答列表。翻页是游标式：把上一页最后一条的答卷 ID 作为 last_answer_id 传入，不是页码。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "survey_id": {
+          "type": "integer",
+          "description": "问卷 ID"
+        },
+        "per_page": {
+          "type": "integer",
+          "description": "每页条数"
+        },
+        "last_answer_id": {
+          "type": "integer",
+          "description": "翻页游标：上一页最后一条答卷的 ID；首次不传"
+        }
+      },
+      "required": [
+        "survey_id"
+      ]
+    }
+  }
+]
