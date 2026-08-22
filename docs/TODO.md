@@ -161,177 +161,157 @@
 
 ### D1. 连接器实现进度（126）
 
-已实现 17 个：`github` `gitee` `notion` `linear` `tapd` `canva` `tencent_map` `wecom` `feishu` `dingtalk`
-`imap_mail`（QQ/网易邮箱）`web`（网页抓取，零凭据）`jiandaoyun` `jinshuju` `baidu_netdisk` `qcc` `tianyancha`
+按**真实可达性**分层，而不是把 126 项都挂成待办 —— 其中相当一部分要么上游本就不是 MCP，
+要么文档需登录/商业授权，硬写只会产出 404 的假 pack。
 
-#### 办公协同 / 文档 / 表单 / 网盘（16）
+#### A · 已实现（20 个连接器 → 19 个自研服务器）
 
-- [ ] **tencent-docs** 腾讯文档 — 上游类型 MCP，鉴权 -
-- [ ] **tencent-docs-oa** 腾讯文档企业版 — 上游类型 MCP，鉴权 oneid-token
-- [ ] **kdocs** 金山文档 — 上游类型 MCP，鉴权 server-side
-- [ ] **tencent-survey** 腾讯问卷 — 上游类型 MCP，鉴权 -
-- [ ] **tencent-weiyun** 微云 — 上游类型 MCP，鉴权 -
-- [x] **baidu-netdisk** 百度网盘 — 已实现 `baidu_netdisk`
-- [x] **jinshuju** 金数据 — 已实现 `jinshuju`
-- [ ] **qingflow** 轻流 — 上游类型 MCP，鉴权 -
-- [x] **jiandaoyun** 简道云 — 已实现 `jiandaoyun`
-- [ ] **h3yun-connector** 氚云 — 上游类型 MCP，鉴权 token
-- [ ] **wisenote** 百智WiseNote — 上游类型 MCP，鉴权 -
-- [ ] **camscanner-mcp** 扫描全能王 — 上游类型 MCP，鉴权 -
-- [ ] **ima-mcp** ima知识库 — 上游类型 MCP，鉴权 -
-- [ ] **lexiang** 乐享知识库 — 上游类型 MCP，鉴权 -
-- [ ] **wps-knowledgebase** WPS知识库 — 上游类型 CLI，鉴权 -
-- [ ] **zsxq** 知识星球 — 上游类型 CLI，鉴权 -
-
-#### 通讯 / 会议 / 客服（6）
-
-- [x] **qq-mail** QQ邮箱 — 已实现 `imap_mail`
-- [x] **netease-mail** 网易邮箱 — 已实现 `imap_mail`
-- [ ] **tencent-qidian-cs** 腾讯企点客服 — 上游类型 MCP，鉴权 mcp
-- [ ] **ezjoin-meeting** EzyJoin智慧会议 — 上游类型 MCP，鉴权 -
-- [ ] **tmeet** 腾讯会议 — 上游类型 CLI，鉴权 -
-- [ ] **fbs-connector** 福帮手 — 上游类型 MCP，鉴权 -
-
-#### 研发 / 运维（14）
-
-- [x] **github** GitHub — 已实现 `github`
-- [x] **tapd** TAPD — 已实现 `tapd`
-- [ ] **cnb-api** CNB — 上游类型 CLI，鉴权 -
-- [ ] **bugly-token** Bugly 质量概览 — 上游类型 MCP，鉴权 token
-- [x] **cloudbase** 腾讯云 CloudBase — 已实现 `tencent_cloudbase`
-- [ ] **edgeone-pages** EdgeOne Makers — 上游类型 MCP，鉴权 -
 - [x] **agentkey** AgentKey — 已实现 `web（抓取部分）`
-- [ ] **dcs-cloud** DCS Cloud — 上游类型 MCP，鉴权 token
-- [ ] **tencent-tchouse-c** 腾讯云数据仓库 TCHouse-C — 上游类型 MCP，鉴权 -
-- [ ] **miaoda** 秒哒应用搭建 — 上游类型 CLI，鉴权 -
-- [ ] **woscli** 微盟 WOS CLI — 上游类型 CLI，鉴权 -
-- [ ] **ioa** 零信任安全 iOA — 上游类型 MCP，鉴权 -
-- [ ] **awesun** 向日葵远程控制 — 上游类型 CLI，鉴权 -
-- [ ] **77ircloud** 铱云AI供应链 — 上游类型 CLI，鉴权 -
-
-#### 金融 / 财税 / 投研（16）
-
-- [ ] **tdx-connector** 通达信 — 上游类型 MCP，鉴权 server-side
-- [ ] **westock-mcp** 腾讯自选股 — 上游类型 MCP，鉴权 -
-- [ ] **gildata** 恒生聚源 MCP — 上游类型 MCP，鉴权 token
-- [ ] **wind-finance** Wind 金融数据 — 上游类型 MCP，鉴权 token
-- [ ] **yingmi-mcp** 盈米MCP — 上游类型 MCP，鉴权 token
-- [ ] **tongzhou-fin-research** 同舟金融研究 — 上游类型 MCP，鉴权 -
-- [ ] **gangtise-mcp** Gangtise投研 — 上游类型 MCP，鉴权 token
-- [ ] **morningstar** 晨星 Morningstar — 上游类型 MCP，鉴权 -
-- [ ] **finenter** 进门投研 — 上游类型 MCP，鉴权 -
-- [ ] **jiushuyun** 九数云BI — 上游类型 MCP，鉴权 -
-- [ ] **zfs-fssc-ai** 中兴新云AI智报 — 上游类型 MCP，鉴权 token
-- [ ] **yzf-invoice-mcp-server** 云帐房AI开票 — 上游类型 MCP，鉴权 -
-- [ ] **mx-ds-mcp** 东方财富妙想MCP — 上游类型 MCP，鉴权 -
-- [ ] **pandadata** PandaData 金融数据 — 上游类型 MCP，鉴权 -
-- [ ] **tplus-api** 畅捷通T+ — 上游类型 MCP，鉴权 -
-- [ ] **shanglv-mcp-gateway** 用友智能服务（AI BaaS） — 上游类型 MCP，鉴权 -
-
-#### 法律 / 合规（9）
-
-- [ ] **pkulaw** 北大法宝·法律智能检索 — 上游类型 MCP，鉴权 -
-- [ ] **qcc-legal** 企查查·法律数据 — 上游类型 MCP，鉴权 -
-- [ ] **fyopen-lawsearch** 法研·法律法规检索 — 上游类型 MCP，鉴权 -
-- [ ] **fazhi-law** 同花顺法律AI助手 — 上游类型 MCP，鉴权 token
-- [ ] **fadada-richee** 法大大睿契 — 上游类型 MCP，鉴权 -
-- [ ] **mzl-trademark** 摩知轮商标查询 — 上游类型 MCP，鉴权 -
-- [ ] **yuandian-mcp** 华宇元典法律数据 — 上游类型 MCP，鉴权 -
-- [ ] **wk-workbuddy** 威科先行 — 上游类型 MCP，鉴权 -
-- [ ] **dknowc-mcp** 深知可信工作台 — 上游类型 MCP，鉴权 -
-
-#### 企业数据 / 征信 / 风险（11）
-
-- [x] **qcc-company** 企查查 — 已实现 `qcc`
-- [x] **tyc-mcp** 天眼查 — 已实现 `tianyancha`
-- [ ] **qixinhuiyan-mcp** 启信慧眼 — 上游类型 MCP，鉴权 -
-- [ ] **kuaicha-search** 同花顺快查企业数据 — 上游类型 MCP，鉴权 token
-- [ ] **sq-company-dynamic** 上奇产业通-企业动态追踪 — 上游类型 MCP，鉴权 token
-- [ ] **opendata** 及刻智能·时空数据MCP — 上游类型 MCP，鉴权 token
-- [ ] **cisp-mcp** 水滴征信 — 上游类型 MCP，鉴权 token
-- [ ] **xingtu-claw-risk** 天创信用星图MCP — 上游类型 MCP，鉴权 -
-- [ ] **fanruan-growth-advisor** 帆软增长谋士 — 上游类型 MCP，鉴权 token
-- [ ] **bazhuayu** 八爪鱼 — 上游类型 MCP，鉴权 -
-- [ ] **tc-chengxin** 同程程心 — 上游类型 CLI，鉴权 -
-
-#### CRM / 销售（6）
-
-- [ ] **neo-crm** 销售易CRM — 上游类型 MCP，鉴权 -
-- [ ] **weisheng-scrm** 微盛企微管家SCRM — 上游类型 MCP，鉴权 token
-- [ ] **sharecrm** 纷享销客CRM — 上游类型 MCP，鉴权 -
-- [ ] **salesnail-instructor** SalesNail 讲师 — 上游类型 MCP，鉴权 -
-- [ ] **salestouch** SalesTouch 经营执行 — 上游类型 MCP，鉴权 -
-- [ ] **youshu-bd-mate** 智客AI · 对公(To B)营销助手 — 上游类型 MCP，鉴权 token
-
-#### 电商 / 跨境（7）
-
-- [ ] **lingxing-mcp** 领星ERP — 上游类型 MCP，鉴权 token
-- [ ] **linkfox-product-selection** Linkfox 选品 — 上游类型 MCP，鉴权 token
-- [ ] **infimind-ecommerce-image** 极睿电商生图 — 上游类型 MCP，鉴权 token
-- [ ] **chuhaijiang** 出海匠 — 上游类型 MCP，鉴权 -
-- [ ] **xiaoe-cloud-cli** 小鹅通 — 上游类型 MCP，鉴权 -
-- [ ] **proboost** OpenBoost 跨境数据 — 上游类型 MCP，鉴权 -
-- [ ] **picset-commerce-images** Picset AI 电商图片 — 上游类型 MCP，鉴权 token
-
-#### 营销 / 广告（4）
-
-- [ ] **tencentads** 腾讯营销投放 — 上游类型 CLI，鉴权 -
-- [ ] **duoguan-fengchao** 夺冠蜂巢 — 上游类型 MCP，鉴权 token
-- [ ] **tec-do** Tec-Do 2.0 广告与增长情报 — 上游类型 MCP，鉴权 -
-- [ ] **seeyon-office-marketing-suite** 致远互联协同办公服务 — 上游类型 CLI，鉴权 -
-
-#### 创意 / 设计 / 音视频（11）
-
+- [x] **baidu-netdisk** 百度网盘 — 已实现 `baidu_netdisk`
 - [x] **canva** Canva可画 — 已实现 `canva`
 - [x] **canva-ai** Canva可画 — 已实现 `canva`
-- [ ] **mastergo-vibe-mcp** MasterGo 莫高设计 — 上游类型 MCP，鉴权 -
-- [ ] **kling-ai-plugin** 可灵 AI — 上游类型 MCP，鉴权 -
-- [ ] **kling-ai-plugin-ai** 可灵 AI — 上游类型 MCP，鉴权 -
-- [ ] **picset-video-generation** Picset AI 视频创作 — 上游类型 MCP，鉴权 token
-- [ ] **infimind-video** 极睿视频 — 上游类型 MCP，鉴权 token
-- [ ] **flova** Flova — 上游类型 MCP，鉴权 oauth
-- [ ] **ai-hive** AI-HIVE — 上游类型 MCP，鉴权 -
-- [ ] **designkit-buddy-cli** 美图设计室 AI设计 CLI — 上游类型 CLI，鉴权 -
-- [ ] **lemonclaw** 柠檬云 — 上游类型 CLI，鉴权 -
-
-#### 人力 / 教育（6）
-
-- [x] **moka** Moka HR 智能体 — 已实现 `moka`
-- [ ] **beisen-cli** 北森AI · HR专家 — 上游类型 CLI，鉴权 -
-- [ ] **ihr-cli** i人事AI·HR专家 — 上游类型 CLI，鉴权 -
-- [ ] **gaodun-job** 大学生实习就业助手 — 上游类型 MCP，鉴权 -
-- [ ] **fenbi-baokao-decision** 报考决策 — 上游类型 MCP，鉴权 -
-- [ ] **teacher-assistant** 企鹅教师助手 — 上游类型 MCP，鉴权 -
-
-#### 医疗健康（3）
-
-- [ ] **archive-hospital-mcp** 腾讯健康全周期管理平台 — 上游类型 MCP，鉴权 -
-- [ ] **tencent-health-nges** 腾讯健康NGES — 上游类型 MCP，鉴权 -
-- [ ] **emr-query** 弹性MapReduce — 上游类型 CLI，鉴权 -
-
-#### 研究 / 知识（3）
-
-- [ ] **patsnap-search** 智慧芽专利&文献融合检索 — 上游类型 MCP，鉴权 token
-- [ ] **tanyuan-assistant** TDC 文化智能体 — 上游类型 MCP，鉴权 -
-- [ ] **gongyi-open-mcp** 腾讯公益机构服务平台 — 上游类型 MCP，鉴权 -
-
-#### 其他（14）
-
-- [ ] **ctrip-wendao** 携程问道 — 上游类型 —，鉴权 token
-- [ ] **uupt** UU跑腿 — 上游类型 CLI，鉴权 -
-- [ ] **mglc** 芒果灵创 CLI — 上游类型 CLI，鉴权 -
-- [ ] **textin-xparse** TextIn xParse·智能文档解析 — 上游类型 CLI，鉴权 -
-- [ ] **textin-xparse-ai** TextIn xParse·智能文档解析 — 上游类型 CLI，鉴权 -
-- [ ] **lovrabet-cli** Lovrabet CLI — 上游类型 CLI，鉴权 -
-- [ ] **shanlong-claw** 商龙经营洞察 — 上游类型 CLI，鉴权 -
-- [ ] **yunke-cli** 云客AI工作手机 — 上游类型 CLI，鉴权 -
-- [x] **linear-mcp** Linear — 已实现 `linear`
-- [x] **notion** Notion — 已实现 `notion`
-- [x] **tencent-map** 腾讯地图 — 已实现 `tencent_map`
-- [x] **wecom** 企业微信 — 已实现 `wecom`
-- [x] **feishu** 飞书 — 已实现 `feishu`
+- [x] **cloudbase** 腾讯云 CloudBase — 已实现 `tencent_cloudbase`
 - [x] **dingtalk** 钉钉 — 已实现 `dingtalk`
+- [x] **feishu** 飞书 — 已实现 `feishu`
+- [x] **github** GitHub — 已实现 `github`
+- [x] **jiandaoyun** 简道云 — 已实现 `jiandaoyun`
+- [x] **jinshuju** 金数据 — 已实现 `jinshuju`
+- [x] **linear-mcp** Linear — 已实现 `linear`
+- [x] **moka** Moka HR 智能体 — 已实现 `moka`
+- [x] **netease-mail** 网易邮箱 — 已实现 `imap_mail`
+- [x] **notion** Notion — 已实现 `notion`
+- [x] **qcc-company** 企查查 — 已实现 `qcc`
+- [x] **qq-mail** QQ邮箱 — 已实现 `imap_mail`
+- [x] **tapd** TAPD — 已实现 `tapd`
+- [x] **tencent-map** 腾讯地图 — 已实现 `tencent_map`
+- [x] **tyc-mcp** 天眼查 — 已实现 `tianyancha`
+- [x] **wecom** 企业微信 — 已实现 `wecom`
 
+#### B · 待实现，需先取得可验证的接口契约（75）
+
+拿到任一家的开发者文档或沙箱账号后，照 [PACKS.md](PACKS.md) 写 pack 即可，引擎无需改动。
+优先级参考 D2。
+
+- [ ] **ai-hive** AI-HIVE
+- [ ] **archive-hospital-mcp** 腾讯健康全周期管理平台
+- [ ] **bazhuayu** 八爪鱼
+- [ ] **bugly-token** Bugly 质量概览（上游 auth_mode=token）
+- [ ] **camscanner-mcp** 扫描全能王
+- [ ] **chuhaijiang** 出海匠
+- [ ] **cisp-mcp** 水滴征信（上游 auth_mode=token）
+- [ ] **dcs-cloud** DCS Cloud（上游 auth_mode=token）
+- [ ] **dknowc-mcp** 深知可信工作台
+- [ ] **duoguan-fengchao** 夺冠蜂巢（上游 auth_mode=token）
+- [ ] **edgeone-pages** EdgeOne Makers
+- [ ] **ezjoin-meeting** EzyJoin智慧会议
+- [ ] **fadada-richee** 法大大睿契
+- [ ] **fanruan-growth-advisor** 帆软增长谋士（上游 auth_mode=token）
+- [ ] **fazhi-law** 同花顺法律AI助手（上游 auth_mode=token）
+- [ ] **fbs-connector** 福帮手
+- [ ] **fenbi-baokao-decision** 报考决策
+- [ ] **finenter** 进门投研
+- [ ] **flova** Flova（上游 auth_mode=oauth）
+- [ ] **fyopen-lawsearch** 法研·法律法规检索
+- [ ] **gangtise-mcp** Gangtise投研（上游 auth_mode=token）
+- [ ] **gaodun-job** 大学生实习就业助手
+- [ ] **gildata** 恒生聚源 MCP（上游 auth_mode=token）
+- [ ] **gongyi-open-mcp** 腾讯公益机构服务平台
+- [ ] **ima-mcp** ima知识库
+- [ ] **infimind-ecommerce-image** 极睿电商生图（上游 auth_mode=token）
+- [ ] **infimind-video** 极睿视频（上游 auth_mode=token）
+- [ ] **ioa** 零信任安全 iOA
+- [ ] **jiushuyun** 九数云BI
+- [ ] **kdocs** 金山文档（上游 auth_mode=server-side）
+- [ ] **kling-ai-plugin** 可灵 AI
+- [ ] **kling-ai-plugin-ai** 可灵 AI
+- [ ] **kuaicha-search** 同花顺快查企业数据（上游 auth_mode=token）
+- [ ] **lexiang** 乐享知识库
+- [ ] **lingxing-mcp** 领星ERP（上游 auth_mode=token）
+- [ ] **linkfox-product-selection** Linkfox 选品（上游 auth_mode=token）
+- [ ] **mastergo-vibe-mcp** MasterGo 莫高设计
+- [ ] **morningstar** 晨星 Morningstar
+- [ ] **mx-ds-mcp** 东方财富妙想MCP
+- [ ] **mzl-trademark** 摩知轮商标查询
+- [ ] **neo-crm** 销售易CRM
+- [ ] **opendata** 及刻智能·时空数据MCP（上游 auth_mode=token）
+- [ ] **pandadata** PandaData 金融数据
+- [ ] **picset-commerce-images** Picset AI 电商图片（上游 auth_mode=token）
+- [ ] **picset-video-generation** Picset AI 视频创作（上游 auth_mode=token）
+- [ ] **pkulaw** 北大法宝·法律智能检索
+- [ ] **proboost** OpenBoost 跨境数据
+- [ ] **qcc-legal** 企查查·法律数据
+- [ ] **qixinhuiyan-mcp** 启信慧眼
+- [ ] **salesnail-instructor** SalesNail 讲师
+- [ ] **salestouch** SalesTouch 经营执行
+- [ ] **shanglv-mcp-gateway** 用友智能服务（AI BaaS）
+- [ ] **sq-company-dynamic** 上奇产业通-企业动态追踪（上游 auth_mode=token）
+- [ ] **tanyuan-assistant** TDC 文化智能体
+- [ ] **tdx-connector** 通达信（上游 auth_mode=server-side）
+- [ ] **teacher-assistant** 企鹅教师助手
+- [ ] **tec-do** Tec-Do 2.0 广告与增长情报
+- [ ] **tencent-health-nges** 腾讯健康NGES
+- [ ] **tencent-qidian-cs** 腾讯企点客服（上游 auth_mode=mcp）
+- [ ] **tencent-survey** 腾讯问卷
+- [ ] **tencent-tchouse-c** 腾讯云数据仓库 TCHouse-C
+- [ ] **tencent-weiyun** 微云
+- [ ] **tongzhou-fin-research** 同舟金融研究
+- [ ] **tplus-api** 畅捷通T+
+- [ ] **weisheng-scrm** 微盛企微管家SCRM（上游 auth_mode=token）
+- [ ] **westock-mcp** 腾讯自选股
+- [ ] **wind-finance** Wind 金融数据（上游 auth_mode=token）
+- [ ] **wisenote** 百智WiseNote
+- [ ] **wk-workbuddy** 威科先行
+- [ ] **xingtu-claw-risk** 天创信用星图MCP
+- [ ] **yingmi-mcp** 盈米MCP（上游 auth_mode=token）
+- [ ] **youshu-bd-mate** 智客AI · 对公(To B)营销助手（上游 auth_mode=token）
+- [ ] **yuandian-mcp** 华宇元典法律数据
+- [ ] **yzf-invoice-mcp-server** 云帐房AI开票
+- [ ] **zfs-fssc-ai** 中兴新云AI智报（上游 auth_mode=token）
+
+#### C · 已核查受阻（8）
+
+逐个查过官方文档，拿不到可验证的端点定义。**不猜端点、不写假 pack。**
+
+- [x] **cnb-api** CNB — 已核查受阻：OpenAPI 端点返回 401，规范需登录
+- [x] **h3yun-connector** 氚云 — 已核查受阻：开放平台文档页报「系统加载错误」，需登录
+- [x] **patsnap-search** 智慧芽专利&文献融合检索 — 已核查受阻：开放平台文档页 404，需登录开发者门户
+- [x] **qingflow** 轻流 — 已核查受阻：Open API 需先在应用内安装扩展才能看文档与取 token
+- [x] **sharecrm** 纷享销客CRM — 已核查受阻：纷享销客文档站是 SPA，抓不到端点定义
+- [x] **tencent-docs** 腾讯文档 — 已核查受阻：v3 只给三元组请求头，文件管理端点在 v2，页面 404
+- [x] **tencent-docs-oa** 腾讯文档企业版 — 已核查受阻：同 tencent-docs，且额外需 oneid-token
+- [x] **xiaoe-cloud-cli** 小鹅通 — 已核查受阻：文档站只暴露目录，端点页需逐页登录
+
+#### D · 上游是 CLI 封装而非 MCP（22）
+
+WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务器。
+若将来需要，可按其底层 REST API 单独实现，不必对齐上游形态。
+
+- [x] **77ircloud** 铱云AI供应链 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **awesun** 向日葵远程控制 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **beisen-cli** 北森AI · HR专家 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **designkit-buddy-cli** 美图设计室 AI设计 CLI — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **emr-query** 弹性MapReduce — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **ihr-cli** i人事AI·HR专家 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **lemonclaw** 柠檬云 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **lovrabet-cli** Lovrabet CLI — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **mglc** 芒果灵创 CLI — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **miaoda** 秒哒应用搭建 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **seeyon-office-marketing-suite** 致远互联协同办公服务 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **shanlong-claw** 商龙经营洞察 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **tc-chengxin** 同程程心 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **tencentads** 腾讯营销投放 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **textin-xparse** TextIn xParse·智能文档解析 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **textin-xparse-ai** TextIn xParse·智能文档解析 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **tmeet** 腾讯会议 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **uupt** UU跑腿 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **woscli** 微盟 WOS CLI — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **wps-knowledgebase** WPS知识库 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **yunke-cli** 云客AI工作手机 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **zsxq** 知识星球 — 上游是 CLI 封装而非 MCP，不在本仓范围
+
+#### E · 上游仅目录占位（1）
+
+- [x] **ctrip-wendao** 携程问道 — 上游无 MCP 也无 CLI 配置，仅目录占位
 
 ### D2. 实现优先级建议
 
