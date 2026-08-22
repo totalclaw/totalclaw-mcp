@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T11:35:45Z",
+  "generated_at": "2026-08-22T11:37:49Z",
   "servers": [
     {
       "name": "composio",
@@ -1851,6 +1851,108 @@
         }
       ],
       "bundle_sha256": "2599b00221d95a61a3e081fff73ceac5530f4dbfd303f9872406f3e41cf85e18"
+    },
+    {
+      "name": "tencent_cloudbase",
+      "id": "totalclaw-mcp/dev/tencent_cloudbase",
+      "display_name": "腾讯云 CloudBase",
+      "description": "查询与管理腾讯云开发 CloudBase 的环境、云函数、数据库集合与静态托管。",
+      "description_zh": "查询与管理腾讯云开发 CloudBase 的环境、云函数、数据库集合与静态托管。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "dev",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "腾讯云",
+        "云开发",
+        "cloudbase",
+        "小程序"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "TENCENTCLOUD_SECRET_ID",
+          "description": "腾讯云 CloudBase 所需的 TENCENTCLOUD_SECRET_ID",
+          "prompt": "请输入 TENCENTCLOUD_SECRET_ID",
+          "secret": true,
+          "required": true
+        },
+        {
+          "name": "TENCENTCLOUD_SECRET_KEY",
+          "description": "腾讯云 CloudBase 所需的 TENCENTCLOUD_SECRET_KEY",
+          "prompt": "请输入 TENCENTCLOUD_SECRET_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 5,
+      "tools": [
+        "list_environments",
+        "get_env_usage",
+        "list_database_collections",
+        "describe_static_store",
+        "describe_env_domains"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/dev/tencent_cloudbase",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/tencent_cloudbase",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/dev/tencent_cloudbase"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "3aadfd97581a815d41e9260fa98163047e950e16a404eceb532132e286858e00",
+          "size": 1226
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "9767178f13ac7ce7f52df879d274b3dae9dcc5f55494530da8a8f18865459f7a",
+          "size": 1735
+        },
+        {
+          "path": "tools.json",
+          "sha256": "bd7239887995f42a3adf1f52749f39d2f78c5692af021993dd6bcd513009d734",
+          "size": 2366
+        }
+      ],
+      "bundle_sha256": "04d67077617c8996de423e448e430c32684e64e6768442ea832076728f20d8f4"
     },
     {
       "name": "docker",

@@ -354,6 +354,61 @@ def test_signature_requires_inject():
             "type": "signature", "parts": ["${A}"], "requires_env": ["A"]}})
 
 
+# ── 腾讯云 TC3 签名 ───────────────────────────────────────────────────────
+
+def test_tc3_signature_matches_independent_recompute(monkeypatch):
+    """独立按官方四步复算一遍，确认实现无误 —— 签名错了上游只会回 AuthFailure，很难查。"""
+    import hashlib
+    import hmac
+    import json as _json
+    import time
+
+    monkeypatch.setenv("TC_ID", "AKIDtest")
+    monkeypatch.setenv("TC_KEY", "skTest123")
+    p = parse_pack({**MINIMAL, "base_url": "https://tcb.tencentcloudapi.com",
+                    "auth": {"type": "tencent_cloud", "service": "tcb", "version": "2018-06-08",
+                             "secret_id_env": "TC_ID", "secret_key_env": "TC_KEY",
+                             "region": "ap-shanghai"},
+                    "tools": [{"name": "act", "description": "d", "method": "POST", "path": "/",
+                               "headers": {"X-TC-Action": "DescribeEnvs"},
+                               "body": {"EnvId": "{env_id}"},
+                               "params": {"type": "object",
+                                          "properties": {"env_id": {"type": "string"}}}}]})
+    req = build_request(p, p.tools[0], {"env_id": "prod-1"})
+    h = req["headers"]
+    body = _json.dumps(req["json"], ensure_ascii=False, separators=(",", ":"))
+    ts = h["X-TC-Timestamp"]
+    date = time.strftime("%Y-%m-%d", time.gmtime(int(ts)))
+    ch = ("content-type:application/json; charset=utf-8\n"
+          "host:tcb.tencentcloudapi.com\nx-tc-action:describeenvs\n")
+    cr = "\n".join(["POST", "/", "", ch, "content-type;host;x-tc-action",
+                    hashlib.sha256(body.encode()).hexdigest()])
+    sts = "\n".join(["TC3-HMAC-SHA256", ts, f"{date}/tcb/tc3_request",
+                     hashlib.sha256(cr.encode()).hexdigest()])
+    k = hmac.new(b"TC3skTest123", date.encode(), hashlib.sha256).digest()
+    k = hmac.new(k, b"tcb", hashlib.sha256).digest()
+    k = hmac.new(k, b"tc3_request", hashlib.sha256).digest()
+    sig = hmac.new(k, sts.encode(), hashlib.sha256).hexdigest()
+    assert f"Signature={sig}" in h["Authorization"]
+    assert h["X-TC-Version"] == "2018-06-08" and h["X-TC-Region"] == "ap-shanghai"
+
+
+def test_tc3_missing_action_is_reported(monkeypatch):
+    monkeypatch.setenv("TC_ID", "a"), monkeypatch.setenv("TC_KEY", "b")
+    p = parse_pack({**MINIMAL, "base_url": "https://tcb.tencentcloudapi.com",
+                    "auth": {"type": "tencent_cloud", "service": "tcb", "version": "2018-06-08",
+                             "secret_id_env": "TC_ID", "secret_key_env": "TC_KEY"},
+                    "tools": [{"name": "act", "description": "d", "method": "POST", "path": "/"}]})
+    r = call_tool(p, p.tools[0], {})
+    assert r["success"] is False and "X-TC-Action" in r["error"]
+
+
+def test_tc3_requires_service_and_version():
+    with pytest.raises(PackError, match="version"):
+        parse_pack({**MINIMAL, "auth": {"type": "tencent_cloud", "service": "tcb",
+                                        "secret_id_env": "A", "secret_key_env": "B"}})
+
+
 # ── 原生服务器 ───────────────────────────────────────────────────────────
 
 def test_native_modules_expose_contract():

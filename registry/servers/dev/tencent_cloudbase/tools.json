@@ -1,0 +1,100 @@
+[
+  {
+    "name": "list_environments",
+    "description": "列出账号下的 CloudBase 环境，返回环境 ID、别名、状态与套餐。先用它拿 EnvId。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "env_id": {
+          "type": "string",
+          "description": "只查某个环境；不传则列出全部"
+        },
+        "is_visible": {
+          "type": "boolean",
+          "description": "是否只返回可见环境"
+        }
+      }
+    }
+  },
+  {
+    "name": "get_env_usage",
+    "description": "查询环境的资源用量（存储、CDN 流量、云函数调用次数等）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "env_id": {
+          "type": "string",
+          "description": "环境 ID"
+        },
+        "resource_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "资源类型过滤，可选"
+        }
+      },
+      "required": [
+        "env_id"
+      ]
+    }
+  },
+  {
+    "name": "list_database_collections",
+    "description": "列出环境内的数据库集合（表）及其文档数与索引数。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "env_id": {
+          "type": "string",
+          "description": "环境 ID"
+        },
+        "collection_name": {
+          "type": "string",
+          "description": "集合名"
+        }
+      },
+      "required": [
+        "env_id",
+        "collection_name"
+      ]
+    }
+  },
+  {
+    "name": "describe_static_store",
+    "description": "查询环境的静态网站托管信息（域名、状态、存储桶）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "env_id": {
+          "type": "string",
+          "description": "环境 ID"
+        }
+      },
+      "required": [
+        "env_id"
+      ]
+    }
+  },
+  {
+    "name": "describe_env_domains",
+    "description": "查询环境绑定的安全域名列表。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "env_id": {
+          "type": "string",
+          "description": "环境 ID"
+        }
+      },
+      "required": [
+        "env_id"
+      ]
+    }
+  }
+]

@@ -44,7 +44,7 @@ from typing import Any
 
 NAME_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 TOOL_NAME_RE = re.compile(r"^[a-z][a-z0-9_]*$")
-AUTH_TYPES = {"none", "header", "bearer", "query", "basic", "token_exchange", "signature"}
+AUTH_TYPES = {"none", "header", "bearer", "query", "basic", "token_exchange", "signature", "tencent_cloud"}
 METHODS = {"GET", "POST", "PUT", "PATCH", "DELETE"}
 
 
@@ -61,6 +61,7 @@ class Auth:
     prefix: str = ""                 # header 值前缀，如 "Bearer "
     exchange: Any = None             # type=token_exchange 时的 TokenExchange
     signature: Any = None            # type=signature 时的 Signature
+    tc3: Any = None                  # type=tencent_cloud 时的 TC3Config
 
     @property
     def required_env(self) -> list[str]:
@@ -68,6 +69,8 @@ class Auth:
             return list(self.exchange.requires_env)
         if self.type == "signature" and self.signature is not None:
             return list(self.signature.requires_env)
+        if self.type == "tencent_cloud" and self.tc3 is not None:
+            return list(self.tc3.requires_env)
         return [e for e in (self.env, self.env_user) if e]
 
 
@@ -139,6 +142,10 @@ def _parse_auth(raw: Any, where: str) -> Auth:
     t = str(raw.get("type") or "none")
     if t not in AUTH_TYPES:
         raise PackError(f"{where}: auth.type={t!r} 非法，可选 {sorted(AUTH_TYPES)}")
+    if t == "tencent_cloud":
+        from .tc3 import parse_tc3
+
+        return Auth(type=t, tc3=parse_tc3(raw, where))
     if t == "signature":
         from .signing import parse_signature
 

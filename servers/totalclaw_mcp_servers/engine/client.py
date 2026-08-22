@@ -18,6 +18,8 @@ _REDACT_KEYS = ("authorization", "token", "key", "secret", "password", "cookie")
 
 
 def resolve_auth_value(auth: Auth) -> str | None:
+    if auth.type == "tencent_cloud":
+        return None      # 签名在 build_request 里按请求体计算
     if auth.type == "signature":
         return None      # 签名在 build_request 里直接算并注入
     if auth.type == "token_exchange" and auth.exchange is not None:
@@ -52,7 +54,14 @@ def build_request(pack: Pack, tool: Tool, params: dict[str, Any]) -> dict[str, A
     headers.update(render_value(tool.headers, params, auth_value) if tool.headers else {})
 
     a = pack.auth
-    if a.type == "signature" and a.signature is not None:
+    if a.type == "tencent_cloud" and a.tc3 is not None:
+        from .tc3 import build_headers, host_of
+
+        # 云 API 恒为 POST /，动作在 X-TC-Action 头里；body 参与签名，必须先定稿
+        action = headers.pop("X-TC-Action", "") or headers.pop("x-tc-action", "")
+        headers.update(build_headers(a.tc3, host=host_of(pack.base_url),
+                                     action=action, payload=body))
+    elif a.type == "signature" and a.signature is not None:
         from .signing import compute
 
         signed = compute(a.signature)
@@ -119,13 +128,14 @@ def call_tool(pack: Pack, tool: Tool, params: dict[str, Any]) -> dict[str, Any]:
         }
 
     from .signing import SigningError
+    from .tc3 import TC3Error
     from .token_exchange import TokenExchangeError
 
     try:
         req = build_request(pack, tool, params)
     except MissingValue as e:
         return {"success": False, "error": f"缺少必填参数：{e.key}"}
-    except (TokenExchangeError, SigningError) as e:
+    except (TokenExchangeError, SigningError, TC3Error) as e:
         return {"success": False, "error": str(e)}
     except Exception as e:  # noqa: BLE001
         return {"success": False, "error": f"构造请求失败：{type(e).__name__}: {e}"}

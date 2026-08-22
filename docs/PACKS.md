@@ -11,14 +11,14 @@
 | `display_name` | ✅ | 展示名（中文优先） |
 | `description` | ✅ | 一句话说清能做什么 |
 | `base_url` | ✅ | API 根地址。非回环地址必须 `https://` |
-| `auth` | | 鉴权（none/header/bearer/query/basic/token_exchange/signature），见下 |
+| `auth` | | 鉴权（none/header/bearer/query/basic/token_exchange/signature/tencent_cloud），见下 |
 | `defaults` | | `{timeout: 30, headers: {...}}` |
 | `response` | | 业务错误码检查，见下 |
 | `tools` | ✅ | 至少 1 个 |
 | `optional_env` | | 可选环境变量名列表 |
 | `docs` | | 上游 API 文档链接 |
 
-## `auth` — 七种鉴权
+## `auth` — 八种鉴权
 
 凭据**只能**来自环境变量，pack 里写死密钥会被校验拒绝。
 
@@ -70,6 +70,32 @@ auth:
 
 可用占位符：`${ENV}` 环境变量、`{timestamp}` 秒级时间戳、`{timestamp_ms}` 毫秒、
 `{nonce}` 随机串、`{signature}` 算出的签名（只能出现在 `inject` 里）。
+
+### `tencent_cloud` — 腾讯云 TC3-HMAC-SHA256
+
+腾讯云所有云 API（CloudBase / EdgeOne / Bugly / TCHouse / 营销投放 / SMS / OCR …）
+共用这套四步签名。引擎已实现，pack 里只需声明服务名与版本。
+
+```yaml
+auth:
+  type: tencent_cloud
+  service: tcb                     # 云产品的 service 名
+  version: "2018-06-08"            # 该产品的 API 版本
+  secret_id_env: TENCENTCLOUD_SECRET_ID
+  secret_key_env: TENCENTCLOUD_SECRET_KEY
+  region_env: TENCENTCLOUD_REGION  # 可选，优先于下面的 region
+  region: ap-shanghai
+```
+
+云 API 形状固定：**`method: POST`、`path: /`，动作放在 `tools[].headers` 的 `X-TC-Action`**，
+入参是 JSON body。失败时是 HTTP 200 + `Response.Error`，所以配套写：
+
+```yaml
+response:
+  error_field: Response.Error.Code
+  ok_value: "__never__"
+  message_field: Response.Error.Message
+```
 
 ## `response` — 业务错误码
 

@@ -42,6 +42,7 @@ META: dict[str, dict] = {
     "qcc":         {"category": "data",    "tags": ["企查查", "工商", "股东", "企业信息"]},
     "tianyancha":  {"category": "data",    "tags": ["天眼查", "工商", "股东", "诉讼", "企业信息"]},
     "web":         {"category": "web",     "tags": ["网页抓取", "正文抽取", "无需凭据"]},
+    "tencent_cloudbase": {"category": "dev", "tags": ["腾讯云", "云开发", "cloudbase", "小程序"]},
 }
 DEFAULT_CATEGORY = "misc"
 
