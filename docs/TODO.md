@@ -59,10 +59,10 @@
 
 ### A4. 既有 bug 顺手修（清单与行号见 AGENT_INTEGRATION.md §5）
 - [x] **A4.1** `cmd_mcp` 已透传退出码（此前返回值被丢弃，`mcp test` 连不上也退 0）
-- [ ] **A4.2** `_dump_impl.py` MCP 计数改读 `mcp_servers`（当前恒为 0）
-- [ ] **A4.3** `is_mcp_tool_parallel_safe` 改用 `mcp_naming` 解析（当前旧前缀判断，`supports_parallel_tool_calls` 失效）
-- [ ] **A4.4** `prompt_builder_body.py` 两处 playwright 工具名改双下划线 `mcp__playwright__*`
-- [ ] **A4.5** `website/docs` 两篇 MCP 文档的工具命名更新为 `mcp__<server>__<tool>`
+- [x] **A4.2** `_dump_impl.py` MCP 计数已改读 `mcp_servers`（此前读 `config.mcp.servers`，恒为 0）
+- [x] **A4.3** `is_mcp_tool_parallel_safe` 已改用 `mcp_naming` 拆分，并保留旧形态兼容历史会话
+- [x] **A4.4** `prompt_builder_body.py` 8 处工具名已改双下划线
+- [x] **A4.5** `website/docs` 两篇文档共 11 处命名已更新
 - [ ] **A4.6** 统一 `mcp add --preset` 命名空间（当前只认 `codex`，与 `mcp presets` 两套目录）
 
 ### A4.7（新增，已完成）`mcp_admin` 静默丢配置
@@ -91,6 +91,14 @@
   `requires_env` 恒为空 —— 「缺凭据」对离线条目永远算不出来，装上就是个连不上的
   条目。现在会从 `args`/`env`/`headers` 抽取（带默认值的 `${VAR:-x}` 不算必填）。
   26 条内置里 10 条需要凭据。
+
+### A4.10（新增，已完成）域路由把 MCP 浏览器工具整体排除
+
+- [x] **A4.10** `tool_router` 的 web/browser 域前缀写的是 `mcp_playwright_`，
+  匹配不到真实注册名 `mcp__playwright__browser_navigate` —— **域收窄时
+  Playwright 的 MCP 工具会被整体排除**，而这正是 `test_playwright_mcp_preferred.py`
+  自称要防的事。该测试此前通篇用旧名字构造工具，等于在测一个不存在的世界，
+  真实问题反而测不出来。已修前缀 + 测试改用 `mcp_prefixed_tool_name` 生成真实名。
 
 ### A5. 环境变量与文档
 - [ ] **A5.1** 注册 env：`TOTALCLAW_MCP_REGISTRY / TOTALCLAW_MCP_API_BASE / TOTALCLAW_MCP_REGISTRY_TTL / TOTALCLAW_MCP_REQUIRE_SIGNATURE / TOTALCLAW_MCP_TELEMETRY / TOTALCLAW_MCP_ORG`，补进 `website/docs/reference/environment-variables.md`
