@@ -17,6 +17,8 @@ build/
 *.log
 
 # 本地环境与密钥
+registry-ed25519.key
+*.ed25519.key
 .env
 .env.local
 *.pem

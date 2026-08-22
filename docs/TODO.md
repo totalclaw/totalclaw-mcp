@@ -117,7 +117,16 @@
     `mcp_memory`(9) `mcp_everything`(13)，全部连通、无注入嫌疑
   - 这轮实跑同时验证了 C1 的两处包名修复确实可用（原规格会挂到超时）
 - [ ] **C2.1** 把余下需凭据的上游条目在有凭据的环境里补跑一遍
-- [ ] **C3** Ed25519 签名：移植 `totalclaw-plugins/scripts/sign_registry.sh` → 产出 `registry.json.sig`
+- [x] **C3** Ed25519 签名脚本 `scripts/sign_registry.py`（`--keygen` / `--sign` / `--verify`）
+  - 已实测完整链路：生成密钥 → 签名 → 验签通过 → 篡改一个字段后验签**正确失败** → 恢复后再通过
+  - 私钥只从 `MCP_REGISTRY_SIGNING_KEY` 或库外文件读，keygen 默认写到 `~/.totalclaw-mcp-keys`
+    并置 600；`.gitignore` 已挡 `*.ed25519.key`
+  - 为什么需要签名：`files[].sha256` 只保证「下载到的文件没被中途改」，
+    但分发点整体被替换时索引和文件会被一起换掉；签名把信任根挪到私钥上
+- [ ] **C3.1** 生成正式密钥对、把私钥放进 CI secret、提交 `registry.pub`、
+  在 CI 的 registry job 末尾加 `--sign` 并提交 `.sig`
+  （本次未提交 `.sig` / `registry.pub`：那是一次性测试密钥签的，
+  提交上去会造成「已官方签名」的假象）
 - [x] **C4.1** 推送 Gitee 仓库 `jlzdyx/totalclaw-mcp`（分支 **master**，与 `registry.json` 的 `raw_base` 路径一致）
 - [ ] **C4.2** 分发通道的可见性方案 —— **决策推迟到对接时**（当前仓库为私有）
   - 已实测（2026-08-22）：
