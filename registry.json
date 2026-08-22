@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T18:42:40Z",
+  "generated_at": "2026-08-22T18:46:44Z",
   "servers": [
     {
       "name": "composio",
@@ -875,6 +875,81 @@
         }
       ],
       "bundle_sha256": "231d915a1b7120eb011c04bd971be5f53156e7a0ad5f36dd608e74f29da8fe46"
+    },
+    {
+      "name": "mastergo",
+      "id": "totalclaw-mcp/creative/mastergo",
+      "display_name": "MasterGo",
+      "description": "Read MasterGo design files as DSL and turn selected layers into code.",
+      "description_zh": "读取 MasterGo 设计稿的 DSL，把选中图层还原成代码；vibe runtime 还支持反向把本地代码同步回画布。",
+      "version": "0.1.0",
+      "author": "upstream",
+      "homepage": "https://github.com/mastergo-design/mastergo-magic-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "creative",
+        "design"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        },
+        {
+          "id": "npx-vibe",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "MG_MCP_TOKEN",
+          "description": "MasterGo 个人访问令牌（网页端 → 个人设置 → 安全设置 → 个人访问令牌）",
+          "prompt": "请输入 MasterGo 个人访问令牌",
+          "secret": true,
+          "required": true,
+          "runtimes": [
+            "npx"
+          ]
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/creative/mastergo",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/mastergo",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/mastergo"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "8d92201968ce013a4cb91776e5c75579189aa2a888feb550c5244774872b04a8",
+          "size": 1924
+        }
+      ],
+      "bundle_sha256": "58e76c686195f18860503bc9d49e3a9490dc3cc3a0f961d86a4ca16effeaf133"
     },
     {
       "name": "unreal_engine",

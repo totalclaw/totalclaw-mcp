@@ -1,0 +1,60 @@
+# 人工维护：MasterGo 官方发布的 MCP 服务器（npm scope @mastergo，维护者 mastergo-admin）。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mastergo
+display_name: MasterGo
+version: 0.1.0
+description: Read MasterGo design files as DSL and turn selected layers into code.
+description_zh: 读取 MasterGo 设计稿的 DSL，把选中图层还原成代码；vibe runtime 还支持反向把本地代码同步回画布。
+author: upstream
+homepage: https://github.com/mastergo-design/mastergo-magic-mcp
+category: creative
+tags:
+- creative
+- design
+kind: mcp_server
+runtimes:
+# 默认用 magic-mcp：独立运行、开源可核（ISC）、只要一个个人访问令牌。
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@mastergo/magic-mcp@0.2.8'
+  - --token=${MG_MCP_TOKEN}
+  requires:
+    node: '>=18'
+# vibe-mcp 是 MasterGo 桌面端的桥接客户端：不用令牌，但**必须先开着桌面端**，
+# 它监听 30678；端口被占用时 MasterGo 会另选端口，届时要改这里的 --url。
+# 该包 npm 上没有仓库地址，装前无法审源码。
+- id: npx-vibe
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@mastergo/vibe-mcp@1.0.28'
+  - --url=http://localhost:30678
+  requires:
+    node: '>=18'
+requires_env:
+- name: MG_MCP_TOKEN
+  env_key: MG_MCP_TOKEN
+  description: MasterGo 个人访问令牌（网页端 → 个人设置 → 安全设置 → 个人访问令牌）
+  prompt: 请输入 MasterGo 个人访问令牌
+  secret: true
+  required: true
+  runtimes: [npx]
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+notes: |
+  权限前提（官方说明）：需要团队版及以上账户，且设计文件必须在团队项目里
+  —— 草稿箱中的文件通过 MCP 取不到，会报「没有权限」。

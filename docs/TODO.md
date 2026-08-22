@@ -327,7 +327,7 @@
 - [ ] **lexiang** 乐享知识库
 - [ ] **lingxing-mcp** 领星ERP（上游 auth_mode=token）
 - [ ] **linkfox-product-selection** Linkfox 选品（上游 auth_mode=token）
-- [ ] **mastergo-vibe-mcp** MasterGo 莫高设计
+- [x] **mastergo-vibe-mcp** MasterGo —— 收录为上游条目 `mastergo`，官方双 runtime（magic-mcp 独立版 / vibe-mcp 桌面桥接）
 - [ ] **morningstar** 晨星 Morningstar
 - [ ] **mx-ds-mcp** 东方财富妙想MCP
 - [ ] **mzl-trademark** 摩知轮商标查询
