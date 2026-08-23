@@ -321,3 +321,22 @@ def test_all_entries_render_an_icon() -> None:
         r = client.get(f"/api/mcp/servers/{e['name']}/icon")
         assert r.status_code == 200, e["name"]
         assert r.content, e["name"]
+
+
+def test_monogram_matches_qiye_app_implementation() -> None:
+    """与 qiye-app 的 mcpIcon.ts 逐字一致。
+
+    桌面端走 qiye_api 拿目录、不请求这个接口，所以它是在本地按同一套算法画同样的块。
+    两边算出不同的颜色，同一个条目在桌面端和网页端就是两个颜色，用户会当成两个东西。
+    这几组期望值在两个仓的测试里各钉一份 —— 谁改了算法，谁那边先红。
+    """
+    import re
+    from api.server.icon import shade_delta, monogram_svg
+
+    def bg(dn: str, slug: str, cat: str) -> str:
+        return re.search(r'fill="(#\w+)"', monogram_svg(dn, slug, cat)).group(1)
+
+    assert shade_delta("awesun") == -3
+    assert bg("向日葵", "awesun", "infra") == "#596877"
+    assert bg("Playwright", "playwright", "web") == "#4B9B66"
+    assert bg("CNB 云原生构建", "cnb", "dev") == "#555ABA"

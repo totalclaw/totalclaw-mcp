@@ -10,7 +10,6 @@
 """
 from __future__ import annotations
 
-import hashlib
 import unicodedata
 
 # 分类底色。取自同一套色相环，饱和度压低 —— 这是背景块，不该比条目名更抢眼。
@@ -44,12 +43,21 @@ def initial(display_name: str, slug: str = "") -> str:
     return "?"
 
 
+def shade_delta(name: str) -> int:
+    """明度微调量。
+
+    刻意用「字符码求和」而不是 sha256：qiye-app 那边要用同一套算法在本地画同样的
+    块（它走 qiye_api 拿目录，不请求这个接口），字符码求和两边都能一行写对，
+    换成 sha256 就得在 TS 里再引一个哈希，两边算出不一样的颜色只是时间问题。
+    """
+    return (sum(ord(c) for c in name) % 25) - 12          # ±12：够区分，又不会糊掉字
+
+
 def _shade(hex_color: str, name: str) -> str:
     """同分类内按名字微调明度，相邻两块不至于糊成一片。"""
     h = hex_color.lstrip("#")
     r, g, b = (int(h[i:i + 2], 16) for i in (0, 2, 4))
-    # ±12 的幅度：够区分，又不会把某些块调得看不清字
-    delta = (int(hashlib.sha256(name.encode()).hexdigest()[:2], 16) % 25) - 12
+    delta = shade_delta(name)
     r, g, b = (max(0, min(255, c + delta)) for c in (r, g, b))
     return f"#{r:02X}{g:02X}{b:02X}"
 
