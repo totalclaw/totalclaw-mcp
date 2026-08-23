@@ -1,0 +1,1468 @@
+[
+  {
+    "name": "skill_whoami",
+    "description": "STEP 1 ONLY: identify the current user, WorkBuddy entry, scene-pack route, and server next action. Use this first after tools/list or ToolSearch; do not answer from assumptions or call advanced/reward tools first. Step 1: always call this tool first for any natural entry, even when the user is anonymous.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionRef": {
+          "type": "string",
+          "description": "可选短会话引用（activate返回）；WorkBuddy宿主链式调用优先使用"
+        },
+        "sessionToken": {
+          "type": "string",
+          "description": "可选JWT会话令牌；无令牌时返回匿名落地引导，仅在能保证原样传递时使用"
+        },
+        "anonymousUserCodeHash": {
+          "type": "string",
+          "description": "匿名用户编码哈希；用于增强匿名上下文"
+        },
+        "serverBindingId": {
+          "type": "string",
+          "description": "服务端匿名绑定ID；用于增强匿名上下文"
+        },
+        "scenePackId": {
+          "type": "string",
+          "description": "专家包本地场景包ID，仅用于观测回流"
+        },
+        "entryId": {
+          "type": "string",
+          "description": "WorkBuddy入口ID，仅用于观测回流"
+        },
+        "entryPromptCode": {
+          "type": "string",
+          "description": "WorkBuddy入口提示码，仅用于归因首轮入口"
+        },
+        "entrySurface": {
+          "type": "string",
+          "description": "WorkBuddy入口来源面，仅用于归因，如primary_entry/quick_prompt/manual_input"
+        },
+        "entryVariantCode": {
+          "type": "string",
+          "description": "可选入口变体码，仅用于实验与模板归因"
+        },
+        "assetType": {
+          "type": "string",
+          "description": "首轮成果类型，仅用于观测回流"
+        },
+        "intentFamily": {
+          "type": "string",
+          "description": "意图族短码，仅用于观测回流"
+        },
+        "profileSegment": {
+          "type": "string",
+          "description": "画像分段短码，仅用于观测回流"
+        },
+        "lifecycleStage": {
+          "type": "string",
+          "description": "生命周期阶段短码，仅用于观测回流"
+        },
+        "personaCode": {
+          "type": "string",
+          "description": "人格编码，如ai_partner_public/legacy_cofounder，仅用于观测回流"
+        },
+        "customizationLevel": {
+          "type": "string",
+          "description": "定制层级，如L1_standard/L2_private_pack，仅用于观测回流"
+        },
+        "packCode": {
+          "type": "string",
+          "description": "服务端权益包编码，仅用于显示双轨状态"
+        },
+        "semanticSource": {
+          "type": "string",
+          "description": "语义来源，如host_semantic_hint"
+        },
+        "expertLoaded": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Optional host signal. Accepts boolean true/false or string true/false because some hosts stringify tool arguments."
+        },
+        "extensionExpertId": {
+          "type": "string",
+          "description": "我的专家扩展专家ID，仅用于观测与归因"
+        },
+        "extensionExpertVersion": {
+          "type": "string",
+          "description": "我的专家扩展专家版本，仅用于观测与归因"
+        },
+        "extensionKind": {
+          "type": "string",
+          "description": "扩展专家类型，当前固定 agent"
+        },
+        "extensionBatchId": {
+          "type": "string",
+          "description": "多 Agent 批次ID，仅用于观测与归因"
+        },
+        "extensionRole": {
+          "type": "string",
+          "description": "扩展 Agent 角色或模板ID，仅用于观测与归因"
+        },
+        "extensionAccessMode": {
+          "type": "string",
+          "description": "扩展专家接入模式，如 shared-connector"
+        },
+        "templateId": {
+          "type": "string",
+          "description": "内置深度模板ID，仅用于观测与归因"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "Optional host dispatch hint. If a host wrapper already selected a fully qualified MCP tool name, pass it through unchanged."
+        },
+        "expertEntryId": {
+          "type": "string",
+          "description": "Optional expert entry id. The currently listed single Super Partner must use fbsir-super-partner; fbsir-super-partner-group is the separate frozen legacy expert team. A generic my_expert surface is not an expert identity."
+        },
+        "defaultPromptId": {
+          "type": "string",
+          "description": "Optional starter prompt id carried by WorkBuddy entry hints for attribution continuity."
+        },
+        "cardActionId": {
+          "type": "string",
+          "description": "Optional starter card action id carried by WorkBuddy entry hints for attribution continuity."
+        },
+        "activeExpertEntryId": {
+          "type": "string",
+          "description": "Optional active expert entry id carried by WorkBuddy host context."
+        },
+        "requestSource": {
+          "type": "string",
+          "description": "Optional source trace. Use workbuddy for real WorkBuddy host-mediated calls; probe or test values disable automatic first-value recording."
+        },
+        "hostType": {
+          "type": "string",
+          "description": "Optional host family, for example WORKBUDDY, WORKBUDDY_AI, or CODEBUDDY. Mirrors x-fbss-host-type when a host sends it as a tool argument."
+        },
+        "productTrack": {
+          "type": "string",
+          "description": "Optional product track, for example domestic or international. Mirrors x-fbss-product-track when a host sends it as a tool argument."
+        },
+        "productId": {
+          "type": "string",
+          "description": "Optional product attribution id. The currently listed single Super Partner must use fbsir-super-partner. fbsir-super-partner-group is a frozen legacy expert team and must never be used for or promoted to the listed single expert. Other examples include fbs-bookwriter, fbsir-industry-scene-researcher, fbsir-board-secretary-assistant, and liuxue-yanxue-expert."
+        },
+        "serviceProductId": {
+          "type": "string",
+          "description": "Optional service product alias. The currently listed single Super Partner uses workbuddy_super_partner_expert; this does not replace productId=fbsir-super-partner."
+        },
+        "packageName": {
+          "type": "string",
+          "description": "Optional host plugin package name. The currently listed single Super Partner package is fbsir-super-partner."
+        },
+        "marketplace": {
+          "type": "string",
+          "description": "Optional marketplace identifier for the active expert package, for example experts. This is a route field, not trusted listing proof by itself."
+        },
+        "channelTrack": {
+          "type": "string",
+          "description": "Optional product channel track. The currently listed single Super Partner uses super_partner; frozen legacy group uses expert_team. my_expert is only a generic host surface and must not override a concrete product or expert identity."
+        },
+        "skillId": {
+          "type": "string",
+          "description": "Optional host-provided WorkBuddy skill install id for skill products. It is an instance hint, not a stable product attribution key."
+        },
+        "channel": {
+          "type": "string",
+          "description": "Optional channel, for example workbuddy_cn or workbuddy_ai. Mirrors x-fbss-channel when a host sends it as a tool argument."
+        },
+        "clientTrack": {
+          "type": "string",
+          "description": "Optional client-side route label used only for probe and conversion segmentation; it never proves a listed product identity."
+        },
+        "terminal": {
+          "type": "string",
+          "description": "Optional terminal classification, for example desktop or cloud, used only for attribution segmentation."
+        },
+        "deviceType": {
+          "type": "string",
+          "description": "Optional device type carried by the host, used only for attribution segmentation."
+        },
+        "hostPlatform": {
+          "type": "string",
+          "description": "Optional host platform carried by the host, used only for attribution segmentation."
+        },
+        "hostVersion": {
+          "type": "string",
+          "description": "Optional WorkBuddy host version forwarded from the preceding same-binding action envelope."
+        },
+        "hostPatchVersion": {
+          "type": "string",
+          "description": "Optional WorkBuddy host patch version forwarded from the preceding same-binding action envelope."
+        },
+        "packageVersion": {
+          "type": "string",
+          "description": "Optional active expert package version supplied for the current route. It remains untrusted until server-side listing verification succeeds."
+        },
+        "connectorPackageVersion": {
+          "type": "string",
+          "description": "Optional FBS connector transport package version. It is operational metadata and must never overwrite or prove the active expert packageVersion."
+        },
+        "connectorContractVersion": {
+          "type": "string",
+          "description": "Optional FBS connector protocol contract version. It is separate from connectorPackageVersion and remains untrusted until server-side verification."
+        },
+        "sourceRequestSource": {
+          "type": "string",
+          "description": "Original caller-supplied requestSource before host canonicalization. Probe or test values must remain visible so read-oriented tools cannot auto-record first value."
+        },
+        "trafficClass": {
+          "type": "string",
+          "description": "Optional traffic classification. Use probe, synthetic, diagnostic, or natural only when the caller has authoritative evidence; a caller declaration cannot promote product credit."
+        },
+        "sourceTrafficClass": {
+          "type": "string",
+          "description": "Original traffic classification before service normalization, retained for audit and exclusion decisions."
+        },
+        "sampleClass": {
+          "type": "string",
+          "description": "Optional sample cohort label used for observability segmentation and probe exclusion."
+        },
+        "sourceSampleClass": {
+          "type": "string",
+          "description": "Original sample cohort label before service normalization, retained for audit."
+        },
+        "testRunId": {
+          "type": "string",
+          "description": "Optional unique controlled-test identifier. Test rows remain excluded from natural product-credit decisions."
+        },
+        "fbssTestRoute": {
+          "type": "string",
+          "description": "Optional named FBS controlled-test route for service-side correlation and exclusion."
+        },
+        "isSynthetic": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Optional controlled-test marker. Accepts boolean true/false or string true/false because some hosts stringify tool arguments; true always excludes product credit."
+        },
+        "traceId": {
+          "type": "string",
+          "description": "Optional normalized trace id used only for host-call-to-service evidence correlation."
+        },
+        "clientTraceId": {
+          "type": "string",
+          "description": "Optional client trace id forwarded by the host for observe/log correlation."
+        },
+        "hostTraceId": {
+          "type": "string",
+          "description": "Optional WorkBuddy or CodeBuddy trace id used only as host-call bridge evidence."
+        },
+        "hostRequestId": {
+          "type": "string",
+          "description": "Optional host request id used only for tool-call-to-service-log correlation."
+        },
+        "hostMessageRequestId": {
+          "type": "string",
+          "description": "Optional host message request id used only for replay correlation."
+        },
+        "traceparent": {
+          "type": "string",
+          "description": "Optional W3C traceparent header value for distributed trace correlation."
+        },
+        "traceparentTraceId": {
+          "type": "string",
+          "description": "Optional trace id extracted from W3C traceparent."
+        },
+        "mcpRequestId": {
+          "type": "string",
+          "description": "Optional JSON-RPC request id echoed for MCP call correlation."
+        },
+        "requestTraceSource": {
+          "type": "string",
+          "description": "Optional source label for how trace fields were derived, used only for host-call correlation."
+        },
+        "chainFingerprint": {
+          "type": "string",
+          "description": "Optional server-issued chain fingerprint used only for same-binding attribution and log correlation."
+        }
+      },
+      "required": []
+    }
+  },
+  {
+    "name": "fbs_scene_pack_query",
+    "description": "STEP 2 ONLY: call after skill_whoami returns nextTool=fbs_scene_pack_query. Call the exact tool name from actionEnvelope or NEXT_TOOL_CALL_JSON and pass actionEnvelope.toolArguments unchanged on the same binding. Step 2: call this only when skill_whoami returns nextTool=fbs_scene_pack_query, and forward actionEnvelope.toolArguments without rewriting them.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionRef": {
+          "type": "string",
+          "description": "可选短会话引用（activate返回）；WorkBuddy宿主链式调用优先使用"
+        },
+        "sessionToken": {
+          "type": "string",
+          "description": "可选JWT会话令牌；匿名阶段将返回激活/路由提示，仅在能保证原样传递时使用"
+        },
+        "packCode": {
+          "type": "string",
+          "description": "服务端权益/场景包编码；专家团只掌握本地路线时可只传scenePackId"
+        },
+        "anonymousUserCodeHash": {
+          "type": "string",
+          "description": "匿名用户编码哈希；用于增强匿名 route relay"
+        },
+        "serverBindingId": {
+          "type": "string",
+          "description": "服务端匿名绑定ID；用于增强匿名 route relay"
+        },
+        "scenePackId": {
+          "type": "string",
+          "description": "专家包本地场景包ID；用于把已确认路线穿过 scene-pack relay"
+        },
+        "entryId": {
+          "type": "string",
+          "description": "WorkBuddy入口ID；用于把已确认入口穿过 scene-pack relay"
+        },
+        "assetType": {
+          "type": "string",
+          "description": "首轮成果类型；用于把已确认首卡类型穿过 scene-pack relay"
+        },
+        "intentFamily": {
+          "type": "string",
+          "description": "意图族；用于把已确认业务意图穿过 scene-pack relay"
+        },
+        "profileSegment": {
+          "type": "string",
+          "description": "画像分段；用于把已确认业务分层穿过 scene-pack relay"
+        },
+        "lifecycleStage": {
+          "type": "string",
+          "description": "生命周期阶段；用于把已确认状态穿过 scene-pack relay"
+        },
+        "semanticSource": {
+          "type": "string",
+          "description": "语义来源，如host_semantic_hint / scene_pack_requires_session_relay"
+        },
+        "personaCode": {
+          "type": "string",
+          "description": "人格编码；用于把专家团已确认 persona 穿过 scene-pack relay"
+        },
+        "customizationLevel": {
+          "type": "string",
+          "description": "定制等级；用于把专家团上下文穿过 scene-pack relay"
+        },
+        "leadAgent": {
+          "type": "string",
+          "description": "专家团 leadAgent；用于把团队语义穿过 scene-pack relay"
+        },
+        "expertLoaded": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Optional host signal. Accepts boolean true/false or string true/false because some hosts stringify tool arguments."
+        },
+        "extensionExpertId": {
+          "type": "string",
+          "description": "我的专家扩展专家ID，仅用于观测与归因"
+        },
+        "extensionExpertVersion": {
+          "type": "string",
+          "description": "我的专家扩展专家版本，仅用于观测与归因"
+        },
+        "extensionKind": {
+          "type": "string",
+          "description": "扩展专家类型，当前固定 agent"
+        },
+        "extensionBatchId": {
+          "type": "string",
+          "description": "多 Agent 批次ID，仅用于观测与归因"
+        },
+        "extensionRole": {
+          "type": "string",
+          "description": "扩展 Agent 角色或模板ID，仅用于观测与归因"
+        },
+        "extensionAccessMode": {
+          "type": "string",
+          "description": "扩展专家接入模式，如 shared-connector"
+        },
+        "templateId": {
+          "type": "string",
+          "description": "内置深度模板ID，仅用于观测与归因"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "Optional host dispatch hint. If a host wrapper already selected a fully qualified MCP tool name, pass it through unchanged."
+        },
+        "entrySurface": {
+          "type": "string",
+          "description": "Optional entry surface trace carried by the server envelope for attribution and followthrough completeness."
+        },
+        "entryPromptCode": {
+          "type": "string",
+          "description": "Optional entry prompt trace carried by the server envelope for attribution and followthrough completeness."
+        },
+        "expertEntryId": {
+          "type": "string",
+          "description": "Optional expert entry id. The currently listed single Super Partner must use fbsir-super-partner; fbsir-super-partner-group is the separate frozen legacy expert team. A generic my_expert surface is not an expert identity."
+        },
+        "defaultPromptId": {
+          "type": "string",
+          "description": "Optional starter prompt id carried by the server envelope for attribution continuity."
+        },
+        "cardActionId": {
+          "type": "string",
+          "description": "Optional starter card action id carried by the server envelope for attribution continuity."
+        },
+        "activeExpertEntryId": {
+          "type": "string",
+          "description": "Optional active expert entry id carried by the server envelope for host followthrough compatibility."
+        },
+        "requestSource": {
+          "type": "string",
+          "description": "Optional source trace. Use workbuddy for real WorkBuddy host-mediated calls; probe or test values disable automatic first-value recording."
+        },
+        "hostType": {
+          "type": "string",
+          "description": "Optional host family, for example WORKBUDDY, WORKBUDDY_AI, or CODEBUDDY. Mirrors x-fbss-host-type when a host sends it as a tool argument."
+        },
+        "productTrack": {
+          "type": "string",
+          "description": "Optional product track, for example domestic or international. Mirrors x-fbss-product-track when a host sends it as a tool argument."
+        },
+        "productId": {
+          "type": "string",
+          "description": "Optional product attribution id. The currently listed single Super Partner must use fbsir-super-partner. fbsir-super-partner-group is a frozen legacy expert team and must never be used for or promoted to the listed single expert. Other examples include fbs-bookwriter, fbsir-industry-scene-researcher, fbsir-board-secretary-assistant, and liuxue-yanxue-expert."
+        },
+        "serviceProductId": {
+          "type": "string",
+          "description": "Optional service product alias. The currently listed single Super Partner uses workbuddy_super_partner_expert; this does not replace productId=fbsir-super-partner."
+        },
+        "packageName": {
+          "type": "string",
+          "description": "Optional host plugin package name. The currently listed single Super Partner package is fbsir-super-partner."
+        },
+        "marketplace": {
+          "type": "string",
+          "description": "Optional marketplace identifier for the active expert package, for example experts. This is a route field, not trusted listing proof by itself."
+        },
+        "channelTrack": {
+          "type": "string",
+          "description": "Optional product channel track. The currently listed single Super Partner uses super_partner; frozen legacy group uses expert_team. my_expert is only a generic host surface and must not override a concrete product or expert identity."
+        },
+        "skillId": {
+          "type": "string",
+          "description": "Optional host-provided WorkBuddy skill install id for skill products. It is an instance hint, not a stable product attribution key."
+        },
+        "channel": {
+          "type": "string",
+          "description": "Optional channel, for example workbuddy_cn or workbuddy_ai. Mirrors x-fbss-channel when a host sends it as a tool argument."
+        },
+        "clientTrack": {
+          "type": "string",
+          "description": "Optional client-side route label used only for probe and conversion segmentation; it never proves a listed product identity."
+        },
+        "terminal": {
+          "type": "string",
+          "description": "Optional terminal classification, for example desktop or cloud, used only for attribution segmentation."
+        },
+        "deviceType": {
+          "type": "string",
+          "description": "Optional device type carried by the host, used only for attribution segmentation."
+        },
+        "hostPlatform": {
+          "type": "string",
+          "description": "Optional host platform carried by the host, used only for attribution segmentation."
+        },
+        "hostVersion": {
+          "type": "string",
+          "description": "Optional WorkBuddy host version forwarded from the preceding same-binding action envelope."
+        },
+        "hostPatchVersion": {
+          "type": "string",
+          "description": "Optional WorkBuddy host patch version forwarded from the preceding same-binding action envelope."
+        },
+        "packageVersion": {
+          "type": "string",
+          "description": "Optional active expert package version supplied for the current route. It remains untrusted until server-side listing verification succeeds."
+        },
+        "connectorPackageVersion": {
+          "type": "string",
+          "description": "Optional FBS connector transport package version. It is operational metadata and must never overwrite or prove the active expert packageVersion."
+        },
+        "connectorContractVersion": {
+          "type": "string",
+          "description": "Optional FBS connector protocol contract version. It is separate from connectorPackageVersion and remains untrusted until server-side verification."
+        },
+        "sourceRequestSource": {
+          "type": "string",
+          "description": "Original caller-supplied requestSource before host canonicalization. Probe or test values must remain visible so read-oriented tools cannot auto-record first value."
+        },
+        "trafficClass": {
+          "type": "string",
+          "description": "Optional traffic classification. Use probe, synthetic, diagnostic, or natural only when the caller has authoritative evidence; a caller declaration cannot promote product credit."
+        },
+        "sourceTrafficClass": {
+          "type": "string",
+          "description": "Original traffic classification before service normalization, retained for audit and exclusion decisions."
+        },
+        "sampleClass": {
+          "type": "string",
+          "description": "Optional sample cohort label used for observability segmentation and probe exclusion."
+        },
+        "sourceSampleClass": {
+          "type": "string",
+          "description": "Original sample cohort label before service normalization, retained for audit."
+        },
+        "testRunId": {
+          "type": "string",
+          "description": "Optional unique controlled-test identifier. Test rows remain excluded from natural product-credit decisions."
+        },
+        "fbssTestRoute": {
+          "type": "string",
+          "description": "Optional named FBS controlled-test route for service-side correlation and exclusion."
+        },
+        "isSynthetic": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Optional controlled-test marker. Accepts boolean true/false or string true/false because some hosts stringify tool arguments; true always excludes product credit."
+        },
+        "traceId": {
+          "type": "string",
+          "description": "Optional normalized trace id used only for host-call-to-service evidence correlation."
+        },
+        "clientTraceId": {
+          "type": "string",
+          "description": "Optional client trace id forwarded by the host for observe/log correlation."
+        },
+        "hostTraceId": {
+          "type": "string",
+          "description": "Optional WorkBuddy or CodeBuddy trace id used only as host-call bridge evidence."
+        },
+        "hostRequestId": {
+          "type": "string",
+          "description": "Optional host request id used only for tool-call-to-service-log correlation."
+        },
+        "hostMessageRequestId": {
+          "type": "string",
+          "description": "Optional host message request id used only for replay correlation."
+        },
+        "traceparent": {
+          "type": "string",
+          "description": "Optional W3C traceparent header value for distributed trace correlation."
+        },
+        "traceparentTraceId": {
+          "type": "string",
+          "description": "Optional trace id extracted from W3C traceparent."
+        },
+        "mcpRequestId": {
+          "type": "string",
+          "description": "Optional JSON-RPC request id echoed for MCP call correlation."
+        },
+        "requestTraceSource": {
+          "type": "string",
+          "description": "Optional source label for how trace fields were derived, used only for host-call correlation."
+        },
+        "chainFingerprint": {
+          "type": "string",
+          "description": "Optional server-issued chain fingerprint used only for same-binding attribution and log correlation."
+        }
+      },
+      "required": []
+    }
+  },
+  {
+    "name": "skill_consume",
+    "description": "STEP 3 ONLY: call after the scene-pack card has actually been delivered or continued-use is confirmed. record first_value_completed or continued_use_completed on the same binding with the server idempotency key. Step 3: after the scene-pack card is actually delivered, call skill_consume on the same binding and send explicit first_value_completed or continued_use_completed semantics.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionRef": {
+          "type": "string",
+          "description": "短会话引用（activate返回）；WorkBuddy宿主链式调用优先使用"
+        },
+        "sessionToken": {
+          "type": "string",
+          "description": "JWT会话令牌；仅在能保证原样传递时使用"
+        },
+        "packCode": {
+          "type": "string"
+        },
+        "skillCode": {
+          "type": "string"
+        },
+        "usageRecordId": {
+          "type": "string"
+        },
+        "authCode": {
+          "type": "string"
+        },
+        "packId": {
+          "type": "string"
+        },
+        "pointsRuleCode": {
+          "type": "string"
+        },
+        "pointsAmount": {
+          "type": "number"
+        },
+        "bizNo": {
+          "type": "string"
+        },
+        "autoCommit": {
+          "type": "boolean",
+          "default": false
+        },
+        "voucherId": {
+          "type": "string"
+        },
+        "sourceEventCode": {
+          "type": "string"
+        },
+        "achievementCode": {
+          "type": "string"
+        },
+        "capabilityCode": {
+          "type": "string"
+        },
+        "unlockCapabilityCode": {
+          "type": "string"
+        },
+        "scenePackId": {
+          "type": "string"
+        },
+        "intentFamily": {
+          "type": "string"
+        },
+        "intentClass": {
+          "type": "string"
+        },
+        "lifecycleStage": {
+          "type": "string"
+        },
+        "profileSegment": {
+          "type": "string"
+        },
+        "anonymousUserCodeHash": {
+          "type": "string"
+        },
+        "serverBindingId": {
+          "type": "string"
+        },
+        "clientTraceId": {
+          "type": "string"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "Optional host dispatch hint. If a host wrapper already selected a fully qualified MCP tool name, pass it through unchanged."
+        },
+        "entrySurface": {
+          "type": "string",
+          "description": "Optional entry surface trace carried by the server envelope for attribution and followthrough completeness."
+        },
+        "entryPromptCode": {
+          "type": "string",
+          "description": "Optional entry prompt trace carried by the server envelope for attribution and followthrough completeness."
+        },
+        "entryId": {
+          "type": "string",
+          "description": "Optional normalized entry id carried by the server envelope for intent attribution continuity."
+        },
+        "semanticSource": {
+          "type": "string",
+          "description": "Optional semantic-source trace carried by the server envelope so downstream consume, lebao, and unlock flows can keep attribution consistent."
+        },
+        "assetType": {
+          "type": "string",
+          "description": "Optional asset-type trace carried by the server envelope for value-event segmentation and later incentive routing."
+        },
+        "expertEntryId": {
+          "type": "string",
+          "description": "Optional expert entry id. The currently listed single Super Partner must use fbsir-super-partner; fbsir-super-partner-group is the separate frozen legacy expert team. A generic my_expert surface is not an expert identity."
+        },
+        "defaultPromptId": {
+          "type": "string",
+          "description": "Optional starter prompt id carried by the scene-pack envelope for attribution continuity."
+        },
+        "cardActionId": {
+          "type": "string",
+          "description": "Optional starter card action id carried by the scene-pack envelope for attribution continuity."
+        },
+        "activeExpertEntryId": {
+          "type": "string",
+          "description": "Optional active expert entry id carried by the scene-pack envelope for host followthrough compatibility."
+        },
+        "expertLoaded": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Optional host signal. Accepts boolean true/false or string true/false because some hosts stringify tool arguments."
+        },
+        "eventType": {
+          "type": "string",
+          "description": "Value event stage. Prefer first_value_completed or continued_use_completed."
+        },
+        "outcome": {
+          "type": "string",
+          "description": "Explicit result aligned with eventType. Provide eventType or outcome at minimum."
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "description": "Stable same-binding dedupe key for repeated value-recording attempts."
+        },
+        "requestSource": {
+          "type": "string",
+          "description": "Optional source trace. Use workbuddy for real WorkBuddy host-mediated calls; probe or test values disable automatic first-value recording."
+        },
+        "hostType": {
+          "type": "string",
+          "description": "Optional host family, for example WORKBUDDY, WORKBUDDY_AI, or CODEBUDDY. Mirrors x-fbss-host-type when a host sends it as a tool argument."
+        },
+        "productTrack": {
+          "type": "string",
+          "description": "Optional product track, for example domestic or international. Mirrors x-fbss-product-track when a host sends it as a tool argument."
+        },
+        "productId": {
+          "type": "string",
+          "description": "Optional product attribution id. The currently listed single Super Partner must use fbsir-super-partner. fbsir-super-partner-group is a frozen legacy expert team and must never be used for or promoted to the listed single expert. Other examples include fbs-bookwriter, fbsir-industry-scene-researcher, fbsir-board-secretary-assistant, and liuxue-yanxue-expert."
+        },
+        "serviceProductId": {
+          "type": "string",
+          "description": "Optional service product alias. The currently listed single Super Partner uses workbuddy_super_partner_expert; this does not replace productId=fbsir-super-partner."
+        },
+        "packageName": {
+          "type": "string",
+          "description": "Optional host plugin package name. The currently listed single Super Partner package is fbsir-super-partner."
+        },
+        "marketplace": {
+          "type": "string",
+          "description": "Optional marketplace identifier for the active expert package, for example experts. This is a route field, not trusted listing proof by itself."
+        },
+        "channelTrack": {
+          "type": "string",
+          "description": "Optional product channel track. The currently listed single Super Partner uses super_partner; frozen legacy group uses expert_team. my_expert is only a generic host surface and must not override a concrete product or expert identity."
+        },
+        "skillId": {
+          "type": "string",
+          "description": "Optional host-provided WorkBuddy skill install id for skill products. It is an instance hint, not a stable product attribution key."
+        },
+        "channel": {
+          "type": "string",
+          "description": "Optional channel, for example workbuddy_cn or workbuddy_ai. Mirrors x-fbss-channel when a host sends it as a tool argument."
+        },
+        "clientTrack": {
+          "type": "string",
+          "description": "Optional client-side route label used only for probe and conversion segmentation; it never proves a listed product identity."
+        },
+        "terminal": {
+          "type": "string",
+          "description": "Optional terminal classification, for example desktop or cloud, used only for attribution segmentation."
+        },
+        "deviceType": {
+          "type": "string",
+          "description": "Optional device type carried by the host, used only for attribution segmentation."
+        },
+        "hostPlatform": {
+          "type": "string",
+          "description": "Optional host platform carried by the host, used only for attribution segmentation."
+        },
+        "hostVersion": {
+          "type": "string",
+          "description": "Optional WorkBuddy host version forwarded from the preceding same-binding action envelope."
+        },
+        "hostPatchVersion": {
+          "type": "string",
+          "description": "Optional WorkBuddy host patch version forwarded from the preceding same-binding action envelope."
+        },
+        "packageVersion": {
+          "type": "string",
+          "description": "Optional active expert package version supplied for the current route. It remains untrusted until server-side listing verification succeeds."
+        },
+        "connectorPackageVersion": {
+          "type": "string",
+          "description": "Optional FBS connector transport package version. It is operational metadata and must never overwrite or prove the active expert packageVersion."
+        },
+        "connectorContractVersion": {
+          "type": "string",
+          "description": "Optional FBS connector protocol contract version. It is separate from connectorPackageVersion and remains untrusted until server-side verification."
+        },
+        "sourceRequestSource": {
+          "type": "string",
+          "description": "Original caller-supplied requestSource before host canonicalization. Probe or test values must remain visible so read-oriented tools cannot auto-record first value."
+        },
+        "trafficClass": {
+          "type": "string",
+          "description": "Optional traffic classification. Use probe, synthetic, diagnostic, or natural only when the caller has authoritative evidence; a caller declaration cannot promote product credit."
+        },
+        "sourceTrafficClass": {
+          "type": "string",
+          "description": "Original traffic classification before service normalization, retained for audit and exclusion decisions."
+        },
+        "sampleClass": {
+          "type": "string",
+          "description": "Optional sample cohort label used for observability segmentation and probe exclusion."
+        },
+        "sourceSampleClass": {
+          "type": "string",
+          "description": "Original sample cohort label before service normalization, retained for audit."
+        },
+        "testRunId": {
+          "type": "string",
+          "description": "Optional unique controlled-test identifier. Test rows remain excluded from natural product-credit decisions."
+        },
+        "fbssTestRoute": {
+          "type": "string",
+          "description": "Optional named FBS controlled-test route for service-side correlation and exclusion."
+        },
+        "isSynthetic": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Optional controlled-test marker. Accepts boolean true/false or string true/false because some hosts stringify tool arguments; true always excludes product credit."
+        },
+        "traceId": {
+          "type": "string",
+          "description": "Optional normalized trace id used only for host-call-to-service evidence correlation."
+        },
+        "hostTraceId": {
+          "type": "string",
+          "description": "Optional WorkBuddy or CodeBuddy trace id used only as host-call bridge evidence."
+        },
+        "hostRequestId": {
+          "type": "string",
+          "description": "Optional host request id used only for tool-call-to-service-log correlation."
+        },
+        "hostMessageRequestId": {
+          "type": "string",
+          "description": "Optional host message request id used only for replay correlation."
+        },
+        "traceparent": {
+          "type": "string",
+          "description": "Optional W3C traceparent header value for distributed trace correlation."
+        },
+        "traceparentTraceId": {
+          "type": "string",
+          "description": "Optional trace id extracted from W3C traceparent."
+        },
+        "mcpRequestId": {
+          "type": "string",
+          "description": "Optional JSON-RPC request id echoed for MCP call correlation."
+        },
+        "requestTraceSource": {
+          "type": "string",
+          "description": "Optional source label for how trace fields were derived, used only for host-call correlation."
+        },
+        "chainFingerprint": {
+          "type": "string",
+          "description": "Optional server-issued chain fingerprint used only for same-binding attribution and log correlation."
+        }
+      },
+      "required": []
+    }
+  },
+  {
+    "name": "skill_activate",
+    "description": "通过访问码激活Skill权益，返回sessionRef和sessionToken用于后续调用；WorkBuddy宿主链式调用优先使用sessionRef Advanced follow-up only. Use this only when the user explicitly provides an access code or when whoami/session relay clearly requires activation; do not use it as the first business step. 高级后续步骤：仅在用户明确提供访问码，或 whoami / 会话接力明确要求激活时使用；不要把它当作首轮业务入口。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "accessCode": {
+          "type": "string",
+          "description": "访问码，格式FBS-XXXX-XXXX-XXXX"
+        },
+        "skillCode": {
+          "type": "string",
+          "description": "Skill编码"
+        },
+        "hostType": {
+          "type": "string",
+          "enum": [
+            "WORKBUDDY",
+            "DEVBUDDY",
+            "CODEBUDDY"
+          ],
+          "default": "WORKBUDDY"
+        },
+        "anonymousUserCodeHash": {
+          "type": "string",
+          "description": "可选匿名用户编码哈希；有 whoami 上下文时透传可避免试用激活身份分叉"
+        },
+        "serverBindingId": {
+          "type": "string",
+          "description": "可选服务端绑定ID；有 whoami 上下文时透传可保持领取链连续性"
+        },
+        "scenePackId": {
+          "type": "string",
+          "description": "专家包本地场景包ID；用于把 whoami 已确认路线穿过 activate relay"
+        },
+        "entryId": {
+          "type": "string",
+          "description": "WorkBuddy入口ID；用于把 whoami 已确认入口穿过 activate relay"
+        },
+        "assetType": {
+          "type": "string",
+          "description": "首轮成果类型；用于把 whoami 已确认首卡类型穿过 activate relay"
+        },
+        "intentFamily": {
+          "type": "string",
+          "description": "意图族；用于把 whoami 已确认业务意图穿过 activate relay"
+        },
+        "profileSegment": {
+          "type": "string",
+          "description": "画像分段；用于把 whoami 已确认业务分层穿过 activate relay"
+        },
+        "lifecycleStage": {
+          "type": "string",
+          "description": "生命周期阶段；用于把 whoami 已确认状态穿过 activate relay"
+        },
+        "packCode": {
+          "type": "string",
+          "description": "服务端权益包编码；用于把已确认 packCode 穿过 activate relay"
+        },
+        "semanticSource": {
+          "type": "string",
+          "description": "语义来源，如 host_semantic_hint / scene_pack_requires_session_relay"
+        },
+        "personaCode": {
+          "type": "string",
+          "description": "人格编码；用于把专家团已确认 persona 穿过 activate relay"
+        },
+        "customizationLevel": {
+          "type": "string",
+          "description": "定制等级；用于把专家团上下文穿过 activate relay"
+        },
+        "leadAgent": {
+          "type": "string",
+          "description": "专家团 leadAgent；用于把团队语义穿过 activate relay"
+        },
+        "expertLoaded": {
+          "type": "boolean",
+          "description": "宿主是否已确认进入专家团上下文"
+        },
+        "extensionExpertId": {
+          "type": "string",
+          "description": "我的专家扩展专家ID，仅用于观测与归因"
+        },
+        "extensionExpertVersion": {
+          "type": "string",
+          "description": "我的专家扩展专家版本，仅用于观测与归因"
+        },
+        "extensionKind": {
+          "type": "string",
+          "description": "扩展专家类型，当前固定 agent"
+        },
+        "extensionBatchId": {
+          "type": "string",
+          "description": "多 Agent 批次ID，仅用于观测与归因"
+        },
+        "extensionRole": {
+          "type": "string",
+          "description": "扩展 Agent 角色或模板ID，仅用于观测与归因"
+        },
+        "extensionAccessMode": {
+          "type": "string",
+          "description": "扩展专家接入模式，如 shared-connector"
+        },
+        "templateId": {
+          "type": "string",
+          "description": "内置深度模板ID，仅用于观测与归因"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "Optional host dispatch routing hint; accepted for WorkBuddy followthrough compatibility and ignored by the service."
+        }
+      },
+      "required": [
+        "accessCode",
+        "skillCode"
+      ]
+    }
+  },
+  {
+    "name": "skill_precheck",
+    "description": "校验当前用户是否有指定场景包权益和足够积分 Advanced follow-up only. Use this after identity/session is known and only for explicit entitlement or points checks. 高级后续步骤：仅在身份/会话已明确后，用于显式权益或积分校验。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionRef": {
+          "type": "string",
+          "description": "短会话引用（activate返回）；WorkBuddy宿主链式调用优先使用"
+        },
+        "sessionToken": {
+          "type": "string",
+          "description": "JWT会话令牌；仅在能保证原样传递时使用"
+        },
+        "skillCode": {
+          "type": "string",
+          "description": "Skill编码"
+        },
+        "packCode": {
+          "type": "string",
+          "description": "场景包编码"
+        },
+        "capacityCode": {
+          "type": "string",
+          "description": "兼容旧参数，将作为packCode兜底"
+        },
+        "clientTraceId": {
+          "type": "string",
+          "description": "客户端链路ID，仅用于联调和观测排除"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "Optional host dispatch routing hint; accepted for WorkBuddy followthrough compatibility and ignored by the service."
+        }
+      },
+      "required": [
+        "skillCode"
+      ]
+    }
+  },
+  {
+    "name": "skill_finish",
+    "description": "更新使用记录完成状态 Advanced follow-up only. Use this only after the business flow has actually completed; not for first entry or first value. 高级后续步骤：仅在业务流程真实完成后使用；不用于首轮入口或首值阶段。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionRef": {
+          "type": "string",
+          "description": "短会话引用（activate返回）；WorkBuddy宿主链式调用优先使用"
+        },
+        "sessionToken": {
+          "type": "string",
+          "description": "JWT会话令牌；仅在能保证原样传递时使用"
+        },
+        "usageId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "number",
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "voucherId": {
+          "type": "string"
+        },
+        "sourceEventCode": {
+          "type": "string"
+        },
+        "achievementCode": {
+          "type": "string"
+        },
+        "capabilityCode": {
+          "type": "string"
+        },
+        "unlockCapabilityCode": {
+          "type": "string"
+        },
+        "scenePackId": {
+          "type": "string"
+        },
+        "intentFamily": {
+          "type": "string"
+        },
+        "intentClass": {
+          "type": "string"
+        },
+        "lifecycleStage": {
+          "type": "string"
+        },
+        "profileSegment": {
+          "type": "string"
+        },
+        "anonymousUserCodeHash": {
+          "type": "string"
+        },
+        "serverBindingId": {
+          "type": "string"
+        },
+        "clientTraceId": {
+          "type": "string"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "Optional host dispatch routing hint; accepted for WorkBuddy followthrough compatibility and ignored by the service."
+        }
+      },
+      "required": [
+        "usageId",
+        "status"
+      ]
+    }
+  },
+  {
+    "name": "skill_logout",
+    "description": "主动注销当前会话 Advanced follow-up only. Use this only when the user explicitly asks to sign out or reset session state. 高级后续步骤：仅在用户明确要求退出登录或重置会话状态时使用。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionRef": {
+          "type": "string",
+          "description": "短会话引用（activate返回）；WorkBuddy宿主链式调用优先使用"
+        },
+        "sessionToken": {
+          "type": "string",
+          "description": "JWT会话令牌；仅在能保证原样传递时使用"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "Optional host dispatch routing hint; accepted for WorkBuddy followthrough compatibility and ignored by the service."
+        }
+      },
+      "required": []
+    }
+  },
+  {
+    "name": "lebao_redeem",
+    "description": "兑换本地.FBS乐包凭证为福帮手站内积分或专家团权益 Advanced reward step. Use this only when a concrete voucher payload is already available; not for the initial diagnosis path. 高级奖励步骤：仅在已有明确乐包凭证载荷时使用；不属于首轮诊断主链。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionRef": {
+          "type": "string",
+          "description": "可选短会话引用（activate返回）"
+        },
+        "sessionToken": {
+          "type": "string",
+          "description": "可选JWT会话令牌；仅在能保证原样传递时使用"
+        },
+        "voucherId": {
+          "type": "string"
+        },
+        "sourceSkillCode": {
+          "type": "string"
+        },
+        "sourceEventCode": {
+          "type": "string"
+        },
+        "rewardRuleCode": {
+          "type": "string"
+        },
+        "rewardType": {
+          "type": "string"
+        },
+        "rewardAmount": {
+          "type": "number"
+        },
+        "rewardPackCode": {
+          "type": "string"
+        },
+        "issuedAt": {
+          "type": "string"
+        },
+        "expiresAt": {
+          "type": "string"
+        },
+        "anonymousUserCodeHash": {
+          "type": "string"
+        },
+        "deviceBindingCodeHash": {
+          "type": "string"
+        },
+        "workspaceFingerprintHash": {
+          "type": "string"
+        },
+        "hostUserHintHash": {
+          "type": "string"
+        },
+        "issuer": {
+          "type": "string"
+        },
+        "nonce": {
+          "type": "string"
+        },
+        "payloadEncoded": {
+          "type": "string"
+        },
+        "payloadCiphertext": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "clientTraceId": {
+          "type": "string"
+        },
+        "achievementCode": {
+          "type": "string"
+        },
+        "capabilityCode": {
+          "type": "string"
+        },
+        "unlockCapabilityCode": {
+          "type": "string"
+        },
+        "scenePackId": {
+          "type": "string"
+        },
+        "packCode": {
+          "type": "string"
+        },
+        "usageRecordId": {
+          "type": "string"
+        },
+        "usageId": {
+          "type": "string"
+        },
+        "intentFamily": {
+          "type": "string"
+        },
+        "intentClass": {
+          "type": "string"
+        },
+        "lifecycleStage": {
+          "type": "string"
+        },
+        "profileSegment": {
+          "type": "string"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "Optional host dispatch routing hint; accepted for WorkBuddy followthrough compatibility and ignored by the service."
+        }
+      },
+      "required": [
+        "voucherId",
+        "sourceSkillCode",
+        "sourceEventCode",
+        "rewardRuleCode",
+        "anonymousUserCodeHash",
+        "issuer",
+        "nonce",
+        "payloadEncoded",
+        "signature"
+      ]
+    }
+  },
+  {
+    "name": "lebao_status",
+    "description": "查询乐包兑换和匿名绑定状态（纯读）；必须至少提供voucherId、serverBindingId、anonymousUserCodeHash之一 Advanced reward follow-up. Use this only for explicit reward-status questions after binding or value evidence exists. 高级奖励后续步骤：仅在已有绑定或价值证据后，用于显式乐包状态查询。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionRef": {
+          "type": "string",
+          "description": "可选短会话引用（activate返回）"
+        },
+        "sessionToken": {
+          "type": "string",
+          "description": "可选JWT会话令牌；仅在能保证原样传递时使用"
+        },
+        "voucherId": {
+          "type": "string",
+          "description": "乐包唯一凭证ID；三选一定位字段"
+        },
+        "serverBindingId": {
+          "type": "string",
+          "description": "服务端绑定ID；三选一定位字段"
+        },
+        "anonymousUserCodeHash": {
+          "type": "string",
+          "description": "匿名用户编码哈希；三选一定位字段"
+        },
+        "sourceEventCode": {
+          "type": "string"
+        },
+        "rewardPackCode": {
+          "type": "string"
+        },
+        "achievementCode": {
+          "type": "string"
+        },
+        "capabilityCode": {
+          "type": "string"
+        },
+        "unlockCapabilityCode": {
+          "type": "string"
+        },
+        "scenePackId": {
+          "type": "string"
+        },
+        "packCode": {
+          "type": "string"
+        },
+        "intentFamily": {
+          "type": "string"
+        },
+        "intentClass": {
+          "type": "string"
+        },
+        "lifecycleStage": {
+          "type": "string"
+        },
+        "profileSegment": {
+          "type": "string"
+        },
+        "clientTraceId": {
+          "type": "string"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "Optional host dispatch routing hint; accepted for WorkBuddy followthrough compatibility and ignored by the service."
+        }
+      },
+      "required": []
+    }
+  },
+  {
+    "name": "lebao_claim",
+    "description": "显式将乐包归并到当前会话用户并触发服务端发奖 Advanced reward step. Use this only when the server has already moved the user to an entitlement/upgrade step; do not claim before the value journey reaches that stage. 高级奖励步骤：仅在服务器已将用户推进到权益/升级阶段时使用；不要在价值主链尚未走到该阶段前直接领取。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionRef": {
+          "type": "string",
+          "description": "短会话引用（activate返回）；WorkBuddy宿主链式调用优先使用"
+        },
+        "sessionToken": {
+          "type": "string",
+          "description": "JWT会话令牌；仅在能保证原样传递时使用"
+        },
+        "voucherId": {
+          "type": "string"
+        },
+        "serverBindingId": {
+          "type": "string"
+        },
+        "anonymousUserCodeHash": {
+          "type": "string"
+        },
+        "sourceEventCode": {
+          "type": "string"
+        },
+        "rewardPackCode": {
+          "type": "string"
+        },
+        "achievementCode": {
+          "type": "string"
+        },
+        "capabilityCode": {
+          "type": "string"
+        },
+        "unlockCapabilityCode": {
+          "type": "string"
+        },
+        "scenePackId": {
+          "type": "string"
+        },
+        "packCode": {
+          "type": "string"
+        },
+        "intentFamily": {
+          "type": "string"
+        },
+        "intentClass": {
+          "type": "string"
+        },
+        "lifecycleStage": {
+          "type": "string"
+        },
+        "profileSegment": {
+          "type": "string"
+        },
+        "clientTraceId": {
+          "type": "string"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "Optional host dispatch routing hint; accepted for WorkBuddy followthrough compatibility and ignored by the service."
+        }
+      },
+      "required": []
+    }
+  },
+  {
+    "name": "lebao_drop",
+    "description": "Server-issued anonymous lebao boost for deterministic milestone drops Server-side reward utility. Never use this as a first business step; reserve it for deterministic milestone handling. 服务端奖励工具：绝不作为首轮业务步骤；仅用于确定性里程碑掉落。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "anonymousUserCodeHash": {
+          "type": "string"
+        },
+        "serverBindingId": {
+          "type": "string"
+        },
+        "sourceSkillCode": {
+          "type": "string"
+        },
+        "sourceEventCode": {
+          "type": "string"
+        },
+        "scenePackId": {
+          "type": "string"
+        },
+        "intentFamily": {
+          "type": "string"
+        },
+        "intentClass": {
+          "type": "string"
+        },
+        "lifecycleStage": {
+          "type": "string"
+        },
+        "profileSegment": {
+          "type": "string"
+        },
+        "achievementCode": {
+          "type": "string"
+        },
+        "capabilityCode": {
+          "type": "string"
+        },
+        "unlockCapabilityCode": {
+          "type": "string"
+        },
+        "usageRecordId": {
+          "type": "string"
+        },
+        "clientTraceId": {
+          "type": "string"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "Optional host dispatch routing hint; accepted for WorkBuddy followthrough compatibility and ignored by the service."
+        }
+      },
+      "required": [
+        "anonymousUserCodeHash",
+        "sourceEventCode"
+      ]
+    }
+  }
+]

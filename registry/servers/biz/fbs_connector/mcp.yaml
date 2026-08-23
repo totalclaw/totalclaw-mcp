@@ -28,17 +28,22 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 60
+  tools:
+    exclude:
+    - lebao_drop
 security:
-  scan_verdict: unscanned
+  scan_verdict: allow
   prompt_injection_findings: []
   osv: unscanned
 homepage: https://api2.u3w.com
-tools_policy:
-  exclude:
-  - lebao_drop
 examples:
 - 先确认我当前的福帮手身份和最稳妥的下一步，再继续推进。
 - 根据我正在使用的专家和当前目标，匹配一个可执行的场景方案。
 - 我已经完成了第一步，请帮我记录进度并安排后续。
 - 查询我的乐包状态，并说明现在适合领取、兑换还是继续完成任务。
 - 把这次协作归到我正在使用的福帮手专家名下。
+tools:
+  probed_at: '2026-08-23T00:40:12Z'
+  probed_runtime: remote
+  count: 11
+  file: tools.json

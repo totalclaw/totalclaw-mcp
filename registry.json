@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T00:36:34Z",
+  "generated_at": "2026-08-23T00:40:36Z",
   "servers": [
     {
       "name": "chuhaijiang",
@@ -431,10 +431,22 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 11,
+      "tools": [
+        "skill_whoami",
+        "fbs_scene_pack_query",
+        "skill_consume",
+        "skill_activate",
+        "skill_precheck",
+        "skill_finish",
+        "skill_logout",
+        "lebao_redeem",
+        "lebao_status",
+        "lebao_claim",
+        "lebao_drop"
+      ],
       "security": {
-        "scan_verdict": "unscanned",
+        "scan_verdict": "allow",
         "prompt_injection_findings": [],
         "osv": "unscanned"
       },
@@ -447,11 +459,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "32c974dff2017192b7346b2913fe4811e862eef71f631da584c9c93ca479be4e",
-          "size": 1528
+          "sha256": "67a513414a0aa53926be53f426246379a1f6be42e62357486cdbf4a7e2a312a6",
+          "size": 1622
+        },
+        {
+          "path": "tools.json",
+          "sha256": "cd6040edb4d5db5af3bee92b6cabd2af2f6a1764b3bb1eef12896bf678812743",
+          "size": 58779
         }
       ],
-      "bundle_sha256": "84b705fca187c70c95325cdf3c3e5814d52fbdc812e63e3bc925aa445ef32558"
+      "bundle_sha256": "be6a7903e7df39835369c5aced20563fd43a38359b488a6cf14feec6f2554d75"
     },
     {
       "name": "fyopen_lawsearch",
@@ -2684,10 +2701,45 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 34,
+      "tools": [
+        "account_user",
+        "project_create",
+        "project_list",
+        "project_info",
+        "project_storyboard",
+        "project_document",
+        "project_resources",
+        "resource_info",
+        "chat_history",
+        "chat_pending_actions",
+        "upload_ticket",
+        "upload_complete",
+        "run",
+        "run_status",
+        "run_result",
+        "run_resume",
+        "export_readiness",
+        "export_video",
+        "export_status",
+        "download_all",
+        "download_status",
+        "project_restore_plan",
+        "project_restore",
+        "project_branch",
+        "skill_categories",
+        "skill_feed",
+        "skill_list",
+        "skill_get",
+        "skill_create",
+        "skill_update",
+        "skill_install",
+        "skill_uninstall",
+        "skill_copy",
+        "skill_delete"
+      ],
       "security": {
-        "scan_verdict": "unscanned",
+        "scan_verdict": "allow",
         "prompt_injection_findings": [],
         "osv": "unscanned"
       },
@@ -2700,11 +2752,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "59a04abd39cd162e7b9354ca08e264fb3e9b968ecb5325627dee48b9626126f7",
-          "size": 1109
+          "sha256": "1a7c76a318fcdc6ff7a5730c6e3e3b6a2a32e557c27a8f4ba2e8ff38354b90c0",
+          "size": 1204
+        },
+        {
+          "path": "tools.json",
+          "sha256": "bb9ab0bb1c8df68a0d851d967216418db632bebd9d05d9a4700537029c784dac",
+          "size": 20745
         }
       ],
-      "bundle_sha256": "35a5c4127f85bf7c3b0975c281110e30c45867027161a320dc10b4c63a312f8d"
+      "bundle_sha256": "52debec3bdc1088abd5159adfc7604bd275a50c774d05c0f82947ad1e2c450e9"
     },
     {
       "name": "infimind_ecommerce_image",
@@ -2766,11 +2823,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "715f97a3580f917a547b140df971587e553abcf0af799bc01010a1a95f54a30e",
-          "size": 1770
+          "sha256": "1e3790ff6a38a9af42a2a687df4d5595144d88d986f21ebb037fa3ba42fd4bfc",
+          "size": 1793
         }
       ],
-      "bundle_sha256": "b67e61a4bc88ec599b16b5946b8eeed093f1701392574737785a64954164af2a"
+      "bundle_sha256": "a886a0b3a962238c4d0ddeb8e759a5ddf97d2cfc6ceb53ba1cdc3f9fe3aef01e"
     },
     {
       "name": "infimind_video",

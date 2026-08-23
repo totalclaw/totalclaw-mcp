@@ -1,0 +1,857 @@
+[
+  {
+    "name": "account_user",
+    "description": "Read the current Flova account, membership, and credit balance before a paid write when status is unknown.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "required": [],
+      "type": "object"
+    }
+  },
+  {
+    "name": "project_create",
+    "description": "Create a video project only after the delivery goal is clear; continue an existing project instead when possible.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "project_type": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "project_list",
+    "description": "List the caller's video projects when a project must be found or selected.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "page": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "page_size": {
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "type": {
+          "type": "integer"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  },
+  {
+    "name": "project_info",
+    "description": "Read an existing project's basic information before continuing work in that project.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "project_storyboard",
+    "description": "Read the latest storyboard, including key elements, shots, audio layers, and production state.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "project_document",
+    "description": "Read the latest Skill or final-video specification; use final_video_spec as the delivery source of truth.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "document_type": {
+          "enum": [
+            "skill",
+            "final_video_spec"
+          ],
+          "type": "string"
+        },
+        "project_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id",
+        "document_type"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "project_resources",
+    "description": "List a project's uploaded and generated resources and their real states; use resource_info for one resource.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "resource_info",
+    "description": "Read one project resource's real state and available URL; do not infer media content from identifiers.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        },
+        "resource_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id",
+        "resource_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "chat_history",
+    "description": "Read project conversation history, prior creative decisions, and any pending actions.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "chat_pending_actions",
+    "description": "Read only current pending actions and their valid options before asking the user to choose.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "upload_ticket",
+    "description": "Start a direct upload. Upload with the returned transport, then call upload_complete; omit scene for ordinary project materials.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "audio_metadata": {
+          "type": "object"
+        },
+        "content_type": {
+          "type": "string"
+        },
+        "document_metadata": {
+          "type": "object"
+        },
+        "file_hash": {
+          "type": "string"
+        },
+        "file_name": {
+          "description": "File name. Control characters and backticks are not allowed.",
+          "type": "string"
+        },
+        "file_size": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "image_metadata": {
+          "type": "object"
+        },
+        "scene": {
+          "default": "resource_upload_default",
+          "description": "Optional upload scene. Omit for ordinary project materials.",
+          "type": "string"
+        },
+        "video_metadata": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "file_name",
+        "file_size"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "upload_complete",
+    "description": "Confirm a completed direct upload and return an opaque file_ref. This does not attach the file to a project; pass the file_ref in run.files as {\"file_ref\": \"...\"}.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "crc32c": {
+          "type": "string"
+        },
+        "generation": {
+          "type": "string"
+        },
+        "upload_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "upload_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "run",
+    "description": "Start one bounded creative run or send normal revision feedback. Put every upload_complete file_ref in files as {\"file_ref\": \"...\"}, never in metadata; then track the returned stream_chat_id with run_status.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "extra_data": {
+          "type": "object"
+        },
+        "files": {
+          "description": "Uploaded inputs for this run. Put each file_ref returned by upload_complete here; never put file refs in metadata.",
+          "items": {
+            "properties": {
+              "file_ref": {
+                "description": "Opaque upload_complete result used only as one run.files item.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_ref"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "metadata": {
+          "description": "Optional opaque message metadata; not for file attachments. Use run.files for uploads.",
+          "type": "object"
+        },
+        "project_id": {
+          "type": "string"
+        },
+        "skill_id": {
+          "type": "string"
+        },
+        "skill_share_code": {
+          "type": "string"
+        },
+        "user_language": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id",
+        "content"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "run_status",
+    "description": "Poll the same run for incremental events and resource states. Reuse next_event_id as after_event_id; omit stream_chat_id only to inspect the current run.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "after_event_id": {
+          "description": "Cursor from the previous run_status response; send it on later polls for only new events.",
+          "type": "string"
+        },
+        "include_events": {
+          "description": "Return incremental progress events and current resource states.",
+          "type": "boolean"
+        },
+        "include_preview_urls": {
+          "description": "With include_events, include permitted previews for successful images and video thumbnails.",
+          "type": "boolean"
+        },
+        "include_resource_urls": {
+          "description": "With include_events, include signed resource URLs for successful resources.",
+          "type": "boolean"
+        },
+        "project_id": {
+          "type": "string"
+        },
+        "stream_chat_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "run_result",
+    "description": "Read a terminal run's structured result, errors, and pending action after run_status stops processing.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        },
+        "stream_chat_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id",
+        "stream_chat_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "run_resume",
+    "description": "Resume a current pending action only after the user explicitly selects one of its returned options; do not use this for ordinary feedback or file attachments.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "action_id": {
+          "type": "string"
+        },
+        "option_id": {
+          "type": "string"
+        },
+        "project_id": {
+          "type": "string"
+        },
+        "resume_message_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id",
+        "resume_message_id",
+        "action_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "export_readiness",
+    "description": "Check timeline existence, validity, and successful state before export_video; this check does not start export.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "export_video",
+    "description": "Start asynchronous final-video export only after export_readiness passes and the user permits export; poll export_status with the returned task_id.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "export_status",
+    "description": "Poll final-video export to a terminal state; omit task_id only to inspect the latest export task.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        },
+        "task_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "download_all",
+    "description": "Start an asynchronous archive of project resources. This archive is not a final-video export; poll download_status with the returned task_id.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        },
+        "resource_types": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "download_status",
+    "description": "Poll a project-resource archive task to a terminal state; omit task_id only to inspect the latest task.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        },
+        "task_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "project_restore_plan",
+    "description": "Read valid project history checkpoints before an explicitly requested restore or branch; do not choose for the user.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "project_restore",
+    "description": "Restore the current project only after an explicit user request, using a message_id returned by project_restore_plan.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "message_id": {
+          "type": "string"
+        },
+        "project_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id",
+        "message_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "project_branch",
+    "description": "Create a new project branch only after an explicit user request; use only a checkpoint returned by project_restore_plan.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "project_id": {
+          "type": "string"
+        },
+        "source_last_message_id": {
+          "type": "string"
+        },
+        "target_project_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "skill_categories",
+    "description": "List published Flova Skill categories for narrowing a community Skill search.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "required": [],
+      "type": "object"
+    }
+  },
+  {
+    "name": "skill_feed",
+    "description": "Browse published community Skills; use skill_get for the selected Skill's full content.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "category_id": {
+          "type": "string"
+        },
+        "only_brief": {
+          "default": true,
+          "type": "boolean"
+        },
+        "page": {
+          "default": 1,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "maximum": 200,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  },
+  {
+    "name": "skill_list",
+    "description": "List the caller's created, saved, draft, or recently used Skills using the requested library view.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "cursor": {
+          "type": "string"
+        },
+        "only_brief": {
+          "default": true,
+          "type": "boolean"
+        },
+        "page_size": {
+          "default": 40,
+          "maximum": 200,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "view": {
+          "default": "all",
+          "enum": [
+            "all",
+            "created",
+            "saved",
+            "draft",
+            "used"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  },
+  {
+    "name": "skill_get",
+    "description": "Read a live Skill, an owner draft with draft=true, or a privately shared Skill with shared_token.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "draft": {
+          "default": false,
+          "type": "boolean"
+        },
+        "shared_token": {
+          "type": "string"
+        },
+        "skill_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "skill_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "skill_create",
+    "description": "Create a personal Skill from complete section content and enable it by default unless saved as a draft.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "attrs": {
+          "type": "object"
+        },
+        "cover_base64": {
+          "type": "string"
+        },
+        "cover_standard_url": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "extra_data": {
+          "type": "string"
+        },
+        "is_draft": {
+          "default": false,
+          "type": "boolean"
+        },
+        "is_public": {
+          "default": 0,
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        },
+        "skill_content": {
+          "items": {
+            "properties": {
+              "config": {
+                "type": "object"
+              },
+              "content": {
+                "type": "string"
+              },
+              "section": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "section",
+              "content",
+              "config"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "skill_description": {
+          "type": "string"
+        },
+        "skill_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "skill_name",
+        "skill_content"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "skill_update",
+    "description": "Update live Skill content with update_type=0 or save an owner draft with update_type=1.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "attrs": {
+          "type": "object"
+        },
+        "cover_base64": {
+          "type": "string"
+        },
+        "cover_standard_url": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "extra_data": {
+          "type": "string"
+        },
+        "is_public": {
+          "default": 0,
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        },
+        "skill_content": {
+          "items": {
+            "properties": {
+              "config": {
+                "type": "object"
+              },
+              "content": {
+                "type": "string"
+              },
+              "section": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "section",
+              "content",
+              "config"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "skill_description": {
+          "type": "string"
+        },
+        "skill_id": {
+          "type": "string"
+        },
+        "skill_name": {
+          "type": "string"
+        },
+        "update_type": {
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        }
+      },
+      "required": [
+        "skill_id",
+        "update_type"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "skill_install",
+    "description": "Install and enable a published or accessible Skill in the caller's library.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "skill_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "skill_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "skill_uninstall",
+    "description": "Disable a Skill without deleting it or removing it from the library.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "skill_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "skill_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "skill_copy",
+    "description": "Copy an accessible Skill into the caller's library, optionally from a valid source checkpoint.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "shared_token": {
+          "type": "string"
+        },
+        "skill_id": {
+          "type": "string"
+        },
+        "source_last_message_id": {
+          "type": "string"
+        },
+        "target_skill_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "skill_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "skill_delete",
+    "description": "Delete, remove, or hide a Skill only after explicit confirmation with confirm=true.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "confirm": {
+          "const": true,
+          "type": "boolean"
+        },
+        "delete_all_locales": {
+          "default": false,
+          "type": "boolean"
+        },
+        "skill_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "skill_id",
+        "confirm"
+      ],
+      "type": "object"
+    }
+  }
+]

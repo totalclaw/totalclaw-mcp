@@ -26,7 +26,7 @@ defaults:
   enabled: true
   timeout: 60
 security:
-  scan_verdict: unscanned
+  scan_verdict: allow
   prompt_injection_findings: []
   osv: unscanned
 homepage: https://service.flova.tv
@@ -34,3 +34,8 @@ examples:
 - 为这份产品介绍制作一条 30 秒的竖屏宣传视频
 - 继续完善我的 Flova 项目，先生成分镜供我确认
 - 根据审阅意见修改镜头并导出最终视频
+tools:
+  probed_at: '2026-08-23T00:40:25Z'
+  probed_runtime: remote
+  count: 34
+  file: tools.json

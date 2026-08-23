@@ -299,7 +299,10 @@ def build_manifest(cid: str, cfg: dict, meta: dict) -> dict[str, Any]:
 
     disabled = cfg.get("disabledTools")
     if isinstance(disabled, list) and disabled:
-        manifest["tools_policy"] = {"exclude": list(disabled)}
+        # 必须写进 defaults.tools.exclude —— 那才是 agent 真正读的位置
+        # （SPEC.md §defaults，mcp_admin._normalize_server_spec 只认 tools.include/exclude）。
+        # 写成别的键名不会报错，只会静默失效：上游禁用的工具照样暴露出来。
+        manifest["defaults"]["tools"] = {"exclude": [str(t) for t in disabled]}
 
     examples = meta.get("examples_zh") or []
     if examples:
