@@ -150,6 +150,15 @@
   就已经起来了，那时还不知道 org 是谁，注入空值反而会让 mcp_hub 误以为配了托管
   而去替换端点里的 `{org}`。
 - [ ] **B3.2.1**（M3 联动，待平台就绪）付费/私有条目的 `bearer_token` 传平台 JWT
+  - 做的时候注意两处（2026-08-23 查过代码）：
+    1. qiye-app 的 `QIYE_API_MCP_INSTALL` 是 **`c.postRaw('/v1/mcp/install', payload)` 整包透传**，
+       而 agent 的 `InstallRequest` 是 pydantic 模型、**不认的字段会被静默丢掉**。
+       只在前端加 `bearerToken` 而忘了加模型字段的话，token 会无声消失，
+       表现是厂商侧 403，查起来完全看不出是自己把它丢了。
+    2. `mcp_hub._download_entry` 走的是 `plugin_hub._download_raw`，那条路**没有**
+       带鉴权头的入口。skill-shop 的付费下载是另起一条 httpx 调用
+       （`skill_shop_api.py` 第二步），MCP 这边要照那个形状单开一条，
+       不要去改 `_download_raw` —— 它是 plugins/tools/skills 共用的。
 
 ---
 
