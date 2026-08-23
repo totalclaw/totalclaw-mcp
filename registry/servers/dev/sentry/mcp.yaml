@@ -1,11 +1,15 @@
 # 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+# 变量名照 `npx @sentry/mcp-server --help` 的「Environment variables」段核过。
+# 此前清单写的是 SENTRY_AUTH_TOKEN + SENTRY_ORG —— **这个包两个都不读**：
+# 它只认 SENTRY_ACCESS_TOKEN，组织是命令行的 --organization-slug，不是环境变量。
+# 用户填完装成功，服务器照样打印 usage 就退出，且完全看不出是名字写错了。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: sentry
 display_name: Sentry
 display_name_en: Sentry
-version: 0.1.0
+version: 0.2.0
 description: Sentry MCP server.
 description_zh: Sentry 错误监控集成 — issue 查询 / event 详情 / release / project / team / 性能 / AI Codegen 错误分析。Sentry
   官方维护。
@@ -30,19 +34,24 @@ runtimes:
   requires:
     node: '>=18'
 requires_env:
-- name: SENTRY_AUTH_TOKEN
-  env_key: SENTRY_AUTH_TOKEN
-  description: SENTRY_AUTH_TOKEN for sentry
-  prompt: 请输入 SENTRY_AUTH_TOKEN
+- name: SENTRY_ACCESS_TOKEN
+  env_key: SENTRY_ACCESS_TOKEN
+  description: Sentry User Auth Token（需 API 访问权限）
+  prompt: 请输入 Sentry User Auth Token
+  doc_url: https://sentry.io/settings/account/api/auth-tokens/
+  doc_label: 去 Sentry 创建 Auth Token
   secret: true
-  required: true
-- name: SENTRY_ORG
-  env_key: SENTRY_ORG
-  description: SENTRY_ORG for sentry
-  prompt: 请输入 SENTRY_ORG
-  secret: false
   required: true
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-08-23T08:14:14Z'
+  probed_runtime: npx
+  count: 9
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned

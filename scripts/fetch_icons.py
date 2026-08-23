@@ -84,6 +84,43 @@ HOST_IS_NOT_THE_PRODUCT = {
 }
 
 
+# 顶级域回退时**不能**用的伞状域名：产品挂在大厂域名下的子域，回退到顶级域
+# 拿到的是大厂 logo（stockbuddy.qq.com 的产品是腾讯自选股，qq.com 给的是 QQ 的企鹅）。
+# 又是「一屏卡片长得一模一样」那个毛病，宁可回落字母块。
+UMBRELLA_APEX = {
+    "qq.com", "tencent.com", "aliyun.com", "alibaba.com", "taobao.com",
+    "baidu.com", "bytedance.com", "163.com", "sina.com.cn", "jd.com",
+    "huawei.com", "microsoft.com", "google.com", "amazonaws.com",
+}
+
+
+# 图标地址里出现这些字样，说明抓到的是**站点用的第三方基础设施**的标，不是产品的。
+# 实例：shanglv_mcp_gateway 的网关挂着 Keycloak 登录页，favicon 是
+# `.../keycloak.v2/favicon.svg` —— 挂上去等于给商旅贴了 Keycloak 的标。
+THIRD_PARTY_ASSET = (
+    "keycloak", "auth0", "okta", "onelogin", "casdoor", "logto",
+    "wordpress", "shopify", "cloudflare", "nginx", "apache",
+    "swagger", "redoc", "gitbook", "docusaurus", "vitepress",
+)
+
+
+def _apex_fallback(host: str) -> str:
+    """把 `mcp-center.wps.cn` 这类网关主机退到产品站 `wps.cn`。
+
+    清单里的 homepage 大多写的是 MCP 端点或文档地址，不是产品首页 —— 34 个抓不到
+    的条目里绝大多数是这个原因。顶级域上通常就有产品自己的图标。
+    """
+    parts = host.split(".")
+    if len(parts) < 3:
+        return ""                       # 本来就是顶级域，没什么可退的
+    # 中国域名多是三段后缀（com.cn / net.cn），apex 要多留一段
+    apex = ".".join(parts[-3:]) if parts[-2] in ("com", "net", "org", "gov") \
+        and parts[-1] in ("cn", "hk", "tw") else ".".join(parts[-2:])
+    if apex in UMBRELLA_APEX or apex == host:
+        return ""
+    return apex
+
+
 # <link rel=...> 里哪些算图标，按优先级排：越靠前越好
 REL_PRIORITY = [
     "apple-touch-icon",        # 通常是最大最干净的那张
@@ -200,8 +237,58 @@ def _candidates(html: str, page_url: str) -> list[str]:
     return out
 
 
+def _try_one(c, url: str, d: Path, res: "Result", page) -> bool:
+    """试一个候选地址；成功就落盘并填好 res，返回 True。"""
+    # 有的站把图标直接内联成 data: URI（bugly 就是），没有可请求的地址
+    if url.startswith("data:"):
+        blob = _decode_data_uri(url)
+        if not blob:
+            return False
+        payload, suffix = blob
+        _write_icon(d, suffix, payload)
+        res.status, res.suffix = "ok", suffix
+        res.source = f"{page.url}（页面内联 data: URI）"
+        res.detail = f"{len(payload) // 1024 or 1} KB（内联）"
+        return True
+    if any(k in url.lower() for k in THIRD_PARTY_ASSET):
+        return False
+    try:
+        r = c.get(url)
+    except Exception:                                            # noqa: BLE001
+        return False
+    if r.status_code != 200 or not r.content or len(r.content) > MAX_BYTES:
+        return False
+    ctype = r.headers.get("content-type", "").split(";")[0].strip().lower()
+    if ctype in ICO_TYPES or url.lower().split("?")[0].endswith(".ico"):
+        png = _ico_to_png(r.content)
+        if not png:
+            return False
+        _write_icon(d, ".png", png)
+        res.status, res.source, res.suffix = "ok", url, ".png"
+        res.detail = f"{len(png) // 1024 or 1} KB（ico→png）"
+        return True
+    suffix = ACCEPT.get(ctype)
+    if not suffix:
+        return False
+    # 有些站把 404 页当 200 返回，内容是 HTML —— 按魔数再核一次
+    if suffix == ".png" and not r.content.startswith(b"\x89PNG"):
+        return False
+    if suffix == ".svg" and b"<svg" not in r.content[:2048].lower():
+        return False
+    _write_icon(d, suffix, r.content)
+    res.status, res.source, res.suffix = "ok", url, suffix
+    res.detail = f"{len(r.content) // 1024 or 1} KB"
+    return True
+
+
+def _write_icon(d: Path, suffix: str, payload: bytes) -> None:
+    for old in (d / "icon.svg", d / "icon.png"):
+        old.unlink(missing_ok=True)
+    (d / f"icon{suffix}").write_bytes(payload)
+
+
 def fetch_one(name: str, category: str, d: Path, manifest: dict,
-              *, force: bool, dry_run: bool) -> Result:
+              *, force: bool, dry_run: bool) -> "Result":
     res = Result(name)
     existing = [p for p in (d / "icon.svg", d / "icon.png") if p.is_file()]
     if existing and not force:
@@ -224,58 +311,27 @@ def fetch_one(name: str, category: str, d: Path, manifest: dict,
     try:
         with httpx.Client(timeout=TIMEOUT, follow_redirects=True,
                           headers={"User-Agent": UA}, verify=True) as c:
-            page = c.get(home)
-            html = page.text if "html" in page.headers.get("content-type", "") else ""
-            for url in _candidates(html, str(page.url)):
-                # 有的站把图标直接内联成 data: URI（bugly 就是），没有可请求的地址
-                if url.startswith("data:"):
-                    blob = _decode_data_uri(url)
-                    if blob:
-                        payload, suffix = blob
-                        for old_p in (d / "icon.svg", d / "icon.png"):
-                            old_p.unlink(missing_ok=True)
-                        (d / f"icon{suffix}").write_bytes(payload)
-                        res.status, res.suffix = "ok", suffix
-                        res.source = f"{page.url}（页面内联 data: URI）"
-                        res.detail = f"{len(payload) // 1024 or 1} KB（内联）"
-                        return res
-                    continue
+            # 主页 →（不行的话）顶级域。clean 里绝大多数 homepage 写的是 MCP 端点
+            # 或文档地址，不是产品首页，所以顶级域这一跳很值钱。
+            tried = []
+            for base in (home, ):
+                tried.append(base)
+            apex = _apex_fallback(host)
+            if apex:
+                tried.append(f"https://{apex}")
+            for base in tried:
                 try:
-                    r = c.get(url)
-                except Exception:
+                    page = c.get(base)
+                except Exception:                                # noqa: BLE001
                     continue
-                if r.status_code != 200 or not r.content:
-                    continue
-                ctype = r.headers.get("content-type", "").split(";")[0].strip().lower()
-                if ctype in ICO_TYPES or url.lower().split("?")[0].endswith(".ico"):
-                    png = _ico_to_png(r.content)
-                    if not png:
-                        continue
-                    for old_p in (d / "icon.svg", d / "icon.png"):
-                        old_p.unlink(missing_ok=True)
-                    (d / "icon.png").write_bytes(png)
-                    res.status, res.source, res.suffix = "ok", url, ".png"
-                    res.detail = f"{len(png) // 1024 or 1} KB（ico→png）"
-                    return res
-                suffix = ACCEPT.get(ctype)
-                if not suffix:
-                    continue
-                if len(r.content) > MAX_BYTES:
-                    continue
-                # 有些站把 404 页当 200 返回，内容是 HTML —— 按魔数再核一次
-                if suffix == ".png" and not r.content.startswith(b"\x89PNG"):
-                    continue
-                if suffix == ".svg" and b"<svg" not in r.content[:2048].lower():
-                    continue
-                for old in (d / "icon.svg", d / "icon.png"):
-                    old.unlink(missing_ok=True)
-                (d / f"icon{suffix}").write_bytes(r.content)
-                res.status, res.source, res.suffix = "ok", url, suffix
-                res.detail = f"{len(r.content) // 1024 or 1} KB"
-                return res
+                html = (page.text if "html" in
+                        page.headers.get("content-type", "") else "")
+                for url in _candidates(html, str(page.url)):
+                    if _try_one(c, url, d, res, page):
+                        return res
         res.status = "fail"
-        res.detail = "站点上没有 svg/png 图标"
-    except Exception as exc:                                    # noqa: BLE001
+        res.detail = "站点与其顶级域上都没有 svg/png/ico 图标"
+    except Exception as exc:                                     # noqa: BLE001
         res.status = "fail"
         res.detail = f"{type(exc).__name__}: {exc}"[:90]
     return res

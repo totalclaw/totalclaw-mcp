@@ -4,6 +4,11 @@
     "file": "icon.png",
     "source": "https://bingli.tengmed.com/favicon.ico"
   },
+  "bazhuayu": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://www.bazhuayu.com/favicon.ico?v1"
+  },
   "bugly_token": {
     "fetched_at": "2026-08-23",
     "file": "icon.png",
@@ -13,6 +18,11 @@
     "fetched_at": "2026-08-23",
     "file": "icon.png",
     "source": "https://ai-tools.camscanner.com/favicon.png"
+  },
+  "chuhaijiang": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://www.chuhaijiang.com/favicon-chj.ico"
   },
   "cisp_mcp": {
     "fetched_at": "2026-08-23",
@@ -39,6 +49,21 @@
     "file": "icon.png",
     "source": "https://api2.u3w.com/favicon.ico"
   },
+  "finenter": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://resource.comein.cn/comein-files/img/default/favicon.ico"
+  },
+  "flova": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://flova.tv/favicon-96x96.png"
+  },
+  "gaodun_job": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://res.gaodunwangxiao.com/tools/2026-07-21/15381072_029f8366-977b-42.png"
+  },
   "gongyi_open_mcp": {
     "fetched_at": "2026-08-23",
     "file": "icon.png",
@@ -54,6 +79,11 @@
     "file": "icon.png",
     "source": "https://work.jiushuyun.com/favicon.ico"
   },
+  "kdocs": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://www.wps.cn/（页面内联 data: URI）"
+  },
   "kling_ai_plugin": {
     "fetched_at": "2026-08-23",
     "file": "icon.png",
@@ -63,6 +93,36 @@
     "fetched_at": "2026-08-23",
     "file": "icon.png",
     "source": "https://s16-kling.klingai.com/kos/s101/nlav112918/kling-homepage-aio/logo-180x180.png"
+  },
+  "lingxing_mcp": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://www.lingxing.com/favicon.ico"
+  },
+  "linkfox_product_selection": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://www.linkfox.com/favicon.ico"
+  },
+  "mx_ds_mcp": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://g1.dfcfw.com/g1/special/Apple_ico.png"
+  },
+  "neo_crm": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://www.xiaoshouyi.com/wp-content/uploads/2021/09/logo_72_72.png"
+  },
+  "opendata": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://cdn-static.isjike.com/isjike_website/home/isjike_logo.ico.png"
+  },
+  "pandadata": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://www.pandaaiquant.com/favicon.ico"
   },
   "picset_commerce_images": {
     "fetched_at": "2026-08-23",
@@ -74,10 +134,20 @@
     "file": "icon.png",
     "source": "https://picsetai.cn/favicon.png"
   },
+  "pkulaw": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://www.pkulaw.com/favicon.ico"
+  },
   "qcc_legal": {
     "fetched_at": "2026-08-23",
     "file": "icon.png",
     "source": "https://agent.qcc.com/favicon-qcc.png"
+  },
+  "qixinhuiyan_mcp": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://c-cdn.qixin.com/web/favicon.ico"
   },
   "salesnail_instructor": {
     "fetched_at": "2026-08-23",
@@ -89,15 +159,15 @@
     "file": "icon.png",
     "source": "https://touch.long-arena.com/favicon.ico"
   },
-  "shanglv_mcp_gateway": {
-    "fetched_at": "2026-08-23",
-    "file": "icon.svg",
-    "source": "https://mcp-gateway.yql.net/resources/aldbh/admin/keycloak.v2/favicon.svg"
-  },
   "sq_company_dynamic": {
     "fetched_at": "2026-08-23",
     "file": "icon.png",
     "source": "https://api.chanyedata.com/favicon.ico"
+  },
+  "tdx_connector": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://sns.tdx.com.cn/site/tdx_sns/static/favicon.ico"
   },
   "teacher_assistant": {
     "fetched_at": "2026-08-23",
@@ -114,10 +184,20 @@
     "file": "icon.png",
     "source": "https://mcp-gateway.textmind-gz.com/logo.png"
   },
+  "tplus_api": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://cms.static.chanjet.com/90004719560/market/platform/image/2021/03/13/45d0b5ace8d846858fc272b3e94327b0.ico"
+  },
   "wkinfo": {
     "fetched_at": "2026-08-23",
     "file": "icon.svg",
     "source": "https://mcp.wkinfo.com.cn/assets/logo-DsQzxDGb.svg"
+  },
+  "yingmi_mcp": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://yingmi.com/assets/img/favicon.ico"
   },
   "youshu_bd_mate": {
     "fetched_at": "2026-08-23",
@@ -128,5 +208,10 @@
     "fetched_at": "2026-08-23",
     "file": "icon.svg",
     "source": "https://open.chineselaw.com/favicon.svg"
+  },
+  "yzf_invoice_mcp_server": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://yunzhangfang.com/favicon.ico"
   }
 }
