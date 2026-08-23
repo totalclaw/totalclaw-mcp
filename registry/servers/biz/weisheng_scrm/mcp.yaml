@@ -33,7 +33,15 @@ runtimes:
     npm_config_registry: https://registry.npmmirror.com
   requires:
     node: '>=18'
-requires_env: []
+requires_env:
+- name: SCRM_APP_KEY
+  env_key: SCRM_APP_KEY
+  description: 企业微信 → 工作台 → 企微管家 → 我的 → 我的 APP KEY
+  prompt: 请输入APP KEY
+  secret: true
+  required: true
+  doc_url: https://docs.qq.com/doc/p/7695c3515c714ddc9b1e233c0c0c5c550ac82332?nlc=1
+  doc_label: 如何获取 APP KEY？
 optional_env: []
 defaults:
   enabled: true

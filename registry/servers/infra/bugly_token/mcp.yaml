@@ -25,10 +25,12 @@ runtimes:
 requires_env:
 - name: BUGLY_ACCESS_TOKEN
   env_key: BUGLY_ACCESS_TOKEN
-  description: Bugly 质量概览 所需的 BUGLY_ACCESS_TOKEN
-  prompt: 请输入 BUGLY_ACCESS_TOKEN
+  description: '用于访问 Bugly OpenAPI 的个人访问令牌，将以 Authorization: Bearer 形式注入请求头。'
+  prompt: 在 Bugly 控制台 → 右上角头像 → 个人令牌→ 复制密钥
   secret: true
   required: true
+  doc_url: https://bugly.tds.qq.com/v2/user/token
+  doc_label: 如何获取 Bugly Access Token？
 optional_env: []
 defaults:
   enabled: true

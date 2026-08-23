@@ -27,10 +27,12 @@ runtimes:
 requires_env:
 - name: REGION_INSIGHT_API_KEY
   env_key: REGION_INSIGHT_API_KEY
-  description: 及刻智能·时空数据MCP 所需的 REGION_INSIGHT_API_KEY
-  prompt: 请输入 REGION_INSIGHT_API_KEY
+  description: 前往及刻开放平台生成并复制完整 MCP Key，请勿填写账号密码。
+  prompt: 粘贴从及刻开放平台页面获取的 MCP Key
   secret: true
   required: true
+  doc_url: https://data.isjike.com/get-mcp
+  doc_label: 免费获取MCP Key
 optional_env: []
 defaults:
   enabled: true

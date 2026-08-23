@@ -23,10 +23,12 @@ runtimes:
 requires_env:
 - name: GILDATA_TOKEN
   env_key: GILDATA_TOKEN
-  description: 恒生聚源 MCP 所需的 GILDATA_TOKEN
-  prompt: 请输入 GILDATA_TOKEN
+  description: 用于访问恒生聚源 MCP 的个人访问令牌。
+  prompt: 请填写恒生聚源下发的 Access Token
   secret: true
   required: true
+  doc_url: https://www.feishu.cn/docx/MeCmd4q0Yo7nmkx9D8IcMYbknob
+  doc_label: 如何使用恒生聚源 MCP 并获取授权 token
 optional_env: []
 defaults:
   enabled: true

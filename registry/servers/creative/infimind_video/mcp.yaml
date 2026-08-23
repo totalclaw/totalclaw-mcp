@@ -31,10 +31,12 @@ runtimes:
 requires_env:
 - name: SORA_MCP_TOKEN
   env_key: SORA_MCP_TOKEN
-  description: 极睿视频 所需的 SORA_MCP_TOKEN
-  prompt: 请输入 SORA_MCP_TOKEN
+  description: 用于访问你本人的极睿视频账户、本人积分和任务。请勿分享；不再使用或疑似泄露时，请立即在 Token 管理页撤销。
+  prompt: 粘贴仅显示一次的 MCP Token
   secret: true
   required: true
+  doc_url: https://aigc-next.iclip.cn/mcp-tokens
+  doc_label: 前往极睿视频创建 Token
 optional_env: []
 defaults:
   enabled: true

@@ -27,16 +27,20 @@ runtimes:
 requires_env:
 - name: GTS_ACCESS_KEY
   env_key: GTS_ACCESS_KEY
-  description: Gangtise投研 所需的 GTS_ACCESS_KEY
-  prompt: 请输入 GTS_ACCESS_KEY
+  description: 登录 Gangtise 开放平台复制 Access Key 并粘贴至输入框内。
+  prompt: 请填入 Gangtise OpenAPI 开发者账号 Access Key
   secret: true
   required: true
+  doc_url: https://open-platform.gangtise.com/
+  doc_label: 如何使用 Gangtise投研 MCP并获取授权Key
 - name: GTS_SECRET_KEY
   env_key: GTS_SECRET_KEY
-  description: Gangtise投研 所需的 GTS_SECRET_KEY
-  prompt: 请输入 GTS_SECRET_KEY
+  description: 登录 Gangtise 开放平台复制 Secret Key 并粘贴至输入框内。
+  prompt: 请填入 Gangtise OpenAPI 开发者账号 Secret Key
   secret: true
   required: true
+  doc_url: https://open-platform.gangtise.com/
+  doc_label: 如何使用 Gangtise投研 MCP并获取授权Key
 optional_env: []
 defaults:
   enabled: true

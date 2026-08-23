@@ -73,7 +73,14 @@ requires_env:
     runtimes: [npx, docker] # 省略 = 所有 runtime 都需要
     default: null           # 仅 optional_env 可给默认值
     validate: "^(ghp|github_pat)_"   # 可选正则
+    doc_url: https://github.com/settings/tokens   # 去哪儿申请这个凭据
+    doc_label: 前往 GitHub 创建 Personal Access Token   # 链接文案，省略则用通用文案
 ```
+
+`doc_url` / `doc_label` 是给界面用的：安装向导在凭据那一步把它渲染成链接。
+少了它，用户看到「请输入 XXX_API_KEY」也不知道去哪儿弄——凭据填不上，
+条目就等于装不了。有 `doc_url` 的条目，`prompt` 与 `description` 也应当写成
+厂商自己的说法（在哪个菜单、复制哪一项），而不是「XX 所需的 XXX_API_KEY」这种同义反复。
 
 安装器落盘规则：`.env` 键默认 `MCP_<NAME_UPPER>_<VAR>`（`NAME` 按 `[^A-Za-z0-9_]→_` 规整），config 中 `env.<VAR>: "${MCP_<NAME_UPPER>_<VAR>}"`。这样同名变量在不同服务器间不冲突，也与 `mcp_admin` 的 `MCP_<NAME>_API_KEY` 约定同构。
 

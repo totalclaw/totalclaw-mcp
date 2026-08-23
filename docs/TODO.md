@@ -182,10 +182,21 @@
 
   **此前我把这 41 个都归进了「等厂商凭据」，是错的** —— 401 不等于「要一把预置的 key」，
   得看它질质询里说的是什么。
-- [ ] **C2.1（剩余）** 还需凭据才能探到工具列表的：约 18 个（静态 key 型，
-  以及 OAuth 型在没走完授权前也探不到）。拿到凭据后
-  `export <VAR>=... && python3 scripts/probe_server.py <名>` 即可补齐
-  `tools.json` 与 `security` 块。OAuth 型需先 `totalclaw mcp login`。
+- [x] **C2.1（凭据获取路径）** 上游每个连接器还带一份 `token-schema.json`，
+  里面是厂商自己写的说法：去哪个页面、点哪个菜单、复制哪一项，以及申请地址。
+  **我此前整轮都没打开过这个文件** —— 于是 registry 里的凭据说明是生成器套出来的
+  同义反复（「XX 所需的 XXX_API_KEY」/「请输入 XXX_API_KEY」）。用户看了还是不知道
+  去哪儿弄，凭据填不上，那个条目就等于装不了。
+  已并进 **20 个条目、21 条凭据**：`description` 换成厂商原话，`prompt` 换成
+  厂商的输入提示，新增 `doc_url` / `doc_label`（SPEC §2.3 已补进规范）。
+  索引生成器也一起改了 —— 它此前把 `doc_url` 过滤掉，而 qiye-app 读的正是索引，
+  不改就等于白做。qiye-app 的安装向导已渲染成链接，3 个用例覆盖。
+  顺带补了 `weisheng_scrm` 漏声明的 `SCRM_APP_KEY`、`opendata` 的
+  `REGION_INSIGHT_API_KEY`（匿名能列工具，真调用要 key，不声明的话用户装完
+  一调就失败且不知为何）。
+- [ ] **C2.1（剩余）** 拿到凭据后补 `tools.json` 与 `security` 块：
+  `export <VAR>=… && python3 scripts/probe_server.py <名>`；OAuth 型先
+  `totalclaw mcp login <名>`。每个条目要去哪儿申请，现在 registry.json 里就有。
 - [x] **C3** Ed25519 签名脚本 `scripts/sign_registry.py`（`--keygen` / `--sign` / `--verify`）
   - 已实测完整链路：生成密钥 → 签名 → 验签通过 → 篡改一个字段后验签**正确失败** → 恢复后再通过
   - 私钥只从 `MCP_REGISTRY_SIGNING_KEY` 或库外文件读，keygen 默认写到 `~/.totalclaw-mcp-keys`

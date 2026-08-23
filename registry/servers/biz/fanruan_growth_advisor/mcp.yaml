@@ -26,10 +26,12 @@ runtimes:
 requires_env:
 - name: MOSS_API_KEY
   env_key: MOSS_API_KEY
-  description: 帆软增长谋士 所需的 MOSS_API_KEY
-  prompt: 请输入 MOSS_API_KEY
+  description: MOSS 租户级 Bearer Token，由租户管理员在管理后台生成。
+  prompt: 在 MOSS 管理后台「数据资源-MCP」生成
   secret: true
   required: true
+  doc_url: https://docs.mossdo.com/docs/function/data-resource/api
+  doc_label: 如何获取 MOSS MCP API Key？
 optional_env: []
 defaults:
   enabled: true

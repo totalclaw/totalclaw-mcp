@@ -26,10 +26,12 @@ runtimes:
 requires_env:
 - name: KUAICHA_API_KEY
   env_key: KUAICHA_API_KEY
-  description: 同花顺快查企业数据 所需的 KUAICHA_API_KEY
-  prompt: 请输入 KUAICHA_API_KEY
+  description: 用于访问同花顺快查企业数据服务。若密钥失效，请在同花顺快查数据平台重新生成后更新此字段。
+  prompt: 请粘贴从同花顺快查数据平台获取的 API Key
   secret: true
   required: true
+  doc_url: https://open.kuaicha365.com/mcp/
+  doc_label: 获取同花顺快查 API Key
 optional_env: []
 defaults:
   enabled: true

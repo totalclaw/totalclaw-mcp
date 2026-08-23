@@ -26,10 +26,12 @@ runtimes:
 requires_env:
 - name: PICSET_AGENT_SK
   env_key: PICSET_AGENT_SK
-  description: Picset AI 电商图片 所需的 PICSET_AGENT_SK
-  prompt: 请输入 PICSET_AGENT_SK
+  description: 在 Picset AI 用户中心的密钥管理中创建密钥，然后粘贴到这里。
+  prompt: 在 Picset AI 用户中心创建，格式如 sk_live_...
   secret: true
   required: true
+  doc_url: https://picsetai.cn/profile?scene=workbuddy&ch=image
+  doc_label: 创建 Picset AI 密钥
 optional_env: []
 defaults:
   enabled: true

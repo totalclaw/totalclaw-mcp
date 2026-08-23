@@ -36,10 +36,12 @@ runtimes:
 requires_env:
 - name: AGENT_KEY
   env_key: AGENT_KEY
-  description: 夺冠蜂巢 所需的 AGENT_KEY
-  prompt: 请输入 AGENT_KEY
+  description: 以 ca_live_ 开头的完整凭证字符串。不要使用 Key ID、邀请码或网页登录 Token。
+  prompt: ca_live_xxxxxxxxxxxxxxxxxx
   secret: true
   required: true
+  doc_url: https://fc.duoguan.com/agent/mcp
+  doc_label: 如何获取 Agent Key？
 optional_env: []
 defaults:
   enabled: true

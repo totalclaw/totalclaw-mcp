@@ -27,10 +27,12 @@ runtimes:
 requires_env:
 - name: LINKFOX_AGENT_API_KEY
   env_key: LINKFOX_AGENT_API_KEY
-  description: Linkfox 选品 所需的 LINKFOX_AGENT_API_KEY
-  prompt: 请输入 LINKFOX_AGENT_API_KEY
+  description: 用于访问 Linkfox 选品服务的Key。
+  prompt: 注册后，在 个人中心 → API设置 中创建API Key
   secret: true
   required: true
+  doc_url: https://skill.linkfox.com/linkfoxskills/guide.htm
+  doc_label: 如何获取 Linkfox 的 API Key？
 optional_env: []
 defaults:
   enabled: true

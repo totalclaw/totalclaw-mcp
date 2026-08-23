@@ -307,6 +307,10 @@ def _collect_server(server_dir: Path, category: str, strict: bool) -> dict:
             {k: v for k, v in {
                 "name": e["name"], "description": e.get("description"), "prompt": e.get("prompt"),
                 "secret": e.get("secret"), "required": e.get("required", True), "runtimes": e.get("runtimes"),
+                # doc_url/doc_label 必须进索引：qiye-app 的安装向导读的是索引，
+                # 不是清单文件。漏掉它们，用户在凭据那一步只看得到「请输入 XXX_KEY」，
+                # 不知道去哪儿申请——凭据填不上，条目就等于装不了。
+                "doc_url": e.get("doc_url"), "doc_label": e.get("doc_label"),
             }.items() if v is not None}
             for e in requires_env
         ],

@@ -23,10 +23,12 @@ runtimes:
 requires_env:
 - name: YINGMI_API_KEY
   env_key: YINGMI_API_KEY
-  description: 盈米MCP 所需的 YINGMI_API_KEY
-  prompt: 请输入 YINGMI_API_KEY
+  description: 登录盈米 MCP 开通服务后复制个人 API Key，将作为 Query 参数 apiKey 注入 MCP 请求。
+  prompt: 粘贴从盈米 MCP 页面获取的 API Key
   secret: true
   required: true
+  doc_url: https://qieman.com/mcp
+  doc_label: 如何获取 API Key？
 optional_env: []
 defaults:
   enabled: true

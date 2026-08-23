@@ -25,10 +25,12 @@ runtimes:
 requires_env:
 - name: LINGXING_MCP_KEY
   env_key: LINGXING_MCP_KEY
-  description: 领星ERP 所需的 LINGXING_MCP_KEY
-  prompt: 请输入 LINGXING_MCP_KEY
+  description: 密钥与当前领星账号绑定，数据访问范围继承该账号权限；密钥泄露后请立即重新生成。
+  prompt: 在领星ERP AI助手的「管理MCP」页面复制鉴权密钥
   secret: true
   required: true
+  doc_url: https://www.lingxing.com/help/article/mcp
+  doc_label: 如何获取领星 MCP 鉴权密钥？
 optional_env: []
 defaults:
   enabled: true

@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T01:38:49Z",
+  "generated_at": "2026-08-23T01:44:41Z",
   "servers": [
     {
       "name": "chuhaijiang",
@@ -168,10 +168,12 @@
       "requires_env": [
         {
           "name": "AGENT_KEY",
-          "description": "夺冠蜂巢 所需的 AGENT_KEY",
-          "prompt": "请输入 AGENT_KEY",
+          "description": "以 ca_live_ 开头的完整凭证字符串。不要使用 Key ID、邀请码或网页登录 Token。",
+          "prompt": "ca_live_xxxxxxxxxxxxxxxxxx",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://fc.duoguan.com/agent/mcp",
+          "doc_label": "如何获取 Agent Key？"
         }
       ],
       "optional_env": [],
@@ -191,11 +193,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "fe4a023cf5d53686a779f3ea397599440a9cc4efb00e57e88c5b77e90612f4aa",
-          "size": 1749
+          "sha256": "36f09dd6783e31677c6fdd98ef7c6db8ed4418dcda6a47bb41499724026ec6f0",
+          "size": 1908
         }
       ],
-      "bundle_sha256": "5df38d0b2d36970081e63ae8972c45febaa6a3d4023c17c33a095a265adc078a"
+      "bundle_sha256": "81722037199cc44e2b572338f57135916de732923b4616df87ef65341377666c"
     },
     {
       "name": "fadada_richee",
@@ -290,10 +292,12 @@
       "requires_env": [
         {
           "name": "MOSS_API_KEY",
-          "description": "帆软增长谋士 所需的 MOSS_API_KEY",
-          "prompt": "请输入 MOSS_API_KEY",
+          "description": "MOSS 租户级 Bearer Token，由租户管理员在管理后台生成。",
+          "prompt": "在 MOSS 管理后台「数据资源-MCP」生成",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://docs.mossdo.com/docs/function/data-resource/api",
+          "doc_label": "如何获取 MOSS MCP API Key？"
         }
       ],
       "optional_env": [],
@@ -313,11 +317,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "464892d4e8c4de1875e6f705230dbc94ee838aa73708da0cfbd8a07f153f8efc",
-          "size": 1536
+          "sha256": "1299eab65d0ae754d4bf2b5c8491312ec2d3532f1fe12fcc9a1763ed27abb609",
+          "size": 1707
         }
       ],
-      "bundle_sha256": "21957f9c24845831637ee53387d8a2f8649e59229bdce22bbb2d228a9aef25d2"
+      "bundle_sha256": "c73314a480895b0876e70e539053dab38b6adbd77785264c20acfc47a4b6eef4"
     },
     {
       "name": "fazhi_law",
@@ -355,10 +359,12 @@
       "requires_env": [
         {
           "name": "FAZHI_API_KEY",
-          "description": "同花顺法律AI助手 所需的 FAZHI_API_KEY",
-          "prompt": "请输入 FAZHI_API_KEY",
+          "description": "用于访问同花顺法律AI助手服务。若密钥失效，请在同花顺法律AI助手平台重新生成后更新此字段。",
+          "prompt": "请粘贴从同花顺法律AI助手平台获取的 API Key",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://open.kuaicha365.com/lawskills/",
+          "doc_label": "获取同花顺法律AI助手 API Key"
         }
       ],
       "optional_env": [],
@@ -385,8 +391,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "7799f50348121a40508ab079f94d67f020f3ca70f1636a75f203be1c002387f5",
-          "size": 2007
+          "sha256": "b9103a1adfe0ecdd0aaf13626354e1f06c3c687c4b6b13c109a8bf91e0027b37",
+          "size": 2226
         },
         {
           "path": "tools.json",
@@ -394,7 +400,7 @@
           "size": 5341
         }
       ],
-      "bundle_sha256": "dbb1f22666274e183afe270271a6a633694d409a03f379817fb9289e1b213c20"
+      "bundle_sha256": "79da0473c9e8c8b4f0bca0f1ddde4a5eddbe7357a4b33fb20e73febdd104584a"
     },
     {
       "name": "fbs_connector",
@@ -620,10 +626,12 @@
       "requires_env": [
         {
           "name": "LINGXING_MCP_KEY",
-          "description": "领星ERP 所需的 LINGXING_MCP_KEY",
-          "prompt": "请输入 LINGXING_MCP_KEY",
+          "description": "密钥与当前领星账号绑定，数据访问范围继承该账号权限；密钥泄露后请立即重新生成。",
+          "prompt": "在领星ERP AI助手的「管理MCP」页面复制鉴权密钥",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://www.lingxing.com/help/article/mcp",
+          "doc_label": "如何获取领星 MCP 鉴权密钥？"
         }
       ],
       "optional_env": [],
@@ -643,11 +651,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "00d1d5198b341676d440121ef9181b03c6826f14b4a558c96bc1d7440288005e",
-          "size": 1400
+          "sha256": "417f6a58d1ddad6b3abf3734a2ab72244ac70d56e877a3e68a783613a2afed53",
+          "size": 1623
         }
       ],
-      "bundle_sha256": "6c4c6da796586c75b3923f9962c50c5d2c54e5a8563a11c8ae71ff15fdd3e449"
+      "bundle_sha256": "cf6f678b5d8a4b6172eaaba3fe29213607bee9a7c56ab2f3ef6759505dd7cf54"
     },
     {
       "name": "linkfox_product_selection",
@@ -685,10 +693,12 @@
       "requires_env": [
         {
           "name": "LINKFOX_AGENT_API_KEY",
-          "description": "Linkfox 选品 所需的 LINKFOX_AGENT_API_KEY",
-          "prompt": "请输入 LINKFOX_AGENT_API_KEY",
+          "description": "用于访问 Linkfox 选品服务的Key。",
+          "prompt": "注册后，在 个人中心 → API设置 中创建API Key",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://skill.linkfox.com/linkfoxskills/guide.htm",
+          "doc_label": "如何获取 Linkfox 的 API Key？"
         }
       ],
       "optional_env": [],
@@ -708,11 +718,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f3c6faeec84a1dbac981b51337e63e7ecb8ac8b3fe181c8269f9e832bdcd015e",
-          "size": 1762
+          "sha256": "1467507c3a7b5aa56882a0a9b2e9fef4ead55569a9884bdbea5288d4791a2ecb",
+          "size": 1896
         }
       ],
-      "bundle_sha256": "29b07c5ac9b7768d547bb9276790b68484bb1b9e3a95218585f5081146857978"
+      "bundle_sha256": "f1b60dcd37ea0d0e6de9565278a0595bbaabca3602a261eb8ac69cc4a8db5e80"
     },
     {
       "name": "mcp_memory",
@@ -1503,7 +1513,17 @@
           "launcher": "npx"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "SCRM_APP_KEY",
+          "description": "企业微信 → 工作台 → 企微管家 → 我的 → 我的 APP KEY",
+          "prompt": "请输入APP KEY",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://docs.qq.com/doc/p/7695c3515c714ddc9b1e233c0c0c5c550ac82332?nlc=1",
+          "doc_label": "如何获取 APP KEY？"
+        }
+      ],
       "optional_env": [],
       "tools_count": 0,
       "tools": [],
@@ -1521,11 +1541,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "2f53dccd02139ef09eff00bef74e5505538b90bd96ebe2062c43c2524d1667fa",
-          "size": 2015
+          "sha256": "4cd75526ee7942e9d4a6e0aa8dd04a7fb837348c9f3b6951aca33c748ae112e0",
+          "size": 2326
         }
       ],
-      "bundle_sha256": "e8d43c9eeae02728f2b50df2f41cb22a45234f33537ac106d42cf45719a6cb4c"
+      "bundle_sha256": "0995e1bd2846b121b0948504a2bd51446a472382cef36c0018b863ec07861d44"
     },
     {
       "name": "wkinfo",
@@ -1677,10 +1697,12 @@
       "requires_env": [
         {
           "name": "API_KEY",
-          "description": "智客AI · 对公(To B)营销助手 所需的 API_KEY",
-          "prompt": "请输入 API_KEY",
+          "description": "用于访问有数 MCP 服务的鉴权凭证。支持两种配置方式：① 将提示词发送给模型自动完成；② 前往有数开放平台点击右上角头像\"获取 MCP Key\"手动粘贴。仅存储在本机 ~/.workbuddy 下。",
+          "prompt": "粘贴从有数开放平台获取的 MCP Key，或将提示词发送给模型自动完成配置",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://open.yscredit.com/mcp/guide",
+          "doc_label": "前往有数开放平台配置"
         }
       ],
       "optional_env": [],
@@ -1700,11 +1722,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "ae21eac2fc581034fc9b846bb1c0eff8cad3698196b15be82ec08ca73a20e358",
-          "size": 1750
+          "sha256": "d1dab243294e813d25a6a5e3d30a2b69ab3d678ee7db75062e45f5bbee47ea82",
+          "size": 2107
         }
       ],
-      "bundle_sha256": "309eaf0ebb43ce4375b0c0128e653113eaefca9dc90eed4909691773e7801fad"
+      "bundle_sha256": "12e202f2738dbc46668fef9d5d1a91c7ba2489cabfd5e4866bdb2eb18dedb66f"
     },
     {
       "name": "yuandian_mcp",
@@ -2947,10 +2969,12 @@
       "requires_env": [
         {
           "name": "MCP_TOKEN",
-          "description": "极睿电商生图 所需的 MCP_TOKEN",
-          "prompt": "请输入 MCP_TOKEN",
+          "description": "仅填写本人账户创建的独立 Token，请勿在其他 MCP 客户端复用。",
+          "prompt": "登录极睿个人账户 → MCP Token 管理 → 创建 Token → 名称填写 WorkBuddy",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://my.feishu.cn/wiki/X9vHw25KvidOhVktH7ScwZ5Anxb?fromScene=spaceOverview",
+          "doc_label": "查看 WorkBuddy Token 获取与配置教程"
         }
       ],
       "optional_env": [],
@@ -2970,11 +2994,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1e3790ff6a38a9af42a2a687df4d5595144d88d986f21ebb037fa3ba42fd4bfc",
-          "size": 1793
+          "sha256": "11c7abe30f322b60182631632d58822782610940253506e024d68bdeef79bfab",
+          "size": 2055
         }
       ],
-      "bundle_sha256": "a886a0b3a962238c4d0ddeb8e759a5ddf97d2cfc6ceb53ba1cdc3f9fe3aef01e"
+      "bundle_sha256": "33c0ee15c598ca229eb93ccadf184d5ac62f53ec88122c51796cba4771e6c4df"
     },
     {
       "name": "infimind_video",
@@ -3013,10 +3037,12 @@
       "requires_env": [
         {
           "name": "SORA_MCP_TOKEN",
-          "description": "极睿视频 所需的 SORA_MCP_TOKEN",
-          "prompt": "请输入 SORA_MCP_TOKEN",
+          "description": "用于访问你本人的极睿视频账户、本人积分和任务。请勿分享；不再使用或疑似泄露时，请立即在 Token 管理页撤销。",
+          "prompt": "粘贴仅显示一次的 MCP Token",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://aigc-next.iclip.cn/mcp-tokens",
+          "doc_label": "前往极睿视频创建 Token"
         }
       ],
       "optional_env": [],
@@ -3036,11 +3062,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "876961e28755a2bc45893c542649715a6722ef266d133c1ef45fffbdf869f5f5",
-          "size": 1476
+          "sha256": "b3b7f3c796b34b8b493be0df4f89f3dcbe911b3cd678122a8a2ddaec3acdc847",
+          "size": 1696
         }
       ],
-      "bundle_sha256": "9a5f0d296853714cda6ce43e6e1c272a274c8d33a14f09d527bfdf98b7a2aaf0"
+      "bundle_sha256": "3bf90c4ba8cf1c0928a62a0dc9f2403e68a6686d8e45eb668063d044cb3b9ae2"
     },
     {
       "name": "kling_ai_plugin",
@@ -3267,10 +3293,12 @@
       "requires_env": [
         {
           "name": "PICSET_AGENT_SK",
-          "description": "Picset AI 电商图片 所需的 PICSET_AGENT_SK",
-          "prompt": "请输入 PICSET_AGENT_SK",
+          "description": "在 Picset AI 用户中心的密钥管理中创建密钥，然后粘贴到这里。",
+          "prompt": "在 Picset AI 用户中心创建，格式如 sk_live_...",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://picsetai.cn/profile?scene=workbuddy&ch=image",
+          "doc_label": "创建 Picset AI 密钥"
         }
       ],
       "optional_env": [],
@@ -3290,11 +3318,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f40c87740c9f23debf12b7ca1eb510c517ab4ac942ec50a928c4febb53182765",
-          "size": 1865
+          "sha256": "b51ca74bae9888d739e31d64d12ef887fa20be8058dcc25e55457dae4ac45ac6",
+          "size": 2032
         }
       ],
-      "bundle_sha256": "6fd8d351378b8a69a65d87b9bff74fc8085c94630a985129ccaf3f55d55397fc"
+      "bundle_sha256": "ddf83686010d21d2d7237f93d584f9c395ebefad29ea1d7dc5fd2c714e0a123c"
     },
     {
       "name": "picset_video_generation",
@@ -3332,10 +3360,12 @@
       "requires_env": [
         {
           "name": "PICSET_AGENT_SK",
-          "description": "Picset AI 视频创作 所需的 PICSET_AGENT_SK",
-          "prompt": "请输入 PICSET_AGENT_SK",
+          "description": "在 Picset AI 用户中心的密钥管理中创建密钥，然后粘贴到这里。",
+          "prompt": "在 Picset AI 用户中心创建，格式如 sk_live_...",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://picsetai.cn/profile?scene=workbuddy&ch=video",
+          "doc_label": "创建 Picset AI 密钥"
         }
       ],
       "optional_env": [],
@@ -3355,11 +3385,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "5905ecd91ef29f278801e9087171deeec1ac5276363299002792cfdef6907a2f",
-          "size": 2205
+          "sha256": "dbb432c35afaeeee42af210e4e3b1d167017e305baf06324bbad395c087f9e2d",
+          "size": 2372
         }
       ],
-      "bundle_sha256": "50353d66ec4c8ab8ab686ce6bba4af9217f23f0d9962455bd3fa2b37df3ea4d5"
+      "bundle_sha256": "134d11107988c97da86ea4074f5508db8b18552a17b756e4274c44919029ce16"
     },
     {
       "name": "unreal_engine",
@@ -3569,17 +3599,21 @@
       "requires_env": [
         {
           "name": "GTS_ACCESS_KEY",
-          "description": "Gangtise投研 所需的 GTS_ACCESS_KEY",
-          "prompt": "请输入 GTS_ACCESS_KEY",
+          "description": "登录 Gangtise 开放平台复制 Access Key 并粘贴至输入框内。",
+          "prompt": "请填入 Gangtise OpenAPI 开发者账号 Access Key",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://open-platform.gangtise.com/",
+          "doc_label": "如何使用 Gangtise投研 MCP并获取授权Key"
         },
         {
           "name": "GTS_SECRET_KEY",
-          "description": "Gangtise投研 所需的 GTS_SECRET_KEY",
-          "prompt": "请输入 GTS_SECRET_KEY",
+          "description": "登录 Gangtise 开放平台复制 Secret Key 并粘贴至输入框内。",
+          "prompt": "请填入 Gangtise OpenAPI 开发者账号 Secret Key",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://open-platform.gangtise.com/",
+          "doc_label": "如何使用 Gangtise投研 MCP并获取授权Key"
         }
       ],
       "optional_env": [],
@@ -3599,11 +3633,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "c5e019ce4b85956f6e12880e6216fc5e5e1692e99fa80b3fd91704d8cda996e7",
-          "size": 2045
+          "sha256": "fe3b2b5550469914cf6bc60c0b756cd94624c70e5c392ff4554beb4839599298",
+          "size": 2391
         }
       ],
-      "bundle_sha256": "c902d7631b717273fb82aeae2699ce946d865dcb2f1b251ef0967fada2effd9a"
+      "bundle_sha256": "9d3ac39c80be52b142b2956b58a943193dff45945166f34c30a342764cdb35f9"
     },
     {
       "name": "gildata",
@@ -3641,10 +3675,12 @@
       "requires_env": [
         {
           "name": "GILDATA_TOKEN",
-          "description": "恒生聚源 MCP 所需的 GILDATA_TOKEN",
-          "prompt": "请输入 GILDATA_TOKEN",
+          "description": "用于访问恒生聚源 MCP 的个人访问令牌。",
+          "prompt": "请填写恒生聚源下发的 Access Token",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://www.feishu.cn/docx/MeCmd4q0Yo7nmkx9D8IcMYbknob",
+          "doc_label": "如何使用恒生聚源 MCP 并获取授权 token"
         }
       ],
       "optional_env": [],
@@ -3664,11 +3700,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "e89cd902d3513d3205e1bf1de74c675e4ebfbbb198c56d55e43ed7886282718f",
-          "size": 1618
+          "sha256": "00128a66eaf8ab9463ffa2f69522df9a4d2c36ea28623e6ec3a35e8b6cac4c64",
+          "size": 1781
         }
       ],
-      "bundle_sha256": "3e1f68150411195672d5b0526da7bdde208a49942600bbde607455a30607b1cf"
+      "bundle_sha256": "df64f0afb04933ee8c69be1a04b1f7476b37bf5200ba41ee37745df8b3e715a6"
     },
     {
       "name": "kuaicha_search",
@@ -3706,10 +3742,12 @@
       "requires_env": [
         {
           "name": "KUAICHA_API_KEY",
-          "description": "同花顺快查企业数据 所需的 KUAICHA_API_KEY",
-          "prompt": "请输入 KUAICHA_API_KEY",
+          "description": "用于访问同花顺快查企业数据服务。若密钥失效，请在同花顺快查数据平台重新生成后更新此字段。",
+          "prompt": "请粘贴从同花顺快查数据平台获取的 API Key",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://open.kuaicha365.com/mcp/",
+          "doc_label": "获取同花顺快查 API Key"
         }
       ],
       "optional_env": [],
@@ -3732,8 +3770,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "61926448957b941ab89e8f106e1f1a3f3fe941df50c2c1d102b78634c079876d",
-          "size": 1727
+          "sha256": "0ee33aed535b89ffa139cac494ae1c22b344080d149b2f2a9e14c744d49d37b2",
+          "size": 1924
         },
         {
           "path": "tools.json",
@@ -3741,7 +3779,7 @@
           "size": 2943
         }
       ],
-      "bundle_sha256": "e10fa9560fad66d646d4034e17a1581baafa0034110a5c8b2fb2a7fb0204260f"
+      "bundle_sha256": "94f0fd4ed04f0810f91b01fb3d8c907d993882809c6019b238f0a0fe67252c33"
     },
     {
       "name": "mcp_postgres",
@@ -4027,10 +4065,12 @@
       "requires_env": [
         {
           "name": "REGION_INSIGHT_API_KEY",
-          "description": "及刻智能·时空数据MCP 所需的 REGION_INSIGHT_API_KEY",
-          "prompt": "请输入 REGION_INSIGHT_API_KEY",
+          "description": "前往及刻开放平台生成并复制完整 MCP Key，请勿填写账号密码。",
+          "prompt": "粘贴从及刻开放平台页面获取的 MCP Key",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://data.isjike.com/get-mcp",
+          "doc_label": "免费获取MCP Key"
         }
       ],
       "optional_env": [],
@@ -4057,8 +4097,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "7271614ed29851093f848c378d8037e3fe49bddf20a2ea91930c8b925b9958d8",
-          "size": 1850
+          "sha256": "1daad51cae978b85b513ff43dc23fa764a0d21ba675e8ec00c0305e0597e24ba",
+          "size": 1965
         },
         {
           "path": "tools.json",
@@ -4066,7 +4106,7 @@
           "size": 10594
         }
       ],
-      "bundle_sha256": "ee5ef5e850f56e24b29aec22d2c69bfc19b4420217a5c0fe675016cde125c94f"
+      "bundle_sha256": "88719c5c2c346b2a2fc0a3d4232f88e696d17bff3ad74b2428a9487e8cce811c"
     },
     {
       "name": "pandadata",
@@ -4323,9 +4363,11 @@
         {
           "name": "API_KEY",
           "description": "上奇产业通-企业动态追踪 所需的 API_KEY",
-          "prompt": "请输入 API_KEY",
+          "prompt": "前往 ai.chanyedata.com 开发者中心获取 API Key（无需 Bearer 前缀）",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://ai.chanyedata.com/ai-quantitative/#/workspace/developer",
+          "doc_label": "前往开发者中心获取 API Key"
         }
       ],
       "optional_env": [],
@@ -4345,11 +4387,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "635a4346f6093c15e330b4e7f7f6878a9e8ec6e948022daf36449f54248f2024",
-          "size": 1732
+          "sha256": "6f391f1a6f0805e49f5f556160fe14dc471e44f5e8ed04b382a949407287229b",
+          "size": 1919
         }
       ],
-      "bundle_sha256": "68b4636b994d41b62b1c45c015317667ede9305d26a2abe9c8c38ad9543ce58c"
+      "bundle_sha256": "cb6cb18a995d6725bbb54bf3f196d333c40df96c1e02945d1d11e39636d614c4"
     },
     {
       "name": "tdx_connector",
@@ -4659,10 +4701,12 @@
       "requires_env": [
         {
           "name": "YINGMI_API_KEY",
-          "description": "盈米MCP 所需的 YINGMI_API_KEY",
-          "prompt": "请输入 YINGMI_API_KEY",
+          "description": "登录盈米 MCP 开通服务后复制个人 API Key，将作为 Query 参数 apiKey 注入 MCP 请求。",
+          "prompt": "粘贴从盈米 MCP 页面获取的 API Key",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://qieman.com/mcp",
+          "doc_label": "如何获取 API Key？"
         }
       ],
       "optional_env": [],
@@ -4682,11 +4726,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "b0848934c1d8a363757b127f375a2f41e9555668e026029af7625b3f25303a2e",
-          "size": 1341
+          "sha256": "bfc103b3c124042e74765d71cbc4d2540267de3a57ffcd441df77e19e0992257",
+          "size": 1502
         }
       ],
-      "bundle_sha256": "08e39284c55e73b916bf75486aa6541cc22e64ce2623c210d29379daf8a41256"
+      "bundle_sha256": "e94fcc9757dbf2bfd1f863d4c28506e2c73a33e64e772bccc759d63d1afa5b9f"
     },
     {
       "name": "yzf_invoice_mcp_server",
@@ -5906,10 +5950,12 @@
       "requires_env": [
         {
           "name": "BUGLY_ACCESS_TOKEN",
-          "description": "Bugly 质量概览 所需的 BUGLY_ACCESS_TOKEN",
-          "prompt": "请输入 BUGLY_ACCESS_TOKEN",
+          "description": "用于访问 Bugly OpenAPI 的个人访问令牌，将以 Authorization: Bearer 形式注入请求头。",
+          "prompt": "在 Bugly 控制台 → 右上角头像 → 个人令牌→ 复制密钥",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://bugly.tds.qq.com/v2/user/token",
+          "doc_label": "如何获取 Bugly Access Token？"
         }
       ],
       "optional_env": [],
@@ -5929,11 +5975,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "90acb2a21a08ad3c09b6aee1c53c80889b219d9e940ee70cadac2ec3c67d21c2",
-          "size": 1243
+          "sha256": "f731ad02f0228cea0060a3ef7e124bfbaa52e64ff5500a0eb40431a732c0016d",
+          "size": 1444
         }
       ],
-      "bundle_sha256": "2277397dd704e407697e870e39882a89df1b75cc2d3f8875ec14e18395c06fa5"
+      "bundle_sha256": "aecffb770c85f32428592869e6be688be4e5bbf351da53b7b931cf0b5d2a5fcb"
     },
     {
       "name": "cisp_mcp",
@@ -5971,10 +6017,12 @@
       "requires_env": [
         {
           "name": "CISP_API_KEY",
-          "description": "水滴征信 所需的 CISP_API_KEY",
-          "prompt": "请输入 CISP_API_KEY",
+          "description": "水滴征信平台的 API Key，格式为 sk-agw- 开头",
+          "prompt": "请输入您的 API Key（sk-agw- 开头）",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://cisp.zenitera.com/openapi",
+          "doc_label": "如何获取 API Key？"
         }
       ],
       "optional_env": [],
@@ -5994,11 +6042,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1377be82876c9c0c2fe3c80fb79128e6280618cbdc72a1c196360ca70723a27d",
-          "size": 1541
+          "sha256": "c1f4d619993236a3973110cd3e1b4b365f63349b48463f8b5fd5076b8707e201",
+          "size": 1665
         }
       ],
-      "bundle_sha256": "4dccfa8db11fcbde1eb41d956f47e24508def0ad7455bf8ee178f523f6a7d4be"
+      "bundle_sha256": "1190e1bf59458d4ffada5465d163ac0e5148349d3f695649dff15e44c44b865d"
     },
     {
       "name": "dcs_cloud",
@@ -6037,10 +6085,12 @@
       "requires_env": [
         {
           "name": "DCS_PAT",
-          "description": "DCS Cloud 所需的 DCS_PAT",
-          "prompt": "请输入 DCS_PAT",
+          "description": "登录 www.dcs.cloud 后，在个人中心 → 访问令牌页面创建并复制的 PAT（dcs_pat_ 开头）。",
+          "prompt": "dcs_pat_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
           "secret": true,
-          "required": true
+          "required": true,
+          "doc_url": "https://www.dcs.cloud/#/login",
+          "doc_label": "登录 DCS Cloud 创建 PAT"
         }
       ],
       "optional_env": [],
@@ -6060,11 +6110,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "06c33d2773a59dff224ba519cf5ae2ad4e8489f9ab0132c9939d89ff82b4c8e1",
-          "size": 1696
+          "sha256": "70753669c2763e4b2fe848069c1db312e81d3736d9e031c152ba1b31f74072e9",
+          "size": 1885
         }
       ],
-      "bundle_sha256": "abde3023118d687dde35c7f6195c96ce3998482ddb67855612d2520e525c647b"
+      "bundle_sha256": "a2738a11a08545a4e96b3ac76c046059293383aa98cdd3ef7f8bb432b747bfc9"
     },
     {
       "name": "docker",

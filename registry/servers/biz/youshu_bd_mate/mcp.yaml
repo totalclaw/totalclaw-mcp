@@ -27,10 +27,13 @@ runtimes:
 requires_env:
 - name: API_KEY
   env_key: API_KEY
-  description: 智客AI · 对公(To B)营销助手 所需的 API_KEY
-  prompt: 请输入 API_KEY
+  description: 用于访问有数 MCP 服务的鉴权凭证。支持两种配置方式：① 将提示词发送给模型自动完成；② 前往有数开放平台点击右上角头像"获取 MCP Key"手动粘贴。仅存储在本机 ~/.workbuddy
+    下。
+  prompt: 粘贴从有数开放平台获取的 MCP Key，或将提示词发送给模型自动完成配置
   secret: true
   required: true
+  doc_url: https://open.yscredit.com/mcp/guide
+  doc_label: 前往有数开放平台配置
 optional_env: []
 defaults:
   enabled: true

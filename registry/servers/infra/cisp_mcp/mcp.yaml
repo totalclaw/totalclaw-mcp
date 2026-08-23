@@ -25,10 +25,12 @@ runtimes:
 requires_env:
 - name: CISP_API_KEY
   env_key: CISP_API_KEY
-  description: 水滴征信 所需的 CISP_API_KEY
-  prompt: 请输入 CISP_API_KEY
+  description: 水滴征信平台的 API Key，格式为 sk-agw- 开头
+  prompt: 请输入您的 API Key（sk-agw- 开头）
   secret: true
   required: true
+  doc_url: https://cisp.zenitera.com/openapi
+  doc_label: 如何获取 API Key？
 optional_env: []
 defaults:
   enabled: true

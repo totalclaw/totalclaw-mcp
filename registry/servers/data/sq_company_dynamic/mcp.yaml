@@ -27,9 +27,11 @@ requires_env:
 - name: API_KEY
   env_key: API_KEY
   description: 上奇产业通-企业动态追踪 所需的 API_KEY
-  prompt: 请输入 API_KEY
+  prompt: 前往 ai.chanyedata.com 开发者中心获取 API Key（无需 Bearer 前缀）
   secret: true
   required: true
+  doc_url: https://ai.chanyedata.com/ai-quantitative/#/workspace/developer
+  doc_label: 前往开发者中心获取 API Key
 optional_env: []
 defaults:
   enabled: true

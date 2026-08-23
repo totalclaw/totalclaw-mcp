@@ -34,10 +34,12 @@ runtimes:
 requires_env:
 - name: DCS_PAT
   env_key: DCS_PAT
-  description: DCS Cloud 所需的 DCS_PAT
-  prompt: 请输入 DCS_PAT
+  description: 登录 www.dcs.cloud 后，在个人中心 → 访问令牌页面创建并复制的 PAT（dcs_pat_ 开头）。
+  prompt: dcs_pat_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   secret: true
   required: true
+  doc_url: https://www.dcs.cloud/#/login
+  doc_label: 登录 DCS Cloud 创建 PAT
 optional_env: []
 defaults:
   enabled: true
