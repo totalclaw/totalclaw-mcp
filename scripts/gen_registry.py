@@ -85,6 +85,46 @@ def _warn(msg: str, strict: bool) -> None:
 
 # ── 包版本 pin 检查（与 totalclaw_cli/mcp_catalog.package_pin_problem 同规则） ──
 
+# 哪个选项后面跟的是**包名**、哪个后面跟的是别的东西，按 launcher 分：
+#   npx -p / --package <包> <bin名>    -p 后面是包，再后面那个是要跑的可执行名
+#   uvx --from <包> <bin名>            同理
+#   uvx -p / --python 3.12 <包>        -p 后面是 Python 版本，不是包
+#   uvx --with <额外依赖> <包>          --with 后面是附加依赖，不是主包
+# 混起来处理就会查错对象：npx 的 -p 被当成「跳过下一个」的话，
+# 真包被跳过、bin 名被当成包，于是报「未 pin 版本」——但那个位置本来就不该有版本。
+_PKG_AFTER = {
+    "npx": ("-p", "--package"),
+    "bunx": ("-p", "--package"),
+    "pnpx": ("-p", "--package"),
+    "uvx": ("--from",),
+    "pipx": ("--spec",),
+}
+_SKIP_AFTER = {
+    "uvx": ("-p", "--python", "--with"),
+    "pipx": ("-p", "--python"),
+}
+
+
+def _package_arg(launcher: str, args: list[str]) -> str | None:
+    """从启动参数里挑出真正的包名。"""
+    pkg_after = _PKG_AFTER.get(launcher, ())
+    skip_after = _SKIP_AFTER.get(launcher, ())
+    skip_next = False
+    for i, a in enumerate(args):
+        if skip_next:
+            skip_next = False
+            continue
+        if a in pkg_after:
+            return args[i + 1] if i + 1 < len(args) else None
+        if a in skip_after:
+            skip_next = True
+            continue
+        if a.startswith("-"):
+            continue
+        return a          # 没有显式选项时，第一个位置参数就是包
+    return None
+
+
 def _pin_problem(launcher: str, args: list[str]) -> str | None:
     if launcher not in PIN_LAUNCHERS:
         if launcher == "docker":
@@ -92,19 +132,7 @@ def _pin_problem(launcher: str, args: list[str]) -> str | None:
                 if "/" in a and ":" not in a.split("/")[-1] and "@sha256" not in a and not a.startswith("-"):
                     return f"docker 镜像未带 tag：{a}"
         return None
-    pkg = None
-    skip_next = False
-    for a in args:
-        if skip_next:
-            skip_next = False
-            continue
-        if a in ("--with", "--from", "--python", "-p"):
-            skip_next = True
-            continue
-        if a.startswith("-"):
-            continue
-        pkg = a
-        break
+    pkg = _package_arg(launcher, args)
     if not pkg:
         return "找不到包名"
     if launcher in ("npx", "bunx", "pnpx"):

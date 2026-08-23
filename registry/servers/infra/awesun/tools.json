@@ -1,0 +1,724 @@
+[
+  {
+    "name": "control_command",
+    "description": "Execute command in CMD or SSH remote session. Supports cmd2(Windows) or ssh(Linux/Mac) sessions. Returns exit code, stdout, and stderr.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "args": {
+          "description": "Command arguments",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "command": {
+          "description": "Command to execute",
+          "type": "string"
+        },
+        "session_id": {
+          "description": "Remote control session ID (cmd2 or ssh session)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "command"
+      ]
+    }
+  },
+  {
+    "name": "control_connect",
+    "description": "Initiate remote control session with a device. Supports file, desktop, cmd2, ssh, desktop_view, newcamera, forward. Returns session_id for subsequent operations. Use remote_id for devices in your account (from device_search) or fastcode for other devices (9-10 digit code provided by user). Either remote_id or fastcode is required.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "fastcode": {
+          "description": "Fastcode (9-10 digit code for devices not in your account. Use either remote_id or fastcode)",
+          "type": "string"
+        },
+        "remote_id": {
+          "description": "Device ID (for devices in your account",
+          "type": "integer"
+        },
+        "type": {
+          "description": "Session type: file",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  },
+  {
+    "name": "control_connect_state",
+    "description": "Check remote control session connection status. Use after control_connect when user needs to manually enter verification code.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "description": "Remote control session ID",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id"
+      ]
+    }
+  },
+  {
+    "name": "control_disconnect",
+    "description": "Terminate active remote control session. Must re-connect via control_connect if needed again. Disconnect when not in use to release resources.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "description": "Remote control session ID",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id"
+      ]
+    }
+  },
+  {
+    "name": "control_file_list",
+    "description": "Browse remote device file directory. Supports path browsing, keyword filter, pagination. Must establish type=file session via control_connect first.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "description": "Filename keyword filter",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Result limit",
+          "type": "integer"
+        },
+        "path": {
+          "description": "Parent path to browse (defaults to user directory if not specified)",
+          "type": "string"
+        },
+        "session_id": {
+          "description": "Remote control session ID (file session only)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id"
+      ]
+    }
+  },
+  {
+    "name": "control_file_mkdir",
+    "description": "Create folder in remote file session. Must be in established file session.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Folder name",
+          "type": "string"
+        },
+        "path": {
+          "description": "Parent path (like CD to directory)",
+          "type": "string"
+        },
+        "session_id": {
+          "description": "Remote control session ID (file session only)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "path",
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "control_file_remove",
+    "description": "Delete file or folder in remote file session. Choose recursive deletion for folders.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "description": "File/folder path to delete",
+          "type": "string"
+        },
+        "recursive": {
+          "description": "Recursive deletion for folders",
+          "type": "boolean"
+        },
+        "session_id": {
+          "description": "Remote control session ID (file session only)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "path"
+      ]
+    }
+  },
+  {
+    "name": "control_file_rename",
+    "description": "Rename file or folder in remote file session.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "new_name": {
+          "description": "New name (name only",
+          "type": "string"
+        },
+        "path": {
+          "description": "Original file/folder path",
+          "type": "string"
+        },
+        "session_id": {
+          "description": "Remote control session ID (file session only)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "path",
+        "new_name"
+      ]
+    }
+  },
+  {
+    "name": "control_file_transfer",
+    "description": "Create file transfer task. Supports bidirectional: down (remote to local) or up (local to remote). Must establish type=file session via control_connect first. Specify local_path, remote_path, transfer_type. Async transfer, returns transfer_id, use control_file_transfer_state to check progress.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "local_path": {
+          "description": "Local file/folder path",
+          "type": "string"
+        },
+        "override": {
+          "description": "Override remote file",
+          "type": "boolean"
+        },
+        "remote_path": {
+          "description": "Remote file/folder path",
+          "type": "string"
+        },
+        "session_id": {
+          "description": "Remote control session ID (file session only)",
+          "type": "string"
+        },
+        "transfer_type": {
+          "description": "Transfer type: down (download) / up (upload)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "transfer_type",
+        "local_path",
+        "remote_path",
+        "override"
+      ]
+    }
+  },
+  {
+    "name": "control_file_transfer_cancel",
+    "description": "Cancel file transfer task in remote file session. Cancel specific task by ID, or all tasks in current session if no ID specified.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "description": "Remote control session ID (file session only)",
+          "type": "string"
+        },
+        "transfer_id": {
+          "description": "Transfer task ID to cancel (cancel all tasks in session if not specified)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id"
+      ]
+    }
+  },
+  {
+    "name": "control_file_transfer_state",
+    "description": "Query file transfer progress in remote file session. Returns transfer speed, transferred size, remaining time, percentage.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "description": "Remote control session ID (file session only)",
+          "type": "string"
+        },
+        "transfer_id": {
+          "description": "Transfer task ID to query (returns all tasks in session if not specified)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id"
+      ]
+    }
+  },
+  {
+    "name": "control_portforward",
+    "description": "Configure port forwarding rules in established forward session. Requires active forward session. Enables bidirectional data forwarding between local and remote ports.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "description": "Remote control session ID (forward session only)",
+          "type": "string"
+        },
+        "target_addresses": {
+          "description": "Target host IP/hostname:port (TCP only",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "session_id",
+        "target_addresses"
+      ]
+    }
+  },
+  {
+    "name": "control_screenshot",
+    "description": "Take screenshot of remote session (desktop/desktop_view/newcamera). Returns Base64 encoded image and dimensions. Use to check current screen state. Only supports desktop, desktop_view, newcamera sessions.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "description": "Remote control session ID (desktop/desktop_view/newcamera only)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id"
+      ]
+    }
+  },
+  {
+    "name": "control_sessions",
+    "description": "Query all active remote control sessions including session_id, type, remote_id, and fastcode. Session_id can be used for screenshot, command execution, desktop operations, and disconnect.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "Filter by session type. Options: file",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "desktop_click_mouse",
+    "description": "Simulate mouse click in remote desktop. Supports left/right/middle click and double click. Coordinates must be normalized (0.0-1.0): x = x_pixel / width. Use for button clicks, menu selection.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "button": {
+          "description": "Mouse button type",
+          "type": "string"
+        },
+        "clicks": {
+          "description": "Number of clicks (2 for double click)",
+          "type": "integer"
+        },
+        "coordinates": {
+          "description": "Click coordinates [x",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "session_id": {
+          "description": "Remote control session ID (desktop session only)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "coordinates",
+        "button",
+        "clicks"
+      ]
+    }
+  },
+  {
+    "name": "desktop_drag_mouse",
+    "description": "Simulate mouse drag in remote desktop. Hold specified button (left/right/middle) and move along path. Use for file drag, window resize, text selection. Path coordinates normalized (0.0-1.0).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "button": {
+          "description": "Drag button type",
+          "type": "string"
+        },
+        "hold_keys": {
+          "description": "Keys to hold while dragging: shift",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "paths": {
+          "description": "Drag path",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "session_id": {
+          "description": "Remote control session ID (desktop session only)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "paths",
+        "button"
+      ]
+    }
+  },
+  {
+    "name": "desktop_move_mouse",
+    "description": "Move mouse cursor to specified position in remote desktop. Coordinates normalized (0.0-1.0). Use for positioning before drag, hover to trigger menu, or with screenshot to determine click position. No click triggered.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "coordinates": {
+          "description": "Target coordinates [x",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "session_id": {
+          "description": "Remote control session ID (desktop session only)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "coordinates"
+      ]
+    }
+  },
+  {
+    "name": "desktop_paste_text",
+    "description": "Paste text via clipboard in remote desktop. More efficient than character typing. Use for long text, code, commands. Ensure input field has focus and remote supports clipboard sync.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "description": "Remote control session ID (desktop session only)",
+          "type": "string"
+        },
+        "text": {
+          "description": "Text to paste",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "desktop_press_keys",
+    "description": "Control key press/release in remote desktop. Supports down only, up only, or default press-then-release. Use for long press, complex key combinations.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "keys": {
+          "description": "Key sequence: control",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "press": {
+          "description": "Key action: up/down (default is press then release. If down",
+          "type": "string"
+        },
+        "session_id": {
+          "description": "Remote control session ID (desktop session only)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "keys"
+      ]
+    }
+  },
+  {
+    "name": "desktop_scroll_mouse",
+    "description": "Simulate mouse wheel scroll at specified position. Supports up or down scroll. Use for scrolling web pages, documents, lists. Coordinates normalized (0.0-1.0).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "coordinates": {
+          "description": "Coordinates [x",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "direction": {
+          "description": "Scroll direction",
+          "type": "string"
+        },
+        "scroll_count": {
+          "description": "Number of scroll steps",
+          "type": "integer"
+        },
+        "session_id": {
+          "description": "Remote control session ID (desktop session only)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "coordinates",
+        "direction",
+        "scroll_count"
+      ]
+    }
+  },
+  {
+    "name": "desktop_typing_keys",
+    "description": "Execute keyboard shortcuts in remote desktop: Ctrl+C, Ctrl+V, Ctrl+S, etc. Presses all keys in sequence, releases in reverse order after delay. Use for multi-key combinations.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "delay": {
+          "description": "Delay between press and release (ms)",
+          "type": "integer"
+        },
+        "keys": {
+          "description": "Keys in sequence: control",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "session_id": {
+          "description": "Remote control session ID (desktop session only)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "keys"
+      ]
+    }
+  },
+  {
+    "name": "desktop_typing_text",
+    "description": "Type text character by character in remote desktop. Ensure input field has focus before typing. Set character delay (ms) to control typing speed.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "delay": {
+          "description": "Character typing delay (ms)",
+          "type": "integer"
+        },
+        "session_id": {
+          "description": "Remote control session ID (desktop session only)",
+          "type": "string"
+        },
+        "text": {
+          "description": "Text to type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "desktop_waiting",
+    "description": "Pause/wait in operation sequence. Use after critical operations to wait for system response or page load. Specify duration in ms. Recommended for network delay or UI rendering.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "description": "Wait duration in ms (recommend <=500ms for UI rendering",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "duration"
+      ]
+    }
+  },
+  {
+    "name": "device_add",
+    "description": "Add a new device to the device list. Set name and description for easy management. After adding, you can query the device via device_search.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "desc": {
+          "description": "Device description",
+          "type": "string"
+        },
+        "name": {
+          "description": "Device name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "device_info",
+    "description": "Get full details of a device including hardware config (CPU, memory, disk, GPU), network info (IP, MAC), system version, online status, supported plugins. Returns fastcode and plugins for connection decisions. Must get remote_id via device_search first.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "remote_id": {
+          "description": "Device ID",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "remote_id"
+      ]
+    }
+  },
+  {
+    "name": "device_remove",
+    "description": "Remove device from the device list. Only removes the record, not the client software. Cannot recover after deletion. Confirm device is no longer needed before removal.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "remote_id": {
+          "description": "Device ID",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "remote_id"
+      ]
+    }
+  },
+  {
+    "name": "device_search",
+    "description": "Fuzzy search devices in your account by keyword. Returns device basic info including remote_id, name, online status. Only searches devices under your account, not fastcode devices. If user provides a fastcode (typically 9-10 digits), use control_connect's fastcode parameter directly instead of this tool.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "description": "Search keyword",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Result limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "limit"
+      ]
+    }
+  },
+  {
+    "name": "device_shutdown",
+    "description": "Send shutdown command to online remote device. Device must be online and support shutdown. Device will shut down and go offline in 1-2 minutes.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "remote_id": {
+          "description": "Device ID",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "remote_id"
+      ]
+    }
+  },
+  {
+    "name": "device_update",
+    "description": "Update device name and description for easier identification and management.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "desc": {
+          "description": "Device description",
+          "type": "string"
+        },
+        "name": {
+          "description": "Device name",
+          "type": "string"
+        },
+        "remote_id": {
+          "description": "Device ID",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "remote_id"
+      ]
+    }
+  },
+  {
+    "name": "device_wakeup",
+    "description": "Send wake-up command to device with Wake-on-LAN hardware. Device needs boot hardware or motherboard supporting WOL. Device will boot and go online in 1-2 minutes.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "remote_id": {
+          "description": "Device ID",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "remote_id"
+      ]
+    }
+  }
+]

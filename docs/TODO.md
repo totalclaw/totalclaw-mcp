@@ -311,6 +311,19 @@
 - [x] **tyc-mcp** 天眼查 — 已实现 `tianyancha`
 - [x] **wecom** 企业微信 — 已实现 `wecom`
 
+> **一处扫描漏项（用户指出后补的）**：我此前只 glob 了 `connectors/*/mcp.json`，
+> 但 126 个连接器里有 26 个用的是 `cli.json`、2 个只有 `token-schema.json`。
+> 那 28 个我当时按元数据记成了「上游是 CLI 封装而非 MCP，不在本仓范围」。
+>
+> **这个结论下早了。** 向日葵就是反例：WorkBuddy 接的是 `@aweray/awesun-cli`，
+> 但贝锐自己发了 MCP server（客户端自带的 `awesun-mcp-server`）。
+> 「某个平台用 CLI 接的」推不出「这家没有 MCP」。
+>
+> 已把 21 家 CLI 型连接器逐家在 npm 上查了一遍官方 MCP 包，另外补回两个：
+> `awesun`（30 个工具，实探）与 `cnb`（官方 `@cnbcool/mcp-server`）。
+> 其余 18 家没搜到官方 MCP 包；`lovrabet` 有包但没 readme 没仓库，
+> 不知道参数与变量就写不出正确清单，按老规矩不猜，只记为线索。
+
 #### B · 厂商自有 MCP 端点（66 已收录 / 4 阻塞）
 
 **这一节此前的判断是错的，已纠正。** 原先写的是「73 项待厂商开发者账号」，
@@ -452,7 +465,7 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 
 逐个查过官方文档，拿不到可验证的端点定义。**不猜端点、不写假 pack。**
 
-- [x] **cnb-api** CNB — 已核查受阻：OpenAPI 端点返回 401，规范需登录
+- [x] **cnb-api** CNB —— 走 REST 那条路确实 401 受阻，但厂商发了官方 MCP `@cnbcool/mcp-server`（仓库在 cnb.cool，MIT）。已收录为 `dev/cnb`，需 API_TOKEN
 - [x] **h3yun-connector** 氚云 — 已核查受阻：开放平台文档页报「系统加载错误」，需登录
 - [x] **patsnap-search** 智慧芽专利&文献融合检索 — 已核查受阻：开放平台文档页 404，需登录开发者门户
 - [x] **qingflow** 轻流 — 已核查受阻：Open API 需先在应用内安装扩展才能看文档与取 token
@@ -467,7 +480,7 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
 若将来需要，可按其底层 REST API 单独实现，不必对齐上游形态。
 
 - [x] **77ircloud** 铱云AI供应链 — 上游是 CLI 封装而非 MCP，不在本仓范围
-- [x] **awesun** 向日葵远程控制 — 上游是 CLI 封装而非 MCP，不在本仓范围
+- [x] **awesun** 向日葵远程控制 —— 上游走 CLI，但**厂商自己发了 MCP**（客户端自带 `awesun-mcp-server`，官方文档 service.oray.com/question/50091）。已收录为 `infra/awesun`，本机实探到 **30 个工具**（官方文档写 22，已过期），注入扫描 allow
 - [x] **beisen-cli** 北森AI · HR专家 — 上游是 CLI 封装而非 MCP，不在本仓范围
 - [x] **designkit-buddy-cli** 美图设计室 AI设计 CLI — 上游是 CLI 封装而非 MCP，不在本仓范围
 - [x] **emr-query** 弹性MapReduce — 上游是 CLI 封装而非 MCP，不在本仓范围

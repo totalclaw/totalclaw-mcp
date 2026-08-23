@@ -1,0 +1,83 @@
+# 人工维护。来源是贝锐官方文档 https://service.oray.com/question/50091.html
+# 与官方仓库 https://github.com/OrayDev/awesun-mcp（工具清单见 docs/mcp_tools.md）。
+#
+# 这个 server 由向日葵客户端自带，跑在本机：客户端在侧边栏「向日葵 MCP」里
+# 点「启用 MCP Server」之后，会给出一段含 URL 与 Token 的配置，两者都要填进来。
+# 端口不是固定的（文档里 Windows 示例 8908、macOS 示例 8980，实际以客户端给的为准），
+# 所以 AWESUN_API_URL 只能由用户填，不能写死。
+# 官方只提供 macOS 与 Windows 的可执行文件，没有 Linux 版
+# 两个 runtime 用绝对路径，靠 agent 的可用性检查自己选：
+# _runtime_availability 走 shutil.which(command)，绝对路径只在文件存在且可执行时才返回，
+# 所以在 macOS 上只有 darwin 这条可用，Windows 上只有 win32 这条可用，不需要额外的平台判断。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: awesun
+display_name: 向日葵远程控制
+version: 0.1.0
+description: Manage and remotely control devices through the local AweSun client — device inventory, wake/shutdown,
+  remote shell, screenshots, port forwarding and desktop input.
+description_zh: 通过本机向日葵客户端管理与远控设备：查设备、开关机、建立远控会话、执行远程命令、截屏、端口转发，以及点击/输入/滚动等桌面操作。
+author: vendor
+homepage: https://github.com/OrayDev/awesun-mcp
+category: infra
+tags:
+- infra
+- vendor
+kind: mcp_server
+platforms:
+- darwin
+- win32
+runtimes:
+- id: darwin
+  type: stdio
+  launcher: binary
+  command: /Applications/AweSun.app/Contents/Helpers/awesun-mcp-server
+  env:
+    AWESUN_API_URL: ${AWESUN_API_URL}
+    AWESUN_API_TOKEN: ${AWESUN_API_TOKEN}
+- id: win32
+  type: stdio
+  launcher: binary
+  command: C:\Program Files\Oray\AweSun\flutter\awesun-mcp-server.exe
+  env:
+    AWESUN_API_URL: ${AWESUN_API_URL}
+    AWESUN_API_TOKEN: ${AWESUN_API_TOKEN}
+requires_env:
+- name: AWESUN_API_URL
+  env_key: AWESUN_API_URL
+  description: 客户端本地 API 地址，从「向日葵 MCP」面板给出的配置里复制（形如 http://127.0.0.1:8908，端口按客户端实际给的填）
+  prompt: 请输入向日葵客户端的本地 API 地址
+  secret: false
+  required: true
+- name: AWESUN_API_TOKEN
+  env_key: AWESUN_API_TOKEN
+  description: 客户端生成的访问令牌，与上面的地址在同一段配置里
+  prompt: 请输入向日葵客户端生成的 Token
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned
+examples:
+- 列出所有在线设备，按设备名、在线状态和最后上线时间整理成表格
+- 把办公电脑上的 D:\test.txt 下载到本地桌面
+- 建立办公电脑的远程连接，运行 ipconfig 和 tasklist 检查网络和进程
+notes: "前提：向日葵个人版 V16.2.3 及以上，客户端必须在本机运行并已在侧边栏\n「向日葵 MCP」里点过「启用 MCP Server」—— 这个 server 是客户端自带的本地进程，\n\
+  客户端没开就起不来。\n\n官方文档也提到 Streamable HTTP 一种跨网络的接法，但页面上没给出可用的端点地址，\n所以这里只落了 stdio。哪天官方公布了地址，加一条 http runtime\
+  \ 即可。\n\n**这是目录里权限最高的一个 server。** 官方 docs/mcp_tools.md 写的是 22 个工具，\n实探（2026-08-23，客户端 macOS 版）是 30 个\
+  \ —— 文档没跟上，以 tools.json 为准。\n其中 15 个能改动远端机器：\n  - control_command                    在远端执行任意命令\n  -\
+  \ control_file_remove / file_rename  删改远端文件\n  - device_shutdown / device_remove    关机、从设备列表移除\n  -\
+  \ control_portforward                建端口转发\n  - desktop_*（9 个）                   直接操控远端鼠标键盘：点击、拖拽、按键、输入、粘贴\n\
+  \n也就是说，模型拿到它就等于拿到了那个账号下所有设备的键鼠和一个 shell。\n装之前先想清楚这个账号绑了哪些机器。只要只读的话，用 defaults.tools.include\n收窄到 device_search\
+  \ / device_info / control_sessions / control_screenshot /\ncontrol_file_list。这里不预设排除名单 —— 厂商暴露什么是厂商的事，用哪些是用户的决定。"
+tools:
+  probed_at: '2026-08-23T01:29:01Z'
+  probed_runtime: darwin
+  count: 30
+  file: tools.json

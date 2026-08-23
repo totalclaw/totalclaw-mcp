@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T01:04:58Z",
+  "generated_at": "2026-08-23T01:38:49Z",
   "servers": [
     {
       "name": "chuhaijiang",
@@ -4746,6 +4746,75 @@
       "bundle_sha256": "a5363a9d9a745a5873c7aec475a645c8205f3402bcd15f99d391c52c724184e8"
     },
     {
+      "name": "cnb",
+      "id": "totalclaw-mcp/dev/cnb",
+      "display_name": "CNB 云原生构建",
+      "description": "Access the CNB platform — repositories, issues, pull requests, pipelines, cloud-native workspaces and knowledge bases.",
+      "description_zh": "访问 CNB 平台：代码仓库、Issue、合并请求、流水线、云原生开发环境与知识库。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://cnb.cool/cnb/tools/cnb-mcp-server",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "dev",
+      "tags": [
+        "dev",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "API_TOKEN",
+          "description": "CNB 平台的访问令牌（个人设置里生成）",
+          "prompt": "请输入 CNB 访问令牌",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [
+        "API_BASE_URL"
+      ],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/dev/cnb",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/cnb",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/dev/cnb"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "a93137f779bcbd554e38a1a256cdbc262606a4df4f63c58d6f99c8a7a26f6b2d",
+          "size": 2319
+        }
+      ],
+      "bundle_sha256": "6a7344cb309843fcf56d04dd00bba987939d41d0b2abba289d25fe6c8daceed9"
+    },
+    {
       "name": "gitee",
       "id": "totalclaw-mcp/dev/gitee",
       "display_name": "Gitee 码云",
@@ -5686,6 +5755,120 @@
         }
       ],
       "bundle_sha256": "1063d2578f0c4a49218fb265faff8085ca9a42c732101e59e6980add5d8f5c04"
+    },
+    {
+      "name": "awesun",
+      "id": "totalclaw-mcp/infra/awesun",
+      "display_name": "向日葵远程控制",
+      "description": "Manage and remotely control devices through the local AweSun client — device inventory, wake/shutdown, remote shell, screenshots, port forwarding and desktop input.",
+      "description_zh": "通过本机向日葵客户端管理与远控设备：查设备、开关机、建立远控会话、执行远程命令、截屏、端口转发，以及点击/输入/滚动等桌面操作。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://github.com/OrayDev/awesun-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "infra",
+      "tags": [
+        "infra",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary"
+      ],
+      "runtimes": [
+        {
+          "id": "darwin",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "win32",
+          "type": "stdio",
+          "launcher": "binary"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "AWESUN_API_URL",
+          "description": "客户端本地 API 地址，从「向日葵 MCP」面板给出的配置里复制（形如 http://127.0.0.1:8908，端口按客户端实际给的填）",
+          "prompt": "请输入向日葵客户端的本地 API 地址",
+          "secret": false,
+          "required": true
+        },
+        {
+          "name": "AWESUN_API_TOKEN",
+          "description": "客户端生成的访问令牌，与上面的地址在同一段配置里",
+          "prompt": "请输入向日葵客户端生成的 Token",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 30,
+      "tools": [
+        "control_command",
+        "control_connect",
+        "control_connect_state",
+        "control_disconnect",
+        "control_file_list",
+        "control_file_mkdir",
+        "control_file_remove",
+        "control_file_rename",
+        "control_file_transfer",
+        "control_file_transfer_cancel",
+        "control_file_transfer_state",
+        "control_portforward",
+        "control_screenshot",
+        "control_sessions",
+        "desktop_click_mouse",
+        "desktop_drag_mouse",
+        "desktop_move_mouse",
+        "desktop_paste_text",
+        "desktop_press_keys",
+        "desktop_scroll_mouse",
+        "desktop_typing_keys",
+        "desktop_typing_text",
+        "desktop_waiting",
+        "device_add",
+        "device_info",
+        "device_remove",
+        "device_search",
+        "device_shutdown",
+        "device_update",
+        "device_wakeup"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/infra/awesun",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/awesun",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/infra/awesun"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "e436d13a23e05f30930b44eb8d41d2f2e7a27e4edc7a3e2e514c9b36c71497d7",
+          "size": 4614
+        },
+        {
+          "path": "tools.json",
+          "sha256": "2c2d8365143c0d25f8666755c434a183c530c347f6906171d0510760991b94eb",
+          "size": 21167
+        }
+      ],
+      "bundle_sha256": "7003a73b7aa1d1fd68fab4fcb630ee446fe2fee698a273e22f82a34fb5bff7d8"
     },
     {
       "name": "bugly_token",
