@@ -340,3 +340,30 @@ def test_monogram_matches_qiye_app_implementation() -> None:
     assert bg("向日葵", "awesun", "infra") == "#596877"
     assert bg("Playwright", "playwright", "web") == "#4B9B66"
     assert bg("CNB 云原生构建", "cnb", "dev") == "#555ABA"
+
+
+def test_icon_file_branch_serves_real_icons() -> None:
+    """有真图标的条目要走 file 分支，不能还发字母块。
+
+    目录里已经抓到 26 个厂商自有图标（来源逐条记在 registry/ICONS.md）；
+    这条挂了说明索引的 icon 字段或 safe_join 把真图标漏了。
+    """
+    with_icon = [e for e in catalog.all_servers() if e.get("icon")]
+    assert with_icon, "索引里一个带图标的条目都没有，先跑 scripts/fetch_icons.py"
+    for e in with_icon:
+        r = client.get(f"/api/mcp/servers/{e['name']}/icon")
+        assert r.status_code == 200, e["name"]
+        assert r.headers["X-Icon-Source"] == "file", e["name"]
+        assert r.headers["content-type"] in ("image/svg+xml", "image/png"), e["name"]
+
+
+def test_icon_provenance_covers_every_icon() -> None:
+    """每个图标都要有来源记录 —— 这是第三方商标，得能查到从哪儿来。"""
+    import json as _json
+    repo = Path(__file__).resolve().parents[2]
+    store = _json.loads((repo / "registry" / "icons.json").read_text(encoding="utf-8"))
+    on_disk = {p.parent.name for p in (repo / "registry" / "servers").glob("*/*/icon.*")
+               if p.suffix in (".svg", ".png")}
+    assert on_disk == set(store), f"记录与磁盘不符：{on_disk ^ set(store)}"
+    for name, rec in store.items():
+        assert rec.get("source"), name

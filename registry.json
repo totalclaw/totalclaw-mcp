@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T05:15:23Z",
+  "generated_at": "2026-08-23T07:45:58Z",
   "servers": [
     {
       "name": "chuhaijiang",
@@ -218,7 +218,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.svg",
       "tags": [
         "biz",
         "vendor"
@@ -257,12 +257,17 @@
       },
       "files": [
         {
+          "path": "icon.svg",
+          "sha256": "e34ec0a02af3b4586ea65152ecef7f273b598ba8620da930953ffaef6eb0d59a",
+          "size": 2310
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "4a21f55f6cbea05d75f5ea42ccb118f0c0abfc363b2a789b55b1401eee216e6c",
           "size": 1565
         }
       ],
-      "bundle_sha256": "dd704050c5cd61698a70c525d5e6b95fc5539092e5ebaf48a0002e795f4153f3"
+      "bundle_sha256": "738404b4b6e80c164f58016c060beefd6821fe76569304ec52cff359c682fdef"
     },
     {
       "name": "fanruan_growth_advisor",
@@ -277,7 +282,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.svg",
       "tags": [
         "biz",
         "vendor"
@@ -326,12 +331,17 @@
       },
       "files": [
         {
+          "path": "icon.svg",
+          "sha256": "4900a2da2a588061f1e1b5affefd296be64a4301443599f4ec8b4e8befba587f",
+          "size": 515
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "9d8192c12344b7bcad3c3fbc04ae0ba6daa7b78ea5f7db86c8b7de8609a2004d",
           "size": 1747
         }
       ],
-      "bundle_sha256": "3b478621f7fc4d9d81c27366fcbd4784b5b4e892bb3d21c2ef60177481c28d64"
+      "bundle_sha256": "3856bd4d00e1e4b8df3309c646c0e43275d885a0b3965f177fbf6f8c701c6a6e"
     },
     {
       "name": "fazhi_law",
@@ -427,7 +437,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "biz",
         "vendor"
@@ -478,6 +488,11 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "03dca4a004f386dfef8b26d01c6a47e475bf03b15ae1cfc75b92af094ecfd1f5",
+          "size": 32967
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "5810eeac208b13ec3ada44bb645c1126ac7503ccf8bafaffbf56d49b1ba342e1",
           "size": 1645
@@ -488,7 +503,7 @@
           "size": 58779
         }
       ],
-      "bundle_sha256": "6ce6e92885f17569f5f69e4eb47a35846a9121ff82e01ac0b39f3ce62334bd1d"
+      "bundle_sha256": "e841d6eb570eb5ddd1c5a76f6efae0295c2a34b6016adcb7bdb33c6fb518a128"
     },
     {
       "name": "fyopen_lawsearch",
@@ -562,7 +577,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "biz",
         "vendor"
@@ -601,12 +616,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "7caef44939fb203bf234b25a4a9267d529e359dbf638848bcf37e06776c0704d",
+          "size": 1799
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "49716132f8665252f624eea321622dbb218d01ab2a935aa35a3cb7cea2075ede",
           "size": 1313
         }
       ],
-      "bundle_sha256": "809ada594bf5e3fe6ca8e87374fd3308f2019410cf90623ee940c6d393e50cf2"
+      "bundle_sha256": "9232234094d904b41a04b3e0b39e8236245aa8ffb57e827fa46652e79c8aa312"
     },
     {
       "name": "lingxing_mcp",
@@ -1241,7 +1261,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "biz",
         "vendor"
@@ -1280,12 +1300,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "882185fd0048dbb348385fa80bb0d1a8c8bec37a131519a8fe4cd039a18e680b",
+          "size": 2759
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "41a87562aa79e8262b29d2953bc1a0abc57ccca8ec7037de717c462edd4ea793",
           "size": 3490
         }
       ],
-      "bundle_sha256": "ca912de71ffccc6678b5deb78e7527f8fd8cee534fda02216a264f5443f8c8e6"
+      "bundle_sha256": "b1b6303231070ac38a3cd4af9c02d338a1f03abc7e3b0729e8bf2fb5f3cc4fc1"
     },
     {
       "name": "salesnail_instructor",
@@ -1300,7 +1325,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "biz",
         "vendor"
@@ -1339,12 +1364,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "9f60dcca51135d468d4ecd08e229f4fb1c0eb8180beecf57a7e235d10163aafa",
+          "size": 3795
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "d0c04c3ee4cb20701baa25482c9af3c2abc539b3f0d863258b5f8ff41dfdd2de",
           "size": 1828
         }
       ],
-      "bundle_sha256": "576518d195920d4ae6fc52d4cf35028299951a7fd02afddc97d0368be0792d76"
+      "bundle_sha256": "cf478c2d8c77c2d46a58d071e43d9032a6e85455b377cc1825ccf42c28c11384"
     },
     {
       "name": "salestouch",
@@ -1359,7 +1389,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "biz",
         "vendor"
@@ -1398,12 +1428,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "ec9a4ad3aaffb8677bb76ba849eea664f9f085d3c136866e46179eeb6f1ef4f9",
+          "size": 2237
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "659056628daea81e534d6131ce9fda9695f1928ec34be8cece28f7ca0074fb20",
           "size": 1986
         }
       ],
-      "bundle_sha256": "e57e187a71a67d33b37f9136637cd27267653cbdba67f421dbdf443bf91256c5"
+      "bundle_sha256": "11892795d70c9c235b4f7491814e1ca1e49fbb1321dcdc74b4cd8e27e27c23f8"
     },
     {
       "name": "tanyuan_assistant",
@@ -1606,7 +1641,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.svg",
       "tags": [
         "biz",
         "vendor"
@@ -1645,12 +1680,17 @@
       },
       "files": [
         {
+          "path": "icon.svg",
+          "sha256": "3151feff9c3cd83bd6cae000d8d400a04d0af0d81453b2cd83ba46105b41ff74",
+          "size": 2224
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "3a62ca5215b97841b747788542a676b6a12948d1d30b7ba59e7ca280eb591deb",
           "size": 1633
         }
       ],
-      "bundle_sha256": "1094e597ff7743637020d33ccb2927481c760a2fb08a1fd4d5bd29e8088ec207"
+      "bundle_sha256": "7e464d81fa5684f857bbb649676a42d4724619f9b3dc3ba14260ca471bd9b9c9"
     },
     {
       "name": "xingtu_claw_risk",
@@ -1724,7 +1764,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "biz",
         "vendor"
@@ -1773,12 +1813,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "f68f741f39f1dbc0d8b3e8fcc4524a85c80e78499eb0c3e0f704d5ea2aff07f3",
+          "size": 2598
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "cbadcdaf66a104cb9fc5c886114dbacbfc037b38ba85f3c599b2ec1d1523c497",
           "size": 2139
         }
       ],
-      "bundle_sha256": "81749229ecc62cb29069847779356685933a8791197b0c0bf2ca3102800ea2c8"
+      "bundle_sha256": "de6077eb2487faca0853c5b5771674706d8cfc5f54cd49de8695f8884c500ca3"
     },
     {
       "name": "yuandian_mcp",
@@ -1793,7 +1838,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.svg",
       "tags": [
         "biz",
         "vendor"
@@ -1832,12 +1877,17 @@
       },
       "files": [
         {
+          "path": "icon.svg",
+          "sha256": "319713b8f403fe2e61574a99fae7e29ceda8940aea51579dd317bf56dc564e2f",
+          "size": 11119
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "26e7880902e58e4933d350300fb75c8aee10cd2440df375f113eb0c63f8809a4",
           "size": 1476
         }
       ],
-      "bundle_sha256": "6ba9be2360fcd7dfde6131d77534ae543d2473030f358a1a9b0efbab0184cc86"
+      "bundle_sha256": "6f228a70c7a599512428109450c7ac1e8c254b8a059f9246a1be1eb8852f23b5"
     },
     {
       "name": "dingtalk",
@@ -1959,7 +2009,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "comm",
         "vendor"
@@ -1998,12 +2048,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "32dd69275c86c46273250c718fee353656225147fe58d3ec5373afc7cb346edd",
+          "size": 46442
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "d5dd24fba90991f620d19a994ae5f98455c3c47bb2496b7ec9696726e3de5af7",
           "size": 1429
         }
       ],
-      "bundle_sha256": "accd48e39c99399ecab01632896aca90509badb97c4decbfd0b30ebed892eace"
+      "bundle_sha256": "94f5e3304ad2526c3f79265b815923ec07a041c19066708b667263a17771cdcb"
     },
     {
       "name": "feishu",
@@ -2127,7 +2182,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "comm",
         "vendor"
@@ -2166,12 +2221,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "a81f85c7ca5fdf3dda2422c82012d6452f141b68af1e8d787001b708ad17ed43",
+          "size": 2220
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "d19c44953aab8a91c70ad183be6d8fd53722444dad0d29d0a78b1a60d856c80a",
           "size": 1420
         }
       ],
-      "bundle_sha256": "deaa570dadb757f2123d8114341fcc3de3d087922b80d7305194626fb67c0eaa"
+      "bundle_sha256": "e41c6de9c25a7f20b33825d6b02b5f33f8aa25c2bc156d5def0d3a5919d2eedc"
     },
     {
       "name": "imap_mail",
@@ -2360,7 +2420,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
-      "icon": "",
+      "icon": "icon.svg",
       "tags": [
         "comm",
         "vendor"
@@ -2399,12 +2459,17 @@
       },
       "files": [
         {
+          "path": "icon.svg",
+          "sha256": "0322bce1a9f2409cdee4a2921e287e112f277a6e7774b983f8fcd32fbae19285",
+          "size": 6718
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "354e402c213f870dc11fa1e9181bdf80f147ac2a516275cb43a2cb9af1a57e11",
           "size": 1838
         }
       ],
-      "bundle_sha256": "070e1c2f1540b7ee904ebb021f3d59255e0b3c04c607acefd8919651c81a96a6"
+      "bundle_sha256": "688729920cced4f06980dd41113a41bc112b7fadd064000eaac3d7ae477cc360"
     },
     {
       "name": "tencent_qidian_cs",
@@ -2770,7 +2835,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "creative",
         "vendor"
@@ -2809,12 +2874,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "6f210ea5b2fa2bb79f387d6c769ca28ebb6bb3b4d77e74fdce0e56416057864d",
+          "size": 1423
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "2b875a72e4d3ef2d247ab092508ccb5e63298c429a4d65246feea2abd2e674ed",
           "size": 1712
         }
       ],
-      "bundle_sha256": "498c7fe16687a26f4982576c29e5d954c8a6c034213a183f8d418f8ef4622141"
+      "bundle_sha256": "a2ce44069160b9057e6ca3167aa446e609fd9a87f8966eb45535f5bbe08189b7"
     },
     {
       "name": "canva",
@@ -3169,7 +3239,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "creative",
         "vendor"
@@ -3208,12 +3278,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "6cb6f7857be8c718a6d6768da67389e169abdacbe5402933378a19a812da9995",
+          "size": 3766
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "8c8c9ba7d991e4349377c036993138c1951fa0c17988e58f453e098e67bb33be",
           "size": 3966
         }
       ],
-      "bundle_sha256": "f442702bd633d329d678c0b535d80fb3ff7f1eb6f27eeff1903e0e7e622aa399"
+      "bundle_sha256": "dafe96c559ac605687e902ac1ee31700daf2c9d488ee1e27905ddabbef414af6"
     },
     {
       "name": "kling_ai_plugin_ai",
@@ -3228,7 +3303,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "creative",
         "vendor"
@@ -3267,12 +3342,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "6cb6f7857be8c718a6d6768da67389e169abdacbe5402933378a19a812da9995",
+          "size": 3766
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "b09de37fb6e9c263086a409e9b357bfa987298c64cf0b1a47414ea9386bcbe12",
           "size": 3966
         }
       ],
-      "bundle_sha256": "4b1466eb5b0cf0c7a3548d6d72127d4214faf807fed4ff09510115e6fdbc6977"
+      "bundle_sha256": "73b2d2b94e6c1d7c6969f699af47a5fcf72ece0b2df6560aacc2cf46687fe99a"
     },
     {
       "name": "mastergo",
@@ -3364,7 +3444,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "creative",
         "vendor"
@@ -3413,12 +3493,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "5802e1da986cdf1df3b965db9493a9b2488ae64bb592361038ec5535de86d607",
+          "size": 7819
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "ea2ddca4bc5eac37189d7b74faf786508adcd59c796f0fb5812c53f9e3b730ff",
           "size": 2075
         }
       ],
-      "bundle_sha256": "45e623695121189fb8e87df7efbcf60a00a20634f7ad4462f6c8785a45592446"
+      "bundle_sha256": "1e9b3b15e853ea5ef41033453de978b8270a75ce3d913b79042d27a5588e92e3"
     },
     {
       "name": "picset_video_generation",
@@ -3433,7 +3518,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "creative",
         "vendor"
@@ -3482,12 +3567,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "5802e1da986cdf1df3b965db9493a9b2488ae64bb592361038ec5535de86d607",
+          "size": 7819
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "f3feb6e16438ce48688e92445b0b2809c78cac58d0bc8940820b3c2556d72361",
           "size": 2416
         }
       ],
-      "bundle_sha256": "23a607a8a3b10ab4fcde2e0ee722b3d05ea2d26fbc516dde0030159e8ef3ce57"
+      "bundle_sha256": "1514c9155dc6a3e77b5eb977c1e450027a2a5eefdba7bfbfe9207cbc31247b51"
     },
     {
       "name": "unreal_engine",
@@ -4465,7 +4555,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "data",
         "vendor"
@@ -4514,12 +4604,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "8e36f2a5cb1bb51008f26cfd7c685c5bf54a29128dd70d43d25bad7d0197c9bb",
+          "size": 1838
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "949dbf06b9b0ed8d43fafac6bcff8ca2f4b3e5227e136d88a20b22df8c79ea96",
           "size": 1961
         }
       ],
-      "bundle_sha256": "3c48a5fa816359053531580e8e08e5a284061af79c2b459859aeeed7da14e702"
+      "bundle_sha256": "e87c8f08741fc59a6f38f9dbc3ac00704413560abedeb99bfb962c366eb03f4b"
     },
     {
       "name": "tdx_connector",
@@ -4696,7 +4791,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "data",
         "vendor"
@@ -4735,12 +4830,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "5d7846c7f37fd191ffe9e986e22c94a391266655b06a5659b44322754db4085f",
+          "size": 3751
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "d96b142bb80bba5c59eed694545b5ea11896d41d055d4186c554438d477ee294",
           "size": 1384
         }
       ],
-      "bundle_sha256": "2e0138cd119b5e31fceec035266522ae61d8ddebfdd1cf3561621703d88919ca"
+      "bundle_sha256": "5e42b09aa57a3e172c0a804ed0071a4b2a45451f3cada5463ea6b9b3bbe74c4a"
     },
     {
       "name": "westock_mcp",
@@ -5918,7 +6018,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "hr",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "hr",
         "vendor"
@@ -5957,12 +6057,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "6fe8e4615a79daed74de5e9a4cf535cc553a05a22da2dc89c9a4075e00ca36c2",
+          "size": 2515
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "03617cf28daff98dc9fa2df2203ab7d230bcba9edf3a11156e5f919649f34414",
           "size": 1673
         }
       ],
-      "bundle_sha256": "c4a7fb87c54afb5228ecef17636dd0296f51aeb956e2560500e0908d3b7899c4"
+      "bundle_sha256": "8f20a22fe362c5178a82a58c954774384006486b7148941063e9234733b6d815"
     },
     {
       "name": "awesun",
@@ -6093,7 +6198,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "infra",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "infra",
         "vendor"
@@ -6142,12 +6247,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "e6de867664c01080dd2390d2179eb60429d2d1f9d31cdcb0b87e52de3401a6a0",
+          "size": 3319
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "2e1fcbb78452e12a13ad05d814019e34237624c94683e3d466dd3c5cceb3875f",
           "size": 1484
         }
       ],
-      "bundle_sha256": "4fa9b07887aa65d9835b57b8c246007039121934fa8dc44ae704e56810cdcaaa"
+      "bundle_sha256": "5e93cce1feaedcf838856d03350c5c6ece014df1c0402fd437cfbede69888f32"
     },
     {
       "name": "cisp_mcp",
@@ -6162,7 +6272,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "infra",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "infra",
         "vendor"
@@ -6211,12 +6321,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "4f56380e85326a54c976fb2355538921c6b7af5fd75e2b4884023e433df7166b",
+          "size": 2866
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "baa2d41d1db4579ef2f56c974b4cae197b14516ca879dabcb72c1277bbd45348",
           "size": 1693
         }
       ],
-      "bundle_sha256": "9a858de835898713c32ca8d891acd8efbc7ad75a3e9e512ad5b65688f943dd66"
+      "bundle_sha256": "c253cdf886f221aaef83a2260133a3bd245d41b051c0a737807de7f413cd1736"
     },
     {
       "name": "dcs_cloud",
@@ -6803,7 +6918,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "office",
         "vendor"
@@ -6842,12 +6957,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "a897acfad21b07de1accf0b039cc347a44ec06fee3dbf6e2e6ee9c42a7c670f9",
+          "size": 1191
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "469e3d45417d37b23d5e26c35d5a1b0bd4d83d9595493a31bf30a2a053db9539",
           "size": 1692
         }
       ],
-      "bundle_sha256": "9ebe3fdcc7c73283e0c74caefbb5dfe9487a76951f4a3e9d8e6b5750e50c1b0a"
+      "bundle_sha256": "df2c76f2c04b71ad9f99a7915ebbb2d2bcdfe3b58c31895d5ffd3ec4a7ea1391"
     },
     {
       "name": "baidu_netdisk",
@@ -6960,7 +7080,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
-      "icon": "",
+      "icon": "icon.svg",
       "tags": [
         "office",
         "vendor"
@@ -6999,12 +7119,17 @@
       },
       "files": [
         {
+          "path": "icon.svg",
+          "sha256": "79f5f565ad0d31c2b3a0f61f3647756abe43bb6a264c7b229f212734662bc1f8",
+          "size": 3104
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "e6b43a5329a4564e07bff3a37a1d38147404ec23917436962f4b1b00be4de5f2",
           "size": 1049
         }
       ],
-      "bundle_sha256": "da2fc9e8a7a4431553059040a65080ab807fef5eb2311688c17be82c89b5229e"
+      "bundle_sha256": "7a7817377801d3cab0d94e66cefa60f71f87ee4b09567ecb8fdb4f41430848e4"
     },
     {
       "name": "jiandaoyun",
@@ -7806,7 +7931,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "office",
         "vendor"
@@ -7845,12 +7970,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "fca92f40ea1e608df97f2c07c985a6b5b5b38b6d422eabfdef057e87a0199c76",
+          "size": 1698
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "93b7d6769797d6f2669c74f5772bc42586c7eca7e86c766786093006062ea760",
           "size": 1429
         }
       ],
-      "bundle_sha256": "ac9e408ec2a1af97bd7fe8e8e14344579206a8bdad3f23fa4dd97438be1bdadc"
+      "bundle_sha256": "05d019462c23467f4300bc87838120cd30ac3bebc14438f9038a40047b8a0d8a"
     },
     {
       "name": "aitoearn",
