@@ -283,7 +283,7 @@
 - [x] **tyc-mcp** 天眼查 — 已实现 `tianyancha`
 - [x] **wecom** 企业微信 — 已实现 `wecom`
 
-#### B · 厂商自有 MCP 端点（62 已收录 / 8 阻塞）
+#### B · 厂商自有 MCP 端点（66 已收录 / 4 阻塞）
 
 **这一节此前的判断是错的，已纠正。** 原先写的是「73 项待厂商开发者账号」，
 前提是每家都得拿到 REST 契约、自己再实现一遍。实际不需要：**这些厂商自己就跑着
@@ -324,7 +324,10 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
   按平台约定 `/mcp-servers/<名>/mcp` 再试就直通了，已探到 84 个工具。
   只剩 zfs-fssc-ai，它本就是演示主机（同域 `mcp.ztccloud.com.cn` DNS 解析不了）。
   「上游写 sse」不等于「只有 sse」，值得先探一下再判死；探的时候路径也别照抄整段。
-- **平台身份鉴权（2）** —— `auth_mode: server-side`，凭据由那个平台自己注入，我们拿不到。
+- ~~平台身份鉴权~~ —— **这一类我判错了，已清零。** 我只看上游的 `auth_mode: server-side`
+  就下了结论，没实测。实际上那个字段说的是上游平台自己怎么接的，不代表端点只认它：
+  kdocs 匿名就能连（258 个工具），tdx 返回的是标准 MCP OAuth 发现（用 `auth: oauth` 即可）。
+  **教训：凭元数据字段推断可用性，不能代替发一个请求。**
 - **非生产主机（1）** —— `test.nges.qq.com`，测试环境不进目录。已试过同域生产写法
   `nges.qq.com/mcp`，DNS 解析不了。
 
@@ -364,7 +367,7 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [x] **infimind-video** 极睿视频（上游 auth_mode=token） —— 厂商自有端点，收录为 `creative/infimind_video`
 - [x] **ioa** 零信任安全 iOA —— `tencent_ioa` pack，6 工具（端点取自官方 SDK）
 - [x] **jiushuyun** 九数云BI —— 厂商自有端点，收录为 `biz/jiushuyun`
-- [ ] **kdocs** 金山文档（上游 auth_mode=server-side） —— 阻塞：平台身份鉴权（auth_mode=server-side，凭据由上游平台注入，我们拿不到）
+- [x] **kdocs** 金山文档 —— 实测端点匿名可连（去掉上游那两个标识调用方的头后仍返回完整 initialize），已探到 **258 个工具**（注入扫描 allow），收录为 `office/kdocs`；含 43 个删除类操作，清单里加了 notes 提醒
 - [x] **kling-ai-plugin** 可灵 AI —— 厂商自有端点，收录为 `creative/kling_ai_plugin`
 - [x] **kling-ai-plugin-ai** 可灵 AI —— 厂商自有端点，收录为 `creative/kling_ai_plugin_ai`
 - [x] **kuaicha-search** 同花顺快查企业数据（上游 auth_mode=token） —— 上游 URL 带 `?source=<他方>`，去掉后通用入口实测直通，已探到 2 个工具（注入扫描 allow），收录为 `data/kuaicha_search`
@@ -389,7 +392,7 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [x] **shanglv-mcp-gateway** 用友智能服务（AI BaaS） —— 厂商自有端点，收录为 `comm/shanglv_mcp_gateway`
 - [x] **sq-company-dynamic** 上奇产业通-企业动态追踪（上游 auth_mode=token） —— 厂商自有端点，收录为 `data/sq_company_dynamic`
 - [x] **tanyuan-assistant** TDC 文化智能体 —— 厂商自有端点，收录为 `biz/tanyuan_assistant`
-- [ ] **tdx-connector** 通达信（上游 auth_mode=server-side） —— 阻塞：平台身份鉴权（auth_mode=server-side，凭据由上游平台注入，我们拿不到）
+- [x] **tdx-connector** 通达信 —— 实测 401 返回的是标准 MCP OAuth 受保护资源发现，按 `auth: oauth` 收录为 `data/tdx_connector`；装后 `totalclaw mcp login tdx_connector`
 - [x] **teacher-assistant** 企鹅教师助手 —— 厂商自有端点，收录为 `hr/teacher_assistant`
 - [x] **tec-do** Tec-Do 2.0 广告与增长情报 —— 厂商自有端点，收录为 `biz/tec_do`
 - [ ] **tencent-health-nges** 腾讯健康NGES —— 阻塞：非生产主机（test.nges.qq.com）

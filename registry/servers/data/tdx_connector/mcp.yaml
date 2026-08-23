@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: tdx-connector。人工修改后请同步递增 version。
+# 实测 401，但返回的是标准 MCP OAuth 受保护资源发现（resource_metadata
+# 指向 .well-known），故用 auth: oauth；装后跑 totalclaw mcp login <名>。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tdx_connector
+display_name: 通达信
+version: 0.1.0
+description: Query global stock data via Tongdaxin MCP. Supports screening, reports, and macro analysis.
+description_zh: 通过通达信 MCP 查询全球股票行情数据、条件选股、研究报告、公告资讯和宏观信息。支持个股基本面分析、同行业对比和智能选股筛查。
+author: vendor
+category: data
+tags:
+- data
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://txmcp.tdx.com.cn:3001/txmcp
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://txmcp.tdx.com.cn
+examples:
+- 帮我查询贵州茅台(600519)最近的研究报告
+- 筛选市盈率低于20、ROE高于15%的全球股票
+- 查询近期宏观经济政策动向
+- 分析半导体行业龙头股的基本面数据

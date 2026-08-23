@@ -1,0 +1,51 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: kdocs。人工修改后请同步递增 version。
+# 上游配置带 X-Request-Source/X-Skill-Version 两个标识调用方的头，已丢弃；
+# 去掉后实测仍返回完整 initialize 响应（protocolVersion 2025-03-26）。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: kdocs
+display_name: 金山文档
+version: 0.1.0
+description: Create, search, and manage Kingsoft Docs (WPS Cloud Docs). Supports creating multiple document
+  types (Word/Excel/PDF/PPT/Smart Sheet/Multi-dimTable/Smart Doc), reading and searching content, editing,
+  sharing, organizing with tags and favorites, knowledge base management, web clipping, and AI PPT generation.
+description_zh: 创建、搜索和管理金山文档（WPS 云文档）。支持新建多种文档类型（Word/Excel/PDF/PPT/智能表格/多维表格/智能文档）、读取与搜索文档内容、编辑更新、分享、移动重命名整理、标签收藏管理、知识库空间操作、网页剪藏，以及接龙转表格、AI
+  PPT 生成等。
+author: vendor
+category: office
+tags:
+- office
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp-center.wps.cn/skill_hub/mcp
+  headers:
+    X-Skill-Version: 1.4.12
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 600
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcp-center.wps.cn
+examples:
+- 搜索我金山文档里所有包含「周报」的文档，列出标题和最近修改时间
+- 帮我在金山文档根目录新建一个智能文档，标题是「Q3 项目总结」，把以下内容写进去
+- 读取「项目计划.xlsx」表格的内容，按优先级整理后输出
+- 把这个网页保存到我的金山文档：https://example.com/article
+tools:
+  probed_at: '2026-08-23T00:51:43Z'
+  probed_runtime: remote
+  count: 258
+  file: tools.json
+notes: "这个服务器暴露 258 个工具，是目录里最大的一个，其中 43 个是删除类操作\n（dbsheet.delete_records / delete_sheet / delete_fields、batch_delete_*\
+  \ 等）。\n注入扫描干净，但两点值得装之前想清楚：\n  1. 258 个工具定义会占掉相当一部分上下文；\n  2. 删除类操作直接作用于用户的在线文档与多维表，误调用不可撤销。\n按需收窄用 defaults.tools.include（只放要用的），或用\
+  \ exclude 挡掉删除类。\n这里不替用户预设排除名单——厂商暴露什么是厂商的事，用哪些是用户的决定。"
