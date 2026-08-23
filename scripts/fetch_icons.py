@@ -318,7 +318,11 @@ def fetch_one(name: str, category: str, d: Path, manifest: dict,
                 tried.append(base)
             apex = _apex_fallback(host)
             if apex:
+                # 裸顶级域与 www 都要试：不少站只在 www 上服务，只试裸的会误判成
+                # 「站点不可达」。实测 mozlen / tcredit / gangtise / morningstar /
+                # dknowc / microdata-inc / kuaicha365 七个都是裸的不通、www 通。
                 tried.append(f"https://{apex}")
+                tried.append(f"https://www.{apex}")
             for base in tried:
                 try:
                     page = c.get(base)

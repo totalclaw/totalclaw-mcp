@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T08:19:13Z",
+  "generated_at": "2026-08-23T08:25:51Z",
   "servers": [
     {
       "name": "chuhaijiang",
@@ -361,7 +361,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "biz",
         "vendor"
@@ -417,6 +417,11 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "d59ee61bde8adb90d8c3722e0bc6f978239b453bf4b0013c51797b2a6c145010",
+          "size": 2447
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "fd625ac014f7e7bd5c2a55de800e785a47bbd1172e177dd891018d05a5806ece",
           "size": 2273
@@ -427,7 +432,7 @@
           "size": 5341
         }
       ],
-      "bundle_sha256": "decce0299e89980a0433f21606ec3b0666be1dc1bf12232babad3685ac3dbbca"
+      "bundle_sha256": "68074695f5330af3fc7cb76adcc345e3de072799900410dcaac9f1072f565904"
     },
     {
       "name": "fbs_connector",
@@ -1137,7 +1142,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.svg",
       "tags": [
         "biz",
         "vendor"
@@ -1261,6 +1266,11 @@
       },
       "files": [
         {
+          "path": "icon.svg",
+          "sha256": "fc9938ad0d96180021f65d2e30e83b3a64595b6f0e6e1c74fd7a24302a0cecc2",
+          "size": 13886
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "850c4a5136fd039c00d05c69d6d43bc66616a005d5ed29af82fa8e1e669ffd8f",
           "size": 1535
@@ -1271,7 +1281,7 @@
           "size": 164509
         }
       ],
-      "bundle_sha256": "daea5efe02ccac4b0ed183cc58ed56f45585d099e69544e9c64929b36f4e0090"
+      "bundle_sha256": "8392f1eab8ce246f8dfe7fd95b9623fa97d3718926f340b36cae16815b88fa7b"
     },
     {
       "name": "qcc_legal",
@@ -3830,7 +3840,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "data",
         "vendor"
@@ -3888,12 +3898,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "cd9803bc74eff125440d30a212811ab55468962973925d22447c2730a2a09526",
+          "size": 7218
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "877836edb999856d2dd35c12dbe7391359ed58c63461719a8fb2d7962229d9ef",
           "size": 2426
         }
       ],
-      "bundle_sha256": "58bba4fe7e0ce09c18cbddf899d90f2e19d0a01c0b62d42c92429a281a9c5674"
+      "bundle_sha256": "7f7f818c64b90aeeb12a02f4a26ea9e64dc009f636f3dc428cae6a5e05fea0df"
     },
     {
       "name": "gildata",
@@ -3977,7 +3992,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "data",
         "vendor"
@@ -4029,6 +4044,11 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "d59ee61bde8adb90d8c3722e0bc6f978239b453bf4b0013c51797b2a6c145010",
+          "size": 2447
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "66bd1ad12110958a1f7c3a7b3e1e1fe820e63a59b6c53546614cf2f2b28f9746",
           "size": 1967
@@ -4039,7 +4059,7 @@
           "size": 2943
         }
       ],
-      "bundle_sha256": "d9ccb15869bb9b6bbd9639b3b8d4eafc4db57f2797701e727e16f294ae4638c7"
+      "bundle_sha256": "9cb5eec23629400a70f8dc66d7e97077ec9de1a8570647e20088f4b2f737d897"
     },
     {
       "name": "mcp_postgres",
@@ -4221,7 +4241,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "data",
         "vendor"
@@ -4260,12 +4280,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "6491afa49a8c95235eeff208a4371594b9e6660d0fa3dddf5eb88a045e49cb31",
+          "size": 549
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "01b64433f4f13c9ac3d555e294ef511e8be1e6f13bcd24f5051b55df53e05b27",
           "size": 1439
         }
       ],
-      "bundle_sha256": "7d245c38fda49aeee79fcb963be0c06438906fd2268260dd1335e8e22dde1e17"
+      "bundle_sha256": "54cd33ace49e3dca85e6b6f65af0c1867b77d8e8d9f77dc973f04d846917b907"
     },
     {
       "name": "mx_ds_mcp",

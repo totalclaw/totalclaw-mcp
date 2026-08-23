@@ -315,18 +315,22 @@
     `shanglv_mcp_gateway` 的网关挂着 Keycloak 登录页，抓到的是
     `.../keycloak.v2/favicon.svg`，挂上去等于给商旅贴了 Keycloak 的标。
     已按关键词过滤（keycloak/auth0/okta/swagger/wordpress…）并复核了全部 43 个文件。
-- [ ] **C5.1（剩余，16 个）** —— **上一行我写过头了，这里更正**：我原先写的是
-  「连顶级域上也没有可用图标」，但逐个复核后发现**多数根本没连上**：
-  `kuaicha365.com` / `cjbdi.com` / `mozlen.com` / `microdata-inc.com` /
-  `tcredit.com` / `lexiang-app.com` / `epicgames.com` / `gangtise.com` /
-  `morningstar.cn` / `dknowc.cn` / `tec-do.cn` 全是 ConnectError / ProxyError /
-  ConnectTimeout —— 是**我这台机器的网络够不着**，不是站点没有图标。
-  （同一个坑我之前踩过一次：把代理不通误判成「DNS 解析不了」。）
-  - 真正确认「站上没有」的只有 3 个：`gildata.com`（200，无 manifest/og:image/
-    TileImage）、`yql.net`（403）、以及 3 个挂在伞状域名下、按规则不回退的
-    （`api.tanyuan.qq.com` / `sse.qidian.qq.com` / `stockbuddy.qq.com`）。
-  - **换一个能连通这些站的网络重跑 `scripts/fetch_icons.py` 很可能还能补上一批。**
-    在此期间它们回落字母块，界面不会开天窗。
+- [x] **C5.1（www 那一跳，2026-08-23）** 图标 **43 → 48**。
+  上一条说「多数站点连不上」也只对了一半：裸顶级域确实不通，但**加上 `www.` 就通** ——
+  `mozlen` / `tcredit` / `gangtise` / `morningstar` / `dknowc` / `microdata-inc` /
+  `kuaicha365` 七个主机都是这样。我的顶级域回退漏了这一跳，于是把「只在 www 上服务」
+  误判成了「站点不可达」。补上后又抓到 5 个。
+  （先用 curl 复核过：这些主机 curl 也连不上裸顶级域，所以不是 httpx 的问题；
+  但 `www.` 前缀 curl 立刻 200 —— 是我少试了一种写法，不是网络的锅。）
+  48 个文件逐个核过魔数，也确认没有混进第三方基础设施的标。
+- [ ] **C5.1（剩余，12 个）** 剩下的确实抓不到：
+  - 站点本身与 www 都不通（`cjbdi.com` / `lexiang-app.com` / `tec-do.cn` /
+    `epicgames.com` / `yql.net`）—— **这几个才是真的从本机够不着**，
+    换一个能连通的网络重跑 `scripts/fetch_icons.py` 可能还能补上；
+  - 挂在伞状域名下、按规则不回退的（`api.tanyuan.qq.com` / `sse.qidian.qq.com` /
+    `stockbuddy.qq.com`）—— 回退过去只会拿到 QQ 的企鹅；
+  - `gildata.com` 通但站上没有任何图标来源（无 favicon / manifest / og:image）。
+  在此期间它们回落字母块，界面不会开天窗。
 
 ---
 

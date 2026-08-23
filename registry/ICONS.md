@@ -23,9 +23,11 @@
 | `ezjoin_meeting` | `icon.png` | https://www.ezyjoin.cn/favicon.ico | 2026-08-23 |
 | `fadada_richee` | `icon.svg` | https://claw.richee.cn/favicon.svg | 2026-08-23 |
 | `fanruan_growth_advisor` | `icon.svg` | https://www.mossdo.com/favicon.svg | 2026-08-23 |
+| `fazhi_law` | `icon.png` | https://www.kuaicha365.com/favicon.ico | 2026-08-23 |
 | `fbs_connector` | `icon.png` | https://api2.u3w.com/favicon.ico | 2026-08-23 |
 | `finenter` | `icon.png` | https://resource.comein.cn/comein-files/img/default/favicon.ico | 2026-08-23 |
 | `flova` | `icon.png` | https://flova.tv/favicon-96x96.png | 2026-08-23 |
+| `gangtise_mcp` | `icon.png` | https://www.gangtise.com/favicon.png | 2026-08-23 |
 | `gaodun_job` | `icon.png` | https://res.gaodunwangxiao.com/tools/2026-07-21/15381072_029f8366-977b-42.png | 2026-08-23 |
 | `gongyi_open_mcp` | `icon.png` | https://ssl.gongyi.qq.com/favicon.ico | 2026-08-23 |
 | `ima_mcp` | `icon.svg` | https://static.ima.qq.com/ima/assets/chat/favicon.svg | 2026-08-23 |
@@ -33,8 +35,10 @@
 | `kdocs` | `icon.png` | https://www.wps.cn/（页面内联 data: URI） | 2026-08-23 |
 | `kling_ai_plugin` | `icon.png` | https://p4-kling.klingai.com/kcdn/cdn-kcdn112452/kling-homepage-aio/logo-180x180.png | 2026-08-23 |
 | `kling_ai_plugin_ai` | `icon.png` | https://s16-kling.klingai.com/kos/s101/nlav112918/kling-homepage-aio/logo-180x180.png | 2026-08-23 |
+| `kuaicha_search` | `icon.png` | https://www.kuaicha365.com/favicon.ico | 2026-08-23 |
 | `lingxing_mcp` | `icon.png` | https://www.lingxing.com/favicon.ico | 2026-08-23 |
 | `linkfox_product_selection` | `icon.png` | https://www.linkfox.com/favicon.ico | 2026-08-23 |
+| `morningstar` | `icon.png` | https://www.morningstar.cn/ssr-static/favicon.ico | 2026-08-23 |
 | `mx_ds_mcp` | `icon.png` | https://g1.dfcfw.com/g1/special/Apple_ico.png | 2026-08-23 |
 | `neo_crm` | `icon.png` | https://www.xiaoshouyi.com/wp-content/uploads/2021/09/logo_72_72.png | 2026-08-23 |
 | `opendata` | `icon.png` | https://cdn-static.isjike.com/isjike_website/home/isjike_logo.ico.png | 2026-08-23 |
@@ -42,6 +46,7 @@
 | `picset_commerce_images` | `icon.png` | https://picsetai.cn/favicon.png | 2026-08-23 |
 | `picset_video_generation` | `icon.png` | https://picsetai.cn/favicon.png | 2026-08-23 |
 | `pkulaw` | `icon.png` | https://www.pkulaw.com/favicon.ico | 2026-08-23 |
+| `proboost` | `icon.svg` | https://www.microdata-inc.com/logo.svg | 2026-08-23 |
 | `qcc_legal` | `icon.png` | https://agent.qcc.com/favicon-qcc.png | 2026-08-23 |
 | `qixinhuiyan_mcp` | `icon.png` | https://c-cdn.qixin.com/web/favicon.ico | 2026-08-23 |
 | `salesnail_instructor` | `icon.png` | https://sn.long-arena.com/favicon.ico | 2026-08-23 |
