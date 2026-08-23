@@ -1,0 +1,227 @@
+[
+  {
+    "name": "get_user_info",
+    "description": "获取当前用户的信息，包括用户名、姓名、邮箱、角色、积分和 VIP 状态",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "create_video_task",
+    "description": "创建视频生成任务。支持本地文件路径或公网 URL 作为参考图片。支持极睿Sd专业版和极睿Ha专业版的多模态素材输入。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "视频生成提示词，描述你想要创建的内容"
+        },
+        "sourceImage": {
+          "type": "string",
+          "description": "可选的单张参考图片。S2 使用此字段；S6 标准模式可用作单图图生视频。可以是本地文件路径或公网 URL"
+        },
+        "sourceImages": {
+          "type": "array",
+          "description": "S5/S6 多张参考图片。本地文件路径或公网 URL 数组。S5 首尾帧模式下第1张为首帧、第2张为尾帧；S6 reference/edit 模式作为参考图",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sourceVideos": {
+          "type": "array",
+          "description": "S5 全能参考或 S6 视频编辑模式的视频素材。本地文件路径或公网 URL 数组",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sourceAudios": {
+          "type": "array",
+          "description": "S5 全能参考模式的音频素材。本地文件路径或公网 URL 数组",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sourceVideoDurationSeconds": {
+          "type": "array",
+          "description": "可选。dryRun 使用的视频素材时长秒数数组，顺序与 sourceVideos 一致；用于获得预估积分",
+          "items": {
+            "type": "number"
+          }
+        },
+        "sourceAudioDurationSeconds": {
+          "type": "array",
+          "description": "可选。dryRun 使用的音频素材时长秒数数组，顺序与 sourceAudios 一致；用于获得预估积分",
+          "items": {
+            "type": "number"
+          }
+        },
+        "size": {
+          "type": "string",
+          "description": "视频方向/比例。S2 支持横竖屏；S5/S6 还支持正方形、4:3、3:4（默认：1280x720）",
+          "enum": [
+            "1280x720",
+            "720x1280",
+            "1024x1024",
+            "1024x768",
+            "768x1024"
+          ]
+        },
+        "seconds": {
+          "type": "number",
+          "description": "视频时长（秒）。S2=10或15秒；S5极睿Sd专业版=5、10或15秒；S6极睿Ha专业版 standard/reference=5、10或15秒，edit 模式由输入视频决定",
+          "enum": [
+            5,
+            10,
+            15
+          ]
+        },
+        "language": {
+          "type": "string",
+          "description": "视频的目标语言（默认：zh-CN）",
+          "enum": [
+            "zh-CN",
+            "en-US",
+            "ja-JP",
+            "ko-KR",
+            "es-ES",
+            "fr-FR",
+            "th-TH",
+            "id-ID",
+            "de-DE",
+            "pt-PT",
+            "bn-BD",
+            "ru-RU",
+            "ar-SA",
+            "zh-HK",
+            "hi-IN"
+          ]
+        },
+        "count": {
+          "type": "number",
+          "description": "生成的视频数量（1-12，默认：1）",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "model": {
+          "type": "string",
+          "description": "生成引擎短码（推荐）：SA=极睿Sa专业版（默认，Sora 2，失败自动回退 S4）、SD=极睿Sd专业版（Seedance 2.0）、HA=极睿Ha专业版（HappyHorse 1.1）。注意：SD、HA 仅限 VIP 用户使用",
+          "enum": [
+            "SA",
+            "SD",
+            "HA"
+          ]
+        },
+        "route": {
+          "type": "string",
+          "description": "内部线路代码（已废弃，请改用 model）。兼容老客户端：S2=极睿Sa专业版、S5=极睿Sd专业版、S6=极睿Ha专业版",
+          "enum": [
+            "S2",
+            "S5",
+            "S6"
+          ],
+          "deprecated": true
+        },
+        "taskMode": {
+          "type": "string",
+          "description": "引擎模式。S5: allinone=全能参考、firstlast=首尾帧；S6: standard=标准模式、reference=图片参考、edit=视频编辑",
+          "enum": [
+            "allinone",
+            "firstlast",
+            "standard",
+            "reference",
+            "edit"
+          ]
+        },
+        "resolution": {
+          "type": "string",
+          "description": "S5/S6 输出清晰度（默认：720p）",
+          "enum": [
+            "720p",
+            "1080p"
+          ]
+        },
+        "ratio": {
+          "type": "string",
+          "description": "S6 图片参考或标准文生视频模式的宽高比，例如 9:16、16:9、1:1、4:3、3:4",
+          "enum": [
+            "16:9",
+            "9:16",
+            "1:1",
+            "4:3",
+            "3:4"
+          ]
+        },
+        "generateAudio": {
+          "type": "boolean",
+          "description": "S5 极睿Sd专业版是否生成音频（默认：true）"
+        },
+        "webSearchEnabled": {
+          "type": "boolean",
+          "description": "S5 极睿Sd专业版是否启用 Agent 增强（默认：false）"
+        },
+        "dryRun": {
+          "type": "boolean",
+          "description": "仅执行参数、素材、权限和积分预检，不创建任务、不扣费。适合在正式创建前确认 S5/S6 参数是否可用"
+        }
+      },
+      "required": [
+        "prompt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_video_status",
+    "description": "获取视频生成任务的状态，包括进度和视频 URL",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "taskId": {
+          "type": "number",
+          "description": "视频生成任务 ID"
+        }
+      },
+      "required": [
+        "taskId"
+      ]
+    }
+  },
+  {
+    "name": "create_video_analysis_task",
+    "description": "创建视频拆解任务，将视频拆解为脚本、风格、卖点话术、爆款公式，并生成用于视频创作的提示词。支持本地文件路径或公网 URL。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "videoFile": {
+          "type": "string",
+          "description": "要分析的视频文件，可以是本地文件路径或公网 URL"
+        }
+      },
+      "required": [
+        "videoFile"
+      ]
+    }
+  },
+  {
+    "name": "get_video_analysis_status",
+    "description": "获取视频拆解任务的状态和结果",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "analysisId": {
+          "type": "number",
+          "description": "视频拆解任务 ID"
+        }
+      },
+      "required": [
+        "analysisId"
+      ]
+    }
+  }
+]

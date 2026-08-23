@@ -1,0 +1,78 @@
+[
+  {
+    "name": "create-container",
+    "description": "Create a new standalone Docker container",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "ports": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "environment": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "image"
+      ]
+    }
+  },
+  {
+    "name": "deploy-compose",
+    "description": "Deploy a Docker Compose stack",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "compose_yaml": {
+          "type": "string"
+        },
+        "project_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "compose_yaml",
+        "project_name"
+      ]
+    }
+  },
+  {
+    "name": "get-logs",
+    "description": "Retrieve the latest logs for a specified Docker container",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "container_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "container_name"
+      ]
+    }
+  },
+  {
+    "name": "list-containers",
+    "description": "List all Docker containers",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

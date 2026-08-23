@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T07:45:58Z",
+  "generated_at": "2026-08-23T08:10:06Z",
   "servers": [
     {
       "name": "chuhaijiang",
@@ -1606,10 +1606,17 @@
         }
       ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 6,
+      "tools": [
+        "check-identity",
+        "list-apis",
+        "fetch-api-doc",
+        "call-api",
+        "upload-image",
+        "fetch-url"
+      ],
       "security": {
-        "scan_verdict": "unscanned",
+        "scan_verdict": "allow",
         "prompt_injection_findings": [],
         "osv": "unscanned"
       },
@@ -1622,11 +1629,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1130ecc6fb9790174e818b534d1b0e2c09dd1ecda30585be4490ba4a4b17276b",
-          "size": 2357
+          "sha256": "008f856ed6f6ab04f8dffadb4483fb6a696e756e85055474962c018fc5b60cd9",
+          "size": 2448
+        },
+        {
+          "path": "tools.json",
+          "sha256": "276211c17a6e4e475d849e26a93f08e0a1491dba311bd083377c2231632435a2",
+          "size": 5545
         }
       ],
-      "bundle_sha256": "70deb80f6364f773aae771ceedd2b8e4668d37d5448edd8c13b546ea03083f09"
+      "bundle_sha256": "e98e63d32f2d2964c4d780a77762ac727fa90766c9f88ae5ab4dcd1679a11228"
     },
     {
       "name": "wkinfo",
@@ -2568,10 +2580,24 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 11,
+      "tools": [
+        "wechat_capabilities",
+        "wechat_list_unread",
+        "wechat_read_scrolled_list",
+        "wechat_open_chat",
+        "wechat_read_chat",
+        "wechat_read_group_history",
+        "wechat_screenshot_chat",
+        "wechat_archive_group_summary",
+        "wechat_schedule_group_summary",
+        "wechat_send_message",
+        "wechat_send_group_message"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/comm/wechat-desktop",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/comm/wechat-desktop",
@@ -2587,11 +2613,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "ded16c4a4afe7500d69c965f025adde0e549f18d8bea1f53570326fac7674b47",
-          "size": 1000
+          "sha256": "53e2679f4ef8948b281075e123f28a45091b0bcc045a590d666c16e63a0eefdb",
+          "size": 1183
+        },
+        {
+          "path": "tools.json",
+          "sha256": "a93fd7a4e646087c93f63ab4e72d9e387aa9c41c3d2a94d3c89dcc8627e93b5d",
+          "size": 9402
         }
       ],
-      "bundle_sha256": "a7c96d06c6a12eab8e3ed2ceb06cb50695ba4b9424e807bd6cfaa42d63910869"
+      "bundle_sha256": "4d0a1baacdb295a0b5b05628e49fa89470676090f7e1e5b2152648d6679e046b"
     },
     {
       "name": "wecom",
@@ -2701,72 +2732,12 @@
       "bundle_sha256": "b463fa03c5d27fbaac08c9986e8d8c54cb5431dd7e7258df554e2ef4dcc72c6e"
     },
     {
-      "name": "ai_hive",
-      "id": "totalclaw-mcp/creative/ai_hive",
-      "display_name": "AI-HIVE",
-      "display_name_en": "AI-HIVE",
-      "description": "100+ top AI models (Seedance 2.5, H3 MiniMax, Happyhorse, GPT-image, Nano-Banana, Deepseek, Kimi). One config.",
-      "description_zh": "连接全球 100+ 顶尖 AI 模型（Seedance 2.5、H3 (MiniMax)、Happyhorse、GPT-image、Nano-Banana、Deepseek、Kimi 等），一键搞定文本、图像、视频创作。",
-      "version": "0.1.0",
-      "author": "vendor",
-      "verified": true,
-      "tested_with": ">=0.63.72",
-      "category": "creative",
-      "icon": "",
-      "tags": [
-        "creative",
-        "vendor"
-      ],
-      "kind": "mcp_server",
-      "platforms": [
-        "darwin",
-        "linux",
-        "win32"
-      ],
-      "transports": [
-        "stdio"
-      ],
-      "launchers": [
-        "npx"
-      ],
-      "runtimes": [
-        {
-          "id": "npx",
-          "type": "stdio",
-          "launcher": "npx"
-        }
-      ],
-      "requires_env": [],
-      "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
-      "security": {
-        "scan_verdict": "unscanned",
-        "prompt_injection_findings": [],
-        "osv": "unscanned"
-      },
-      "path": "registry/servers/creative/ai_hive",
-      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/ai_hive",
-      "git_sparse": {
-        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
-        "subdir": "registry/servers/creative/ai_hive"
-      },
-      "files": [
-        {
-          "path": "mcp.yaml",
-          "sha256": "d60fae17af6927f45a6355eb72de4f016beb31dcd884eada81de367be14486af",
-          "size": 2723
-        }
-      ],
-      "bundle_sha256": "5392145fb2bb29dad5bb44436057fef179236f0613ca4e6da08e54815e144e1e"
-    },
-    {
       "name": "blender",
       "id": "totalclaw-mcp/creative/blender",
       "display_name": "Blender",
       "display_name_en": "Blender",
       "description": "Drive a live Blender session for modeling, scenes, and renders.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": "upstream",
       "verified": true,
       "tested_with": ">=0.63.72",
@@ -2797,10 +2768,35 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 22,
+      "tools": [
+        "get_scene_info",
+        "get_object_info",
+        "get_viewport_screenshot",
+        "execute_blender_code",
+        "get_polyhaven_categories",
+        "search_polyhaven_assets",
+        "download_polyhaven_asset",
+        "set_texture",
+        "get_polyhaven_status",
+        "get_hyper3d_status",
+        "get_sketchfab_status",
+        "search_sketchfab_models",
+        "get_sketchfab_model_preview",
+        "download_sketchfab_model",
+        "generate_hyper3d_model_via_text",
+        "generate_hyper3d_model_via_images",
+        "poll_rodin_job_status",
+        "import_generated_asset",
+        "get_hunyuan3d_status",
+        "generate_hunyuan3d_model",
+        "poll_hunyuan_job_status",
+        "import_generated_asset_hunyuan"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/creative/blender",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/blender",
@@ -2816,11 +2812,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "cd60eccdf2cd32783d012d53acd22bbaa32fd345885d95f31cd0f0c660c99bb7",
-          "size": 709
+          "sha256": "2c5ab139d96e8233c54755f324a8ef3c971309f4ab87dfcf118cf2e88fd98328",
+          "size": 913
+        },
+        {
+          "path": "tools.json",
+          "sha256": "3dfb37d2670808706f26476a2b9779fbcad06ab09e21ef4adce5ff30fb27eee9",
+          "size": 21114
         }
       ],
-      "bundle_sha256": "f6db7c1b9cf724975e6cad0b3302b78a0b5405f5522d7a573c750db08c7548a7"
+      "bundle_sha256": "5dd4b7951369547384b504a35cf1beb6cf9ab754650b9509ada9e62b04e6d28e"
     },
     {
       "name": "camscanner_mcp",
@@ -3204,10 +3205,16 @@
         }
       ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 5,
+      "tools": [
+        "get_user_info",
+        "create_video_task",
+        "get_video_status",
+        "create_video_analysis_task",
+        "get_video_analysis_status"
+      ],
       "security": {
-        "scan_verdict": "unscanned",
+        "scan_verdict": "allow",
         "prompt_injection_findings": [],
         "osv": "unscanned"
       },
@@ -3220,11 +3227,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "76aeede83d55b465c88dcbd542502211a395bff6ebbd4fa6504a4a22e6f40aec",
-          "size": 1728
+          "sha256": "2353e8b19e8c84410f8a10a0270a7ea83f0e1b3148f17746d28dafeaf86a9f16",
+          "size": 1819
+        },
+        {
+          "path": "tools.json",
+          "sha256": "f51591b23af006085e3abaecb912809b615e7de320ea218441f62532ba2227d1",
+          "size": 7225
         }
       ],
-      "bundle_sha256": "5c078ab16c44c75979083bf492d6c0aed91363bd347c64573f15ffac02a0cb8a"
+      "bundle_sha256": "fa354abae37a8277889164e71ca226494afa20014fcdeb3c9b85ec5de5c5607c"
     },
     {
       "name": "kling_ai_plugin",
@@ -3409,10 +3421,23 @@
         }
       ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 12,
+      "tools": [
+        "version_0_2_8",
+        "mcp__getDesignSections",
+        "mcp__getPageLayers",
+        "mcp__getDsl",
+        "mcp__getD2c",
+        "mcp__C2d",
+        "mcp__getComponentLink",
+        "mcp__getMeta",
+        "mcp__getComponentGenerator",
+        "mcp__getFlutterGenerator",
+        "mcp__extractSvg",
+        "mcp__applyDesign"
+      ],
       "security": {
-        "scan_verdict": "unscanned",
+        "scan_verdict": "allow",
         "prompt_injection_findings": [],
         "osv": "unscanned"
       },
@@ -3425,11 +3450,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "e310e3be5c638fd5c3d02e3b6d654193b63441e257bb924cb405ef05da80a19c",
-          "size": 1950
+          "sha256": "c1ff5b8e6502f9656b26a881f6a582e3bcfa05d87105318b4556347522486e03",
+          "size": 2047
+        },
+        {
+          "path": "tools.json",
+          "sha256": "03115e2422de1efb2d3f827c1745bb0062bec03f1d6c7edc3fdcb9f232b79f67",
+          "size": 28670
         }
       ],
-      "bundle_sha256": "fdaf083bd8a2fd13b63c37133203c1cf328f6971cdd6ab9c9faedd094f4f12c6"
+      "bundle_sha256": "e6a761fa001d4de9d345479d345c10b52fcfedc2b0f5321b446036285d40b89f"
     },
     {
       "name": "picset_commerce_images",
@@ -4028,10 +4058,14 @@
         }
       ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 1,
+      "tools": [
+        "query"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/data/mcp_postgres",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/mcp_postgres",
@@ -4047,11 +4081,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "3a964b1bbd6a870219bfdcf32e7498e8772965d28e5de13fbfc0e5aac60b58a4",
-          "size": 975
+          "sha256": "e7a44384bca73d453a5b5f4635594821a34258b9cf4c3f306d2210e2c6fd1d98",
+          "size": 1151
+        },
+        {
+          "path": "tools.json",
+          "sha256": "ed74234dbf0854fd34e3795f4fa2ef88cc3019f2e3bd46ddf1edcc4e22eda0e2",
+          "size": 241
         }
       ],
-      "bundle_sha256": "09eba109002ee888dcf3a6756a8f921d525a521b00a04e2f83c193a99cb34771"
+      "bundle_sha256": "ecfcc1cb14b1a798149680270bb7f60b455d64fd48b8d6b9ca9c740898852425"
     },
     {
       "name": "mcp_sqlite",
@@ -4060,7 +4099,7 @@
       "display_name_en": "SQLite",
       "description": "SQLite MCP server.",
       "description_zh": "SQLite 本地数据库读写 — list_tables / describe_table / read_query / write_query / create_table。轻量本地存储工作流。已归档但仍可用。",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": "upstream",
       "homepage": "https://github.com/modelcontextprotocol/servers-archived",
       "verified": true,
@@ -4090,14 +4129,29 @@
           "launcher": "uvx"
         }
       ],
-      "requires_env": [],
-      "optional_env": [
-        "SQLITE_DB_PATH"
+      "requires_env": [
+        {
+          "name": "SQLITE_DB_PATH",
+          "description": "SQLite 数据库文件路径；不存在会新建",
+          "prompt": "请输入 SQLite 数据库文件路径（如 ~/.totalclaw/mcp_sqlite.db）",
+          "secret": false,
+          "required": true
+        }
       ],
-      "tools_count": 0,
-      "tools": [],
+      "optional_env": [],
+      "tools_count": 6,
+      "tools": [
+        "read_query",
+        "write_query",
+        "create_table",
+        "list_tables",
+        "describe_table",
+        "append_insight"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/data/mcp_sqlite",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/mcp_sqlite",
@@ -4113,11 +4167,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "a2f43eb619dca980c8331ac743af39fd939a1a55fa7654077c9202860cfc9ba4",
-          "size": 1046
+          "sha256": "9cb0ed9f3a1dc8ab2fb0397cf644d8d4c0014aeefb9e2f0a1280a0b1c0dc56f7",
+          "size": 1683
+        },
+        {
+          "path": "tools.json",
+          "sha256": "1a804e28e22a2e98abeedf93a7eaf68222ff08add2de72f7b96c14a7ae4924d5",
+          "size": 2074
         }
       ],
-      "bundle_sha256": "b1a236026e573ffb0b4797c8a62d9d0050cd04729537cfd4101f77f2e2f1adef"
+      "bundle_sha256": "a1b9cd110e534e7a660456edb358fe461f55a7986386bf3dd68ccf8434f65be8"
     },
     {
       "name": "morningstar",
@@ -5078,10 +5137,51 @@
       "optional_env": [
         "API_BASE_URL"
       ],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 40,
+      "tools": [
+        "cnb_list_groups",
+        "cnb_list_sub_groups",
+        "cnb_get_group",
+        "cnb_create_group",
+        "cnb_list_repositories",
+        "cnb_list_group_repositories",
+        "cnb_get_repository",
+        "cnb_create_repository",
+        "cnb_get_current_repository",
+        "cnb_list_issues",
+        "cnb_get_issue",
+        "cnb_create_issue",
+        "cnb_update_issue",
+        "cnb_list_issue_comments",
+        "cnb_create_issue_comment",
+        "cnb_update_issue_comment",
+        "cnb_list_issue_labels",
+        "cnb_add_issue_labels",
+        "cnb_set_issue_labels",
+        "cnb_clear_issue_labels",
+        "cnb_remove_issue_label",
+        "cnb_list_workspaces",
+        "cnb_delete_workspace",
+        "cnb_start_workspace",
+        "cnb_list_pulls",
+        "cnb_get_pull",
+        "cnb_create_pull",
+        "cnb_update_pull",
+        "cnb_merge_pull",
+        "cnb_list_pull_comments",
+        "cnb_create_pull_comment",
+        "cnb_buildLogsDelete",
+        "cnb_buildRunnerDownloadLog",
+        "cnb_getBuildLogs",
+        "cnb_getBuildStage",
+        "cnb_getBuildStatus",
+        "cnb_startBuild",
+        "cnb_stopBuild",
+        "cnb_getKnowledgeBaseInfo",
+        "cnb_queryKnowledgeBase"
+      ],
       "security": {
-        "scan_verdict": "unscanned",
+        "scan_verdict": "allow",
         "prompt_injection_findings": [],
         "osv": "unscanned"
       },
@@ -5094,11 +5194,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f9b2e78e53453b9eb410557a2b70b7a522f04a43be16b6034b77bfedd594192c",
-          "size": 2340
+          "sha256": "4700786e5decff1223403fdd00a2cf42aaa2906a110f3f6dc48611acfa81d6eb",
+          "size": 2265
+        },
+        {
+          "path": "tools.json",
+          "sha256": "e3da5a36dea5ec408c2715fbdd6d34c9199b29f6414f9e823477bdadecfbb85b",
+          "size": 38642
         }
       ],
-      "bundle_sha256": "83066173071f40c5616ffd1eca56bca9983999add6c5985e0292b29ad981dd34"
+      "bundle_sha256": "4282c954e774fec6eecf509fb12ffb8cadd8ae48041cba08f8ff86cdfb42b928"
     },
     {
       "name": "gitee",
@@ -5528,10 +5633,25 @@
       "optional_env": [
         "MCP_GIT_REPO"
       ],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 12,
+      "tools": [
+        "git_status",
+        "git_diff_unstaged",
+        "git_diff_staged",
+        "git_diff",
+        "git_commit",
+        "git_add",
+        "git_reset",
+        "git_log",
+        "git_create_branch",
+        "git_checkout",
+        "git_show",
+        "git_branch"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/dev/mcp_git",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/mcp_git",
@@ -5547,11 +5667,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "0582f1d2305597bc20eae0cea6678ab9ecef9964a60fe138d0d9d470a38628a7",
-          "size": 969
+          "sha256": "ca8f30ebad67b17770f053bcf5a3494a762f46f965881e939387b3978ed18c5a",
+          "size": 1146
+        },
+        {
+          "path": "tools.json",
+          "sha256": "a1e5b2bc0c3d0535eb8e46a3303700ef459134f731bb9222cbbb567d2418282e",
+          "size": 7916
         }
       ],
-      "bundle_sha256": "177ffee28630fb26f6b3f3d9d69ae3940aabb5931095f81b81914ddf2c999885"
+      "bundle_sha256": "5ace7af7475389fda2145ebfbaac8fb0482f685871173d85d812db74561beefb"
     },
     {
       "name": "sentry",
@@ -6381,10 +6506,12 @@
         }
       ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 1,
+      "tools": [
+        "dcs_setup"
+      ],
       "security": {
-        "scan_verdict": "unscanned",
+        "scan_verdict": "allow",
         "prompt_injection_findings": [],
         "osv": "unscanned"
       },
@@ -6397,11 +6524,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "3530991da6a8574d965f190516c2feacd34f4f0d4a30cc5300c883c182034074",
-          "size": 1912
+          "sha256": "71c33a6bfd520c325e46f72d3d23c6c8d87167b4b38e2fe315770b288fef5175",
+          "size": 2003
+        },
+        {
+          "path": "tools.json",
+          "sha256": "df59db89c0d091b56c454ec30925c14939ddf61c9d83b1626fed788cf10fc2bd",
+          "size": 495
         }
       ],
-      "bundle_sha256": "5b8ee74b2d63a3c424ec69898678b80af3a93359136dc8618e3a085cb854ece4"
+      "bundle_sha256": "45b3fcb47fa388f4f4b6f74bc6915c9c2f8ccf9e2c9057040c12ff4793985e39"
     },
     {
       "name": "docker",
@@ -6410,7 +6542,7 @@
       "display_name_en": "Docker",
       "description": "Docker MCP server.",
       "description_zh": "Docker 容器管理 — ps / images / run / stop / logs / exec / inspect / network / volume。LLM 直接调度本地或远端 Docker daemon。",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": "upstream",
       "homepage": "https://github.com/QuantGeekDev/docker-mcp",
       "verified": true,
@@ -6444,10 +6576,17 @@
       "optional_env": [
         "DOCKER_HOST"
       ],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 4,
+      "tools": [
+        "create-container",
+        "deploy-compose",
+        "get-logs",
+        "list-containers"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/infra/docker",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/docker",
@@ -6463,11 +6602,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "612640b85f6a0733abe57bc50ab4cf08dc3aeded90823b00cb6512077f2eebe3",
-          "size": 1007
+          "sha256": "c5b6fb175249f4d559402bab172225e9137b739d00459b4243f630e1578cb21a",
+          "size": 1210
+        },
+        {
+          "path": "tools.json",
+          "sha256": "deb73a2726fdfbf93dcf8f56dc90a17d3b006a0e2d1d016d2f984450affd8ad1",
+          "size": 1572
         }
       ],
-      "bundle_sha256": "5bfc914e39aeee095202e2636432836ed3f3d8d762099eaa68b0e4cacbb15b39"
+      "bundle_sha256": "750625aeddf62a8e909fe53ddf36cd7bad91e1a1ddc2edd3e6d51a9c3bdda7c5"
     },
     {
       "name": "tencent_edgeone",
@@ -6641,7 +6785,7 @@
       "display_name_en": "Filesystem",
       "description": "Filesystem MCP server.",
       "description_zh": "受控文件系统读写 — 强制根目录沙箱,支持 list / read / write / edit / search / move。args 末 path 是允许根(可多个)。",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": "upstream",
       "homepage": "https://github.com/modelcontextprotocol/servers",
       "verified": true,
@@ -6671,14 +6815,37 @@
           "launcher": "npx"
         }
       ],
-      "requires_env": [],
-      "optional_env": [
-        "MCP_FS_ROOT"
+      "requires_env": [
+        {
+          "name": "MCP_FS_ROOT",
+          "description": "允许读写的根目录（沙箱边界，只有这个目录下的文件可被访问）",
+          "prompt": "请输入允许读写的根目录绝对路径",
+          "secret": false,
+          "required": true
+        }
       ],
-      "tools_count": 0,
-      "tools": [],
+      "optional_env": [],
+      "tools_count": 14,
+      "tools": [
+        "read_file",
+        "read_text_file",
+        "read_media_file",
+        "read_multiple_files",
+        "write_file",
+        "edit_file",
+        "create_directory",
+        "list_directory",
+        "list_directory_with_sizes",
+        "directory_tree",
+        "move_file",
+        "search_files",
+        "get_file_info",
+        "list_allowed_directories"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/media/mcp_filesystem",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/media/mcp_filesystem",
@@ -6694,11 +6861,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "2772f2a08f3600784ebc5c75dc7f4d4fba91d406d8ded6db708909dfa7735889",
-          "size": 1009
+          "sha256": "4ceb5a95bec963ccb936da8cbf176f5aa066fe545f2b499a020e0cfecbf2f0d3",
+          "size": 1637
+        },
+        {
+          "path": "tools.json",
+          "sha256": "897bbc3b65eecb70a4b8d5787100b6284e7874315c2e6c88e9e4adba18bcccd5",
+          "size": 10844
         }
       ],
-      "bundle_sha256": "044be95a204aed8e4fbaa850d3e24b6e79c5381ba0ea977e7242c6c1bd4f3136"
+      "bundle_sha256": "2b477ad4a10f1e07af7698a559fab111b90c5eb12b7f6da22a89085606979bf6"
     },
     {
       "name": "tencent_ioa",
@@ -8058,7 +8230,7 @@
       "display_name_en": "Douyin / Xiaohongshu",
       "description": "抖音 / 小红书 MCP server.",
       "description_zh": "抖音+小红书内容提取/去水印/语音转文字:get_douyin_download_link / extract_douyin_text / parse_douyin_video_info / get_xiaohongshu_content / extract_xiaohongshu_text / extract_xiaohongshu_video_text / get_xiaohongshu_images / remove_xiaohongshu_video_watermark(8 工具)。",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": "upstream",
       "homepage": "https://github.com/AshinH/dy-xhs-mcp-server",
       "verified": true,
@@ -8092,10 +8264,18 @@
       "optional_env": [
         "DOUYIN_MCP_CONFIG"
       ],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 5,
+      "tools": [
+        "get_douyin_download_link",
+        "extract_douyin_text",
+        "parse_douyin_video_info",
+        "recognize_audio_file",
+        "recognize_audio_url"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/social/dy_xhs",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/social/dy_xhs",
@@ -8111,11 +8291,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "6b8dcf748d43308e765df29af1fea5060cf7f75bf1fb24f254caa60402de2635",
-          "size": 1228
+          "sha256": "17009c1184515a1049a77edd64a1f707f069eef6ef0257e4101f48f1409d4d2c",
+          "size": 1431
+        },
+        {
+          "path": "tools.json",
+          "sha256": "c8351a2c21f6b94f268d1ba0dd298366be461fad4ddb8118960edb941af35f94",
+          "size": 5461
         }
       ],
-      "bundle_sha256": "1735d31f3d0a3799d2f9edff0e4dd5d23edaf61d6d6a166b42341ff79a98cac1"
+      "bundle_sha256": "13437db51256cd5a324892b524b9b69f9603d2cb0de2a8e3457cd4b88dcb6914"
     },
     {
       "name": "matrixmedia",
@@ -8236,10 +8421,22 @@
         }
       ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 9,
+      "tools": [
+        "socialcrawl_list_platforms",
+        "socialcrawl_list_endpoints",
+        "socialcrawl_request",
+        "socialcrawl_check_balance",
+        "socialcrawl_monitors",
+        "socialcrawl_web",
+        "socialcrawl_pricing",
+        "socialcrawl_discover",
+        "socialcrawl_get_docs"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/social/socialcrawl",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/social/socialcrawl",
@@ -8255,11 +8452,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "b6c73bbeb4a7c466de011e2682684148c5a89b15778e5e8e7185507dcf76c5ef",
-          "size": 1077
+          "sha256": "b8d468006cf9f184f71ceb46c73a4ad669cef3721f51b1e62498e879d8e3c7fa",
+          "size": 1253
+        },
+        {
+          "path": "tools.json",
+          "sha256": "898546710d5f960a13d172eb307f39bfa18328d47b9bf836bd48ca5467803798",
+          "size": 28924
         }
       ],
-      "bundle_sha256": "4d1338394e85f7f1220574cee9d432087c0a6d92b56052ec06c33bc516694901"
+      "bundle_sha256": "5ea96ee0b6532ec7eb4aff0d4a093ff0384075a7dd4de180db94eb93ecc51378"
     },
     {
       "name": "xiaohongshu",
@@ -8420,10 +8622,42 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 29,
+      "tools": [
+        "click",
+        "close_page",
+        "drag",
+        "emulate",
+        "evaluate_script",
+        "fill",
+        "fill_form",
+        "get_console_message",
+        "get_network_request",
+        "handle_dialog",
+        "hover",
+        "lighthouse_audit",
+        "list_console_messages",
+        "list_network_requests",
+        "list_pages",
+        "navigate_page",
+        "new_page",
+        "performance_analyze_insight",
+        "performance_start_trace",
+        "performance_stop_trace",
+        "press_key",
+        "resize_page",
+        "select_page",
+        "take_heapsnapshot",
+        "take_screenshot",
+        "take_snapshot",
+        "type_text",
+        "upload_file",
+        "wait_for"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/web/chrome_devtools",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/chrome_devtools",
@@ -8439,11 +8673,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "5f2f221e360ef55118ac60380b8cee23d2d3561e04f82b67f219a360e3ac3d61",
-          "size": 1049
+          "sha256": "0a7926539f2c43c421c9a0b5ddc6750c2a93969da46bab16c36542a6f215b0f4",
+          "size": 1226
+        },
+        {
+          "path": "tools.json",
+          "sha256": "268f46bbfc2aac44e04f5fd87afdc37baba61a9a418656e970f76881575c92c0",
+          "size": 28742
         }
       ],
-      "bundle_sha256": "809f4ea4ca667ff36a32d5aa4f2a6dfd08823cc8de4bc6cf25e941ac59ffa824"
+      "bundle_sha256": "24012618200950a8e319e4330cf0b47a4eff420b1a7d7e3a70f049a2fdad7c81"
     },
     {
       "name": "mcp_brave_search",
@@ -8492,10 +8731,15 @@
         }
       ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 2,
+      "tools": [
+        "brave_web_search",
+        "brave_local_search"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/web/mcp_brave_search",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/mcp_brave_search",
@@ -8511,11 +8755,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "3e63d7679901d3c2d9855a636658de80fe942a385033ce86f4280ef02b0510d7",
-          "size": 1017
+          "sha256": "6923ad93b899ff12647d9f20319bf9d19c78e4d2aeaa8cdf4888d9fa6b3b62e4",
+          "size": 1193
+        },
+        {
+          "path": "tools.json",
+          "sha256": "f0afdb581974c65cfabb64f8af7e77e5c6a30be07d871fe62903bcd05bc61e50",
+          "size": 1906
         }
       ],
-      "bundle_sha256": "2f82dffacc575c3a68c57f44bac258d345d876a857d093b9e2f7bfd1c11512dd"
+      "bundle_sha256": "15a165b65844721e75a236c13ee3b6cc2bc1e4d132794860321f2d570093a6f1"
     },
     {
       "name": "mcp_fetch",
@@ -8629,10 +8878,37 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 24,
+      "tools": [
+        "browser_close",
+        "browser_resize",
+        "browser_console_messages",
+        "browser_handle_dialog",
+        "browser_evaluate",
+        "browser_file_upload",
+        "browser_drop",
+        "browser_find",
+        "browser_fill_form",
+        "browser_press_key",
+        "browser_type",
+        "browser_navigate",
+        "browser_navigate_back",
+        "browser_network_requests",
+        "browser_network_request",
+        "browser_run_code_unsafe",
+        "browser_take_screenshot",
+        "browser_snapshot",
+        "browser_click",
+        "browser_drag",
+        "browser_hover",
+        "browser_select_option",
+        "browser_tabs",
+        "browser_wait_for"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/web/playwright",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/playwright",
@@ -8648,11 +8924,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "6e5ded4ccb8409157a05e3468b593ddc733384958ba29161d873b0623f33e01c",
-          "size": 848
+          "sha256": "4ae8c5f07cc1aac2c3f28147ed7274fad0c94361fee577f5da4c4b7b4d45c5b3",
+          "size": 1025
+        },
+        {
+          "path": "tools.json",
+          "sha256": "efff55728febc19e42d6a155cfa16bf4ed3e40aa825d3acf9529fffe0eb86f06",
+          "size": 22742
         }
       ],
-      "bundle_sha256": "59702db0c9f0127ba95e6e3a864106a55d3dd3ff2508a9aafc0bd0fae9ea3e1c"
+      "bundle_sha256": "b6dba33badb3d91b1aeea2181121e1d713a2735615f55f911960f2013869bff2"
     },
     {
       "name": "playwright-py",
@@ -8692,10 +8973,23 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 10,
+      "tools": [
+        "browser_navigate",
+        "browser_snapshot",
+        "browser_click",
+        "browser_type",
+        "browser_eval",
+        "browser_download",
+        "browser_screenshot",
+        "browser_get_url",
+        "browser_back",
+        "browser_close"
+      ],
       "security": {
-        "scan_verdict": "unscanned"
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
       },
       "path": "registry/servers/web/playwright-py",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/playwright-py",
@@ -8711,11 +9005,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "a547bc5f35d3aeec7c6a712739a91fd29575a7304e1d529a88b453abaa9714ab",
-          "size": 826
+          "sha256": "b7e402a3d948687643fea147b68a0e26e5cbdd4e6a7415da2d34f8f3066f0b80",
+          "size": 1009
+        },
+        {
+          "path": "tools.json",
+          "sha256": "d36815e03c3f50ce90fb1278b4bd58978e6c7acfef10c8cae1f8c09c65d85853",
+          "size": 6345
         }
       ],
-      "bundle_sha256": "5a9243ff6b272e77040bfcc91a480d5114ce08a5e2d7e61383d3ce686d484560"
+      "bundle_sha256": "a72206f87f8d3138656d5ba2a6ba2bbb4d8321a74fba836b634c6788c18797fc"
     },
     {
       "name": "tencent_map",

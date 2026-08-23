@@ -1,0 +1,12 @@
+[
+  {
+    "name": "dcs_setup",
+    "description": "Bootstrap the dcs CLI: download/update the platform binary (SHA256-verified, auto-updates to the latest GitHub release) and log in with the configured PAT. Returns the binary path, version, and login status. After this succeeds, run dcs commands directly in the terminal (always append --output json --no-history).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  }
+]

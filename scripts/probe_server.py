@@ -123,11 +123,12 @@ def _server_params(manifest: dict, runtime_id: str | None):
         if key and os.environ.get(key):
             env[key] = os.environ[key]
     for k, v in (rt.get("env") or {}).items():
-        # 清单里的 ${VAR} 要用真实环境变量展开，展不开就原样留着让上游自己报错
-        env[str(k)] = re.sub(r"\$\{([A-Za-z_][A-Za-z0-9_]*)\}",
-                             lambda m: os.environ.get(m.group(1), m.group(0)), str(v))
+        env[str(k)] = _expand(str(v))
+    # args 也要展开 —— agent 侧 interpolate_env_vars 是对整个 server 字典递归的，
+    # 参数里的 ${VAR} 一样会被代入。这里不展开就跟真实启动行为不一致，
+    # 表现为「探测挂了但装上能用」，反过来更糟：探测过了但装上挂。
     return StdioServerParameters(command=str(rt["command"]),
-                                 args=[str(a) for a in (rt.get("args") or [])],
+                                 args=[_expand(str(a)) for a in (rt.get("args") or [])],
                                  env=env), rt
 
 

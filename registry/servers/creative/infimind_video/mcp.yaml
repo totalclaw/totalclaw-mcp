@@ -43,10 +43,15 @@ defaults:
   enabled: true
   timeout: 60
 security:
-  scan_verdict: unscanned
+  scan_verdict: allow
   prompt_injection_findings: []
   osv: unscanned
 examples:
 - 用这张商品图生成一段 10 秒的竖屏展示视频
 - 用首尾两张图片生成一段自然过渡的视频
 - 分析这个商品视频的脚本、风格、卖点和爆款公式
+tools:
+  probed_at: '2026-08-23T08:09:27Z'
+  probed_runtime: npx
+  count: 5
+  file: tools.json

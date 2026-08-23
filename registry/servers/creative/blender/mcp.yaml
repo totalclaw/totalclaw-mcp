@@ -5,7 +5,7 @@ tested_with: '>=0.63.72'
 name: blender
 display_name: Blender
 display_name_en: Blender
-version: 0.1.0
+version: 0.2.0
 description: Drive a live Blender session for modeling, scenes, and renders.
 author: upstream
 category: creative
@@ -19,6 +19,8 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp==1.19.0
   - blender-mcp==1.6.4
   env:
     DISABLE_TELEMETRY: 'true'
@@ -32,3 +34,12 @@ defaults:
     - get_object_info
     - get_viewport_screenshot
     - execute_blender_code
+tools:
+  probed_at: '2026-08-23T08:08:38Z'
+  probed_runtime: uvx
+  count: 22
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned

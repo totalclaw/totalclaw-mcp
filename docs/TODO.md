@@ -203,14 +203,36 @@
   顺带补了 `weisheng_scrm` 漏声明的 `SCRM_APP_KEY`、`opendata` 的
   `REGION_INSIGHT_API_KEY`（匿名能列工具，真调用要 key，不声明的话用户装完
   一调就失败且不知为何）。
-- [ ] **C2.1（剩余）** 拿到凭据后补 `tools.json` 与 `security` 块：
-  `export <VAR>=… && python3 scripts/probe_server.py <名>`；OAuth 型先
-  `totalclaw mcp login <名>`。每个条目要去哪儿申请，现在 registry.json 里就有。
-  - **2026-08-23 已把 40 个「不需要预置凭据」的 http 条目全量匿名探了一遍**（本仓
-    `scripts/probe_server.py`），**40 个全部 401**，无一能匿名列工具。也就是说这一项
-    不是「还没探」，是**确实要凭据**——别再重跑一遍匿名探测了。
-    另有 2 个本机端点（`unreal_engine` / `xiaohongshu`）按设计跳过，需用户自行起服务。
-  - 剩下 39 个缺 `tools.json` 的是 stdio 型：装包才能探，凭据同样在厂商侧。
+- [x] **C2.1（stdio 那批，2026-08-23）** 此前只扫了 http，**stdio 从没实探过**。
+  装包实探后 **18 个条目拿到真实工具清单**，有工具的条目 36 → 54，工具总数 827。
+  过程中修出 5 个「装上必挂」的条目 + 2 个我自己的 bug：
+  - **`${VAR:-default}` 语法 agent 根本不支持**。SPEC 第 57 行却写着「允许」——
+    规范承诺了消费方做不到的事。agent 的 `utils.interpolate_env_vars` 正则是
+    `\$\{([^}]+)\}`，会把 `MCP_FS_ROOT:-/tmp` **整个当变量名**去查，查不到就原样
+    留着，服务器拿到一串字面量当路径/目录名，起手就挂。
+    `mcp_filesystem` 与 `mcp_sqlite` 两条中招；导入脚本当年也被这语法截断，
+    在 `mcp_sqlite` 的 optional_env 里留下过一个残缺的 `default: ${HOME`。
+    已改成显式变量 + 必填。`mcp_filesystem` 这样反而更安全：沙箱根目录本来就该
+    让用户自己选，静默默认 `/tmp` 等于替用户决定了哪些文件可被模型读写。
+  - **4 个包与新版 MCP SDK 不兼容**（`mcp_sqlite` / `blender` / `docker` / `dy_xhs`）：
+    `ModuleNotFoundError: mcp.server.fastmcp` 或 `'Server' object has no attribute
+    list_prompts/list_resources`。都加 `--with mcp==1.19.0` 钉住能用的 SDK。
+    `mcp-server-sqlite` 的最新版就是出问题那版，没有更新的可换。
+  - **`ai_hive` 已删除**：`@infimind-next/ai-hive-mcp` 起手就打印「尚未连接
+    AI-HIVE，请在 WorkBuddy 中重新连接」，是别家产品的专属客户端，在我们这儿
+    永远起不来 —— 而清单里写的是 `requires_env: []`（无需凭据，装了就能用）。
+    条目数 115 → 114。
+  - **`scripts/probe_server.py` 不展开 args 里的 `${VAR}`**（只展开了 url 与 env）。
+    agent 侧是对整个 server 字典递归展开的，探测与真实启动行为不一致 ——
+    这个方向的偏差尤其糟：探测过了，装上却挂。已修。
+- [ ] **C2.1（剩余）** 还有 60 个条目没有工具清单，都要真凭据：
+  - **http 型 40 个**：2026-08-23 全量匿名探过，**40 个全部 401**，无一能匿名列工具。
+    这一项不是「还没探」，是**确实要凭据**——别再重跑匿名探测了。
+  - **stdio 型 4 个**：`duoguan_fengchao` / `infimind_ecommerce_image`（Unauthorized）/
+    `sentry` / `matrixmedia`（要本地装好的目录）。
+  - 拿到凭据后：`export <VAR>=… && python3 scripts/probe_server.py <名>`；
+    OAuth 型先 `totalclaw mcp login <名>`。去哪儿申请，registry.json 里就有。
+
 - [x] **C3** Ed25519 签名脚本 `scripts/sign_registry.py`（`--keygen` / `--sign` / `--verify`）
   - 已实测完整链路：生成密钥 → 签名 → 验签通过 → 篡改一个字段后验签**正确失败** → 恢复后再通过
   - 私钥只从 `MCP_REGISTRY_SIGNING_KEY` 或库外文件读，keygen 默认写到 `~/.totalclaw-mcp-keys`

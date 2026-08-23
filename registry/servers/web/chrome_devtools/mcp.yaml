@@ -34,3 +34,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 180
+tools:
+  probed_at: '2026-08-23T07:58:02Z'
+  probed_runtime: npx
+  count: 29
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned

@@ -1,0 +1,191 @@
+[
+  {
+    "name": "browser_navigate",
+    "description": "导航到 URL(等 DOMContentLoaded),返回最终 URL + 页面标题。",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "url": {
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "title": "browser_navigateArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_snapshot",
+    "description": "返回当前页面的**可访问性树快照**(Playwright AI 模式)。\n\n    每个可交互元素带 role、可访问名(accessible name)与**稳定 ref**(形如\n    ``[ref=e12]``),并含 ``<iframe>`` 内容。这是与微软 ``@playwright/mcp``\n    等价的\"给 LLM 看的\"结构化表示 —— 比纯文本 / 截图更适合决策:模型据此知道\n    页面上有哪些按钮 / 链接 / 输入框,再把对应 ref 传给 ``browser_click`` /\n    ``browser_type``(用 ``aria-ref=<ref>`` 选择器)做**确定性**操作,无需猜\n    CSS selector。ref 在下一次 snapshot / 导航前有效,操作前先 snapshot。\n\n    输出截断到 max_chars(AI 快照本身已较紧凑)。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "max_chars": {
+          "default": 20000,
+          "title": "Max Chars",
+          "type": "integer"
+        }
+      },
+      "title": "browser_snapshotArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_click",
+    "description": "点击元素。selector 取值(优先级从高到低):\n\n    * ``aria-ref=e12`` —— ``browser_snapshot`` 返回的 ref,**首选、最稳**;\n    * CSS selector(如 ``button.submit`` / ``#login``);\n    * ``text=登录`` 文本选择器。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "selector": {
+          "title": "Selector",
+          "type": "string"
+        }
+      },
+      "required": [
+        "selector"
+      ],
+      "title": "browser_clickArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_type",
+    "description": "在 selector 元素填入 text;submit=True 则随后回车提交。\n\n    selector 同 ``browser_click``:优先用 ``browser_snapshot`` 的 ``aria-ref=<ref>``,\n    亦可 CSS / ``text=`` 选择器。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "selector": {
+          "title": "Selector",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "submit": {
+          "default": false,
+          "title": "Submit",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "selector",
+        "text"
+      ],
+      "title": "browser_typeArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_eval",
+    "description": "在页面上下文执行 JS,返回结果的字符串形态(截断)。\n\n    ``page.evaluate`` 被包了一层墙钟超时(默认 30s,``PLAYWRIGHT_MCP_EVAL_TIMEOUT_MS``\n    可调):页面脚本死循环 / 挂在永不完成的 promise 时,超时抛清晰错误而非让 agent 干等。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "script": {
+          "title": "Script",
+          "type": "string"
+        },
+        "max_chars": {
+          "default": 20000,
+          "title": "Max Chars",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "script"
+      ],
+      "title": "browser_evalArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_download",
+    "description": "主动触发一次页面下载,等待其完成,回传落地文件路径与建议文件名。\n\n    触发方式二选一(都不传 → 报错):\n\n    * ``selector`` —— 点击一个会触发下载的元素(selector 语义同 ``browser_click``:\n      首选 ``browser_snapshot`` 的 ``aria-ref=<ref>``,亦可 CSS / ``text=``)。\n    * ``script`` —— 在页面上下文执行 JS 触发下载(如 ``location=<文件URL>``、点击\n      运行时生成的 ``<a download>``)。触发即返回,不等脚本本身的返回值。\n\n    ``timeout_ms`` 是等待下载开始的墙钟上限(默认 30s;非法 / 非正回落默认)。下载落地\n    目录复用托管 Chrome 下载偏好(见 ``resolve_chrome_download_prefs``),未配置则落系统\n    临时目录。返回下载完成的最终文件路径。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "selector": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selector"
+        },
+        "script": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Script"
+        },
+        "timeout_ms": {
+          "default": 30000,
+          "title": "Timeout Ms",
+          "type": "integer"
+        }
+      },
+      "title": "browser_downloadArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_screenshot",
+    "description": "整页/视口截图存临时 PNG,返回文件路径(供 vision 工具读取)。",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "full_page": {
+          "default": false,
+          "title": "Full Page",
+          "type": "boolean"
+        }
+      },
+      "title": "browser_screenshotArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_get_url",
+    "description": "返回当前页面 URL + 标题。",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "browser_get_urlArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_back",
+    "description": "浏览器后退一步。",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "browser_backArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_close",
+    "description": "关闭浏览器、释放资源(下次工具调用会自动重启)。",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "browser_closeArguments",
+      "type": "object"
+    }
+  }
+]

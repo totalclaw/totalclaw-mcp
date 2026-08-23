@@ -1,0 +1,15 @@
+[
+  {
+    "name": "query",
+    "description": "Run a read-only SQL query",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sql": {
+          "type": "string"
+        }
+      }
+    }
+  }
+]

@@ -31,3 +31,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-08-23T07:57:12Z'
+  probed_runtime: totalclaw
+  count: 11
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned

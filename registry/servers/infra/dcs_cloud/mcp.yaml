@@ -46,7 +46,7 @@ defaults:
   enabled: true
   timeout: 60
 security:
-  scan_verdict: unscanned
+  scan_verdict: allow
   prompt_injection_findings: []
   osv: unscanned
 examples:
@@ -55,3 +55,8 @@ examples:
 - 查看任务 W202606130053472 的详情和日志
 - 取消任务 W202606130053472
 - 列出 /Files 目录下的数据文件
+tools:
+  probed_at: '2026-08-23T08:09:49Z'
+  probed_runtime: npx
+  count: 1
+  file: tools.json

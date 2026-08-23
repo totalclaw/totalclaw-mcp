@@ -48,7 +48,7 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: unscanned
+  scan_verdict: allow
   prompt_injection_findings: []
   osv: unscanned
 examples:
@@ -57,3 +57,8 @@ examples:
 - 我下午要去拜访张三这个客户，请整理他的客户画像信息，帮我准备一下
 - 帮我给最新添加的客户，根据沟通内容和需求，生成几个跟进任务给对应员工，包含跟进目标、话术
 - 帮我创建一个今天下午两点的日程，提醒我跟进最近添加的客户，内容是主动向客户介绍新功能
+tools:
+  probed_at: '2026-08-23T08:09:24Z'
+  probed_runtime: npx
+  count: 6
+  file: tools.json

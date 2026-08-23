@@ -1,0 +1,299 @@
+[
+  {
+    "name": "wechat_capabilities",
+    "description": "探测本机能力:平台(Windows/macOS/Linux)、微信是否在跑、可用读取层顺序。\n\n    这是\"自动 OS 检测 + 选能力\"的出口:调用方据此知道本机走哪条读取路\n    (native_text 免模型直读 / ocr / clipboard / screenshot 交 agent 视觉)。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "wechat_capabilitiesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wechat_list_unread",
+    "description": "从会话列表顶部滚轮遍历并列出全部可发现的未读会话(红点检测,零模型)。\n\n    每页在仍可见时记录红点行；返回 ``page`` 和屏幕坐标 ``row_y``。会话名需\n    再读（纯红检测可能误报红色头像）。滚动前会复核微信仍在前台。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "max_pages": {
+          "default": 100,
+          "title": "Max Pages",
+          "type": "integer"
+        },
+        "scroll_clicks": {
+          "default": 7,
+          "title": "Scroll Clicks",
+          "type": "integer"
+        }
+      },
+      "title": "wechat_list_unreadArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wechat_read_scrolled_list",
+    "description": "滚轮遍历微信列表并 OCR 去重。\n\n    ``kind`` 支持 ``conversations``（会话）、``groups``（群聊）和\n    ``contacts``（联系人）。每次滚动前均校验微信仍在前台；连续页面不变、\n    列表到底或达到 ``max_pages`` 时停止。群聊结果会写入本地群 roster，供未\n    指定群时的“全部群聊”范围使用。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "max_pages": {
+          "default": 100,
+          "title": "Max Pages",
+          "type": "integer"
+        },
+        "scroll_clicks": {
+          "default": 7,
+          "title": "Scroll Clicks",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "wechat_read_scrolled_listArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wechat_open_chat",
+    "description": "按联系人/群名打开会话(搜索式,自动置于可读/可发状态)。",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "contact": {
+          "title": "Contact",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contact"
+      ],
+      "title": "wechat_open_chatArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wechat_read_chat",
+    "description": "读某联系人会话的最近消息文本。\n\n    自动按本机能力选层:native_text(AX/UIA 直读,免模型)→ ocr → clipboard。\n    若本机无任何免-LLM 读取层(如 macOS 微信不暴露 AX 树)→ 返回提示,请改用\n    ``wechat_screenshot_chat`` 让调用 agent 的视觉模型读。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "contact": {
+          "title": "Contact",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contact"
+      ],
+      "title": "wechat_read_chatArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wechat_read_group_history",
+    "description": "滚动鼠标滚轮并读取指定天数内的群聊历史。\n\n    ``group`` / ``groups`` 可指定单群或多群；均为空时处理全部已发现群。每页\n    在本机截图并 OCR，识别到 ``days`` 天前日期后停止。另有页数、历史顶部和\n    前台失焦护栏。长群聊可能耗时数分钟，期间不会发送任何消息。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "group": {
+          "default": "",
+          "title": "Group",
+          "type": "string"
+        },
+        "groups": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Groups"
+        },
+        "days": {
+          "default": 20,
+          "title": "Days",
+          "type": "integer"
+        },
+        "max_pages": {
+          "default": 240,
+          "title": "Max Pages",
+          "type": "integer"
+        }
+      },
+      "title": "wechat_read_group_historyArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wechat_screenshot_chat",
+    "description": "返回微信会话区截图(PNG),交调用 agent 的视觉模型读。\n\n    ``contact`` 非空则先打开该会话再截;为空则截当前已打开会话。这是\"视觉读取\n    层\":本 server 不调 LLM,把图交给有视觉能力的 agent。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "contact": {
+          "default": "",
+          "title": "Contact",
+          "type": "string"
+        }
+      },
+      "title": "wechat_screenshot_chatArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wechat_archive_group_summary",
+    "description": "持久化一份群聊摘要及其选中原文。\n\n    先用 ``wechat_read_chat`` / ``wechat_screenshot_chat`` 读取，再由调用\n    Agent 按 ``content_filter`` 汇总，最后调用本工具。文件写入\n    ``$TOTALCLAW_HOME/wechat/group-archives``；默认 5 分钟执行窗口内自动去重，\n    防止 cron 重试和 OCR 波动重复落盘。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "group": {
+          "title": "Group",
+          "type": "string"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "selected_content": {
+          "default": "",
+          "title": "Selected Content",
+          "type": "string"
+        },
+        "content_filter": {
+          "default": "",
+          "title": "Content Filter",
+          "type": "string"
+        },
+        "dedupe_window_minutes": {
+          "default": 5,
+          "title": "Dedupe Window Minutes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "group",
+        "summary"
+      ],
+      "title": "wechat_archive_group_summaryArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wechat_schedule_group_summary",
+    "description": "创建定期微信群聊汇总归档任务。\n\n    ``group`` / ``groups`` 均为空时给全部已发现群分别建任务。``schedule``\n    复用 TotalClaw cron 格式；``days`` 是每次回溯天数。相同群、天数和筛选\n    条件只创建一个任务；任务只允许使用本微信 MCP，且禁止发送消息。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "group": {
+          "default": "",
+          "title": "Group",
+          "type": "string"
+        },
+        "schedule": {
+          "default": "",
+          "title": "Schedule",
+          "type": "string"
+        },
+        "content_filter": {
+          "default": "",
+          "title": "Content Filter",
+          "type": "string"
+        },
+        "groups": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Groups"
+        },
+        "days": {
+          "default": 1,
+          "title": "Days",
+          "type": "integer"
+        }
+      },
+      "title": "wechat_schedule_group_summaryArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wechat_send_message",
+    "description": "给联系人/群发一条文本消息(确定性发送:几何+键盘+剪贴板,自动按平台)。\n\n    ⚠️ 个人号自动化违反微信 ToS(灰区,风险自担)。批量/营销/群发请勿使用本工具;\n    自动回复的限速/白名单/人审护栏在入站适配器层。\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "contact": {
+          "title": "Contact",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contact",
+        "message"
+      ],
+      "title": "wechat_send_messageArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wechat_send_group_message",
+    "description": "向群发送文本，可用 ``mentions`` 生成微信原生 @ 成员。",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "group": {
+          "title": "Group",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "mentions": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mentions"
+        }
+      },
+      "required": [
+        "group",
+        "message"
+      ],
+      "title": "wechat_send_group_messageArguments",
+      "type": "object"
+    }
+  }
+]

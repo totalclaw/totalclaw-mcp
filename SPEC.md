@@ -54,7 +54,7 @@ registry/servers/<category>/<name>/
 | `type` | 全部 | `stdio` \| `http` |
 | `launcher` | stdio | `npx` \| `uvx` \| `pipx` \| `docker` \| `node` \| `python` \| `binary`；安装器据此检查本机可用性（`shutil.which`） |
 | `command` | stdio | 可执行文件 |
-| `args` | stdio | 参数列表。`npx/uvx/pipx/bunx/pnpx` 包名**必须精确 pin 版本**（`pkg@1.2.3` / `pkg==1.2.3`），docker 镜像必须带 tag，推荐带 `@sha256:` digest。`${VAR}` / `${VAR:-default}` 允许 |
+| `args` | stdio | 参数列表。`npx/uvx/pipx/bunx/pnpx` 包名**必须精确 pin 版本**（`pkg@1.2.3` / `pkg==1.2.3`），docker 镜像必须带 tag，推荐带 `@sha256:` digest。`${VAR}` 允许（安装后由 agent 从 `.env`/环境变量代入）。**`${VAR:-default}` 不支持** —— agent 的 `utils.interpolate_env_vars` 正则是 `\$\{([^}]+)\}`，会把 `VAR:-default` 整个当成变量名去查，查不到就原样留着，服务器拿到一串字面量后起不来。要默认值就在 `requires_env` 里声明变量并写清 `prompt`，别指望 shell 语法 |
 | `requires` | stdio | 本机前置，如 `{node: ">=18"}`、`{python: ">=3.10"}`、`{docker: true}` |
 | `url` | http | 端点 URL。`{org}` 占位符仅允许出现在 `hosted` 运行时，由安装器替换 |
 | `auth` | http | `none` \| `header` \| `oauth`。`header` → 安装器生成 `headers.Authorization: Bearer ${MCP_<NAME>_API_KEY}`；`oauth` → 写 `auth: oauth`，装后需 `totalclaw mcp login <name>` |

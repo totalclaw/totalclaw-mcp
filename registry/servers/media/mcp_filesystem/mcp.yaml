@@ -1,11 +1,15 @@
 # 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+# 原先写的是 ${MCP_FS_ROOT:-/tmp}，而 agent 的 interpolate_env_vars 不认 :- 默认值
+# （正则 \$\{([^}]+)\}，把 "MCP_FS_ROOT:-/tmp" 整个当变量名去查）—— 服务器拿到一串
+# 字面量当目录名，起不来。改成必填：沙箱根目录本来就该让用户自己选，
+# 静默默认 /tmp 等于替用户决定了「哪些文件可以被模型读写」。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_filesystem
 display_name: Filesystem
 display_name_en: Filesystem
-version: 0.1.0
+version: 0.2.0
 description: Filesystem MCP server.
 description_zh: 受控文件系统读写 — 强制根目录沙箱,支持 list / read / write / edit / search / move。args 末 path 是允许根(可多个)。
 author: upstream
@@ -23,18 +27,26 @@ runtimes:
   args:
   - -y
   - '@modelcontextprotocol/server-filesystem@2026.7.10'
-  - ${MCP_FS_ROOT:-/tmp}
+  - ${MCP_FS_ROOT}
   requires:
     node: '>=18'
-requires_env: []
-optional_env:
+requires_env:
 - name: MCP_FS_ROOT
   env_key: MCP_FS_ROOT
-  description: MCP_FS_ROOT for mcp_filesystem
-  prompt: 请输入 MCP_FS_ROOT
+  description: 允许读写的根目录（沙箱边界，只有这个目录下的文件可被访问）
+  prompt: 请输入允许读写的根目录绝对路径
   secret: false
-  default: /tmp
-  required: false
+  required: true
+optional_env: []
 defaults:
   enabled: true
   timeout: 60
+tools:
+  probed_at: '2026-08-23T08:07:00Z'
+  probed_runtime: npx
+  count: 14
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned

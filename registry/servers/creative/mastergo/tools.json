@@ -1,0 +1,418 @@
+[
+  {
+    "name": "version_0_2_8",
+    "description": "the current version is 0.2.8",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "mcp__getDesignSections",
+    "description": "\nBEFORE calling this tool, CHECK the layerId:\n- If layerId has NO colon and no digits (e.g. \"M\", or any short non-numeric id), it is likely a\n  PAGE-level id, NOT a layer id. Page-level ids return EMPTY from this tool (they cannot be\n  enumerated via /container).\n  → STOP. Call mcp__getPageLayers with the same fileId+layerId first to enumerate the real\n  layer_ids, then restore each one individually.\n- Only proceed with THIS tool when layerId looks like a real layer id (contains a colon and\n  digits, e.g. \"802:02364\", \"453:6855\").\nThis check is MANDATORY when the user's URL contains ?page_id= (not ?layer_id=). If you ignore\nthis and call this tool with a page-level id, the server will return an error redirecting you to\nmcp__getPageLayers anyway — so save the round-trip and call getPageLayers first.\n\n[PRIMARY] This is the main tool for all designs. Operates in TWO modes:\n\nMode 1 — Get layout overview (sectionIndex NOT provided):\nReturns the list of all sections with id, name, type, nodeCount, textPreview (first TEXT node, 20 chars max), and a page-absolute bounding box (x, y, width, height) for each section, plus totalSections and totalNodes.\nAlso returns rootMetadata (root layer width/height/name/type/fill) when available. rootContainer CSS properties for the page wrapper. splitContainers for large page regions that were split into child sections.\nUse this FIRST to understand the design scope. The per-section bbox tells you exactly where each section sits inside the root container — use it for absolute positioning when generating code.\nExample: { \"fileId\": \"123\", \"layerId\": \"456:789\" }\n\nMode 2 — Get section DSL (sectionIndex provided):\nReturns the full DSL for ONE specific section.\n- PATH nodes carry a `svgShortKey` field (a short sequential ID like `S0#0`, `S0#1`). The SVG markup is NOT in the DSL. Place `@@SVG:{svgShortKey}@@` where each icon goes, then call `mcp__applyDesign` at the end to inject the real high-precision SVG. NEVER hand-write `<path d=\"...\">`.\n- CRITICAL: After generating the complete code with all `@@SVG:{svgShortKey}@@` placeholders, call `mcp__applyDesign` to replace them with real SVG. Skipping this WILL cause missing icons.\n- INSTANCE nodes with a `_variantProps` object carry semantic state labels. Compare these across sibling instances to determine active/selected/hovered states — do NOT default to the first item.\n\nCRITICAL — sectionIndex is SINGULAR: the parameter is sectionIndex (a SINGLE integer per call). There is NO plural sectionIndices parameter — passing an array will be rejected with an error. To fetch multiple sections you MUST make multiple calls, each with one sectionIndex.\n\nIMPORTANT workflow:\n1. First call WITHOUT sectionIndex to get the section list with node counts.\n2. Then call WITH sectionIndex=0, then sectionIndex=1, ... up to totalSections-1 — ONE sectionIndex per call.\n3. YOU MUST REQUEST ALL SECTIONS. Do NOT skip any section index — missing sections WILL cause missing content.\n4. textPreview helps distinguish same-looking sections: \"系统信息\", \"权限设置\", \"基本设置\" — all may have nodeCount=3 and empty name but DIFFERENT textPreview. They are individual menu items, NOT duplicates.\n5. Fetch sections in batches of 3-5 CONCURRENT calls (3-5 separate single-sectionIndex calls in parallel), wait for all results, then send the next batch. Each call has exactly one sectionIndex.\n6. After fetching all sections, generate code with `@@SVG:{svgShortKey}@@` placeholders for every PATH node, then call `mcp__applyDesign` to inject real SVG.\n7. Count your requests. If totalSections=48, you must make exactly 48 sectionIndex calls (each with a SINGLE integer). Keep a checklist and do NOT stop early.\n8. Generate the complete HTML with all SVG placeholders, then call `mcp__applyDesign` as the FINAL step.\n\nDO NOT call mcp__getDsl after completing this workflow — all data is already provided.\nIf this tool returns an error (e.g. old server), fall back to mcp__getDsl.\n\nYou can provide either:\n1. fileId and layerId directly, or\n2. a short link (like https://{domain}/goto/LhGgBAK)\n",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "string",
+          "description": "MasterGo design file ID. Required if shortLink is not provided."
+        },
+        "layerId": {
+          "type": "string",
+          "description": "Root layer ID of the design. Required if shortLink is not provided."
+        },
+        "shortLink": {
+          "type": "string",
+          "description": "Short link (like https://{domain}/goto/LhGgBAK)."
+        },
+        "sourceLayerId": {
+          "type": "string",
+          "description": "Source layer ID from URL parameter source_layer_id. When provided, use this instead of layerId for all queries."
+        },
+        "sectionIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "0-based section index (SINGULAR — a single integer per call). If omitted, returns the section list only. If provided, returns full DSL for that ONE specific section. To fetch multiple sections, make MULTIPLE separate calls each with a single sectionIndex. Do NOT pass an array."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "json",
+            "yaml",
+            "tree"
+          ],
+          "description": "Output format for design data. Defaults to json.\n- json — default; useful when piping output into tools that expect JSON.\n- yaml — fewer tokens than JSON for typical designs.\n- tree — experimental compact format. Structural keys (id, name, type) are encoded positionally on each node line, and style values stay deduplicated in a globalVars block. Designs with heavy style reuse see the largest token savings."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mcp__getPageLayers",
+    "description": "\nList ALL layers under a given page (or any container layer) of a MasterGo design file.\nThis is the ENUMERATION step of the multi-layer restoration workflow — it only lists\nlayer_ids; it does NOT restore designs.\n\n**Workflow (enumerate → build URLs → restore one by one):**\n  1. Call this tool with the page_id / parent layerId to get the full layer list.\n  2. Pick the top-level restorable layers from the result (FRAME/COMPONENT/INSTANCE at\n     depth 0/1). For each, build a URL: https://mastergo.com/file/{fileId}?layer_id={id}\n     (URL-encode the id, e.g. 802:02364 → 802%3A02364).\n  3. Restore them SEQUENTIALLY — take one layer_id, run the full single-layer restoration\n     (mcp__getDesignSections → fetch all sections → mcp__applyDesign), write its HTML to its\n     OWN separate .html file (a complete standalone document with <!DOCTYPE html>/<head>/<body>),\n     THEN move to the next. Do NOT batch-restore. Do NOT merge multiple layers into one HTML file —\n     ONE layer = ONE standalone .html file.\n\nYou can provide either:\n1. fileId and layerId directly (layerId = the page's layerId, i.e. page_id), or\n2. a short link (like https://{domain}/goto/LhGgBAK)\n\nThe returned layer list is lightweight: each entry has id, name, type, depth, parentId,\nchildrenCount, width, height. It does NOT contain DSL/styles/SVG paths — use the section\nor DSL tools to restore each layer.\n\nNOTE: This tool cannot enumerate a document's PAGE list from a fileId alone — you must\nalready know a page_id / layerId to pass in. The synthetic page_id=M returns empty\n(page data not available via this API); use a real layer_id URL in that case.\n",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "string",
+          "description": "MasterGo design file ID (format: file/<fileId> in MasterGo URL). Required if shortLink is not provided."
+        },
+        "layerId": {
+          "type": "string",
+          "description": "Page layer ID to enumerate. This is the page_id from the MasterGo URL (e.g. \"40:015\"). Required if shortLink is not provided."
+        },
+        "sourceLayerId": {
+          "type": "string",
+          "description": "Source layer ID from URL parameter source_layer_id. When provided, use this instead of layerId for all queries."
+        },
+        "shortLink": {
+          "type": "string",
+          "description": "Short link (like https://{domain}/goto/LhGgBAK)."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "json",
+            "yaml",
+            "tree"
+          ],
+          "description": "Output format for design data. Defaults to json.\n- json — default; useful when piping output into tools that expect JSON.\n- yaml — fewer tokens than JSON for typical designs.\n- tree — experimental compact format. Structural keys (id, name, type) are encoded positionally on each node line, and style values stay deduplicated in a globalVars block. Designs with heavy style reuse see the largest token savings."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mcp__getDsl",
+    "description": "\n[FALLBACK] Use only when mcp__getDesignSections is unavailable or returns an error.\nThis returns the FULL DSL in one response — may be large and exceed context limits for complex designs.\nPrefer mcp__getDesignSections as the primary tool for all designs.\nYou can provide either:\n1. fileId and layerId directly, or\n2. a short link (like https://{domain}/goto/LhGgBAK)\nThis tool returns the raw DSL data that you can then parse and analyze. Use the optional 'format' parameter (json/yaml/tree, defaults to json) to control the serialization.\nThis tool also returns the rules you must follow when generating code.\nThe DSL data can also be used to transform and generate code for different frameworks.\n",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "string",
+          "description": "MasterGo design file ID (format: file/<fileId> in MasterGo URL). Required if shortLink is not provided."
+        },
+        "layerId": {
+          "type": "string",
+          "description": "Layer ID of the specific component or element to retrieve (format: ?layer_id=<layerId> / file=<fileId> in MasterGo URL). Required if shortLink is not provided."
+        },
+        "sourceLayerId": {
+          "type": "string",
+          "description": "Source layer ID from URL parameter source_layer_id. When provided, use this instead of layerId for all queries."
+        },
+        "shortLink": {
+          "type": "string",
+          "description": "Short link (like https://{domain}/goto/LhGgBAK)."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "json",
+            "yaml",
+            "tree"
+          ],
+          "description": "Output format for design data. Defaults to json.\n- json — default; useful when piping output into tools that expect JSON.\n- yaml — fewer tokens than JSON for typical designs.\n- tree — experimental compact format. Structural keys (id, name, type) are encoded positionally on each node line, and style values stay deduplicated in a globalVars block. Designs with heavy style reuse see the largest token savings."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mcp__getD2c",
+    "description": "\n使用此工具从 MasterGo 获取 D2C 数据，并在本地落盘：\n1）将返回的 code 写入 html；\n2）将返回的 svg / image 资源按 resourcePath 落盘到对应目录；\n3）返回落盘摘要，避免把大体积资源塞进上下文。\n",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "contentId": {
+          "type": "string",
+          "description": "MasterGo D2C contentId，例如 mastergo://getd2c/176452330285910-2-2845 中的 176452330285910-2-2845。"
+        },
+        "documentId": {
+          "type": "string",
+          "description": "MasterGo 文档 ID，通常为 contentId 的第一段，例如 contentId 为 176452330285910-2-9032 时 documentId 为 176452330285910。"
+        },
+        "outDir": {
+          "type": "string",
+          "description": "可选，输出目录（绝对路径或相对当前工作目录）。"
+        }
+      },
+      "required": [
+        "contentId",
+        "documentId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mcp__C2d",
+    "description": "\n使用此工具将代码文件发送到 MasterGo MCP 服务进行 C2D（代码转设计）处理，将用户代码同步到设计稿。\n\n参数说明：\n- filePath：HTML 文件的完整路径（如 /path/to/file.html），工具会自动读取文件内容并发送给后端。\n- fileId： 不提供 shortLink 时至少需要 fileId。layerId 不是必填，没有就不要传。\n- layerId： 可选。图层 ID（只读取 URL 参数 layer_id）。不传或解析不到则仅按 file 维度同步；pageid/page_id 不会被当作 layerId。\n- shortLink：可选，短链接形式（例如 https://{domain}/goto/xxxx）。\n  注意事项：只允许使用 URL 中的 layer_id 参数作为 layerId，严禁将 pageid/page_id 等任何页面 ID 当作 layerId。\n  如果短链接或 URL 中没有解析出 layer_id，则不传 layerId。\n\n工具会读取 filePath 指定文件的内容，并传给后端，附带 fileId 与可选的 layerId。\n",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "filePath": {
+          "type": "string",
+          "minLength": 1,
+          "description": "HTML 文件的完整路径，工具会读取文件内容并发送给后端"
+        },
+        "fileId": {
+          "type": "string",
+          "description": "文件 ID（URL 中 file= 或路径中的数字段）。未传 shortLink 时必填。"
+        },
+        "layerId": {
+          "type": "string",
+          "description": "可选。图层 ID（只读取 URL 参数 layer_id）。不传或解析不到则仅按 file 维度同步；pageid/page_id 不会被当作 layerId。"
+        },
+        "shortLink": {
+          "type": "string",
+          "description": "Short link (like https://{domain}/goto/LhGgBAK)."
+        }
+      },
+      "required": [
+        "filePath"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mcp__getComponentLink",
+    "description": "When the data returned by mcp__getDsl contains a non-empty componentDocumentLinks array, this tool is used to sequentially retrieve URLs from the componentDocumentLinks array and then obtain component documentation data. The returned document data is used for you to generate frontend code based on components.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Component documentation link URL, from the componentDocumentLinks property, please ensure the URL is valid"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mcp__getMeta",
+    "description": "\nUse this tool when the user intends to build a complete website or needs to obtain high-level site\nconfiguration information. You must provide a fileld and layerld to identify the specific design element.\nThis tool returns the rules and results of the site and page. The rules is a markdown file, you must\nfollow the rules and use the results to analyze the site and page.\n",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "string",
+          "description": "MasterGo design file ID (format: file/<fileId> in MasterGo URL)"
+        },
+        "layerId": {
+          "type": "string",
+          "description": "Layer ID of the specific component or element to retrieve (format: ?layer_id=<layerId> / file=<fileId> in MasterGo URL)"
+        },
+        "sourceLayerId": {
+          "type": "string",
+          "description": "Source layer ID from URL parameter source_layer_id. When provided, use this instead of layerId for all queries."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "json",
+            "yaml",
+            "tree"
+          ],
+          "description": "Output format for design data. Defaults to json.\n- json — default; useful when piping output into tools that expect JSON.\n- yaml — fewer tokens than JSON for typical designs.\n- tree — experimental compact format. Structural keys (id, name, type) are encoded positionally on each node line, and style values stay deduplicated in a globalVars block. Designs with heavy style reuse see the largest token savings."
+        }
+      },
+      "required": [
+        "fileId",
+        "layerId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mcp__getComponentGenerator",
+    "description": "\nUsers need to actively call this tool to get the component development workflow. When Generator is mentioned, please actively call this tool.\nThis tool provides a structured workflow for component development following best practices.\nYou must provide an absolute rootPath of workspace to save workflow files.\n",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "rootPath": {
+          "type": "string",
+          "description": "The root path of the project, if the user does not provide, you can use the current directory as the root path"
+        },
+        "fileId": {
+          "type": "string",
+          "description": "MasterGo design file ID (format: file/<fileId> in MasterGo URL)"
+        },
+        "layerId": {
+          "type": "string",
+          "description": "Layer ID of the specific component or element to retrieve (format: ?layer_id=<layerId> / file=<fileId> in MasterGo URL)"
+        },
+        "sourceLayerId": {
+          "type": "string",
+          "description": "Source layer ID from URL parameter source_layer_id. When provided, use this instead of layerId for all queries."
+        }
+      },
+      "required": [
+        "rootPath",
+        "fileId",
+        "layerId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mcp__getFlutterGenerator",
+    "description": "\nUsers need to actively call this tool to get the Flutter component development workflow. When Flutter Generator or Flutter Component is mentioned, please actively call this tool.\nThis tool provides a structured workflow for Flutter component development following best practices.\nIt includes MasterGo DSL to Flutter Widget mapping rules, screen adaptation with flutter_screenutil, and feature-based architecture guidance.\nIt also downloads all image resources from the design file to local disk, rewrites CSS and DSL references to point at Flutter asset paths, and generates an asset manifest.\nYou must provide an absolute rootPath of workspace to save workflow files.\n",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "rootPath": {
+          "type": "string",
+          "description": "The root path of the Flutter project, if the user does not provide, you can use the current directory as the root path"
+        },
+        "fileId": {
+          "type": "string",
+          "description": "MasterGo design file ID (format: file/<fileId> in MasterGo URL)"
+        },
+        "layerId": {
+          "type": "string",
+          "description": "Layer ID of the specific component or element to retrieve (format: ?layer_id=<layerId> / file=<fileId> in MasterGo URL)"
+        },
+        "sourceLayerId": {
+          "type": "string",
+          "description": "Source layer ID from URL parameter source_layer_id. When provided, use this instead of layerId for all queries."
+        },
+        "featureName": {
+          "type": "string",
+          "description": "Optional feature directory name under assets/image/ and the Flutter feature module. Defaults to the root component name."
+        }
+      },
+      "required": [
+        "rootPath",
+        "fileId",
+        "layerId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mcp__extractSvg",
+    "description": "\nExtract SVG data from MasterGo design files. This tool retrieves the DSL from a design layer, finds all PATH nodes (typically inside INSTANCE/icon components), resolves their color references, and generates SVG markup strings.\nYou can provide either:\n1. fileId and layerId directly, or\n2. a short link (like https://{domain}/goto/LhGgBAK)\n\nPagination: When there are many icons, use the first call without \"page\" to get totalCount. Then call again with page=0, page=1, etc. (page starts at 0, pageSize defaults to 20, max 100). If hasMore is false, you've fetched all pages.\n",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "string",
+          "description": "MasterGo design file ID (format: file/<fileId> in MasterGo URL). Required if shortLink is not provided."
+        },
+        "layerId": {
+          "type": "string",
+          "description": "Layer ID of the specific component or element to retrieve (format: ?layer_id=<layerId>). Required if shortLink is not provided."
+        },
+        "sourceLayerId": {
+          "type": "string",
+          "description": "Source layer ID from URL parameter source_layer_id. When provided, use this instead of layerId for all queries."
+        },
+        "shortLink": {
+          "type": "string",
+          "description": "Short link (like https://{domain}/goto/LhGgBAK)."
+        },
+        "backgroundColor": {
+          "type": "string",
+          "description": "Solid background color for the SVG (e.g. '#000000', 'black'). Useful for previewing white/light icons."
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Page number for pagination (starts at 0). Omit to get all SVGs at once. When provided, the response includes totalCount/hasMore/page/pageSize for you to iterate through all pages."
+        },
+        "pageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Number of SVGs per page (default 20, max 100). Only used when page is provided."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "json",
+            "yaml",
+            "tree"
+          ],
+          "description": "Output format for design data. Defaults to json.\n- json — default; useful when piping output into tools that expect JSON.\n- yaml — fewer tokens than JSON for typical designs.\n- tree — experimental compact format. Structural keys (id, name, type) are encoded positionally on each node line, and style values stay deduplicated in a globalVars block. Designs with heavy style reuse see the largest token savings."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mcp__applyDesign",
+    "description": "\nFinalize generated design code: replace ALL placeholders (SVG icons + long text) with real high-precision data from the design cache, then write the final file directly to disk.\n\nWHAT it does:\n1. Replaces every `@@SVG:{svgShortKey}@@` placeholder with the real high-precision `<svg>` markup from the SVG cache (character-for-character exact, no rounding).\n2. Replaces every `T{sectionIndex}|{nodeId}` text placeholder with the real long text from the text cache.\n3. Detects fabricated (hand-written) `<path d=\"...\">` that were NOT injected via placeholders — reports them as errors.\n4. Writes the finalized code directly to `{outDir}/{outputFileName}` on disk.\n\nCRITICAL — outDir is MANDATORY: Always provide outDir so the finalized code is written directly to disk. This ensures the server-injected data reaches the file WITHOUT any LLM re-processing. Do NOT copy the code back into your response and re-output it — that causes precision loss. The file written by this tool IS the final deliverable.\n\nPLACEHOLDER FORMATS:\n- SVG icons: `@@SVG:{svgShortKey}@@` — svgShortKey comes from the PATH node's svgShortKey field in the section DSL.\n  Example: <span class=\"icon\">@@SVG:S0#0@@</span>\n- Long text: `T{sectionIndex}|{nodeId}` — appears in TEXT nodes whose text was too long for inline DSL.\n  Example: <p>T3|1:1234:5678</p>\n\nThe server escapes the injected data according to the `targetLang` parameter:\n- `html` (default, also for Vue templates): place the placeholder in element content (`<span>@@SVG:S0#0@@</span>`, `<p>T3|1:2</p>`). SVG is inserted as-is; long text is HTML-escaped (& < >).\n- `dart` (Flutter): place the placeholder inside a single-quoted string literal (`SvgPicture.string('@@SVG:S0#0@@')`, `Text('T3|1:2')`). SVG/text are escaped for that string (\\ ' newline). Pass `targetLang: \"dart\"`.\nPick targetLang to match the code you generated, and place placeholders in that language's standard position shown above.\n\nYou can provide either:\n1. fileId and layerId directly, or\n2. a short link (like https://{domain}/goto/LhGgBAK)\n\nIMPORTANT: Call this tool with the COMPLETE code string. After the tool writes the file, you are DONE — do NOT output or edit the code further.\n",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "string",
+          "description": "MasterGo design file ID. Required if shortLink is not provided. Must match the fileId used in getDesignSections."
+        },
+        "layerId": {
+          "type": "string",
+          "description": "Root layer ID of the design. Required if shortLink is not provided. Must match the layerId used in getDesignSections."
+        },
+        "sourceLayerId": {
+          "type": "string",
+          "description": "Source layer ID from URL parameter source_layer_id. When provided, use this instead of layerId for all queries."
+        },
+        "shortLink": {
+          "type": "string",
+          "description": "Short link (like https://{domain}/goto/LhGgBAK)."
+        },
+        "code": {
+          "type": "string",
+          "description": "The COMPLETE generated code containing @@SVG:{svgShortKey}@@ and/or T{sectionIndex}|{nodeId} placeholders."
+        },
+        "outDir": {
+          "type": "string",
+          "description": "Output directory where the final file will be written. The finalized code (with all placeholders replaced by real data) is written directly to this directory — do NOT re-output or edit the code after this tool runs. Example: '/Users/you/project/output' or './output'."
+        },
+        "outputFileName": {
+          "type": "string",
+          "description": "Output file name (default: 'index.html'). Include extension. Example: 'snmp-agent.html'."
+        },
+        "targetLang": {
+          "type": "string",
+          "enum": [
+            "html",
+            "dart"
+          ],
+          "description": "Target language of the generated code, decides placeholder escaping. 'html' (default, also for Vue): SVG inserted as-is into element content, long text HTML-escaped. 'dart' (Flutter): SVG/text escaped for single-quoted string literals (SvgPicture.string('...'), Text('...'))."
+        }
+      },
+      "required": [
+        "code",
+        "outDir"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  }
+]

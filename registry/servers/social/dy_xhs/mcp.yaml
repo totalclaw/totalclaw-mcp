@@ -5,7 +5,7 @@ tested_with: '>=0.63.72'
 name: dy_xhs
 display_name: 抖音 / 小红书
 display_name_en: Douyin / Xiaohongshu
-version: 0.1.0
+version: 0.2.0
 description: 抖音 / 小红书 MCP server.
 description_zh: 抖音+小红书内容提取/去水印/语音转文字:get_douyin_download_link / extract_douyin_text / parse_douyin_video_info
   / get_xiaohongshu_content / extract_xiaohongshu_text / extract_xiaohongshu_video_text / get_xiaohongshu_images
@@ -23,6 +23,8 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp==1.19.0
   - douyin-mcp-server==1.2.1
   env:
     DOUYIN_MCP_CONFIG: ${DOUYIN_MCP_CONFIG:-${HOME}/.totalclaw/dy_xhs_config.json}
@@ -40,3 +42,12 @@ optional_env:
 defaults:
   enabled: true
   timeout: 240
+tools:
+  probed_at: '2026-08-23T08:08:38Z'
+  probed_runtime: uvx
+  count: 5
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned

@@ -1,11 +1,15 @@
 # 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+# 原先写的是 ${SQLITE_DB_PATH:-${HOME}/.totalclaw/mcp_sqlite.db}，而 agent 的
+# interpolate_env_vars 不认 :- 默认值（正则 \$\{([^}]+)\}，会把 "SQLITE_DB_PATH:-${HOME"
+# 整个当变量名）—— 服务器拿到一串字面量当路径，起不来。导入脚本也被这个语法截断，
+# 在 optional_env 里留下过一个残缺的 `default: ${HOME`。改成显式变量、装的时候填。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_sqlite
 display_name: SQLite
 display_name_en: SQLite
-version: 0.1.0
+version: 0.2.0
 description: SQLite MCP server.
 description_zh: SQLite 本地数据库读写 — list_tables / describe_table / read_query / write_query / create_table。轻量本地存储工作流。已归档但仍可用。
 author: upstream
@@ -21,20 +25,30 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp==1.19.0
   - mcp-server-sqlite==2025.4.25
   - --db-path
-  - ${SQLITE_DB_PATH:-${HOME}/.totalclaw/mcp_sqlite.db}
+  - ${SQLITE_DB_PATH}
   requires:
     python: '>=3.10'
-requires_env: []
-optional_env:
+requires_env:
 - name: SQLITE_DB_PATH
   env_key: SQLITE_DB_PATH
-  description: SQLITE_DB_PATH for mcp_sqlite
-  prompt: 请输入 SQLITE_DB_PATH
+  description: SQLite 数据库文件路径；不存在会新建
+  prompt: 请输入 SQLite 数据库文件路径（如 ~/.totalclaw/mcp_sqlite.db）
   secret: false
-  default: ${HOME
-  required: false
+  required: true
+optional_env: []
 defaults:
   enabled: true
   timeout: 60
+tools:
+  probed_at: '2026-08-23T08:06:28Z'
+  probed_runtime: uvx
+  count: 6
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned

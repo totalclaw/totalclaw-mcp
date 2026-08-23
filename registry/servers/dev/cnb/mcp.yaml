@@ -3,6 +3,8 @@
 #
 # 这条是补上来的：此前 TODO 里 cnb-api 记的是「OpenAPI 端点 401，规范需登录」——
 # 那是走 REST 自研 pack 那条路走不通，但厂商自己发了 MCP server，直接接就行。
+# 上游变量名就叫 API_TOKEN —— 太通用了，几个 server 共用一份 .env 会互相覆盖，
+# 所以这里显式命名空间化成 MCP_CNB_API_TOKEN，再在 runtime 里映射回上游要的名字。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
@@ -10,8 +12,8 @@ name: cnb
 display_name: CNB 云原生构建
 display_name_en: CNB
 version: 0.1.0
-description: Access the CNB platform — repositories, issues, pull requests, pipelines, cloud-native
-  workspaces and knowledge bases.
+description: Access the CNB platform — repositories, issues, pull requests, pipelines, cloud-native workspaces
+  and knowledge bases.
 description_zh: 访问 CNB 平台：代码仓库、Issue、合并请求、流水线、云原生开发环境与知识库。
 author: vendor
 homepage: https://cnb.cool/cnb/tools/cnb-mcp-server
@@ -36,8 +38,6 @@ runtimes:
   requires:
     node: '>=18'
 requires_env:
-# 上游变量名就叫 API_TOKEN —— 太通用了，几个 server 共用一份 .env 会互相覆盖，
-# 所以这里显式命名空间化成 MCP_CNB_API_TOKEN，再在 runtime 里映射回上游要的名字。
 - name: API_TOKEN
   env_key: MCP_CNB_API_TOKEN
   description: CNB 平台的访问令牌（个人设置里生成）
@@ -56,11 +56,16 @@ defaults:
   enabled: true
   timeout: 60
 security:
-  # 没有令牌连不上，探不到工具列表也就扫不了注入。
-  # 有令牌的环境里：export MCP_CNB_API_TOKEN=… && python3 scripts/probe_server.py cnb
-  scan_verdict: unscanned
+  scan_verdict: allow
   prompt_injection_findings: []
   osv: unscanned
-notes: |
-  包里还有第二个 bin `cnb-mcp-streamable`，是在本机起一个 streamable-HTTP 端口
+notes: '包里还有第二个 bin `cnb-mcp-streamable`，是在本机起一个 streamable-HTTP 端口
+
   给跨进程用的，不是厂商的远程端点。装到 agent 里走 stdio 更直接，所以这里只落了它。
+
+  '
+tools:
+  probed_at: '2026-08-23T08:09:35Z'
+  probed_runtime: npx
+  count: 40
+  file: tools.json

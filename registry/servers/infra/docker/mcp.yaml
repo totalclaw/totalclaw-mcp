@@ -5,7 +5,7 @@ tested_with: '>=0.63.72'
 name: docker
 display_name: Docker
 display_name_en: Docker
-version: 0.1.0
+version: 0.2.0
 description: Docker MCP server.
 description_zh: Docker 容器管理 — ps / images / run / stop / logs / exec / inspect / network / volume。LLM
   直接调度本地或远端 Docker daemon。
@@ -22,6 +22,8 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp==1.19.0
   - docker-mcp==0.2.0
   env:
     DOCKER_HOST: ${DOCKER_HOST:-unix:///var/run/docker.sock}
@@ -39,3 +41,12 @@ optional_env:
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-08-23T08:08:38Z'
+  probed_runtime: uvx
+  count: 4
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned
