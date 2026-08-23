@@ -1,0 +1,44 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: gildata。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: gildata
+display_name: 恒生聚源 MCP
+version: 0.1.0
+description: Connect to Gildata MCP to query structured financial data, research reports, corporate announcements,
+  news, conditional stock selection, macroeconomic & industry data, as well as enterprise business data.
+description_zh: 连接恒生聚源 MCP，查询金融结构化数据、研究报告、公司公告、新闻资讯、条件选股、宏观行业、工商企业数据。支持基金经理观点持仓一致性分析、行业速报生成、金融资讯热点解读。
+author: vendor
+category: data
+tags:
+- data
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://api.gildata.com/mcp-servers/aidata-assistant-srv-tool?token=${GILDATA_TOKEN}
+  auth: none
+requires_env:
+- name: GILDATA_TOKEN
+  env_key: GILDATA_TOKEN
+  description: 恒生聚源 MCP 所需的 GILDATA_TOKEN
+  prompt: 请输入 GILDATA_TOKEN
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 180
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://api.gildata.com
+examples:
+- 帮我分析张坤在 2024 年底的观点与持仓一致性
+- 生成半导体行业的 24 小时速报
+- 今天有什么重要的金融新闻要闻？
+- 帮我筛选市盈率低于 15 的沪深 300 成分股
+- 查询贵州茅台最近的研究报告

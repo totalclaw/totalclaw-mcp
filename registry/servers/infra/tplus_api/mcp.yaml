@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: tplus-api。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tplus_api
+display_name: 畅捷通T+
+version: 0.1.0
+description: 'Natural-language access to Chanjet T+Cloud: query and manage sales orders, purchase orders,
+  inventory vouchers, production orders, financial documents, reports, and master data.'
+description_zh: 畅捷通 T+Cloud 自然语言操作入口：查询/管理销售订单、采购订单、库存单据、生产工单、财务凭证、报表及基础档案。
+author: vendor
+category: infra
+tags:
+- infra
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcphub.chanapp.chanjet.com/151/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcphub.chanapp.chanjet.com
+examples:
+- 查询最近一周的销售订单
+- 帮我查采购订单 PO-2026-0001 的明细
+- 列出所有未审核的销售出库单
+- 查询库存现存量
+- 查一下客户档案列表

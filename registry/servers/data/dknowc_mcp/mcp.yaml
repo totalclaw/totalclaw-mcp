@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: dknowc-mcp。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: dknowc_mcp
+display_name: 深知可信工作台
+version: 0.1.0
+description: DKnow Trusted Workbench helps with policy, legal, standards, and public-service work. It
+  provides trusted Q&A, authoritative search, deep research, and evidence-based material organization,
+  helping users find official sources, eligibility requirements, application materials, subsidies, regulations,
+  and standards across regions and time periods.
+description_zh: 深知可信工作台面向政策、法律、标准和公共服务场景，提供可信问答、权威检索、深度研究和材料整理能力。它可以帮助用户查询政策原文、办事条件、申报材料、补贴资质、法律法规和行业标准，梳理多地区、多时间范围的信息，并基于可追溯的权威来源形成清晰、可核验的结果。
+author: vendor
+category: data
+tags:
+- data
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.dknowc.cn/s6/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcp.dknowc.cn
+examples:
+- 请使用深知可信工作台查询：深圳公积金租房提取需要哪些材料？请给出权威依据、办理条件和溯源链接。
+- 请使用深知可信工作台搜索重庆市智能化改造技改补贴政策，返回政策原文、申报条件和权威来源链接。
+- 请使用深知可信工作台深度对比北京、上海、深圳三地人才引进政策的类型、适用人群和核心条件，附权威政策依据。

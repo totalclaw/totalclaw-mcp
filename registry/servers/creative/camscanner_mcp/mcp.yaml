@@ -1,0 +1,40 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: camscanner-mcp。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: camscanner_mcp
+display_name: 扫描全能王
+version: 0.1.0
+description: Smart document conversion and processing platform. Supports image/PDF format conversion (Word,
+  Excel, Markdown, PDF), image enhancement (shadow removal, sharpening, HD upscaling, photo restoration),
+  OCR, image translation, formula extraction, watermark processing, multi-image merging, and cloud document
+  saving.
+description_zh: 智能文档转换与处理平台。支持图片/PDF格式转换（Word、Excel、Markdown、PDF）、图片增强（去阴影、锐化、高清化、老照片修复）、OCR文字识别、图片翻译、公式提取、水印处理、多图合并、文档云端保存等。
+author: vendor
+category: creative
+tags:
+- creative
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://ai-tools.camscanner.com/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://ai-tools.camscanner.com
+examples:
+- 帮我把这张图片转成Word
+- 把这个PDF转成Excel
+- 帮我增强一下这张照片
+- 识别这张图片上的文字
+- 把这几张扫描件合并成一个PDF

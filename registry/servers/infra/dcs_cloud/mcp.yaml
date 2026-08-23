@@ -1,0 +1,54 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: dcs-cloud。人工修改后请同步递增 version。
+# 相对上游配置做的规整：
+#   - dcs-cloud-mcp-server → dcs-cloud-mcp-server@2.0.0
+#   - 补 -y（免交互）
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: dcs_cloud
+display_name: DCS Cloud
+version: 0.1.0
+description: 'Bootstrap the dcs CLI (download, auto-update, PAT login), then run the CLI directly to operate
+  DCS Cloud: projects, tasks, workflows, billing, and data files. Create a Personal Access Token (PAT)
+  in the cloud platform profile page and paste it into the connector.'
+description_zh: 引导 dcs CLI（下载、自动更新、PAT 登录），之后直接执行 CLI 操作 DCS Cloud：项目、任务、工作流、计费、数据文件。用户需在云平台个人中心创建个人访问令牌(PAT)并粘贴到连接器。
+author: vendor
+category: infra
+tags:
+- infra
+- vendor
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - dcs-cloud-mcp-server@2.0.0
+  env:
+    DCS_PAT: ${DCS_PAT}
+  requires:
+    node: '>=18.0.0'
+requires_env:
+- name: DCS_PAT
+  env_key: DCS_PAT
+  description: DCS Cloud 所需的 DCS_PAT
+  prompt: 请输入 DCS_PAT
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+examples:
+- 列出我所有的项目
+- 查看当前项目和任务列表
+- 查看任务 W202606130053472 的详情和日志
+- 取消任务 W202606130053472
+- 列出 /Files 目录下的数据文件

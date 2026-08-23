@@ -1,0 +1,36 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: tec-do。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tec_do
+display_name: Tec-Do 2.0 广告与增长情报
+version: 0.1.0
+description: An AI capability suite for global advertising and growth teams.
+description_zh: 面向出海广告投放和增长团队的 AI 能力集合。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://tec-chi-external-skill-mcp.tec-do.cn/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://tec-chi-external-skill-mcp.tec-do.cn
+examples:
+- 查询美国 TikTok 电商品类的 CPM、CTR 和 CPC 基准
+- 搜索美国宠物用品品类近 30 天的 TikTok 热门广告素材
+- 为 example.com 生成结构化竞品分析报告
+- 分析论坛和评论站点中关于智能喂食器的客户之声与情感

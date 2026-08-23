@@ -1,0 +1,40 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: mx-ds-mcp。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mx_ds_mcp
+display_name: 东方财富妙想MCP
+version: 0.1.0
+description: The financial investment research MCP tool suite, which enables natural language queries,
+  relies on data sources from Eastmoney to provide query capabilities for A-shares, Hong Kong stocks,
+  US stocks, funds, bonds, index sectors, and macroeconomic data. It boasts multi-condition asset screening,
+  brokerage research report retrieval, full-market announcement analysis, and financial news retrieval
+  capabilities.
+description_zh: 通过自然语言查询的金融投研 MCP 工具套件，依托东方财富数据源，提供A股、港股、美股、基金、债券、指数板块、宏观数据查询，具备多条件资产筛选、券商研报检索、全市场公告解析、金融资讯检索能力。
+author: vendor
+category: data
+tags:
+- data
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mxapi.eastmoney.com/mxds/v2/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 180
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mxapi.eastmoney.com
+examples:
+- 格力电器近 5 日涨跌幅、换手率及上市时间
+- 沪深 300 近 10 日收盘点位与涨跌幅
+- 筛选创业板市盈率最低的 50 只个股
+- 贵州茅台最新券商研报、分红公告内容

@@ -1,0 +1,50 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: qcc-legal。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: qcc_legal
+display_name: 企查查·法律数据
+version: 0.1.0
+description: 'QCC Legal is a Chinese legal-data connector for searching, researching, and verifying statutes
+  and judicial cases. On the regulation side it covers the full body of in-force Chinese law — laws, administrative
+  regulations, departmental rules, judicial interpretations, and local regulations — at both the whole-regulation
+  and individual-article level, returning verbatim text tagged with validity status (in force / amended
+  / repealed), legal hierarchy, and promulgating authority, with common-name normalization (e.g. The Civil
+  Code, the Personal Information Protection Law). On the case side it covers a massive corpus of ordinary
+  judgment documents plus 25,000+ authoritative cases — Supreme People''s Court and Supreme People''s
+  Procuratorate guiding cases, gazette cases, typical cases, and reference cases — filterable by cause
+  of action, court, instance, judgment date, and party. It further verifies legal citations: given any
+  text it detects every statute and case-number reference, checks each against the database, flags validity
+  status, returns the authoritative source and verbatim text, and generates traceable hyperlinks — eliminating
+  fabricated statutes and case numbers in AI-generated legal content. Use natural language to find statutory
+  grounds, run legal research and analysis, retrieve similar cases, pull verbatim originals, and verify
+  citations before delivery.'
+description_zh: 检索与核验中国法律法规和司法案例。覆盖全量现行法律、行政法规、司法解释——法规级到法条级逐字正文，标注时效性与效力级别；海量裁判文书及 2.5 万+ 权威案例（最高法/最高检指导性案例、公报案例、典型案例）；并对文本中的法条与案号引用逐条回库核验、标注时效、生成可溯源超链。用自然语言完成法条依据查找、类案检索、原文调取与法律引用核验，从源头消除法条与案号幻觉。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://agent.qcc.com/mcp/legal/stream
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://agent.qcc.com
+examples:
+- 员工拒绝调岗被解除劳动合同，有哪些法律依据？请给出法条原文并确认是否现行有效
+- 找几个卖方违约的买卖合同纠纷判决作类案参考
+- 有没有关于个人信息保护的最高法指导性案例？
+- 对方逾期交货三个月，我方能否解除合同并主张违约金？帮我研判一下
+- 核验这段话的引用：「依据《劳动合同法》第二十三条、第二十四条和《民法典》第五百八十五条，竞业限制违约金约定过高的可以请求适当减少」——法条是否真实、是否现行有效，附上溯源链接

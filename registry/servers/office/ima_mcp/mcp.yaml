@@ -1,0 +1,35 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: ima-mcp。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: ima_mcp
+display_name: ima知识库
+version: 0.1.0
+description: Reference knowledge base materials and files, browse knowledge base details.
+description_zh: 引用知识库资料及文件，浏览知识库详情。
+author: vendor
+category: office
+tags:
+- office
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://ima.qq.com/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://ima.qq.com
+examples:
+- 在 ima 知识库中搜索『季度复盘』相关的资料
+- 查看『产品手册』ima 知识库的详情和文件列表
+- 引用 ima 知识库中关于 OpenAPI 的内容回答这个问题

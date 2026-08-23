@@ -1,0 +1,37 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: morningstar。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: morningstar
+display_name: 晨星 Morningstar
+version: 0.1.0
+description: Morningstar global and China fund data, analyst research and portfolio analytics for fund
+  screening, risk, holdings, fees and reviews.
+description_zh: 接入晨星全球与中国基金数据，通过自然语言实现基金查询、筛选、分析与深度研究，以及组合穿透分析
+author: vendor
+category: data
+tags:
+- data
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.morningstar.cn/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 600
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcp.morningstar.cn
+examples:
+- 筛选晨星评级5星，近三年最大回撤不超过20%的基金
+- 帮我看看易方达蓝筹精选的业绩、风险和持仓
+- 研究一下最新的主动ETF/ active ETF
+- 分析柏瑞基金系列 - 柏瑞美国股票基金

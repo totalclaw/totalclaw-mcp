@@ -1,0 +1,48 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: youshu-bd-mate。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: youshu_bd_mate
+display_name: 智客AI · 对公(To B)营销助手
+version: 0.1.0
+description: The BD Mate is an intelligent corporate marketing assistant built on full-dimensional enterprise
+  data, delivering a complete business development closed-loop from pre-visit one-pagers and customer
+  intelligence reports to product-based customer acquisition, key-person profiling, sales scripts, and
+  enterprise-based product recommendations.
+description_zh: 对公营销助手是基于企业全维数据构建的对公营销智能助手，提供从生成访前一页纸、访前客情报告、产品找客、关键人画像、营销话术及按企荐品的完整展业闭环能力。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://open.yscredit.com/ys-mcp/report
+  headers:
+    Authorization: Bearer ${API_KEY}
+  auth: none
+requires_env:
+- name: API_KEY
+  env_key: API_KEY
+  description: 智客AI · 对公(To B)营销助手 所需的 API_KEY
+  prompt: 请输入 API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://open.yscredit.com
+examples:
+- 帮我生成一份XXX公司的访前报告
+- 我要去拜访XXX公司，帮我生成一套营销话术
+- 查一下XX公司的基本情况
+- 查一下XXX公司的股权结构和实际控制人
+- 为XXX公司匹配适合的金融产品

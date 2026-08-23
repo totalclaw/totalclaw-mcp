@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: shanglv-mcp-gateway。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: shanglv_mcp_gateway
+display_name: 用友智能服务（AI BaaS）
+version: 0.1.0
+description: Provides enterprise financial, tax, banking, and travel management services through Yonyou
+  Bank-Enterprise Cloud, Tax-Enterprise Cloud, and Business Travel Cloud, enabling comprehensive fund,
+  tax, and travel operations management via natural language.
+description_zh: 通过用友银企联、税企联、商旅云等财务服务产品，为企业提供财务税务与银行资金数据服务，并提供企业商旅运营服务和行程服务。用自然语言完成企业的资金、税务、商旅的全面运营管理。
+author: vendor
+category: comm
+tags:
+- comm
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp-gateway.yql.net/mcp/
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcp-gateway.yql.net
+examples:
+- 查询 dept_a 租户下金额大于 5000 的发票清单
+- 搜索客户 CUST2024001 并查看其所有银行账户的最新余额快照
+- 查账户 6225****1234 最近一个月的交易明细，只看贷方（入账）且金额大于 10000 的记录
+- 获取账户 6216****2782 在 2026-07 的小时余额统计摘要（峰值/谷值/最大单小时变动）

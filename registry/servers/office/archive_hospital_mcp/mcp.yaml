@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: archive-hospital-mcp。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: archive_hospital_mcp
+display_name: 腾讯健康全周期管理平台
+version: 0.1.0
+description: MCP connector for the provider-side AI agent of the Full-Cycle Patient Management Platform
+  (Tengmed Patient Archive). Built on the existing platform, it enables clinical operations through conversational
+  interface in natural language.
+description_zh: 全周期管理平台机构端 AI 智能体的 MCP 连接器。基于原有全周期管理平台，通过引入对话式 AI 智能体，实现理解管理者意图，调度平台原有能力模块完成患者数据查询管理等操作
+author: vendor
+category: office
+tags:
+- office
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://bingli.tengmed.com/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://bingli.tengmed.com
+examples:
+- 目前管理了多少患者
+- 帮我查一下最近收藏的患者列表
+- 帮我查看张三的数据情况，总结异常指标和需要关注的重点情况
+- 张三最近三个月血压怎么样，给个趋势分析

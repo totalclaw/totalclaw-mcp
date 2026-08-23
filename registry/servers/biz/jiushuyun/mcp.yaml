@@ -1,0 +1,36 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: jiushuyun。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: jiushuyun
+display_name: 九数云BI
+version: 0.1.0
+description: Upload Excel or CSV files to quickly generate native visual data analysis reports, dashboards,
+  and charts.
+description_zh: 上传 Excel 或 CSV 表格，一键生成原生的可视化数据分析报告、仪表板、图表。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://work.jiushuyun.com/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://work.jiushuyun.com
+examples:
+- 帮我导入这个 Excel，并分析各销售区域的签单金额
+- 根据当前项目数据创建一个销售趋势图表
+- 查看已有仪表板中本月各区域的销售表现

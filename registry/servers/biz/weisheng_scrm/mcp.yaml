@@ -1,0 +1,50 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: weisheng-scrm。人工修改后请同步递增 version。
+# 相对上游配置做的规整：
+#   - 去掉 --registry=https://registry.npmmirror.com（改用 npm 官方源）
+#   - mcp-server-weisheng-scrm@latest → mcp-server-weisheng-scrm@0.0.6
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: weisheng_scrm
+display_name: 微盛企微管家SCRM
+version: 0.1.0
+description: 'Query or manage WeCom (WeChat Work) business capabilities: customer info, tags, groups,
+  marketing assets, QR codes, campaigns, follow-ups, contacts, opportunities, reports, lucky draws, schedules,
+  chat records and more.'
+description_zh: 查询或管理企业微信中的客户信息、客户标签、客户群、营销素材、活码、群发、跟进记录、联系人、商机、汇报、抽奖、客户日程、聊天记录等业务能力。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-server-weisheng-scrm@0.0.6
+  env:
+    SCRM_APP_KEY: ''
+    SCRM_BASE_URL: https://open.wshoto.com
+    npm_config_registry: https://registry.npmmirror.com
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+examples:
+- 帮我查询一下我上周新增了几个客户
+- 创建我的员工活码，欢迎语设置为：您好👋，很高兴为您服务！有任何需求随时和我说～
+- 我下午要去拜访张三这个客户，请整理他的客户画像信息，帮我准备一下
+- 帮我给最新添加的客户，根据沟通内容和需求，生成几个跟进任务给对应员工，包含跟进目标、话术
+- 帮我创建一个今天下午两点的日程，提醒我跟进最近添加的客户，内容是主动向客户介绍新功能

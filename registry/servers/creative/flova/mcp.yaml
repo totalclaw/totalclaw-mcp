@@ -1,0 +1,36 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: flova。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: flova
+display_name: Flova
+version: 0.1.0
+description: Create, revise, review, and export professional videos with AI, from creative planning and
+  storyboards to final delivery.
+description_zh: 使用 AI 创建、修改、审阅和导出专业视频，覆盖从创意与分镜到成片交付的完整流程。
+author: vendor
+category: creative
+tags:
+- creative
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://service.flova.tv/api/mcp/
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://service.flova.tv
+examples:
+- 为这份产品介绍制作一条 30 秒的竖屏宣传视频
+- 继续完善我的 Flova 项目，先生成分镜供我确认
+- 根据审阅意见修改镜头并导出最终视频

@@ -1,0 +1,36 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: tongzhou-fin-research。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tongzhou_fin_research
+display_name: 同舟金融研究
+version: 0.1.0
+description: Connects market data, research, industry graphs, and Tongzhou evidence for public-equity
+  analysis.
+description_zh: 连接公开行情、研报检索、行业图谱与同舟投研材料，为股市研究提供可复核证据。
+author: vendor
+category: data
+tags:
+- data
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp-gateway.textmind-gz.com/mcp/tongzhou-research
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 180
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcp-gateway.textmind-gz.com
+examples:
+- 分析半导体设备行业近期景气和估值变化
+- 梳理一则政策事件对产业链上下游的影响
+- 对比一家公司的行情、公告和机构观点

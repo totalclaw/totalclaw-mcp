@@ -1,0 +1,41 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: pkulaw。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: pkulaw
+display_name: 北大法宝·法律智能检索
+version: 0.1.0
+description: 'Semantic (natural-language) + keyword dual-mode retrieval over Chinese laws, regulations
+  and judicial cases, plus citation verification: extract and standardise statute references, validate
+  case numbers, fact-check article text against the authoritative original, and auto-link everything back
+  to pkulaw.com — traceable, verifiable, ready to cite.'
+description_zh: 检索 + 核验一体：语义（自然语言描述）与关键词双模式检索法规、法条与司法案例；并可把文本中的法条引用与案号回北大法宝库逐条比对、对齐标准名称，输出带 pkulaw.com
+  原文链接的可溯源结果，专治法律幻觉。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://apim-gateway.pkulaw.com/mcp-law-agg/1.0.0/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://apim-gateway.pkulaw.com
+examples:
+- 微信聊天记录作为民事诉讼电子证据，法院的认定标准和审查重点是什么？
+- 员工连续旷工三天，公司能否解除劳动合同？请检索相关法律依据。
+- 房屋租赁合同到期后房东拒绝退还押金，有没有类似司法案例？
+- 查一下当前现行有效的「数据出境安全评估」中央层级法规。
+- 《民法典》第一千零七十七条原文是什么？是否现行有效？

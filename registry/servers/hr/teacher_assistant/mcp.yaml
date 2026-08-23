@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: teacher-assistant。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: teacher_assistant
+display_name: 企鹅教师助手
+version: 0.1.0
+description: Penguin Teacher Assistant handles foundational tasks, leveraging curriculum standards and
+  teaching methodologies to rapidly generate lesson outlines, lesson plans, courseware, and multimodal
+  teaching resources, thereby freeing up more time for teachers to innovate in the classroom.
+description_zh: 企鹅教师助手负责处理基础性工作，基于课标和教学方法协助快速生成课程大纲、教案、课件及多模态教学资源，从而让教师腾出更多时间在课堂上进行创新
+author: vendor
+category: hr
+tags:
+- hr
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://aiteach.qq.com/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://aiteach.qq.com
+examples:
+- 帮我准备一节小学四年级数学《分数的初步认识》的课程
+- 分析一下本周班级学生的作业完成情况
+- 推荐几个关于光合作用的教学视频
+- 根据学生错题生成一份针对性的练习卷

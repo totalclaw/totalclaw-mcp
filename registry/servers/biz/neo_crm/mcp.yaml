@@ -1,0 +1,36 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: neo-crm。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: neo_crm
+display_name: 销售易CRM
+version: 0.1.0
+description: Query customers, advance opportunities, review leads, claim from the public pool, and log
+  follow-ups in natural language—closing the sales workflow loop in a single sentence.
+description_zh: 用自然语言查客户、推商机、盘线索、领公海、写跟进，一句话打通销售工作闭环。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.xiaoshouyi.com/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcp.xiaoshouyi.com
+examples:
+- 我要去拜访XXX，帮我准备一下
+- 把我名下超过 30 天没跟进的客户列出来
+- 搜一下公海里制造业、上周新进的线索 Top 10

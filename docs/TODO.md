@@ -277,95 +277,121 @@
 - [x] **tyc-mcp** 天眼查 — 已实现 `tianyancha`
 - [x] **wecom** 企业微信 — 已实现 `wecom`
 
-#### B · 待厂商开发者账号（73）
+#### B · 厂商自有 MCP 端点（56 已收录 / 14 阻塞）
 
-**不是「还没动手」，是「拿不到可验证的接口契约」。** 已用
-`scripts/probe_vendor_docs.py` 对 18 家做过可复查的探测（抓文档入口，看有无
-`GET /`、`/api/v1`、`access_token` 这类具体接口痕迹）：**可继续 0 家**。
-其中 8 家还逐个人工攻过，具体阻塞原因记在脚本的 `KNOWN_BLOCKED` 里。
+**这一节此前的判断是错的，已纠正。** 原先写的是「73 项待厂商开发者账号」，
+前提是每家都得拿到 REST 契约、自己再实现一遍。实际不需要：**这些厂商自己就跑着
+MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openmcp.lingxing.com`
+……70 个端点全是厂商自有域名，没有一个是中间平台的网关（域名归类见
+`scripts/import_vendor_mcp.py --audit`）。
 
-这些站点绝大多数是需登录的 SPA 或服务商注册墙。**不猜端点、不写假 pack** ——
-一个调不通的 pack 比没有更糟：它会出现在市场里、被装上、然后在用户面前失败。
+厂商已经把 REST 包成 MCP 了，就没有「再实现一遍」的东西可写：REST→MCP pack 要的
+正是那层被包起来的 REST 契约。**指向厂商端点是这里唯一正确的做法**，而这跟「下载
+别家的东西」是两回事——连的是厂商，不是任何中间平台。
 
-拿到任一家的开发者账号后：照 [PACKS.md](PACKS.md) 写 pack 即可，**引擎无需改动**
-（八种鉴权已覆盖 bearer / header / query / basic / 令牌交换 / 签名 / 腾讯云 TC3）。
-重跑 `probe_vendor_docs.py` 可确认厂商是否已开放文档。
+56 项已由 `scripts/import_vendor_mcp.py` 转成清单落地。转换时做了四处规整，都不是
+照抄：
 
-- [ ] **ai-hive** AI-HIVE
-- [ ] **archive-hospital-mcp** 腾讯健康全周期管理平台
-- [ ] **bazhuayu** 八爪鱼
-- [ ] **bugly-token** Bugly 质量概览（上游 auth_mode=token）
-- [ ] **camscanner-mcp** 扫描全能王
-- [ ] **chuhaijiang** 出海匠
-- [ ] **cisp-mcp** 水滴征信（上游 auth_mode=token）
-- [ ] **dcs-cloud** DCS Cloud（上游 auth_mode=token）
-- [ ] **dknowc-mcp** 深知可信工作台
-- [ ] **duoguan-fengchao** 夺冠蜂巢（上游 auth_mode=token）
+| 规整 | 为什么 |
+|---|---|
+| 丢弃 `X-Request-Source: workbuddy` 一类请求头 | 照抄等于冒充别家产品向厂商网关发请求 |
+| npm 包钉到确切版本（`@latest`、`^1.0.8`、无版本各一例） | 装什么版本必须确定，否则今天能用明天可能就变 |
+| 去掉 `--registry=registry.npmmirror.com` | 把供应链信任转移到镜像方；包在官方源上有 |
+| 描述里的别家产品名换成中性说法 | 目录是给我们的用户看的，指名别家既不准也误导 |
+
+**14 项阻塞**，每项的具体理由已写在下面各条后面，四类：
+
+- **他方专属路由（6）** —— URL 里带着别家产品名（`mcp.wind.com.cn/vserver_workbuddy/`、
+  `market-api.fenbi.com/workbuddy/mcp`、`?source=workbuddy`）。这是厂商为那个产品
+  单开的租户入口，不是通用网关；走它等于占用别人谈下来的合作配额。
+  **要接，得自己去和厂商申请一条独立路由。**
+- **sse 传输（5）** —— agent 只支持 stdio 与 streamable-HTTP（SPEC.md §runtimes）。
+  要么等厂商开 streamable-HTTP，要么在 agent 侧加 SSE 支持。
+- **平台身份鉴权（2）** —— `auth_mode: server-side`，凭据由那个平台自己注入，我们拿不到。
+- **非生产主机（1）** —— `test.nges.qq.com`，测试环境不进目录。
+
+已收录条目的 `security.scan_verdict` 一律是 `unscanned`：没有凭据就连不上、
+探不到工具列表，也就扫不了注入。有凭据的环境里跑 `scripts/probe_server.py` 补齐。
+
+要给某家写**自研 pack**（而不是指向其端点）时：照 [PACKS.md](PACKS.md) 写即可，
+**引擎无需改动**——八种鉴权已覆盖 bearer / header / query / basic / 令牌交换 /
+签名 / 腾讯云 TC3。端点从哪儿取见 PACKS.md「怎么拿到可信的端点」。
+
+- [x] **ai-hive** AI-HIVE —— 厂商自有端点，收录为 `creative/ai_hive`
+- [x] **archive-hospital-mcp** 腾讯健康全周期管理平台 —— 厂商自有端点，收录为 `office/archive_hospital_mcp`
+- [x] **bazhuayu** 八爪鱼 —— 厂商自有端点，收录为 `web/bazhuayu`
+- [x] **bugly-token** Bugly 质量概览（上游 auth_mode=token） —— 厂商自有端点，收录为 `infra/bugly_token`
+- [x] **camscanner-mcp** 扫描全能王 —— 厂商自有端点，收录为 `creative/camscanner_mcp`
+- [x] **chuhaijiang** 出海匠 —— 厂商自有端点，收录为 `biz/chuhaijiang`
+- [x] **cisp-mcp** 水滴征信（上游 auth_mode=token） —— 厂商自有端点，收录为 `infra/cisp_mcp`
+- [x] **dcs-cloud** DCS Cloud（上游 auth_mode=token） —— 厂商自有端点，收录为 `infra/dcs_cloud`
+- [x] **dknowc-mcp** 深知可信工作台 —— 厂商自有端点，收录为 `data/dknowc_mcp`
+- [x] **duoguan-fengchao** 夺冠蜂巢（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/duoguan_fengchao`
 - [x] **edgeone-pages** EdgeOne Makers — 已实现 `tencent_edgeone`（站点/域名/刷新预热）
-- [ ] **ezjoin-meeting** EzyJoin智慧会议
-- [ ] **fadada-richee** 法大大睿契
-- [ ] **fanruan-growth-advisor** 帆软增长谋士（上游 auth_mode=token）
-- [ ] **fazhi-law** 同花顺法律AI助手（上游 auth_mode=token）
-- [ ] **fbs-connector** 福帮手
-- [ ] **fenbi-baokao-decision** 报考决策
-- [ ] **finenter** 进门投研
-- [ ] **flova** Flova（上游 auth_mode=oauth）
-- [ ] **fyopen-lawsearch** 法研·法律法规检索
-- [ ] **gangtise-mcp** Gangtise投研（上游 auth_mode=token）
-- [ ] **gaodun-job** 大学生实习就业助手
-- [ ] **gildata** 恒生聚源 MCP（上游 auth_mode=token）
-- [ ] **gongyi-open-mcp** 腾讯公益机构服务平台
-- [ ] **ima-mcp** ima知识库
-- [ ] **infimind-ecommerce-image** 极睿电商生图（上游 auth_mode=token）
-- [ ] **infimind-video** 极睿视频（上游 auth_mode=token）
+- [x] **ezjoin-meeting** EzyJoin智慧会议 —— 厂商自有端点，收录为 `comm/ezjoin_meeting`
+- [ ] **fadada-richee** 法大大睿契 —— 阻塞：他方专属路由（https://claw.richee.cn/claw-api/mcp/workbuddy —— 需自行向厂商申请独立路由）
+- [x] **fanruan-growth-advisor** 帆软增长谋士（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/fanruan_growth_advisor`
+- [ ] **fazhi-law** 同花顺法律AI助手（上游 auth_mode=token） —— 阻塞：他方专属路由（https://bizveris.kuaicha365.com/law_agent/mcp?source=workbuddy —— 需自行向）
+- [x] **fbs-connector** 福帮手 —— 厂商自有端点，收录为 `biz/fbs_connector`
+- [ ] **fenbi-baokao-decision** 报考决策 —— 阻塞：他方专属路由（https://market-api.fenbi.com/workbuddy/mcp —— 需自行向厂商申请独立路由）
+- [ ] **finenter** 进门投研 —— 阻塞：传输不支持（type=sse；agent 只支持 stdio 与 streamable-HTTP）
+- [x] **flova** Flova（上游 auth_mode=oauth） —— 厂商自有端点，收录为 `creative/flova`
+- [x] **fyopen-lawsearch** 法研·法律法规检索 —— 厂商自有端点，收录为 `biz/fyopen_lawsearch`
+- [x] **gangtise-mcp** Gangtise投研（上游 auth_mode=token） —— 厂商自有端点，收录为 `data/gangtise_mcp`
+- [x] **gaodun-job** 大学生实习就业助手 —— 厂商自有端点，收录为 `hr/gaodun_job`
+- [x] **gildata** 恒生聚源 MCP（上游 auth_mode=token） —— 厂商自有端点，收录为 `data/gildata`
+- [x] **gongyi-open-mcp** 腾讯公益机构服务平台 —— 厂商自有端点，收录为 `comm/gongyi_open_mcp`
+- [x] **ima-mcp** ima知识库 —— 厂商自有端点，收录为 `office/ima_mcp`
+- [x] **infimind-ecommerce-image** 极睿电商生图（上游 auth_mode=token） —— 厂商自有端点，收录为 `creative/infimind_ecommerce_image`
+- [x] **infimind-video** 极睿视频（上游 auth_mode=token） —— 厂商自有端点，收录为 `creative/infimind_video`
 - [x] **ioa** 零信任安全 iOA —— `tencent_ioa` pack，6 工具（端点取自官方 SDK）
-- [ ] **jiushuyun** 九数云BI
-- [ ] **kdocs** 金山文档（上游 auth_mode=server-side）
-- [ ] **kling-ai-plugin** 可灵 AI
-- [ ] **kling-ai-plugin-ai** 可灵 AI
-- [ ] **kuaicha-search** 同花顺快查企业数据（上游 auth_mode=token）
-- [ ] **lexiang** 乐享知识库
-- [ ] **lingxing-mcp** 领星ERP（上游 auth_mode=token）
-- [ ] **linkfox-product-selection** Linkfox 选品（上游 auth_mode=token）
+- [x] **jiushuyun** 九数云BI —— 厂商自有端点，收录为 `biz/jiushuyun`
+- [ ] **kdocs** 金山文档（上游 auth_mode=server-side） —— 阻塞：平台身份鉴权（auth_mode=server-side，凭据由上游平台注入，我们拿不到）
+- [x] **kling-ai-plugin** 可灵 AI —— 厂商自有端点，收录为 `creative/kling_ai_plugin`
+- [x] **kling-ai-plugin-ai** 可灵 AI —— 厂商自有端点，收录为 `creative/kling_ai_plugin_ai`
+- [ ] **kuaicha-search** 同花顺快查企业数据（上游 auth_mode=token） —— 阻塞：他方专属路由（https://bizveris.kuaicha365.com/mcp?source=workbuddy —— 需自行向厂商申请独立路由）
+- [x] **lexiang** 乐享知识库 —— 厂商自有端点，收录为 `comm/lexiang`
+- [x] **lingxing-mcp** 领星ERP（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/lingxing_mcp`
+- [x] **linkfox-product-selection** Linkfox 选品（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/linkfox_product_selection`
 - [x] **mastergo-vibe-mcp** MasterGo —— 收录为上游条目 `mastergo`，官方双 runtime（magic-mcp 独立版 / vibe-mcp 桌面桥接）
-- [ ] **morningstar** 晨星 Morningstar
-- [ ] **mx-ds-mcp** 东方财富妙想MCP
-- [ ] **mzl-trademark** 摩知轮商标查询
-- [ ] **neo-crm** 销售易CRM
-- [ ] **opendata** 及刻智能·时空数据MCP（上游 auth_mode=token）
-- [ ] **pandadata** PandaData 金融数据
-- [ ] **picset-commerce-images** Picset AI 电商图片（上游 auth_mode=token）
-- [ ] **picset-video-generation** Picset AI 视频创作（上游 auth_mode=token）
-- [ ] **pkulaw** 北大法宝·法律智能检索
-- [ ] **proboost** OpenBoost 跨境数据
-- [ ] **qcc-legal** 企查查·法律数据
-- [ ] **qixinhuiyan-mcp** 启信慧眼
-- [ ] **salesnail-instructor** SalesNail 讲师
-- [ ] **salestouch** SalesTouch 经营执行
-- [ ] **shanglv-mcp-gateway** 用友智能服务（AI BaaS）
-- [ ] **sq-company-dynamic** 上奇产业通-企业动态追踪（上游 auth_mode=token）
-- [ ] **tanyuan-assistant** TDC 文化智能体
-- [ ] **tdx-connector** 通达信（上游 auth_mode=server-side）
-- [ ] **teacher-assistant** 企鹅教师助手
-- [ ] **tec-do** Tec-Do 2.0 广告与增长情报
-- [ ] **tencent-health-nges** 腾讯健康NGES
-- [ ] **tencent-qidian-cs** 腾讯企点客服（上游 auth_mode=mcp）
+- [x] **morningstar** 晨星 Morningstar —— 厂商自有端点，收录为 `data/morningstar`
+- [x] **mx-ds-mcp** 东方财富妙想MCP —— 厂商自有端点，收录为 `data/mx_ds_mcp`
+- [x] **mzl-trademark** 摩知轮商标查询 —— 厂商自有端点，收录为 `biz/mzl_trademark`
+- [x] **neo-crm** 销售易CRM —— 厂商自有端点，收录为 `biz/neo_crm`
+- [ ] **opendata** 及刻智能·时空数据MCP（上游 auth_mode=token） —— 阻塞：传输不支持（type=sse；agent 只支持 stdio 与 streamable-HTTP）
+- [x] **pandadata** PandaData 金融数据 —— 厂商自有端点，收录为 `data/pandadata`
+- [x] **picset-commerce-images** Picset AI 电商图片（上游 auth_mode=token） —— 厂商自有端点，收录为 `creative/picset_commerce_images`
+- [x] **picset-video-generation** Picset AI 视频创作（上游 auth_mode=token） —— 厂商自有端点，收录为 `creative/picset_video_generation`
+- [x] **pkulaw** 北大法宝·法律智能检索 —— 厂商自有端点，收录为 `biz/pkulaw`
+- [ ] **proboost** OpenBoost 跨境数据 —— 阻塞：传输不支持（type=sse；agent 只支持 stdio 与 streamable-HTTP）
+- [x] **qcc-legal** 企查查·法律数据 —— 厂商自有端点，收录为 `biz/qcc_legal`
+- [x] **qixinhuiyan-mcp** 启信慧眼 —— 厂商自有端点，收录为 `data/qixinhuiyan_mcp`
+- [x] **salesnail-instructor** SalesNail 讲师 —— 厂商自有端点，收录为 `biz/salesnail_instructor`
+- [x] **salestouch** SalesTouch 经营执行 —— 厂商自有端点，收录为 `biz/salestouch`
+- [x] **shanglv-mcp-gateway** 用友智能服务（AI BaaS） —— 厂商自有端点，收录为 `comm/shanglv_mcp_gateway`
+- [x] **sq-company-dynamic** 上奇产业通-企业动态追踪（上游 auth_mode=token） —— 厂商自有端点，收录为 `data/sq_company_dynamic`
+- [x] **tanyuan-assistant** TDC 文化智能体 —— 厂商自有端点，收录为 `biz/tanyuan_assistant`
+- [ ] **tdx-connector** 通达信（上游 auth_mode=server-side） —— 阻塞：平台身份鉴权（auth_mode=server-side，凭据由上游平台注入，我们拿不到）
+- [x] **teacher-assistant** 企鹅教师助手 —— 厂商自有端点，收录为 `hr/teacher_assistant`
+- [x] **tec-do** Tec-Do 2.0 广告与增长情报 —— 厂商自有端点，收录为 `biz/tec_do`
+- [ ] **tencent-health-nges** 腾讯健康NGES —— 阻塞：非生产主机（test.nges.qq.com）
+- [x] **tencent-qidian-cs** 腾讯企点客服（上游 auth_mode=mcp） —— 厂商自有端点，收录为 `comm/tencent_qidian_cs`
 - [x] **tencent-survey** 腾讯问卷 — 已实现 `tencent_survey`（问卷详情 + 游标翻页取答卷；上游为尊享版付费功能）
 - [x] **tencent-tchouse-c** 腾讯云数据仓库 TCHouse-C —— `tencent_tchouse_c` pack，9 工具（端点取自官方 SDK）
-- [ ] **tencent-weiyun** 微云
-- [ ] **tongzhou-fin-research** 同舟金融研究
-- [ ] **tplus-api** 畅捷通T+
-- [ ] **weisheng-scrm** 微盛企微管家SCRM（上游 auth_mode=token）
-- [ ] **westock-mcp** 腾讯自选股
-- [ ] **wind-finance** Wind 金融数据（上游 auth_mode=token）
-- [ ] **wisenote** 百智WiseNote
-- [ ] **wk-workbuddy** 威科先行
-- [ ] **xingtu-claw-risk** 天创信用星图MCP
-- [ ] **yingmi-mcp** 盈米MCP（上游 auth_mode=token）
-- [ ] **youshu-bd-mate** 智客AI · 对公(To B)营销助手（上游 auth_mode=token）
-- [ ] **yuandian-mcp** 华宇元典法律数据
-- [ ] **yzf-invoice-mcp-server** 云帐房AI开票
-- [ ] **zfs-fssc-ai** 中兴新云AI智报（上游 auth_mode=token）
+- [x] **tencent-weiyun** 微云 —— 厂商自有端点，收录为 `office/tencent_weiyun`
+- [x] **tongzhou-fin-research** 同舟金融研究 —— 厂商自有端点，收录为 `data/tongzhou_fin_research`
+- [x] **tplus-api** 畅捷通T+ —— 厂商自有端点，收录为 `infra/tplus_api`
+- [x] **weisheng-scrm** 微盛企微管家SCRM（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/weisheng_scrm`
+- [x] **westock-mcp** 腾讯自选股 —— 厂商自有端点，收录为 `data/westock_mcp`
+- [ ] **wind-finance** Wind 金融数据（上游 auth_mode=token） —— 阻塞：他方专属路由（https://mcp.wind.com.cn/vserver_workbuddy/mcp/ —— 需自行向厂商申请独立路由）
+- [ ] **wisenote** 百智WiseNote —— 阻塞：他方专属路由（https://100wiser.com/workbuddy/wisenote/meeting/mcp —— 需自行向厂商申请独立路由）
+- [x] **wk-workbuddy** 威科先行 —— 厂商自有端点，收录为 `biz/wkinfo`
+- [ ] **xingtu-claw-risk** 天创信用星图MCP —— 阻塞：传输不支持（type=sse；agent 只支持 stdio 与 streamable-HTTP）
+- [x] **yingmi-mcp** 盈米MCP（上游 auth_mode=token） —— 厂商自有端点，收录为 `data/yingmi_mcp`
+- [x] **youshu-bd-mate** 智客AI · 对公(To B)营销助手（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/youshu_bd_mate`
+- [x] **yuandian-mcp** 华宇元典法律数据 —— 厂商自有端点，收录为 `biz/yuandian_mcp`
+- [x] **yzf-invoice-mcp-server** 云帐房AI开票 —— 厂商自有端点，收录为 `data/yzf_invoice_mcp_server`
+- [ ] **zfs-fssc-ai** 中兴新云AI智报（上游 auth_mode=token） —— 阻塞：传输不支持（type=sse；agent 只支持 stdio 与 streamable-HTTP）
 
 
 #### C · 已核查受阻（8）

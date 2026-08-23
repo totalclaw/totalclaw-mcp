@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: mzl-trademark。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mzl_trademark
+display_name: 摩知轮商标查询
+version: 0.1.0
+description: Search trademarks with natural language by name, applicant, application/registration number,
+  Nice class, legal status and date range across China and 110+ overseas offices, with image-based similarity
+  search.
+description_zh: 用自然语言检索商标：按名称、申请人、申请号、注册号、尼斯类别、法律状态、日期范围查询，覆盖中国及 110+ 海外国家/地区商标局；并支持以图搜图的图形近似检索。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://www.mozlen.com/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 65
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://www.mozlen.com
+examples:
+- 帮我查一下「茅台」这个商标在第 33 类的注册情况
+- 查申请人「华为技术有限公司」在中国的全部商标
+- 「星巴克」在美国、欧盟、日本的商标注册情况
+- 用这张图找一下图形近似的商标（中国 + 马德里）

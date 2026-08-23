@@ -4,8 +4,65 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-22T18:46:44Z",
+  "generated_at": "2026-08-23T00:22:31Z",
   "servers": [
+    {
+      "name": "chuhaijiang",
+      "id": "totalclaw-mcp/biz/chuhaijiang",
+      "display_name": "出海匠",
+      "description": "Use real-time TikTok Shop data for product research, competitor analysis, creator discovery, shoppable content workflows, and social account, publishing, comment, and direct-message operations.",
+      "description_zh": "基于实时 TikTok Shop 数据完成选品、竞品分析、达人筛选与带货内容创作，并管理社媒账号、发布内容、运营评论和私信。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp.gateway.chuhaijiang.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/chuhaijiang",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/chuhaijiang",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/chuhaijiang"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "3604553fc46a5779a4d76221b1b53e79bbc8b6060d465805a42d5f3aae9c2659",
+          "size": 1767
+        }
+      ],
+      "bundle_sha256": "8451a77859ea8d3d5815664b127c741e8be51a9fdd5f0daa17c01e5ac9067302"
+    },
     {
       "name": "composio",
       "id": "totalclaw-mcp/biz/composio",
@@ -73,6 +130,438 @@
         }
       ],
       "bundle_sha256": "7201b74b25e94cd263a04e18d2431d67be239ebb6578694c51b172ab3b0c8fb5"
+    },
+    {
+      "name": "duoguan_fengchao",
+      "id": "totalclaw-mcp/biz/duoguan_fengchao",
+      "display_name": "夺冠蜂巢",
+      "description": "AI-powered content operations platform. From topic planning and copywriting to podcast voiceover and video packaging — all in one place.",
+      "description_zh": "AI 自媒体内容运营系统。从选题策划、文案撰写、图片配图到播客配音、视频封装，一站式内容生产。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "AGENT_KEY",
+          "description": "夺冠蜂巢 所需的 AGENT_KEY",
+          "prompt": "请输入 AGENT_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/duoguan_fengchao",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/duoguan_fengchao",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/duoguan_fengchao"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "fe4a023cf5d53686a779f3ea397599440a9cc4efb00e57e88c5b77e90612f4aa",
+          "size": 1749
+        }
+      ],
+      "bundle_sha256": "5df38d0b2d36970081e63ae8972c45febaa6a3d4023c17c33a095a265adc078a"
+    },
+    {
+      "name": "fanruan_growth_advisor",
+      "id": "totalclaw-mcp/biz/fanruan_growth_advisor",
+      "display_name": "帆软增长谋士",
+      "description": "Enterprise insight and growth analysis: query public business data such as operational risks, public opinion, bidding, patents, qualifications, and policies, and call authorized MOSS Growth Advisor agents to generate analysis and reports.",
+      "description_zh": "企业洞察与增长分析：查询企业经营风险、舆情、招投标、专利、资质、政策等公开商业数据，并调用已授权的 MOSS 增长谋士 Agent 生成分析与报告。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://www.mossdo.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "MOSS_API_KEY",
+          "description": "帆软增长谋士 所需的 MOSS_API_KEY",
+          "prompt": "请输入 MOSS_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/fanruan_growth_advisor",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/fanruan_growth_advisor",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/fanruan_growth_advisor"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "464892d4e8c4de1875e6f705230dbc94ee838aa73708da0cfbd8a07f153f8efc",
+          "size": 1536
+        }
+      ],
+      "bundle_sha256": "21957f9c24845831637ee53387d8a2f8649e59229bdce22bbb2d228a9aef25d2"
+    },
+    {
+      "name": "fbs_connector",
+      "id": "totalclaw-mcp/biz/fbs_connector",
+      "display_name": "福帮手",
+      "description": "FBSir: identity, scene plans, progress, reward status, and expert handoffs.",
+      "description_zh": "福帮手人机协同连接器：识别当前身份与专家入口，匹配可执行场景方案，记录首值与继续使用进度，并查询乐包状态或衔接后续服务。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://api2.u3w.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/fbs_connector",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/fbs_connector",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/fbs_connector"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "32c974dff2017192b7346b2913fe4811e862eef71f631da584c9c93ca479be4e",
+          "size": 1528
+        }
+      ],
+      "bundle_sha256": "84b705fca187c70c95325cdf3c3e5814d52fbdc812e63e3bc925aa445ef32558"
+    },
+    {
+      "name": "fyopen_lawsearch",
+      "id": "totalclaw-mcp/biz/fyopen_lawsearch",
+      "display_name": "法研·法律法规检索",
+      "description": "Support natural language to obtain accurate and currently effective regulatory provisions, seamlessly integrating high-quality and massive regulatory knowledge bases into various AI applications and workflows.",
+      "description_zh": "法研·法律法规检索，支持自然语言获取精准、现行有效的法规条文，将高质量、海量的法规知识库，无缝接入各类AI应用与工作流中。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://api.cjbdi.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/fyopen_lawsearch",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/fyopen_lawsearch",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/fyopen_lawsearch"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "b2c41d15b8e321d933baa07d5b270443767652c6160167b458505ddf649f82b3",
+          "size": 1215
+        }
+      ],
+      "bundle_sha256": "c56e7929d455ddca7561ef3d3e8c94809e6a58c91b7b2abd67689e6a4fca1d8f"
+    },
+    {
+      "name": "jiushuyun",
+      "id": "totalclaw-mcp/biz/jiushuyun",
+      "display_name": "九数云BI",
+      "description": "Upload Excel or CSV files to quickly generate native visual data analysis reports, dashboards, and charts.",
+      "description_zh": "上传 Excel 或 CSV 表格，一键生成原生的可视化数据分析报告、仪表板、图表。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://work.jiushuyun.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/jiushuyun",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/jiushuyun",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/jiushuyun"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "15c09aced40013fa56abc419a708b4ce0263f3f6b5ae3571a85cbb1d0bd10ed4",
+          "size": 1084
+        }
+      ],
+      "bundle_sha256": "5f0ad3f7b08c1d09d684fd4fc101781e275cf4defe8f202fa6580f9041f30f62"
+    },
+    {
+      "name": "lingxing_mcp",
+      "id": "totalclaw-mcp/biz/lingxing_mcp",
+      "display_name": "领星ERP",
+      "description": "Query and manage stores, inventory, listings, sales, profit, advertising, and operations data in LingXing ERP using natural language.",
+      "description_zh": "使用自然语言查询和管理领星ERP中的店铺、库存、Listing、销售、利润、广告和运营数据。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://openmcp.lingxing.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "LINGXING_MCP_KEY",
+          "description": "领星ERP 所需的 LINGXING_MCP_KEY",
+          "prompt": "请输入 LINGXING_MCP_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/lingxing_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/lingxing_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/lingxing_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "00d1d5198b341676d440121ef9181b03c6826f14b4a558c96bc1d7440288005e",
+          "size": 1400
+        }
+      ],
+      "bundle_sha256": "6c4c6da796586c75b3923f9962c50c5d2c54e5a8563a11c8ae71ff15fdd3e449"
+    },
+    {
+      "name": "linkfox_product_selection",
+      "id": "totalclaw-mcp/biz/linkfox_product_selection",
+      "display_name": "Linkfox 选品",
+      "description": "Cross-border e-commerce product selection all-in-one AI toolkit, integrating multiple sub-capabilities including competitor lookup, ABA, Keepa, Sorftime, Jungle Scout, SellerSprite, SIF, Jiimore, business insights, and compliance detection—covering product selection, keywords, competitors, reviews, niches & trends, and compliance detection.",
+      "description_zh": "跨境电商选品一站式 AI 工具集，整合 竞品查询/ABA/Keepa/Sorftime/Jungle Scout/卖家精灵/SIF/极目/商业洞察/合规检测等 多项子能力，覆盖选品、关键词、竞品、评论、利基与趋势、合规检测。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp-tool-gateway.linkfox.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "LINKFOX_AGENT_API_KEY",
+          "description": "Linkfox 选品 所需的 LINKFOX_AGENT_API_KEY",
+          "prompt": "请输入 LINKFOX_AGENT_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/linkfox_product_selection",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/linkfox_product_selection",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/linkfox_product_selection"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "f3c6faeec84a1dbac981b51337e63e7ecb8ac8b3fe181c8269f9e832bdcd015e",
+          "size": 1762
+        }
+      ],
+      "bundle_sha256": "29b07c5ac9b7768d547bb9276790b68484bb1b9e3a95218585f5081146857978"
     },
     {
       "name": "mcp_memory",
@@ -227,6 +716,699 @@
       "bundle_sha256": "7e521f46155f8e38582b6298bc2bb4c94a9144f8fba5bc772086fe8b7742aea9"
     },
     {
+      "name": "mzl_trademark",
+      "id": "totalclaw-mcp/biz/mzl_trademark",
+      "display_name": "摩知轮商标查询",
+      "description": "Search trademarks with natural language by name, applicant, application/registration number, Nice class, legal status and date range across China and 110+ overseas offices, with image-based similarity search.",
+      "description_zh": "用自然语言检索商标：按名称、申请人、申请号、注册号、尼斯类别、法律状态、日期范围查询，覆盖中国及 110+ 海外国家/地区商标局；并支持以图搜图的图形近似检索。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://www.mozlen.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/mzl_trademark",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/mzl_trademark",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/mzl_trademark"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "cb265856a8d4a7f5f7da86015f0414d946703e8fbe849d67715af82ecf5a8337",
+          "size": 1413
+        }
+      ],
+      "bundle_sha256": "7e45b27abbd467f03f9b19a4b2940c8ec15e39ab0f172bfc45962c1ab221d918"
+    },
+    {
+      "name": "neo_crm",
+      "id": "totalclaw-mcp/biz/neo_crm",
+      "display_name": "销售易CRM",
+      "description": "Query customers, advance opportunities, review leads, claim from the public pool, and log follow-ups in natural language—closing the sales workflow loop in a single sentence.",
+      "description_zh": "用自然语言查客户、推商机、盘线索、领公海、写跟进，一句话打通销售工作闭环。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp.xiaoshouyi.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/neo_crm",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/neo_crm",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/neo_crm"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "bd0f0f289c295c8b41a1c13083b37fd816afa601fd845edab88669196bc98b89",
+          "size": 1135
+        }
+      ],
+      "bundle_sha256": "354c7e452bcd75e66cc1719352e90dcd2b939da96178ee4e6cb1512ad88a6b0a"
+    },
+    {
+      "name": "pkulaw",
+      "id": "totalclaw-mcp/biz/pkulaw",
+      "display_name": "北大法宝·法律智能检索",
+      "description": "Semantic (natural-language) + keyword dual-mode retrieval over Chinese laws, regulations and judicial cases, plus citation verification: extract and standardise statute references, validate case numbers, fact-check article text against the authoritative original, and auto-link everything back to pkulaw.com — traceable, verifiable, ready to cite.",
+      "description_zh": "检索 + 核验一体：语义（自然语言描述）与关键词双模式检索法规、法条与司法案例；并可把文本中的法条引用与案号回北大法宝库逐条比对、对齐标准名称，输出带 pkulaw.com 原文链接的可溯源结果，专治法律幻觉。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://apim-gateway.pkulaw.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/pkulaw",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/pkulaw",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/pkulaw"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "3a784deb51acc5565963d9d2fc2895c3e2cd2111ba35ebfb89993236adc2d6f6",
+          "size": 1825
+        }
+      ],
+      "bundle_sha256": "0719a00375121b620d46acf1f2fb6f98de23629b88d750f12217c292b1eea527"
+    },
+    {
+      "name": "qcc_legal",
+      "id": "totalclaw-mcp/biz/qcc_legal",
+      "display_name": "企查查·法律数据",
+      "description": "QCC Legal is a Chinese legal-data connector for searching, researching, and verifying statutes and judicial cases. On the regulation side it covers the full body of in-force Chinese law — laws, administrative regulations, departmental rules, judicial interpretations, and local regulations — at both the whole-regulation and individual-article level, returning verbatim text tagged with validity status (in force / amended / repealed), legal hierarchy, and promulgating authority, with common-name normalization (e.g. The Civil Code, the Personal Information Protection Law). On the case side it covers a massive corpus of ordinary judgment documents plus 25,000+ authoritative cases — Supreme People's Court and Supreme People's Procuratorate guiding cases, gazette cases, typical cases, and reference cases — filterable by cause of action, court, instance, judgment date, and party. It further verifies legal citations: given any text it detects every statute and case-number reference, checks each against the database, flags validity status, returns the authoritative source and verbatim text, and generates traceable hyperlinks — eliminating fabricated statutes and case numbers in AI-generated legal content. Use natural language to find statutory grounds, run legal research and analysis, retrieve similar cases, pull verbatim originals, and verify citations before delivery.",
+      "description_zh": "检索与核验中国法律法规和司法案例。覆盖全量现行法律、行政法规、司法解释——法规级到法条级逐字正文，标注时效性与效力级别；海量裁判文书及 2.5 万+ 权威案例（最高法/最高检指导性案例、公报案例、典型案例）；并对文本中的法条与案号引用逐条回库核验、标注时效、生成可溯源超链。用自然语言完成法条依据查找、类案检索、原文调取与法律引用核验，从源头消除法条与案号幻觉。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://agent.qcc.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/qcc_legal",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/qcc_legal",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/qcc_legal"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "657926fc231cdaba41514de97c64e48792fdb621cc069bb1b61527f7600fcfc9",
+          "size": 3264
+        }
+      ],
+      "bundle_sha256": "1d84610ecb9d2994114c3d14454561c2eade12e10ef37d94a553dbaccfb3a7fd"
+    },
+    {
+      "name": "salesnail_instructor",
+      "id": "totalclaw-mcp/biz/salesnail_instructor",
+      "display_name": "SalesNail 讲师",
+      "description": "Self-activate an instructor trial, maintain a business Profile, draft client proposals, create and reuse games, configure courses, facilitate classrooms, and analyze complex-sales performance with evidence-backed semantics.",
+      "description_zh": "通过自然语言自助开通讲师试用、维护商业 Profile、生成客户方案，完成游戏创作、课程配置、实时带教，以及团队、学员、班级和商机的证据化分析与复盘。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://sn.long-arena.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/salesnail_instructor",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/salesnail_instructor",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/salesnail_instructor"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "06caffea3cadf0533ce6a92f7a0e3176c2285df2a659a1b3b7a94762e9fdccd1",
+          "size": 1591
+        }
+      ],
+      "bundle_sha256": "9e7bf649c31f6f09b37869b32fd9103844c2a3a9c243cc75cdddd6a0cabb8f7d"
+    },
+    {
+      "name": "salestouch",
+      "id": "totalclaw-mcp/biz/salestouch",
+      "display_name": "SalesTouch 经营执行",
+      "description": "Connect SalesTouch to configure organization profiles, units, role permissions, employee invitations, reporting scopes, and sales processes, then govern sales and non-sales execution with evidence-backed management reviews.",
+      "description_zh": "通过自然语言连接 SalesTouch，完成组织资料、部门、角色权限、员工邀请、下属管理范围与销售流程配置，并处理销售执行、非销售工作、绩效、内部调研和经营汇总。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://touch.long-arena.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/salestouch",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/salestouch",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/salestouch"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "b4789e817a2b9ae2e333ea09b2642b061d31b664a33bf131907c1cb27d633c2f",
+          "size": 1739
+        }
+      ],
+      "bundle_sha256": "74cb3433c0c9d5e785a2c1615b01bf1585554b87d09569a1196a236fe3297061"
+    },
+    {
+      "name": "tanyuan_assistant",
+      "id": "totalclaw-mcp/biz/tanyuan_assistant",
+      "display_name": "TDC 文化智能体",
+      "description": "AI assistant powered by a trusted cultural knowledge base. Provides traceable retrieval and creative assistance across world heritage sites, museum collections, oracle bone characters, and academic literature. Covers heritage nomination texts, archaeological data, ceramic genome databases, pattern libraries, and more.",
+      "description_zh": "基于文化可信知识库的智能体服务，提供世界遗产、博物馆藏品、甲骨文字形释义、学术文献等可溯源检索与创作辅助。覆盖申遗文本、考古数据、陶瓷基因库、纹样库等多模态知识，支持研究考据、策展辅助、文化科普与内容创作。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://api.tanyuan.qq.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/tanyuan_assistant",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/tanyuan_assistant",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/tanyuan_assistant"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "ce859841f7e4b6d0f5bcf5646845e87d4386f068746bdedc14288d81d8e6eb2e",
+          "size": 1460
+        }
+      ],
+      "bundle_sha256": "fe203dfa9ec7aab0afdc2f5090f0a1679d4bafa73b15fb3f483b4df309be9921"
+    },
+    {
+      "name": "tec_do",
+      "id": "totalclaw-mcp/biz/tec_do",
+      "display_name": "Tec-Do 2.0 广告与增长情报",
+      "description": "An AI capability suite for global advertising and growth teams.",
+      "description_zh": "面向出海广告投放和增长团队的 AI 能力集合。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://tec-chi-external-skill-mcp.tec-do.cn",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/tec_do",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/tec_do",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/tec_do"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "66040759cc9adcd096ccdd9951f646366553dc55281afbf2fc879c9db14af7eb",
+          "size": 1131
+        }
+      ],
+      "bundle_sha256": "43ccc3b715ef7e4c9bc72d3808b0123452ec41535ed84075f1c5bf3357a81488"
+    },
+    {
+      "name": "weisheng_scrm",
+      "id": "totalclaw-mcp/biz/weisheng_scrm",
+      "display_name": "微盛企微管家SCRM",
+      "description": "Query or manage WeCom (WeChat Work) business capabilities: customer info, tags, groups, marketing assets, QR codes, campaigns, follow-ups, contacts, opportunities, reports, lucky draws, schedules, chat records and more.",
+      "description_zh": "查询或管理企业微信中的客户信息、客户标签、客户群、营销素材、活码、群发、跟进记录、联系人、商机、汇报、抽奖、客户日程、聊天记录等业务能力。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/weisheng_scrm",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/weisheng_scrm",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/weisheng_scrm"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "2f53dccd02139ef09eff00bef74e5505538b90bd96ebe2062c43c2524d1667fa",
+          "size": 2015
+        }
+      ],
+      "bundle_sha256": "e8d43c9eeae02728f2b50df2f41cb22a45234f33537ac106d42cf45719a6cb4c"
+    },
+    {
+      "name": "wkinfo",
+      "id": "totalclaw-mcp/biz/wkinfo",
+      "display_name": "威科先行",
+      "description": "Built on Wolters Kluwer China's authoritative and real-time legal database, MCP service facilitates diverse search capabilities such as semantic and keyword retrieval.",
+      "description_zh": "威科先行依托全面、准确、及时更新的法规、案例等法律数据研发的MCP服务，支持语义检索、关键词检索等场景。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp.wkinfo.com.cn",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/wkinfo",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/wkinfo",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/wkinfo"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "2388574667b940ec11a847379cdbf43fbf1aab9471a2caf9b610f0b6831da0c0",
+          "size": 1403
+        }
+      ],
+      "bundle_sha256": "4170d3ad6ff6238e62fdd1ffcbb482c65109d59315f4cb95f4ecaa1a52f7a7d6"
+    },
+    {
+      "name": "youshu_bd_mate",
+      "id": "totalclaw-mcp/biz/youshu_bd_mate",
+      "display_name": "智客AI · 对公(To B)营销助手",
+      "description": "The BD Mate is an intelligent corporate marketing assistant built on full-dimensional enterprise data, delivering a complete business development closed-loop from pre-visit one-pagers and customer intelligence reports to product-based customer acquisition, key-person profiling, sales scripts, and enterprise-based product recommendations.",
+      "description_zh": "对公营销助手是基于企业全维数据构建的对公营销智能助手，提供从生成访前一页纸、访前客情报告、产品找客、关键人画像、营销话术及按企荐品的完整展业闭环能力。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://open.yscredit.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "API_KEY",
+          "description": "智客AI · 对公(To B)营销助手 所需的 API_KEY",
+          "prompt": "请输入 API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/youshu_bd_mate",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/youshu_bd_mate",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/youshu_bd_mate"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "ae21eac2fc581034fc9b846bb1c0eff8cad3698196b15be82ec08ca73a20e358",
+          "size": 1750
+        }
+      ],
+      "bundle_sha256": "309eaf0ebb43ce4375b0c0128e653113eaefca9dc90eed4909691773e7801fad"
+    },
+    {
+      "name": "yuandian_mcp",
+      "id": "totalclaw-mcp/biz/yuandian_mcp",
+      "display_name": "华宇元典法律数据",
+      "description": "Huayu Yuandian Legal Data provides agents with MCP tool capabilities for laws and regulations, case documents, and enterprise information.",
+      "description_zh": "华宇元典法律数据为智能体提供法律法规、案例文书、企业信息 MCP 工具能力。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://open.chineselaw.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/yuandian_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/yuandian_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/yuandian_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "3cc827f72decd7ed5f12710d91839164856b9e518583f694c86ad25b7e0bde4a",
+          "size": 1234
+        }
+      ],
+      "bundle_sha256": "4e8b0ee6b92c8f30491d0bd50bea1f1b6336b007ed475acfb9c211f1887258cc"
+    },
+    {
       "name": "dingtalk",
       "id": "totalclaw-mcp/comm/dingtalk",
       "display_name": "钉钉",
@@ -330,6 +1512,63 @@
         }
       ],
       "bundle_sha256": "2df75996633a0098cdeee0a4634e08b4e89de41e6ce7ecd027b62acc2cefbad6"
+    },
+    {
+      "name": "ezjoin_meeting",
+      "id": "totalclaw-mcp/comm/ezjoin_meeting",
+      "display_name": "EzyJoin智慧会议",
+      "description": "Manage EzyJoin meetings via natural language: book rooms, create or cancel meetings, view schedules.",
+      "description_zh": "用自然语言管理 EzyJoin 智慧会议：预约会议室、创建/取消会议、查询会议日程与 AI 纪要。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://www.ezyjoin.cn",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "comm",
+      "tags": [
+        "comm",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/comm/ezjoin_meeting",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/comm/ezjoin_meeting",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/comm/ezjoin_meeting"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "cb0e5f8109cc271c4f7869c4260a71dcfe5e9d3b5f42c99d29b9fee0c96559b4",
+          "size": 1191
+        }
+      ],
+      "bundle_sha256": "d1d3342e405860da4a98aada62fd0ca5fe0cea7070f56919a908d4487ca0eaa0"
     },
     {
       "name": "feishu",
@@ -437,6 +1676,63 @@
         }
       ],
       "bundle_sha256": "85b9a0b77f9fe3887fe876521bddee59b2db35147a3cdc41fc6371538fa1f62d"
+    },
+    {
+      "name": "gongyi_open_mcp",
+      "id": "totalclaw-mcp/comm/gongyi_open_mcp",
+      "display_name": "腾讯公益机构服务平台",
+      "description": "Tencent Charity organization platform connector: query the current organization's user and org info, projects, progress, and financial disclosures with natural language.",
+      "description_zh": "腾讯公益机构服务平台连接器：用自然语言查询当前登录机构的用户与机构信息、项目、进展、财务披露等机构侧业务数据。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://ssl.gongyi.qq.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "comm",
+      "tags": [
+        "comm",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/comm/gongyi_open_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/comm/gongyi_open_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/comm/gongyi_open_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "19ba518be3c8508b2e6dad6bea5bf8164d476d42a10a50b56e108f4ed0a8e512",
+          "size": 1374
+        }
+      ],
+      "bundle_sha256": "58f5ad6a82ed2550500a7102467337630a6b23ec81cced432c32c30520270ca7"
     },
     {
       "name": "imap_mail",
@@ -550,6 +1846,177 @@
         }
       ],
       "bundle_sha256": "540c84fa9eacd77f7763cf32c6c2a25cf566840ec338215564fd213ac98dfdda"
+    },
+    {
+      "name": "lexiang",
+      "id": "totalclaw-mcp/comm/lexiang",
+      "display_name": "乐享知识库",
+      "description": "Search, create, and manage documents in your Lexiang knowledge base. Import Markdown, organize by tags, and keep team docs up to date.",
+      "description_zh": "搜索、创建和管理乐享知识库中的文档。支持导入 Markdown、按标签整理内容、追踪团队文档的更新动态。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp.lexiang-app.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "comm",
+      "tags": [
+        "comm",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/comm/lexiang",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/comm/lexiang",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/comm/lexiang"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "c5f2e611a9f5b4ddc1092d764eacfacd09282ce5650785e56e02fd37704d0e34",
+          "size": 1704
+        }
+      ],
+      "bundle_sha256": "eb48cff3932503270a863fbe4611fb8f5e7e54253c2a8ee781fdebc52fd022ba"
+    },
+    {
+      "name": "shanglv_mcp_gateway",
+      "id": "totalclaw-mcp/comm/shanglv_mcp_gateway",
+      "display_name": "用友智能服务（AI BaaS）",
+      "description": "Provides enterprise financial, tax, banking, and travel management services through Yonyou Bank-Enterprise Cloud, Tax-Enterprise Cloud, and Business Travel Cloud, enabling comprehensive fund, tax, and travel operations management via natural language.",
+      "description_zh": "通过用友银企联、税企联、商旅云等财务服务产品，为企业提供财务税务与银行资金数据服务，并提供企业商旅运营服务和行程服务。用自然语言完成企业的资金、税务、商旅的全面运营管理。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp-gateway.yql.net",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "comm",
+      "tags": [
+        "comm",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/comm/shanglv_mcp_gateway",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/comm/shanglv_mcp_gateway",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/comm/shanglv_mcp_gateway"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "3e66d1ce373dbf69dbeffd9c0446c93927ee3b01a552d24d2393ced8b03a29f6",
+          "size": 1607
+        }
+      ],
+      "bundle_sha256": "bb07ad0fa13e57c801be5701338d525727265168389508b8f74c8b451f7becf2"
+    },
+    {
+      "name": "tencent_qidian_cs",
+      "id": "totalclaw-mcp/comm/tencent_qidian_cs",
+      "display_name": "腾讯企点客服",
+      "description": "Tencent Qidian Customer Service connector. Use natural language to manage work orders (query / create / update / status change), monitor agent online status and real-time reception, retrieve customer profiles, pull chat records and messages from human / LLM / text-robot sessions, and view real-time service monitoring, session monitoring, satisfaction and response reports.",
+      "description_zh": "腾讯企点客服连接器：用自然语言处理工单（查询/创建/更新/状态变更）、查询坐席在线与实时接待、检索/拉取客户资料、拉取人工/大模型/文本机器人的会话记录和消息、查看客服实时监控、会话监控、客服满意度与响应度报表等数据。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://sse.qidian.qq.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "comm",
+      "tags": [
+        "comm",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/comm/tencent_qidian_cs",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/comm/tencent_qidian_cs",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/comm/tencent_qidian_cs"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "078431efe00446e980c38581063fc7f10bcd43590b9282a4d05ce38e849bed50",
+          "size": 1649
+        }
+      ],
+      "bundle_sha256": "c0924ae56ca1857e1bb0218ed29d5809ebd515469d618574686a8f6fd92a5958"
     },
     {
       "name": "wechat-desktop",
@@ -718,6 +2185,64 @@
       "bundle_sha256": "3a5477657ad3c3f98248be063ed39cb9781e4f9f8dc8286dda0b5866477736d3"
     },
     {
+      "name": "ai_hive",
+      "id": "totalclaw-mcp/creative/ai_hive",
+      "display_name": "AI-HIVE",
+      "description": "100+ top AI models (Seedance 2.5, H3 MiniMax, Happyhorse, GPT-image, Nano-Banana, Deepseek, Kimi). One config.",
+      "description_zh": "连接全球 100+ 顶尖 AI 模型（Seedance 2.5、H3 (MiniMax)、Happyhorse、GPT-image、Nano-Banana、Deepseek、Kimi 等），一键搞定文本、图像、视频创作。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "creative",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/creative/ai_hive",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/ai_hive",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/ai_hive"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "17e6901bdad4bfe6e63958d58e79f5c40bf55802d0547bf5e62b5696815f645e",
+          "size": 2698
+        }
+      ],
+      "bundle_sha256": "ee42823fecfbca5735d30827927f4c31303ae3fac36a65f892d23c828b4b11b7"
+    },
+    {
       "name": "blender",
       "id": "totalclaw-mcp/creative/blender",
       "display_name": "Blender",
@@ -776,6 +2301,63 @@
         }
       ],
       "bundle_sha256": "63430a0db48b2d3362571d5fbe6718ebd09c634470a8412f9724f52faa2d9a40"
+    },
+    {
+      "name": "camscanner_mcp",
+      "id": "totalclaw-mcp/creative/camscanner_mcp",
+      "display_name": "扫描全能王",
+      "description": "Smart document conversion and processing platform. Supports image/PDF format conversion (Word, Excel, Markdown, PDF), image enhancement (shadow removal, sharpening, HD upscaling, photo restoration), OCR, image translation, formula extraction, watermark processing, multi-image merging, and cloud document saving.",
+      "description_zh": "智能文档转换与处理平台。支持图片/PDF格式转换（Word、Excel、Markdown、PDF）、图片增强（去阴影、锐化、高清化、老照片修复）、OCR文字识别、图片翻译、公式提取、水印处理、多图合并、文档云端保存等。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://ai-tools.camscanner.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "creative",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/creative/camscanner_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/camscanner_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/camscanner_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "b7f8d186fc1d3caa4cfec2ccd4b5663da353de8a9007609bf3a6bffe8f140c9c",
+          "size": 1485
+        }
+      ],
+      "bundle_sha256": "ff2f6e37802f0a981d66c5ffef6bb2267c663ca5bf22b840260e67bf721bbd1c"
     },
     {
       "name": "canva",
@@ -877,6 +2459,309 @@
       "bundle_sha256": "231d915a1b7120eb011c04bd971be5f53156e7a0ad5f36dd608e74f29da8fe46"
     },
     {
+      "name": "flova",
+      "id": "totalclaw-mcp/creative/flova",
+      "display_name": "Flova",
+      "description": "Create, revise, review, and export professional videos with AI, from creative planning and storyboards to final delivery.",
+      "description_zh": "使用 AI 创建、修改、审阅和导出专业视频，覆盖从创意与分镜到成片交付的完整流程。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://service.flova.tv",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "creative",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "oauth"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/creative/flova",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/flova",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/flova"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "59a04abd39cd162e7b9354ca08e264fb3e9b968ecb5325627dee48b9626126f7",
+          "size": 1109
+        }
+      ],
+      "bundle_sha256": "35a5c4127f85bf7c3b0975c281110e30c45867027161a320dc10b4c63a312f8d"
+    },
+    {
+      "name": "infimind_ecommerce_image",
+      "id": "totalclaw-mcp/creative/infimind_ecommerce_image",
+      "display_name": "极睿电商生图",
+      "description": "Generate KOC seeding collages, product main images, and product detail pages through MCP, then track task results.",
+      "description_zh": "通过 MCP 生成 KOC 种草拼图、商品主图与电商商品详情页，并查询任务生成结果。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "creative",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "MCP_TOKEN",
+          "description": "极睿电商生图 所需的 MCP_TOKEN",
+          "prompt": "请输入 MCP_TOKEN",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/creative/infimind_ecommerce_image",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/infimind_ecommerce_image",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/infimind_ecommerce_image"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "715f97a3580f917a547b140df971587e553abcf0af799bc01010a1a95f54a30e",
+          "size": 1770
+        }
+      ],
+      "bundle_sha256": "b67e61a4bc88ec599b16b5946b8eeed093f1701392574737785a64954164af2a"
+    },
+    {
+      "name": "infimind_video",
+      "id": "totalclaw-mcp/creative/infimind_video",
+      "display_name": "极睿视频",
+      "description": "Create professional videos from prompts and reference media, track generation progress, and analyze videos into reusable creative insights.",
+      "description_zh": "通过自然语言使用极睿视频的专业视频生成和视频分析能力，支持多素材参考、任务进度查询与结构化分析结果。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "creative",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "SORA_MCP_TOKEN",
+          "description": "极睿视频 所需的 SORA_MCP_TOKEN",
+          "prompt": "请输入 SORA_MCP_TOKEN",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/creative/infimind_video",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/infimind_video",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/infimind_video"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "876961e28755a2bc45893c542649715a6722ef266d133c1ef45fffbdf869f5f5",
+          "size": 1476
+        }
+      ],
+      "bundle_sha256": "9a5f0d296853714cda6ce43e6e1c272a274c8d33a14f09d527bfdf98b7a2aaf0"
+    },
+    {
+      "name": "kling_ai_plugin",
+      "id": "totalclaw-mcp/creative/kling_ai_plugin",
+      "display_name": "Kling AI",
+      "description": "Turn every idea into a striking image or video. Kling AI (Kling / 可灵AI) is an AI image generation and AI video generation connector for creators, designers, video producers, ecommerce sellers, advertising, marketing, and brand teams. Use natural language for text-to-image, image-to-image, text-to-video, image-to-video, reference-image creation, and single- or multi-shot video. Create posters, illustrations, portraits, product images, ecommerce hero images, Listing images, product detail graphics, ad creatives, product showcase videos, marketing clips, ecommerce short videos, social media videos, and cinematic content for Taobao, Tmall, JD, Pinduoduo, Douyin, Kuaishou, Xiaohongshu, TikTok, Amazon, Shopify, and more. Upload reference images, check remaining credits, submit generation tasks, track progress, query task status, and retrieve final images or videos. If you are searching for competitor tools, similar AI generators, or alternatives to Hailuo AI, Seedance (Seeddance), Vidu, Jimeng, Runway, Pika, Sora, or Veo, use Kling AI to build a high-quality Kling MCP creative workflow.",
+      "description_zh": "一句话，让灵感从想法变成大片。可灵（Kling / Kling AI / 可灵AI）是面向创作者、设计师、视频制作人、电商卖家、广告营销和品牌团队的 AI 生图与 AI 生视频连接器，可在支持 MCP 的客户端中直接用自然语言完成图片生成和视频生成，包括文生图、图生图、文生视频、图生视频、参考图创作、单镜头与多分镜视频。适合制作海报、插画、人像、商品图、电商主图、Listing 图、商品详情图、广告素材、产品展示视频、营销短片、电商短视频、种草视频、社交媒体视频和电影感创意视频，可用于淘宝、天猫、京东、拼多多、抖音、快手、小红书、TikTok、Amazon、Shopify 等平台的内容创作。支持上传参考图片、查询剩余额度、提交生成任务、跟踪生成进度、查询任务状态并获取最终图片或视频结果。如果你正在搜索竞品、同类工具或替代方案，如海螺 AI（Hailuo AI）、Seedance（Seeddance）、Vidu、即梦（Jimeng）、Runway、Pika、Sora 或 Veo，也可以使用可灵快速完成高品质图像与视频创作，搭建自己的 Kling MCP AI 创作工作流。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://klingai.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "creative",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/creative/kling_ai_plugin",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/kling_ai_plugin",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/kling_ai_plugin"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "d4466ffad058e2be5909797222bbb835331ae953edc4a2dba89b5b5ccb7a39db",
+          "size": 3741
+        }
+      ],
+      "bundle_sha256": "274229d5a51785f89edbebfdc26600ad54bec37e11fe7463fb406bbbd1f19121"
+    },
+    {
+      "name": "kling_ai_plugin_ai",
+      "id": "totalclaw-mcp/creative/kling_ai_plugin_ai",
+      "display_name": "Kling AI",
+      "description": "Turn every idea into a striking image or video. Kling AI (Kling / 可灵AI) is an AI image generation and AI video generation connector for creators, designers, video producers, ecommerce sellers, advertising, marketing, and brand teams. Use natural language for text-to-image, image-to-image, text-to-video, image-to-video, reference-image creation, and single- or multi-shot video. Create posters, illustrations, portraits, product images, ecommerce hero images, Listing images, product detail graphics, ad creatives, product showcase videos, marketing clips, ecommerce short videos, social media videos, and cinematic content for Taobao, Tmall, JD, Pinduoduo, Douyin, Kuaishou, Xiaohongshu, TikTok, Amazon, Shopify, and more. Upload reference images, check remaining credits, submit generation tasks, track progress, query task status, and retrieve final images or videos. If you are searching for competitor tools, similar AI generators, or alternatives to Hailuo AI, Seedance (Seeddance), Vidu, Jimeng, Runway, Pika, Sora, or Veo, use Kling AI to build a high-quality Kling MCP creative workflow.",
+      "description_zh": "一句话，让灵感从想法变成大片。可灵（Kling / Kling AI / 可灵AI）是面向创作者、设计师、视频制作人、电商卖家、广告营销和品牌团队的 AI 生图与 AI 生视频连接器，可在支持 MCP 的客户端中直接用自然语言完成图片生成和视频生成，包括文生图、图生图、文生视频、图生视频、参考图创作、单镜头与多分镜视频。适合制作海报、插画、人像、商品图、电商主图、Listing 图、商品详情图、广告素材、产品展示视频、营销短片、电商短视频、种草视频、社交媒体视频和电影感创意视频，可用于淘宝、天猫、京东、拼多多、抖音、快手、小红书、TikTok、Amazon、Shopify 等平台的内容创作。支持上传参考图片、查询剩余额度、提交生成任务、跟踪生成进度、查询任务状态并获取最终图片或视频结果。如果你正在搜索竞品、同类工具或替代方案，如海螺 AI（Hailuo AI）、Seedance（Seeddance）、Vidu、即梦（Jimeng）、Runway、Pika、Sora 或 Veo，也可以使用可灵快速完成高品质图像与视频创作，搭建自己的 Kling MCP AI 创作工作流。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://kling.ai",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "creative",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/creative/kling_ai_plugin_ai",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/kling_ai_plugin_ai",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/kling_ai_plugin_ai"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "c08ddb63200af55e9266533fca7a6a0f5a6d834e7d994a4d653c78a381958b74",
+          "size": 3741
+        }
+      ],
+      "bundle_sha256": "2f79a61b1d9f92aba258cbd28913e93d7f43417fb7b03cafb3a4fa29afb53c3c"
+    },
+    {
       "name": "mastergo",
       "id": "totalclaw-mcp/creative/mastergo",
       "display_name": "MasterGo",
@@ -952,6 +2837,136 @@
       "bundle_sha256": "58e76c686195f18860503bc9d49e3a9490dc3cc3a0f961d86a4ca16effeaf133"
     },
     {
+      "name": "picset_commerce_images",
+      "id": "totalclaw-mcp/creative/picset_commerce_images",
+      "display_name": "Picset AI 电商图片",
+      "description": "Design and generate ecommerce main images, detail images, and coordinated Listing image suites through Picset AI.",
+      "description_zh": "Picset AI 面向电商卖家、设计师和品牌团队，提供设计并制作电商套图、商品主图和商品详情图等。适用于设计制作电商套图、商品套图、主图、详情图、电商图、Listing 图、上架图、卖点图、功能图、场景图、详情长图或长详情页等商品图片需求时使用。适配 Amazon、淘宝、天猫、1688、Temu、TikTok Shop、拼多多、抖音电商、OZON、独立站、Shopify、Shopee、阿里巴巴国际站、Alibaba.com、速卖通、AliExpress、SHEIN、京东等国内国际主流电商平台",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://picsetai.cn",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "creative",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "PICSET_AGENT_SK",
+          "description": "Picset AI 电商图片 所需的 PICSET_AGENT_SK",
+          "prompt": "请输入 PICSET_AGENT_SK",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/creative/picset_commerce_images",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/picset_commerce_images",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/picset_commerce_images"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "f40c87740c9f23debf12b7ca1eb510c517ab4ac942ec50a928c4febb53182765",
+          "size": 1865
+        }
+      ],
+      "bundle_sha256": "6fd8d351378b8a69a65d87b9bff74fc8085c94630a985129ccaf3f55d55397fc"
+    },
+    {
+      "name": "picset_video_generation",
+      "id": "totalclaw-mcp/creative/picset_video_generation",
+      "display_name": "Picset AI 视频创作",
+      "description": "Picset AI video creation connector for ecommerce product video generation, viral video recreation, and model image generation with asset upload registration, script planning, credit estimates, explicit confirmation, asynchronous generation, and task status tools. The MVP supports Seedance 2.0, Seedance 2.0 Fast, and Seedance 2.0 Mini models, with Seedance 2.0 as the default.",
+      "description_zh": "Picset AI 视频创作连接器支持在支持 MCP 的客户端中通过密钥调用电商商品视频生成、爆款视频复刻和模特图生成能力，完成素材上传登记、脚本规划、视频脚本生成、积分预估、确认提交、异步生成和任务状态查询。MVP 支持 Seedance 2.0、Seedance 2.0 Fast、Seedance 2.0 Mini 三个模型，默认使用 Seedance 2.0。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://picsetai.cn",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "creative",
+      "tags": [
+        "creative",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "PICSET_AGENT_SK",
+          "description": "Picset AI 视频创作 所需的 PICSET_AGENT_SK",
+          "prompt": "请输入 PICSET_AGENT_SK",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/creative/picset_video_generation",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/picset_video_generation",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/creative/picset_video_generation"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "5905ecd91ef29f278801e9087171deeec1ac5276363299002792cfdef6907a2f",
+          "size": 2205
+        }
+      ],
+      "bundle_sha256": "50353d66ec4c8ab8ab686ce6bba4af9217f23f0d9962455bd3fa2b37df3ea4d5"
+    },
+    {
       "name": "unreal_engine",
       "id": "totalclaw-mcp/creative/unreal_engine",
       "display_name": "Unreal Engine",
@@ -1008,6 +3023,200 @@
         }
       ],
       "bundle_sha256": "0d9fa77b912227f792f09b790a45caaab8c86b8846d372fecc9043860e0fcf92"
+    },
+    {
+      "name": "dknowc_mcp",
+      "id": "totalclaw-mcp/data/dknowc_mcp",
+      "display_name": "深知可信工作台",
+      "description": "DKnow Trusted Workbench helps with policy, legal, standards, and public-service work. It provides trusted Q&A, authoritative search, deep research, and evidence-based material organization, helping users find official sources, eligibility requirements, application materials, subsidies, regulations, and standards across regions and time periods.",
+      "description_zh": "深知可信工作台面向政策、法律、标准和公共服务场景，提供可信问答、权威检索、深度研究和材料整理能力。它可以帮助用户查询政策原文、办事条件、申报材料、补贴资质、法律法规和行业标准，梳理多地区、多时间范围的信息，并基于可追溯的权威来源形成清晰、可核验的结果。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp.dknowc.cn",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/dknowc_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/dknowc_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/dknowc_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "7faeb6fdc05032366a879256e34833b653a0d57145af1220f8d71fea08f867b8",
+          "size": 1872
+        }
+      ],
+      "bundle_sha256": "9251b4f527aae6905abcaeedd0f97353aae1eb5c885489574753358364115555"
+    },
+    {
+      "name": "gangtise_mcp",
+      "id": "totalclaw-mcp/data/gangtise_mcp",
+      "display_name": "Gangtise投研",
+      "description": "Gangtise MCP aggregates institutional-grade insights, meeting notes, event calendars, and other alternative data, while providing AI-agent-ready, pre-generated research content alongside structured global market, financial, valuation, and industry data.",
+      "description_zh": "Gangtise MCP汇聚机构级观点，研报，日程等另类数据，提供投研AI Agent预生成数据及全球行情/财务/估值/宏观行业等结构化数据。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://openapi.gangtise.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "GTS_ACCESS_KEY",
+          "description": "Gangtise投研 所需的 GTS_ACCESS_KEY",
+          "prompt": "请输入 GTS_ACCESS_KEY",
+          "secret": true,
+          "required": true
+        },
+        {
+          "name": "GTS_SECRET_KEY",
+          "description": "Gangtise投研 所需的 GTS_SECRET_KEY",
+          "prompt": "请输入 GTS_SECRET_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/gangtise_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/gangtise_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/gangtise_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "c5e019ce4b85956f6e12880e6216fc5e5e1692e99fa80b3fd91704d8cda996e7",
+          "size": 2045
+        }
+      ],
+      "bundle_sha256": "c902d7631b717273fb82aeae2699ce946d865dcb2f1b251ef0967fada2effd9a"
+    },
+    {
+      "name": "gildata",
+      "id": "totalclaw-mcp/data/gildata",
+      "display_name": "恒生聚源 MCP",
+      "description": "Connect to Gildata MCP to query structured financial data, research reports, corporate announcements, news, conditional stock selection, macroeconomic & industry data, as well as enterprise business data.",
+      "description_zh": "连接恒生聚源 MCP，查询金融结构化数据、研究报告、公司公告、新闻资讯、条件选股、宏观行业、工商企业数据。支持基金经理观点持仓一致性分析、行业速报生成、金融资讯热点解读。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://api.gildata.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "GILDATA_TOKEN",
+          "description": "恒生聚源 MCP 所需的 GILDATA_TOKEN",
+          "prompt": "请输入 GILDATA_TOKEN",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/gildata",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/gildata",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/gildata"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "e89cd902d3513d3205e1bf1de74c675e4ebfbbb198c56d55e43ed7886282718f",
+          "size": 1618
+        }
+      ],
+      "bundle_sha256": "3e1f68150411195672d5b0526da7bdde208a49942600bbde607455a30607b1cf"
     },
     {
       "name": "mcp_postgres",
@@ -1144,6 +3353,177 @@
       "bundle_sha256": "9c7624d569994aa92a6bc9195d24182f187d25a2c73cb871c6f83c1207f14ff4"
     },
     {
+      "name": "morningstar",
+      "id": "totalclaw-mcp/data/morningstar",
+      "display_name": "晨星 Morningstar",
+      "description": "Morningstar global and China fund data, analyst research and portfolio analytics for fund screening, risk, holdings, fees and reviews.",
+      "description_zh": "接入晨星全球与中国基金数据，通过自然语言实现基金查询、筛选、分析与深度研究，以及组合穿透分析",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp.morningstar.cn",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/morningstar",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/morningstar",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/morningstar"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "427b5ca9a4ef200930785f5f2f6d78c2a354e0ab640f29c2f6df4ee2406a193c",
+          "size": 1211
+        }
+      ],
+      "bundle_sha256": "85c72cee51cf115313d9872ebac2801110e97c301c8f3cefeb85b9c5113d8327"
+    },
+    {
+      "name": "mx_ds_mcp",
+      "id": "totalclaw-mcp/data/mx_ds_mcp",
+      "display_name": "东方财富妙想MCP",
+      "description": "The financial investment research MCP tool suite, which enables natural language queries, relies on data sources from Eastmoney to provide query capabilities for A-shares, Hong Kong stocks, US stocks, funds, bonds, index sectors, and macroeconomic data. It boasts multi-condition asset screening, brokerage research report retrieval, full-market announcement analysis, and financial news retrieval capabilities.",
+      "description_zh": "通过自然语言查询的金融投研 MCP 工具套件，依托东方财富数据源，提供A股、港股、美股、基金、债券、指数板块、宏观数据查询，具备多条件资产筛选、券商研报检索、全市场公告解析、金融资讯检索能力。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mxapi.eastmoney.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/mx_ds_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/mx_ds_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/mx_ds_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "7d2f51bd90e4ae0ad35ecd6734e0ee8b00455dafb8e994beb20b4e4376b05d11",
+          "size": 1620
+        }
+      ],
+      "bundle_sha256": "beb4c7e7da2ddfe9632f15210fafad16014121cfd8a62caea710de65479f7cf6"
+    },
+    {
+      "name": "pandadata",
+      "id": "totalclaw-mcp/data/pandadata",
+      "display_name": "PandaData 金融数据",
+      "description": "Query, organize, and analyze financial data across Chinese, Hong Kong, and U.S. Equities, futures, options, funds, macroeconomics, and quantitative factors.",
+      "description_zh": "查询、整理和分析 A 股、期货、期权、港美股、基金、宏观经济及量化因子等金融数据，支持统计比较与趋势归纳。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://pandadatamcp.pandaaiquant.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/pandadata",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/pandadata",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/pandadata"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "bd9a38ec5505c36f466f6ec201f3bf7e8bfa8d16b813707c94b620d39bfb1885",
+          "size": 1293
+        }
+      ],
+      "bundle_sha256": "54090594fe091fe2d719b4781053394712099351bf16a7b8ae9671d5963ebca6"
+    },
+    {
       "name": "qcc",
       "id": "totalclaw-mcp/data/qcc",
       "display_name": "企查查",
@@ -1248,6 +3628,128 @@
       "bundle_sha256": "50f5a889006e53e7d4025f644144958c5cf25546c15f911cd111aff26f0e6844"
     },
     {
+      "name": "qixinhuiyan_mcp",
+      "id": "totalclaw-mcp/data/qixinhuiyan_mcp",
+      "display_name": "启信慧眼",
+      "description": "Connect to Qixinhuiyan's comprehensive enterprise data capabilities through Qixinhuiyan MCP, enabling users to use natural language for company search, business profiling, risk identification, business updates, intellectual property, and other business intelligence analysis.",
+      "description_zh": "通过启信慧眼 MCP 接入企业全景数据能力，支持用户用自然语言完成企业搜索、工商画像、风险识别、经营动态、知识产权等商业情报分析。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp.qixin.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/qixinhuiyan_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/qixinhuiyan_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/qixinhuiyan_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "f525f6f8ccdebf769743f59911bc2548171ccfd69ae42be5b304e4626bef3fab",
+          "size": 1369
+        }
+      ],
+      "bundle_sha256": "1bc6682e2da601160fe8bd8b7eb5ac0c606c2bbb0a69d0ce9b4730f94de9e776"
+    },
+    {
+      "name": "sq_company_dynamic",
+      "id": "totalclaw-mcp/data/sq_company_dynamic",
+      "display_name": "上奇产业通-企业动态追踪",
+      "description": "Tracks company dynamics across its full lifecycle: investment, equity changes, innovation platforms, bidding, IP, rankings, migration, certifications, business changes, IPO, standards, recruitment, land acquisition, with entity matching.",
+      "description_zh": "实时追踪企业全生命周期动态，覆盖投资设立、股权变动、创新平台、中标、知识产权、排名、迁移、资质认定、工商变更、上市、标准制定、招聘、拿地等维度，并提供企业实体匹配。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://api.chanyedata.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "API_KEY",
+          "description": "上奇产业通-企业动态追踪 所需的 API_KEY",
+          "prompt": "请输入 API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/sq_company_dynamic",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/sq_company_dynamic",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/sq_company_dynamic"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "635a4346f6093c15e330b4e7f7f6878a9e8ec6e948022daf36449f54248f2024",
+          "size": 1732
+        }
+      ],
+      "bundle_sha256": "68b4636b994d41b62b1c45c015317667ede9305d26a2abe9c8c38ad9543ce58c"
+    },
+    {
       "name": "tianyancha",
       "id": "totalclaw-mcp/data/tianyancha",
       "display_name": "天眼查",
@@ -1347,6 +3849,242 @@
         }
       ],
       "bundle_sha256": "2b9f67175134dd6524542015f503d86ad45b68679ee4f8a1fa598404c3b7795b"
+    },
+    {
+      "name": "tongzhou_fin_research",
+      "id": "totalclaw-mcp/data/tongzhou_fin_research",
+      "display_name": "同舟金融研究",
+      "description": "Connects market data, research, industry graphs, and Tongzhou evidence for public-equity analysis.",
+      "description_zh": "连接公开行情、研报检索、行业图谱与同舟投研材料，为股市研究提供可复核证据。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp-gateway.textmind-gz.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/tongzhou_fin_research",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/tongzhou_fin_research",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/tongzhou_fin_research"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "0857b0d7d0e57fadae1ffb65fa2ae5838136ba57699c924953e215996412d624",
+          "size": 1140
+        }
+      ],
+      "bundle_sha256": "83dd9d7a6a67e32309601db690dc7505fc38b335f26fa6e171d63fde8034b95b"
+    },
+    {
+      "name": "westock_mcp",
+      "id": "totalclaw-mcp/data/westock_mcp",
+      "display_name": "腾讯自选股",
+      "description": "Directly connect to WeStock for real-time market data, watchlist management, price alerts, and paper trading. Analyze personalized data with natural language and easily handle monitoring and investment decisions.",
+      "description_zh": "直连腾讯自选股，实时掌握毫秒级行情与资金动态，用自然语言分析自选数据、设置股价提醒、管理模拟交易，轻松搞定盯盘与投资决策。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://stockbuddy.qq.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/westock_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/westock_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/westock_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "b0186a19382291e4944e04a4a2f534146d3500b81fbc9d0632f1586eee25c552",
+          "size": 1310
+        }
+      ],
+      "bundle_sha256": "d5e97baeef5b8a1d3c8a621e1384d9623a6189319337ea4ef453764c85b21ee3"
+    },
+    {
+      "name": "yingmi_mcp",
+      "id": "totalclaw-mcp/data/yingmi_mcp",
+      "display_name": "盈米MCP",
+      "description": "Access fund and market data for investment research, portfolio analysis, wealth planning, and financial content creation.",
+      "description_zh": "查询基金与市场数据，完成基金研究、组合分析、财富规划及金融内容生成。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://stargate.yingmi.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "YINGMI_API_KEY",
+          "description": "盈米MCP 所需的 YINGMI_API_KEY",
+          "prompt": "请输入 YINGMI_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/yingmi_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/yingmi_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/yingmi_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "b0848934c1d8a363757b127f375a2f41e9555668e026029af7625b3f25303a2e",
+          "size": 1341
+        }
+      ],
+      "bundle_sha256": "08e39284c55e73b916bf75486aa6541cc22e64ce2623c210d29379daf8a41256"
+    },
+    {
+      "name": "yzf_invoice_mcp_server",
+      "id": "totalclaw-mcp/data/yzf_invoice_mcp_server",
+      "display_name": "云帐房AI开票",
+      "description": "Use Yunzhangfang AI invoicing services to extract billing information and open the e-tax bureau invoicing flow.",
+      "description_zh": "通过自然语言使用云帐房 AI 开票能力，完成开票信息识别，并前往电子税局开票。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://super-ai-app.yunzhangfang.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/yzf_invoice_mcp_server",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/yzf_invoice_mcp_server",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/yzf_invoice_mcp_server"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "0e3b4545b74013ad68a37c42c3d54612b77ee2c8684463565042eb4bed10ec34",
+          "size": 1439
+        }
+      ],
+      "bundle_sha256": "54ec6d1ae86e63a9bae25afe4d35a5b7015330b294444f6825fa55cd011c8217"
     },
     {
       "name": "gitee",
@@ -2077,6 +4815,63 @@
       "bundle_sha256": "398d199d3d6e999bf83955569031fd146fd035d6dce3196ac344ff09fdeedc26"
     },
     {
+      "name": "gaodun_job",
+      "id": "totalclaw-mcp/hr/gaodun_job",
+      "display_name": "大学生实习就业助手",
+      "description": "A full-journey AI assistant for student internships and employment: get smart civil-service position recommendations, search internship and campus jobs, run career assessments (MBTI, Holland, career anchors), diagnose and optimize resumes, and practice interview questions with evaluation reports.",
+      "description_zh": "大学生实习就业全链路 AI 助手：智能推荐公考岗位，检索实习与校招职位，提供 MBTI、霍兰德等职业测评，简历诊断与 AI 优化改写，面试刷题与模拟面试评估报告，助你拿 offer。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://apigateway.gaodun.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "hr",
+      "tags": [
+        "hr",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/hr/gaodun_job",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/hr/gaodun_job",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/hr/gaodun_job"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "dc94ae1382b48ec66e15ecca5afcdd2ece7fcde40da72971dd577eb2773981b6",
+          "size": 1548
+        }
+      ],
+      "bundle_sha256": "5d0d49e0b475e1897d2baa89f57b47a128bbf65188457ac69b18e756f5b81a6a"
+    },
+    {
       "name": "moka",
       "id": "totalclaw-mcp/hr/moka",
       "display_name": "Moka 招聘",
@@ -2175,6 +4970,259 @@
         }
       ],
       "bundle_sha256": "1a8d6dac28adf1793ef5dd02cb85e88b4da3398dd202e81def23d5541eb6d201"
+    },
+    {
+      "name": "teacher_assistant",
+      "id": "totalclaw-mcp/hr/teacher_assistant",
+      "display_name": "企鹅教师助手",
+      "description": "Penguin Teacher Assistant handles foundational tasks, leveraging curriculum standards and teaching methodologies to rapidly generate lesson outlines, lesson plans, courseware, and multimodal teaching resources, thereby freeing up more time for teachers to innovate in the classroom.",
+      "description_zh": "企鹅教师助手负责处理基础性工作，基于课标和教学方法协助快速生成课程大纲、教案、课件及多模态教学资源，从而让教师腾出更多时间在课堂上进行创新",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://aiteach.qq.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "hr",
+      "tags": [
+        "hr",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/hr/teacher_assistant",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/hr/teacher_assistant",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/hr/teacher_assistant"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "02f21b7785beccd2820b65c5e22f74bfb8e046efb3e4b124866c16d5fe5e91a1",
+          "size": 1431
+        }
+      ],
+      "bundle_sha256": "8335c61593fc13d4b1fe89cd7d9863e4ebb43614bbbc111e07dcb86db823ab57"
+    },
+    {
+      "name": "bugly_token",
+      "id": "totalclaw-mcp/infra/bugly_token",
+      "display_name": "Bugly 质量概览",
+      "description": "View the product quality overview, including crash rate, ANR rate, FOOM (OOM) rate, and startup latency.",
+      "description_zh": "查看产品的质量概览 包括崩溃率 anr率 foom（oom）率 启动耗时",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://bugly.tds.qq.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "infra",
+      "tags": [
+        "infra",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "BUGLY_ACCESS_TOKEN",
+          "description": "Bugly 质量概览 所需的 BUGLY_ACCESS_TOKEN",
+          "prompt": "请输入 BUGLY_ACCESS_TOKEN",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/infra/bugly_token",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/bugly_token",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/infra/bugly_token"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "90acb2a21a08ad3c09b6aee1c53c80889b219d9e940ee70cadac2ec3c67d21c2",
+          "size": 1243
+        }
+      ],
+      "bundle_sha256": "2277397dd704e407697e870e39882a89df1b75cc2d3f8875ec14e18395c06fa5"
+    },
+    {
+      "name": "cisp_mcp",
+      "id": "totalclaw-mcp/infra/cisp_mcp",
+      "display_name": "水滴征信",
+      "description": "Query multi-dimensional enterprise information via Zenicredit, including business registration, IP, public opinion, financials, land, corporate relationships, related parties, and verification services.",
+      "description_zh": "通过水滴征信企业信息服务平台查询工商、知识产权、舆情、财务、土地、企业关联关系、关联方等企业多维信息，并支持企业二要素/三要素核验。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://cisp.zenitera.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "infra",
+      "tags": [
+        "infra",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "CISP_API_KEY",
+          "description": "水滴征信 所需的 CISP_API_KEY",
+          "prompt": "请输入 CISP_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/infra/cisp_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/cisp_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/infra/cisp_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "1377be82876c9c0c2fe3c80fb79128e6280618cbdc72a1c196360ca70723a27d",
+          "size": 1541
+        }
+      ],
+      "bundle_sha256": "4dccfa8db11fcbde1eb41d956f47e24508def0ad7455bf8ee178f523f6a7d4be"
+    },
+    {
+      "name": "dcs_cloud",
+      "id": "totalclaw-mcp/infra/dcs_cloud",
+      "display_name": "DCS Cloud",
+      "description": "Bootstrap the dcs CLI (download, auto-update, PAT login), then run the CLI directly to operate DCS Cloud: projects, tasks, workflows, billing, and data files. Create a Personal Access Token (PAT) in the cloud platform profile page and paste it into the connector.",
+      "description_zh": "引导 dcs CLI（下载、自动更新、PAT 登录），之后直接执行 CLI 操作 DCS Cloud：项目、任务、工作流、计费、数据文件。用户需在云平台个人中心创建个人访问令牌(PAT)并粘贴到连接器。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "infra",
+      "tags": [
+        "infra",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "npx"
+      ],
+      "runtimes": [
+        {
+          "id": "npx",
+          "type": "stdio",
+          "launcher": "npx"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "DCS_PAT",
+          "description": "DCS Cloud 所需的 DCS_PAT",
+          "prompt": "请输入 DCS_PAT",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/infra/dcs_cloud",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/dcs_cloud",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/infra/dcs_cloud"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "06c33d2773a59dff224ba519cf5ae2ad4e8489f9ab0132c9939d89ff82b4c8e1",
+          "size": 1696
+        }
+      ],
+      "bundle_sha256": "abde3023118d687dde35c7f6195c96ce3998482ddb67855612d2520e525c647b"
     },
     {
       "name": "docker",
@@ -2343,6 +5391,63 @@
         }
       ],
       "bundle_sha256": "fcb85c57b0c5439546608e8e140576217bf1647703ec4f43276eef40771e1499"
+    },
+    {
+      "name": "tplus_api",
+      "id": "totalclaw-mcp/infra/tplus_api",
+      "display_name": "畅捷通T+",
+      "description": "Natural-language access to Chanjet T+Cloud: query and manage sales orders, purchase orders, inventory vouchers, production orders, financial documents, reports, and master data.",
+      "description_zh": "畅捷通 T+Cloud 自然语言操作入口：查询/管理销售订单、采购订单、库存单据、生产工单、财务凭证、报表及基础档案。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcphub.chanapp.chanjet.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "infra",
+      "tags": [
+        "infra",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/infra/tplus_api",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/tplus_api",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/infra/tplus_api"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "2dc94e4cbcb9be5590c1fec833e5bfbf503197a5874240ecf68d1286a6edf438",
+          "size": 1232
+        }
+      ],
+      "bundle_sha256": "5032d4ce59574dc15ed3d54b1911b6d34952e2eb9933210c949f12de99fb2a96"
     },
     {
       "name": "mcp_filesystem",
@@ -2610,6 +5715,63 @@
       "bundle_sha256": "092a15dfd0024da01f7ad80eb086e6b7f7a350cff5acf6aa6f87bb8426c79d88"
     },
     {
+      "name": "archive_hospital_mcp",
+      "id": "totalclaw-mcp/office/archive_hospital_mcp",
+      "display_name": "腾讯健康全周期管理平台",
+      "description": "MCP connector for the provider-side AI agent of the Full-Cycle Patient Management Platform (Tengmed Patient Archive). Built on the existing platform, it enables clinical operations through conversational interface in natural language.",
+      "description_zh": "全周期管理平台机构端 AI 智能体的 MCP 连接器。基于原有全周期管理平台，通过引入对话式 AI 智能体，实现理解管理者意图，调度平台原有能力模块完成患者数据查询管理等操作",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://bingli.tengmed.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "office",
+      "tags": [
+        "office",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/office/archive_hospital_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/archive_hospital_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/office/archive_hospital_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "8e7d882bcfda95688cc617fcfc663c0d3332c25f06600a4e09f4275346fa246a",
+          "size": 1436
+        }
+      ],
+      "bundle_sha256": "bd2aad7e8acd348c21ef0cc84724d839664a692e0414beb1d754abe83c5e7915"
+    },
+    {
       "name": "baidu_netdisk",
       "id": "totalclaw-mcp/office/baidu_netdisk",
       "display_name": "百度网盘",
@@ -2704,6 +5866,63 @@
         }
       ],
       "bundle_sha256": "f436e0fc5926fe4ae39395438f413c7e5bf019bd5909e969a6c20b947556b680"
+    },
+    {
+      "name": "ima_mcp",
+      "id": "totalclaw-mcp/office/ima_mcp",
+      "display_name": "ima知识库",
+      "description": "Reference knowledge base materials and files, browse knowledge base details.",
+      "description_zh": "引用知识库资料及文件，浏览知识库详情。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://ima.qq.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "office",
+      "tags": [
+        "office",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/office/ima_mcp",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/ima_mcp",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/office/ima_mcp"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "21dfc56c6909663b56ba937dd5485d704de28969b2cc836b74176d10616adfff",
+          "size": 1005
+        }
+      ],
+      "bundle_sha256": "8a8c17365e5450b7bc35542f4486db27e91c4fe587406c2495e3226aad49379d"
     },
     {
       "name": "jiandaoyun",
@@ -3160,6 +6379,63 @@
       "bundle_sha256": "9b89b3114f67b599c1f51599c47f9c6ff652bbcb370635857b679c3360858582"
     },
     {
+      "name": "tencent_weiyun",
+      "id": "totalclaw-mcp/office/tencent_weiyun",
+      "display_name": "微云",
+      "description": "Access, download, or remove files from Weiyun, while also supporting file uploads and the creation of sharing links to help you manage your Weiyun storage.",
+      "description_zh": "查看、下载、删除微云文件，并且提供上传文件到微云、生成分享链接能力，帮你管理微云文件",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://www.weiyun.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "office",
+      "tags": [
+        "office",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/office/tencent_weiyun",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/tencent_weiyun",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/office/tencent_weiyun"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "5cc64ea0a8b8156de25e2e4eee5c230c01f6f53c6850a66f7f1211dc0fa33495",
+          "size": 1206
+        }
+      ],
+      "bundle_sha256": "111bb6aaba1b89c199d9c9ab92230048cbd0e250bb6a46f9e5cf58a163018221"
+    },
+    {
       "name": "aitoearn",
       "id": "totalclaw-mcp/social/aitoearn",
       "display_name": "AiToEarn",
@@ -3488,6 +6764,63 @@
         }
       ],
       "bundle_sha256": "45e39d80222ade09f60641f95c683d751fb1eef30233f3ef2fe59ba699ba48fe"
+    },
+    {
+      "name": "bazhuayu",
+      "id": "totalclaw-mcp/web/bazhuayu",
+      "display_name": "八爪鱼",
+      "description": "Drive Bazhuayu cloud scraping with natural language: discover templates, run tasks, check progress, export structured data, and manage existing tasks.",
+      "description_zh": "用自然语言驱动八爪鱼云采集：搜索模板、启动任务、查询进度、导出结构化数据，并管理已有任务。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp.bazhuayu.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "web",
+      "tags": [
+        "web",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/web/bazhuayu",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/bazhuayu",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/web/bazhuayu"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "353aaf1140655c49dde66f0f40b0c167d41e8e088749c33d0199402a001e4c4b",
+          "size": 1330
+        }
+      ],
+      "bundle_sha256": "d6e27b1fcce402222ef0029892fc6bd916d66636bd4f4a8a1aabdcd39d84747b"
     },
     {
       "name": "chrome_devtools",

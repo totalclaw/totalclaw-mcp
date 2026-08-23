@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: gongyi-open-mcp。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: gongyi_open_mcp
+display_name: 腾讯公益机构服务平台
+version: 0.1.0
+description: 'Tencent Charity organization platform connector: query the current organization''s user
+  and org info, projects, progress, and financial disclosures with natural language.'
+description_zh: 腾讯公益机构服务平台连接器：用自然语言查询当前登录机构的用户与机构信息、项目、进展、财务披露等机构侧业务数据。
+author: vendor
+category: comm
+tags:
+- comm
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://ssl.gongyi.qq.com/gygw-web/api/open/tob/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://ssl.gongyi.qq.com
+examples:
+- 获取当前登录用户和所属机构信息
+- 查询我机构下的项目列表，重点看教育助学类项目
+- 查一下本机构的统一社会信用代码和评估等级
+- 看看某个项目最新的进展和受益人数
+- 拉取某个项目近三年的财务披露和收支明细

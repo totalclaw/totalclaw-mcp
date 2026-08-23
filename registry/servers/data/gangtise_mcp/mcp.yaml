@@ -1,0 +1,54 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: gangtise-mcp。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: gangtise_mcp
+display_name: Gangtise投研
+version: 0.1.0
+description: Gangtise MCP aggregates institutional-grade insights, meeting notes, event calendars, and
+  other alternative data, while providing AI-agent-ready, pre-generated research content alongside structured
+  global market, financial, valuation, and industry data.
+description_zh: Gangtise MCP汇聚机构级观点，研报，日程等另类数据，提供投研AI Agent预生成数据及全球行情/财务/估值/宏观行业等结构化数据。
+author: vendor
+category: data
+tags:
+- data
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://openapi.gangtise.com/application/open-mcp/
+  headers:
+    accessKey: ${GTS_ACCESS_KEY}
+    secretKey: ${GTS_SECRET_KEY}
+  auth: none
+requires_env:
+- name: GTS_ACCESS_KEY
+  env_key: GTS_ACCESS_KEY
+  description: Gangtise投研 所需的 GTS_ACCESS_KEY
+  prompt: 请输入 GTS_ACCESS_KEY
+  secret: true
+  required: true
+- name: GTS_SECRET_KEY
+  env_key: GTS_SECRET_KEY
+  description: Gangtise投研 所需的 GTS_SECRET_KEY
+  prompt: 请输入 GTS_SECRET_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://openapi.gangtise.com
+examples:
+- 过去30天，国内外机构对英伟达有哪些共识与分歧？
+- 为宁德时代生成一页式投资摘要，并补充投资逻辑、同业对比、估值与主要风险
+- 近期人形机器人产业的路演、调研与会议纪要，提炼产业链变化及重点公司
+- 围绕“AI资本开支已经见顶”生成多空辩论，并列出关键论据与验证指标
+- 对比中际旭创最新年报与业绩会中的管理层讨论，提炼经营指引及表述变化

@@ -1,0 +1,37 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: wk-workbuddy。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: wkinfo
+display_name: 威科先行
+version: 0.1.0
+description: Built on Wolters Kluwer China's authoritative and real-time legal database, MCP service facilitates
+  diverse search capabilities such as semantic and keyword retrieval.
+description_zh: 威科先行依托全面、准确、及时更新的法规、案例等法律数据研发的MCP服务，支持语义检索、关键词检索等场景。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.wkinfo.com.cn/mcp-servers/integrated/
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcp.wkinfo.com.cn
+examples:
+- 在北京，根据近三年的案例观点，股权激励纠纷是否属于劳动争议？
+- 北上深关于"未约定竞业限制经济补偿时用人单位支付标准"的规定
+- 合同里写『甲方可随时单方解除合同且不承担任何责任』，这条款有没有问题？
+- 查询房屋租赁押金返还相关判例，对比不同法院的裁判倾向。

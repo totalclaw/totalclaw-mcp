@@ -1,0 +1,46 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: lingxing-mcp。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: lingxing_mcp
+display_name: 领星ERP
+version: 0.1.0
+description: Query and manage stores, inventory, listings, sales, profit, advertising, and operations
+  data in LingXing ERP using natural language.
+description_zh: 使用自然语言查询和管理领星ERP中的店铺、库存、Listing、销售、利润、广告和运营数据。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://openmcp.lingxing.com/mcp-servers/lingxing-mcp
+  headers:
+    X-Mcp-Key: ${LINGXING_MCP_KEY}
+  auth: none
+requires_env:
+- name: LINGXING_MCP_KEY
+  env_key: LINGXING_MCP_KEY
+  description: 领星ERP 所需的 LINGXING_MCP_KEY
+  prompt: 请输入 LINGXING_MCP_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://openmcp.lingxing.com
+examples:
+- 查看我有权限访问的店铺
+- 查询最近 7 天各店铺的产品表现
+- 汇总本月订单利润并按店铺排序
+- 分析最近 30 天的广告活动表现
+- 查询当前 FBA 库存和补货建议

@@ -1,0 +1,37 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: pandadata。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: pandadata
+display_name: PandaData 金融数据
+version: 0.1.0
+description: Query, organize, and analyze financial data across Chinese, Hong Kong, and U.S. Equities,
+  futures, options, funds, macroeconomics, and quantitative factors.
+description_zh: 查询、整理和分析 A 股、期货、期权、港美股、基金、宏观经济及量化因子等金融数据，支持统计比较与趋势归纳。
+author: vendor
+category: data
+tags:
+- data
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://pandadatamcp.pandaaiquant.com/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://pandadatamcp.pandaaiquant.com
+examples:
+- 查询贵州茅台过去一年的日线行情，并统计月度收益率
+- 比较沪深 300 和中证 500 最近三年的表现与波动
+- 查询螺纹钢期货主力合约及近期行情变化
+- 整理最近五年中国主要宏观指标并归纳趋势

@@ -1,0 +1,39 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: westock-mcp。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: westock_mcp
+display_name: 腾讯自选股
+version: 0.1.0
+description: Directly connect to WeStock for real-time market data, watchlist management, price alerts,
+  and paper trading. Analyze personalized data with natural language and easily handle monitoring and
+  investment decisions.
+description_zh: 直连腾讯自选股，实时掌握毫秒级行情与资金动态，用自然语言分析自选数据、设置股价提醒、管理模拟交易，轻松搞定盯盘与投资决策。
+author: vendor
+category: data
+tags:
+- data
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://stockbuddy.qq.com/cgi/cgi-bin/openai/mcp/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://stockbuddy.qq.com
+examples:
+- 把宁德时代加到我的自选
+- 帮我找半导体相关的股票
+- 看看我有哪些自选股票
+- 查一下腾讯控股的资金流向
+- 茅台和宁德时代今天行情怎么样

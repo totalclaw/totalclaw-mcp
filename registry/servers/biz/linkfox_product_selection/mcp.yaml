@@ -1,0 +1,46 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: linkfox-product-selection。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: linkfox_product_selection
+display_name: Linkfox 选品
+version: 0.1.0
+description: Cross-border e-commerce product selection all-in-one AI toolkit, integrating multiple sub-capabilities
+  including competitor lookup, ABA, Keepa, Sorftime, Jungle Scout, SellerSprite, SIF, Jiimore, business
+  insights, and compliance detection—covering product selection, keywords, competitors, reviews, niches
+  & trends, and compliance detection.
+description_zh: 跨境电商选品一站式 AI 工具集，整合 竞品查询/ABA/Keepa/Sorftime/Jungle Scout/卖家精灵/SIF/极目/商业洞察/合规检测等 多项子能力，覆盖选品、关键词、竞品、评论、利基与趋势、合规检测。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp-tool-gateway.linkfox.com/mcp/any-tool
+  headers:
+    Authorization: ${LINKFOX_AGENT_API_KEY}
+  auth: none
+requires_env:
+- name: LINKFOX_AGENT_API_KEY
+  env_key: LINKFOX_AGENT_API_KEY
+  description: Linkfox 选品 所需的 LINKFOX_AGENT_API_KEY
+  prompt: 请输入 LINKFOX_AGENT_API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcp-tool-gateway.linkfox.com
+examples:
+- 用 Jungle Scout 筛选美国站月销量 500+ 的商品
+- 查 Keepa 上某 ASIN 近 90 天价格和 BSR 趋势
+- 用智慧芽检索商品图相似外观专利

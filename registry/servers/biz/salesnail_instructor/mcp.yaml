@@ -1,0 +1,39 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: salesnail-instructor。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: salesnail_instructor
+display_name: SalesNail 讲师
+version: 0.1.0
+description: Self-activate an instructor trial, maintain a business Profile, draft client proposals, create
+  and reuse games, configure courses, facilitate classrooms, and analyze complex-sales performance with
+  evidence-backed semantics.
+description_zh: 通过自然语言自助开通讲师试用、维护商业 Profile、生成客户方案，完成游戏创作、课程配置、实时带教，以及团队、学员、班级和商机的证据化分析与复盘。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://sn.long-arena.com/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://sn.long-arena.com
+examples:
+- 帮我自助开通讲师试用，完成 Profile，并准备自我体验和好友体验课程
+- 根据我的讲师 Profile 和这个客户 Brief 生成一份可发送的复杂销售培训方案
+- 为制造业大客户销售培训设计并生成一个中文游戏
+- 为这门课创建分组、设置组长并给我学员和助教邀请链接
+- 分析第一组的重点商机，按 MEDDPICC 和 SPIN 给出证据、风险和下一步问题

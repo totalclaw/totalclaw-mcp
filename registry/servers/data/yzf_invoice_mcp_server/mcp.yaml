@@ -1,0 +1,37 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: yzf-invoice-mcp-server。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: yzf_invoice_mcp_server
+display_name: 云帐房AI开票
+version: 0.1.0
+description: Use Yunzhangfang AI invoicing services to extract billing information and open the e-tax
+  bureau invoicing flow.
+description_zh: 通过自然语言使用云帐房 AI 开票能力，完成开票信息识别，并前往电子税局开票。
+author: vendor
+category: data
+tags:
+- data
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://super-ai-app.yunzhangfang.com/api/mcp/invoice/stream
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://super-ai-app.yunzhangfang.com
+examples:
+- 帮我开专票给云帐房网络科技有限公司，开票项目是软件服务费，含税金额 12000 元
+- 帮我开普票给云帐房网络科技有限公司，开票项目是信息技术服务费，含税金额 8600 元
+- 帮我开专票给云帐房网络科技有限公司，开票项目是咨询服务费，含税金额 5300 元
+- 帮我开普票给云帐房网络科技有限公司，开票项目是系统维护费，含税金额 2800 元

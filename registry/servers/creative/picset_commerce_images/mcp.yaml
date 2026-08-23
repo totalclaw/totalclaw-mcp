@@ -1,0 +1,46 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: picset-commerce-images。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: picset_commerce_images
+display_name: Picset AI 电商图片
+version: 0.1.0
+description: Design and generate ecommerce main images, detail images, and coordinated Listing image suites
+  through Picset AI.
+description_zh: Picset AI 面向电商卖家、设计师和品牌团队，提供设计并制作电商套图、商品主图和商品详情图等。适用于设计制作电商套图、商品套图、主图、详情图、电商图、Listing
+  图、上架图、卖点图、功能图、场景图、详情长图或长详情页等商品图片需求时使用。适配 Amazon、淘宝、天猫、1688、Temu、TikTok Shop、拼多多、抖音电商、OZON、独立站、Shopify、Shopee、阿里巴巴国际站、Alibaba.com、速卖通、AliExpress、SHEIN、京东等国内国际主流电商平台
+author: vendor
+category: creative
+tags:
+- creative
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://picsetai.cn/functions/v1/agent-mcp-v1/mcp
+  headers:
+    Authorization: Bearer ${PICSET_AGENT_SK}
+  auth: none
+requires_env:
+- name: PICSET_AGENT_SK
+  env_key: PICSET_AGENT_SK
+  description: Picset AI 电商图片 所需的 PICSET_AGENT_SK
+  prompt: 请输入 PICSET_AGENT_SK
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://picsetai.cn
+examples:
+- 用我上传的商品图生成一套淘宝主图和详情图
+- 生成 5 张 Amazon 主图
+- 生成一套统一风格的商品详情图
+- 把 D3 背景改成厨房，其他图片不要动

@@ -1,0 +1,45 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: ai-hive。人工修改后请同步递增 version。
+# 相对上游配置做的规整：
+#   - @infimind-next/ai-hive-mcp@latest → @infimind-next/ai-hive-mcp@0.2.5
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: ai_hive
+display_name: AI-HIVE
+version: 0.1.0
+description: 100+ top AI models (Seedance 2.5, H3 MiniMax, Happyhorse, GPT-image, Nano-Banana, Deepseek,
+  Kimi). One config.
+description_zh: 连接全球 100+ 顶尖 AI 模型（Seedance 2.5、H3 (MiniMax)、Happyhorse、GPT-image、Nano-Banana、Deepseek、Kimi
+  等），一键搞定文本、图像、视频创作。
+author: vendor
+category: creative
+tags:
+- creative
+- vendor
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@infimind-next/ai-hive-mcp@0.2.5'
+  requires:
+    node: '>=20.19.0'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+examples:
+- 先联网搜一组宋代美学参考（服饰纹样、青绿山水、木构建筑），据此生成一张汉服少女主视觉概念图；再把这张图做成 12 秒电影感运镜视频：0-4s 缓慢推进特写衣纹、4-8s 环绕微距工艺、8-12s 横移拉远见全景，带氛围光与影视级色调，画面流畅稳定、面部五官清晰不变形、无抖动无闪烁。
+- 帮我设计一个日漫风战斗少女 IP：银白长发、异色瞳（左金右蓝）、机甲肩甲、战斗服。先搜同类热门人设找配色参考，再用固定角色锚点『银发异色瞳少女，机甲肩甲，战斗姿态，锐利眼神』原样复用，生成正面/侧面/背面的三视图，统一画风与配色，用于盲盒手办立项。
+- 搜一下今年新茶饮夏季营销主视觉趋势，据此做一张门店开业促销海报：主标题大字『买一送一』、暖橙色调、左侧 40% 留白、电影感侧光、3:4 竖版，适合朋友圈与小红书投放；另出一张极简冷调备选。
+- 做一个柠檬黄泰迪熊盲盒手办系列：先出基础款 Q 版三视图（圆脸大眼、公仔比例），再连续迭代 5 款不同穿搭与配饰的衍生款（宇航员/厨师/旗袍/运动/蒸汽朋克），保持同一角色锚点与盲盒比例，统一柔光陶瓷质感。
+- 搜一组『职场精英写实肖像』布光与构图参考，生成一张商务正装职业照：自然窗光、浅景深、干净灰渐变背景、8K、对称构图，用于简历与领英头像；再生成一张同人物的汉服写真做风格对比。

@@ -1,0 +1,55 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: duoguan-fengchao。人工修改后请同步递增 version。
+# 相对上游配置做的规整：
+#   - @duoguan-fengchao/mcp-launcher@^1.0.8 → @duoguan-fengchao/mcp-launcher@1.0.8
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: duoguan_fengchao
+display_name: 夺冠蜂巢
+version: 0.1.0
+description: AI-powered content operations platform. From topic planning and copywriting to podcast voiceover
+  and video packaging — all in one place.
+description_zh: AI 自媒体内容运营系统。从选题策划、文案撰写、图片配图到播客配音、视频封装，一站式内容生产。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - --package
+  - '@duoguan-fengchao/mcp-launcher@1.0.8'
+  - duoguan-fengchao-launcher
+  env:
+    DUOGUAN_FENGCHAO_API_BASE_URL: https://fc.duoguan.com
+    DUOGUAN_FENGCHAO_PUBLIC_BASE_URL: https://fc.duoguan.com
+    DUOGUAN_FENGCHAO_API_TOKEN: ${AGENT_KEY}
+  requires:
+    node: '>=18'
+requires_env:
+- name: AGENT_KEY
+  env_key: AGENT_KEY
+  description: 夺冠蜂巢 所需的 AGENT_KEY
+  prompt: 请输入 AGENT_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+examples:
+- 帮我分析最近的热点，推荐一个适合做抖音口播的选题
+- 把这个选题写成一篇小红书图文，配 3 张封面方案
+- 我有一批产品资料，帮我初始化内容大脑
+- 这篇文案定稿了，帮我生成一段播客音频

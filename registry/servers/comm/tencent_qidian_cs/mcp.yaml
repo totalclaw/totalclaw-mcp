@@ -1,0 +1,40 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: tencent-qidian-cs。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tencent_qidian_cs
+display_name: 腾讯企点客服
+version: 0.1.0
+description: Tencent Qidian Customer Service connector. Use natural language to manage work orders (query
+  / create / update / status change), monitor agent online status and real-time reception, retrieve customer
+  profiles, pull chat records and messages from human / LLM / text-robot sessions, and view real-time
+  service monitoring, session monitoring, satisfaction and response reports.
+description_zh: 腾讯企点客服连接器：用自然语言处理工单（查询/创建/更新/状态变更）、查询坐席在线与实时接待、检索/拉取客户资料、拉取人工/大模型/文本机器人的会话记录和消息、查看客服实时监控、会话监控、客服满意度与响应度报表等数据。
+author: vendor
+category: comm
+tags:
+- comm
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://sse.qidian.qq.com/qidian-cs/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://sse.qidian.qq.com
+examples:
+- 帮我查一下我最近一周处理的工单
+- 用 VIP 模板帮我建一张工单，处理人是我
+- 现在客服谁在线？
+- 拉一下昨天的人工会话聊天记录
+- 出一份本周的客服满意度和响应度报表

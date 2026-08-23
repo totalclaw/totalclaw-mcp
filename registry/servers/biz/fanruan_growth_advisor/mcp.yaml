@@ -1,0 +1,45 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: fanruan-growth-advisor。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: fanruan_growth_advisor
+display_name: 帆软增长谋士
+version: 0.1.0
+description: 'Enterprise insight and growth analysis: query public business data such as operational risks,
+  public opinion, bidding, patents, qualifications, and policies, and call authorized MOSS Growth Advisor
+  agents to generate analysis and reports.'
+description_zh: 企业洞察与增长分析：查询企业经营风险、舆情、招投标、专利、资质、政策等公开商业数据，并调用已授权的 MOSS 增长谋士 Agent 生成分析与报告。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://www.mossdo.com/api/v1/mcp
+  headers:
+    Authorization: Bearer ${MOSS_API_KEY}
+  auth: none
+requires_env:
+- name: MOSS_API_KEY
+  env_key: MOSS_API_KEY
+  description: 帆软增长谋士 所需的 MOSS_API_KEY
+  prompt: 请输入 MOSS_API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://www.mossdo.com
+examples:
+- 帮我查询这家公司的经营风险和涉诉情况
+- 分析某行业的最新舆情和招投标动态
+- 查询这家企业是否获得过政策补贴

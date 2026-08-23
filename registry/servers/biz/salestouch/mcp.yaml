@@ -1,0 +1,39 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: salestouch。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: salestouch
+display_name: SalesTouch 经营执行
+version: 0.1.0
+description: Connect SalesTouch to configure organization profiles, units, role permissions, employee
+  invitations, reporting scopes, and sales processes, then govern sales and non-sales execution with evidence-backed
+  management reviews.
+description_zh: 通过自然语言连接 SalesTouch，完成组织资料、部门、角色权限、员工邀请、下属管理范围与销售流程配置，并处理销售执行、非销售工作、绩效、内部调研和经营汇总。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://touch.long-arena.com/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://touch.long-arena.com
+examples:
+- 为新公司完成组织资料、部门、销售与非销售角色权限和销售流程配置，再邀请员工激活帐号、分配组织关系并设置主管的下属范围
+- 汇总本周销售、项目任务、表单、绩效和内部调研，列出风险、证据缺口和下周动作
+- 查一下华东区重点客户和商机，先给我风险摘要，再创建已确认的跟进任务
+- 设计一份门店巡检表，预览收件人后等我确认再发布和内部分发
+- 读取内部调研结果，遵守匿名阈值，说明结论、置信度和还需要补访的问题

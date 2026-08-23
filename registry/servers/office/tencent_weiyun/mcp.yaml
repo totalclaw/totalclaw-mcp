@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: tencent-weiyun。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tencent_weiyun
+display_name: 微云
+version: 0.1.0
+description: Access, download, or remove files from Weiyun, while also supporting file uploads and the
+  creation of sharing links to help you manage your Weiyun storage.
+description_zh: 查看、下载、删除微云文件，并且提供上传文件到微云、生成分享链接能力，帮你管理微云文件
+author: vendor
+category: office
+tags:
+- office
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://www.weiyun.com/api/v3/mcpserver
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://www.weiyun.com
+examples:
+- 查看我的微云文件列表
+- 帮我把这个文件上传到微云
+- 将刚刚上传的文件生成一个分享链接发到微信群
+- 下载微云文件中的日志文件
+- 删除微云文件中的日志文件

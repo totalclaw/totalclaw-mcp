@@ -1,0 +1,44 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: bugly-token。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: bugly_token
+display_name: Bugly 质量概览
+version: 0.1.0
+description: View the product quality overview, including crash rate, ANR rate, FOOM (OOM) rate, and startup
+  latency.
+description_zh: 查看产品的质量概览 包括崩溃率 anr率 foom（oom）率 启动耗时
+author: vendor
+category: infra
+tags:
+- infra
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://bugly.tds.qq.com/mcp
+  headers:
+    Authorization: Bearer ${BUGLY_ACCESS_TOKEN}
+  auth: none
+requires_env:
+- name: BUGLY_ACCESS_TOKEN
+  env_key: BUGLY_ACCESS_TOKEN
+  description: Bugly 质量概览 所需的 BUGLY_ACCESS_TOKEN
+  prompt: 请输入 BUGLY_ACCESS_TOKEN
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://bugly.tds.qq.com
+examples:
+- 查看应用的大盘质量概览
+- 查看应用的版本质量概览
+- 查看应用的今天质量概览

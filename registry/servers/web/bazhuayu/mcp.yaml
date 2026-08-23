@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: bazhuayu。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: bazhuayu
+display_name: 八爪鱼
+version: 0.1.0
+description: 'Drive Bazhuayu cloud scraping with natural language: discover templates, run tasks, check
+  progress, export structured data, and manage existing tasks.'
+description_zh: 用自然语言驱动八爪鱼云采集：搜索模板、启动任务、查询进度、导出结构化数据，并管理已有任务。
+author: vendor
+category: web
+tags:
+- web
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.bazhuayu.com?includeTools=search_templates,execute_task,get_task_status,export_data,search_tasks,start_or_stop_task
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcp.bazhuayu.com
+examples:
+- 帮我采集亚马逊无线耳机搜索结果前 3 页
+- 搜索适合抓取某电商商品详情的云采集模板
+- 查看我最近创建的采集任务进度
+- 把任务 TF 对应批次的第一页数据导出来
+- 停止正在运行的那个采集任务

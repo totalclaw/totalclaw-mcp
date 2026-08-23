@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: tanyuan-assistant。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tanyuan_assistant
+display_name: TDC 文化智能体
+version: 0.1.0
+description: AI assistant powered by a trusted cultural knowledge base. Provides traceable retrieval and
+  creative assistance across world heritage sites, museum collections, oracle bone characters, and academic
+  literature. Covers heritage nomination texts, archaeological data, ceramic genome databases, pattern
+  libraries, and more.
+description_zh: 基于文化可信知识库的智能体服务，提供世界遗产、博物馆藏品、甲骨文字形释义、学术文献等可溯源检索与创作辅助。覆盖申遗文本、考古数据、陶瓷基因库、纹样库等多模态知识，支持研究考据、策展辅助、文化科普与内容创作。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://api.tanyuan.qq.com/wb/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://api.tanyuan.qq.com
+examples:
+- 敦煌莫高窟有哪些艺术瑰宝
+- 曾侯乙编钟的音律体系复原
+- 越王勾践剑为何不锈

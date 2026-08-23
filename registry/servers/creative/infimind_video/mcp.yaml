@@ -1,0 +1,49 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: infimind-video。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: infimind_video
+display_name: 极睿视频
+version: 0.1.0
+description: Create professional videos from prompts and reference media, track generation progress, and
+  analyze videos into reusable creative insights.
+description_zh: 通过自然语言使用极睿视频的专业视频生成和视频分析能力，支持多素材参考、任务进度查询与结构化分析结果。
+author: vendor
+category: creative
+tags:
+- creative
+- vendor
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@infimind/video-mcp-cli@1.0.11'
+  env:
+    SORA_API_URL: https://aigc-next.iclip.cn/api
+    SORA_MCP_TOKEN: ${SORA_MCP_TOKEN}
+  requires:
+    node: '>=18.0.0'
+requires_env:
+- name: SORA_MCP_TOKEN
+  env_key: SORA_MCP_TOKEN
+  description: 极睿视频 所需的 SORA_MCP_TOKEN
+  prompt: 请输入 SORA_MCP_TOKEN
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+examples:
+- 用这张商品图生成一段 10 秒的竖屏展示视频
+- 用首尾两张图片生成一段自然过渡的视频
+- 分析这个商品视频的脚本、风格、卖点和爆款公式

@@ -1,0 +1,44 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: fbs-connector。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: fbs_connector
+display_name: 福帮手
+version: 0.1.0
+description: 'FBSir: identity, scene plans, progress, reward status, and expert handoffs.'
+description_zh: 福帮手人机协同连接器：识别当前身份与专家入口，匹配可执行场景方案，记录首值与继续使用进度，并查询乐包状态或衔接后续服务。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://api2.u3w.com/fbs-mcp/mcp
+  headers:
+    X-FBS-Connector-Source: fbs-connector
+    X-FBS-Connector-Version: 1.2.9
+    X-FBS-Connector-Package-Version: 26.8.20
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://api2.u3w.com
+tools_policy:
+  exclude:
+  - lebao_drop
+examples:
+- 先确认我当前的福帮手身份和最稳妥的下一步，再继续推进。
+- 根据我正在使用的专家和当前目标，匹配一个可执行的场景方案。
+- 我已经完成了第一步，请帮我记录进度并安排后续。
+- 查询我的乐包状态，并说明现在适合领取、兑换还是继续完成任务。
+- 把这次协作归到我正在使用的福帮手专家名下。

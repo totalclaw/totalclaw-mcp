@@ -1,0 +1,45 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: cisp-mcp。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cisp_mcp
+display_name: 水滴征信
+version: 0.1.0
+description: Query multi-dimensional enterprise information via Zenicredit, including business registration,
+  IP, public opinion, financials, land, corporate relationships, related parties, and verification services.
+description_zh: 通过水滴征信企业信息服务平台查询工商、知识产权、舆情、财务、土地、企业关联关系、关联方等企业多维信息，并支持企业二要素/三要素核验。
+author: vendor
+category: infra
+tags:
+- infra
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://cisp.zenitera.com/mcp
+  headers:
+    Authorization: Bearer ${CISP_API_KEY}
+  auth: none
+requires_env:
+- name: CISP_API_KEY
+  env_key: CISP_API_KEY
+  description: 水滴征信 所需的 CISP_API_KEY
+  prompt: 请输入 CISP_API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://cisp.zenitera.com
+examples:
+- 查询证通股份有限公司的工商照面信息
+- 查一下证通股份有限公司的商标注册情况
+- 验证企业名称和统一社会信用代码是否一致
+- 筛选注册地在杭州、成立5年以上的高新技术企业

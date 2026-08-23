@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: chuhaijiang。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: chuhaijiang
+display_name: 出海匠
+version: 0.1.0
+description: Use real-time TikTok Shop data for product research, competitor analysis, creator discovery,
+  shoppable content workflows, and social account, publishing, comment, and direct-message operations.
+description_zh: 基于实时 TikTok Shop 数据完成选品、竞品分析、达人筛选与带货内容创作，并管理社媒账号、发布内容、运营评论和私信。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.gateway.chuhaijiang.com/mcp/oauth
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcp.gateway.chuhaijiang.com
+examples:
+- 评估美区 Leak Proof Design Mini Portable Juicer Blender（ID：1731889645432705669）的近 7 天增长、竞争度和切入机会
+- 深度分析 580ML Portable Juicer with LED Display（ID：1732374678933836006）的销量、评论痛点、带货达人和相似竞品
+- 围绕 USB Rechargeable Portable Smoothies Blender & Juicer（ID：1731172842143585192），筛选 10 个可建联的中腰部带货达人
+- 参考 580ML Portable Juicer with LED Display（ID：1732374678933836006）的爆款视频，为同类便携榨汁杯生成一条 TikTok 带货口播脚本
+- 查看我已连接的 TikTok 和 Instagram 账号近 7 天内容表现，找出需要回复的高互动评论和私信

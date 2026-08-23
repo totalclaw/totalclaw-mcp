@@ -1,0 +1,49 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: picset-video-generation。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: picset_video_generation
+display_name: Picset AI 视频创作
+version: 0.1.0
+description: Picset AI video creation connector for ecommerce product video generation, viral video recreation,
+  and model image generation with asset upload registration, script planning, credit estimates, explicit
+  confirmation, asynchronous generation, and task status tools. The MVP supports Seedance 2.0, Seedance
+  2.0 Fast, and Seedance 2.0 Mini models, with Seedance 2.0 as the default.
+description_zh: Picset AI 视频创作连接器支持在支持 MCP 的客户端中通过密钥调用电商商品视频生成、爆款视频复刻和模特图生成能力，完成素材上传登记、脚本规划、视频脚本生成、积分预估、确认提交、异步生成和任务状态查询。MVP
+  支持 Seedance 2.0、Seedance 2.0 Fast、Seedance 2.0 Mini 三个模型，默认使用 Seedance 2.0。
+author: vendor
+category: creative
+tags:
+- creative
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://picsetai.cn/functions/v1/agent-video-mcp-v1/mcp
+  headers:
+    Authorization: Bearer ${PICSET_AGENT_SK}
+  auth: none
+requires_env:
+- name: PICSET_AGENT_SK
+  env_key: PICSET_AGENT_SK
+  description: Picset AI 视频创作 所需的 PICSET_AGENT_SK
+  prompt: 请输入 PICSET_AGENT_SK
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://picsetai.cn
+examples:
+- 我上传一张商品图，帮我用 Seedance 2.0 生成一个 6 秒的高级质感展示视频
+- 基于这张商品参考图，预估用 Seedance 2.0 Fast 生成 4 秒电商短视频需要多少积分
+- 用这张空气循环扇图片生成 9:16 的 4 秒卖点视频，突出静音柔风
+- 根据我上传的食品图生成一段近景开场视频，画面要有烟火气
+- 查询刚才 Picset AI 视频生成任务的完成状态

@@ -1,0 +1,38 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: ezjoin-meeting。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: ezjoin_meeting
+display_name: EzyJoin智慧会议
+version: 0.1.0
+description: 'Manage EzyJoin meetings via natural language: book rooms, create or cancel meetings, view
+  schedules.'
+description_zh: 用自然语言管理 EzyJoin 智慧会议：预约会议室、创建/取消会议、查询会议日程与 AI 纪要。
+author: vendor
+category: comm
+tags:
+- comm
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://www.ezyjoin.cn/api/mcp/message
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://www.ezyjoin.cn
+examples:
+- 帮我查一下明天上午有哪些空闲会议室
+- 帮我预约明天下午 3 点到 4 点 A 栋 3 楼 301 会议室，主题是项目周会
+- 查看我本周的会议安排
+- 帮我把会议 ID 12345 取消掉
+- 查一下最近会议的 AI 纪要
