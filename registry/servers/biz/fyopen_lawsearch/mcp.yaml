@@ -1,5 +1,7 @@
 # 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
 # 上游连接器 id: fyopen-lawsearch。人工修改后请同步递增 version。
+# 实测该端点返回标准 MCP OAuth 质询（WWW-Authenticate 带 resource_metadata），
+# 故 auth: oauth —— 不需要预置凭据，装完跑 totalclaw mcp login <名> 浏览器授权。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
@@ -20,7 +22,7 @@ runtimes:
 - id: remote
   type: http
   url: https://api.cjbdi.com:8443/354347/mcp_law_service
-  auth: none
+  auth: oauth
 requires_env: []
 optional_env: []
 defaults:

@@ -172,9 +172,20 @@
   http 型一律跳过，于是「有凭据就能补跑」根本没有工具可用。同时把 MCP SDK 的
   `ExceptionGroup: unhandled errors in a TaskGroup` 拆开报根因：401 缺凭据、
   404 端点没了、超时，这三种此前长得一模一样，没法排查。
-- [ ] **C2.1（剩余）** 41 个条目实测返回 401 —— 端点在、说 streamable-HTTP，
-  只差各家凭据。拿到任一家凭据后 `export <VAR>=... && python3 scripts/probe_server.py <名>`
-  即可补齐其 `tools.json` 与 `security` 块。
+- [x] **C2.1（鉴权方式部分）** 把全部 59 个 http 条目挨个发请求，看 401 里的
+  `WWW-Authenticate` 有没有 `resource_metadata` —— **41 个支持标准 MCP OAuth**。
+  这些**根本不需要预置凭据**：清单改成 `auth: oauth` 后，用户装完跑
+  `totalclaw mcp login <名>` 浏览器授权即可。已改 36 个（渲染后 `missing_env` 为空）。
+  另外 4 个（fanruan / youshu / picset / gangtise）本来就有明确的 `${VAR}` 静态凭据，
+  有 key 直连更省事，没动；fadada_richee 的 OAuth 证据只是主机级 well-known
+  且指向别家产品那条路径，不够硬，也没动。
+
+  **此前我把这 41 个都归进了「等厂商凭据」，是错的** —— 401 不等于「要一把预置的 key」，
+  得看它질质询里说的是什么。
+- [ ] **C2.1（剩余）** 还需凭据才能探到工具列表的：约 18 个（静态 key 型，
+  以及 OAuth 型在没走完授权前也探不到）。拿到凭据后
+  `export <VAR>=... && python3 scripts/probe_server.py <名>` 即可补齐
+  `tools.json` 与 `security` 块。OAuth 型需先 `totalclaw mcp login`。
 - [x] **C3** Ed25519 签名脚本 `scripts/sign_registry.py`（`--keygen` / `--sign` / `--verify`）
   - 已实测完整链路：生成密钥 → 签名 → 验签通过 → 篡改一个字段后验签**正确失败** → 恢复后再通过
   - 私钥只从 `MCP_REGISTRY_SIGNING_KEY` 或库外文件读，keygen 默认写到 `~/.totalclaw-mcp-keys`

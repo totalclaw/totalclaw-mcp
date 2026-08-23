@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T00:53:10Z",
+  "generated_at": "2026-08-23T01:04:58Z",
   "servers": [
     {
       "name": "chuhaijiang",
@@ -36,7 +36,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -57,11 +57,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "3604553fc46a5779a4d76221b1b53e79bbc8b6060d465805a42d5f3aae9c2659",
-          "size": 1767
+          "sha256": "f3bb88d1d3a598e811f26fc38c65a33899efabfcd0278a45c7d330d88d4b33dc",
+          "size": 1966
         }
       ],
-      "bundle_sha256": "8451a77859ea8d3d5815664b127c741e8be51a9fdd5f0daa17c01e5ac9067302"
+      "bundle_sha256": "6f28280dcec72e645a86c255469f4d50cef0068349dbaefa617b5f0747752a34"
     },
     {
       "name": "composio",
@@ -500,7 +500,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -521,11 +521,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "b2c41d15b8e321d933baa07d5b270443767652c6160167b458505ddf649f82b3",
-          "size": 1215
+          "sha256": "3d4101d2185bd4f679721a4111de618f0645e96f631451f6f89dd381a7f1b7d9",
+          "size": 1414
         }
       ],
-      "bundle_sha256": "c56e7929d455ddca7561ef3d3e8c94809e6a58c91b7b2abd67689e6a4fca1d8f"
+      "bundle_sha256": "608b80ed946e866c151cc1a5b7454477353359a7dfd09e31dd5bd9a3e94517dd"
     },
     {
       "name": "jiushuyun",
@@ -557,7 +557,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -578,11 +578,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "15c09aced40013fa56abc419a708b4ce0263f3f6b5ae3571a85cbb1d0bd10ed4",
-          "size": 1084
+          "sha256": "38bc8ec69cb52366a615fe07853bf6cede2d70d579e9636b8896c87a6cd6c341",
+          "size": 1283
         }
       ],
-      "bundle_sha256": "5f0ad3f7b08c1d09d684fd4fc101781e275cf4defe8f202fa6580f9041f30f62"
+      "bundle_sha256": "56dabbe8ab1a29c4a41616fdbcdccd18b607f6d80e3a0666df80b18f5fd97b81"
     },
     {
       "name": "lingxing_mcp",
@@ -896,7 +896,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -917,11 +917,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "cb265856a8d4a7f5f7da86015f0414d946703e8fbe849d67715af82ecf5a8337",
-          "size": 1413
+          "sha256": "624bf31fcd3ef3eb2972e94072c137fb88d53010e08c678f95809f0a2a38f1a3",
+          "size": 1612
         }
       ],
-      "bundle_sha256": "7e45b27abbd467f03f9b19a4b2940c8ec15e39ab0f172bfc45962c1ab221d918"
+      "bundle_sha256": "7c4926e067975aa064824dd5070fad02e2be4307c8f8715655f74f94960130fa"
     },
     {
       "name": "neo_crm",
@@ -953,7 +953,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -974,11 +974,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "bd0f0f289c295c8b41a1c13083b37fd816afa601fd845edab88669196bc98b89",
-          "size": 1135
+          "sha256": "4b5736c2fc2c97a885566f6939af8976641888f8038ecb177c4c4f96fe9f5d4c",
+          "size": 1334
         }
       ],
-      "bundle_sha256": "354c7e452bcd75e66cc1719352e90dcd2b939da96178ee4e6cb1512ad88a6b0a"
+      "bundle_sha256": "fab19e05983d83f0d6912f3094e8c295d26af3fd7f4671a93023b8b6e0f12855"
     },
     {
       "name": "pkulaw",
@@ -1010,7 +1010,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -1031,11 +1031,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "3a784deb51acc5565963d9d2fc2895c3e2cd2111ba35ebfb89993236adc2d6f6",
-          "size": 1825
+          "sha256": "a30f73ffd7b03523cc847d9083be1db397030326e1e7d88ccdcb7a435dae9dc4",
+          "size": 2024
         }
       ],
-      "bundle_sha256": "0719a00375121b620d46acf1f2fb6f98de23629b88d750f12217c292b1eea527"
+      "bundle_sha256": "e56cabdf9ab89c326505a619a4e2ee2ed9e10ffcf3d2db0d3ec85a0e341c51a8"
     },
     {
       "name": "proboost",
@@ -1214,7 +1214,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -1235,11 +1235,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "657926fc231cdaba41514de97c64e48792fdb621cc069bb1b61527f7600fcfc9",
-          "size": 3264
+          "sha256": "04dc7c49a3e0b5ae385b5a8338f85ea38c4c06f8a3cdba9096301a8411ce8aaf",
+          "size": 3463
         }
       ],
-      "bundle_sha256": "1d84610ecb9d2994114c3d14454561c2eade12e10ef37d94a553dbaccfb3a7fd"
+      "bundle_sha256": "a62503318d3d4103d54128238bb56ca89ab7197fae06f5d8f58b645c4f7f388b"
     },
     {
       "name": "salesnail_instructor",
@@ -1271,7 +1271,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -1292,11 +1292,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "06caffea3cadf0533ce6a92f7a0e3176c2285df2a659a1b3b7a94762e9fdccd1",
-          "size": 1591
+          "sha256": "11c84cc653256c92fb4bc9505a4401c4564da0b2414d6b0fe5954f112d80dd02",
+          "size": 1790
         }
       ],
-      "bundle_sha256": "9e7bf649c31f6f09b37869b32fd9103844c2a3a9c243cc75cdddd6a0cabb8f7d"
+      "bundle_sha256": "adf1b8664991c02e94f49024f94b4a1135779bded92d68b4bd9ce7332ed2575d"
     },
     {
       "name": "salestouch",
@@ -1328,7 +1328,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -1349,11 +1349,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "b4789e817a2b9ae2e333ea09b2642b061d31b664a33bf131907c1cb27d633c2f",
-          "size": 1739
+          "sha256": "dafef75753f467ae6f455eba2f64043687d1ea894201779c6c06a05593eae99e",
+          "size": 1938
         }
       ],
-      "bundle_sha256": "74cb3433c0c9d5e785a2c1615b01bf1585554b87d09569a1196a236fe3297061"
+      "bundle_sha256": "0952ff10dff8dfbc50248aee2e2039b134060108c09515269f0a568dfb71afcf"
     },
     {
       "name": "tanyuan_assistant",
@@ -1385,7 +1385,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -1406,11 +1406,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "ce859841f7e4b6d0f5bcf5646845e87d4386f068746bdedc14288d81d8e6eb2e",
-          "size": 1460
+          "sha256": "0bfcbbfb6328dcb32495a7104a1408fcc922c74941b83190dff7c71caa972d1b",
+          "size": 1659
         }
       ],
-      "bundle_sha256": "fe203dfa9ec7aab0afdc2f5090f0a1679d4bafa73b15fb3f483b4df309be9921"
+      "bundle_sha256": "77902b00f93a52a358b76c17972502ace8d89968524498c6849b103977766906"
     },
     {
       "name": "tec_do",
@@ -1442,7 +1442,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -1463,11 +1463,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "66040759cc9adcd096ccdd9951f646366553dc55281afbf2fc879c9db14af7eb",
-          "size": 1131
+          "sha256": "f7197835487d37b6110c8ff85637217d1fe0b93dd4b536a37ae22da6073de9e4",
+          "size": 1330
         }
       ],
-      "bundle_sha256": "43ccc3b715ef7e4c9bc72d3808b0123452ec41535ed84075f1c5bf3357a81488"
+      "bundle_sha256": "64dad2ac27f984e41c960d35cca99f6c663d6feb2baa3adace96e2844265438a"
     },
     {
       "name": "weisheng_scrm",
@@ -1557,7 +1557,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -1578,11 +1578,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "2388574667b940ec11a847379cdbf43fbf1aab9471a2caf9b610f0b6831da0c0",
-          "size": 1403
+          "sha256": "9f518388bc6db730b7402e55e469ee619bfc7318b87bf568dd9e8f998b43ba04",
+          "size": 1602
         }
       ],
-      "bundle_sha256": "4170d3ad6ff6238e62fdd1ffcbb482c65109d59315f4cb95f4ecaa1a52f7a7d6"
+      "bundle_sha256": "0ec496ca2ee358d692415d667f508fa767504fc541f4ba7f4a1a29c3a88e5400"
     },
     {
       "name": "xingtu_claw_risk",
@@ -1614,7 +1614,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -1635,11 +1635,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "78b0e9a8ff2251682434014dc6d381c82e772f54b83838901f8d28fa6cbe2de8",
-          "size": 1446
+          "sha256": "fdc8a61ff2983b3bb9e890d176bbd0f0cbe9285035db76309f82aac4f41e4f05",
+          "size": 1645
         }
       ],
-      "bundle_sha256": "b4d063442f9bfc2dfb8e11185439d9fa0eca616733cf74de4009316b9e861ab9"
+      "bundle_sha256": "a30ced83438f6c448703c3390017763d45578ceb56cb9fcb88c6b1ddf23faba2"
     },
     {
       "name": "youshu_bd_mate",
@@ -1736,7 +1736,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -1757,11 +1757,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "3cc827f72decd7ed5f12710d91839164856b9e518583f694c86ad25b7e0bde4a",
-          "size": 1234
+          "sha256": "507124a698ce3897823acfb44ca38a69f106132308790edf822220f22a8713f4",
+          "size": 1433
         }
       ],
-      "bundle_sha256": "4e8b0ee6b92c8f30491d0bd50bea1f1b6336b007ed475acfb9c211f1887258cc"
+      "bundle_sha256": "395c81a369675288e52576702015735cd375f2be69579ed7e86ed9a6319ea216"
     },
     {
       "name": "dingtalk",
@@ -1898,7 +1898,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -1919,11 +1919,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "cb0e5f8109cc271c4f7869c4260a71dcfe5e9d3b5f42c99d29b9fee0c96559b4",
-          "size": 1191
+          "sha256": "f01a6c599ade276e92bd1a3b8363f1754f150bcb6211ebe474fcf049d9a54ed9",
+          "size": 1390
         }
       ],
-      "bundle_sha256": "d1d3342e405860da4a98aada62fd0ca5fe0cea7070f56919a908d4487ca0eaa0"
+      "bundle_sha256": "6ca895a989fedf21680c29859fba480b969c5617eee48a17952d648a35081978"
     },
     {
       "name": "feishu",
@@ -2232,7 +2232,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -2253,11 +2253,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "c5f2e611a9f5b4ddc1092d764eacfacd09282ce5650785e56e02fd37704d0e34",
-          "size": 1704
+          "sha256": "5f3731e531b19c44752c5440b3135a28701f37361a587b9b75db7343f8457a74",
+          "size": 1903
         }
       ],
-      "bundle_sha256": "eb48cff3932503270a863fbe4611fb8f5e7e54253c2a8ee781fdebc52fd022ba"
+      "bundle_sha256": "564c091b6ffc02ec95f25fe871efb52c724ca865ca0abf3cce89d64c00ab2010"
     },
     {
       "name": "shanglv_mcp_gateway",
@@ -2289,7 +2289,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -2310,11 +2310,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "3e66d1ce373dbf69dbeffd9c0446c93927ee3b01a552d24d2393ced8b03a29f6",
-          "size": 1607
+          "sha256": "962de621dfbd07f06da4ad482f3e2737ab0af2d6258088f662550a7b91bea473",
+          "size": 1806
         }
       ],
-      "bundle_sha256": "bb07ad0fa13e57c801be5701338d525727265168389508b8f74c8b451f7becf2"
+      "bundle_sha256": "5a63f9f5b67ec5d78b233fa11ba113724eb66991bae8e9416649a26a5362f129"
     },
     {
       "name": "tencent_qidian_cs",
@@ -2346,7 +2346,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -2367,11 +2367,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "078431efe00446e980c38581063fc7f10bcd43590b9282a4d05ce38e849bed50",
-          "size": 1649
+          "sha256": "469836c82d4eef19d4b6552624a0709b069bf532b5126fff03620fdf1180b73c",
+          "size": 1848
         }
       ],
-      "bundle_sha256": "c0924ae56ca1857e1bb0218ed29d5809ebd515469d618574686a8f6fd92a5958"
+      "bundle_sha256": "741537d25f9eb7d6fd26121ad1b313b84dd3fb78cedc17e65285a62ca86f2b7d"
     },
     {
       "name": "wechat-desktop",
@@ -2687,7 +2687,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -2708,11 +2708,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "b7f8d186fc1d3caa4cfec2ccd4b5663da353de8a9007609bf3a6bffe8f140c9c",
-          "size": 1485
+          "sha256": "75eda26bdacc8361a9209b8bfc8eac9611b22bde9cd9000670e871e088d98ace",
+          "size": 1684
         }
       ],
-      "bundle_sha256": "ff2f6e37802f0a981d66c5ffef6bb2267c663ca5bf22b840260e67bf721bbd1c"
+      "bundle_sha256": "5a52471a307bd8d51583b0a1998a588946b195f7b7cfd2541e1977474f8451e3"
     },
     {
       "name": "canva",
@@ -3072,7 +3072,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -3093,11 +3093,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "d4466ffad058e2be5909797222bbb835331ae953edc4a2dba89b5b5ccb7a39db",
-          "size": 3741
+          "sha256": "797e6e4ee7d53feb6ce899c107c3aaecd7d28992e668c6ea1104a572ee294028",
+          "size": 3940
         }
       ],
-      "bundle_sha256": "274229d5a51785f89edbebfdc26600ad54bec37e11fe7463fb406bbbd1f19121"
+      "bundle_sha256": "4ca97efd19fd882ca785ae59c5f050396b3c14ed1dcdbef2151772c525998b44"
     },
     {
       "name": "kling_ai_plugin_ai",
@@ -3129,7 +3129,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -3150,11 +3150,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "c08ddb63200af55e9266533fca7a6a0f5a6d834e7d994a4d653c78a381958b74",
-          "size": 3741
+          "sha256": "bdd3dd1af56061a9af37530f4fe73ecdb11516f5ebd1a268c3d6a995874fd794",
+          "size": 3940
         }
       ],
-      "bundle_sha256": "2f79a61b1d9f92aba258cbd28913e93d7f43417fb7b03cafb3a4fa29afb53c3c"
+      "bundle_sha256": "120962722d1d2901d9f2b1c76e9eff5d221f07b3422da9750abdf91364b52b7c"
     },
     {
       "name": "mastergo",
@@ -3449,7 +3449,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -3470,11 +3470,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "7faeb6fdc05032366a879256e34833b653a0d57145af1220f8d71fea08f867b8",
-          "size": 1872
+          "sha256": "cee859c6d9ba0f8547f10db39c99f93f852f5f612952e290b69f3836e1e5b416",
+          "size": 2071
         }
       ],
-      "bundle_sha256": "9251b4f527aae6905abcaeedd0f97353aae1eb5c885489574753358364115555"
+      "bundle_sha256": "185486e042ac11cb00206eaa38e7d9b9996d7dd37071d56f626b7c3ec0198ef5"
     },
     {
       "name": "finenter",
@@ -3506,7 +3506,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -3527,11 +3527,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "52d349e3bbae25341d7b84d60474dcebac723cd98d62f4648fae9ac53dca27b0",
-          "size": 2104
+          "sha256": "bcbb277e2c4876da01118fe938d2b9e2dc7fdd8c3ddc4d55bd4851a7d009839a",
+          "size": 2303
         }
       ],
-      "bundle_sha256": "7fa23152c64cb52615611d176e75b69e83bc7b683a571241879ceb77ec324a24"
+      "bundle_sha256": "63efb3052f4087b52800dec70f4021d6609a96beab5f37cf28b2b0e94f0c7531"
     },
     {
       "name": "gangtise_mcp",
@@ -3907,7 +3907,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -3928,11 +3928,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "427b5ca9a4ef200930785f5f2f6d78c2a354e0ab640f29c2f6df4ee2406a193c",
-          "size": 1211
+          "sha256": "103ba7104770c3e057831c0d92456978d6a5a8fbc57bd5eb06930c9f28ea6799",
+          "size": 1410
         }
       ],
-      "bundle_sha256": "85c72cee51cf115313d9872ebac2801110e97c301c8f3cefeb85b9c5113d8327"
+      "bundle_sha256": "828c065881b2fae1f2bf00dfbbaaf9403e7a75e3650da7aeb1053c508d390d2e"
     },
     {
       "name": "mx_ds_mcp",
@@ -3964,7 +3964,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -3985,11 +3985,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "7d2f51bd90e4ae0ad35ecd6734e0ee8b00455dafb8e994beb20b4e4376b05d11",
-          "size": 1620
+          "sha256": "7ac9f6a06bda73adce066bbd0ffcc7cf9660bae9f4f6c29a67ce1da257b3807a",
+          "size": 1819
         }
       ],
-      "bundle_sha256": "beb4c7e7da2ddfe9632f15210fafad16014121cfd8a62caea710de65479f7cf6"
+      "bundle_sha256": "ab4d2cd58e272dc356e19ba8f7f55770ea1f032586879f8e070a3da1a2cdd0f0"
     },
     {
       "name": "opendata",
@@ -4098,7 +4098,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -4119,11 +4119,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "bd9a38ec5505c36f466f6ec201f3bf7e8bfa8d16b813707c94b620d39bfb1885",
-          "size": 1293
+          "sha256": "acc5eab7a903a2171c7cd669de9b58a53f011e23b3cc29d72fe55a3a4760c024",
+          "size": 1492
         }
       ],
-      "bundle_sha256": "54090594fe091fe2d719b4781053394712099351bf16a7b8ae9671d5963ebca6"
+      "bundle_sha256": "66f695dbd667523f82d6d5d0c0e7a87f0a58f5e659d819bf5a0baa23b9ef723e"
     },
     {
       "name": "qcc",
@@ -4259,7 +4259,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -4280,11 +4280,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f525f6f8ccdebf769743f59911bc2548171ccfd69ae42be5b304e4626bef3fab",
-          "size": 1369
+          "sha256": "31fcba293cea233965cd102b0b807cecf2accb73861c726b4c992a06eed9de2a",
+          "size": 1568
         }
       ],
-      "bundle_sha256": "1bc6682e2da601160fe8bd8b7eb5ac0c606c2bbb0a69d0ce9b4730f94de9e776"
+      "bundle_sha256": "dac5db49102adc8afd314870c0fa31fd51bffb7c43af2b7af2fc15e7e150e8df"
     },
     {
       "name": "sq_company_dynamic",
@@ -4539,7 +4539,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -4560,11 +4560,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "0857b0d7d0e57fadae1ffb65fa2ae5838136ba57699c924953e215996412d624",
-          "size": 1140
+          "sha256": "bb9e2cf2ccac83e3438c25c6400a1f6d5b308545e4dbfb4a4ad3e895c4bbeb8d",
+          "size": 1339
         }
       ],
-      "bundle_sha256": "83dd9d7a6a67e32309601db690dc7505fc38b335f26fa6e171d63fde8034b95b"
+      "bundle_sha256": "d418bd19dea95563bab3218a743973eb2c4f10f2a5f50bd5badb456055b47d12"
     },
     {
       "name": "westock_mcp",
@@ -4596,7 +4596,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -4617,11 +4617,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "b0186a19382291e4944e04a4a2f534146d3500b81fbc9d0632f1586eee25c552",
-          "size": 1310
+          "sha256": "c591fe101e33ff111bbf101ccde1aee2cb61b57156f50eb762bf6a94f71cca09",
+          "size": 1509
         }
       ],
-      "bundle_sha256": "d5e97baeef5b8a1d3c8a621e1384d9623a6189319337ea4ef453764c85b21ee3"
+      "bundle_sha256": "7ef3843845f51c3a2eae385bf227b1ef1c0c9438eb12aab94fab920d35c51e77"
     },
     {
       "name": "yingmi_mcp",
@@ -4718,7 +4718,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -4739,11 +4739,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "0e3b4545b74013ad68a37c42c3d54612b77ee2c8684463565042eb4bed10ec34",
-          "size": 1439
+          "sha256": "9757f124f504b27e3735f8d1a5f412785a6f071f925395a58ffbac919b3b5f46",
+          "size": 1638
         }
       ],
-      "bundle_sha256": "54ec6d1ae86e63a9bae25afe4d35a5b7015330b294444f6825fa55cd011c8217"
+      "bundle_sha256": "a5363a9d9a745a5873c7aec475a645c8205f3402bcd15f99d391c52c724184e8"
     },
     {
       "name": "gitee",
@@ -5503,7 +5503,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -5524,11 +5524,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "dc94ae1382b48ec66e15ecca5afcdd2ece7fcde40da72971dd577eb2773981b6",
-          "size": 1548
+          "sha256": "d5e8b60aff6eb2672021b8ca7ec680f6ac38e64e839623f0de47cb8ce7200000",
+          "size": 1747
         }
       ],
-      "bundle_sha256": "5d0d49e0b475e1897d2baa89f57b47a128bbf65188457ac69b18e756f5b81a6a"
+      "bundle_sha256": "ed1a494637a37468ceb20af41d2480278ba478b7205f4d4f6c8ce51a72a126f4"
     },
     {
       "name": "moka",
@@ -5660,7 +5660,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -5681,11 +5681,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "02f21b7785beccd2820b65c5e22f74bfb8e046efb3e4b124866c16d5fe5e91a1",
-          "size": 1431
+          "sha256": "54ef3daa55d7e94c437104ebd5fdbbc331587c4128d683044dc73a7d8dfaae4f",
+          "size": 1630
         }
       ],
-      "bundle_sha256": "8335c61593fc13d4b1fe89cd7d9863e4ebb43614bbbc111e07dcb86db823ab57"
+      "bundle_sha256": "1063d2578f0c4a49218fb265faff8085ca9a42c732101e59e6980add5d8f5c04"
     },
     {
       "name": "bugly_token",
@@ -6081,7 +6081,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -6102,11 +6102,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "2dc94e4cbcb9be5590c1fec833e5bfbf503197a5874240ecf68d1286a6edf438",
-          "size": 1232
+          "sha256": "7d3bad912e31bb4bfa0458d5890be0aa8b9ec4279b82d6dfc0480eeafb14e8b5",
+          "size": 1431
         }
       ],
-      "bundle_sha256": "5032d4ce59574dc15ed3d54b1911b6d34952e2eb9933210c949f12de99fb2a96"
+      "bundle_sha256": "b58741f166b9deeb8b4d3bdc8a82c363aea19064af57239ad19f88077ea0a3d4"
     },
     {
       "name": "mcp_filesystem",
@@ -6403,7 +6403,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -6424,11 +6424,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "8e7d882bcfda95688cc617fcfc663c0d3332c25f06600a4e09f4275346fa246a",
-          "size": 1436
+          "sha256": "5f533bbd431a709f08b0a8a01c77de74d870bf8cc261b9d9950ceed206743684",
+          "size": 1635
         }
       ],
-      "bundle_sha256": "bd2aad7e8acd348c21ef0cc84724d839664a692e0414beb1d754abe83c5e7915"
+      "bundle_sha256": "622447c3e404d4b00b9822d8928e52bbff90f9df54c5ecad73dc07f8b1cbae05"
     },
     {
       "name": "baidu_netdisk",
@@ -7388,7 +7388,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -7409,11 +7409,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "5cc64ea0a8b8156de25e2e4eee5c230c01f6f53c6850a66f7f1211dc0fa33495",
-          "size": 1206
+          "sha256": "a1314b250e29fc3215869a50180a9c98410701e5034bc08ebe2046fa636ed9ba",
+          "size": 1405
         }
       ],
-      "bundle_sha256": "111bb6aaba1b89c199d9c9ab92230048cbd0e250bb6a46f9e5cf58a163018221"
+      "bundle_sha256": "7161e7b8a5decac76410a5232de986b725d618b1daacedaa2119236b63416822"
     },
     {
       "name": "aitoearn",
@@ -7775,7 +7775,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "oauth"
         }
       ],
       "requires_env": [],
@@ -7796,11 +7796,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "353aaf1140655c49dde66f0f40b0c167d41e8e088749c33d0199402a001e4c4b",
-          "size": 1330
+          "sha256": "3bd828ba12189c4a83fa4fd19d30c0697f082a342b5f4b48bffa8d62f5c80271",
+          "size": 1529
         }
       ],
-      "bundle_sha256": "d6e27b1fcce402222ef0029892fc6bd916d66636bd4f4a8a1aabdcd39d84747b"
+      "bundle_sha256": "d3cbac296bccc2d063b3dafcc3e6bd6b63459f89869f80893d8f9cb1e8b4339e"
     },
     {
       "name": "chrome_devtools",
