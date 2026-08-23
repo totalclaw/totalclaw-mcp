@@ -1,0 +1,299 @@
+[
+  {
+    "name": "post_v1_heat_map",
+    "description": "区域热力（最近10天） - 传入`圆形围栏`或`多边形围栏`查询该区域近期内的人群热力\n返回同时包含空间+时间的数据：\n1. `cell_heat`：空间维度，每个格子内的热力值\n2. `time_range`：时间维度，每天、每个小时的数据（10天×24小时）\n通过参数`cell_level`自定义栅格的大小，目前支持10~18的Level。如果不传，系统自动计算。\n本系统采用 Google S2 Geometry 建立空间索引。\n接口最多返回前14天~前3天，共计10天的数据。\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "cell_level": {
+          "description": "自定义格子大小 (Google S2 Cell Level，支持10~18级，非必传)",
+          "type": "integer"
+        },
+        "circle": {
+          "description": "圆形围栏参数。**必须直接输出真正的 JSON 对象结构，绝对不要使用任何引号把整个对象包裹成字符串！**\n\n【唯一正确格式】（直接写成这样，不要加外层引号或转义）：\n{\"center_point\": [113.33, 22.54], \"radius\": 500}\n\n【严禁】以下任何形式（会导致多层引号、转义、解析失败）：\n- \"{\\\"center_point\\\": [113.33, 22.54], \\\"radius\\\": 500}\"\n- '{ \"center_point\": [113.33, 22.54], \"radius\": 500 }'\n- \"{\"center_point\":[113.33,22.54],\"radius\":500}\"\n- JSON.stringify(...) 的结果\n\ncenter_point 是数组 [经度, 纬度]，radius 是整数（米）。\n",
+          "properties": {
+            "center_point": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "radius": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "fence": {
+          "description": "多边形围栏参数。**必须直接输出真正的坐标数组，绝对不要使用引号把整个数组或 JSON 包裹成字符串！**\n\n【唯一正确格式】（直接写成这样，不要加外层引号）：\n[[113.936594, 22.5303147], [113.936557, 22.529932], [113.937196, 22.530064], [113.936981, 22.53037], [113.936594, 22.5303147]]\n\n【严禁】：\n- \"[[113.936594,22.5303147],...]\"\n- '[ [113.936594, 22.5303147], ... ]'\n- \"{\\\"fence\\\":[[...]]}\"\n",
+          "items": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "post_region_insight_grid_datas",
+    "description": "区域洞察网格人群与画像数据。\n按一个圆形围栏（GCJ02）返回区域人群数量及画像。\npopulation_type：1 表示居住，2 表示工作，3 表示常驻。\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "circle_fences": {
+          "description": "圆形围栏数组，必须且只能包含一个围栏；每项包含 gcj02_longitude、gcj02_latitude 和 radius。",
+          "items": {
+            "properties": {
+              "gcj02_latitude": {
+                "description": "GCJ02 纬度。",
+                "maximum": 90,
+                "type": "number"
+              },
+              "gcj02_longitude": {
+                "description": "GCJ02 经度。",
+                "maximum": 180,
+                "type": "number"
+              },
+              "radius": {
+                "description": "围栏半径（米），仅支持 1000 和 3000。",
+                "enum": [
+                  1000,
+                  3000
+                ],
+                "type": "integer"
+              }
+            },
+            "required": [
+              "gcj02_longitude",
+              "gcj02_latitude",
+              "radius"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "population_type": {
+          "description": "人群类型：1 居住，2 工作，3 常驻。",
+          "enum": [
+            1,
+            2,
+            3
+          ],
+          "type": "integer"
+        }
+      },
+      "required": [
+        "population_type",
+        "circle_fences"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "post_region_insight_poi_location",
+    "description": "区域洞察 POI 定位。\n按省、市、区和关键字检索 POI，返回候选 POI 及 GCJ02 坐标。\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "brand_name": {
+          "description": "品牌名称，最多 256 个字符。",
+          "type": "string"
+        },
+        "category_id": {
+          "description": "分类 ID。",
+          "type": "integer"
+        },
+        "city_name": {
+          "description": "城市名称，最多 64 个字符。",
+          "type": "string"
+        },
+        "district_name": {
+          "description": "区县名称，最多 64 个字符。",
+          "type": "string"
+        },
+        "keyword": {
+          "description": "POI 搜索关键字，最多 200 个字符。",
+          "type": "string"
+        },
+        "page": {
+          "description": "页码，默认第 1 页。",
+          "type": "integer"
+        },
+        "page_size": {
+          "description": "每页条数，默认 20，最多 50。",
+          "type": "integer"
+        },
+        "province_name": {
+          "description": "省份名称，最多 64 个字符。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "keyword"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "post_region_insight_fence_poi_list",
+    "description": "区域洞察围栏内 POI 列表。\n按圆形围栏（GCJ02）查询围栏内 POI，支持分类和品牌过滤。\n接口不支持分页，最多返回 10000 条 POI；围栏半径最大为 5000 米。\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "brand_names": {
+          "description": "品牌名称列表，支持模糊搜索，最多 100 个。",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "category_ids": {
+          "description": "分类 ID 列表，最多 100 个。",
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "circle_fences": {
+          "description": "圆形围栏数组，至少包含一个围栏；每项包含 gcj02_longitude、gcj02_latitude 和 radius。",
+          "items": {
+            "properties": {
+              "gcj02_latitude": {
+                "description": "GCJ02 纬度。",
+                "maximum": 90,
+                "type": "number"
+              },
+              "gcj02_longitude": {
+                "description": "GCJ02 经度。",
+                "maximum": 180,
+                "type": "number"
+              },
+              "radius": {
+                "description": "围栏半径（米）。",
+                "maximum": 5000,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "gcj02_longitude",
+              "gcj02_latitude",
+              "radius"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "circle_fences"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "post_region_insight_fence_poi_overview",
+    "description": "区域洞察围栏内 POI 概览。\n按圆形围栏（GCJ02）查询围栏内 POI 聚合概览，支持分类、品牌过滤，\n并可按 category_id、brand_id 聚合。围栏半径最大为 5000 米。\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "brand_names": {
+          "description": "品牌名称列表，支持模糊搜索，最多 100 个。",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "bucket_size": {
+          "description": "每层聚合桶数量，范围 1 至 10000。",
+          "type": "integer"
+        },
+        "category_ids": {
+          "description": "分类 ID 列表，最多 100 个。",
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "circle_fences": {
+          "description": "圆形围栏数组，至少包含一个围栏；每项包含 gcj02_longitude、gcj02_latitude 和 radius。",
+          "items": {
+            "properties": {
+              "gcj02_latitude": {
+                "description": "GCJ02 纬度。",
+                "maximum": 90,
+                "type": "number"
+              },
+              "gcj02_longitude": {
+                "description": "GCJ02 经度。",
+                "maximum": 180,
+                "type": "number"
+              },
+              "radius": {
+                "description": "围栏半径（米）。",
+                "maximum": 5000,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "gcj02_longitude",
+              "gcj02_latitude",
+              "radius"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "group_by_fields": {
+          "description": "聚合字段列表，仅支持 category_id、brand_id；默认按 category_id 聚合。",
+          "items": {
+            "enum": [
+              "category_id",
+              "brand_id"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "circle_fences"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_v1_citymap_HistoryCustomer",
+    "description": "场景客流趋势 - 查询指定场景的历史客流趋势。\n\n:::tip[]\nPower by 来客地图\n:::\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "competitor_id": {
+          "description": "竞品场景的ID,多个ID用逗号分隔(非必传)",
+          "type": "string"
+        },
+        "end_month": {
+          "description": "终止月份(格式:YYYY-MM)",
+          "type": "string"
+        },
+        "poi_id": {
+          "description": "要查询的场景的唯一ID",
+          "type": "string"
+        },
+        "start_month": {
+          "description": "起始月份(格式:YYYY-MM)",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+]

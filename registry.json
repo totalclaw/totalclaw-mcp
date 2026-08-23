@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T00:22:31Z",
+  "generated_at": "2026-08-23T00:30:06Z",
   "servers": [
     {
       "name": "chuhaijiang",
@@ -1285,6 +1285,63 @@
         }
       ],
       "bundle_sha256": "4170d3ad6ff6238e62fdd1ffcbb482c65109d59315f4cb95f4ecaa1a52f7a7d6"
+    },
+    {
+      "name": "xingtu_claw_risk",
+      "id": "totalclaw-mcp/biz/xingtu_claw_risk",
+      "display_name": "天创信用星图MCP",
+      "description": "Enterprise risk AI assistant. Identify a company's industry and analyze related-party relationships (equity, controller, guarantee, joint investment) between companies using natural language.",
+      "description_zh": "企业风险 AI 分析助手，用自然语言识别企业所属行业、分析企业间关联方关系（股权/实控人/担保/共同投资）。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://claw-mcp.tcredit.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/xingtu_claw_risk",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/xingtu_claw_risk",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/xingtu_claw_risk"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "78b0e9a8ff2251682434014dc6d381c82e772f54b83838901f8d28fa6cbe2de8",
+          "size": 1446
+        }
+      ],
+      "bundle_sha256": "b4d063442f9bfc2dfb8e11185439d9fa0eca616733cf74de4009316b9e861ab9"
     },
     {
       "name": "youshu_bd_mate",
@@ -3082,6 +3139,63 @@
       "bundle_sha256": "9251b4f527aae6905abcaeedd0f97353aae1eb5c885489574753358364115555"
     },
     {
+      "name": "finenter",
+      "id": "totalclaw-mcp/data/finenter",
+      "display_name": "进门投研",
+      "description": "Finenter MCP covers public roadshow content from securities firms, listed companies, and asset management institutions; integrates institutional-grade insights from domestic and international research reports and brokerage commentary; and provides real-time market data, financial data, quantitative factors, and more. Data Agent cleansing and structuring reduce token usage and improve response accuracy.",
+      "description_zh": "进门MCP覆盖券商、上市公司及资管机构的公开路演内容，整合内外资研报、券商点评等机构级观点，并提供实时行情、财务及量化因子等数据。经Data Agent清洗与结构化处理，减少Token消耗，提升回答准确率。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp-server-global.comein.cn",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/finenter",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/finenter",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/finenter"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "52d349e3bbae25341d7b84d60474dcebac723cd98d62f4648fae9ac53dca27b0",
+          "size": 2104
+        }
+      ],
+      "bundle_sha256": "7fa23152c64cb52615611d176e75b69e83bc7b683a571241879ceb77ec324a24"
+    },
+    {
       "name": "gangtise_mcp",
       "id": "totalclaw-mcp/data/gangtise_mcp",
       "display_name": "Gangtise投研",
@@ -3465,6 +3579,83 @@
         }
       ],
       "bundle_sha256": "beb4c7e7da2ddfe9632f15210fafad16014121cfd8a62caea710de65479f7cf6"
+    },
+    {
+      "name": "opendata",
+      "id": "totalclaw-mcp/data/opendata",
+      "display_name": "及刻智能·时空数据MCP",
+      "description": "Query offline spatiotemporal data via natural language — area heat maps, scene recognition, customer-flow analysis, POI search and more — to power business insights and site-selection scenarios.",
+      "description_zh": "通过自然语言查询线下时空数据，提供区域热力、场景识别、客流分析、POI查询等能力，助力商业洞察、开店选址等应用场景。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://mcp.isjike.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "REGION_INSIGHT_API_KEY",
+          "description": "及刻智能·时空数据MCP 所需的 REGION_INSIGHT_API_KEY",
+          "prompt": "请输入 REGION_INSIGHT_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 6,
+      "tools": [
+        "post_v1_heat_map",
+        "post_region_insight_grid_datas",
+        "post_region_insight_poi_location",
+        "post_region_insight_fence_poi_list",
+        "post_region_insight_fence_poi_overview",
+        "get_v1_citymap_HistoryCustomer"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/opendata",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/opendata",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/opendata"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "7271614ed29851093f848c378d8037e3fe49bddf20a2ea91930c8b925b9958d8",
+          "size": 1850
+        },
+        {
+          "path": "tools.json",
+          "sha256": "23454d7ba837726a134e0624e2b6e39600f2d08c9ba8261e0d3429b894b1a253",
+          "size": 10594
+        }
+      ],
+      "bundle_sha256": "ee5ef5e850f56e24b29aec22d2c69bfc19b4420217a5c0fe675016cde125c94f"
     },
     {
       "name": "pandadata",

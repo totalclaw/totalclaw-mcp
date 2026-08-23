@@ -67,6 +67,26 @@ def scan_tools(tools: list[dict]) -> list[dict]:
     return findings
 
 
+def _expand(value: str) -> str:
+    """把 ``${VAR}`` 展开成真实环境变量；展不开就原样留着，让上游自己报错。"""
+    return re.sub(r"\$\{([A-Za-z_][A-Za-z0-9_]*)\}",
+                  lambda m: os.environ.get(m.group(1), m.group(0)), str(value))
+
+
+def _pick_runtime(manifest: dict, runtime_id: str | None) -> dict:
+    """挑一个可探测的 runtime。stdio 优先——不用凭据就能连上。"""
+    runtimes = [r for r in (manifest.get("runtimes") or [])
+                if r.get("type") in ("stdio", "http")]
+    if runtime_id:
+        runtimes = [r for r in runtimes if r.get("id") == runtime_id]
+        if not runtimes:
+            raise RuntimeError(f"清单里没有 runtime {runtime_id!r}")
+    if not runtimes:
+        raise RuntimeError("清单里没有 stdio 或 http runtime")
+    runtimes.sort(key=lambda r: 0 if r.get("type") == "stdio" else 1)
+    return runtimes[0]
+
+
 def _server_params(manifest: dict, runtime_id: str | None):
     """从清单里挑一个 stdio runtime，转成 StdioServerParameters。"""
     from mcp import StdioServerParameters
@@ -75,7 +95,7 @@ def _server_params(manifest: dict, runtime_id: str | None):
     if runtime_id:
         runtimes = [r for r in runtimes if r.get("id") == runtime_id]
     if not runtimes:
-        raise RuntimeError("没有可探测的 stdio runtime（http 型需要真实端点与凭据，本脚本不探测）")
+        raise RuntimeError("没有可探测的 stdio runtime")
     rt = runtimes[0]
 
     env = {k: os.environ.get(k, "") for k in
@@ -94,16 +114,41 @@ def _server_params(manifest: dict, runtime_id: str | None):
                                  env=env), rt
 
 
+async def _collect(session, tools_out: list) -> None:
+    await asyncio.wait_for(session.initialize(), timeout=CONNECT_TIMEOUT)
+    listed = await asyncio.wait_for(session.list_tools(), timeout=CONNECT_TIMEOUT)
+    tools_out.extend(listed.tools)
+
+
 async def probe_one(manifest: dict, runtime_id: str | None) -> tuple[list[dict], str]:
     """连接服务器并拉取工具清单。返回 (tools, runtime_id)。"""
     from mcp import ClientSession
-    from mcp.client.stdio import stdio_client
 
-    params, rt = _server_params(manifest, runtime_id)
-    async with stdio_client(params) as (read, write):
-        async with ClientSession(read, write) as session:
-            await asyncio.wait_for(session.initialize(), timeout=CONNECT_TIMEOUT)
-            listed = await asyncio.wait_for(session.list_tools(), timeout=CONNECT_TIMEOUT)
+    rt = _pick_runtime(manifest, runtime_id)
+    raw: list = []
+
+    if rt.get("type") == "http":
+        # http 型要真实端点；带 ${VAR} 的头展不开就会被服务端拒（401），
+        # 那正是我们要如实记下的结果 —— 不能假装探过。
+        from mcp.client.streamable_http import streamablehttp_client
+
+        headers = {str(k): _expand(v) for k, v in (rt.get("headers") or {}).items()}
+        kwargs: dict = {"timeout": CONNECT_TIMEOUT}
+        if headers:
+            kwargs["headers"] = headers
+        async with streamablehttp_client(_expand(str(rt["url"])), **kwargs) as transport:
+            read, write = transport[0], transport[1]
+            async with ClientSession(read, write) as session:
+                await _collect(session, raw)
+    else:
+        from mcp.client.stdio import stdio_client
+
+        params, rt = _server_params(manifest, runtime_id)
+        async with stdio_client(params) as (read, write):
+            async with ClientSession(read, write) as session:
+                await _collect(session, raw)
+
+    listed = type("L", (), {"tools": raw})()
     tools = []
     for t in listed.tools:
         ann = t.annotations

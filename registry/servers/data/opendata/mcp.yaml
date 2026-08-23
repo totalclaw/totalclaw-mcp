@@ -1,0 +1,51 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: opendata。人工修改后请同步递增 version。
+# 上游配置写的是 sse（agent 不支持）。把路径末段 /sse 换成 /mcp 后实测端点存在
+# 且说 streamable-HTTP，故改用 http runtime；实测记录见 docs/TODO.md B 层。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: opendata
+display_name: 及刻智能·时空数据MCP
+version: 0.1.0
+description: Query offline spatiotemporal data via natural language — area heat maps, scene recognition,
+  customer-flow analysis, POI search and more — to power business insights and site-selection scenarios.
+description_zh: 通过自然语言查询线下时空数据，提供区域热力、场景识别、客流分析、POI查询等能力，助力商业洞察、开店选址等应用场景。
+author: vendor
+category: data
+tags:
+- data
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.isjike.com/mcp-servers/opendata/mcp
+  headers:
+    Authorization: Bearer ${REGION_INSIGHT_API_KEY}
+  auth: none
+requires_env:
+- name: REGION_INSIGHT_API_KEY
+  env_key: REGION_INSIGHT_API_KEY
+  description: 及刻智能·时空数据MCP 所需的 REGION_INSIGHT_API_KEY
+  prompt: 请输入 REGION_INSIGHT_API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcp.isjike.com
+examples:
+- 查找上海妇女用品商店并返回 GCJ-02 坐标
+- 统计成都建设路邻里生活广场周边 1000 米内不同分类的 POI 数量
+- 查询指定圆形区域内的餐饮 POI 列表
+tools:
+  probed_at: '2026-08-23T00:29:27Z'
+  probed_runtime: remote
+  count: 6
+  file: tools.json

@@ -277,7 +277,7 @@
 - [x] **tyc-mcp** 天眼查 — 已实现 `tianyancha`
 - [x] **wecom** 企业微信 — 已实现 `wecom`
 
-#### B · 厂商自有 MCP 端点（56 已收录 / 14 阻塞）
+#### B · 厂商自有 MCP 端点（59 已收录 / 11 阻塞）
 
 **这一节此前的判断是错的，已纠正。** 原先写的是「73 项待厂商开发者账号」，
 前提是每家都得拿到 REST 契约、自己再实现一遍。实际不需要：**这些厂商自己就跑着
@@ -305,8 +305,11 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
   `market-api.fenbi.com/workbuddy/mcp`、`?source=workbuddy`）。这是厂商为那个产品
   单开的租户入口，不是通用网关；走它等于占用别人谈下来的合作配额。
   **要接，得自己去和厂商申请一条独立路由。**
-- **sse 传输（5）** —— agent 只支持 stdio 与 streamable-HTTP（SPEC.md §runtimes）。
-  要么等厂商开 streamable-HTTP，要么在 agent 侧加 SSE 支持。
+- **sse 传输（2）** —— agent 只支持 stdio 与 streamable-HTTP（SPEC.md §runtimes）。
+  原本 5 项，**实测把路径末段 `/sse` 换成 `/mcp` 后有 3 家是通的**（opendata 直接连上并探到
+  6 个工具；finenter、xingtu-claw-risk 返回 401 —— 端点在、说 streamable-HTTP，只差凭据），
+  已改用 http runtime 收录。剩下 proboost 实测 404、zfs-fssc-ai 本就是演示主机。
+  「上游写 sse」不等于「只有 sse」，值得先探一下再判死。
 - **平台身份鉴权（2）** —— `auth_mode: server-side`，凭据由那个平台自己注入，我们拿不到。
 - **非生产主机（1）** —— `test.nges.qq.com`，测试环境不进目录。
 
@@ -334,7 +337,7 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [ ] **fazhi-law** 同花顺法律AI助手（上游 auth_mode=token） —— 阻塞：他方专属路由（https://bizveris.kuaicha365.com/law_agent/mcp?source=workbuddy —— 需自行向）
 - [x] **fbs-connector** 福帮手 —— 厂商自有端点，收录为 `biz/fbs_connector`
 - [ ] **fenbi-baokao-decision** 报考决策 —— 阻塞：他方专属路由（https://market-api.fenbi.com/workbuddy/mcp —— 需自行向厂商申请独立路由）
-- [ ] **finenter** 进门投研 —— 阻塞：传输不支持（type=sse；agent 只支持 stdio 与 streamable-HTTP）
+- [x] **finenter** 进门投研 —— 上游写 sse，实测 `/sse`→`/mcp` 端点存在（401，需凭据），已按 http 收录为 `data/finenter`
 - [x] **flova** Flova（上游 auth_mode=oauth） —— 厂商自有端点，收录为 `creative/flova`
 - [x] **fyopen-lawsearch** 法研·法律法规检索 —— 厂商自有端点，收录为 `biz/fyopen_lawsearch`
 - [x] **gangtise-mcp** Gangtise投研（上游 auth_mode=token） —— 厂商自有端点，收录为 `data/gangtise_mcp`
@@ -358,12 +361,12 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [x] **mx-ds-mcp** 东方财富妙想MCP —— 厂商自有端点，收录为 `data/mx_ds_mcp`
 - [x] **mzl-trademark** 摩知轮商标查询 —— 厂商自有端点，收录为 `biz/mzl_trademark`
 - [x] **neo-crm** 销售易CRM —— 厂商自有端点，收录为 `biz/neo_crm`
-- [ ] **opendata** 及刻智能·时空数据MCP（上游 auth_mode=token） —— 阻塞：传输不支持（type=sse；agent 只支持 stdio 与 streamable-HTTP）
+- [x] **opendata** 及刻智能·时空数据MCP（上游 auth_mode=token） —— 上游写 sse，实测 `/sse`→`/mcp` **直接连通**，已探到 6 个工具（注入扫描 allow），收录为 `data/opendata`
 - [x] **pandadata** PandaData 金融数据 —— 厂商自有端点，收录为 `data/pandadata`
 - [x] **picset-commerce-images** Picset AI 电商图片（上游 auth_mode=token） —— 厂商自有端点，收录为 `creative/picset_commerce_images`
 - [x] **picset-video-generation** Picset AI 视频创作（上游 auth_mode=token） —— 厂商自有端点，收录为 `creative/picset_video_generation`
 - [x] **pkulaw** 北大法宝·法律智能检索 —— 厂商自有端点，收录为 `biz/pkulaw`
-- [ ] **proboost** OpenBoost 跨境数据 —— 阻塞：传输不支持（type=sse；agent 只支持 stdio 与 streamable-HTTP）
+- [ ] **proboost** OpenBoost 跨境数据 —— 阻塞：仅 SSE。已实测 `/sse`→`/mcp` 返回 404，厂商没开 streamable-HTTP；要接需 agent 侧支持 SSE，或等厂商开
 - [x] **qcc-legal** 企查查·法律数据 —— 厂商自有端点，收录为 `biz/qcc_legal`
 - [x] **qixinhuiyan-mcp** 启信慧眼 —— 厂商自有端点，收录为 `data/qixinhuiyan_mcp`
 - [x] **salesnail-instructor** SalesNail 讲师 —— 厂商自有端点，收录为 `biz/salesnail_instructor`
@@ -386,7 +389,7 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [ ] **wind-finance** Wind 金融数据（上游 auth_mode=token） —— 阻塞：他方专属路由（https://mcp.wind.com.cn/vserver_workbuddy/mcp/ —— 需自行向厂商申请独立路由）
 - [ ] **wisenote** 百智WiseNote —— 阻塞：他方专属路由（https://100wiser.com/workbuddy/wisenote/meeting/mcp —— 需自行向厂商申请独立路由）
 - [x] **wk-workbuddy** 威科先行 —— 厂商自有端点，收录为 `biz/wkinfo`
-- [ ] **xingtu-claw-risk** 天创信用星图MCP —— 阻塞：传输不支持（type=sse；agent 只支持 stdio 与 streamable-HTTP）
+- [x] **xingtu-claw-risk** 天创信用星图MCP —— 上游写 sse，实测 `/mcp` 端点存在（401，需凭据），已按 http 收录为 `biz/xingtu_claw_risk`
 - [x] **yingmi-mcp** 盈米MCP（上游 auth_mode=token） —— 厂商自有端点，收录为 `data/yingmi_mcp`
 - [x] **youshu-bd-mate** 智客AI · 对公(To B)营销助手（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/youshu_bd_mate`
 - [x] **yuandian-mcp** 华宇元典法律数据 —— 厂商自有端点，收录为 `biz/yuandian_mcp`
