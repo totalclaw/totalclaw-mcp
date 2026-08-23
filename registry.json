@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T00:40:36Z",
+  "generated_at": "2026-08-23T00:45:22Z",
   "servers": [
     {
       "name": "chuhaijiang",
@@ -459,7 +459,7 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "67a513414a0aa53926be53f426246379a1f6be42e62357486cdbf4a7e2a312a6",
+          "sha256": "128820ef681515d9907ee92f851d06e83984c2ca0b3f37573f7a60262ff37870",
           "size": 1622
         },
         {
@@ -468,7 +468,7 @@
           "size": 58779
         }
       ],
-      "bundle_sha256": "be6a7903e7df39835369c5aced20563fd43a38359b488a6cf14feec6f2554d75"
+      "bundle_sha256": "de688d1db943b64a1d55284a31327ceb72e23d7f2d854c00d9f9e1dde2f10741"
     },
     {
       "name": "fyopen_lawsearch",
@@ -2752,7 +2752,7 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1a7c76a318fcdc6ff7a5730c6e3e3b6a2a32e557c27a8f4ba2e8ff38354b90c0",
+          "sha256": "355e449dc3376fa27acf12dff8b3fb6bad065e1a6ed94529f6886443c69a41e9",
           "size": 1204
         },
         {
@@ -2761,7 +2761,7 @@
           "size": 20745
         }
       ],
-      "bundle_sha256": "52debec3bdc1088abd5159adfc7604bd275a50c774d05c0f82947ad1e2c450e9"
+      "bundle_sha256": "7d62c66322b6eb2c4f90852776a233ff80b3c16c05f6e2a28bb93ef545171e58"
     },
     {
       "name": "infimind_ecommerce_image",

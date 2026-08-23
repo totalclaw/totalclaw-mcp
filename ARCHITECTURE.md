@@ -126,7 +126,7 @@ registry.json.sig              # Ed25519，复用 totalclaw-plugins 签名方案
 
 - 目录即分类：`servers/<category>/<name>/`，`id = totalclaw-mcp/<category>/<name>`，发布后永不改名（与 plugins/tools SPEC §8 一致）。
 - `scripts/gen_registry.py`：遍历清单 → 校验（名字字符集、`manifest_version`、版本 pin、transport 合法性）→ 逐文件 sha256 + `bundle_sha256` → 输出 `registry.json`。
-- `scripts/probe_server.py`（CI）：在沙箱里真实启动服务器，`list_tools` 生成 `tools.json`（名称/描述/inputSchema/readOnlyHint）、跑工具描述注入扫描（复用 agent `helpers.py` 的 10 条模式）、记录出网域名 → 写回 `security:` 块。**这份快照让 agent 可以预填 `schema-cache`，安装即见工具。**
+- `scripts/probe_server.py`（CI）：stdio 型在沙箱里真实启动，http 型直接连厂商端点（连不上会把根因报出来——401 缺凭据 / 404 端点没了 / 超时，各不相同），`list_tools` 生成 `tools.json`（名称/描述/inputSchema/readOnlyHint）、跑工具描述注入扫描（复用 agent `helpers.py` 的 10 条模式）、记录出网域名 → 写回 `security:` 块。**这份快照让 agent 可以预填 `schema-cache`，安装即见工具。**
 - `scripts/import_presets.py`：一次性从 agent 的 `mcp_presets.py`（24）与 `mcp_catalog.py`（2）导入种子，保持名字不变（`mcp_fetch`、`playwright` …），确保已有用户配置无缝对接。
 
 ### 3.2 `api/` — 平台服务（NestJS + Mongo，复用 skill-shop 骨架，M2）

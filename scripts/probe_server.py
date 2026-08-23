@@ -67,6 +67,23 @@ def scan_tools(tools: list[dict]) -> list[dict]:
     return findings
 
 
+def _root_cause(exc: BaseException) -> BaseException:
+    """扒出 ExceptionGroup 里真正的错误。
+
+    MCP SDK 用 TaskGroup 跑连接，任何失败都被包成
+    ``ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)`` ——
+    那句话对排查毫无帮助：分不清是缺凭据（401）、端点没了（404）还是网络不通。
+    """
+    seen = 0
+    while seen < 10:
+        subs = getattr(exc, "exceptions", None)
+        if not subs:
+            break
+        exc = subs[0]
+        seen += 1
+    return exc
+
+
 def _expand(value: str) -> str:
     """把 ``${VAR}`` 展开成真实环境变量；展不开就原样留着，让上游自己报错。"""
     return re.sub(r"\$\{([A-Za-z_][A-Za-z0-9_]*)\}",
@@ -175,6 +192,13 @@ def probe(name: str, *, runtime_id: str | None, dry_run: bool, skip_auth: bool) 
     if "totalclaw" in (manifest.get("tags") or []):
         return f"· {name}: 跳过（自研服务器，tools.json 由 gen_manifests.py 生成）"
 
+    # 指向 localhost 的条目要用户先在本机把那个服务跑起来。探它只会拿到
+    # 连接错误，说明不了条目本身有没有问题 —— 跳过，别混进失败计数里。
+    for rt in manifest.get("runtimes") or []:
+        url = str(rt.get("url") or "")
+        if url and re.search(r"//(localhost|127\.0\.0\.1|\[::1\])\b", url):
+            return f"· {name}: 跳过（{url} 是本机端点，需用户自行启动该服务）"
+
     req_env = [e.get("env_key") or e.get("name") for e in (manifest.get("requires_env") or [])]
     missing = [e for e in req_env if e and not os.environ.get(e)]
     if missing and skip_auth:
@@ -192,9 +216,10 @@ def probe(name: str, *, runtime_id: str | None, dry_run: bool, skip_auth: bool) 
     except asyncio.TimeoutError:
         return f"✗ {name}: 连接超时（{CONNECT_TIMEOUT:.0f}s）"
     except Exception as e:  # noqa: BLE001 - 上游千奇百怪，一条失败不该中断整轮
-        detail = str(e).splitlines()[0][:120] if str(e) else type(e).__name__
+        root = _root_cause(e)
+        detail = str(root).splitlines()[0][:120] if str(root) else type(root).__name__
         hint = "（可能缺凭据）" if missing else ""
-        return f"✗ {name}: {type(e).__name__}: {detail}{hint}"
+        return f"✗ {name}: {type(root).__name__}: {detail}{hint}"
 
     findings = scan_tools(tools)
     verdict = "warn" if findings else "allow"

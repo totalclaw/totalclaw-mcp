@@ -43,7 +43,7 @@ examples:
 - 查询我的乐包状态，并说明现在适合领取、兑换还是继续完成任务。
 - 把这次协作归到我正在使用的福帮手专家名下。
 tools:
-  probed_at: '2026-08-23T00:40:12Z'
+  probed_at: '2026-08-23T00:43:51Z'
   probed_runtime: remote
   count: 11
   file: tools.json

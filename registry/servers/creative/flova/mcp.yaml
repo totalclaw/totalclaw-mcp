@@ -35,7 +35,7 @@ examples:
 - 继续完善我的 Flova 项目，先生成分镜供我确认
 - 根据审阅意见修改镜头并导出最终视频
 tools:
-  probed_at: '2026-08-23T00:40:25Z'
+  probed_at: '2026-08-23T00:44:04Z'
   probed_runtime: remote
   count: 34
   file: tools.json

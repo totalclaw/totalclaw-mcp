@@ -168,7 +168,13 @@
   - 已实跑 5 个上游条目：`mcp_time`(2) `mcp_fetch`(1) `mcp_sequential_thinking`(1)
     `mcp_memory`(9) `mcp_everything`(13)，全部连通、无注入嫌疑
   - 这轮实跑同时验证了 C1 的两处包名修复确实可用（原规格会挂到超时）
-- [ ] **C2.1** 把余下需凭据的上游条目在有凭据的环境里补跑一遍
+- [x] **C2.1（工具就绪部分）** `probe_server.py` 加了 http 支持——此前只探 stdio，
+  http 型一律跳过，于是「有凭据就能补跑」根本没有工具可用。同时把 MCP SDK 的
+  `ExceptionGroup: unhandled errors in a TaskGroup` 拆开报根因：401 缺凭据、
+  404 端点没了、超时，这三种此前长得一模一样，没法排查。
+- [ ] **C2.1（剩余）** 41 个条目实测返回 401 —— 端点在、说 streamable-HTTP，
+  只差各家凭据。拿到任一家凭据后 `export <VAR>=... && python3 scripts/probe_server.py <名>`
+  即可补齐其 `tools.json` 与 `security` 块。
 - [x] **C3** Ed25519 签名脚本 `scripts/sign_registry.py`（`--keygen` / `--sign` / `--verify`）
   - 已实测完整链路：生成密钥 → 签名 → 验签通过 → 篡改一个字段后验签**正确失败** → 恢复后再通过
   - 私钥只从 `MCP_REGISTRY_SIGNING_KEY` 或库外文件读，keygen 默认写到 `~/.totalclaw-mcp-keys`
