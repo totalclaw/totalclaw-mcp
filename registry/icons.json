@@ -189,6 +189,11 @@
     "file": "icon.png",
     "source": "https://api.chanyedata.com/favicon.ico"
   },
+  "tanyuan_assistant": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://tanyuan.qq.com/favicon.ico"
+  },
   "tdx_connector": {
     "fetched_at": "2026-08-23",
     "file": "icon.png",
@@ -198,6 +203,11 @@
     "fetched_at": "2026-08-23",
     "file": "icon.png",
     "source": "https://ai-at-cdn.digital-edu.qq.com/ta-web-static/ta-web-20260820_1657/favicon.ico"
+  },
+  "tencent_qidian_cs": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://bqq.gtimg.com/qidian/src/themes/blue/common/images/favicon.ico"
   },
   "tencent_weiyun": {
     "fetched_at": "2026-08-23",
@@ -213,6 +223,11 @@
     "fetched_at": "2026-08-23",
     "file": "icon.png",
     "source": "https://cms.static.chanjet.com/90004719560/market/platform/image/2021/03/13/45d0b5ace8d846858fc272b3e94327b0.ico"
+  },
+  "westock_mcp": {
+    "fetched_at": "2026-08-23",
+    "file": "icon.png",
+    "source": "https://stockbuddy.qq.com/logo.jpg"
   },
   "wkinfo": {
     "fetched_at": "2026-08-23",

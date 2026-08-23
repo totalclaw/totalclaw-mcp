@@ -367,3 +367,19 @@ def test_icon_provenance_covers_every_icon() -> None:
     assert on_disk == set(store), f"记录与磁盘不符：{on_disk ^ set(store)}"
     for name, rec in store.items():
         assert rec.get("source"), name
+
+
+def test_icons_stay_small() -> None:
+    """图标不能大到拖垮 bundle。
+
+    jpg→png 会把 165 KB 的图撑成 1.3 MB（stockbuddy 的 logo.jpg 实测）。
+    MAX_BYTES 卡的是下载的字节，卡不住转换后的 —— 114 个条目各带一张就是几十兆，
+    而 bundle 是要逐条下发的。转换统一缩到 256px 后这条才立得住。
+    """
+    repo = Path(__file__).resolve().parents[2]
+    icons = [p for p in (repo / "registry" / "servers").glob("*/*/icon.*")
+             if p.suffix in (".svg", ".png")]
+    assert icons
+    oversized = [(p.name, p.parent.name, p.stat().st_size)
+                 for p in icons if p.stat().st_size > 200 * 1024]
+    assert not oversized, f"图标过大：{oversized}"

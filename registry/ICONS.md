@@ -52,11 +52,14 @@
 | `salesnail_instructor` | `icon.png` | https://sn.long-arena.com/favicon.ico | 2026-08-23 |
 | `salestouch` | `icon.png` | https://touch.long-arena.com/favicon.ico | 2026-08-23 |
 | `sq_company_dynamic` | `icon.png` | https://api.chanyedata.com/favicon.ico | 2026-08-23 |
+| `tanyuan_assistant` | `icon.png` | https://tanyuan.qq.com/favicon.ico | 2026-08-23 |
 | `tdx_connector` | `icon.png` | https://sns.tdx.com.cn/site/tdx_sns/static/favicon.ico | 2026-08-23 |
 | `teacher_assistant` | `icon.png` | https://ai-at-cdn.digital-edu.qq.com/ta-web-static/ta-web-20260820_1657/favicon.ico | 2026-08-23 |
+| `tencent_qidian_cs` | `icon.png` | https://bqq.gtimg.com/qidian/src/themes/blue/common/images/favicon.ico | 2026-08-23 |
 | `tencent_weiyun` | `icon.png` | https://img.weiyun.com/vipstyle/nr/box/img/favicon.ico?max_age=31536000 | 2026-08-23 |
 | `tongzhou_fin_research` | `icon.png` | https://mcp-gateway.textmind-gz.com/logo.png | 2026-08-23 |
 | `tplus_api` | `icon.png` | https://cms.static.chanjet.com/90004719560/market/platform/image/2021/03/13/45d0b5ace8d846858fc272b3e94327b0.ico | 2026-08-23 |
+| `westock_mcp` | `icon.png` | https://stockbuddy.qq.com/logo.jpg | 2026-08-23 |
 | `wkinfo` | `icon.svg` | https://mcp.wkinfo.com.cn/assets/logo-DsQzxDGb.svg | 2026-08-23 |
 | `yingmi_mcp` | `icon.png` | https://yingmi.com/assets/img/favicon.ico | 2026-08-23 |
 | `youshu_bd_mate` | `icon.png` | https://open.yscredit.com/favicon.ico | 2026-08-23 |

@@ -323,13 +323,19 @@
   （先用 curl 复核过：这些主机 curl 也连不上裸顶级域，所以不是 httpx 的问题；
   但 `www.` 前缀 curl 立刻 200 —— 是我少试了一种写法，不是网络的锅。）
   48 个文件逐个核过魔数，也确认没有混进第三方基础设施的标。
-- [ ] **C5.1（剩余，12 个）** 剩下的确实抓不到：
-  - 站点本身与 www 都不通（`cjbdi.com` / `lexiang-app.com` / `tec-do.cn` /
-    `epicgames.com` / `yql.net`）—— **这几个才是真的从本机够不着**，
-    换一个能连通的网络重跑 `scripts/fetch_icons.py` 可能还能补上；
-  - 挂在伞状域名下、按规则不回退的（`api.tanyuan.qq.com` / `sse.qidian.qq.com` /
-    `stockbuddy.qq.com`）—— 回退过去只会拿到 QQ 的企鹅；
-  - `gildata.com` 通但站上没有任何图标来源（无 favicon / manifest / og:image）。
+- [x] **C5.1（父域回退 + 体积上限，2026-08-23）** 图标 **48 → 51**。
+  伞状域名那 3 条我之前一刀切禁掉了回退 —— 但**产品站往往正好在中间那一层**：
+  `sse.qidian.qq.com` → `qidian.qq.com` 是腾讯企点自己的站（favicon 路径里就带
+  qidian），再往上才是 `qq.com`（QQ 的企鹅）。改成逐层剥标签、撞到伞状域名才停，
+  `tencent_qidian_cs` / `tanyuan_assistant` / `westock_mcp` 三条都补上了。
+  - 顺带发现一个会拖垮 bundle 的问题：`stockbuddy` 的 `<link rel=icon>` 指的是
+    `/logo.jpg`（165 KB），jpg→png **撑成 1.3 MB**。`MAX_BYTES` 卡的是下载的字节，
+    卡不住转换后的。转换统一缩到 256px 边长并复查体积后，51 个图标合计 367 KB、
+    最大 59 KB。加了用例守住这条（`test_icons_stay_small`）。
+- [ ] **C5.1（剩余，9 个）** 确实抓不到：站点与 www 都不通的
+  （`cjbdi.com` / `lexiang-app.com` / `tec-do.cn` / `epicgames.com` / `yql.net` —— 
+  **换个能连通的网络重跑 `scripts/fetch_icons.py` 可能还能补**），
+  以及 `gildata.com` / `mozlen.com` 等站上确实没有任何图标来源的。
   在此期间它们回落字母块，界面不会开天窗。
 
 ---

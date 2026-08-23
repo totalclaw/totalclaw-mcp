@@ -54,7 +54,12 @@ UA = "Mozilla/5.0 (compatible; totalclaw-mcp-icon-fetcher/1.0)"
 ACCEPT = {
     "image/svg+xml": ".svg",
     "image/png": ".png",
+    # 有的站把产品 logo 的 jpg 直接声明成 icon（stockbuddy 的 <link rel=icon> 指的是
+    # /logo.jpg）。转成 png 落盘，省得客户端还要判两种扩展名。
+    "image/jpeg": ".png",
+    "image/jpg": ".png",
 }
+JPEG_TYPES = {"image/jpeg", "image/jpg"}
 # .ico 是多帧容器，直接落盘的话浏览器与 Electron 里表现不一，所以转成 PNG 再存。
 # Pillow 不在就跳过这类（回落字母块），不因为少一个可选依赖让整个脚本挂掉 ——
 # 国内站点用 .ico 的比例很高，实测 45 个失败里有一多半是这个原因。
@@ -102,6 +107,23 @@ THIRD_PARTY_ASSET = (
     "wordpress", "shopify", "cloudflare", "nginx", "apache",
     "swagger", "redoc", "gitbook", "docusaurus", "vitepress",
 )
+
+
+def _parent_hosts(host: str) -> list[str]:
+    """逐层剥掉最左边的标签，直到剩两段或撞上伞状域名。
+
+    `sse.qidian.qq.com` → `qidian.qq.com`（腾讯企点自己的站，favicon 路径里就带
+    qidian），再往上才是 `qq.com`（那是 QQ 的企鹅，不是产品的）。
+    只退到顶级域是不够的：伞状域名下的产品站往往正好在中间那一层。
+    """
+    parts = host.split(".")
+    out = []
+    for i in range(1, len(parts) - 1):
+        cand = ".".join(parts[i:])
+        if len(cand.split(".")) < 2 or cand in UMBRELLA_APEX:
+            break
+        out.append(cand)
+    return out
 
 
 def _apex_fallback(host: str) -> str:
@@ -167,6 +189,37 @@ def _decode_data_uri(uri: str) -> "tuple[bytes, str] | None":
     return None
 
 
+# 图标落盘的最大边长。转换后必须缩：MAX_BYTES 卡的是**下载**的字节，
+# 而 jpg→png 会把 165 KB 的图撑成 1.3 MB（实测 stockbuddy 的 logo.jpg）。
+# 目录里 114 个条目各带一张这种图，光图标就几十兆。
+ICON_MAX_EDGE = 256
+
+
+def _encode_png(im) -> "bytes | None":
+    """统一的 PNG 落盘：超过 ICON_MAX_EDGE 就等比缩小。"""
+    from PIL import Image
+    if max(im.size) > ICON_MAX_EDGE:
+        ratio = ICON_MAX_EDGE / max(im.size)
+        im = im.resize((max(1, int(im.width * ratio)),
+                        max(1, int(im.height * ratio))), Image.LANCZOS)
+    out = io.BytesIO()
+    im.convert("RGBA").save(out, format="PNG", optimize=True)
+    data = out.getvalue()
+    return data if len(data) <= MAX_BYTES else None
+
+
+def _jpeg_to_png(raw: bytes) -> "bytes | None":
+    """jpg 转 PNG（并缩到图标尺寸）。Pillow 不在就返回 None。"""
+    if not _HAVE_PIL or not raw or not raw.startswith(b"\xff\xd8"):
+        return None
+    try:
+        from PIL import Image
+        with Image.open(io.BytesIO(raw)) as im:
+            return _encode_png(im)
+    except Exception:                                            # noqa: BLE001
+        return None
+
+
 def _ico_to_png(raw: bytes) -> "bytes | None":
     """.ico 转 PNG，取里面最大的一帧。Pillow 不在就返回 None。"""
     if not _HAVE_PIL or not raw:
@@ -178,9 +231,7 @@ def _ico_to_png(raw: bytes) -> "bytes | None":
             sizes = getattr(im, "ico", None)
             if sizes is not None:
                 im = im.ico.getimage(max(im.ico.sizes()))
-            out = io.BytesIO()
-            im.convert("RGBA").save(out, format="PNG")
-            return out.getvalue()
+            return _encode_png(im)
     except Exception:                                            # noqa: BLE001
         return None
 
@@ -267,6 +318,14 @@ def _try_one(c, url: str, d: Path, res: "Result", page) -> bool:
         res.status, res.source, res.suffix = "ok", url, ".png"
         res.detail = f"{len(png) // 1024 or 1} KB（ico→png）"
         return True
+    if ctype in JPEG_TYPES:
+        png = _jpeg_to_png(r.content)
+        if not png:
+            return False
+        _write_icon(d, ".png", png)
+        res.status, res.source, res.suffix = "ok", url, ".png"
+        res.detail = f"{len(png) // 1024 or 1} KB（jpg→png）"
+        return True
     suffix = ACCEPT.get(ctype)
     if not suffix:
         return False
@@ -282,6 +341,7 @@ def _try_one(c, url: str, d: Path, res: "Result", page) -> bool:
 
 
 def _write_icon(d: Path, suffix: str, payload: bytes) -> None:
+    """落盘。调用方保证 payload 已经过尺寸与体积检查。"""
     for old in (d / "icon.svg", d / "icon.png"):
         old.unlink(missing_ok=True)
     (d / f"icon{suffix}").write_bytes(payload)
@@ -316,6 +376,8 @@ def fetch_one(name: str, category: str, d: Path, manifest: dict,
             tried = []
             for base in (home, ):
                 tried.append(base)
+            # 先逐层剥父域（仍在产品子域内），再退顶级域
+            tried.extend(f"https://{ph}" for ph in _parent_hosts(host))
             apex = _apex_fallback(host)
             if apex:
                 # 裸顶级域与 www 都要试：不少站只在 www 上服务，只试裸的会误判成

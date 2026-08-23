@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T08:25:51Z",
+  "generated_at": "2026-08-23T08:30:37Z",
   "servers": [
     {
       "name": "chuhaijiang",
@@ -59,8 +59,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "870875ddddbf01bbeb1950c11131e57c11f0fdb6176f4596d55d9c6369463dbf",
-          "size": 3769
+          "sha256": "f59c291ce6c15bc82097031cfaabb56fbf07641da15655510c6044a29d064c38",
+          "size": 3562
         },
         {
           "path": "mcp.yaml",
@@ -68,7 +68,7 @@
           "size": 1995
         }
       ],
-      "bundle_sha256": "fd4509162dbe814d084b38e8f47c37e5b85199cbacdb2967ce27eacaa15cebd8"
+      "bundle_sha256": "c3857952c68b3e2ecd30f08e06656937d557bb4231907b485e0c7d88f390b696"
     },
     {
       "name": "composio",
@@ -418,8 +418,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "d59ee61bde8adb90d8c3722e0bc6f978239b453bf4b0013c51797b2a6c145010",
-          "size": 2447
+          "sha256": "87b76190f983b17e51cd840e8637d511918199497958ede7d912b09b64b4e68a",
+          "size": 2383
         },
         {
           "path": "mcp.yaml",
@@ -432,7 +432,7 @@
           "size": 5341
         }
       ],
-      "bundle_sha256": "68074695f5330af3fc7cb76adcc345e3de072799900410dcaac9f1072f565904"
+      "bundle_sha256": "345e809599fda6132e1633e1d13c435ff5fd73e0f73925011545979946fcb5cf"
     },
     {
       "name": "fbs_connector",
@@ -499,8 +499,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "03dca4a004f386dfef8b26d01c6a47e475bf03b15ae1cfc75b92af094ecfd1f5",
-          "size": 32967
+          "sha256": "6d21ad1396422f85c9c3525d281adf9e9b830e300ff8521efd343965a9725ad0",
+          "size": 31702
         },
         {
           "path": "mcp.yaml",
@@ -513,7 +513,7 @@
           "size": 58779
         }
       ],
-      "bundle_sha256": "e841d6eb570eb5ddd1c5a76f6efae0295c2a34b6016adcb7bdb33c6fb518a128"
+      "bundle_sha256": "7a4bfb6cd050e19bb35366cb02a912d4473a1812474547ca84a66cf11534e7ae"
     },
     {
       "name": "fyopen_lawsearch",
@@ -627,8 +627,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "7caef44939fb203bf234b25a4a9267d529e359dbf638848bcf37e06776c0704d",
-          "size": 1799
+          "sha256": "9680bc9ae34f6e39ae6741e367d196cd0a19145bd157293e0d056192b5c0ec04",
+          "size": 1754
         },
         {
           "path": "mcp.yaml",
@@ -636,7 +636,7 @@
           "size": 1313
         }
       ],
-      "bundle_sha256": "9232234094d904b41a04b3e0b39e8236245aa8ffb57e827fa46652e79c8aa312"
+      "bundle_sha256": "c8b23c972a1fb5a0687e431073da46032e9b7b6faeb298343d84975460fdf5fa"
     },
     {
       "name": "lingxing_mcp",
@@ -701,8 +701,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "323404187854cf6fd2e31235e6d4f6d3186ad31fdae37103978975f84d36336d",
-          "size": 868
+          "sha256": "0cd71a63a46685ec6d73148a3380bfd490dc91f4fe1d6d2e656bd48f191c88f2",
+          "size": 836
         },
         {
           "path": "mcp.yaml",
@@ -710,7 +710,7 @@
           "size": 1653
         }
       ],
-      "bundle_sha256": "8ee55eedac84abaa12188b0ce9aee1075fed0761f1412e10260132bc34ada4e8"
+      "bundle_sha256": "85f459e7d5a3f8a8473ba02a3242c12fcb3c627908acbe1eda937304a9a11c0c"
     },
     {
       "name": "linkfox_product_selection",
@@ -775,8 +775,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "90cea6be184351a5f3438a36e972902b525aad02aa44672e1a6f7a649c65e6ea",
-          "size": 3881
+          "sha256": "3dc4f22f31df3d8ec613a38d40d75eacb70c6c3fc725b7b9ca42e11e8f36ffa6",
+          "size": 3783
         },
         {
           "path": "mcp.yaml",
@@ -784,7 +784,7 @@
           "size": 1939
         }
       ],
-      "bundle_sha256": "38ccd59693d1dd7ebcfa95a3548497d7015a534ee506a052e8cc634262a8b41a"
+      "bundle_sha256": "d723e93318d2ee79f378a4062e3e918aad1b56e5494284a12362c540e9f35251"
     },
     {
       "name": "mcp_memory",
@@ -1118,8 +1118,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "f3aa764eb6db7aa41688548bb59b9ad2ef0d678783fd5c5e4a94a9babf72603f",
-          "size": 930
+          "sha256": "952f88500194e5e0f4b18d4179d9d4a476cfda3ba4fddbc3dd54df070c0f9116",
+          "size": 909
         },
         {
           "path": "mcp.yaml",
@@ -1127,7 +1127,7 @@
           "size": 2064
         }
       ],
-      "bundle_sha256": "97c20bb4a09a2ca53f3ec6883e645ba52f82b8dac532fd56452f9d61fff76196"
+      "bundle_sha256": "7c1309e5a542ec2c480f6fc5a95b718bb314dbb8fb1472db1ae578b371d212be"
     },
     {
       "name": "proboost",
@@ -1400,8 +1400,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "9f60dcca51135d468d4ecd08e229f4fb1c0eb8180beecf57a7e235d10163aafa",
-          "size": 3795
+          "sha256": "5b1a959c21fe91ded7fda1abb658a6dec8a1235ebed788aa74d3589277add429",
+          "size": 3615
         },
         {
           "path": "mcp.yaml",
@@ -1409,7 +1409,7 @@
           "size": 1828
         }
       ],
-      "bundle_sha256": "cf478c2d8c77c2d46a58d071e43d9032a6e85455b377cc1825ccf42c28c11384"
+      "bundle_sha256": "20aac19eec4a36e03d894dfdc8ba7a3712891b6c11a6666373ff24b63fc3c39c"
     },
     {
       "name": "salestouch",
@@ -1464,8 +1464,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "ec9a4ad3aaffb8677bb76ba849eea664f9f085d3c136866e46179eeb6f1ef4f9",
-          "size": 2237
+          "sha256": "74823be886332214c4b25f68468f4592d9770f5a32a7d92a41a0034054298c76",
+          "size": 2154
         },
         {
           "path": "mcp.yaml",
@@ -1473,7 +1473,7 @@
           "size": 1986
         }
       ],
-      "bundle_sha256": "11892795d70c9c235b4f7491814e1ca1e49fbb1321dcdc74b4cd8e27e27c23f8"
+      "bundle_sha256": "8e03bb999a665bac8b794410050547c349da65d5c40bf3e9ad2b586a999c8115"
     },
     {
       "name": "tanyuan_assistant",
@@ -1488,7 +1488,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "biz",
         "vendor"
@@ -1527,12 +1527,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "993130e6176d4523201957d59b44fb4657d6556fcc2d5b85762b675b49596206",
+          "size": 3031
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "ad1b5f7d026ca774edd79b32419e948d7bc56f55583af4978556354d862eb859",
           "size": 1992
         }
       ],
-      "bundle_sha256": "dabba46c32646e1a5ab992cae785f61e571b1ca00defccaf97e9a056ee35c186"
+      "bundle_sha256": "10c468a68c26eee3767b7ab20a28891f5599cab232839f17aa3979301fe4a9ec"
     },
     {
       "name": "tec_do",
@@ -1861,8 +1866,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "f68f741f39f1dbc0d8b3e8fcc4524a85c80e78499eb0c3e0f704d5ea2aff07f3",
-          "size": 2598
+          "sha256": "105e8c10ce1f77ba4b2ce10607fb1fca32782e005738b5daa0dfc2f40fdc7bd1",
+          "size": 2536
         },
         {
           "path": "mcp.yaml",
@@ -1870,7 +1875,7 @@
           "size": 2139
         }
       ],
-      "bundle_sha256": "de6077eb2487faca0853c5b5771674706d8cfc5f54cd49de8695f8884c500ca3"
+      "bundle_sha256": "2580ed5869537515544e3ace74250980d4b862460a410558b3ddfbd9cb5a6d06"
     },
     {
       "name": "yuandian_mcp",
@@ -2096,8 +2101,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "32dd69275c86c46273250c718fee353656225147fe58d3ec5373afc7cb346edd",
-          "size": 46442
+          "sha256": "6bc656cf415c0aadd0234ff066a5e2db5bca0860007cb6340c71a27d5fdbe536",
+          "size": 42243
         },
         {
           "path": "mcp.yaml",
@@ -2105,7 +2110,7 @@
           "size": 1429
         }
       ],
-      "bundle_sha256": "94f5e3304ad2526c3f79265b815923ec07a041c19066708b667263a17771cdcb"
+      "bundle_sha256": "40f459601c3002d7e861f8fc8d1cc83756335831057bbc78c6d568c007adb6da"
     },
     {
       "name": "feishu",
@@ -2269,8 +2274,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "a81f85c7ca5fdf3dda2422c82012d6452f141b68af1e8d787001b708ad17ed43",
-          "size": 2220
+          "sha256": "9a4611eed9227a33d66a9511d8f277d898fa38d6070185b66ea9833143bcd1da",
+          "size": 2209
         },
         {
           "path": "mcp.yaml",
@@ -2278,7 +2283,7 @@
           "size": 1420
         }
       ],
-      "bundle_sha256": "e41c6de9c25a7f20b33825d6b02b5f33f8aa25c2bc156d5def0d3a5919d2eedc"
+      "bundle_sha256": "c0df396bbd1cf71ab19441ebea0930417fe661b6917170930be2a5fe49384eb5"
     },
     {
       "name": "imap_mail",
@@ -2526,7 +2531,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "comm",
         "vendor"
@@ -2565,12 +2570,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "466a81dd0ebc1a3663db72722f11557ea1df4e534fd95a026d7f67febfe38ea6",
+          "size": 739
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "5a6d9c706567b3209cead8a38ea4ce8faacf39fdbdd5c70920ede977c581b0e9",
           "size": 1897
         }
       ],
-      "bundle_sha256": "d68b8e2fec22a0db302be434221aed858af490030746c9d0440d6c33d9a62a0b"
+      "bundle_sha256": "ee87838fa4f6adf9e6ba27dc39ccef658d351bac6317b2f83d6ba6274d30dedd"
     },
     {
       "name": "wechat-desktop",
@@ -3816,8 +3826,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "0c18bfae3a0532a89b6d79f1ecfbec5cc1db3e04feaf3dac6a439146391e3410",
-          "size": 1631
+          "sha256": "314c3c46840cd3b44feae54e4a248dcff9f9806e6173a18b26b616d5320604ab",
+          "size": 1690
         },
         {
           "path": "mcp.yaml",
@@ -3825,7 +3835,7 @@
           "size": 2329
         }
       ],
-      "bundle_sha256": "ffa7b790f477db444a34b4c9adbdb8e1163edb6bba03350e0e0c0ebc7d5d1f14"
+      "bundle_sha256": "03c0e2789f9d5371d62af30ce2bad66061ccf9702b071e52aba6df7bf11c88ff"
     },
     {
       "name": "gangtise_mcp",
@@ -4045,8 +4055,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "d59ee61bde8adb90d8c3722e0bc6f978239b453bf4b0013c51797b2a6c145010",
-          "size": 2447
+          "sha256": "87b76190f983b17e51cd840e8637d511918199497958ede7d912b09b64b4e68a",
+          "size": 2383
         },
         {
           "path": "mcp.yaml",
@@ -4059,7 +4069,7 @@
           "size": 2943
         }
       ],
-      "bundle_sha256": "9cb5eec23629400a70f8dc66d7e97077ec9de1a8570647e20088f4b2f737d897"
+      "bundle_sha256": "7e4c399e6a2180277e799e2ea1e92e50d223a5ccfb997676266d5ce75cf1d2c0"
     },
     {
       "name": "mcp_postgres",
@@ -4281,8 +4291,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "6491afa49a8c95235eeff208a4371594b9e6660d0fa3dddf5eb88a045e49cb31",
-          "size": 549
+          "sha256": "d8db8006ce942073613fbaaedadcdf92f645d4ddff79df4aea6bdd46a842799a",
+          "size": 532
         },
         {
           "path": "mcp.yaml",
@@ -4290,7 +4300,7 @@
           "size": 1439
         }
       ],
-      "bundle_sha256": "54cd33ace49e3dca85e6b6f65af0c1867b77d8e8d9f77dc973f04d846917b907"
+      "bundle_sha256": "89210a6f46816250836dbd708124cfeaf15b69bb4d54d072a189fd52a7604726"
     },
     {
       "name": "mx_ds_mcp",
@@ -4495,8 +4505,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "8706d8b7804a17815478504efb9165135a5897439bbee55ed96983517224c3ba",
-          "size": 21179
+          "sha256": "a6a1f295a2ac7d8890e503d32149e4e259442aaf2cdc4e7bc643b7281fdd7c77",
+          "size": 20157
         },
         {
           "path": "mcp.yaml",
@@ -4504,7 +4514,7 @@
           "size": 1519
         }
       ],
-      "bundle_sha256": "cada2f062b48905653b1f20f0cbcbb6df3f14718d991c9fdf290c39975a1e021"
+      "bundle_sha256": "ac2a4d2c3953088cc5b44e5d25dfea59850d1d83c2bc2254ce46abef07509dbd"
     },
     {
       "name": "qcc",
@@ -4665,8 +4675,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "d0e912b771ec7138a4c47ad86d20a5bc40d2528e426baa49ad04545dd04bd594",
-          "size": 1926
+          "sha256": "334f0bd6315cb0590eb5da0e9f00df74a525340f5f57f81b3fbebdd2f7ccddf6",
+          "size": 1883
         },
         {
           "path": "mcp.yaml",
@@ -4674,7 +4684,7 @@
           "size": 1597
         }
       ],
-      "bundle_sha256": "221b55ca934e78c730f2a689fdcdcac67e0ecb07d1cf251e916623ab49cb495c"
+      "bundle_sha256": "207b1ce25641e4eb53a31042107fed8b5a8040e086720198b18e0bc76e6307eb"
     },
     {
       "name": "sq_company_dynamic",
@@ -4739,8 +4749,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "8e36f2a5cb1bb51008f26cfd7c685c5bf54a29128dd70d43d25bad7d0197c9bb",
-          "size": 1838
+          "sha256": "d0fa062f577e575d4c39c57f370e83f2f26183ca8b00789bf99f0f6e8995d0d9",
+          "size": 1815
         },
         {
           "path": "mcp.yaml",
@@ -4748,7 +4758,7 @@
           "size": 1961
         }
       ],
-      "bundle_sha256": "e87c8f08741fc59a6f38f9dbc3ac00704413560abedeb99bfb962c366eb03f4b"
+      "bundle_sha256": "3ca38079d0872b2cc718badca61471b102a6567d7528175305941b451b09984f"
     },
     {
       "name": "tdx_connector",
@@ -4803,8 +4813,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "3997fc9c0764a7cb65c8d9c014304ed7acd0b0d192b3b9875ed2062bb14fed6d",
-          "size": 4624
+          "sha256": "df22fd9dcffe085d55dee20173d454a9d6f314cca95fd2389e0f354ab97a67d2",
+          "size": 4512
         },
         {
           "path": "mcp.yaml",
@@ -4812,7 +4822,7 @@
           "size": 1388
         }
       ],
-      "bundle_sha256": "2b043319b018751406f6a839f28f129dc9e78da6793e7f72e6b9b2b6850f342e"
+      "bundle_sha256": "1f48171d7d7b39e7b32505731546805e0ef197070a4ce33b40c48dba587c6d37"
     },
     {
       "name": "tianyancha",
@@ -4994,7 +5004,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "data",
         "vendor"
@@ -5033,12 +5043,17 @@
       },
       "files": [
         {
+          "path": "icon.png",
+          "sha256": "4189ccf67909ee7d50711150147cae519b5cdf5426f50c3cf2b1ef02dd86e527",
+          "size": 60469
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "8002b8453192346ee7494ad583a93e28b7ebebaa145b9576b87125b5bfafc7c0",
           "size": 1534
         }
       ],
-      "bundle_sha256": "97263652e5fb8479eb40184fa2f2e88215f8459422bc5d4e4e6b7ae0e54abee9"
+      "bundle_sha256": "125f93f40096fdcf39a004679d19b5c9ce0972c8ce9ef8edb724c7c5ea5f5681"
     },
     {
       "name": "yingmi_mcp",
@@ -5103,8 +5118,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "934134c3fe53455cb397d788a7852fb15544cd3f30b88cd1828ec210c9002faf",
-          "size": 383
+          "sha256": "b2a2945d5dd2489dda710df2554cbd458938219f1b6845b118963b5d61b9560b",
+          "size": 372
         },
         {
           "path": "mcp.yaml",
@@ -5112,7 +5127,7 @@
           "size": 1530
         }
       ],
-      "bundle_sha256": "0276846b8f8c9122d169bf9e534b742636fa20d07624aaaaa15343b2de877f36"
+      "bundle_sha256": "b747f5500c38b8cb7246bf1947f0feddfe24dd7ce461d1d083f9843735eb7a9a"
     },
     {
       "name": "yzf_invoice_mcp_server",
@@ -5167,8 +5182,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "1bf0a18a8a4a4a132a470aed3420eb806a9dd4b2ea69bbab0eda5b8df53da13a",
-          "size": 1712
+          "sha256": "4b4ea1e6e5aa1b69178f5a8419946dbf6b85959d8135b88e09b94230c0e26de4",
+          "size": 1666
         },
         {
           "path": "mcp.yaml",
@@ -5176,7 +5191,7 @@
           "size": 1681
         }
       ],
-      "bundle_sha256": "c465939fe92675862120037f6e2d7f4e201a2fd9c7a1add97d445dcdbbf6c55b"
+      "bundle_sha256": "b66f056b912fde830ca8c0366ced25e3339379024ffc8ad339e5fdcdaff9e131"
     },
     {
       "name": "cnb",
@@ -6290,8 +6305,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "6fe8e4615a79daed74de5e9a4cf535cc553a05a22da2dc89c9a4075e00ca36c2",
-          "size": 2515
+          "sha256": "1a4bec5751bf6aaf606f01c98ceafdf989765f48c037c2d2dabc58fa4d2ccedb",
+          "size": 2512
         },
         {
           "path": "mcp.yaml",
@@ -6299,7 +6314,7 @@
           "size": 1673
         }
       ],
-      "bundle_sha256": "8f20a22fe362c5178a82a58c954774384006486b7148941063e9234733b6d815"
+      "bundle_sha256": "ea7d6ff1e9758cfcbce6a6b134aaaae2eb7e88b129bc247177c30c664207156d"
     },
     {
       "name": "awesun",
@@ -6554,8 +6569,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "4f56380e85326a54c976fb2355538921c6b7af5fd75e2b4884023e433df7166b",
-          "size": 2866
+          "sha256": "32cb0e7862d4da23c86d99c53d9af42bf12547823991442779c949b85f02076e",
+          "size": 2902
         },
         {
           "path": "mcp.yaml",
@@ -6563,7 +6578,7 @@
           "size": 1693
         }
       ],
-      "bundle_sha256": "c253cdf886f221aaef83a2260133a3bd245d41b051c0a737807de7f413cd1736"
+      "bundle_sha256": "6d11a5b95a65761622038206283cd230610be1a2606af70d90438fd866d34249"
     },
     {
       "name": "dcs_cloud",
@@ -6879,8 +6894,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "14203da448e845541c1bcabfa55b008104bfb0612610c401bf1978c598cb1469",
-          "size": 1192
+          "sha256": "8b55fb3224770a0f51a624cd7d40eee6eeb28b88695f43ba5cd71e930a83291b",
+          "size": 1185
         },
         {
           "path": "mcp.yaml",
@@ -6888,7 +6903,7 @@
           "size": 1459
         }
       ],
-      "bundle_sha256": "9c8a5a9b91f587d9bbeaa2d73e559c1fdd3a6b83e788cc36da1d3ecd44d68898"
+      "bundle_sha256": "cf71fc17d18502f1207b1ecf04f5a1e70c9bd80150badff86f737431b4f321cb"
     },
     {
       "name": "mcp_filesystem",
@@ -7242,8 +7257,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "a897acfad21b07de1accf0b039cc347a44ec06fee3dbf6e2e6ee9c42a7c670f9",
-          "size": 1191
+          "sha256": "ffd53c02cc8abd377485f0ac56c8cf255c502ea4fae926fd3ae65a925caa77e9",
+          "size": 1149
         },
         {
           "path": "mcp.yaml",
@@ -7251,7 +7266,7 @@
           "size": 1692
         }
       ],
-      "bundle_sha256": "df2c76f2c04b71ad9f99a7915ebbb2d2bcdfe3b58c31895d5ffd3ec4a7ea1391"
+      "bundle_sha256": "d73af265e9f0f3694b6efbb8a2f176cf52f849a64662f4b8550f398959f88dfe"
     },
     {
       "name": "baidu_netdisk",
@@ -8260,8 +8275,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "fca92f40ea1e608df97f2c07c985a6b5b5b38b6d422eabfdef057e87a0199c76",
-          "size": 1698
+          "sha256": "f5f41c3424760b5661f050c2c45df7b186f431bb721a8a52404a7527fa8f530f",
+          "size": 1687
         },
         {
           "path": "mcp.yaml",
@@ -8269,7 +8284,7 @@
           "size": 1429
         }
       ],
-      "bundle_sha256": "05d019462c23467f4300bc87838120cd30ac3bebc14438f9038a40047b8a0d8a"
+      "bundle_sha256": "916be838d0f59d83fd1901160c548cba9ad25587de0d3bf1d8961399f52c7b90"
     },
     {
       "name": "aitoearn",
@@ -8694,8 +8709,8 @@
       "files": [
         {
           "path": "icon.png",
-          "sha256": "16302b5931c6ffa39a1881b1a38ea9a357721b2d00c6bc442734601de1e87541",
-          "size": 16493
+          "sha256": "ca2aa62091c8eb5c4397345a942454f4217ec1cc12b7c10948206034d460bcdf",
+          "size": 15321
         },
         {
           "path": "mcp.yaml",
@@ -8703,7 +8718,7 @@
           "size": 1555
         }
       ],
-      "bundle_sha256": "670414e61a40b09161a25aa41308e3c4405f0fb882b42dbea6df8f8279d8e70a"
+      "bundle_sha256": "e9b9ede5ffcc9d80f057a93e929fa6a83d7d56f68c11753d27ef40f16fe80b04"
     },
     {
       "name": "chrome_devtools",
