@@ -280,9 +280,29 @@
   - 422 `missing_env` 回到填凭据那步，不是弹红条把人卡在预览页
   - 轮询定时器在关闭与卸载时都必须停干净
   - 离线降级提示、卸载前确认（文案要讲清凭据会一并清掉）、「更新」只对注册表条目开放
-- [ ] **V3（剩余）** 真正的 Electron 端到端（打包后启动、跨进程 IPC、真实
-  agent 进程）仍需人工走一遍。上面两层已把契约与组件行为分别钉住，
-  这一步剩下的是「三者接在一起」。
+- [x] **V3（自动化部分）** 真 Electron 端到端已落成脚本：qiye-app 仓
+  `apps/desktop-shell/e2e/mcpMarket.e2e.mjs`（`pnpm e2e:mcp`）。用 Playwright 的
+  `_electron` 拉起 **dist 构建**（不是源码），等主窗口、等 qiye-api 子进程就绪，
+  再走真 IPC 调 `mcpRegistry()`。
+  单元测试结构上看不见这一层：渲染层用例把 `window.electronAPI` **mock 掉了**，
+  agent 侧 `test_mcp_hub_api.py` 用 TestClient **直接打路由**——
+  「路由有没有真挂在跑着的那个进程上」两边都绕过去了。
+- [ ] **V3（剩余，且第一次跑就抓到一个真问题）** 现在跑出来是 **3 过 2 挂**：
+  - ✓ 应用启动进主窗口 · ✓ preload 导出全部 15 个 MCP 函数 · ✓ `/mcp` 路由挂载
+  - ✗ `mcpRegistry()` → **`/v1/mcp/registry` 返回 404**。原因：桌面端跑的是
+    **vendored agent**（`resources/vendor/totalclaw-agent-src`，停在 `699569fae`
+    / `main` 分支），那个提交里**没有 `mcp_hub_api.py`**；我们的 agent 改动在
+    另一个 checkout 的 `totalclaw-core-kernel` 分支上，submodule 指针没动过。
+    **也就是说：市场页在今天的桌面端里是打不开目录的**，A/B 两组的接线在真机上
+    还没通过。修法是把 agent 分支合进 submodule 跟踪的分支并 bump 指针 +
+    `check-agent-pointer.mjs` 的 EXPECTED_VERSION/SHA —— 那是跨仓发版动作，
+    **需要你来定**，我不该擅自动别人的发版分支。
+  - ✗ 卡片图标：目录没取到，连带跳过
+  - 仍需人工的只剩**登录态下的真实安装**（填凭据 → 装 → 探测 → 热重载）：
+    脚本不持有账号，走不到那一步。
+  - 顺带修了一处误导文案：这种 404 此前会被归到「请稍后重试」，而它再重试一万次
+    也不会好。现在特判成「当前 agent 版本没有 MCP 目录接口」（3 个用例）。
+
 - [x] **V4** 篡改 sha256 被拒于校验阶段，config.yaml 无残留
 - [x] **V5** 卸载后 config.yaml / .env / installed.json / schema-cache 全干净
 - [x] **V6** 断网时 `source=builtin`，内置目录仍可搜可装
