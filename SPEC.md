@@ -10,7 +10,9 @@
 registry/servers/<category>/<name>/
   mcp.yaml        # 必需
   README.md       # 推荐：安装前置、获取凭据步骤
-  icon.svg|png    # 可选
+  icon.svg|png    # 可选；有就会被投影成索引的 `icon` 字段（相对路径），
+                  # 没有则客户端回落到按「首字 + 分类取色」生成的字母块。
+                  # 厂商 logo 有商标，不自造假图标
   tools.json      # CI 生成：探测到的工具快照（名称/描述/inputSchema/readOnlyHint）
 ```
 

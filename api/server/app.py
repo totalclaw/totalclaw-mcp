@@ -22,6 +22,7 @@ from fastapi.responses import JSONResponse
 
 from .bundle import file_digests, make_tar_gz, safe_join, sha256_bytes
 from .catalog import Catalog, normalize_lang
+from .icon import monogram_svg
 
 app = FastAPI(
     title="TotalClaw MCP Registry API",
@@ -157,6 +158,33 @@ def download(name: str) -> Response:
             "Cache-Control": "public, max-age=300",
         },
     )
+
+
+@app.get("/api/mcp/servers/{name}/icon", summary="条目图标（没有自带图标就发字母块）")
+def get_icon(name: str) -> Response:
+    entry = _entry_or_404(name)
+    rel = entry.get("icon") or ""
+    if rel:
+        try:
+            target = safe_join(catalog.server_dir(entry), rel)
+        except (ValueError, FileNotFoundError):
+            target = None            # 索引与磁盘不同步时不 500，回落生成
+        if target is not None:
+            ctype = "image/svg+xml" if target.suffix == ".svg" else "image/png"
+            return Response(target.read_bytes(), media_type=ctype, headers={
+                "X-Icon-Source": "file",
+                "Cache-Control": "public, max-age=300",
+            })
+
+    # 厂商 logo 有商标，不自造 —— 生成的是字母块，一眼看得出不是官方图标，
+    # 但比一排空白强：目前 115 个条目自带图标数为 0。
+    svg = monogram_svg(entry.get("display_name") or "", entry.get("name") or "",
+                       entry.get("category") or "")
+    return Response(svg, media_type="image/svg+xml", headers={
+        "X-Icon-Source": "generated",
+        "ETag": f'"{sha256_bytes(svg.encode())}"',
+        "Cache-Control": "public, max-age=300",
+    })
 
 
 # 详情路由声明在最后：{name:path} 是贪婪的，放前面会把 `awesun/download`

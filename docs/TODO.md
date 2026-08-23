@@ -197,6 +197,11 @@
 - [ ] **C2.1（剩余）** 拿到凭据后补 `tools.json` 与 `security` 块：
   `export <VAR>=… && python3 scripts/probe_server.py <名>`；OAuth 型先
   `totalclaw mcp login <名>`。每个条目要去哪儿申请，现在 registry.json 里就有。
+  - **2026-08-23 已把 40 个「不需要预置凭据」的 http 条目全量匿名探了一遍**（本仓
+    `scripts/probe_server.py`），**40 个全部 401**，无一能匿名列工具。也就是说这一项
+    不是「还没探」，是**确实要凭据**——别再重跑一遍匿名探测了。
+    另有 2 个本机端点（`unreal_engine` / `xiaohongshu`）按设计跳过，需用户自行起服务。
+  - 剩下 39 个缺 `tools.json` 的是 stdio 型：装包才能探，凭据同样在厂商侧。
 - [x] **C3** Ed25519 签名脚本 `scripts/sign_registry.py`（`--keygen` / `--sign` / `--verify`）
   - 已实测完整链路：生成密钥 → 签名 → 验签通过 → 篡改一个字段后验签**正确失败** → 恢复后再通过
   - 私钥只从 `MCP_REGISTRY_SIGNING_KEY` 或库外文件读，keygen 默认写到 `~/.totalclaw-mcp-keys`
@@ -232,7 +237,14 @@
 - [x] **C5（英文描述部分）** pack 规范加 `description_en`，21 条自研条目全部补齐；
   `gen_manifests` 改为 `description` 取英文、`description_zh` 取中文 —— 此前两处都填中文，
   英文界面上就只能看到中文
-- [ ] **C5.1** 图标 `icon.svg`：需要设计资源，不自造
+- [x] **C5.1（机制部分）** 图标链路打通：
+  - `gen_registry.py` 新增 `icon` 投影 —— 此前 SPEC 写了 `icon.svg|png` 这个可选文件，
+    但索引里**根本没有这个字段**，也就是说就算真放了图标客户端也找不到它
+  - 读接口 `GET /api/mcp/servers/{name}/icon`：有自带图标发真的（`X-Icon-Source: file`），
+    没有就发按「首字 + 分类取色」生成的字母块（`generated`）。全库 115 条跑过，不 500
+  - 真图标放进条目目录即刻生效，客户端零改动
+- [ ] **C5.1（剩余）** 真实厂商图标素材。**不自造**：厂商 logo 有商标，画一个像的比
+  留空更糟。生成的字母块一眼看得出不是官方图标，界面在此期间不会是一排空框。
 
 ---
 
@@ -551,6 +563,16 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
   从上游导入时 `> 3600` 一律按毫秒换算。
 - 已删除两条被自研实现取代的外链条目：`biz/notion`、`dev/mcp_github`
   （后者上游 server 本身已归档）。
+- **`tanyuan_assistant` 的 `/wb/mcp` 路径存疑，但按现有证据保留**（2026-08-23 复核）。
+  它和被我否掉的 wisenote 长得像——都是「只有一条带前缀的路径能用」。区别在于证据强度：
+  - wisenote 的路径段**是另一家产品的全名**，且厂商的 `oauth-protected-resource`
+    把那条路径声明为规范资源 → 明确是给那家单开的，已否掉；
+  - tanyuan 只有两个字母 `wb`，可以是任何缩写。实测 `/mcp`、`/mcp/`、`/open/mcp`、
+    `/api/mcp`、`/tanyuan/mcp` 全是**没有 `WWW-Authenticate` 的裸 401**（边缘统一挡的），
+    只有 `/wb/mcp` 回标准 MCP OAuth 质询，其 `resource` 也自指该路径。
+  也就是说：既没有通用入口可换，也拿不到「wb 就是某产品」的实证。
+  凭两个字母就删掉一个能用的条目，和凭两个字母就断定它没问题，都是瞎猜。
+  **要定性得问厂商**；在那之前它按标准 OAuth 工作，用户各自授权，不影响使用。
 
 ---
 

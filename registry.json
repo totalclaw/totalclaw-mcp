@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T05:03:54Z",
+  "generated_at": "2026-08-23T05:15:23Z",
   "servers": [
     {
       "name": "chuhaijiang",
@@ -19,6 +19,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -77,6 +78,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "preset"
@@ -145,6 +147,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -215,6 +218,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -273,6 +277,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -341,6 +346,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -421,6 +427,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -496,6 +503,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -554,6 +562,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -612,6 +621,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -680,6 +690,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -748,6 +759,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "preset"
@@ -830,6 +842,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "preset"
@@ -902,6 +915,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -960,6 +974,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1018,6 +1033,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1076,6 +1092,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1224,6 +1241,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1282,6 +1300,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1340,6 +1359,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1398,6 +1418,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1437,11 +1458,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "69d0ee6b7edfb86da04e1ac10aceb7f1c243fb4a3fc9c9d0c3df8915288521db",
-          "size": 1706
+          "sha256": "ad1b5f7d026ca774edd79b32419e948d7bc56f55583af4978556354d862eb859",
+          "size": 1992
         }
       ],
-      "bundle_sha256": "4be0cfb28d0ae5af0aaa0c87e69253f1b7bb608bf9710152a1e31c8e3e4dce95"
+      "bundle_sha256": "dabba46c32646e1a5ab992cae785f61e571b1ca00defccaf97e9a056ee35c186"
     },
     {
       "name": "tec_do",
@@ -1456,6 +1477,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1513,6 +1535,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1583,6 +1606,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1641,6 +1665,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1699,6 +1724,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1767,6 +1793,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "biz",
+      "icon": "",
       "tags": [
         "biz",
         "vendor"
@@ -1826,6 +1853,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -1931,6 +1959,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
+      "icon": "",
       "tags": [
         "comm",
         "vendor"
@@ -1990,6 +2019,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -2097,6 +2127,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
+      "icon": "",
       "tags": [
         "comm",
         "vendor"
@@ -2156,6 +2187,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -2269,6 +2301,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
+      "icon": "",
       "tags": [
         "comm",
         "vendor"
@@ -2327,6 +2360,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
+      "icon": "",
       "tags": [
         "comm",
         "vendor"
@@ -2385,6 +2419,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
+      "icon": "",
       "tags": [
         "comm",
         "vendor"
@@ -2442,6 +2477,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
+      "icon": "",
       "tags": [
         "comm",
         "preset"
@@ -2506,6 +2542,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "comm",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -2610,6 +2647,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "creative",
         "vendor"
@@ -2668,6 +2706,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "creative",
         "catalog"
@@ -2731,6 +2770,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "creative",
         "vendor"
@@ -2790,6 +2830,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -2889,6 +2930,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "creative",
         "vendor"
@@ -2986,6 +3028,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "creative",
         "vendor"
@@ -3055,6 +3098,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "creative",
         "vendor"
@@ -3125,6 +3169,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "creative",
         "vendor"
@@ -3183,6 +3228,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "creative",
         "vendor"
@@ -3241,6 +3287,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "creative",
         "design"
@@ -3317,6 +3364,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "creative",
         "vendor"
@@ -3385,6 +3433,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "creative",
         "vendor"
@@ -3452,6 +3501,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
+      "icon": "",
       "tags": [
         "creative",
         "preset"
@@ -3512,6 +3562,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -3570,6 +3621,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -3628,6 +3680,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -3705,6 +3758,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -3773,6 +3827,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -3849,6 +3904,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "preset"
@@ -3920,6 +3976,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "preset"
@@ -3985,6 +4042,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -4043,6 +4101,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -4101,6 +4160,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -4181,6 +4241,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -4240,6 +4301,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -4344,6 +4406,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -4402,6 +4465,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -4470,6 +4534,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -4529,6 +4594,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -4630,6 +4696,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -4688,6 +4755,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -4746,6 +4814,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -4814,6 +4883,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "data",
+      "icon": "",
       "tags": [
         "data",
         "vendor"
@@ -4872,6 +4942,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "dev",
+      "icon": "",
       "tags": [
         "dev",
         "vendor"
@@ -4943,6 +5014,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "dev",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -5041,6 +5113,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "dev",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -5144,6 +5217,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "dev",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -5241,6 +5315,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "dev",
+      "icon": "",
       "tags": [
         "dev",
         "preset"
@@ -5325,6 +5400,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "dev",
+      "icon": "",
       "tags": [
         "dev",
         "preset"
@@ -5390,6 +5466,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "dev",
+      "icon": "",
       "tags": [
         "dev",
         "preset"
@@ -5469,6 +5546,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "dev",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -5576,6 +5654,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "dev",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -5678,6 +5757,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "hr",
+      "icon": "",
       "tags": [
         "hr",
         "vendor"
@@ -5737,6 +5817,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "hr",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -5837,6 +5918,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "hr",
+      "icon": "",
       "tags": [
         "hr",
         "vendor"
@@ -5895,6 +5977,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "infra",
+      "icon": "",
       "tags": [
         "infra",
         "vendor"
@@ -6010,6 +6093,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "infra",
+      "icon": "",
       "tags": [
         "infra",
         "vendor"
@@ -6078,6 +6162,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "infra",
+      "icon": "",
       "tags": [
         "infra",
         "vendor"
@@ -6145,6 +6230,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "infra",
+      "icon": "",
       "tags": [
         "infra",
         "vendor"
@@ -6215,6 +6301,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "infra",
+      "icon": "",
       "tags": [
         "infra",
         "preset"
@@ -6281,6 +6368,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "infra",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -6385,6 +6473,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "infra",
+      "icon": "",
       "tags": [
         "infra",
         "vendor"
@@ -6443,6 +6532,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "media",
+      "icon": "",
       "tags": [
         "media",
         "preset"
@@ -6509,6 +6599,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "misc",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted"
@@ -6609,6 +6700,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "misc",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted"
@@ -6711,6 +6803,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
+      "icon": "",
       "tags": [
         "office",
         "vendor"
@@ -6770,6 +6863,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -6866,6 +6960,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
+      "icon": "",
       "tags": [
         "office",
         "vendor"
@@ -6925,6 +7020,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -7022,6 +7118,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -7116,6 +7213,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
+      "icon": "",
       "tags": [
         "office",
         "vendor"
@@ -7438,6 +7536,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
+      "icon": "",
       "tags": [
         "office",
         "preset"
@@ -7512,6 +7611,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -7611,6 +7711,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -7705,6 +7806,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "office",
+      "icon": "",
       "tags": [
         "office",
         "vendor"
@@ -7763,6 +7865,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "social",
+      "icon": "",
       "tags": [
         "social",
         "preset"
@@ -7831,6 +7934,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "social",
+      "icon": "",
       "tags": [
         "social",
         "preset"
@@ -7896,6 +8000,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "social",
+      "icon": "",
       "tags": [
         "social",
         "preset"
@@ -7967,6 +8072,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "social",
+      "icon": "",
       "tags": [
         "social",
         "preset"
@@ -8038,6 +8144,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "social",
+      "icon": "",
       "tags": [
         "social",
         "preset"
@@ -8098,6 +8205,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "web",
+      "icon": "",
       "tags": [
         "web",
         "vendor"
@@ -8156,6 +8264,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "web",
+      "icon": "",
       "tags": [
         "web",
         "preset"
@@ -8219,6 +8328,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "web",
+      "icon": "",
       "tags": [
         "web",
         "preset"
@@ -8290,6 +8400,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "web",
+      "icon": "",
       "tags": [
         "web",
         "preset"
@@ -8362,6 +8473,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "web",
+      "icon": "",
       "tags": [
         "web",
         "preset"
@@ -8424,6 +8536,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "web",
+      "icon": "",
       "tags": [
         "web",
         "preset"
@@ -8488,6 +8601,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "web",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",
@@ -8586,6 +8700,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "web",
+      "icon": "",
       "tags": [
         "totalclaw",
         "self-hosted",

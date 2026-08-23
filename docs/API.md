@@ -74,6 +74,18 @@ GET /api/mcp/servers/{name}/download          # 整条目 tar.gz
 `{name}` 在 `/files` 与 `/download` 上只认短名（`name` 全库唯一，SPEC §1 有保证）；
 `{path}` 走 `safe_join`，`../`、绝对路径、软链外指一律 400/404。
 
+### 图标
+
+```
+GET /api/mcp/servers/{name}/icon
+   ← X-Icon-Source: file       # 条目目录里有 icon.svg/png，发的是真图标
+     X-Icon-Source: generated  # 没有，发的是「首字 + 分类取色」的字母块 SVG
+```
+
+厂商 logo 有商标，**不自造假 logo**；生成的字母块一眼看得出不是官方图标，但比
+一排空白强——目前 115 个条目自带图标数为 0，界面上会全是空框，用户分不清谁是谁。
+真图标放进条目目录即刻生效（索引 `icon` 字段），无需改客户端。
+
 ---
 
 ## ① 平台 API（`https://mcp.taituai.com`，NestJS，全局前缀 `/api`）

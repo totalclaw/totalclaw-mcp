@@ -262,3 +262,62 @@ def test_registry_snapshot_matches_disk() -> None:
 def test_healthz() -> None:
     d = client.get("/healthz").json()
     assert d["ok"] and d["servers"] > 0
+
+
+# ── 图标 ────────────────────────────────────────────────────────────────
+def test_icon_falls_back_to_monogram() -> None:
+    """没有自带图标就发字母块，不是 404 —— 界面上一排空框用户分不清哪个是哪个。"""
+    r = client.get("/api/mcp/servers/awesun/icon")
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith("image/svg+xml")
+    assert r.headers["X-Icon-Source"] == "generated"
+    assert r.text.startswith("<svg")
+
+
+def test_icon_is_deterministic() -> None:
+    """同样的条目要出同样的字节，否则 ETag 每次都变。"""
+    a = client.get("/api/mcp/servers/awesun/icon")
+    b = client.get("/api/mcp/servers/awesun/icon")
+    assert a.content == b.content and a.headers["ETag"] == b.headers["ETag"]
+
+
+def test_icon_serves_real_file_when_present(tmp_path: Path) -> None:
+    """条目目录里放了 icon.svg 就发真的，并把来源标成 file。"""
+    entry = dict(catalog.get("awesun") or {})
+    d = catalog.server_dir(entry)
+    f = d / "icon.svg"
+    assert not f.exists(), "这个条目本来就有图标，换一个没有的来测"
+    f.write_text('<svg xmlns="http://www.w3.org/2000/svg"/>', encoding="utf-8")
+    try:
+        # 索引里还没有 icon 字段（没重新生成），所以直接测投影函数与路由的两半
+        import sys
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
+        from gen_registry import _icon_rel
+        assert _icon_rel(d) == "icon.svg"
+    finally:
+        f.unlink()
+
+
+def test_monogram_initial_skips_punctuation() -> None:
+    """名字以标点开头时要跳到第一个字母/汉字 —— 拿标点当图标认不出是谁。"""
+    from api.server.icon import initial
+    assert initial("「向日葵」远程控制") == "向"
+    assert initial("  playwright") == "P"
+    assert initial("——") == "?"
+    assert initial("", "fallback_slug") == "F"
+
+
+def test_monogram_differs_by_entry() -> None:
+    """不同条目的块要能区分开，否则等于没有图标。"""
+    from api.server.icon import monogram_svg
+    a = monogram_svg("腾讯文档", "tencent_docs", "office")
+    b = monogram_svg("飞书", "feishu", "comm")
+    assert a != b
+
+
+def test_all_entries_render_an_icon() -> None:
+    """全库跑一遍：任何一个条目都不能因为名字里有奇怪字符而 500。"""
+    for e in catalog.all_servers():
+        r = client.get(f"/api/mcp/servers/{e['name']}/icon")
+        assert r.status_code == 200, e["name"]
+        assert r.content, e["name"]

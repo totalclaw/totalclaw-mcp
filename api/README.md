@@ -33,6 +33,7 @@ Swagger 在 `/api/docs`。
 | GET | `/api/mcp/servers/{name}/files` | 逐文件 `{path, sha256, size}` + `bundle_sha256` |
 | GET | `/api/mcp/servers/{name}/files/{path}` | 取单个文件原文 |
 | GET | `/api/mcp/servers/{name}/download` | 整条目 `tar.gz` |
+| GET | `/api/mcp/servers/{name}/icon` | 图标；条目没自带就发生成的字母块 |
 
 `{name}` 收短名（`awesun`）或完整 id（`totalclaw-mcp/infra/awesun`）；`/files` 与
 `/download` 只认短名（`name` 全库唯一，SPEC §1 有保证）。
@@ -76,6 +77,14 @@ GET /api/mcp/servers?q=&category=&transport=stdio|http&launcher=npx|uvx|docker
 
 包内统一一层同名目录（`awesun/mcp.yaml`），解开时不会把文件散到当前目录。
 
+### 图标
+
+条目目录里有 `icon.svg`/`icon.png` 就发真的（`X-Icon-Source: file`），没有就发一个
+按「首字 + 分类取色」生成的字母块（`X-Icon-Source: generated`）。
+
+厂商 logo 有商标，**不自造假 logo**。生成的块一眼看得出不是官方图标，但比一排空白强
+——目前 115 个条目自带图标数为 0。真图标放进条目目录即刻生效，客户端不用改。
+
 ### 安全
 
 `{path}` 是外部输入，`safe_join` 在**函数自身**做防线（resolve 后判是否仍在条目目录内），
@@ -89,7 +98,7 @@ GET /api/mcp/servers?q=&category=&transport=stdio|http&launcher=npx|uvx|docker
 python3 -m pytest api/tests -q        # 在仓库根目录跑
 ```
 
-39 个用例，重点盯三处「错了不会当场报错」的：路径穿越、分页边界、多语言回落。
+45 个用例，重点盯三处「错了不会当场报错」的：路径穿越、分页边界、多语言回落。
 
 ---
 

@@ -204,6 +204,14 @@ def _validate_env_list(items, where: str, key: str) -> list[dict]:
     return out
 
 
+def _icon_rel(server_dir: Path) -> str:
+    """条目自带图标的相对路径；没有就空串（由客户端回落到生成的字母块）。"""
+    for fn in ("icon.svg", "icon.png"):
+        if (server_dir / fn).is_file():
+            return fn
+    return ""
+
+
 def _collect_server(server_dir: Path, category: str, strict: bool) -> dict:
     yaml = _require_yaml()
     manifest_path = server_dir / "mcp.yaml"
@@ -292,6 +300,10 @@ def _collect_server(server_dir: Path, category: str, strict: bool) -> dict:
         "verified": bool(manifest.get("verified", True)),  # 官方仓内置即 verified；第三方 PR 由维护者审后置位
         **({"tested_with": manifest["tested_with"]} if manifest.get("tested_with") else {}),
         "category": category,
+        # 条目目录里有 icon.svg/png 就把相对路径挂出来。此前 SPEC 写了这个可选文件，
+        # 但索引里根本没有这个字段 —— 也就是说就算真放了图标，客户端也找不到它。
+        # 目前一个都没有（厂商 logo 有商标，不自造），字段先备好，放进去即刻生效。
+        "icon": _icon_rel(server_dir),
         "tags": [str(t) for t in (manifest.get("tags") or [])],
         "kind": "mcp_server",
         "platforms": manifest.get("platforms") or ["darwin", "linux", "win32"],
