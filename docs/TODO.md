@@ -233,8 +233,18 @@
 
 - [x] **V1** CLI 装上并在 `installed` 可见（本环境探测失败→按设计置 disabled，退出码 3 也算通过）
 - [x] **V2** 缺 env 退出码 2 + `missing_env` 列表正确
-- [ ] **V3**（需人工）qiye-app 界面全流程要在 Electron 里点。其依赖的 REST 契约已由
-  agent 仓 `test_mcp_hub_api.py` 11 个用例覆盖；界面本身不假装脚本能验
+- [x] **V3（组件行为部分）** qiye-app 补了两份组件测试，共 **36 个用例**
+  （`McpInstallDialog.test.ts` 18 + `McpMarketView.test.ts` 18），用
+  `@vue/test-utils` + happy-dom，不需要 Electron。盯的是错了不会当场报错的那些：
+  - 凭据键名映射（清单 `name` → `.env` 的 `env_keys[name]`）—— 反了的话凭据会落到
+    没人读的键下，安装照样「成功」，然后连不上
+  - 空值/纯空格不提交，否则会把已有凭据覆盖成空串
+  - 422 `missing_env` 回到填凭据那步，不是弹红条把人卡在预览页
+  - 轮询定时器在关闭与卸载时都必须停干净
+  - 离线降级提示、卸载前确认（文案要讲清凭据会一并清掉）、「更新」只对注册表条目开放
+- [ ] **V3（剩余）** 真正的 Electron 端到端（打包后启动、跨进程 IPC、真实
+  agent 进程）仍需人工走一遍。上面两层已把契约与组件行为分别钉住，
+  这一步剩下的是「三者接在一起」。
 - [x] **V4** 篡改 sha256 被拒于校验阶段，config.yaml 无残留
 - [x] **V5** 卸载后 config.yaml / .env / installed.json / schema-cache 全干净
 - [x] **V6** 断网时 `source=builtin`，内置目录仍可搜可装
