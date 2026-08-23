@@ -1,0 +1,12 @@
+# 读接口（api/server）的运行依赖。
+#
+# 这里刻意没有 pyproject/打包：服务是**在仓库检出里就地跑**的 —— catalog.py 的
+# REPO_ROOT 指向 api/ 的上一级，装成 wheel 挪到别处后就读不到 registry.json 与
+# registry/servers/**。能装但装完读不到数据，比装不了更糟。
+fastapi>=0.110
+uvicorn[standard]>=0.27
+PyYAML>=6.0
+
+# TestClient 走的是 httpx，跑测试时必须有
+httpx>=0.27
+pytest>=8.0

@@ -51,6 +51,19 @@ jobs:
             exit 1
           }
 
+  api:
+    name: 注册表读接口
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r api/requirements.txt
+      # 必须在仓库根跑：接口是就地读 registry.json 与 registry/servers/**，
+      # 换个工作目录就读不到数据（api/requirements.txt 里有解释）
+      - name: 接口测试
+        run: python3 -m pytest api/tests -q
+
   clean-install:
     name: 干净环境安装（wheel 真能跑起来）
     runs-on: ubuntu-latest

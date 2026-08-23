@@ -551,3 +551,34 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
   从上游导入时 `> 3600` 一律按毫秒换算。
 - 已删除两条被自研实现取代的外链条目：`biz/notion`、`dev/mcp_github`
   （后者上游 server 本身已归档）。
+
+---
+
+## E 组 · 注册表读接口（`api/`，M1 已完成）
+
+来源：「你做的这些 mcp，需要有一个分页查询的接口（支持多语言）；然后每一个 mcp
+支持通过接口下来」。形状对齐 [`API.md`](API.md) ⓪，M2 平台服务接管时前端不用改。
+
+- [x] **E1.1** `api/server/catalog.py`：就地读 `registry.json`（mtime 缓存，自动重载），
+  筛选（`q`/`category`/`transport`/`launcher`/`tag`/`verified`/`no_credentials`）、
+  排序、分页。**不落数据库**——注册表本来就是 Git 仓库，抄一份就得管同步，而同步会错。
+- [x] **E1.2** 多语言：`lang=zh-CN|en`，不传按 `Accept-Language` 协商，认不出来回落
+  `zh-CN`（语言标签写错不该让请求失败）。取值回落 **本语言 → 另一语言 → slug**；
+  slug 排最后，`tencent_tchouse_c` 这种机器名不该抢在正经名字前面。
+- [x] **E1.3** 全部 115 条补齐 `display_name_en`（90 条取自上游 `name_en`，25 条取厂商
+  既有英文品牌名）。**没有就留空回落中文，不现译**——留空好过现译一个错的。
+  字段已写进 [`SPEC.md`](../SPEC.md) 与 `scripts/gen_registry.py`。
+- [x] **E1.4** 逐条目下载：`/files`（逐文件 sha256）、`/files/{path}`（单文件）、
+  `/download`（tar.gz）。打包 mtime 与属主归零 → 同内容同字节 → ETag 稳定可缓存。
+- [x] **E1.5** 路径穿越防线做在 `safe_join` **自身**（resolve 后判是否仍在条目目录内），
+  不指望路由层或反向代理先规范化 `..`；软链外指一并挡掉。条目目录由已校验的
+  `category`+`name` 拼出，不用 `entry['path']`（那是给客户端看的字符串）。
+- [x] **E1.6** `api/tests` 39 个用例：穿越 7 例、分页边界 5 例、语言协商 9 例 + 回落、
+  跨语言搜索、筛选、下载可复现与逐文件摘要一致、快照与磁盘逐字节相等。
+  CI 新增 `api` job（`.github/workflows/ci.yml`）。
+- [x] **E1.7** 两个被测试逮到的 bug：① 回落顺序里 slug 排在了另一种语言前面，
+  只有英文名的条目在中文界面会显示 slug；② `{name:path}` 贪婪路由声明在前，
+  把 `awesun/download` 整个吞成 name，下载与取文件两条路都进不来。
+
+**刻意没做打包**：`catalog.py` 的 `REPO_ROOT` 指向 `api/` 的上一级，装成 wheel 挪到
+别处就读不到条目数据。能装但装完读不到，比装不了更糟——所以只给 `api/requirements.txt`。

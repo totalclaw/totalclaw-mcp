@@ -1,7 +1,78 @@
 # 接口合约
 
 三层：① 平台 `api/`（公网，M2）② agent `qiye_api`（本机 127.0.0.1:<port>，qiye-app 唯一入口，M1）③ agent CLI（M1）。
-M1 阶段 ① 可以不存在——agent 直接拉 Gitee raw 的 `registry.json`。
+M1 阶段 ① 的平台服务可以不存在——agent 直接拉 Gitee raw 的 `registry.json`；
+需要分页/多语言/逐条下载时，用本仓已实现的 **⓪ 读接口**（`api/server`，FastAPI，
+就地读仓库、无数据库），形状与 ① 一致，M2 平台接管时前端不用改。
+
+---
+
+## ⓪ 本仓读接口（`api/server`，FastAPI，**已实现**）
+
+就地读 `registry.json` 与 `registry/servers/**`，没有数据库。跑法与说明见
+[`api/README.md`](../api/README.md)。默认端口 3101，Swagger `/api/docs`，全部只读、免鉴权。
+
+```
+GET /healthz                                  → { ok, servers }
+GET /registry.json                            # 与磁盘逐字节一致
+```
+
+### 分页查询（多语言）
+
+```
+GET /api/mcp/servers
+    ?q=&category=&transport=stdio|http&launcher=npx|uvx|docker&tag=
+    &verified=true|false&no_credentials=true|false
+    &page=1&page_size=24&lang=zh-CN|en
+→ {
+  items: [RegistryEntry & {
+    display_name_localized: string,      // 本语言 → 另一语言 → slug
+    description_localized: string,
+    category_label: string,              // 分类的本语言展示名
+    lang: string
+  }],
+  total, page, page_size, total_pages, lang
+}
+```
+
+- `page_size` ∈ [1,100]，超上限 **422**（不静默截断）。
+- `page` 越界**夹到最后一页**，不返回空列表——返回空前端只会以为目录空了。
+- `q` 一次搜中英文名 + 中英文描述 + 标签 + 工具名（输入语言与界面语言无关）。
+- `no_credentials=true` → 只看 `requires_env` 为空、装完不用填凭据的条目。
+- `lang` 不传则按 `Accept-Language` 协商（取第一段），认不出来回落 `zh-CN`。
+
+```
+GET /api/mcp/categories?lang=en               → { items: [{category, label, count}], lang }
+```
+
+### 详情
+
+```
+GET /api/mcp/servers/{name}?lang=              # name = 短名 或 totalclaw-mcp/<cat>/<name>
+→ RegistryEntry & { display_name_localized, description_localized, category_label,
+                    manifest: <mcp.yaml 全文>, tools_detail: [...], readme_md }
+```
+
+### 逐条目下载
+
+```
+GET /api/mcp/servers/{name}/files
+→ { name, files: [{path, sha256, size}], bundle_sha256 }
+
+GET /api/mcp/servers/{name}/files/{path}      # 单个文件原文
+GET /api/mcp/servers/{name}/download          # 整条目 tar.gz
+   ← ETag: "<压缩包 sha256>"
+     X-Archive-Sha256: <压缩包 sha256>
+     X-Bundle-Sha256:  <索引里的 bundle_sha256>
+```
+
+两个摘要别搞混：`bundle_sha256` 是**文件清单**的摘要（`sha256("<path>:<sha256>\n" …)`，
+见 SPEC §分发），不是压缩包的摘要；客户端按 `files[]` 逐条校验。
+打包时 mtime 与属主归零，同内容打出同字节，所以 ETag 稳定、可缓存；包内统一一层同名
+目录（`awesun/mcp.yaml`）。
+
+`{name}` 在 `/files` 与 `/download` 上只认短名（`name` 全库唯一，SPEC §1 有保证）；
+`{path}` 走 `safe_join`，`../`、绝对路径、软链外指一律 400/404。
 
 ---
 
