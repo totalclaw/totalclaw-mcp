@@ -327,8 +327,10 @@ def write_provenance(new_rows: list[tuple[str, str, str]]) -> int:
         "抓取脚本：`scripts/fetch_icons.py`。抓不到的条目没有图标文件，",
         "客户端会回落到「首字 + 分类取色」的字母块。",
         "",
-        "商标归各自厂商所有。如需下架某个图标，删掉对应条目目录下的 "
-        "`icon.svg`/`icon.png` 再跑 `scripts/gen_registry.py` 即可。",
+        "这些图标**不在**本仓库 LICENSE（Apache-2.0）的授权范围内 —— 见根目录 `NOTICE`。",
+        "商标归各自厂商所有，本仓库不主张任何权利、也不转授权。",
+        "如需下架某个图标，删掉对应条目目录下的 `icon.svg`/`icon.png`，"
+        "再跑 `scripts/fetch_icons.py`（会同步剔掉记录）与 `scripts/gen_registry.py`。",
         "",
         f"最后更新：{today}",
         "",

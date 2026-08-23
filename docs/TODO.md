@@ -229,15 +229,25 @@
   3. `git add registry.pub && git commit` —— 提交后 CI 的验签步骤自动生效
   注意：`registry.json` 每次重新生成后都要重新签名，否则验签会失败。
 - [x] **C4.1** 推送 Gitee 仓库 `jlzdyx/totalclaw-mcp`（分支 **master**，与 `registry.json` 的 `raw_base` 路径一致）
-- [ ] **C4.2** 分发通道的可见性方案 —— **决策推迟到对接时**（当前仓库为私有）
-  - 已实测（2026-08-22）：
-    - 匿名 `raw/master/registry.json` → **403**（对照 totalclaw-plugins/tools 均为 302，它们是公开仓）
-    - 匿名 Gitee API v5 contents → **404**
-    - **认证 sparse clone → 可用**：`git clone --depth 1 --filter=blob:none --sparse` + 凭据可正常拉取私有仓文件。agent 侧 `plugin_hub._download_sparse` 走的正是这条路，**私有分发有现成通道**
-    - 整仓体积：`registry.json` gzip 后 10 KB，`registry.json + registry/` 打包 22 KB → 单个签名 bundle 分发完全可行，无需逐文件取数
-  - 对接时二选一：
-    - **(a) 转公开**：Gitee → 管理 → 仓库设置 → 开源；`mcp_hub` 直接匿名拉 raw，无需改动
-    - **(b) 保持私有**：客户端**不得**携带 Gitee token（个人令牌是账号级的，且桌面端可被提取）。走平台中转：`api/` 服务端持 token 同步私有仓 → 对外发签名 bundle，客户端用自身已有身份（qiye-app 的平台 JWT / agent 的 license）鉴权。此方案把 `api/` 从 M2 提前到 M1
+- [x] **C4.2（仓库侧已备好）** 分发通道 **决定：转公开**（2026-08-23 你定的）。
+  仓库侧该做的都做完了，**只差你在 Gitee 网页上翻那个开关**：
+  Gitee → 仓库 → 管理 → 仓库设置 → 开源。翻完 `mcp_hub` 就能匿名拉 raw，
+  agent 与 qiye-app **零改动**（`raw_base` / `git_sparse` 一直就是公开路径的形态）。
+  - 公开前的体检（已做）：
+    - **工作区与全量 git 历史都扫过凭据**（`ghp_` / `github_pat_` / `sk-` / `AKIA` /
+      PEM 私钥 / `xox*`）——**零命中**。仅有的两处是文档占位 `ghp_xxx` 与
+      `servers/tests/test_engine.py` 里的脱敏标记表，都不是真凭据。
+    - 曾提交过的「敏感文件名」也查过：只有 `bugly_token/mcp.yaml`（条目就叫这名）
+      与 `engine/token_exchange.py`（一种鉴权方式），无 `.env` / `.key` / `.pem`。
+    - 补了根目录 `LICENSE`（Apache-2.0，与 `servers/pyproject.toml` 早已声明的一致）。
+      **公开前想换别的授权，现在改还来得及。**
+    - 补了 `NOTICE`：26 个厂商图标、条目所指向的第三方服务、厂商名称与产品名
+      **都不在 Apache-2.0 的授权范围内**。没有这条，一个 Apache-2.0 的仓库看上去
+      像是在转授权别人的商标。
+  - 翻开关之后建议顺手验一下：
+    `curl -sI https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry.json | head -1`
+    —— 现在是 403，公开后应为 200/302。届时桌面端市场页的 `source` 会从
+    `builtin`（离线内置 26 条）变成 `remote`（115 条），厂商图标也会一起显示出来。
 - [x] **C4.3** CI（`.github/workflows/ci.yml`）：
   - `gen_registry.py --check --strict`（版本未 pin 直接失败）
   - `totalclaw-mcp-server --check` + `pytest`
@@ -258,8 +268,20 @@
     明度微调刻意用字符码求和而不是哈希 —— 就是为了 Python 与 TS 都能一行写对
   - 桌面端**不渲染指向 `raw_base` 的 `<img>`**：仓库是私有的，匿名拉 raw 是 403，
     挂一个必然裂掉的图比没有更糟。等 C4.2 定了分发通道再接
-- [ ] **C5.1（剩余）** 真实厂商图标素材。**不自造**：厂商 logo 有商标，画一个像的比
-  留空更糟。生成的字母块一眼看得出不是官方图标，界面在此期间不会是一排空框。
+- [x] **C5.1（素材部分，2026-08-23 你定的：抓下来收进目录）** `scripts/fetch_icons.py`
+  从各条目的 `homepage` 抓**厂商自己站点上**的图标，抓到 **26 个**。
+  - 三个必须挡的坑：① 55 个条目的 homepage 指向 github/gitee/npm/cnb 这类代码托管站，
+    照抓会给一半条目贴上 GitHub 的猫 —— 目录看上去像所有东西都是同一家的，比没有更糟，
+    一律跳过；② 国内站大量用 `.ico`（多帧容器），转 PNG 取最大帧；
+    ③ 有的站把图标内联成 `data:` URI（bugly），单独解。
+  - 来源逐条留痕：`registry/icons.json` + `registry/ICONS.md`（来源 URL + 抓取日期），
+    并与磁盘对账。**第一版把上一轮的记录冲掉了**（26 个图标只剩 9 条记录）——
+    图标是第三方商标，「这张从哪儿来」正是这个文件存在的全部理由，已改成累积写。
+  - 授权边界写进根目录 `NOTICE`：这些图标不在本仓 Apache-2.0 的范围内。
+- [ ] **C5.1（剩余）** 还有 34 个条目抓不到（站点只有 HTML 没有 svg/png/ico，
+  或 `homepage` 指向的是 API 主机而非产品站，如 kdocs 写的是 `mcp-center.wps.cn`）。
+  这批要么等厂商给素材，要么把清单里的 `homepage` 改成真正的产品站再重抓。
+  在此期间它们回落字母块，界面不会开天窗。
 
 ---
 
@@ -287,21 +309,22 @@
   单元测试结构上看不见这一层：渲染层用例把 `window.electronAPI` **mock 掉了**，
   agent 侧 `test_mcp_hub_api.py` 用 TestClient **直接打路由**——
   「路由有没有真挂在跑着的那个进程上」两边都绕过去了。
-- [ ] **V3（剩余，且第一次跑就抓到一个真问题）** 现在跑出来是 **3 过 2 挂**：
-  - ✓ 应用启动进主窗口 · ✓ preload 导出全部 15 个 MCP 函数 · ✓ `/mcp` 路由挂载
-  - ✗ `mcpRegistry()` → **`/v1/mcp/registry` 返回 404**。原因：桌面端跑的是
-    **vendored agent**（`resources/vendor/totalclaw-agent-src`，停在 `699569fae`
-    / `main` 分支），那个提交里**没有 `mcp_hub_api.py`**；我们的 agent 改动在
-    另一个 checkout 的 `totalclaw-core-kernel` 分支上，submodule 指针没动过。
-    **也就是说：市场页在今天的桌面端里是打不开目录的**，A/B 两组的接线在真机上
-    还没通过。修法是把 agent 分支合进 submodule 跟踪的分支并 bump 指针 +
-    `check-agent-pointer.mjs` 的 EXPECTED_VERSION/SHA —— 那是跨仓发版动作，
-    **需要你来定**，我不该擅自动别人的发版分支。
-  - ✗ 卡片图标：目录没取到，连带跳过
-  - 仍需人工的只剩**登录态下的真实安装**（填凭据 → 装 → 探测 → 热重载）：
-    脚本不持有账号，走不到那一步。
-  - 顺带修了一处误导文案：这种 404 此前会被归到「请稍后重试」，而它再重试一万次
-    也不会好。现在特判成「当前 agent 版本没有 MCP 目录接口」（3 个用例）。
+- [x] **V3（真机接线已通过）** 2026-08-23 跑通：**5 过 0 挂**。
+  ✓ 启动进主窗口 · ✓ preload 导出全部 15 个 MCP 函数 · ✓ `/mcp` 路由挂载 ·
+  ✓ `mcpRegistry()` 取回目录 · ✓ 24 张卡片 24 个图标。
+  - 修的是两处**只有真机才现形**的问题：
+    1. submodule 停在 `699569fae`，那个提交里没有 `mcp_hub_api.py` → 404。
+       已 bump 到 `aa47cd5ff`（0.66.53-core）并同步 `check-agent-pointer.mjs` 的
+       EXPECTED_VERSION/SHA。丢的 6 个提交逐条核过：5 个是 merge，唯一实质的
+       `2aea6758c` 是 agent 仓自己的流水线模板，不随包发出。
+    2. **bump 了 submodule ≠ 跑着的 agent 变新了**：上游 wheel 的 `packages.find`
+       不含 `totalclaw_qiye_api`（RECORD 里 0 个文件），那个包是构建脚本单独 cp 进
+       site-packages 的，而 `setup:totalclaw-agent` 见 venv 已存在就整段跳过。
+       坑记在 e2e 脚本头部。
+  - 顺带修了一处误导文案：这种 404 此前落到「请稍后重试」，重试一万次也不会好。
+- [ ] **V3（剩余）** 登录态下的真实安装（填凭据 → 装 → 探测 → 热重载）仍需人工：
+  脚本不持有账号，走不到那一步。目前目录取的是 `source=builtin`（26 条离线内置），
+  C4.2 那个开关翻完会变成 `remote`（115 条），届时值得再人工走一遍完整安装。
 
 - [x] **V4** 篡改 sha256 被拒于校验阶段，config.yaml 无残留
 - [x] **V5** 卸载后 config.yaml / .env / installed.json / schema-cache 全干净

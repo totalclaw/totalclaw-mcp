@@ -1,0 +1,19 @@
+totalclaw-mcp
+Copyright 2026 TotalClaw
+
+本仓库的代码与清单按 LICENSE（Apache-2.0）授权。
+
+以下内容**不在** Apache-2.0 的授权范围内，各自权利归原权利人所有：
+
+1. **条目图标**（`registry/servers/*/*/icon.svg|png`，26 个）
+   取自各厂商自己的站点，用于在目录中识别其自有产品。商标归各自厂商所有，
+   本仓库不对其主张任何权利，也不转授权。逐条来源与抓取日期见
+   `registry/ICONS.md`。如需下架，删掉对应文件并重跑 `scripts/gen_registry.py`。
+
+2. **条目所指向的第三方 MCP 服务器**
+   清单只描述「怎么连上去」，服务本身由各厂商提供并按其自己的条款授权。
+   `mcp.yaml` 里的 `license` 字段记的是上游的授权，不是本仓库的。
+
+3. **厂商名称与产品名**
+   出现在 `display_name` / `description` 中仅用于指代其所指的产品，
+   不表示与本项目存在任何关联或背书。
