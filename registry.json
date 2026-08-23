@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T00:30:06Z",
+  "generated_at": "2026-08-23T00:36:34Z",
   "servers": [
     {
       "name": "chuhaijiang",
@@ -198,6 +198,63 @@
       "bundle_sha256": "5df38d0b2d36970081e63ae8972c45febaa6a3d4023c17c33a095a265adc078a"
     },
     {
+      "name": "fadada_richee",
+      "id": "totalclaw-mcp/biz/fadada_richee",
+      "display_name": "法大大睿契",
+      "description": "Search laws, regulations, and similar legal cases, look up enterprise information, and review contract risks with Richee.",
+      "description_zh": "提供法律法规检索、类案检索、企业信息查询与合同审查能力，帮助用户快速查找相关法条、相似案例、核验企业信息并完成合同风险审查。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://claw.richee.cn",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/fadada_richee",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/fadada_richee",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/fadada_richee"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "bb539309abf7ed357e47d0a4609f5f045cdc7e21dc7c6f2a24afb5be3f074a07",
+          "size": 1534
+        }
+      ],
+      "bundle_sha256": "42cda469387cf306111d12bb2387f4181783466fbc1b0232174e09b9789e047a"
+    },
+    {
       "name": "fanruan_growth_advisor",
       "id": "totalclaw-mcp/biz/fanruan_growth_advisor",
       "display_name": "帆软增长谋士",
@@ -261,6 +318,83 @@
         }
       ],
       "bundle_sha256": "21957f9c24845831637ee53387d8a2f8649e59229bdce22bbb2d228a9aef25d2"
+    },
+    {
+      "name": "fazhi_law",
+      "id": "totalclaw-mcp/biz/fazhi_law",
+      "display_name": "同花顺法律AI助手",
+      "description": "Search Chinese laws and regulations, judicial cases, judgment documents, and internet legal practice information. Supports legal article search, similar case retrieval, deep legal research, legal document drafting, and litigation visualization.",
+      "description_zh": "查询中国法律法规、司法案例、裁判文书及互联网法律实务资讯，支持法条检索、类案检索、深度法律研究、法律文书起草与诉讼可视化。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://bizveris.kuaicha365.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "tags": [
+        "biz",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "FAZHI_API_KEY",
+          "description": "同花顺法律AI助手 所需的 FAZHI_API_KEY",
+          "prompt": "请输入 FAZHI_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 6,
+      "tools": [
+        "practice_search",
+        "webpage_visit",
+        "legal_article_search",
+        "law_content_visit",
+        "case_search",
+        "case_browser"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/biz/fazhi_law",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/fazhi_law",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/fazhi_law"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "7799f50348121a40508ab079f94d67f020f3ca70f1636a75f203be1c002387f5",
+          "size": 2007
+        },
+        {
+          "path": "tools.json",
+          "sha256": "8c8200502c4854070992411fed082221dc8c940dfb9079ab543ea599eb0d38e0",
+          "size": 5341
+        }
+      ],
+      "bundle_sha256": "dbb1f22666274e183afe270271a6a633694d409a03f379817fb9289e1b213c20"
     },
     {
       "name": "fbs_connector",
@@ -3331,6 +3465,79 @@
         }
       ],
       "bundle_sha256": "3e1f68150411195672d5b0526da7bdde208a49942600bbde607455a30607b1cf"
+    },
+    {
+      "name": "kuaicha_search",
+      "id": "totalclaw-mcp/data/kuaicha_search",
+      "display_name": "同花顺快查企业数据",
+      "description": "Search Chinese company profiles, ownership, risks, intellectual property, tenders, and news.",
+      "description_zh": "查询中国企业工商、股权投资、经营司法风险、知识产权、招投标及新闻舆情数据。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://bizveris.kuaicha365.com",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "data",
+      "tags": [
+        "data",
+        "vendor"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "none"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "KUAICHA_API_KEY",
+          "description": "同花顺快查企业数据 所需的 KUAICHA_API_KEY",
+          "prompt": "请输入 KUAICHA_API_KEY",
+          "secret": true,
+          "required": true
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 2,
+      "tools": [
+        "discover",
+        "call"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/data/kuaicha_search",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/kuaicha_search",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/data/kuaicha_search"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "61926448957b941ab89e8f106e1f1a3f3fe941df50c2c1d102b78634c079876d",
+          "size": 1727
+        },
+        {
+          "path": "tools.json",
+          "sha256": "91aa38b1140abcab513f64c299542136bb3760c3d11904f49876f3b7d9f5bbd3",
+          "size": 2943
+        }
+      ],
+      "bundle_sha256": "e10fa9560fad66d646d4034e17a1581baafa0034110a5c8b2fb2a7fb0204260f"
     },
     {
       "name": "mcp_postgres",

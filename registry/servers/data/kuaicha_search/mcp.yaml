@@ -1,0 +1,52 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: kuaicha-search。人工修改后请同步递增 version。
+# 上游 URL 里带着别家产品的标识（路径段或 source 参数）。去掉之后实测通用入口
+# 存在且可用，故改用通用地址——不占用别人谈下来的路由。实测见 docs/TODO.md B 层。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: kuaicha_search
+display_name: 同花顺快查企业数据
+version: 0.1.0
+description: Search Chinese company profiles, ownership, risks, intellectual property, tenders, and news.
+description_zh: 查询中国企业工商、股权投资、经营司法风险、知识产权、招投标及新闻舆情数据。
+author: vendor
+category: data
+tags:
+- data
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://bizveris.kuaicha365.com/mcp
+  headers:
+    open-authorization: Bearer ${KUAICHA_API_KEY}
+  auth: none
+requires_env:
+- name: KUAICHA_API_KEY
+  env_key: KUAICHA_API_KEY
+  description: 同花顺快查企业数据 所需的 KUAICHA_API_KEY
+  prompt: 请输入 KUAICHA_API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://bizveris.kuaicha365.com
+examples:
+- 查询同花顺的工商基本信息
+- 查一下腾讯的股东结构和最终受益人
+- 恒大有没有经营异常、行政处罚或司法风险
+- 华为有多少专利和商标
+- 杭州最近新成立的科技公司有哪些
+tools:
+  probed_at: '2026-08-23T00:34:50Z'
+  probed_runtime: remote
+  count: 2
+  file: tools.json

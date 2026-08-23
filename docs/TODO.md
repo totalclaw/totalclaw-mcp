@@ -277,7 +277,7 @@
 - [x] **tyc-mcp** 天眼查 — 已实现 `tianyancha`
 - [x] **wecom** 企业微信 — 已实现 `wecom`
 
-#### B · 厂商自有 MCP 端点（59 已收录 / 11 阻塞）
+#### B · 厂商自有 MCP 端点（62 已收录 / 8 阻塞）
 
 **这一节此前的判断是错的，已纠正。** 原先写的是「73 项待厂商开发者账号」，
 前提是每家都得拿到 REST 契约、自己再实现一遍。实际不需要：**这些厂商自己就跑着
@@ -301,10 +301,12 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 
 **14 项阻塞**，每项的具体理由已写在下面各条后面，四类：
 
-- **他方专属路由（6）** —— URL 里带着别家产品名（`mcp.wind.com.cn/vserver_workbuddy/`、
-  `market-api.fenbi.com/workbuddy/mcp`、`?source=workbuddy`）。这是厂商为那个产品
-  单开的租户入口，不是通用网关；走它等于占用别人谈下来的合作配额。
-  **要接，得自己去和厂商申请一条独立路由。**
+- **他方专属路由（3）** —— URL 里带着别家产品名。原本 6 项，**把那段标识去掉后
+  实测有 3 家存在通用入口**：`bizveris.kuaicha365.com/mcp`（去掉 `?source=` 直通，
+  已探到工具）、同域的 `law_agent/mcp`（同样直通）、`claw.richee.cn/claw-api/mcp`
+  （401，端点在、要 token）——这三家已改用通用地址收录，不占用别人的路由。
+  剩下 3 家（wind、fenbi、wisenote）通用路径实测 404/405，确实只有专属入口，
+  **要接得自己去和厂商申请一条**。
 - **sse 传输（2）** —— agent 只支持 stdio 与 streamable-HTTP（SPEC.md §runtimes）。
   原本 5 项，**实测把路径末段 `/sse` 换成 `/mcp` 后有 3 家是通的**（opendata 直接连上并探到
   6 个工具；finenter、xingtu-claw-risk 返回 401 —— 端点在、说 streamable-HTTP，只差凭据），
@@ -332,9 +334,9 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [x] **duoguan-fengchao** 夺冠蜂巢（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/duoguan_fengchao`
 - [x] **edgeone-pages** EdgeOne Makers — 已实现 `tencent_edgeone`（站点/域名/刷新预热）
 - [x] **ezjoin-meeting** EzyJoin智慧会议 —— 厂商自有端点，收录为 `comm/ezjoin_meeting`
-- [ ] **fadada-richee** 法大大睿契 —— 阻塞：他方专属路由（https://claw.richee.cn/claw-api/mcp/workbuddy —— 需自行向厂商申请独立路由）
+- [x] **fadada-richee** 法大大睿契 —— 上游路径末段是他方产品名，去掉后 `claw-api/mcp` 实测存在（返回 401 未读到有效 token），已收录为 `biz/fadada_richee`，需凭据
 - [x] **fanruan-growth-advisor** 帆软增长谋士（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/fanruan_growth_advisor`
-- [ ] **fazhi-law** 同花顺法律AI助手（上游 auth_mode=token） —— 阻塞：他方专属路由（https://bizveris.kuaicha365.com/law_agent/mcp?source=workbuddy —— 需自行向）
+- [x] **fazhi-law** 同花顺法律AI助手（上游 auth_mode=token） —— 同上，`law_agent/mcp` 去掉 source 参数后直通，已探到 6 个工具（注入扫描 allow），收录为 `biz/fazhi_law`
 - [x] **fbs-connector** 福帮手 —— 厂商自有端点，收录为 `biz/fbs_connector`
 - [ ] **fenbi-baokao-decision** 报考决策 —— 阻塞：他方专属路由（https://market-api.fenbi.com/workbuddy/mcp —— 需自行向厂商申请独立路由）
 - [x] **finenter** 进门投研 —— 上游写 sse，实测 `/sse`→`/mcp` 端点存在（401，需凭据），已按 http 收录为 `data/finenter`
@@ -352,7 +354,7 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [ ] **kdocs** 金山文档（上游 auth_mode=server-side） —— 阻塞：平台身份鉴权（auth_mode=server-side，凭据由上游平台注入，我们拿不到）
 - [x] **kling-ai-plugin** 可灵 AI —— 厂商自有端点，收录为 `creative/kling_ai_plugin`
 - [x] **kling-ai-plugin-ai** 可灵 AI —— 厂商自有端点，收录为 `creative/kling_ai_plugin_ai`
-- [ ] **kuaicha-search** 同花顺快查企业数据（上游 auth_mode=token） —— 阻塞：他方专属路由（https://bizveris.kuaicha365.com/mcp?source=workbuddy —— 需自行向厂商申请独立路由）
+- [x] **kuaicha-search** 同花顺快查企业数据（上游 auth_mode=token） —— 上游 URL 带 `?source=<他方>`，去掉后通用入口实测直通，已探到 2 个工具（注入扫描 allow），收录为 `data/kuaicha_search`
 - [x] **lexiang** 乐享知识库 —— 厂商自有端点，收录为 `comm/lexiang`
 - [x] **lingxing-mcp** 领星ERP（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/lingxing_mcp`
 - [x] **linkfox-product-selection** Linkfox 选品（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/linkfox_product_selection`

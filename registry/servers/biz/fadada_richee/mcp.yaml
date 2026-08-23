@@ -1,0 +1,40 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: fadada-richee。人工修改后请同步递增 version。
+# 上游 URL 里带着别家产品的标识（路径段或 source 参数）。去掉之后实测通用入口
+# 存在且可用，故改用通用地址——不占用别人谈下来的路由。实测见 docs/TODO.md B 层。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: fadada_richee
+display_name: 法大大睿契
+version: 0.1.0
+description: Search laws, regulations, and similar legal cases, look up enterprise information, and review
+  contract risks with Richee.
+description_zh: 提供法律法规检索、类案检索、企业信息查询与合同审查能力，帮助用户快速查找相关法条、相似案例、核验企业信息并完成合同风险审查。
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://claw.richee.cn/claw-api/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 30
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://claw.richee.cn
+examples:
+- 查找《民法典》中关于合同解除的相关规定
+- 检索未签订书面劳动合同相关的劳动争议类案
+- 查找与股权转让合同效力相关的相似案例
+- 查询某家公司的工商注册信息和涉诉情况
+- 审查这份采购合同的付款条款是否存在风险
