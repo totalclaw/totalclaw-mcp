@@ -19,6 +19,17 @@ jobs:
       - name: gen_registry --check --strict
         run: python3 scripts/gen_registry.py --check --strict
 
+      # 公钥还没提交时（C3.1 待办）跳过，不让 CI 因此变红；一旦 registry.pub
+      # 进库就自动开始把关。签名不匹配必须失败 —— 分发通道的完整性靠这一步。
+      - name: 验签（registry.pub 存在才跑）
+        run: |
+          if [ -f registry.pub ]; then
+            pip install cryptography
+            python3 scripts/sign_registry.py --verify
+          else
+            echo "registry.pub 尚未提交，跳过验签（见 docs/TODO.md C3.1）"
+          fi
+
   servers:
     name: 自研服务器
     runs-on: ubuntu-latest

@@ -181,10 +181,17 @@
     并置 600；`.gitignore` 已挡 `*.ed25519.key`
   - 为什么需要签名：`files[].sha256` 只保证「下载到的文件没被中途改」，
     但分发点整体被替换时索引和文件会被一起换掉；签名把信任根挪到私钥上
-- [ ] **C3.1** 生成正式密钥对、把私钥放进 CI secret、提交 `registry.pub`、
-  在 CI 的 registry job 末尾加 `--sign` 并提交 `.sig`
-  （本次未提交 `.sig` / `registry.pub`：那是一次性测试密钥签的，
-  提交上去会造成「已官方签名」的假象）
+- [x] **C3.1（CI 验签部分）** CI 加了验签步骤：`registry.pub` 存在才跑，不存在就跳过。
+  这样公钥一进库就自动开始把关，不用再改 CI。已用一次性密钥实测完整链路——
+  keygen → sign → verify 通过 → 改一个字段后 verify **正确失败** → 清理干净。
+- [ ] **C3.1（剩余）** 生成正式密钥对、私钥进 CI secret、提交 `registry.pub`。
+  **这一步该由你做，不该由我做**：私钥一旦经我手就等于泄露过，签名的意义就没了。
+  三条命令：
+  1. `python3 scripts/sign_registry.py --keygen`（私钥默认写到库外 `~/.totalclaw-mcp-keys`，权限 600；
+     公钥写到 `registry.pub`）
+  2. 私钥内容存进 CI secret `MCP_REGISTRY_SIGNING_KEY`，然后**把本地私钥文件删掉**
+  3. `git add registry.pub && git commit` —— 提交后 CI 的验签步骤自动生效
+  注意：`registry.json` 每次重新生成后都要重新签名，否则验签会失败。
 - [x] **C4.1** 推送 Gitee 仓库 `jlzdyx/totalclaw-mcp`（分支 **master**，与 `registry.json` 的 `raw_base` 路径一致）
 - [ ] **C4.2** 分发通道的可见性方案 —— **决策推迟到对接时**（当前仓库为私有）
   - 已实测（2026-08-22）：
