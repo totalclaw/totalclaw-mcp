@@ -329,14 +329,19 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
   已改用 http runtime 收录。**proboost 第一次判 404 是我试错了路径**——它的 sse 路径是
   `/mcp-servers/oauth/<名>/sse`，我把 `oauth` 当成了固定段，实际那是 OAuth 流程的子路径；
   按平台约定 `/mcp-servers/<名>/mcp` 再试就直通了，已探到 84 个工具。
-  只剩 zfs-fssc-ai，它本就是演示主机（同域 `mcp.ztccloud.com.cn` DNS 解析不了）。
+  只剩 zfs-fssc-ai，它本就是演示主机。
   「上游写 sse」不等于「只有 sse」，值得先探一下再判死；探的时候路径也别照抄整段。
 - ~~平台身份鉴权~~ —— **这一类我判错了，已清零。** 我只看上游的 `auth_mode: server-side`
   就下了结论，没实测。实际上那个字段说的是上游平台自己怎么接的，不代表端点只认它：
   kdocs 匿名就能连（258 个工具），tdx 返回的是标准 MCP OAuth 发现（用 `auth: oauth` 即可）。
   **教训：凭元数据字段推断可用性，不能代替发一个请求。**
-- **非生产主机（1）** —— `test.nges.qq.com`，测试环境不进目录。已试过同域生产写法
-  `nges.qq.com/mcp`，DNS 解析不了。
+- **非生产主机（1）** —— `test.nges.qq.com`，测试环境不进目录。同域生产写法 `nges.qq.com` 连不上。
+
+  > **探测时注意本机 DNS**：这台机器上 `dig` 对任何域名都返回 `198.18.x.x`（代理的
+  > fake-IP 段），所以「解析得到」不代表主机存在，「连不上」也不是 DNS 的问题。
+  > 我一开始据此写过「DNS 解析不了」，是错的 —— 判可达性要看实际连接结果
+  > （`000` 是连不上，`404` 说明主机在、只是路径不对）。同一个坑之前在 SSRF 守卫
+  > 上也踩过（`TOTALCLAW_MCP_WEB_ALLOW_PRIVATE` 那个开关就是为它加的）。
 
 已收录条目的 `security.scan_verdict` 一律是 `unscanned`：没有凭据就连不上、
 探不到工具列表，也就扫不了注入。有凭据的环境里跑 `scripts/probe_server.py` 补齐。
@@ -361,7 +366,7 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [x] **fanruan-growth-advisor** 帆软增长谋士（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/fanruan_growth_advisor`
 - [x] **fazhi-law** 同花顺法律AI助手（上游 auth_mode=token） —— 同上，`law_agent/mcp` 去掉 source 参数后直通，已探到 6 个工具（注入扫描 allow），收录为 `biz/fazhi_law`
 - [x] **fbs-connector** 福帮手 —— 厂商自有端点，收录为 `biz/fbs_connector`
-- [ ] **fenbi-baokao-decision** 报考决策 —— 阻塞：他方专属路由（https://market-api.fenbi.com/workbuddy/mcp —— 需自行向厂商申请独立路由）
+- [ ] **fenbi-baokao-decision** 报考决策 —— 阻塞：`market-api.fenbi.com` 上 `/mcp`、`/mcp/`、`/open/mcp`、`/.well-known/mcp`、`/.well-known/oauth-protected-resource` 全 404，**无通用入口，需向厂商申请**
 - [x] **finenter** 进门投研 —— 上游写 sse，实测 `/sse`→`/mcp` 端点存在（401，需凭据），已按 http 收录为 `data/finenter`
 - [x] **flova** Flova（上游 auth_mode=oauth） —— 厂商自有端点，收录为 `creative/flova`
 - [x] **fyopen-lawsearch** 法研·法律法规检索 —— 厂商自有端点，收录为 `biz/fyopen_lawsearch`
@@ -402,7 +407,7 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [x] **tdx-connector** 通达信 —— 实测 401 返回的是标准 MCP OAuth 受保护资源发现，按 `auth: oauth` 收录为 `data/tdx_connector`；装后 `totalclaw mcp login tdx_connector`
 - [x] **teacher-assistant** 企鹅教师助手 —— 厂商自有端点，收录为 `hr/teacher_assistant`
 - [x] **tec-do** Tec-Do 2.0 广告与增长情报 —— 厂商自有端点，收录为 `biz/tec_do`
-- [ ] **tencent-health-nges** 腾讯健康NGES —— 阻塞：非生产主机（test.nges.qq.com）
+- [ ] **tencent-health-nges** 腾讯健康NGES —— 阻塞：只有测试主机 `test.nges.qq.com`。生产写法 `nges.qq.com` 连不上（连接失败，非 DNS 问题，见下方说明）
 - [x] **tencent-qidian-cs** 腾讯企点客服（上游 auth_mode=mcp） —— 厂商自有端点，收录为 `comm/tencent_qidian_cs`
 - [x] **tencent-survey** 腾讯问卷 — 已实现 `tencent_survey`（问卷详情 + 游标翻页取答卷；上游为尊享版付费功能）
 - [x] **tencent-tchouse-c** 腾讯云数据仓库 TCHouse-C —— `tencent_tchouse_c` pack，9 工具（端点取自官方 SDK）
@@ -411,15 +416,15 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [x] **tplus-api** 畅捷通T+ —— 厂商自有端点，收录为 `infra/tplus_api`
 - [x] **weisheng-scrm** 微盛企微管家SCRM（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/weisheng_scrm`
 - [x] **westock-mcp** 腾讯自选股 —— 厂商自有端点，收录为 `data/westock_mcp`
-- [ ] **wind-finance** Wind 金融数据（上游 auth_mode=token） —— 阻塞：他方专属路由（https://mcp.wind.com.cn/vserver_workbuddy/mcp/ —— 需自行向厂商申请独立路由）
-- [ ] **wisenote** 百智WiseNote —— 阻塞：他方专属路由（https://100wiser.com/workbuddy/wisenote/meeting/mcp —— 需自行向厂商申请独立路由）
+- [ ] **wind-finance** Wind 金融数据（上游 auth_mode=token） —— 阻塞：厂商按集成方单开路径（`vserver_<方名>`）。已查其 `.well-known/oauth-protected-resource`：resource 写的是主机根、授权服务器指向 `aifinmarket.wind.com.cn`，但根路径 301、`/mcp`、`/mcp/`、`/vserver/mcp/`、`/mcp-server/mcp` 全 404 —— **没有通用入口，必须向 Wind 申请自己的 vserver 路径**
+- [ ] **wisenote** 百智WiseNote —— 阻塞：厂商 `.well-known/oauth-protected-resource` **把带他方产品名的那条路径声明为其规范资源**，连 OAuth 的 revocation_endpoint 也在同一段下；不存在不带该段的入口（`/mcp` 405、`/wisenote/meeting/mcp` 404）。虽然是标准 OAuth、凭据按用户各自授权，但把一条以别家产品命名的集成入口摆进我们的目录不合适 —— **需向厂商申请自己的入口**
 - [x] **wk-workbuddy** 威科先行 —— 厂商自有端点，收录为 `biz/wkinfo`
 - [x] **xingtu-claw-risk** 天创信用星图MCP —— 上游写 sse，实测 `/mcp` 端点存在（401，需凭据），已按 http 收录为 `biz/xingtu_claw_risk`
 - [x] **yingmi-mcp** 盈米MCP（上游 auth_mode=token） —— 厂商自有端点，收录为 `data/yingmi_mcp`
 - [x] **youshu-bd-mate** 智客AI · 对公(To B)营销助手（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/youshu_bd_mate`
 - [x] **yuandian-mcp** 华宇元典法律数据 —— 厂商自有端点，收录为 `biz/yuandian_mcp`
 - [x] **yzf-invoice-mcp-server** 云帐房AI开票 —— 厂商自有端点，收录为 `data/yzf_invoice_mcp_server`
-- [ ] **zfs-fssc-ai** 中兴新云AI智报（上游 auth_mode=token） —— 阻塞：传输不支持（type=sse；agent 只支持 stdio 与 streamable-HTTP）
+- [ ] **zfs-fssc-ai** 中兴新云AI智报（上游 auth_mode=token） —— 阻塞：只有演示主机 `mcpdemo.ztccloud.com.cn`（根路径 404，主机确实在）；`mcp.ztccloud.com.cn` 连不上。且上游传输是 sse
 
 
 #### C · 已核查受阻（8）
