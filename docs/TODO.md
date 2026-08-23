@@ -311,15 +311,22 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
   实测有 3 家存在通用入口**：`bizveris.kuaicha365.com/mcp`（去掉 `?source=` 直通，
   已探到工具）、同域的 `law_agent/mcp`（同样直通）、`claw.richee.cn/claw-api/mcp`
   （401，端点在、要 token）——这三家已改用通用地址收录，不占用别人的路由。
-  剩下 3 家（wind、fenbi、wisenote）通用路径实测 404/405，确实只有专属入口，
-  **要接得自己去和厂商申请一条**。
-- **sse 传输（2）** —— agent 只支持 stdio 与 streamable-HTTP（SPEC.md §runtimes）。
+  剩下 3 家（wind、fenbi、wisenote）通用路径实测确为死路，**已试过的变体记在这里，
+  别再重试**：`mcp.wind.com.cn/mcp`、`/mcp/`、`/vserver/mcp/` 全 404；
+  `market-api.fenbi.com/mcp`、`/open/mcp` 全 404；`100wiser.com/mcp` 405、
+  `/wisenote/meeting/mcp` 404、`/api/wisenote/meeting/mcp` 405。
+  **要接得自己去和厂商申请一条独立路由。**
+- **sse 传输（1）** —— agent 只支持 stdio 与 streamable-HTTP（SPEC.md §runtimes）。
   原本 5 项，**实测把路径末段 `/sse` 换成 `/mcp` 后有 3 家是通的**（opendata 直接连上并探到
   6 个工具；finenter、xingtu-claw-risk 返回 401 —— 端点在、说 streamable-HTTP，只差凭据），
-  已改用 http runtime 收录。剩下 proboost 实测 404、zfs-fssc-ai 本就是演示主机。
-  「上游写 sse」不等于「只有 sse」，值得先探一下再判死。
+  已改用 http runtime 收录。**proboost 第一次判 404 是我试错了路径**——它的 sse 路径是
+  `/mcp-servers/oauth/<名>/sse`，我把 `oauth` 当成了固定段，实际那是 OAuth 流程的子路径；
+  按平台约定 `/mcp-servers/<名>/mcp` 再试就直通了，已探到 84 个工具。
+  只剩 zfs-fssc-ai，它本就是演示主机（同域 `mcp.ztccloud.com.cn` DNS 解析不了）。
+  「上游写 sse」不等于「只有 sse」，值得先探一下再判死；探的时候路径也别照抄整段。
 - **平台身份鉴权（2）** —— `auth_mode: server-side`，凭据由那个平台自己注入，我们拿不到。
-- **非生产主机（1）** —— `test.nges.qq.com`，测试环境不进目录。
+- **非生产主机（1）** —— `test.nges.qq.com`，测试环境不进目录。已试过同域生产写法
+  `nges.qq.com/mcp`，DNS 解析不了。
 
 已收录条目的 `security.scan_verdict` 一律是 `unscanned`：没有凭据就连不上、
 探不到工具列表，也就扫不了注入。有凭据的环境里跑 `scripts/probe_server.py` 补齐。
@@ -374,7 +381,7 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [x] **picset-commerce-images** Picset AI 电商图片（上游 auth_mode=token） —— 厂商自有端点，收录为 `creative/picset_commerce_images`
 - [x] **picset-video-generation** Picset AI 视频创作（上游 auth_mode=token） —— 厂商自有端点，收录为 `creative/picset_video_generation`
 - [x] **pkulaw** 北大法宝·法律智能检索 —— 厂商自有端点，收录为 `biz/pkulaw`
-- [ ] **proboost** OpenBoost 跨境数据 —— 阻塞：仅 SSE。已实测 `/sse`→`/mcp` 返回 404，厂商没开 streamable-HTTP；要接需 agent 侧支持 SSE，或等厂商开
+- [x] **proboost** OpenBoost 跨境数据 —— 上游 sse 路径带 `/oauth/` 段；该托管平台约定是 `/mcp-servers/<名>/mcp`，去掉后实测直通，已探到 **84 个工具**（注入扫描 allow），收录为 `biz/proboost`
 - [x] **qcc-legal** 企查查·法律数据 —— 厂商自有端点，收录为 `biz/qcc_legal`
 - [x] **qixinhuiyan-mcp** 启信慧眼 —— 厂商自有端点，收录为 `data/qixinhuiyan_mcp`
 - [x] **salesnail-instructor** SalesNail 讲师 —— 厂商自有端点，收录为 `biz/salesnail_instructor`

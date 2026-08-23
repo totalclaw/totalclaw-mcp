@@ -1,0 +1,45 @@
+# 由 scripts/import_vendor_mcp.py 生成——端点是厂商自有的 MCP 服务器，
+# 上游连接器 id: proboost。人工修改后请同步递增 version。
+# 上游写的是 sse，路径为 /mcp-servers/oauth/<名>/sse。该托管平台的约定是
+# /mcp-servers/<名>/mcp（isjike、comein 同形状），oauth 是 OAuth 流程的子路径。
+# 去掉该段后实测 streamable-HTTP 直通。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: proboost
+display_name: OpenBoost 跨境数据
+version: 0.1.0
+description: Supports cross-border e-commerce scenarios including market research, product selection analysis,
+  competitive monitoring, VOC insights, keyword analysis, listing generation, and more.
+description_zh: 支持市场研究、选品分析、竞对监控、VOC洞察、关键词分析、listing生成等跨境电商应用场景
+author: vendor
+category: biz
+tags:
+- biz
+- vendor
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.microdata-inc.com/mcp-servers/proboost-tiktok-amazon-patent-mcp/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 60
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: unscanned
+homepage: https://mcp.microdata-inc.com
+examples:
+- 帮我做亚马逊选品
+- 分析 TikTok 达人
+- 查专利侵权风险
+- 挖亚马逊关键词
+tools:
+  probed_at: '2026-08-23T00:49:05Z'
+  probed_runtime: remote
+  count: 84
+  file: tools.json
