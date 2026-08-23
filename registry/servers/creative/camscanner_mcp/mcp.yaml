@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: camscanner_mcp
 display_name: 扫描全能王
+display_name_en: CamScanner
 version: 0.1.0
 description: Smart document conversion and processing platform. Supports image/PDF format conversion (Word,
   Excel, Markdown, PDF), image enhancement (shadow removal, sharpening, HD upscaling, photo restoration),

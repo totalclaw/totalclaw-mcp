@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: salesnail_instructor
 display_name: SalesNail 讲师
+display_name_en: SalesNail Instructor
 version: 0.1.0
 description: Self-activate an instructor trial, maintain a business Profile, draft client proposals, create
   and reuse games, configure courses, facilitate classrooms, and analyze complex-sales performance with

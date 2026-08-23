@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: qixinhuiyan_mcp
 display_name: 启信慧眼
+display_name_en: Qixinhuiyan
 version: 0.1.0
 description: Connect to Qixinhuiyan's comprehensive enterprise data capabilities through Qixinhuiyan MCP,
   enabling users to use natural language for company search, business profiling, risk identification,

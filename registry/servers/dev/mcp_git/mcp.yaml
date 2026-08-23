@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_git
 display_name: Git
+display_name_en: Git
 version: 0.1.0
 description: Git MCP server.
 description_zh: git 仓库读取 / 搜索 / 操作 — log / diff / blame / branch / show / stage / commit / status。对 LLM

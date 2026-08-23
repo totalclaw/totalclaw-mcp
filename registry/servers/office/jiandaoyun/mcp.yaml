@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: jiandaoyun
 display_name: 简道云
+display_name_en: JianDaoYun
 version: 0.1.0
 description: 'Query and fill JianDaoYun form data: search records, read one, inspect field schema, create.'
 description_zh: 查询和填写简道云表单数据：检索记录、读取单条、查看表单字段结构、新建记录。

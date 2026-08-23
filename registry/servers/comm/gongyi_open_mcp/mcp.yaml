@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: gongyi_open_mcp
 display_name: 腾讯公益机构服务平台
+display_name_en: Tencent Charity Org Platform
 version: 0.1.0
 description: 'Tencent Charity organization platform connector: query the current organization''s user
   and org info, projects, progress, and financial disclosures with natural language.'

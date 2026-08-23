@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: westock_mcp
 display_name: 腾讯自选股
+display_name_en: WeStock
 version: 0.1.0
 description: Directly connect to WeStock for real-time market data, watchlist management, price alerts,
   and paper trading. Analyze personalized data with natural language and easily handle monitoring and

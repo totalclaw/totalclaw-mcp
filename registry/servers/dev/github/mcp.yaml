@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: github
 display_name: GitHub
+display_name_en: GitHub
 version: 0.1.0
 description: Search and manage GitHub repositories, issues, pull requests, commits and file contents.
 description_zh: 在 GitHub 上查询和管理仓库、Issue、Pull Request、提交与代码搜索。

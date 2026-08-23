@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_everything
 display_name: Everything (reference)
+display_name_en: Everything (reference)
 version: 0.1.0
 description: Everything (reference) MCP server.
 description_zh: 官方参考实现 + 测试服 — 提供 prompts / resources / tools 三类 MCP capability 完整示例,用于 MCP client 兼容性验证

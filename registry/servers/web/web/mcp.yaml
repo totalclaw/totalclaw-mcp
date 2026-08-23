@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: web
 display_name: 网页抓取
+display_name_en: Web Fetch
 version: 0.1.0
 description: Fetch web pages and extract readable text; supports batch fetch and JSON endpoints. No credentials.
 description_zh: 抓取网页并抽取正文纯文本，支持批量抓取与 JSON 接口，零凭据。

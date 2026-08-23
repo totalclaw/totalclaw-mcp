@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: tencent_cloudbase
 display_name: 腾讯云 CloudBase
+display_name_en: Tencent CloudBase
 version: 0.1.0
 description: Query and manage Tencent CloudBase environments, databases and static hosting.
 description_zh: 查询与管理腾讯云开发 CloudBase 的环境、云函数、数据库集合与静态托管。

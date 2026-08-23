@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: fanruan_growth_advisor
 display_name: 帆软增长谋士
+display_name_en: Fanruan Growth Advisor
 version: 0.1.0
 description: 'Enterprise insight and growth analysis: query public business data such as operational risks,
   public opinion, bidding, patents, qualifications, and policies, and call authorized MOSS Growth Advisor

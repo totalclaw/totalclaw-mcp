@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: chuhaijiang
 display_name: 出海匠
+display_name_en: Chuhaijiang
 version: 0.1.0
 description: Use real-time TikTok Shop data for product research, competitor analysis, creator discovery,
   shoppable content workflows, and social account, publishing, comment, and direct-message operations.

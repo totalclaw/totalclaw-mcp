@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: docker
 display_name: Docker
+display_name_en: Docker
 version: 0.1.0
 description: Docker MCP server.
 description_zh: Docker 容器管理 — ps / images / run / stop / logs / exec / inspect / network / volume。LLM

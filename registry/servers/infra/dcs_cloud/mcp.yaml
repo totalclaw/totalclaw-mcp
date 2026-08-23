@@ -8,6 +8,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: dcs_cloud
 display_name: DCS Cloud
+display_name_en: DCS Cloud
 version: 0.1.0
 description: 'Bootstrap the dcs CLI (download, auto-update, PAT login), then run the CLI directly to operate
   DCS Cloud: projects, tasks, workflows, billing, and data files. Create a Personal Access Token (PAT)

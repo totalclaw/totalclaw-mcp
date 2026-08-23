@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: gildata
 display_name: 恒生聚源 MCP
+display_name_en: Gildata MCP
 version: 0.1.0
 description: Connect to Gildata MCP to query structured financial data, research reports, corporate announcements,
   news, conditional stock selection, macroeconomic & industry data, as well as enterprise business data.

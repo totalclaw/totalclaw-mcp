@@ -8,6 +8,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: weisheng_scrm
 display_name: 微盛企微管家SCRM
+display_name_en: Weisheng SCRM
 version: 0.1.0
 description: 'Query or manage WeCom (WeChat Work) business capabilities: customer info, tags, groups,
   marketing assets, QR codes, campaigns, follow-ups, contacts, opportunities, reports, lucky draws, schedules,

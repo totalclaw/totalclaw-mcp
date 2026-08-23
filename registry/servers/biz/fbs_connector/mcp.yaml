@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: fbs_connector
 display_name: 福帮手
+display_name_en: Fbsir
 version: 0.1.0
 description: 'FBSir: identity, scene plans, progress, reward status, and expert handoffs.'
 description_zh: 福帮手人机协同连接器：识别当前身份与专家入口，匹配可执行场景方案，记录首值与继续使用进度，并查询乐包状态或衔接后续服务。

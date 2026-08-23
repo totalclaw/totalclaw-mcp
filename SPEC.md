@@ -29,7 +29,8 @@ registry/servers/<category>/<name>/
 | `requires_protocol_version` | ✅ | `">=1"`（安装器 strict 校验） |
 | `tested_with` | 推荐 | agent 版本下限，PEP 440，软检查（如 `">=0.63.72"`） |
 | `name` | ✅ | 见 §1 |
-| `display_name` | ✅ | 展示名 |
+| `display_name` | ✅ | 展示名（中文界面用） |
+| `display_name_en` | 推荐 | 英文展示名。用厂商**既有的**英文品牌名，没有就留空回落中文——留空好过现译一个错的 |
 | `version` | ✅ | semver 或上游版本号；清单任何改动必须递增 |
 | `description` | ✅ | 一句话能力与边界（英文） |
 | `description_zh` | 推荐 | 中文描述 |

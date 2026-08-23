@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: shanglv_mcp_gateway
 display_name: 用友智能服务（AI BaaS）
+display_name_en: Yonyou AI BaaS
 version: 0.1.0
 description: Provides enterprise financial, tax, banking, and travel management services through Yonyou
   Bank-Enterprise Cloud, Tax-Enterprise Cloud, and Business Travel Cloud, enabling comprehensive fund,

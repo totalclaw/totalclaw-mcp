@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: jiushuyun
 display_name: 九数云BI
+display_name_en: Jiushuyun BI
 version: 0.1.0
 description: Upload Excel or CSV files to quickly generate native visual data analysis reports, dashboards,
   and charts.

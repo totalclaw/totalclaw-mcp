@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: unreal_engine
 display_name: Unreal Engine
+display_name_en: Unreal Engine
 version: 0.1.0
 description: 'Drive Unreal Editor 5.8+ through Epic''s experimental MCP toolset registry: scene, asset,
   Blueprint, Sequencer, PIE, automation, capture, and editor scripting workflows.'

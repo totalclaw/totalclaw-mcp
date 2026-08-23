@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: matrixmedia
 display_name: MatrixMedia 媒体矩阵
+display_name_en: MatrixMedia
 version: 0.1.0
 description: MatrixMedia 媒体矩阵 MCP server.
 description_zh: 媒体矩阵账号管理 + 视频跨平台批量发布 + 发布历史查询;提供 list_accounts / list_history / publish_video 3 个工具。

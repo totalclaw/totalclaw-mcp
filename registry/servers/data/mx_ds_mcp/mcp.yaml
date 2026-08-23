@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mx_ds_mcp
 display_name: 东方财富妙想MCP
+display_name_en: Eastmoney MX MCP
 version: 0.1.0
 description: The financial investment research MCP tool suite, which enables natural language queries,
   relies on data sources from Eastmoney to provide query capabilities for A-shares, Hong Kong stocks,

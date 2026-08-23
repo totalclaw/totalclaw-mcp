@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: teacher_assistant
 display_name: 企鹅教师助手
+display_name_en: Penguin Teacher Assistant
 version: 0.1.0
 description: Penguin Teacher Assistant handles foundational tasks, leveraging curriculum standards and
   teaching methodologies to rapidly generate lesson outlines, lesson plans, courseware, and multimodal

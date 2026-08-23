@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: infimind_ecommerce_image
 display_name: 极睿电商生图
+display_name_en: Infimind Ecom Image
 version: 0.1.0
 description: Generate KOC seeding collages, product main images, and product detail pages through MCP,
   then track task results.

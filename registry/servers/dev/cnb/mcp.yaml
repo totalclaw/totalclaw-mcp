@@ -8,6 +8,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: cnb
 display_name: CNB 云原生构建
+display_name_en: CNB
 version: 0.1.0
 description: Access the CNB platform — repositories, issues, pull requests, pipelines, cloud-native
   workspaces and knowledge bases.

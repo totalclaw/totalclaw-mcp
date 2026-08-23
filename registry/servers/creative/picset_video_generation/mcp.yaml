@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: picset_video_generation
 display_name: Picset AI 视频创作
+display_name_en: Picset AI Video Generation
 version: 0.1.0
 description: Picset AI video creation connector for ecommerce product video generation, viral video recreation,
   and model image generation with asset upload registration, script planning, credit estimates, explicit

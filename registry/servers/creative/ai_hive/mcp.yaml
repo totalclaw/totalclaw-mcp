@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: ai_hive
 display_name: AI-HIVE
+display_name_en: AI-HIVE
 version: 0.1.0
 description: 100+ top AI models (Seedance 2.5, H3 MiniMax, Happyhorse, GPT-image, Nano-Banana, Deepseek,
   Kimi). One config.

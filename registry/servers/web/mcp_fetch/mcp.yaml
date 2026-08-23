@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_fetch
 display_name: Fetch
+display_name_en: Fetch
 version: 0.1.0
 description: Fetch MCP server.
 description_zh: 抓取任意 URL 网页内容 + 自动 HTML→markdown 转换 + 节流。LLM 即时阅读 web 内容的标准入口。

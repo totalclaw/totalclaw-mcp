@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: kling_ai_plugin
 display_name: Kling AI
+display_name_en: Kling AI
 version: 0.1.0
 description: Turn every idea into a striking image or video. Kling AI (Kling / 可灵AI) is an AI image generation
   and AI video generation connector for creators, designers, video producers, ecommerce sellers, advertising,

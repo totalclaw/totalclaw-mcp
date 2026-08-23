@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: tencent_tchouse_c
 display_name: 腾讯云数据仓库 TCHouse-C
+display_name_en: Tencent TCHouse-C
 version: 0.1.0
 description: Inspect Tencent TCHouse-C (ClickHouse) instances, nodes, shards, clusters, schema metadata
   and backup jobs.

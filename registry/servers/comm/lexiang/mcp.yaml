@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: lexiang
 display_name: 乐享知识库
+display_name_en: Tencent Lexiang
 version: 0.1.0
 description: Search, create, and manage documents in your Lexiang knowledge base. Import Markdown, organize
   by tags, and keep team docs up to date.

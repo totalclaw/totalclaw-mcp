@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: tencent_ioa
 display_name: 腾讯云 iOA 零信任
+display_name_en: Tencent iOA
 version: 0.1.0
 description: Query Tencent iOA zero-trust endpoints, installed software, local accounts and account groups.
 description_zh: 查询 iOA 零信任管理的终端设备、终端软件、本地账号与账号分组，排查设备在线与合规状态。

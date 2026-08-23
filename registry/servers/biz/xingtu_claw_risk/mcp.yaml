@@ -9,6 +9,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: xingtu_claw_risk
 display_name: 天创信用星图MCP
+display_name_en: Tianchuang Credit StarGraph MCP
 version: 0.1.0
 description: Enterprise risk AI assistant. Identify a company's industry and analyze related-party relationships
   (equity, controller, guarantee, joint investment) between companies using natural language.

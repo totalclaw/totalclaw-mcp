@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: picset_commerce_images
 display_name: Picset AI 电商图片
+display_name_en: Picset AI Commerce Images
 version: 0.1.0
 description: Design and generate ecommerce main images, detail images, and coordinated Listing image suites
   through Picset AI.

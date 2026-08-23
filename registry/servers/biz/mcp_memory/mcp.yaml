@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_memory
 display_name: Memory
+display_name_en: Memory
 version: 0.1.0
 description: Memory MCP server.
 description_zh: 知识图谱式持久记忆 — 实体 / 关系 / 观察三元组,跨会话保留。与 totalclaw_core.memory.long_term_memory 互补:本 server

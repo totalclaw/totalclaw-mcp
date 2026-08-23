@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: wechat-desktop
 display_name: WeChat Desktop (built-in)
+display_name_en: WeChat Desktop (built-in)
 version: 0.1.0
 description: WeChat Desktop (built-in) MCP server.
 description_zh: 桌面微信自控 —— 自动检测 OS(Windows/macOS/Linux)调对应底层:wechat_capabilities/list_unread/open_chat/read_chat/screenshot_chat/send_message。分层读取:native_text(AX/UIA

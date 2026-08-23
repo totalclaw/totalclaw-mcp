@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: duoguan_fengchao
 display_name: 夺冠蜂巢
+display_name_en: Duoguan Fengchao
 version: 0.1.0
 description: AI-powered content operations platform. From topic planning and copywriting to podcast voiceover
   and video packaging — all in one place.

@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: salestouch
 display_name: SalesTouch 经营执行
+display_name_en: SalesTouch Business Operations
 version: 0.1.0
 description: Connect SalesTouch to configure organization profiles, units, role permissions, employee
   invitations, reporting scopes, and sales processes, then govern sales and non-sales execution with evidence-backed

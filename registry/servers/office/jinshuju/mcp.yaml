@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: jinshuju
 display_name: 金数据
+display_name_en: Jinshuju
 version: 0.1.0
 description: Query Jinshuju forms, field schema and submitted entries.
 description_zh: 查询金数据的表单、字段结构与提交数据，用于汇总问卷、报名与收款记录。

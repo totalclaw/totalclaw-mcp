@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: feishu
 display_name: 飞书 / Lark
+display_name_en: Feishu
 version: 0.1.0
 description: Query Feishu/Lark contacts, calendar and docs; send messages; read and write Bitable.
 description_zh: 查询飞书通讯录、日历与云文档，发送消息，读写多维表格（Bitable）。

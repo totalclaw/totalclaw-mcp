@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: fazhi_law
 display_name: 同花顺法律AI助手
+display_name_en: RoyalFlush Legal AI Assistant
 version: 0.1.0
 description: Search Chinese laws and regulations, judicial cases, judgment documents, and internet legal
   practice information. Supports legal article search, similar case retrieval, deep legal research, legal

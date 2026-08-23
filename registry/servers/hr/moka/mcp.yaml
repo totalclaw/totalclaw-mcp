@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: moka
 display_name: Moka 招聘
+display_name_en: Moka
 version: 0.1.0
 description: 'Query Moka recruiting: jobs, candidate applications and org structure.'
 description_zh: 查询 Moka 招聘系统的职位、候选人投递记录与组织架构，跟踪招聘进展。

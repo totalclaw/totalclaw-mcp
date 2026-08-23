@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: xiaohongshu
 display_name: 小红书
+display_name_en: Xiaohongshu
 version: 0.1.0
 description: 小红书 MCP server.
 description_zh: 小红书图文/视频发布、关键词搜索、推荐流获取、帖子详情、评论(发表/回复/点赞)、收藏、用户主页、登录状态检查(13 工具)。

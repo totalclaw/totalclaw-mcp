@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: kuaicha_search
 display_name: 同花顺快查企业数据
+display_name_en: Kuaicha Enterprise Search
 version: 0.1.0
 description: Search Chinese company profiles, ownership, risks, intellectual property, tenders, and news.
 description_zh: 查询中国企业工商、股权投资、经营司法风险、知识产权、招投标及新闻舆情数据。

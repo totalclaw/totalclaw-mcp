@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mastergo
 display_name: MasterGo
+display_name_en: MasterGo
 version: 0.1.0
 description: Read MasterGo design files as DSL and turn selected layers into code.
 description_zh: 读取 MasterGo 设计稿的 DSL，把选中图层还原成代码；vibe runtime 还支持反向把本地代码同步回画布。

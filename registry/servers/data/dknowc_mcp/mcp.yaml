@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: dknowc_mcp
 display_name: 深知可信工作台
+display_name_en: DKnow Trusted Workbench
 version: 0.1.0
 description: DKnow Trusted Workbench helps with policy, legal, standards, and public-service work. It
   provides trusted Q&A, authoritative search, deep research, and evidence-based material organization,

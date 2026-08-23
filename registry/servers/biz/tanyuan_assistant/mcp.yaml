@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: tanyuan_assistant
 display_name: TDC 文化智能体
+display_name_en: TDC - Tencent Digital Culture
 version: 0.1.0
 description: AI assistant powered by a trusted cultural knowledge base. Provides traceable retrieval and
   creative assistance across world heritage sites, museum collections, oracle bone characters, and academic

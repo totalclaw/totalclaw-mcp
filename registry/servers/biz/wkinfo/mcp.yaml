@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: wkinfo
 display_name: 威科先行
+display_name_en: WoltersKluwer
 version: 0.1.0
 description: Built on Wolters Kluwer China's authoritative and real-time legal database, MCP service facilitates
   diverse search capabilities such as semantic and keyword retrieval.

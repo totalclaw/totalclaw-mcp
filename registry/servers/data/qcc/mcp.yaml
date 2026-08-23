@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: qcc
 display_name: 企查查
+display_name_en: Qichacha
 version: 0.1.0
 description: Look up Chinese company registration, shareholders, key personnel and risk data via Qichacha.
 description_zh: 查询企业工商登记、股东结构、主要人员与经营风险等公开企业信息。

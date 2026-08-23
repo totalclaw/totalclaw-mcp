@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: gaodun_job
 display_name: 大学生实习就业助手
+display_name_en: Student Internship & Career Assistant
 version: 0.1.0
 description: 'A full-journey AI assistant for student internships and employment: get smart civil-service
   position recommendations, search internship and campus jobs, run career assessments (MBTI, Holland,

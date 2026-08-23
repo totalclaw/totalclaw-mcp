@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mzl_trademark
 display_name: 摩知轮商标查询
+display_name_en: Trademark Search
 version: 0.1.0
 description: Search trademarks with natural language by name, applicant, application/registration number,
   Nice class, legal status and date range across China and 110+ overseas offices, with image-based similarity

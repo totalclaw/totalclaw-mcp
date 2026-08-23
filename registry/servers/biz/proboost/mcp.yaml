@@ -8,6 +8,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: proboost
 display_name: OpenBoost 跨境数据
+display_name_en: OpenBoost Cross-border Data
 version: 0.1.0
 description: Supports cross-border e-commerce scenarios including market research, product selection analysis,
   competitive monitoring, VOC insights, keyword analysis, listing generation, and more.

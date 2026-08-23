@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: tencent_qidian_cs
 display_name: 腾讯企点客服
+display_name_en: Tencent Qidian Customer Service
 version: 0.1.0
 description: Tencent Qidian Customer Service connector. Use natural language to manage work orders (query
   / create / update / status change), monitor agent online status and real-time reception, retrieve customer

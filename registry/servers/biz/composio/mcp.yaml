@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: composio
 display_name: Composio
+display_name_en: Composio
 version: 0.1.0
 description: Composio MCP server.
 description_zh: 500+ SaaS 工具统一接入枢纽:Gmail / Slack / GitHub / Notion / Linear / Jira / HubSpot / Salesforce

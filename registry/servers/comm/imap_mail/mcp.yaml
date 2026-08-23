@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: imap_mail
 display_name: 邮箱（IMAP/SMTP）
+display_name_en: Email (IMAP/SMTP)
 version: 0.1.0
 description: Read, search and send email over IMAP/SMTP — works with QQ Mail, NetEase Mail and any IMAP
   mailbox.

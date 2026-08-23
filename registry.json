@@ -4,12 +4,13 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-08-23T01:44:41Z",
+  "generated_at": "2026-08-23T05:03:54Z",
   "servers": [
     {
       "name": "chuhaijiang",
       "id": "totalclaw-mcp/biz/chuhaijiang",
       "display_name": "出海匠",
+      "display_name_en": "Chuhaijiang",
       "description": "Use real-time TikTok Shop data for product research, competitor analysis, creator discovery, shoppable content workflows, and social account, publishing, comment, and direct-message operations.",
       "description_zh": "基于实时 TikTok Shop 数据完成选品、竞品分析、达人筛选与带货内容创作，并管理社媒账号、发布内容、运营评论和私信。",
       "version": "0.1.0",
@@ -57,16 +58,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f3bb88d1d3a598e811f26fc38c65a33899efabfcd0278a45c7d330d88d4b33dc",
-          "size": 1966
+          "sha256": "b3504d934c0fce5550fb2694386ddb16886254c15cdafad17777c75c15543d88",
+          "size": 1995
         }
       ],
-      "bundle_sha256": "6f28280dcec72e645a86c255469f4d50cef0068349dbaefa617b5f0747752a34"
+      "bundle_sha256": "2b4a35022c0d4225485668c3a197fc8003d8168144da41cdef3058a1b384350b"
     },
     {
       "name": "composio",
       "id": "totalclaw-mcp/biz/composio",
       "display_name": "Composio",
+      "display_name_en": "Composio",
       "description": "Composio MCP server.",
       "description_zh": "500+ SaaS 工具统一接入枢纽:Gmail / Slack / GitHub / Notion / Linear / Jira / HubSpot / Salesforce / Calendar / Drive 等。支持 OAuth 流程 + 多账号上下文 + 沙箱工作台。",
       "version": "0.1.0",
@@ -125,16 +127,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "eeb40165f38a1b3c714026fba72fdd2ff9ee7f661c7a6e4eebff17b89f726332",
-          "size": 961
+          "sha256": "bde789bf3d5653462ff3b6e81f9a50f4c2018f643678eafc7eef82662f978c15",
+          "size": 987
         }
       ],
-      "bundle_sha256": "7201b74b25e94cd263a04e18d2431d67be239ebb6578694c51b172ab3b0c8fb5"
+      "bundle_sha256": "59c2de543c91ca5cc56f26c5ae8a118ad3fec2c243ccf7399918da04a69826ba"
     },
     {
       "name": "duoguan_fengchao",
       "id": "totalclaw-mcp/biz/duoguan_fengchao",
       "display_name": "夺冠蜂巢",
+      "display_name_en": "Duoguan Fengchao",
       "description": "AI-powered content operations platform. From topic planning and copywriting to podcast voiceover and video packaging — all in one place.",
       "description_zh": "AI 自媒体内容运营系统。从选题策划、文案撰写、图片配图到播客配音、视频封装，一站式内容生产。",
       "version": "0.1.0",
@@ -193,16 +196,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "36f09dd6783e31677c6fdd98ef7c6db8ed4418dcda6a47bb41499724026ec6f0",
-          "size": 1908
+          "sha256": "83f204486c8fa91e2a239287ecf4d371ccaa4b238b87a999f63b3bf46b962c47",
+          "size": 1942
         }
       ],
-      "bundle_sha256": "81722037199cc44e2b572338f57135916de732923b4616df87ef65341377666c"
+      "bundle_sha256": "47fdacf01c2b9ac72197c5e503cd36436821f37bf228d6eb724f2b55d4ce48de"
     },
     {
       "name": "fadada_richee",
       "id": "totalclaw-mcp/biz/fadada_richee",
       "display_name": "法大大睿契",
+      "display_name_en": "Fadada-Richee",
       "description": "Search laws, regulations, and similar legal cases, look up enterprise information, and review contract risks with Richee.",
       "description_zh": "提供法律法规检索、类案检索、企业信息查询与合同审查能力，帮助用户快速查找相关法条、相似案例、核验企业信息并完成合同风险审查。",
       "version": "0.1.0",
@@ -250,16 +254,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "bb539309abf7ed357e47d0a4609f5f045cdc7e21dc7c6f2a24afb5be3f074a07",
-          "size": 1534
+          "sha256": "4a21f55f6cbea05d75f5ea42ccb118f0c0abfc363b2a789b55b1401eee216e6c",
+          "size": 1565
         }
       ],
-      "bundle_sha256": "42cda469387cf306111d12bb2387f4181783466fbc1b0232174e09b9789e047a"
+      "bundle_sha256": "dd704050c5cd61698a70c525d5e6b95fc5539092e5ebaf48a0002e795f4153f3"
     },
     {
       "name": "fanruan_growth_advisor",
       "id": "totalclaw-mcp/biz/fanruan_growth_advisor",
       "display_name": "帆软增长谋士",
+      "display_name_en": "Fanruan Growth Advisor",
       "description": "Enterprise insight and growth analysis: query public business data such as operational risks, public opinion, bidding, patents, qualifications, and policies, and call authorized MOSS Growth Advisor agents to generate analysis and reports.",
       "description_zh": "企业洞察与增长分析：查询企业经营风险、舆情、招投标、专利、资质、政策等公开商业数据，并调用已授权的 MOSS 增长谋士 Agent 生成分析与报告。",
       "version": "0.1.0",
@@ -317,16 +322,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1299eab65d0ae754d4bf2b5c8491312ec2d3532f1fe12fcc9a1763ed27abb609",
-          "size": 1707
+          "sha256": "9d8192c12344b7bcad3c3fbc04ae0ba6daa7b78ea5f7db86c8b7de8609a2004d",
+          "size": 1747
         }
       ],
-      "bundle_sha256": "c73314a480895b0876e70e539053dab38b6adbd77785264c20acfc47a4b6eef4"
+      "bundle_sha256": "3b478621f7fc4d9d81c27366fcbd4784b5b4e892bb3d21c2ef60177481c28d64"
     },
     {
       "name": "fazhi_law",
       "id": "totalclaw-mcp/biz/fazhi_law",
       "display_name": "同花顺法律AI助手",
+      "display_name_en": "RoyalFlush Legal AI Assistant",
       "description": "Search Chinese laws and regulations, judicial cases, judgment documents, and internet legal practice information. Supports legal article search, similar case retrieval, deep legal research, legal document drafting, and litigation visualization.",
       "description_zh": "查询中国法律法规、司法案例、裁判文书及互联网法律实务资讯，支持法条检索、类案检索、深度法律研究、法律文书起草与诉讼可视化。",
       "version": "0.1.0",
@@ -391,8 +397,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "b9103a1adfe0ecdd0aaf13626354e1f06c3c687c4b6b13c109a8bf91e0027b37",
-          "size": 2226
+          "sha256": "fd625ac014f7e7bd5c2a55de800e785a47bbd1172e177dd891018d05a5806ece",
+          "size": 2273
         },
         {
           "path": "tools.json",
@@ -400,12 +406,13 @@
           "size": 5341
         }
       ],
-      "bundle_sha256": "79da0473c9e8c8b4f0bca0f1ddde4a5eddbe7357a4b33fb20e73febdd104584a"
+      "bundle_sha256": "decce0299e89980a0433f21606ec3b0666be1dc1bf12232babad3685ac3dbbca"
     },
     {
       "name": "fbs_connector",
       "id": "totalclaw-mcp/biz/fbs_connector",
       "display_name": "福帮手",
+      "display_name_en": "Fbsir",
       "description": "FBSir: identity, scene plans, progress, reward status, and expert handoffs.",
       "description_zh": "福帮手人机协同连接器：识别当前身份与专家入口，匹配可执行场景方案，记录首值与继续使用进度，并查询乐包状态或衔接后续服务。",
       "version": "0.1.0",
@@ -465,8 +472,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "128820ef681515d9907ee92f851d06e83984c2ca0b3f37573f7a60262ff37870",
-          "size": 1622
+          "sha256": "5810eeac208b13ec3ada44bb645c1126ac7503ccf8bafaffbf56d49b1ba342e1",
+          "size": 1645
         },
         {
           "path": "tools.json",
@@ -474,12 +481,13 @@
           "size": 58779
         }
       ],
-      "bundle_sha256": "de688d1db943b64a1d55284a31327ceb72e23d7f2d854c00d9f9e1dde2f10741"
+      "bundle_sha256": "6ce6e92885f17569f5f69e4eb47a35846a9121ff82e01ac0b39f3ce62334bd1d"
     },
     {
       "name": "fyopen_lawsearch",
       "id": "totalclaw-mcp/biz/fyopen_lawsearch",
       "display_name": "法研·法律法规检索",
+      "display_name_en": "fyopen·lawSearch",
       "description": "Support natural language to obtain accurate and currently effective regulatory provisions, seamlessly integrating high-quality and massive regulatory knowledge bases into various AI applications and workflows.",
       "description_zh": "法研·法律法规检索，支持自然语言获取精准、现行有效的法规条文，将高质量、海量的法规知识库，无缝接入各类AI应用与工作流中。",
       "version": "0.1.0",
@@ -527,16 +535,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "3d4101d2185bd4f679721a4111de618f0645e96f631451f6f89dd381a7f1b7d9",
-          "size": 1414
+          "sha256": "578d6334598beaa84d5ca25f1c5423c74b2b102a9183ce3867b6f9fb8db4f536",
+          "size": 1449
         }
       ],
-      "bundle_sha256": "608b80ed946e866c151cc1a5b7454477353359a7dfd09e31dd5bd9a3e94517dd"
+      "bundle_sha256": "dcf5ced40566eb3a93fac3c3099f2141d18afab77bd962a404e79452298f1e25"
     },
     {
       "name": "jiushuyun",
       "id": "totalclaw-mcp/biz/jiushuyun",
       "display_name": "九数云BI",
+      "display_name_en": "Jiushuyun BI",
       "description": "Upload Excel or CSV files to quickly generate native visual data analysis reports, dashboards, and charts.",
       "description_zh": "上传 Excel 或 CSV 表格，一键生成原生的可视化数据分析报告、仪表板、图表。",
       "version": "0.1.0",
@@ -584,16 +593,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "38bc8ec69cb52366a615fe07853bf6cede2d70d579e9636b8896c87a6cd6c341",
-          "size": 1283
+          "sha256": "49716132f8665252f624eea321622dbb218d01ab2a935aa35a3cb7cea2075ede",
+          "size": 1313
         }
       ],
-      "bundle_sha256": "56dabbe8ab1a29c4a41616fdbcdccd18b607f6d80e3a0666df80b18f5fd97b81"
+      "bundle_sha256": "809ada594bf5e3fe6ca8e87374fd3308f2019410cf90623ee940c6d393e50cf2"
     },
     {
       "name": "lingxing_mcp",
       "id": "totalclaw-mcp/biz/lingxing_mcp",
       "display_name": "领星ERP",
+      "display_name_en": "LingXing ERP",
       "description": "Query and manage stores, inventory, listings, sales, profit, advertising, and operations data in LingXing ERP using natural language.",
       "description_zh": "使用自然语言查询和管理领星ERP中的店铺、库存、Listing、销售、利润、广告和运营数据。",
       "version": "0.1.0",
@@ -651,16 +661,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "417f6a58d1ddad6b3abf3734a2ab72244ac70d56e877a3e68a783613a2afed53",
-          "size": 1623
+          "sha256": "1b039d8ee3a1f58837af19e14704e785f01203f847369aa8a51ada9ffb972fa1",
+          "size": 1653
         }
       ],
-      "bundle_sha256": "cf6f678b5d8a4b6172eaaba3fe29213607bee9a7c56ab2f3ef6759505dd7cf54"
+      "bundle_sha256": "71bdde7c44f3235492ee7b56fac696535d4298467017b1559074193ce659b8fe"
     },
     {
       "name": "linkfox_product_selection",
       "id": "totalclaw-mcp/biz/linkfox_product_selection",
       "display_name": "Linkfox 选品",
+      "display_name_en": "Linkfox Product Selection",
       "description": "Cross-border e-commerce product selection all-in-one AI toolkit, integrating multiple sub-capabilities including competitor lookup, ABA, Keepa, Sorftime, Jungle Scout, SellerSprite, SIF, Jiimore, business insights, and compliance detection—covering product selection, keywords, competitors, reviews, niches & trends, and compliance detection.",
       "description_zh": "跨境电商选品一站式 AI 工具集，整合 竞品查询/ABA/Keepa/Sorftime/Jungle Scout/卖家精灵/SIF/极目/商业洞察/合规检测等 多项子能力，覆盖选品、关键词、竞品、评论、利基与趋势、合规检测。",
       "version": "0.1.0",
@@ -718,16 +729,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1467507c3a7b5aa56882a0a9b2e9fef4ead55569a9884bdbea5288d4791a2ecb",
-          "size": 1896
+          "sha256": "265e589121595f61186e09cecadf1141390310e9afbf3250f299d1119a87f919",
+          "size": 1939
         }
       ],
-      "bundle_sha256": "f1b60dcd37ea0d0e6de9565278a0595bbaabca3602a261eb8ac69cc4a8db5e80"
+      "bundle_sha256": "69766b7820d5a898582eaa3586dbd048922ac64d2aa446e55ceb7a7ddd9ee65a"
     },
     {
       "name": "mcp_memory",
       "id": "totalclaw-mcp/biz/mcp_memory",
       "display_name": "Memory",
+      "display_name_en": "Memory",
       "description": "Memory MCP server.",
       "description_zh": "知识图谱式持久记忆 — 实体 / 关系 / 观察三元组,跨会话保留。与 totalclaw_core.memory.long_term_memory 互补:本 server 走图谱模型,核内 LTM 走衰减表模型。",
       "version": "0.1.0",
@@ -794,8 +806,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "b36876322fb58a1fc471b6b857a938ddb5579d40c7d7d6ae2ba3b39241b7c85c",
-          "size": 1266
+          "sha256": "9e1eeb58162818834f7dbda1fd0ec2e7061a65037519939ac75511deb38e1b89",
+          "size": 1290
         },
         {
           "path": "tools.json",
@@ -803,12 +815,13 @@
           "size": 7165
         }
       ],
-      "bundle_sha256": "c759fc709a3058ed28f24ce5265eedb90e1e80db7bc6d46e45474ad6097dcb0a"
+      "bundle_sha256": "06b7d4c6e08d0cd1485f062ae00cc22d0b362b57df7e6f39882fa2ac257b8b2d"
     },
     {
       "name": "mcp_sequential_thinking",
       "id": "totalclaw-mcp/biz/mcp_sequential_thinking",
       "display_name": "Sequential Thinking",
+      "display_name_en": "Sequential Thinking",
       "description": "Sequential Thinking MCP server.",
       "description_zh": "动态反思式问题分解 — 把复杂任务拆成有序思考序列,支持回溯 / 修正 / 分支。适合长 horizon planning。",
       "version": "0.1.0",
@@ -865,8 +878,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "34ced9d9a015f4beaacf013427479f3a997c5bf8008b098bff2a23695c49cace",
-          "size": 986
+          "sha256": "aa8981f28dd4b4e1ed48b6c1e47d21daa3892bfe4930fd070b7d9b2b0b100bbe",
+          "size": 1023
         },
         {
           "path": "tools.json",
@@ -874,12 +887,13 @@
           "size": 4594
         }
       ],
-      "bundle_sha256": "7e521f46155f8e38582b6298bc2bb4c94a9144f8fba5bc772086fe8b7742aea9"
+      "bundle_sha256": "2f7140491c292ba8fb41953fa136cbd81acb8df4b7018e08af92bc1f3f36bb95"
     },
     {
       "name": "mzl_trademark",
       "id": "totalclaw-mcp/biz/mzl_trademark",
       "display_name": "摩知轮商标查询",
+      "display_name_en": "Trademark Search",
       "description": "Search trademarks with natural language by name, applicant, application/registration number, Nice class, legal status and date range across China and 110+ overseas offices, with image-based similarity search.",
       "description_zh": "用自然语言检索商标：按名称、申请人、申请号、注册号、尼斯类别、法律状态、日期范围查询，覆盖中国及 110+ 海外国家/地区商标局；并支持以图搜图的图形近似检索。",
       "version": "0.1.0",
@@ -927,16 +941,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "624bf31fcd3ef3eb2972e94072c137fb88d53010e08c678f95809f0a2a38f1a3",
-          "size": 1612
+          "sha256": "285259ff1ae29c2ea4244c47c77fbd7ea7c6b2e25db3db9c3b443fd6845668c7",
+          "size": 1646
         }
       ],
-      "bundle_sha256": "7c4926e067975aa064824dd5070fad02e2be4307c8f8715655f74f94960130fa"
+      "bundle_sha256": "b95ad01c857cc8befc28262e124e264edbfb7589aaa9ee25f4bb5978c4f36752"
     },
     {
       "name": "neo_crm",
       "id": "totalclaw-mcp/biz/neo_crm",
       "display_name": "销售易CRM",
+      "display_name_en": "NeoCRM",
       "description": "Query customers, advance opportunities, review leads, claim from the public pool, and log follow-ups in natural language—closing the sales workflow loop in a single sentence.",
       "description_zh": "用自然语言查客户、推商机、盘线索、领公海、写跟进，一句话打通销售工作闭环。",
       "version": "0.1.0",
@@ -984,16 +999,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "4b5736c2fc2c97a885566f6939af8976641888f8038ecb177c4c4f96fe9f5d4c",
-          "size": 1334
+          "sha256": "2ec397b4f34f17eb0b1e53f54db34a6fcfcac8444c4b750359b8d2448ae7ac8d",
+          "size": 1358
         }
       ],
-      "bundle_sha256": "fab19e05983d83f0d6912f3094e8c295d26af3fd7f4671a93023b8b6e0f12855"
+      "bundle_sha256": "6852ff91b0710579700792961e6fbadb7ffc21db94fd48b93dfb8117f659a90b"
     },
     {
       "name": "pkulaw",
       "id": "totalclaw-mcp/biz/pkulaw",
       "display_name": "北大法宝·法律智能检索",
+      "display_name_en": "PKULaw · Legal Search",
       "description": "Semantic (natural-language) + keyword dual-mode retrieval over Chinese laws, regulations and judicial cases, plus citation verification: extract and standardise statute references, validate case numbers, fact-check article text against the authoritative original, and auto-link everything back to pkulaw.com — traceable, verifiable, ready to cite.",
       "description_zh": "检索 + 核验一体：语义（自然语言描述）与关键词双模式检索法规、法条与司法案例；并可把文本中的法条引用与案号回北大法宝库逐条比对、对齐标准名称，输出带 pkulaw.com 原文链接的可溯源结果，专治法律幻觉。",
       "version": "0.1.0",
@@ -1041,16 +1057,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a30f73ffd7b03523cc847d9083be1db397030326e1e7d88ccdcb7a435dae9dc4",
-          "size": 2024
+          "sha256": "3c9ace61327c2aca06b441647ca6aef0d4169d1827b73d2e0a9510df5bcbd4bd",
+          "size": 2064
         }
       ],
-      "bundle_sha256": "e56cabdf9ab89c326505a619a4e2ee2ed9e10ffcf3d2db0d3ec85a0e341c51a8"
+      "bundle_sha256": "45d804bc248125d5bb8f862026b1e00e9882e6f4701768632596afee8fbc32ed"
     },
     {
       "name": "proboost",
       "id": "totalclaw-mcp/biz/proboost",
       "display_name": "OpenBoost 跨境数据",
+      "display_name_en": "OpenBoost Cross-border Data",
       "description": "Supports cross-border e-commerce scenarios including market research, product selection analysis, competitive monitoring, VOC insights, keyword analysis, listing generation, and more.",
       "description_zh": "支持市场研究、选品分析、竞对监控、VOC洞察、关键词分析、listing生成等跨境电商应用场景",
       "version": "0.1.0",
@@ -1183,8 +1200,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "7efb20cc1b9324ae7d4254212b3c1a47f54959137f5356c0c731a5fee4e89e97",
-          "size": 1490
+          "sha256": "850c4a5136fd039c00d05c69d6d43bc66616a005d5ed29af82fa8e1e669ffd8f",
+          "size": 1535
         },
         {
           "path": "tools.json",
@@ -1192,12 +1209,13 @@
           "size": 164509
         }
       ],
-      "bundle_sha256": "d2c35dbe9ee9f1f5ac3f1af1bca5e5298acd57c98a82a0afef0b22a511b9f8b0"
+      "bundle_sha256": "daea5efe02ccac4b0ed183cc58ed56f45585d099e69544e9c64929b36f4e0090"
     },
     {
       "name": "qcc_legal",
       "id": "totalclaw-mcp/biz/qcc_legal",
       "display_name": "企查查·法律数据",
+      "display_name_en": "QCC Legal",
       "description": "QCC Legal is a Chinese legal-data connector for searching, researching, and verifying statutes and judicial cases. On the regulation side it covers the full body of in-force Chinese law — laws, administrative regulations, departmental rules, judicial interpretations, and local regulations — at both the whole-regulation and individual-article level, returning verbatim text tagged with validity status (in force / amended / repealed), legal hierarchy, and promulgating authority, with common-name normalization (e.g. The Civil Code, the Personal Information Protection Law). On the case side it covers a massive corpus of ordinary judgment documents plus 25,000+ authoritative cases — Supreme People's Court and Supreme People's Procuratorate guiding cases, gazette cases, typical cases, and reference cases — filterable by cause of action, court, instance, judgment date, and party. It further verifies legal citations: given any text it detects every statute and case-number reference, checks each against the database, flags validity status, returns the authoritative source and verbatim text, and generates traceable hyperlinks — eliminating fabricated statutes and case numbers in AI-generated legal content. Use natural language to find statutory grounds, run legal research and analysis, retrieve similar cases, pull verbatim originals, and verify citations before delivery.",
       "description_zh": "检索与核验中国法律法规和司法案例。覆盖全量现行法律、行政法规、司法解释——法规级到法条级逐字正文，标注时效性与效力级别；海量裁判文书及 2.5 万+ 权威案例（最高法/最高检指导性案例、公报案例、典型案例）；并对文本中的法条与案号引用逐条回库核验、标注时效、生成可溯源超链。用自然语言完成法条依据查找、类案检索、原文调取与法律引用核验，从源头消除法条与案号幻觉。",
       "version": "0.1.0",
@@ -1245,16 +1263,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "04dc7c49a3e0b5ae385b5a8338f85ea38c4c06f8a3cdba9096301a8411ce8aaf",
-          "size": 3463
+          "sha256": "41a87562aa79e8262b29d2953bc1a0abc57ccca8ec7037de717c462edd4ea793",
+          "size": 3490
         }
       ],
-      "bundle_sha256": "a62503318d3d4103d54128238bb56ca89ab7197fae06f5d8f58b645c4f7f388b"
+      "bundle_sha256": "ca912de71ffccc6678b5deb78e7527f8fd8cee534fda02216a264f5443f8c8e6"
     },
     {
       "name": "salesnail_instructor",
       "id": "totalclaw-mcp/biz/salesnail_instructor",
       "display_name": "SalesNail 讲师",
+      "display_name_en": "SalesNail Instructor",
       "description": "Self-activate an instructor trial, maintain a business Profile, draft client proposals, create and reuse games, configure courses, facilitate classrooms, and analyze complex-sales performance with evidence-backed semantics.",
       "description_zh": "通过自然语言自助开通讲师试用、维护商业 Profile、生成客户方案，完成游戏创作、课程配置、实时带教，以及团队、学员、班级和商机的证据化分析与复盘。",
       "version": "0.1.0",
@@ -1302,16 +1321,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "11c84cc653256c92fb4bc9505a4401c4564da0b2414d6b0fe5954f112d80dd02",
-          "size": 1790
+          "sha256": "d0c04c3ee4cb20701baa25482c9af3c2abc539b3f0d863258b5f8ff41dfdd2de",
+          "size": 1828
         }
       ],
-      "bundle_sha256": "adf1b8664991c02e94f49024f94b4a1135779bded92d68b4bd9ce7332ed2575d"
+      "bundle_sha256": "576518d195920d4ae6fc52d4cf35028299951a7fd02afddc97d0368be0792d76"
     },
     {
       "name": "salestouch",
       "id": "totalclaw-mcp/biz/salestouch",
       "display_name": "SalesTouch 经营执行",
+      "display_name_en": "SalesTouch Business Operations",
       "description": "Connect SalesTouch to configure organization profiles, units, role permissions, employee invitations, reporting scopes, and sales processes, then govern sales and non-sales execution with evidence-backed management reviews.",
       "description_zh": "通过自然语言连接 SalesTouch，完成组织资料、部门、角色权限、员工邀请、下属管理范围与销售流程配置，并处理销售执行、非销售工作、绩效、内部调研和经营汇总。",
       "version": "0.1.0",
@@ -1359,16 +1379,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "dafef75753f467ae6f455eba2f64043687d1ea894201779c6c06a05593eae99e",
-          "size": 1938
+          "sha256": "659056628daea81e534d6131ce9fda9695f1928ec34be8cece28f7ca0074fb20",
+          "size": 1986
         }
       ],
-      "bundle_sha256": "0952ff10dff8dfbc50248aee2e2039b134060108c09515269f0a568dfb71afcf"
+      "bundle_sha256": "e57e187a71a67d33b37f9136637cd27267653cbdba67f421dbdf443bf91256c5"
     },
     {
       "name": "tanyuan_assistant",
       "id": "totalclaw-mcp/biz/tanyuan_assistant",
       "display_name": "TDC 文化智能体",
+      "display_name_en": "TDC - Tencent Digital Culture",
       "description": "AI assistant powered by a trusted cultural knowledge base. Provides traceable retrieval and creative assistance across world heritage sites, museum collections, oracle bone characters, and academic literature. Covers heritage nomination texts, archaeological data, ceramic genome databases, pattern libraries, and more.",
       "description_zh": "基于文化可信知识库的智能体服务，提供世界遗产、博物馆藏品、甲骨文字形释义、学术文献等可溯源检索与创作辅助。覆盖申遗文本、考古数据、陶瓷基因库、纹样库等多模态知识，支持研究考据、策展辅助、文化科普与内容创作。",
       "version": "0.1.0",
@@ -1416,16 +1437,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "0bfcbbfb6328dcb32495a7104a1408fcc922c74941b83190dff7c71caa972d1b",
-          "size": 1659
+          "sha256": "69d0ee6b7edfb86da04e1ac10aceb7f1c243fb4a3fc9c9d0c3df8915288521db",
+          "size": 1706
         }
       ],
-      "bundle_sha256": "77902b00f93a52a358b76c17972502ace8d89968524498c6849b103977766906"
+      "bundle_sha256": "4be0cfb28d0ae5af0aaa0c87e69253f1b7bb608bf9710152a1e31c8e3e4dce95"
     },
     {
       "name": "tec_do",
       "id": "totalclaw-mcp/biz/tec_do",
       "display_name": "Tec-Do 2.0 广告与增长情报",
+      "display_name_en": "Tec-Do 2.0 Ad & Growth Intelligence",
       "description": "An AI capability suite for global advertising and growth teams.",
       "description_zh": "面向出海广告投放和增长团队的 AI 能力集合。",
       "version": "0.1.0",
@@ -1473,16 +1495,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f7197835487d37b6110c8ff85637217d1fe0b93dd4b536a37ae22da6073de9e4",
-          "size": 1330
+          "sha256": "553cb96fc9dbfda2c63c60a359f1ff68cf1ce23c0b92904cdecc0848b72291ea",
+          "size": 1383
         }
       ],
-      "bundle_sha256": "64dad2ac27f984e41c960d35cca99f6c663d6feb2baa3adace96e2844265438a"
+      "bundle_sha256": "e56b1515f65ab4d57acf0cb14e49d995c53a379fbaeaf91db758b1ba0c679f7a"
     },
     {
       "name": "weisheng_scrm",
       "id": "totalclaw-mcp/biz/weisheng_scrm",
       "display_name": "微盛企微管家SCRM",
+      "display_name_en": "Weisheng SCRM",
       "description": "Query or manage WeCom (WeChat Work) business capabilities: customer info, tags, groups, marketing assets, QR codes, campaigns, follow-ups, contacts, opportunities, reports, lucky draws, schedules, chat records and more.",
       "description_zh": "查询或管理企业微信中的客户信息、客户标签、客户群、营销素材、活码、群发、跟进记录、联系人、商机、汇报、抽奖、客户日程、聊天记录等业务能力。",
       "version": "0.1.0",
@@ -1541,16 +1564,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "4cd75526ee7942e9d4a6e0aa8dd04a7fb837348c9f3b6951aca33c748ae112e0",
-          "size": 2326
+          "sha256": "1130ecc6fb9790174e818b534d1b0e2c09dd1ecda30585be4490ba4a4b17276b",
+          "size": 2357
         }
       ],
-      "bundle_sha256": "0995e1bd2846b121b0948504a2bd51446a472382cef36c0018b863ec07861d44"
+      "bundle_sha256": "70deb80f6364f773aae771ceedd2b8e4668d37d5448edd8c13b546ea03083f09"
     },
     {
       "name": "wkinfo",
       "id": "totalclaw-mcp/biz/wkinfo",
       "display_name": "威科先行",
+      "display_name_en": "WoltersKluwer",
       "description": "Built on Wolters Kluwer China's authoritative and real-time legal database, MCP service facilitates diverse search capabilities such as semantic and keyword retrieval.",
       "description_zh": "威科先行依托全面、准确、及时更新的法规、案例等法律数据研发的MCP服务，支持语义检索、关键词检索等场景。",
       "version": "0.1.0",
@@ -1598,16 +1622,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "9f518388bc6db730b7402e55e469ee619bfc7318b87bf568dd9e8f998b43ba04",
-          "size": 1602
+          "sha256": "3a62ca5215b97841b747788542a676b6a12948d1d30b7ba59e7ca280eb591deb",
+          "size": 1633
         }
       ],
-      "bundle_sha256": "0ec496ca2ee358d692415d667f508fa767504fc541f4ba7f4a1a29c3a88e5400"
+      "bundle_sha256": "1094e597ff7743637020d33ccb2927481c760a2fb08a1fd4d5bd29e8088ec207"
     },
     {
       "name": "xingtu_claw_risk",
       "id": "totalclaw-mcp/biz/xingtu_claw_risk",
       "display_name": "天创信用星图MCP",
+      "display_name_en": "Tianchuang Credit StarGraph MCP",
       "description": "Enterprise risk AI assistant. Identify a company's industry and analyze related-party relationships (equity, controller, guarantee, joint investment) between companies using natural language.",
       "description_zh": "企业风险 AI 分析助手，用自然语言识别企业所属行业、分析企业间关联方关系（股权/实控人/担保/共同投资）。",
       "version": "0.1.0",
@@ -1655,16 +1680,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "fdc8a61ff2983b3bb9e890d176bbd0f0cbe9285035db76309f82aac4f41e4f05",
-          "size": 1645
+          "sha256": "4a9c8fc069f17af1315be7398670e02eb09e5b3a2f8fe976a3c7003c62a9e45a",
+          "size": 1694
         }
       ],
-      "bundle_sha256": "a30ced83438f6c448703c3390017763d45578ceb56cb9fcb88c6b1ddf23faba2"
+      "bundle_sha256": "d583cae670ccb415ebf10c68810364bf8e0c6a00c6c4c24012d2e267e64ea745"
     },
     {
       "name": "youshu_bd_mate",
       "id": "totalclaw-mcp/biz/youshu_bd_mate",
       "display_name": "智客AI · 对公(To B)营销助手",
+      "display_name_en": "YouShu BD Mate",
       "description": "The BD Mate is an intelligent corporate marketing assistant built on full-dimensional enterprise data, delivering a complete business development closed-loop from pre-visit one-pagers and customer intelligence reports to product-based customer acquisition, key-person profiling, sales scripts, and enterprise-based product recommendations.",
       "description_zh": "对公营销助手是基于企业全维数据构建的对公营销智能助手，提供从生成访前一页纸、访前客情报告、产品找客、关键人画像、营销话术及按企荐品的完整展业闭环能力。",
       "version": "0.1.0",
@@ -1722,16 +1748,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "d1dab243294e813d25a6a5e3d30a2b69ab3d678ee7db75062e45f5bbee47ea82",
-          "size": 2107
+          "sha256": "cbadcdaf66a104cb9fc5c886114dbacbfc037b38ba85f3c599b2ec1d1523c497",
+          "size": 2139
         }
       ],
-      "bundle_sha256": "12e202f2738dbc46668fef9d5d1a91c7ba2489cabfd5e4866bdb2eb18dedb66f"
+      "bundle_sha256": "81749229ecc62cb29069847779356685933a8791197b0c0bf2ca3102800ea2c8"
     },
     {
       "name": "yuandian_mcp",
       "id": "totalclaw-mcp/biz/yuandian_mcp",
       "display_name": "华宇元典法律数据",
+      "display_name_en": "Huayu Yuandian Legal Data",
       "description": "Huayu Yuandian Legal Data provides agents with MCP tool capabilities for laws and regulations, case documents, and enterprise information.",
       "description_zh": "华宇元典法律数据为智能体提供法律法规、案例文书、企业信息 MCP 工具能力。",
       "version": "0.1.0",
@@ -1779,16 +1806,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "507124a698ce3897823acfb44ca38a69f106132308790edf822220f22a8713f4",
-          "size": 1433
+          "sha256": "26e7880902e58e4933d350300fb75c8aee10cd2440df375f113eb0c63f8809a4",
+          "size": 1476
         }
       ],
-      "bundle_sha256": "395c81a369675288e52576702015735cd375f2be69579ed7e86ed9a6319ea216"
+      "bundle_sha256": "6ba9be2360fcd7dfde6131d77534ae543d2473030f358a1a9b0efbab0184cc86"
     },
     {
       "name": "dingtalk",
       "id": "totalclaw-mcp/comm/dingtalk",
       "display_name": "钉钉",
+      "display_name_en": "DingTalk",
       "description": "Query DingTalk contacts and departments, send work notices, read attendance and approvals.",
       "description_zh": "查询钉钉通讯录与部门，发送工作通知，查询考勤与审批实例。",
       "version": "0.1.0",
@@ -1879,8 +1907,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "a1e914e2b4d1a33fb77fb0bb97f2ba7c031a36c0d53174b3db413777805696c9",
-          "size": 1599
+          "sha256": "99bdafcc69d30aa016805767d4137d1f129e21881bbe0cceb8c7c2decad50f87",
+          "size": 1625
         },
         {
           "path": "tools.json",
@@ -1888,12 +1916,13 @@
           "size": 4832
         }
       ],
-      "bundle_sha256": "2df75996633a0098cdeee0a4634e08b4e89de41e6ce7ecd027b62acc2cefbad6"
+      "bundle_sha256": "26bb1fd660ed83f5d08b0c3afe4458287eeb3949156fec3a885f90008ffdde32"
     },
     {
       "name": "ezjoin_meeting",
       "id": "totalclaw-mcp/comm/ezjoin_meeting",
       "display_name": "EzyJoin智慧会议",
+      "display_name_en": "EzyJoin Smart Meeting",
       "description": "Manage EzyJoin meetings via natural language: book rooms, create or cancel meetings, view schedules.",
       "description_zh": "用自然语言管理 EzyJoin 智慧会议：预约会议室、创建/取消会议、查询会议日程与 AI 纪要。",
       "version": "0.1.0",
@@ -1941,16 +1970,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f01a6c599ade276e92bd1a3b8363f1754f150bcb6211ebe474fcf049d9a54ed9",
-          "size": 1390
+          "sha256": "d5dd24fba90991f620d19a994ae5f98455c3c47bb2496b7ec9696726e3de5af7",
+          "size": 1429
         }
       ],
-      "bundle_sha256": "6ca895a989fedf21680c29859fba480b969c5617eee48a17952d648a35081978"
+      "bundle_sha256": "accd48e39c99399ecab01632896aca90509badb97c4decbfd0b30ebed892eace"
     },
     {
       "name": "feishu",
       "id": "totalclaw-mcp/comm/feishu",
       "display_name": "飞书 / Lark",
+      "display_name_en": "Feishu",
       "description": "Query Feishu/Lark contacts, calendar and docs; send messages; read and write Bitable.",
       "description_zh": "查询飞书通讯录、日历与云文档，发送消息，读写多维表格（Bitable）。",
       "version": "0.1.0",
@@ -2043,8 +2073,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "fe437efb81eb1c3964752d87981cefb7b9f4e3a804814e33523b0015d3ba65b1",
-          "size": 1610
+          "sha256": "c5efd0feaec6506ccb9e9be11aa4eca5808519f2428760545435633ab483da61",
+          "size": 1634
         },
         {
           "path": "tools.json",
@@ -2052,12 +2082,13 @@
           "size": 6523
         }
       ],
-      "bundle_sha256": "85b9a0b77f9fe3887fe876521bddee59b2db35147a3cdc41fc6371538fa1f62d"
+      "bundle_sha256": "012d1b3c7af262a17552dbd946a3ae430f3e0b5db7c1b6928883c4322c63a2b2"
     },
     {
       "name": "gongyi_open_mcp",
       "id": "totalclaw-mcp/comm/gongyi_open_mcp",
       "display_name": "腾讯公益机构服务平台",
+      "display_name_en": "Tencent Charity Org Platform",
       "description": "Tencent Charity organization platform connector: query the current organization's user and org info, projects, progress, and financial disclosures with natural language.",
       "description_zh": "腾讯公益机构服务平台连接器：用自然语言查询当前登录机构的用户与机构信息、项目、进展、财务披露等机构侧业务数据。",
       "version": "0.1.0",
@@ -2105,16 +2136,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "19ba518be3c8508b2e6dad6bea5bf8164d476d42a10a50b56e108f4ed0a8e512",
-          "size": 1374
+          "sha256": "d19c44953aab8a91c70ad183be6d8fd53722444dad0d29d0a78b1a60d856c80a",
+          "size": 1420
         }
       ],
-      "bundle_sha256": "58f5ad6a82ed2550500a7102467337630a6b23ec81cced432c32c30520270ca7"
+      "bundle_sha256": "deaa570dadb757f2123d8114341fcc3de3d087922b80d7305194626fb67c0eaa"
     },
     {
       "name": "imap_mail",
       "id": "totalclaw-mcp/comm/imap_mail",
       "display_name": "邮箱（IMAP/SMTP）",
+      "display_name_en": "Email (IMAP/SMTP)",
       "description": "Read, search and send email over IMAP/SMTP — works with QQ Mail, NetEase Mail and any IMAP mailbox.",
       "description_zh": "收发、搜索和整理邮件，支持 QQ 邮箱、网易邮箱及任意 IMAP 邮箱。",
       "version": "0.1.0",
@@ -2213,8 +2245,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "f6fc99e25c383e0c3e1d39266710e2586d13305cc24596bea7d92aaac0bcc169",
-          "size": 1866
+          "sha256": "50f1334278a017474f90ec2236b32c8cf0d9210671db6a218eb82d1637904bf3",
+          "size": 1901
         },
         {
           "path": "tools.json",
@@ -2222,12 +2254,13 @@
           "size": 2681
         }
       ],
-      "bundle_sha256": "540c84fa9eacd77f7763cf32c6c2a25cf566840ec338215564fd213ac98dfdda"
+      "bundle_sha256": "db3bd920ca817bce205039857b1021b1c64701f58f2d847bd47f55a946a4a82e"
     },
     {
       "name": "lexiang",
       "id": "totalclaw-mcp/comm/lexiang",
       "display_name": "乐享知识库",
+      "display_name_en": "Tencent Lexiang",
       "description": "Search, create, and manage documents in your Lexiang knowledge base. Import Markdown, organize by tags, and keep team docs up to date.",
       "description_zh": "搜索、创建和管理乐享知识库中的文档。支持导入 Markdown、按标签整理内容、追踪团队文档的更新动态。",
       "version": "0.1.0",
@@ -2275,16 +2308,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "5f3731e531b19c44752c5440b3135a28701f37361a587b9b75db7343f8457a74",
-          "size": 1903
+          "sha256": "adae68f067d8afdf828d2715a2900437dd150864805899eb7be4d7d669d84c3b",
+          "size": 1936
         }
       ],
-      "bundle_sha256": "564c091b6ffc02ec95f25fe871efb52c724ca865ca0abf3cce89d64c00ab2010"
+      "bundle_sha256": "a2c4131e58d5fb78528ddb08a221481da7635d34356072e9654255c85bde3a9b"
     },
     {
       "name": "shanglv_mcp_gateway",
       "id": "totalclaw-mcp/comm/shanglv_mcp_gateway",
       "display_name": "用友智能服务（AI BaaS）",
+      "display_name_en": "Yonyou AI BaaS",
       "description": "Provides enterprise financial, tax, banking, and travel management services through Yonyou Bank-Enterprise Cloud, Tax-Enterprise Cloud, and Business Travel Cloud, enabling comprehensive fund, tax, and travel operations management via natural language.",
       "description_zh": "通过用友银企联、税企联、商旅云等财务服务产品，为企业提供财务税务与银行资金数据服务，并提供企业商旅运营服务和行程服务。用自然语言完成企业的资金、税务、商旅的全面运营管理。",
       "version": "0.1.0",
@@ -2332,16 +2366,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "962de621dfbd07f06da4ad482f3e2737ab0af2d6258088f662550a7b91bea473",
-          "size": 1806
+          "sha256": "354e402c213f870dc11fa1e9181bdf80f147ac2a516275cb43a2cb9af1a57e11",
+          "size": 1838
         }
       ],
-      "bundle_sha256": "5a63f9f5b67ec5d78b233fa11ba113724eb66991bae8e9416649a26a5362f129"
+      "bundle_sha256": "070e1c2f1540b7ee904ebb021f3d59255e0b3c04c607acefd8919651c81a96a6"
     },
     {
       "name": "tencent_qidian_cs",
       "id": "totalclaw-mcp/comm/tencent_qidian_cs",
       "display_name": "腾讯企点客服",
+      "display_name_en": "Tencent Qidian Customer Service",
       "description": "Tencent Qidian Customer Service connector. Use natural language to manage work orders (query / create / update / status change), monitor agent online status and real-time reception, retrieve customer profiles, pull chat records and messages from human / LLM / text-robot sessions, and view real-time service monitoring, session monitoring, satisfaction and response reports.",
       "description_zh": "腾讯企点客服连接器：用自然语言处理工单（查询/创建/更新/状态变更）、查询坐席在线与实时接待、检索/拉取客户资料、拉取人工/大模型/文本机器人的会话记录和消息、查看客服实时监控、会话监控、客服满意度与响应度报表等数据。",
       "version": "0.1.0",
@@ -2389,16 +2424,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "469836c82d4eef19d4b6552624a0709b069bf532b5126fff03620fdf1180b73c",
-          "size": 1848
+          "sha256": "5a6d9c706567b3209cead8a38ea4ce8faacf39fdbdd5c70920ede977c581b0e9",
+          "size": 1897
         }
       ],
-      "bundle_sha256": "741537d25f9eb7d6fd26121ad1b313b84dd3fb78cedc17e65285a62ca86f2b7d"
+      "bundle_sha256": "d68b8e2fec22a0db302be434221aed858af490030746c9d0440d6c33d9a62a0b"
     },
     {
       "name": "wechat-desktop",
       "id": "totalclaw-mcp/comm/wechat-desktop",
       "display_name": "WeChat Desktop (built-in)",
+      "display_name_en": "WeChat Desktop (built-in)",
       "description": "WeChat Desktop (built-in) MCP server.",
       "description_zh": "桌面微信自控 —— 自动检测 OS(Windows/macOS/Linux)调对应底层:wechat_capabilities/list_unread/open_chat/read_chat/screenshot_chat/send_message。分层读取:native_text(AX/UIA 免模型)→ ocr → clipboard → screenshot(交 agent 视觉)。发送用确定性几何。",
       "version": "0.1.0",
@@ -2450,16 +2486,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "3600be4e269d2e1d563d0c2cf5de98a022e605abb8b6f3ca52e5746d5e035e3e",
-          "size": 957
+          "sha256": "ded16c4a4afe7500d69c965f025adde0e549f18d8bea1f53570326fac7674b47",
+          "size": 1000
         }
       ],
-      "bundle_sha256": "1e1a114c265bbbcccc0306024109c8aa87ebe02d9b4fe53caa5605fd992e6891"
+      "bundle_sha256": "a7c96d06c6a12eab8e3ed2ceb06cb50695ba4b9424e807bd6cfaa42d63910869"
     },
     {
       "name": "wecom",
       "id": "totalclaw-mcp/comm/wecom",
       "display_name": "企业微信",
+      "display_name_en": "WeCom",
       "description": "Query WeCom contacts and departments, send app messages, manage external contacts.",
       "description_zh": "查询企业微信通讯录、部门与成员，发送应用消息，管理外部联系人。",
       "version": "0.1.0",
@@ -2550,8 +2587,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "384f3ca9c88c1214a43cb4f8a94aff81d9ff3b330d1bb031a18c24999e37a54b",
-          "size": 1574
+          "sha256": "230f85e0c9fa4a8c9aecb6fe4df690375ad7bc8e9cc91509aa5f032f52ea7ccf",
+          "size": 1597
         },
         {
           "path": "tools.json",
@@ -2559,12 +2596,13 @@
           "size": 4223
         }
       ],
-      "bundle_sha256": "3a5477657ad3c3f98248be063ed39cb9781e4f9f8dc8286dda0b5866477736d3"
+      "bundle_sha256": "b463fa03c5d27fbaac08c9986e8d8c54cb5431dd7e7258df554e2ef4dcc72c6e"
     },
     {
       "name": "ai_hive",
       "id": "totalclaw-mcp/creative/ai_hive",
       "display_name": "AI-HIVE",
+      "display_name_en": "AI-HIVE",
       "description": "100+ top AI models (Seedance 2.5, H3 MiniMax, Happyhorse, GPT-image, Nano-Banana, Deepseek, Kimi). One config.",
       "description_zh": "连接全球 100+ 顶尖 AI 模型（Seedance 2.5、H3 (MiniMax)、Happyhorse、GPT-image、Nano-Banana、Deepseek、Kimi 等），一键搞定文本、图像、视频创作。",
       "version": "0.1.0",
@@ -2613,16 +2651,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "17e6901bdad4bfe6e63958d58e79f5c40bf55802d0547bf5e62b5696815f645e",
-          "size": 2698
+          "sha256": "d60fae17af6927f45a6355eb72de4f016beb31dcd884eada81de367be14486af",
+          "size": 2723
         }
       ],
-      "bundle_sha256": "ee42823fecfbca5735d30827927f4c31303ae3fac36a65f892d23c828b4b11b7"
+      "bundle_sha256": "5392145fb2bb29dad5bb44436057fef179236f0613ca4e6da08e54815e144e1e"
     },
     {
       "name": "blender",
       "id": "totalclaw-mcp/creative/blender",
       "display_name": "Blender",
+      "display_name_en": "Blender",
       "description": "Drive a live Blender session for modeling, scenes, and renders.",
       "version": "0.1.0",
       "author": "upstream",
@@ -2673,16 +2712,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "b65fe205fe29a4be75c39be45d7d71bac82fca629df9e3a817018fa09bca6d2a",
-          "size": 684
+          "sha256": "cd60eccdf2cd32783d012d53acd22bbaa32fd345885d95f31cd0f0c660c99bb7",
+          "size": 709
         }
       ],
-      "bundle_sha256": "63430a0db48b2d3362571d5fbe6718ebd09c634470a8412f9724f52faa2d9a40"
+      "bundle_sha256": "f6db7c1b9cf724975e6cad0b3302b78a0b5405f5522d7a573c750db08c7548a7"
     },
     {
       "name": "camscanner_mcp",
       "id": "totalclaw-mcp/creative/camscanner_mcp",
       "display_name": "扫描全能王",
+      "display_name_en": "CamScanner",
       "description": "Smart document conversion and processing platform. Supports image/PDF format conversion (Word, Excel, Markdown, PDF), image enhancement (shadow removal, sharpening, HD upscaling, photo restoration), OCR, image translation, formula extraction, watermark processing, multi-image merging, and cloud document saving.",
       "description_zh": "智能文档转换与处理平台。支持图片/PDF格式转换（Word、Excel、Markdown、PDF）、图片增强（去阴影、锐化、高清化、老照片修复）、OCR文字识别、图片翻译、公式提取、水印处理、多图合并、文档云端保存等。",
       "version": "0.1.0",
@@ -2730,16 +2770,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "75eda26bdacc8361a9209b8bfc8eac9611b22bde9cd9000670e871e088d98ace",
-          "size": 1684
+          "sha256": "2b875a72e4d3ef2d247ab092508ccb5e63298c429a4d65246feea2abd2e674ed",
+          "size": 1712
         }
       ],
-      "bundle_sha256": "5a52471a307bd8d51583b0a1998a588946b195f7b7cfd2541e1977474f8451e3"
+      "bundle_sha256": "498c7fe16687a26f4982576c29e5d954c8a6c034213a183f8d418f8ef4622141"
     },
     {
       "name": "canva",
       "id": "totalclaw-mcp/creative/canva",
       "display_name": "Canva 可画",
+      "display_name_en": "Canva",
       "description": "Search and manage Canva designs, autofill from brand templates, export to PDF/image/PPTX.",
       "description_zh": "搜索与管理 Canva 设计稿，用品牌模板批量套用内容，导出为 PDF / 图片 / PPTX。",
       "version": "0.1.0",
@@ -2824,8 +2865,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "9fed2ee711a4fd40db4cdd923f6fc793aa093db3f75d8a89b7d7fff7b8691108",
-          "size": 1451
+          "sha256": "b8d147122e96ee10da41f28f87f1c41544221c33b5b39b587dc1c482e13a1bcd",
+          "size": 1474
         },
         {
           "path": "tools.json",
@@ -2833,12 +2874,13 @@
           "size": 5963
         }
       ],
-      "bundle_sha256": "231d915a1b7120eb011c04bd971be5f53156e7a0ad5f36dd608e74f29da8fe46"
+      "bundle_sha256": "0980f2eca9e16b8315bf35ab159639a1240e92fbec227c8584baf284405ee67b"
     },
     {
       "name": "flova",
       "id": "totalclaw-mcp/creative/flova",
       "display_name": "Flova",
+      "display_name_en": "Flova",
       "description": "Create, revise, review, and export professional videos with AI, from creative planning and storyboards to final delivery.",
       "description_zh": "使用 AI 创建、修改、审阅和导出专业视频，覆盖从创意与分镜到成片交付的完整流程。",
       "version": "0.1.0",
@@ -2921,8 +2963,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "355e449dc3376fa27acf12dff8b3fb6bad065e1a6ed94529f6886443c69a41e9",
-          "size": 1204
+          "sha256": "50347b69954bad23c84efd56a9e12ee89f08efcf0890c6ce7db015825a955806",
+          "size": 1227
         },
         {
           "path": "tools.json",
@@ -2930,12 +2972,13 @@
           "size": 20745
         }
       ],
-      "bundle_sha256": "7d62c66322b6eb2c4f90852776a233ff80b3c16c05f6e2a28bb93ef545171e58"
+      "bundle_sha256": "749302efe2e29a92ebf595cbf9e013407e440eec878bfe6c72c4f3f390c7e740"
     },
     {
       "name": "infimind_ecommerce_image",
       "id": "totalclaw-mcp/creative/infimind_ecommerce_image",
       "display_name": "极睿电商生图",
+      "display_name_en": "Infimind Ecom Image",
       "description": "Generate KOC seeding collages, product main images, and product detail pages through MCP, then track task results.",
       "description_zh": "通过 MCP 生成 KOC 种草拼图、商品主图与电商商品详情页，并查询任务生成结果。",
       "version": "0.1.0",
@@ -2994,16 +3037,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "11c7abe30f322b60182631632d58822782610940253506e024d68bdeef79bfab",
-          "size": 2055
+          "sha256": "a745037f940818e4c1b548fe69eba841dfa8403ad952310e5289488c11525e2f",
+          "size": 2092
         }
       ],
-      "bundle_sha256": "33c0ee15c598ca229eb93ccadf184d5ac62f53ec88122c51796cba4771e6c4df"
+      "bundle_sha256": "5070c89a1d129b18d69d561edcdb23cfd1a52d274b365ec6cdab4468d7088099"
     },
     {
       "name": "infimind_video",
       "id": "totalclaw-mcp/creative/infimind_video",
       "display_name": "极睿视频",
+      "display_name_en": "Infimind Video",
       "description": "Create professional videos from prompts and reference media, track generation progress, and analyze videos into reusable creative insights.",
       "description_zh": "通过自然语言使用极睿视频的专业视频生成和视频分析能力，支持多素材参考、任务进度查询与结构化分析结果。",
       "version": "0.1.0",
@@ -3062,16 +3106,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "b3b7f3c796b34b8b493be0df4f89f3dcbe911b3cd678122a8a2ddaec3acdc847",
-          "size": 1696
+          "sha256": "76aeede83d55b465c88dcbd542502211a395bff6ebbd4fa6504a4a22e6f40aec",
+          "size": 1728
         }
       ],
-      "bundle_sha256": "3bf90c4ba8cf1c0928a62a0dc9f2403e68a6686d8e45eb668063d044cb3b9ae2"
+      "bundle_sha256": "5c078ab16c44c75979083bf492d6c0aed91363bd347c64573f15ffac02a0cb8a"
     },
     {
       "name": "kling_ai_plugin",
       "id": "totalclaw-mcp/creative/kling_ai_plugin",
       "display_name": "Kling AI",
+      "display_name_en": "Kling AI",
       "description": "Turn every idea into a striking image or video. Kling AI (Kling / 可灵AI) is an AI image generation and AI video generation connector for creators, designers, video producers, ecommerce sellers, advertising, marketing, and brand teams. Use natural language for text-to-image, image-to-image, text-to-video, image-to-video, reference-image creation, and single- or multi-shot video. Create posters, illustrations, portraits, product images, ecommerce hero images, Listing images, product detail graphics, ad creatives, product showcase videos, marketing clips, ecommerce short videos, social media videos, and cinematic content for Taobao, Tmall, JD, Pinduoduo, Douyin, Kuaishou, Xiaohongshu, TikTok, Amazon, Shopify, and more. Upload reference images, check remaining credits, submit generation tasks, track progress, query task status, and retrieve final images or videos. If you are searching for competitor tools, similar AI generators, or alternatives to Hailuo AI, Seedance (Seeddance), Vidu, Jimeng, Runway, Pika, Sora, or Veo, use Kling AI to build a high-quality Kling MCP creative workflow.",
       "description_zh": "一句话，让灵感从想法变成大片。可灵（Kling / Kling AI / 可灵AI）是面向创作者、设计师、视频制作人、电商卖家、广告营销和品牌团队的 AI 生图与 AI 生视频连接器，可在支持 MCP 的客户端中直接用自然语言完成图片生成和视频生成，包括文生图、图生图、文生视频、图生视频、参考图创作、单镜头与多分镜视频。适合制作海报、插画、人像、商品图、电商主图、Listing 图、商品详情图、广告素材、产品展示视频、营销短片、电商短视频、种草视频、社交媒体视频和电影感创意视频，可用于淘宝、天猫、京东、拼多多、抖音、快手、小红书、TikTok、Amazon、Shopify 等平台的内容创作。支持上传参考图片、查询剩余额度、提交生成任务、跟踪生成进度、查询任务状态并获取最终图片或视频结果。如果你正在搜索竞品、同类工具或替代方案，如海螺 AI（Hailuo AI）、Seedance（Seeddance）、Vidu、即梦（Jimeng）、Runway、Pika、Sora 或 Veo，也可以使用可灵快速完成高品质图像与视频创作，搭建自己的 Kling MCP AI 创作工作流。",
       "version": "0.1.0",
@@ -3119,16 +3164,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "797e6e4ee7d53feb6ce899c107c3aaecd7d28992e668c6ea1104a572ee294028",
-          "size": 3940
+          "sha256": "8c8c9ba7d991e4349377c036993138c1951fa0c17988e58f453e098e67bb33be",
+          "size": 3966
         }
       ],
-      "bundle_sha256": "4ca97efd19fd882ca785ae59c5f050396b3c14ed1dcdbef2151772c525998b44"
+      "bundle_sha256": "f442702bd633d329d678c0b535d80fb3ff7f1eb6f27eeff1903e0e7e622aa399"
     },
     {
       "name": "kling_ai_plugin_ai",
       "id": "totalclaw-mcp/creative/kling_ai_plugin_ai",
       "display_name": "Kling AI",
+      "display_name_en": "Kling AI",
       "description": "Turn every idea into a striking image or video. Kling AI (Kling / 可灵AI) is an AI image generation and AI video generation connector for creators, designers, video producers, ecommerce sellers, advertising, marketing, and brand teams. Use natural language for text-to-image, image-to-image, text-to-video, image-to-video, reference-image creation, and single- or multi-shot video. Create posters, illustrations, portraits, product images, ecommerce hero images, Listing images, product detail graphics, ad creatives, product showcase videos, marketing clips, ecommerce short videos, social media videos, and cinematic content for Taobao, Tmall, JD, Pinduoduo, Douyin, Kuaishou, Xiaohongshu, TikTok, Amazon, Shopify, and more. Upload reference images, check remaining credits, submit generation tasks, track progress, query task status, and retrieve final images or videos. If you are searching for competitor tools, similar AI generators, or alternatives to Hailuo AI, Seedance (Seeddance), Vidu, Jimeng, Runway, Pika, Sora, or Veo, use Kling AI to build a high-quality Kling MCP creative workflow.",
       "description_zh": "一句话，让灵感从想法变成大片。可灵（Kling / Kling AI / 可灵AI）是面向创作者、设计师、视频制作人、电商卖家、广告营销和品牌团队的 AI 生图与 AI 生视频连接器，可在支持 MCP 的客户端中直接用自然语言完成图片生成和视频生成，包括文生图、图生图、文生视频、图生视频、参考图创作、单镜头与多分镜视频。适合制作海报、插画、人像、商品图、电商主图、Listing 图、商品详情图、广告素材、产品展示视频、营销短片、电商短视频、种草视频、社交媒体视频和电影感创意视频，可用于淘宝、天猫、京东、拼多多、抖音、快手、小红书、TikTok、Amazon、Shopify 等平台的内容创作。支持上传参考图片、查询剩余额度、提交生成任务、跟踪生成进度、查询任务状态并获取最终图片或视频结果。如果你正在搜索竞品、同类工具或替代方案，如海螺 AI（Hailuo AI）、Seedance（Seeddance）、Vidu、即梦（Jimeng）、Runway、Pika、Sora 或 Veo，也可以使用可灵快速完成高品质图像与视频创作，搭建自己的 Kling MCP AI 创作工作流。",
       "version": "0.1.0",
@@ -3176,16 +3222,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "bdd3dd1af56061a9af37530f4fe73ecdb11516f5ebd1a268c3d6a995874fd794",
-          "size": 3940
+          "sha256": "b09de37fb6e9c263086a409e9b357bfa987298c64cf0b1a47414ea9386bcbe12",
+          "size": 3966
         }
       ],
-      "bundle_sha256": "120962722d1d2901d9f2b1c76e9eff5d221f07b3422da9750abdf91364b52b7c"
+      "bundle_sha256": "4b1466eb5b0cf0c7a3548d6d72127d4214faf807fed4ff09510115e6fdbc6977"
     },
     {
       "name": "mastergo",
       "id": "totalclaw-mcp/creative/mastergo",
       "display_name": "MasterGo",
+      "display_name_en": "MasterGo",
       "description": "Read MasterGo design files as DSL and turn selected layers into code.",
       "description_zh": "读取 MasterGo 设计稿的 DSL，把选中图层还原成代码；vibe runtime 还支持反向把本地代码同步回画布。",
       "version": "0.1.0",
@@ -3251,16 +3298,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "8d92201968ce013a4cb91776e5c75579189aa2a888feb550c5244774872b04a8",
-          "size": 1924
+          "sha256": "e310e3be5c638fd5c3d02e3b6d654193b63441e257bb924cb405ef05da80a19c",
+          "size": 1950
         }
       ],
-      "bundle_sha256": "58e76c686195f18860503bc9d49e3a9490dc3cc3a0f961d86a4ca16effeaf133"
+      "bundle_sha256": "fdaf083bd8a2fd13b63c37133203c1cf328f6971cdd6ab9c9faedd094f4f12c6"
     },
     {
       "name": "picset_commerce_images",
       "id": "totalclaw-mcp/creative/picset_commerce_images",
       "display_name": "Picset AI 电商图片",
+      "display_name_en": "Picset AI Commerce Images",
       "description": "Design and generate ecommerce main images, detail images, and coordinated Listing image suites through Picset AI.",
       "description_zh": "Picset AI 面向电商卖家、设计师和品牌团队，提供设计并制作电商套图、商品主图和商品详情图等。适用于设计制作电商套图、商品套图、主图、详情图、电商图、Listing 图、上架图、卖点图、功能图、场景图、详情长图或长详情页等商品图片需求时使用。适配 Amazon、淘宝、天猫、1688、Temu、TikTok Shop、拼多多、抖音电商、OZON、独立站、Shopify、Shopee、阿里巴巴国际站、Alibaba.com、速卖通、AliExpress、SHEIN、京东等国内国际主流电商平台",
       "version": "0.1.0",
@@ -3318,16 +3366,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "b51ca74bae9888d739e31d64d12ef887fa20be8058dcc25e55457dae4ac45ac6",
-          "size": 2032
+          "sha256": "ea2ddca4bc5eac37189d7b74faf786508adcd59c796f0fb5812c53f9e3b730ff",
+          "size": 2075
         }
       ],
-      "bundle_sha256": "ddf83686010d21d2d7237f93d584f9c395ebefad29ea1d7dc5fd2c714e0a123c"
+      "bundle_sha256": "45e623695121189fb8e87df7efbcf60a00a20634f7ad4462f6c8785a45592446"
     },
     {
       "name": "picset_video_generation",
       "id": "totalclaw-mcp/creative/picset_video_generation",
       "display_name": "Picset AI 视频创作",
+      "display_name_en": "Picset AI Video Generation",
       "description": "Picset AI video creation connector for ecommerce product video generation, viral video recreation, and model image generation with asset upload registration, script planning, credit estimates, explicit confirmation, asynchronous generation, and task status tools. The MVP supports Seedance 2.0, Seedance 2.0 Fast, and Seedance 2.0 Mini models, with Seedance 2.0 as the default.",
       "description_zh": "Picset AI 视频创作连接器支持在支持 MCP 的客户端中通过密钥调用电商商品视频生成、爆款视频复刻和模特图生成能力，完成素材上传登记、脚本规划、视频脚本生成、积分预估、确认提交、异步生成和任务状态查询。MVP 支持 Seedance 2.0、Seedance 2.0 Fast、Seedance 2.0 Mini 三个模型，默认使用 Seedance 2.0。",
       "version": "0.1.0",
@@ -3385,16 +3434,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "dbb432c35afaeeee42af210e4e3b1d167017e305baf06324bbad395c087f9e2d",
-          "size": 2372
+          "sha256": "f3feb6e16438ce48688e92445b0b2809c78cac58d0bc8940820b3c2556d72361",
+          "size": 2416
         }
       ],
-      "bundle_sha256": "134d11107988c97da86ea4074f5508db8b18552a17b756e4274c44919029ce16"
+      "bundle_sha256": "23a607a8a3b10ab4fcde2e0ee722b3d05ea2d26fbc516dde0030159e8ef3ce57"
     },
     {
       "name": "unreal_engine",
       "id": "totalclaw-mcp/creative/unreal_engine",
       "display_name": "Unreal Engine",
+      "display_name_en": "Unreal Engine",
       "description": "Drive Unreal Editor 5.8+ through Epic's experimental MCP toolset registry: scene, asset, Blueprint, Sequencer, PIE, automation, capture, and editor scripting workflows.",
       "version": "0.1.0",
       "author": "upstream",
@@ -3443,16 +3493,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "b550f6d5a366cbe1ae6c40e0824e62c48988d0a88ac5034112bcbefeb5905d3f",
-          "size": 764
+          "sha256": "680928422e40cad53a9d728f853cf9040f58c687ed9d29ba16c2621455ec931e",
+          "size": 795
         }
       ],
-      "bundle_sha256": "0d9fa77b912227f792f09b790a45caaab8c86b8846d372fecc9043860e0fcf92"
+      "bundle_sha256": "09e6cf1e3b1ce72b25e5db8b9fd8b0677bf4cec2566e7242f458d8be32014b54"
     },
     {
       "name": "dknowc_mcp",
       "id": "totalclaw-mcp/data/dknowc_mcp",
       "display_name": "深知可信工作台",
+      "display_name_en": "DKnow Trusted Workbench",
       "description": "DKnow Trusted Workbench helps with policy, legal, standards, and public-service work. It provides trusted Q&A, authoritative search, deep research, and evidence-based material organization, helping users find official sources, eligibility requirements, application materials, subsidies, regulations, and standards across regions and time periods.",
       "description_zh": "深知可信工作台面向政策、法律、标准和公共服务场景，提供可信问答、权威检索、深度研究和材料整理能力。它可以帮助用户查询政策原文、办事条件、申报材料、补贴资质、法律法规和行业标准，梳理多地区、多时间范围的信息，并基于可追溯的权威来源形成清晰、可核验的结果。",
       "version": "0.1.0",
@@ -3500,16 +3551,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "cee859c6d9ba0f8547f10db39c99f93f852f5f612952e290b69f3836e1e5b416",
-          "size": 2071
+          "sha256": "b2f3943e95eb312aa78a0aaeb1283578821515127d81253bef77e6d8785e1ee6",
+          "size": 2112
         }
       ],
-      "bundle_sha256": "185486e042ac11cb00206eaa38e7d9b9996d7dd37071d56f626b7c3ec0198ef5"
+      "bundle_sha256": "85893d81bda13a642ed66a4fa17b4ba7b39c03ff3b9d92aaa7f6e255c9b8bcaa"
     },
     {
       "name": "finenter",
       "id": "totalclaw-mcp/data/finenter",
       "display_name": "进门投研",
+      "display_name_en": "Finenter",
       "description": "Finenter MCP covers public roadshow content from securities firms, listed companies, and asset management institutions; integrates institutional-grade insights from domestic and international research reports and brokerage commentary; and provides real-time market data, financial data, quantitative factors, and more. Data Agent cleansing and structuring reduce token usage and improve response accuracy.",
       "description_zh": "进门MCP覆盖券商、上市公司及资管机构的公开路演内容，整合内外资研报、券商点评等机构级观点，并提供实时行情、财务及量化因子等数据。经Data Agent清洗与结构化处理，减少Token消耗，提升回答准确率。",
       "version": "0.1.0",
@@ -3557,16 +3609,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "bcbb277e2c4876da01118fe938d2b9e2dc7fdd8c3ddc4d55bd4851a7d009839a",
-          "size": 2303
+          "sha256": "67d76d4d89f26d07478a6d535614294206ef4387b3f8cb2f7cb3cd9cef7a87af",
+          "size": 2329
         }
       ],
-      "bundle_sha256": "63efb3052f4087b52800dec70f4021d6609a96beab5f37cf28b2b0e94f0c7531"
+      "bundle_sha256": "d0674519618aac2cb3fb126488e9000e12eb50d6dab51942f97f09c554499e9c"
     },
     {
       "name": "gangtise_mcp",
       "id": "totalclaw-mcp/data/gangtise_mcp",
       "display_name": "Gangtise投研",
+      "display_name_en": "Gangtise Research",
       "description": "Gangtise MCP aggregates institutional-grade insights, meeting notes, event calendars, and other alternative data, while providing AI-agent-ready, pre-generated research content alongside structured global market, financial, valuation, and industry data.",
       "description_zh": "Gangtise MCP汇聚机构级观点，研报，日程等另类数据，提供投研AI Agent预生成数据及全球行情/财务/估值/宏观行业等结构化数据。",
       "version": "0.1.0",
@@ -3633,16 +3686,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "fe3b2b5550469914cf6bc60c0b756cd94624c70e5c392ff4554beb4839599298",
-          "size": 2391
+          "sha256": "877836edb999856d2dd35c12dbe7391359ed58c63461719a8fb2d7962229d9ef",
+          "size": 2426
         }
       ],
-      "bundle_sha256": "9d3ac39c80be52b142b2956b58a943193dff45945166f34c30a342764cdb35f9"
+      "bundle_sha256": "58bba4fe7e0ce09c18cbddf899d90f2e19d0a01c0b62d42c92429a281a9c5674"
     },
     {
       "name": "gildata",
       "id": "totalclaw-mcp/data/gildata",
       "display_name": "恒生聚源 MCP",
+      "display_name_en": "Gildata MCP",
       "description": "Connect to Gildata MCP to query structured financial data, research reports, corporate announcements, news, conditional stock selection, macroeconomic & industry data, as well as enterprise business data.",
       "description_zh": "连接恒生聚源 MCP，查询金融结构化数据、研究报告、公司公告、新闻资讯、条件选股、宏观行业、工商企业数据。支持基金经理观点持仓一致性分析、行业速报生成、金融资讯热点解读。",
       "version": "0.1.0",
@@ -3700,16 +3754,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "00128a66eaf8ab9463ffa2f69522df9a4d2c36ea28623e6ec3a35e8b6cac4c64",
-          "size": 1781
+          "sha256": "90f9883f4088839f0cf1c2cfa7b104043ac47869bea3bc557c1c694cd5a890fb",
+          "size": 1810
         }
       ],
-      "bundle_sha256": "df64f0afb04933ee8c69be1a04b1f7476b37bf5200ba41ee37745df8b3e715a6"
+      "bundle_sha256": "c6c5d3106950c5130346dc2295a50bc91ab6c04d341518475faf56f7f777074e"
     },
     {
       "name": "kuaicha_search",
       "id": "totalclaw-mcp/data/kuaicha_search",
       "display_name": "同花顺快查企业数据",
+      "display_name_en": "Kuaicha Enterprise Search",
       "description": "Search Chinese company profiles, ownership, risks, intellectual property, tenders, and news.",
       "description_zh": "查询中国企业工商、股权投资、经营司法风险、知识产权、招投标及新闻舆情数据。",
       "version": "0.1.0",
@@ -3770,8 +3825,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "0ee33aed535b89ffa139cac494ae1c22b344080d149b2f2a9e14c744d49d37b2",
-          "size": 1924
+          "sha256": "66bd1ad12110958a1f7c3a7b3e1e1fe820e63a59b6c53546614cf2f2b28f9746",
+          "size": 1967
         },
         {
           "path": "tools.json",
@@ -3779,12 +3834,13 @@
           "size": 2943
         }
       ],
-      "bundle_sha256": "94f0fd4ed04f0810f91b01fb3d8c907d993882809c6019b238f0a0fe67252c33"
+      "bundle_sha256": "d9ccb15869bb9b6bbd9639b3b8d4eafc4db57f2797701e727e16f294ae4638c7"
     },
     {
       "name": "mcp_postgres",
       "id": "totalclaw-mcp/data/mcp_postgres",
       "display_name": "PostgreSQL",
+      "display_name_en": "PostgreSQL",
       "description": "PostgreSQL MCP server.",
       "description_zh": "PostgreSQL 只读查询 — 暴露 query / schema / 表元信息工具。Connection string 在 args 末。已归档但仍可用。",
       "version": "0.1.0",
@@ -3845,16 +3901,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "749971551b2b8f323681c69b07971f8cbcda4a6585fad77cb6ee2f391e7953e5",
-          "size": 947
+          "sha256": "3a964b1bbd6a870219bfdcf32e7498e8772965d28e5de13fbfc0e5aac60b58a4",
+          "size": 975
         }
       ],
-      "bundle_sha256": "a69af105c3aa0035253c137ca4ac215067173e0254fd096772aa170c7658b6a3"
+      "bundle_sha256": "09eba109002ee888dcf3a6756a8f921d525a521b00a04e2f83c193a99cb34771"
     },
     {
       "name": "mcp_sqlite",
       "id": "totalclaw-mcp/data/mcp_sqlite",
       "display_name": "SQLite",
+      "display_name_en": "SQLite",
       "description": "SQLite MCP server.",
       "description_zh": "SQLite 本地数据库读写 — list_tables / describe_table / read_query / write_query / create_table。轻量本地存储工作流。已归档但仍可用。",
       "version": "0.1.0",
@@ -3909,16 +3966,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "c2f9c0f4293cde0489edd2b5d4be5b47acd07a50eab28d0fdf063292efd5fdad",
-          "size": 1022
+          "sha256": "a2f43eb619dca980c8331ac743af39fd939a1a55fa7654077c9202860cfc9ba4",
+          "size": 1046
         }
       ],
-      "bundle_sha256": "9c7624d569994aa92a6bc9195d24182f187d25a2c73cb871c6f83c1207f14ff4"
+      "bundle_sha256": "b1a236026e573ffb0b4797c8a62d9d0050cd04729537cfd4101f77f2e2f1adef"
     },
     {
       "name": "morningstar",
       "id": "totalclaw-mcp/data/morningstar",
       "display_name": "晨星 Morningstar",
+      "display_name_en": "Morningstar",
       "description": "Morningstar global and China fund data, analyst research and portfolio analytics for fund screening, risk, holdings, fees and reviews.",
       "description_zh": "接入晨星全球与中国基金数据，通过自然语言实现基金查询、筛选、分析与深度研究，以及组合穿透分析",
       "version": "0.1.0",
@@ -3966,16 +4024,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "103ba7104770c3e057831c0d92456978d6a5a8fbc57bd5eb06930c9f28ea6799",
-          "size": 1410
+          "sha256": "01b64433f4f13c9ac3d555e294ef511e8be1e6f13bcd24f5051b55df53e05b27",
+          "size": 1439
         }
       ],
-      "bundle_sha256": "828c065881b2fae1f2bf00dfbbaaf9403e7a75e3650da7aeb1053c508d390d2e"
+      "bundle_sha256": "7d245c38fda49aeee79fcb963be0c06438906fd2268260dd1335e8e22dde1e17"
     },
     {
       "name": "mx_ds_mcp",
       "id": "totalclaw-mcp/data/mx_ds_mcp",
       "display_name": "东方财富妙想MCP",
+      "display_name_en": "Eastmoney MX MCP",
       "description": "The financial investment research MCP tool suite, which enables natural language queries, relies on data sources from Eastmoney to provide query capabilities for A-shares, Hong Kong stocks, US stocks, funds, bonds, index sectors, and macroeconomic data. It boasts multi-condition asset screening, brokerage research report retrieval, full-market announcement analysis, and financial news retrieval capabilities.",
       "description_zh": "通过自然语言查询的金融投研 MCP 工具套件，依托东方财富数据源，提供A股、港股、美股、基金、债券、指数板块、宏观数据查询，具备多条件资产筛选、券商研报检索、全市场公告解析、金融资讯检索能力。",
       "version": "0.1.0",
@@ -4023,16 +4082,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "7ac9f6a06bda73adce066bbd0ffcc7cf9660bae9f4f6c29a67ce1da257b3807a",
-          "size": 1819
+          "sha256": "a7b6d988ee1ebe33072bf02f671d23beec475ce914030fcf5b9ea0136fc56622",
+          "size": 1853
         }
       ],
-      "bundle_sha256": "ab4d2cd58e272dc356e19ba8f7f55770ea1f032586879f8e070a3da1a2cdd0f0"
+      "bundle_sha256": "336235468497c48f226fd0e6689e14630f54be17f33f047fc30972add9214efb"
     },
     {
       "name": "opendata",
       "id": "totalclaw-mcp/data/opendata",
       "display_name": "及刻智能·时空数据MCP",
+      "display_name_en": "Jike Spatiotemporal Data MCP",
       "description": "Query offline spatiotemporal data via natural language — area heat maps, scene recognition, customer-flow analysis, POI search and more — to power business insights and site-selection scenarios.",
       "description_zh": "通过自然语言查询线下时空数据，提供区域热力、场景识别、客流分析、POI查询等能力，助力商业洞察、开店选址等应用场景。",
       "version": "0.1.0",
@@ -4097,8 +4157,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1daad51cae978b85b513ff43dc23fa764a0d21ba675e8ec00c0305e0597e24ba",
-          "size": 1965
+          "sha256": "be4eed22ed3af943a9481d7dd2762e695dc3166168a2d64b7f2c48d5b554cd71",
+          "size": 2011
         },
         {
           "path": "tools.json",
@@ -4106,12 +4166,13 @@
           "size": 10594
         }
       ],
-      "bundle_sha256": "88719c5c2c346b2a2fc0a3d4232f88e696d17bff3ad74b2428a9487e8cce811c"
+      "bundle_sha256": "8655e84f986c153d2627e75db60181ab7275e3dc1cd46b8167f1d3b3568e761a"
     },
     {
       "name": "pandadata",
       "id": "totalclaw-mcp/data/pandadata",
       "display_name": "PandaData 金融数据",
+      "display_name_en": "PandaData",
       "description": "Query, organize, and analyze financial data across Chinese, Hong Kong, and U.S. Equities, futures, options, funds, macroeconomics, and quantitative factors.",
       "description_zh": "查询、整理和分析 A 股、期货、期权、港美股、基金、宏观经济及量化因子等金融数据，支持统计比较与趋势归纳。",
       "version": "0.1.0",
@@ -4159,16 +4220,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "acc5eab7a903a2171c7cd669de9b58a53f011e23b3cc29d72fe55a3a4760c024",
-          "size": 1492
+          "sha256": "9f343a8129d4a46827548e0d9ba34c507418967708004edfeeebd9399600ba35",
+          "size": 1519
         }
       ],
-      "bundle_sha256": "66f695dbd667523f82d6d5d0c0e7a87f0a58f5e659d819bf5a0baa23b9ef723e"
+      "bundle_sha256": "425a783e1179580f4a9fedd5b0b8de0c9004926f8864151da534d7bddda1e4f5"
     },
     {
       "name": "qcc",
       "id": "totalclaw-mcp/data/qcc",
       "display_name": "企查查",
+      "display_name_en": "Qichacha",
       "description": "Look up Chinese company registration, shareholders, key personnel and risk data via Qichacha.",
       "description_zh": "查询企业工商登记、股东结构、主要人员与经营风险等公开企业信息。",
       "version": "0.1.0",
@@ -4258,8 +4320,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "57c4f24d39c21813659f8820abf38dbc615ac86675ba9e52993bf893ce0c2799",
-          "size": 1571
+          "sha256": "6322e0899e2d896b6da7484e43e189d6f36c283f195b81b3e485ddc5be17dadd",
+          "size": 1597
         },
         {
           "path": "tools.json",
@@ -4267,12 +4329,13 @@
           "size": 3699
         }
       ],
-      "bundle_sha256": "50f5a889006e53e7d4025f644144958c5cf25546c15f911cd111aff26f0e6844"
+      "bundle_sha256": "d21813dde8fd9708806a95f35df4adb475c712f599bcbb1f8572f81ee549d183"
     },
     {
       "name": "qixinhuiyan_mcp",
       "id": "totalclaw-mcp/data/qixinhuiyan_mcp",
       "display_name": "启信慧眼",
+      "display_name_en": "Qixinhuiyan",
       "description": "Connect to Qixinhuiyan's comprehensive enterprise data capabilities through Qixinhuiyan MCP, enabling users to use natural language for company search, business profiling, risk identification, business updates, intellectual property, and other business intelligence analysis.",
       "description_zh": "通过启信慧眼 MCP 接入企业全景数据能力，支持用户用自然语言完成企业搜索、工商画像、风险识别、经营动态、知识产权等商业情报分析。",
       "version": "0.1.0",
@@ -4320,16 +4383,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "31fcba293cea233965cd102b0b807cecf2accb73861c726b4c992a06eed9de2a",
-          "size": 1568
+          "sha256": "3db80e19ae5f80c76c6707d1a9f55094c16c9f02f87f9e021544caad22204f3a",
+          "size": 1597
         }
       ],
-      "bundle_sha256": "dac5db49102adc8afd314870c0fa31fd51bffb7c43af2b7af2fc15e7e150e8df"
+      "bundle_sha256": "2b2dd22209cf69434338633e89d0215419caf4918ccb03dcb3487d71ac21f462"
     },
     {
       "name": "sq_company_dynamic",
       "id": "totalclaw-mcp/data/sq_company_dynamic",
       "display_name": "上奇产业通-企业动态追踪",
+      "display_name_en": "Company Dynamic Tracking",
       "description": "Tracks company dynamics across its full lifecycle: investment, equity changes, innovation platforms, bidding, IP, rankings, migration, certifications, business changes, IPO, standards, recruitment, land acquisition, with entity matching.",
       "description_zh": "实时追踪企业全生命周期动态，覆盖投资设立、股权变动、创新平台、中标、知识产权、排名、迁移、资质认定、工商变更、上市、标准制定、招聘、拿地等维度，并提供企业实体匹配。",
       "version": "0.1.0",
@@ -4387,16 +4451,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "6f391f1a6f0805e49f5f556160fe14dc471e44f5e8ed04b382a949407287229b",
-          "size": 1919
+          "sha256": "949dbf06b9b0ed8d43fafac6bcff8ca2f4b3e5227e136d88a20b22df8c79ea96",
+          "size": 1961
         }
       ],
-      "bundle_sha256": "cb6cb18a995d6725bbb54bf3f196d333c40df96c1e02945d1d11e39636d614c4"
+      "bundle_sha256": "3c48a5fa816359053531580e8e08e5a284061af79c2b459859aeeed7da14e702"
     },
     {
       "name": "tdx_connector",
       "id": "totalclaw-mcp/data/tdx_connector",
       "display_name": "通达信",
+      "display_name_en": "Tongdaxin Finance",
       "description": "Query global stock data via Tongdaxin MCP. Supports screening, reports, and macro analysis.",
       "description_zh": "通过通达信 MCP 查询全球股票行情数据、条件选股、研究报告、公告资讯和宏观信息。支持个股基本面分析、同行业对比和智能选股筛查。",
       "version": "0.1.0",
@@ -4444,16 +4509,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "3c05336a401e269ef71085f7b8f01ea0415ff1c2c2f810b6962def527d500bc8",
-          "size": 1353
+          "sha256": "3c9c684741b4d06603fe0a198c6f431cd48cc6b1fc3c8d7a2074efe67a747f21",
+          "size": 1388
         }
       ],
-      "bundle_sha256": "e534f4e2a6dbb0c69718f83abadf6f66b795d61e75260ede597ee1abfc9516ca"
+      "bundle_sha256": "0add6ef865b52151b1687c6320a771ca6b381825851d81c782f4a6223f52f1e7"
     },
     {
       "name": "tianyancha",
       "id": "totalclaw-mcp/data/tianyancha",
       "display_name": "天眼查",
+      "display_name_en": "Tianyancha",
       "description": "Look up Chinese company registration, shareholders, staff, investments, changes and lawsuits via Tianyancha.",
       "description_zh": "查询企业工商登记、股东出资、主要人员、对外投资、变更记录与法律诉讼等公开企业数据。",
       "version": "0.1.0",
@@ -4540,8 +4606,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "8aece33ea0688c540681cb4ab0961d8b0807a74370a240c65bdc41eb94f54570",
-          "size": 1503
+          "sha256": "ce2ed1db6ab3b7cd36638caa7fb403493eda96a7e116e9aadd7bb8ae2f8640dd",
+          "size": 1531
         },
         {
           "path": "tools.json",
@@ -4549,12 +4615,13 @@
           "size": 5832
         }
       ],
-      "bundle_sha256": "2b9f67175134dd6524542015f503d86ad45b68679ee4f8a1fa598404c3b7795b"
+      "bundle_sha256": "e9f23ec316eed7a145914231f269ab111381eb55f5d488e2ea6627795ad58dfb"
     },
     {
       "name": "tongzhou_fin_research",
       "id": "totalclaw-mcp/data/tongzhou_fin_research",
       "display_name": "同舟金融研究",
+      "display_name_en": "Tongzhou Financial Research",
       "description": "Connects market data, research, industry graphs, and Tongzhou evidence for public-equity analysis.",
       "description_zh": "连接公开行情、研报检索、行业图谱与同舟投研材料，为股市研究提供可复核证据。",
       "version": "0.1.0",
@@ -4602,16 +4669,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "bb9e2cf2ccac83e3438c25c6400a1f6d5b308545e4dbfb4a4ad3e895c4bbeb8d",
-          "size": 1339
+          "sha256": "d96b142bb80bba5c59eed694545b5ea11896d41d055d4186c554438d477ee294",
+          "size": 1384
         }
       ],
-      "bundle_sha256": "d418bd19dea95563bab3218a743973eb2c4f10f2a5f50bd5badb456055b47d12"
+      "bundle_sha256": "2e0138cd119b5e31fceec035266522ae61d8ddebfdd1cf3561621703d88919ca"
     },
     {
       "name": "westock_mcp",
       "id": "totalclaw-mcp/data/westock_mcp",
       "display_name": "腾讯自选股",
+      "display_name_en": "WeStock",
       "description": "Directly connect to WeStock for real-time market data, watchlist management, price alerts, and paper trading. Analyze personalized data with natural language and easily handle monitoring and investment decisions.",
       "description_zh": "直连腾讯自选股，实时掌握毫秒级行情与资金动态，用自然语言分析自选数据、设置股价提醒、管理模拟交易，轻松搞定盯盘与投资决策。",
       "version": "0.1.0",
@@ -4659,16 +4727,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "c591fe101e33ff111bbf101ccde1aee2cb61b57156f50eb762bf6a94f71cca09",
-          "size": 1509
+          "sha256": "8002b8453192346ee7494ad583a93e28b7ebebaa145b9576b87125b5bfafc7c0",
+          "size": 1534
         }
       ],
-      "bundle_sha256": "7ef3843845f51c3a2eae385bf227b1ef1c0c9438eb12aab94fab920d35c51e77"
+      "bundle_sha256": "97263652e5fb8479eb40184fa2f2e88215f8459422bc5d4e4e6b7ae0e54abee9"
     },
     {
       "name": "yingmi_mcp",
       "id": "totalclaw-mcp/data/yingmi_mcp",
       "display_name": "盈米MCP",
+      "display_name_en": "Yingmi MCP",
       "description": "Access fund and market data for investment research, portfolio analysis, wealth planning, and financial content creation.",
       "description_zh": "查询基金与市场数据，完成基金研究、组合分析、财富规划及金融内容生成。",
       "version": "0.1.0",
@@ -4726,16 +4795,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "bfc103b3c124042e74765d71cbc4d2540267de3a57ffcd441df77e19e0992257",
-          "size": 1502
+          "sha256": "48f49cb7e38a65eb66f63470d0bf44df368f7fc9d874464a4463c7d547651c16",
+          "size": 1530
         }
       ],
-      "bundle_sha256": "e94fcc9757dbf2bfd1f863d4c28506e2c73a33e64e772bccc759d63d1afa5b9f"
+      "bundle_sha256": "e8a1b8588d2aa9bde7916ceb017f3b2d24649eebad1f5b13e246517eed1950c7"
     },
     {
       "name": "yzf_invoice_mcp_server",
       "id": "totalclaw-mcp/data/yzf_invoice_mcp_server",
       "display_name": "云帐房AI开票",
+      "display_name_en": "Yunzhangfang AI Invoicing",
       "description": "Use Yunzhangfang AI invoicing services to extract billing information and open the e-tax bureau invoicing flow.",
       "description_zh": "通过自然语言使用云帐房 AI 开票能力，完成开票信息识别，并前往电子税局开票。",
       "version": "0.1.0",
@@ -4783,16 +4853,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "9757f124f504b27e3735f8d1a5f412785a6f071f925395a58ffbac919b3b5f46",
-          "size": 1638
+          "sha256": "8853234ffce1b62529973cdff26d831eccac6129082919a28595dde7f4000f79",
+          "size": 1681
         }
       ],
-      "bundle_sha256": "a5363a9d9a745a5873c7aec475a645c8205f3402bcd15f99d391c52c724184e8"
+      "bundle_sha256": "d0859aceceea0a8a90e160147ad2f86aa373c91e7183ed6c61803d46e5b71eb9"
     },
     {
       "name": "cnb",
       "id": "totalclaw-mcp/dev/cnb",
       "display_name": "CNB 云原生构建",
+      "display_name_en": "CNB",
       "description": "Access the CNB platform — repositories, issues, pull requests, pipelines, cloud-native workspaces and knowledge bases.",
       "description_zh": "访问 CNB 平台：代码仓库、Issue、合并请求、流水线、云原生开发环境与知识库。",
       "version": "0.1.0",
@@ -4852,16 +4923,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a93137f779bcbd554e38a1a256cdbc262606a4df4f63c58d6f99c8a7a26f6b2d",
-          "size": 2319
+          "sha256": "f9b2e78e53453b9eb410557a2b70b7a522f04a43be16b6034b77bfedd594192c",
+          "size": 2340
         }
       ],
-      "bundle_sha256": "6a7344cb309843fcf56d04dd00bba987939d41d0b2abba289d25fe6c8daceed9"
+      "bundle_sha256": "83066173071f40c5616ffd1eca56bca9983999add6c5985e0292b29ad981dd34"
     },
     {
       "name": "gitee",
       "id": "totalclaw-mcp/dev/gitee",
       "display_name": "Gitee 码云",
+      "display_name_en": "Gitee",
       "description": "Query and manage Gitee repositories, issues, pull requests and file contents.",
       "description_zh": "查询和管理 Gitee 仓库、Issue、Pull Request 与文件内容。",
       "version": "0.1.0",
@@ -4944,8 +5016,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "1d701af3f4748e5a99510b117b59ae4771fcb90d2ede8b278374a56d7b45170b",
-          "size": 1384
+          "sha256": "5a62ae9dd2f74507c6c86236dfd156795c79f433400ced4554dc0b69d1468935",
+          "size": 1407
         },
         {
           "path": "tools.json",
@@ -4953,12 +5025,13 @@
           "size": 5291
         }
       ],
-      "bundle_sha256": "bd3acf4e21cd1e3afcb9aee0e13037003fa81b29fe934b2f08a15bf0576c7164"
+      "bundle_sha256": "018a6826b37a79dbb7737bfd7e63e979481bb89da8b97bea399087ae36f33f05"
     },
     {
       "name": "github",
       "id": "totalclaw-mcp/dev/github",
       "display_name": "GitHub",
+      "display_name_en": "GitHub",
       "description": "Search and manage GitHub repositories, issues, pull requests, commits and file contents.",
       "description_zh": "在 GitHub 上查询和管理仓库、Issue、Pull Request、提交与代码搜索。",
       "version": "0.1.0",
@@ -5046,8 +5119,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "ba7bce2e16d65e368bb494d3ba174cbd979eae02e37fb591036f4fcdd056acc6",
-          "size": 1392
+          "sha256": "26fd4ab848f359f922c3646b0b4b1b32dd55fee4d084dcbd738912986ffc5299",
+          "size": 1416
         },
         {
           "path": "tools.json",
@@ -5055,12 +5128,13 @@
           "size": 8560
         }
       ],
-      "bundle_sha256": "c53f940fadfd16e0d2128de6bf75e5cbd30a2837241af183e0458302780854ed"
+      "bundle_sha256": "6b5ef1700a434f5e4b498ea71fb7f0f8ee747bc33f26eaf7bb44908f5ddc91f0"
     },
     {
       "name": "linear",
       "id": "totalclaw-mcp/dev/linear",
       "display_name": "Linear",
+      "display_name_en": "Linear",
       "description": "Query and manage Linear issues, projects, teams and cycles.",
       "description_zh": "查询和管理 Linear 的 Issue、项目、团队与周期（Cycle）。",
       "version": "0.1.0",
@@ -5143,8 +5217,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "74b32435361c13ac72bbe2007a129abbf74e1324e8846b39875f8468a3005639",
-          "size": 1358
+          "sha256": "77c89660e899fe03abba522a46188ef6508b8bcc47757d109845e9c3be12b71f",
+          "size": 1382
         },
         {
           "path": "tools.json",
@@ -5152,12 +5226,13 @@
           "size": 3856
         }
       ],
-      "bundle_sha256": "48f35bdbcc50051559e860361fa52c5943ac4a32f2f2aa6799af63bc99b3ccf8"
+      "bundle_sha256": "1d30e13618fa587e63104bd7bed15f6a24a1b31f6f0ef23e046b24bba492883e"
     },
     {
       "name": "mcp_everything",
       "id": "totalclaw-mcp/dev/mcp_everything",
       "display_name": "Everything (reference)",
+      "display_name_en": "Everything (reference)",
       "description": "Everything (reference) MCP server.",
       "description_zh": "官方参考实现 + 测试服 — 提供 prompts / resources / tools 三类 MCP capability 完整示例,用于 MCP client 兼容性验证 + 学习。",
       "version": "0.1.0",
@@ -5226,8 +5301,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "c137799808bc9c2891949c1e7a83b2208d039da56312abf87cda5c2abfaf9d4b",
-          "size": 994
+          "sha256": "2cfc345026aded418729aefb02134e12e241918a59b0596ad721bdbac4014937",
+          "size": 1034
         },
         {
           "path": "tools.json",
@@ -5235,12 +5310,13 @@
           "size": 7194
         }
       ],
-      "bundle_sha256": "e0868be78ff620e868f5b08f1bd61221271135c8ec8b6a95be96b56d8850b1bd"
+      "bundle_sha256": "9abdc2b826cea4293363dea11e3719de93471496f0aff4076e0273d87375af01"
     },
     {
       "name": "mcp_git",
       "id": "totalclaw-mcp/dev/mcp_git",
       "display_name": "Git",
+      "display_name_en": "Git",
       "description": "Git MCP server.",
       "description_zh": "git 仓库读取 / 搜索 / 操作 — log / diff / blame / branch / show / stage / commit / status。对 LLM 暴露完整 git 工作流。",
       "version": "0.1.0",
@@ -5295,16 +5371,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "fb765ec9cea642c6bd8c512432917d29480ad337a3bdb9cc9947e462a785db9e",
-          "size": 948
+          "sha256": "0582f1d2305597bc20eae0cea6678ab9ecef9964a60fe138d0d9d470a38628a7",
+          "size": 969
         }
       ],
-      "bundle_sha256": "cc52ed086c15ca387613606c7e01eaf17a3b33c83e76eccd5cda7f89d4cfb94c"
+      "bundle_sha256": "177ffee28630fb26f6b3f3d9d69ae3940aabb5931095f81b81914ddf2c999885"
     },
     {
       "name": "sentry",
       "id": "totalclaw-mcp/dev/sentry",
       "display_name": "Sentry",
+      "display_name_en": "Sentry",
       "description": "Sentry MCP server.",
       "description_zh": "Sentry 错误监控集成 — issue 查询 / event 详情 / release / project / team / 性能 / AI Codegen 错误分析。Sentry 官方维护。",
       "version": "0.1.0",
@@ -5372,16 +5449,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "7b4fbaa6cfa4dedcc0a02273ca6f0380dc7d4ca04d57e1a36570ba0739446f35",
-          "size": 1129
+          "sha256": "b7a25ce4a6f02ee0e26cfbec776431994df8026eb81a66c09beb2a8fa63dce76",
+          "size": 1153
         }
       ],
-      "bundle_sha256": "383291535bc41bde7762200d0d1d15da2a2709f2a2c383db5a39ef3f8ed306f3"
+      "bundle_sha256": "407d43fd97726f313df58839ed9d1b2aeaeed0cbeb21baf31014a019d96e3309"
     },
     {
       "name": "tapd",
       "id": "totalclaw-mcp/dev/tapd",
       "display_name": "TAPD",
+      "display_name_en": "TAPD",
       "description": "Query and manage TAPD stories, bugs, tasks and iterations.",
       "description_zh": "查询和管理 TAPD 的需求、缺陷、任务与迭代，跟踪研发进度。",
       "version": "0.1.0",
@@ -5473,8 +5551,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "c0822ff86ffe5c7a307d5a8b8227d3ff28c166eab2ee2f98139fa96d77be1828",
-          "size": 1529
+          "sha256": "63364ff95cf81a509208af5d6e5fecbefb718ad55d9591ceb04aa0a1b52d6480",
+          "size": 1551
         },
         {
           "path": "tools.json",
@@ -5482,12 +5560,13 @@
           "size": 8574
         }
       ],
-      "bundle_sha256": "c53a6b4549a434569adee1cb097d4e1279fbc27f5fd3280736d6c30dfc6a5dd8"
+      "bundle_sha256": "900b5236462ef1399b14fbd0badf6e99e4a96caa5b7d588d0133fb3da03f3b25"
     },
     {
       "name": "tencent_cloudbase",
       "id": "totalclaw-mcp/dev/tencent_cloudbase",
       "display_name": "腾讯云 CloudBase",
+      "display_name_en": "Tencent CloudBase",
       "description": "Query and manage Tencent CloudBase environments, databases and static hosting.",
       "description_zh": "查询与管理腾讯云开发 CloudBase 的环境、云函数、数据库集合与静态托管。",
       "version": "0.1.0",
@@ -5575,8 +5654,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "c036552ea08cf55d1a74a6b34eccc36d27d2983f1b99327bad9020c98d532716",
-          "size": 1715
+          "sha256": "1df6469e300854e9fefbc238665b42dcf7bdab296777a509c79d8f7c73975c84",
+          "size": 1750
         },
         {
           "path": "tools.json",
@@ -5584,12 +5663,13 @@
           "size": 2366
         }
       ],
-      "bundle_sha256": "398d199d3d6e999bf83955569031fd146fd035d6dce3196ac344ff09fdeedc26"
+      "bundle_sha256": "c3a53ecbba7d19b4b74794407b0dd09d712912d78134f7b92bd26622013c7257"
     },
     {
       "name": "gaodun_job",
       "id": "totalclaw-mcp/hr/gaodun_job",
       "display_name": "大学生实习就业助手",
+      "display_name_en": "Student Internship & Career Assistant",
       "description": "A full-journey AI assistant for student internships and employment: get smart civil-service position recommendations, search internship and campus jobs, run career assessments (MBTI, Holland, career anchors), diagnose and optimize resumes, and practice interview questions with evaluation reports.",
       "description_zh": "大学生实习就业全链路 AI 助手：智能推荐公考岗位，检索实习与校招职位，提供 MBTI、霍兰德等职业测评，简历诊断与 AI 优化改写，面试刷题与模拟面试评估报告，助你拿 offer。",
       "version": "0.1.0",
@@ -5637,16 +5717,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "d5e8b60aff6eb2672021b8ca7ec680f6ac38e64e839623f0de47cb8ce7200000",
-          "size": 1747
+          "sha256": "60aef07e257d93e1df84817f0e514241c311a50d8ea355e81479914724869342",
+          "size": 1802
         }
       ],
-      "bundle_sha256": "ed1a494637a37468ceb20af41d2480278ba478b7205f4d4f6c8ce51a72a126f4"
+      "bundle_sha256": "226c3a464a10b447ffd9d52090d96fbe4a3b7f96c6fdec4ce29b7c931075149a"
     },
     {
       "name": "moka",
       "id": "totalclaw-mcp/hr/moka",
       "display_name": "Moka 招聘",
+      "display_name_en": "Moka",
       "description": "Query Moka recruiting: jobs, candidate applications and org structure.",
       "description_zh": "查询 Moka 招聘系统的职位、候选人投递记录与组织架构，跟踪招聘进展。",
       "version": "0.1.0",
@@ -5732,8 +5813,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "ae4e6408dce93e955e40d4788eaf16e60e2aa281360b633c7747c5c9ac926140",
-          "size": 1568
+          "sha256": "a40eb3a234e0a4211e4839b033b2f091fb9c61af291028ad9933a2a696b01da9",
+          "size": 1590
         },
         {
           "path": "tools.json",
@@ -5741,12 +5822,13 @@
           "size": 2701
         }
       ],
-      "bundle_sha256": "1a8d6dac28adf1793ef5dd02cb85e88b4da3398dd202e81def23d5541eb6d201"
+      "bundle_sha256": "56a202b76a6682df743b7bf83071ad2a28efa42510b5eabb4694118978f844ba"
     },
     {
       "name": "teacher_assistant",
       "id": "totalclaw-mcp/hr/teacher_assistant",
       "display_name": "企鹅教师助手",
+      "display_name_en": "Penguin Teacher Assistant",
       "description": "Penguin Teacher Assistant handles foundational tasks, leveraging curriculum standards and teaching methodologies to rapidly generate lesson outlines, lesson plans, courseware, and multimodal teaching resources, thereby freeing up more time for teachers to innovate in the classroom.",
       "description_zh": "企鹅教师助手负责处理基础性工作，基于课标和教学方法协助快速生成课程大纲、教案、课件及多模态教学资源，从而让教师腾出更多时间在课堂上进行创新",
       "version": "0.1.0",
@@ -5794,16 +5876,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "54ef3daa55d7e94c437104ebd5fdbbc331587c4128d683044dc73a7d8dfaae4f",
-          "size": 1630
+          "sha256": "03617cf28daff98dc9fa2df2203ab7d230bcba9edf3a11156e5f919649f34414",
+          "size": 1673
         }
       ],
-      "bundle_sha256": "1063d2578f0c4a49218fb265faff8085ca9a42c732101e59e6980add5d8f5c04"
+      "bundle_sha256": "c4a7fb87c54afb5228ecef17636dd0296f51aeb956e2560500e0908d3b7899c4"
     },
     {
       "name": "awesun",
       "id": "totalclaw-mcp/infra/awesun",
       "display_name": "向日葵远程控制",
+      "display_name_en": "AweSun",
       "description": "Manage and remotely control devices through the local AweSun client — device inventory, wake/shutdown, remote shell, screenshots, port forwarding and desktop input.",
       "description_zh": "通过本机向日葵客户端管理与远控设备：查设备、开关机、建立远控会话、执行远程命令、截屏、端口转发，以及点击/输入/滚动等桌面操作。",
       "version": "0.1.0",
@@ -5903,8 +5986,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "e436d13a23e05f30930b44eb8d41d2f2e7a27e4edc7a3e2e514c9b36c71497d7",
-          "size": 4614
+          "sha256": "0399f33073497ce65c1afd64e6d9259c559431bb48a341ad08a8ca8cfcddec18",
+          "size": 4638
         },
         {
           "path": "tools.json",
@@ -5912,12 +5995,13 @@
           "size": 21167
         }
       ],
-      "bundle_sha256": "7003a73b7aa1d1fd68fab4fcb630ee446fe2fee698a273e22f82a34fb5bff7d8"
+      "bundle_sha256": "c9de0670d9a4cca77102638adfcb14b65cc14b52befccb11eab003677fc335b4"
     },
     {
       "name": "bugly_token",
       "id": "totalclaw-mcp/infra/bugly_token",
       "display_name": "Bugly 质量概览",
+      "display_name_en": "Bugly Quality Overview",
       "description": "View the product quality overview, including crash rate, ANR rate, FOOM (OOM) rate, and startup latency.",
       "description_zh": "查看产品的质量概览 包括崩溃率 anr率 foom（oom）率 启动耗时",
       "version": "0.1.0",
@@ -5975,16 +6059,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f731ad02f0228cea0060a3ef7e124bfbaa52e64ff5500a0eb40431a732c0016d",
-          "size": 1444
+          "sha256": "2e1fcbb78452e12a13ad05d814019e34237624c94683e3d466dd3c5cceb3875f",
+          "size": 1484
         }
       ],
-      "bundle_sha256": "aecffb770c85f32428592869e6be688be4e5bbf351da53b7b931cf0b5d2a5fcb"
+      "bundle_sha256": "4fa9b07887aa65d9835b57b8c246007039121934fa8dc44ae704e56810cdcaaa"
     },
     {
       "name": "cisp_mcp",
       "id": "totalclaw-mcp/infra/cisp_mcp",
       "display_name": "水滴征信",
+      "display_name_en": "Zenicredit",
       "description": "Query multi-dimensional enterprise information via Zenicredit, including business registration, IP, public opinion, financials, land, corporate relationships, related parties, and verification services.",
       "description_zh": "通过水滴征信企业信息服务平台查询工商、知识产权、舆情、财务、土地、企业关联关系、关联方等企业多维信息，并支持企业二要素/三要素核验。",
       "version": "0.1.0",
@@ -6042,16 +6127,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "c1f4d619993236a3973110cd3e1b4b365f63349b48463f8b5fd5076b8707e201",
-          "size": 1665
+          "sha256": "baa2d41d1db4579ef2f56c974b4cae197b14516ca879dabcb72c1277bbd45348",
+          "size": 1693
         }
       ],
-      "bundle_sha256": "1190e1bf59458d4ffada5465d163ac0e5148349d3f695649dff15e44c44b865d"
+      "bundle_sha256": "9a858de835898713c32ca8d891acd8efbc7ad75a3e9e512ad5b65688f943dd66"
     },
     {
       "name": "dcs_cloud",
       "id": "totalclaw-mcp/infra/dcs_cloud",
       "display_name": "DCS Cloud",
+      "display_name_en": "DCS Cloud",
       "description": "Bootstrap the dcs CLI (download, auto-update, PAT login), then run the CLI directly to operate DCS Cloud: projects, tasks, workflows, billing, and data files. Create a Personal Access Token (PAT) in the cloud platform profile page and paste it into the connector.",
       "description_zh": "引导 dcs CLI（下载、自动更新、PAT 登录），之后直接执行 CLI 操作 DCS Cloud：项目、任务、工作流、计费、数据文件。用户需在云平台个人中心创建个人访问令牌(PAT)并粘贴到连接器。",
       "version": "0.1.0",
@@ -6110,16 +6196,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "70753669c2763e4b2fe848069c1db312e81d3736d9e031c152ba1b31f74072e9",
-          "size": 1885
+          "sha256": "3530991da6a8574d965f190516c2feacd34f4f0d4a30cc5300c883c182034074",
+          "size": 1912
         }
       ],
-      "bundle_sha256": "a2738a11a08545a4e96b3ac76c046059293383aa98cdd3ef7f8bb432b747bfc9"
+      "bundle_sha256": "5b8ee74b2d63a3c424ec69898678b80af3a93359136dc8618e3a085cb854ece4"
     },
     {
       "name": "docker",
       "id": "totalclaw-mcp/infra/docker",
       "display_name": "Docker",
+      "display_name_en": "Docker",
       "description": "Docker MCP server.",
       "description_zh": "Docker 容器管理 — ps / images / run / stop / logs / exec / inspect / network / volume。LLM 直接调度本地或远端 Docker daemon。",
       "version": "0.1.0",
@@ -6174,16 +6261,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "59ec29db1af119332085506918caedaaec80f8ac9329065c0a5faff13ce2aa18",
-          "size": 983
+          "sha256": "612640b85f6a0733abe57bc50ab4cf08dc3aeded90823b00cb6512077f2eebe3",
+          "size": 1007
         }
       ],
-      "bundle_sha256": "96e8808605f83b7257b4c664ade7a16cffb58d49f51ce218f55b278855dfff93"
+      "bundle_sha256": "5bfc914e39aeee095202e2636432836ed3f3d8d762099eaa68b0e4cacbb15b39"
     },
     {
       "name": "tencent_edgeone",
       "id": "totalclaw-mcp/infra/tencent_edgeone",
       "display_name": "腾讯云 EdgeOne",
+      "display_name_en": "Tencent EdgeOne",
       "description": "Query EdgeOne sites and acceleration domains; submit purge and prefetch tasks.",
       "description_zh": "查询与管理 EdgeOne 站点、加速域名，提交刷新与预热任务。",
       "version": "0.1.0",
@@ -6273,8 +6361,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "436abe0efd3915f0045ce85f78f2cd592ecca9e2094c1bec075161264890cd53",
-          "size": 1689
+          "sha256": "cbbbddd88a6487b14faaf5199b087aabda12650ab51ae2cac6d6d308f8be555a",
+          "size": 1722
         },
         {
           "path": "tools.json",
@@ -6282,12 +6370,13 @@
           "size": 5348
         }
       ],
-      "bundle_sha256": "fcb85c57b0c5439546608e8e140576217bf1647703ec4f43276eef40771e1499"
+      "bundle_sha256": "402e7c04f02092553b4fc50527eb7ea9625b2593dbaeb18e262fb6d182861dba"
     },
     {
       "name": "tplus_api",
       "id": "totalclaw-mcp/infra/tplus_api",
       "display_name": "畅捷通T+",
+      "display_name_en": "Chanjet T+",
       "description": "Natural-language access to Chanjet T+Cloud: query and manage sales orders, purchase orders, inventory vouchers, production orders, financial documents, reports, and master data.",
       "description_zh": "畅捷通 T+Cloud 自然语言操作入口：查询/管理销售订单、采购订单、库存单据、生产工单、财务凭证、报表及基础档案。",
       "version": "0.1.0",
@@ -6335,16 +6424,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "7d3bad912e31bb4bfa0458d5890be0aa8b9ec4279b82d6dfc0480eeafb14e8b5",
-          "size": 1431
+          "sha256": "a44fc72d7192a39b234c8c1245071a9725d7e05264b32bec31dc7ef0d0742e4e",
+          "size": 1459
         }
       ],
-      "bundle_sha256": "b58741f166b9deeb8b4d3bdc8a82c363aea19064af57239ad19f88077ea0a3d4"
+      "bundle_sha256": "87e33281b6038d02795a14719cb1d46f85f9ecb8fd231d3c68fcde7261f32156"
     },
     {
       "name": "mcp_filesystem",
       "id": "totalclaw-mcp/media/mcp_filesystem",
       "display_name": "Filesystem",
+      "display_name_en": "Filesystem",
       "description": "Filesystem MCP server.",
       "description_zh": "受控文件系统读写 — 强制根目录沙箱,支持 list / read / write / edit / search / move。args 末 path 是允许根(可多个)。",
       "version": "0.1.0",
@@ -6399,16 +6489,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "7d8a8ddad81d80d0fa7ace92beb2325d55a90aed890164b842e4b278c847c342",
-          "size": 981
+          "sha256": "2772f2a08f3600784ebc5c75dc7f4d4fba91d406d8ded6db708909dfa7735889",
+          "size": 1009
         }
       ],
-      "bundle_sha256": "d8065eea981ab1f312c8c39397a900217bf2b59eb014313540172acb5ba0220e"
+      "bundle_sha256": "044be95a204aed8e4fbaa850d3e24b6e79c5381ba0ea977e7242c6c1bd4f3136"
     },
     {
       "name": "tencent_ioa",
       "id": "totalclaw-mcp/misc/tencent_ioa",
       "display_name": "腾讯云 iOA 零信任",
+      "display_name_en": "Tencent iOA",
       "description": "Query Tencent iOA zero-trust endpoints, installed software, local accounts and account groups.",
       "description_zh": "查询 iOA 零信任管理的终端设备、终端软件、本地账号与账号分组，排查设备在线与合规状态。",
       "version": "0.1.0",
@@ -6493,8 +6584,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "0c4fe396476abcf5570fd973276bf3561844c0bbc6864ecd679cd6650ec82cca",
-          "size": 1705
+          "sha256": "0c3aab58a610ad3eb8b378a62711edd2fe0034442cd7fd441fac5b70edaf0f35",
+          "size": 1734
         },
         {
           "path": "tools.json",
@@ -6502,12 +6593,13 @@
           "size": 5211
         }
       ],
-      "bundle_sha256": "ba98981f9f3018c7ed21c6eefcb5155217c16867ffade1144479ddddbf54ea3f"
+      "bundle_sha256": "a81909d44fc0859bd8e36ded38d0ab5e96a7ddad0e991ab055b38f6ca53f2705"
     },
     {
       "name": "tencent_tchouse_c",
       "id": "totalclaw-mcp/misc/tencent_tchouse_c",
       "display_name": "腾讯云数据仓库 TCHouse-C",
+      "display_name_en": "Tencent TCHouse-C",
       "description": "Inspect Tencent TCHouse-C (ClickHouse) instances, nodes, shards, clusters, schema metadata and backup jobs.",
       "description_zh": "查询 TCHouse-C（ClickHouse）实例、节点、分片与逻辑集群，以及库表元数据和备份任务。",
       "version": "0.1.0",
@@ -6595,8 +6687,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "2f2881c9a1f03847b04ab9ffb00f7d605ff7bd45f366a8636e65e1e9dcc2f94a",
-          "size": 1750
+          "sha256": "6f5719280cbec78edc13b91ab880f9711241ef491f49be70a7f8a8e7fb787b11",
+          "size": 1785
         },
         {
           "path": "tools.json",
@@ -6604,12 +6696,13 @@
           "size": 6533
         }
       ],
-      "bundle_sha256": "092a15dfd0024da01f7ad80eb086e6b7f7a350cff5acf6aa6f87bb8426c79d88"
+      "bundle_sha256": "a2d540c4a8d3c8dfcaa64b37e387101d231945225802bc917c43ca54c6450bec"
     },
     {
       "name": "archive_hospital_mcp",
       "id": "totalclaw-mcp/office/archive_hospital_mcp",
       "display_name": "腾讯健康全周期管理平台",
+      "display_name_en": "Tencent Health Full-Cycle Care Platform",
       "description": "MCP connector for the provider-side AI agent of the Full-Cycle Patient Management Platform (Tengmed Patient Archive). Built on the existing platform, it enables clinical operations through conversational interface in natural language.",
       "description_zh": "全周期管理平台机构端 AI 智能体的 MCP 连接器。基于原有全周期管理平台，通过引入对话式 AI 智能体，实现理解管理者意图，调度平台原有能力模块完成患者数据查询管理等操作",
       "version": "0.1.0",
@@ -6657,16 +6750,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "5f533bbd431a709f08b0a8a01c77de74d870bf8cc261b9d9950ceed206743684",
-          "size": 1635
+          "sha256": "469e3d45417d37b23d5e26c35d5a1b0bd4d83d9595493a31bf30a2a053db9539",
+          "size": 1692
         }
       ],
-      "bundle_sha256": "622447c3e404d4b00b9822d8928e52bbff90f9df54c5ecad73dc07f8b1cbae05"
+      "bundle_sha256": "9ebe3fdcc7c73283e0c74caefbb5dfe9487a76951f4a3e9d8e6b5750e50c1b0a"
     },
     {
       "name": "baidu_netdisk",
       "id": "totalclaw-mcp/office/baidu_netdisk",
       "display_name": "百度网盘",
+      "display_name_en": "Baidu Netdisk",
       "description": "Browse and search Baidu Netdisk files, read file metadata, check quota.",
       "description_zh": "浏览、搜索百度网盘文件与目录，查询文件详情、容量与分类文件列表。",
       "version": "0.1.0",
@@ -6748,8 +6842,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "6ecb7e370555b90d5fc27b862b7759e38eca62efc332366a54aa94ab72885dd6",
-          "size": 1481
+          "sha256": "1df6f15b786d824fb6f48b3ee6b03db369362cecbad750bbd0bda466eeb51a70",
+          "size": 1512
         },
         {
           "path": "tools.json",
@@ -6757,12 +6851,13 @@
           "size": 4894
         }
       ],
-      "bundle_sha256": "f436e0fc5926fe4ae39395438f413c7e5bf019bd5909e969a6c20b947556b680"
+      "bundle_sha256": "3626d6d4401517bc69a74002207bddba50fc72213ded318637d95ff5278fa348"
     },
     {
       "name": "ima_mcp",
       "id": "totalclaw-mcp/office/ima_mcp",
       "display_name": "ima知识库",
+      "display_name_en": "Tencent ima Knowledge Base",
       "description": "Reference knowledge base materials and files, browse knowledge base details.",
       "description_zh": "引用知识库资料及文件，浏览知识库详情。",
       "version": "0.1.0",
@@ -6810,16 +6905,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "21dfc56c6909663b56ba937dd5485d704de28969b2cc836b74176d10616adfff",
-          "size": 1005
+          "sha256": "e6b43a5329a4564e07bff3a37a1d38147404ec23917436962f4b1b00be4de5f2",
+          "size": 1049
         }
       ],
-      "bundle_sha256": "8a8c17365e5450b7bc35542f4486db27e91c4fe587406c2495e3226aad49379d"
+      "bundle_sha256": "da2fc9e8a7a4431553059040a65080ab807fef5eb2311688c17be82c89b5229e"
     },
     {
       "name": "jiandaoyun",
       "id": "totalclaw-mcp/office/jiandaoyun",
       "display_name": "简道云",
+      "display_name_en": "JianDaoYun",
       "description": "Query and fill JianDaoYun form data: search records, read one, inspect field schema, create.",
       "description_zh": "查询和填写简道云表单数据：检索记录、读取单条、查看表单字段结构、新建记录。",
       "version": "0.1.0",
@@ -6901,8 +6997,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "3faa9b6f6d0201500b3b19444c8347da2b5e123f2ff51e86836e500398fdc98f",
-          "size": 1472
+          "sha256": "2ef34576c216bdf4519e99ba02970f1d806c40b9717b8ad95898799de4727385",
+          "size": 1500
         },
         {
           "path": "tools.json",
@@ -6910,12 +7006,13 @@
           "size": 4224
         }
       ],
-      "bundle_sha256": "29f58942d5d78197942c01ce193ce03c9190029576eeac995ffe589afaf0f9d0"
+      "bundle_sha256": "268636a74e12157475c92cf2d2f3479d69fba5c89366161a8783dead49056fc8"
     },
     {
       "name": "jinshuju",
       "id": "totalclaw-mcp/office/jinshuju",
       "display_name": "金数据",
+      "display_name_en": "Jinshuju",
       "description": "Query Jinshuju forms, field schema and submitted entries.",
       "description_zh": "查询金数据的表单、字段结构与提交数据，用于汇总问卷、报名与收款记录。",
       "version": "0.1.0",
@@ -6995,8 +7092,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "2b50bc71f730bede0130b4f71c8cb05e050e73b7b9e29aa8625d840865bc9936",
-          "size": 1429
+          "sha256": "8eb49454c9208b2954b69fb2295cdd7c38c24244b3e68817ddfb2ad55fdc9278",
+          "size": 1455
         },
         {
           "path": "tools.json",
@@ -7004,12 +7101,13 @@
           "size": 2403
         }
       ],
-      "bundle_sha256": "a9045a3407bdd4e7c777e2711f92d27338f2306e1f85945cc5bd4977a6fc526f"
+      "bundle_sha256": "db941a20de325e69e9abad3e1feaa77d6b710187999a2e17dff54698a4235051"
     },
     {
       "name": "kdocs",
       "id": "totalclaw-mcp/office/kdocs",
       "display_name": "金山文档",
+      "display_name_en": "Kingsoft Docs",
       "description": "Create, search, and manage Kingsoft Docs (WPS Cloud Docs). Supports creating multiple document types (Word/Excel/PDF/PPT/Smart Sheet/Multi-dimTable/Smart Doc), reading and searching content, editing, sharing, organizing with tags and favorites, knowledge base management, web clipping, and AI PPT generation.",
       "description_zh": "创建、搜索和管理金山文档（WPS 云文档）。支持新建多种文档类型（Word/Excel/PDF/PPT/智能表格/多维表格/智能文档）、读取与搜索文档内容、编辑更新、分享、移动重命名整理、标签收藏管理、知识库空间操作、网页剪藏，以及接龙转表格、AI PPT 生成等。",
       "version": "0.1.0",
@@ -7316,8 +7414,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "5924f5db53cf5d8fd2da9a7dd8180a3b38b1d384cb49667f8692c6e52f30340f",
-          "size": 2657
+          "sha256": "eab1d55521452f74da6741d8e139f53990bca1cc919da058a3e6e6a9fda31871",
+          "size": 2688
         },
         {
           "path": "tools.json",
@@ -7325,12 +7423,13 @@
           "size": 339832
         }
       ],
-      "bundle_sha256": "795cf73bb4a616e3414a6c28ab75f5bf3f61730bcfa9c82372ba509c78220b11"
+      "bundle_sha256": "ad27c8ece899bd5fc04edb6d6209a49c84d1006ccd76af98ba74d1d93797ad96"
     },
     {
       "name": "mcp_time",
       "id": "totalclaw-mcp/office/mcp_time",
       "display_name": "Time",
+      "display_name_en": "Time",
       "description": "Time MCP server.",
       "description_zh": "时间 + 时区转换 — get_current_time(timezone) / convert_time(time, from_tz, to_tz)。补 LLM 时间盲区。",
       "version": "0.1.0",
@@ -7388,8 +7487,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "a6a476ac4d0eafcda83d7791b4aadbd6f713e5930783560b485c3930801a7536",
-          "size": 892
+          "sha256": "c5cd99e1300563417061643e7f2953cedfc7c4313f878b93fb6729f074fec7da",
+          "size": 914
         },
         {
           "path": "tools.json",
@@ -7397,12 +7496,13 @@
           "size": 1410
         }
       ],
-      "bundle_sha256": "3525bc1cd005c46df2b1abcffa7cab0adc6a7044a14db7a378ccb74c976e3d36"
+      "bundle_sha256": "7a1cd78545f1154f8f65733605f111e4740c42e7042f741e3811ead35beeae7f"
     },
     {
       "name": "notion",
       "id": "totalclaw-mcp/office/notion",
       "display_name": "Notion",
+      "display_name_en": "Notion",
       "description": "Search, read and manage Notion pages and databases.",
       "description_zh": "搜索、读取和管理 Notion 工作区中的页面与数据库。",
       "version": "0.1.0",
@@ -7486,8 +7586,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "fc4a1d6c3127965e08b87f95497ea6aada0acd93d4a4ad9838290774faa3f25a",
-          "size": 1343
+          "sha256": "b6b5b2b7aba487ff52cf6bee345c56e5c666db676e5c543feb53aa7a8b1577b7",
+          "size": 1367
         },
         {
           "path": "tools.json",
@@ -7495,12 +7595,13 @@
           "size": 5425
         }
       ],
-      "bundle_sha256": "7e2145b92c2de11d918c5a86d2b612fac03dbc7dc57f2f2310af1d048a0993e1"
+      "bundle_sha256": "f0989f5da4d57f930a080512913a8261b147577cce8ce0594e890d123a1fea75"
     },
     {
       "name": "tencent_survey",
       "id": "totalclaw-mcp/office/tencent_survey",
       "display_name": "腾讯问卷",
+      "display_name_en": "Tencent Survey",
       "description": "Read Tencent Survey questionnaires and their collected answers.",
       "description_zh": "查询腾讯问卷的问卷详情与回收的答卷数据。",
       "version": "0.1.0",
@@ -7580,8 +7681,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "889a43f2fdc590b73689e772fca3d3ae36700d6f8c6594b851193300041b0f16",
-          "size": 1464
+          "sha256": "eaf201559286d593c4f86babb5445da60f7bf96deef1d009934a6acc699c278b",
+          "size": 1496
         },
         {
           "path": "tools.json",
@@ -7589,12 +7690,13 @@
           "size": 1173
         }
       ],
-      "bundle_sha256": "9b89b3114f67b599c1f51599c47f9c6ff652bbcb370635857b679c3360858582"
+      "bundle_sha256": "9380265e4a6383ec1a35139e4c04b02b1fb5b84efc032f4d82a5d2912692506a"
     },
     {
       "name": "tencent_weiyun",
       "id": "totalclaw-mcp/office/tencent_weiyun",
       "display_name": "微云",
+      "display_name_en": "Weiyun",
       "description": "Access, download, or remove files from Weiyun, while also supporting file uploads and the creation of sharing links to help you manage your Weiyun storage.",
       "description_zh": "查看、下载、删除微云文件，并且提供上传文件到微云、生成分享链接能力，帮你管理微云文件",
       "version": "0.1.0",
@@ -7642,16 +7744,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a1314b250e29fc3215869a50180a9c98410701e5034bc08ebe2046fa636ed9ba",
-          "size": 1405
+          "sha256": "93b7d6769797d6f2669c74f5772bc42586c7eca7e86c766786093006062ea760",
+          "size": 1429
         }
       ],
-      "bundle_sha256": "7161e7b8a5decac76410a5232de986b725d618b1daacedaa2119236b63416822"
+      "bundle_sha256": "ac9e408ec2a1af97bd7fe8e8e14344579206a8bdad3f23fa4dd97438be1bdadc"
     },
     {
       "name": "aitoearn",
       "id": "totalclaw-mcp/social/aitoearn",
       "display_name": "AiToEarn",
+      "display_name_en": "AiToEarn",
       "description": "AiToEarn MCP server.",
       "description_zh": "13+ 社交平台统一发布(视频/图文) + 自动点赞/评论/回复 + AI 文案生成 + 任务化变现执行。统一 unified MCP 接口。国内站点改 base 为 https://aitoearn.cn/api。",
       "version": "0.1.0",
@@ -7709,16 +7812,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "3d7a9325a5d6bffce22692987bb5b0a858533ca018a9734697c03b0a3382c37d",
-          "size": 930
+          "sha256": "d7b448e8b3ae4c1042f3312963dc2829c479bde9220dbafba8a3fa58f422ad91",
+          "size": 956
         }
       ],
-      "bundle_sha256": "09a0ea98ec61cbd49c2b7ff46faa9d1ec8341f73a7f9c03f9a6ffee25cbf43b1"
+      "bundle_sha256": "84377484e0f67a0654eda16490d8c18625743af89f433402293390264c99d9a0"
     },
     {
       "name": "dy_xhs",
       "id": "totalclaw-mcp/social/dy_xhs",
       "display_name": "抖音 / 小红书",
+      "display_name_en": "Douyin / Xiaohongshu",
       "description": "抖音 / 小红书 MCP server.",
       "description_zh": "抖音+小红书内容提取/去水印/语音转文字:get_douyin_download_link / extract_douyin_text / parse_douyin_video_info / get_xiaohongshu_content / extract_xiaohongshu_text / extract_xiaohongshu_video_text / get_xiaohongshu_images / remove_xiaohongshu_video_watermark(8 工具)。",
       "version": "0.1.0",
@@ -7773,16 +7877,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "8792a1439d4d25bd0244a1dac2bd5b60996c247ebc6cf9d75c5ef11b509e4e32",
-          "size": 1190
+          "sha256": "6b8dcf748d43308e765df29af1fea5060cf7f75bf1fb24f254caa60402de2635",
+          "size": 1228
         }
       ],
-      "bundle_sha256": "d1e54239319232cc157f0e38adc47a1c17211f6b24cdc3e8098a4cd5c57c0653"
+      "bundle_sha256": "1735d31f3d0a3799d2f9edff0e4dd5d23edaf61d6d6a166b42341ff79a98cac1"
     },
     {
       "name": "matrixmedia",
       "id": "totalclaw-mcp/social/matrixmedia",
       "display_name": "MatrixMedia 媒体矩阵",
+      "display_name_en": "MatrixMedia",
       "description": "MatrixMedia 媒体矩阵 MCP server.",
       "description_zh": "媒体矩阵账号管理 + 视频跨平台批量发布 + 发布历史查询;提供 list_accounts / list_history / publish_video 3 个工具。",
       "version": "0.1.0",
@@ -7843,16 +7948,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "7c5ee2b6428a5136114e7357f4b345d01047430cbc6c93f3e073c6137febcf17",
-          "size": 972
+          "sha256": "91b0c8a0abe50e2dd779338e53537730b63e1fffe5cb01fb32194cf077c4b06e",
+          "size": 1001
         }
       ],
-      "bundle_sha256": "8d44c1383d31d883d7f1efb69d501f0f7aa9c81c6a4edf4d3ddf4931411ce20d"
+      "bundle_sha256": "ecbf911faa762ad098e4e4653e58acbc238d798b85162f2a0bc5c22c43354821"
     },
     {
       "name": "socialcrawl",
       "id": "totalclaw-mcp/social/socialcrawl",
       "display_name": "SocialCrawl",
+      "display_name_en": "SocialCrawl",
       "description": "SocialCrawl MCP server.",
       "description_zh": "27 社交平台公开数据爬取:账号资料、帖子、搜索、分析。5 工具:list_platforms / list_endpoints / request / check_balance / get_docs。前 3 个无 key 可用,request + balance 需 key。",
       "version": "0.1.0",
@@ -7913,16 +8019,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "d82cc0cf51a37a1da36a272af89992dfd08f58fb7ab2ac5078f3565f8bf865bc",
-          "size": 1048
+          "sha256": "b6c73bbeb4a7c466de011e2682684148c5a89b15778e5e8e7185507dcf76c5ef",
+          "size": 1077
         }
       ],
-      "bundle_sha256": "c4bbb70d68ddaa8c00047669f8d215208a9c127848e97b87eefa077e84a755ec"
+      "bundle_sha256": "4d1338394e85f7f1220574cee9d432087c0a6d92b56052ec06c33bc516694901"
     },
     {
       "name": "xiaohongshu",
       "id": "totalclaw-mcp/social/xiaohongshu",
       "display_name": "小红书",
+      "display_name_en": "Xiaohongshu",
       "description": "小红书 MCP server.",
       "description_zh": "小红书图文/视频发布、关键词搜索、推荐流获取、帖子详情、评论(发表/回复/点赞)、收藏、用户主页、登录状态检查(13 工具)。",
       "version": "0.1.0",
@@ -7972,16 +8079,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "3fce1f4bb1bf1ab33b76c3a5c0c60fe5dece83edf0d98a966a84197f35b7e982",
-          "size": 714
+          "sha256": "41b0a1923d4d2127c805cc0f9a07ea1014d33b414c3c8b4278e57570715d2f0b",
+          "size": 743
         }
       ],
-      "bundle_sha256": "45e39d80222ade09f60641f95c683d751fb1eef30233f3ef2fe59ba699ba48fe"
+      "bundle_sha256": "b75160f228be16539b12fca4371f07487922ab5d641b42cd28a3d0643f487b14"
     },
     {
       "name": "bazhuayu",
       "id": "totalclaw-mcp/web/bazhuayu",
       "display_name": "八爪鱼",
+      "display_name_en": "Bazhuayu",
       "description": "Drive Bazhuayu cloud scraping with natural language: discover templates, run tasks, check progress, export structured data, and manage existing tasks.",
       "description_zh": "用自然语言驱动八爪鱼云采集：搜索模板、启动任务、查询进度、导出结构化数据，并管理已有任务。",
       "version": "0.1.0",
@@ -8029,16 +8137,17 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "3bd828ba12189c4a83fa4fd19d30c0697f082a342b5f4b48bffa8d62f5c80271",
-          "size": 1529
+          "sha256": "4bc6f7760858db94754d224bf737c0eedb10ea094b37893422f22603159cf98b",
+          "size": 1555
         }
       ],
-      "bundle_sha256": "d3cbac296bccc2d063b3dafcc3e6bd6b63459f89869f80893d8f9cb1e8b4339e"
+      "bundle_sha256": "8812d69647ec2380f1f876f8205296d98523c2fcda0a7cf3f5a30abcfaa7bdcc"
     },
     {
       "name": "chrome_devtools",
       "id": "totalclaw-mcp/web/chrome_devtools",
       "display_name": "Chrome DevTools",
+      "display_name_en": "Chrome DevTools",
       "description": "Chrome DevTools MCP server.",
       "description_zh": "谷歌浏览器(Chrome)DevTools 控制 — 自动化导航/点击/填表、性能 trace + Lighthouse 审计、网络请求观察、控制台日志读取、JS 执行、heap snapshot、屏幕截图、扩展安装。支持 --headless / --isolated / --browser-url 接已有 Chrome。",
       "version": "0.1.0",
@@ -8091,16 +8200,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "21a80b4cf8b938dd76e1e3d39384dfedfd82eb89dc6bd5cea4682ea96cd7632e",
-          "size": 1016
+          "sha256": "5f2f221e360ef55118ac60380b8cee23d2d3561e04f82b67f219a360e3ac3d61",
+          "size": 1049
         }
       ],
-      "bundle_sha256": "195f31d7bdb2deec50c0b65bba2f24dd2b14635a71ac1ef2310db56377d132c0"
+      "bundle_sha256": "809f4ea4ca667ff36a32d5aa4f2a6dfd08823cc8de4bc6cf25e941ac59ffa824"
     },
     {
       "name": "mcp_brave_search",
       "id": "totalclaw-mcp/web/mcp_brave_search",
       "display_name": "Brave Search",
+      "display_name_en": "Brave Search",
       "description": "Brave Search MCP server.",
       "description_zh": "Brave 搜索 API — web_search / local_search。隐私友好的搜索后端,与 LLM 主搜索流互补。已归档但仍可用。",
       "version": "0.1.0",
@@ -8161,16 +8271,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "cc7d638989e813b45a187bff56f4284057a9d977533cbd7875f7e3f1f13ad0bf",
-          "size": 987
+          "sha256": "3e63d7679901d3c2d9855a636658de80fe942a385033ce86f4280ef02b0510d7",
+          "size": 1017
         }
       ],
-      "bundle_sha256": "07610114bb930418d596897951ed4b524efd54a618c8fd00c66cb9b94f0b1ca6"
+      "bundle_sha256": "2f82dffacc575c3a68c57f44bac258d345d876a857d093b9e2f7bfd1c11512dd"
     },
     {
       "name": "mcp_fetch",
       "id": "totalclaw-mcp/web/mcp_fetch",
       "display_name": "Fetch",
+      "display_name_en": "Fetch",
       "description": "Fetch MCP server.",
       "description_zh": "抓取任意 URL 网页内容 + 自动 HTML→markdown 转换 + 节流。LLM 即时阅读 web 内容的标准入口。",
       "version": "0.1.0",
@@ -8227,8 +8338,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "e4c294adb118b8bc4025b855abe9f91a8383964cabfd7071e2a8c45e5f8cd95a",
-          "size": 915
+          "sha256": "6dc8303a9d39b8003c557a2cc874561be1d2c1936d6edcbd13295f6c9889ed0a",
+          "size": 938
         },
         {
           "path": "tools.json",
@@ -8236,12 +8347,13 @@
           "size": 1539
         }
       ],
-      "bundle_sha256": "03c0b378ef1ac7fd58fa2b79ce56a083350773d888720806e40dd88ff0f75c68"
+      "bundle_sha256": "a774d93f35a71dec1b465e98fa8ba129c93f6cf346b1c14c5ffe5d9d3adbea19"
     },
     {
       "name": "playwright",
       "id": "totalclaw-mcp/web/playwright",
       "display_name": "Playwright",
+      "display_name_en": "Playwright",
       "description": "Playwright MCP server.",
       "description_zh": "微软 Playwright MCP — 跨浏览器(Chromium/Firefox/WebKit)自动化 + 截图 + 网络拦截 + accessibility tree。比 chrome_devtools 跨浏览器、accessibility 信息更丰富。由微软官方维护。",
       "version": "0.1.0",
@@ -8294,16 +8406,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "ff1a0a62a7a70c22242d3c49ba8b530e4bd4351da8d0ee12f9b7d7618b550500",
-          "size": 820
+          "sha256": "6e5ded4ccb8409157a05e3468b593ddc733384958ba29161d873b0623f33e01c",
+          "size": 848
         }
       ],
-      "bundle_sha256": "f311a82db38b206f9046a61d90035835e35d49ffcc723850f5e2ee8824a1615c"
+      "bundle_sha256": "59702db0c9f0127ba95e6e3a864106a55d3dd3ff2508a9aafc0bd0fae9ea3e1c"
     },
     {
       "name": "playwright-py",
       "id": "totalclaw-mcp/web/playwright-py",
       "display_name": "Playwright (built-in Python)",
+      "display_name_en": "Playwright (built-in Python)",
       "description": "Playwright (built-in Python) MCP server.",
       "description_zh": "纯 Python Playwright MCP —— 浏览器自动化首选(零 Node)。navigate/snapshot/click/type/eval/screenshot/back。BROWSER_CDP_URL 设了则接管用户已开 Chrome,否则自启 Chromium。",
       "version": "0.1.0",
@@ -8355,16 +8468,17 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "7aecc904eef90222312af5472b54969bbac166bd3b468b7778a7ece07d5adfed",
-          "size": 780
+          "sha256": "a547bc5f35d3aeec7c6a712739a91fd29575a7304e1d529a88b453abaa9714ab",
+          "size": 826
         }
       ],
-      "bundle_sha256": "caec2c6462b3cbc92c3003ee2cadcf5fa8c346c3e7daa48c5f23dfd1449323ae"
+      "bundle_sha256": "5a9243ff6b272e77040bfcc91a480d5114ce08a5e2d7e61383d3ce686d484560"
     },
     {
       "name": "tencent_map",
       "id": "totalclaw-mcp/web/tencent_map",
       "display_name": "腾讯地图",
+      "display_name_en": "Tencent Maps",
       "description": "Place search, route planning, geocoding, district lookup and distance matrix.",
       "description_zh": "地点搜索、路线规划、地址与坐标互转、行政区划查询、距离矩阵计算。",
       "version": "0.1.0",
@@ -8447,8 +8561,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "a6856e1aa0ca13af89b56a373d71b3138cc00a63f9904758d2c1a4de0f8f3224",
-          "size": 1437
+          "sha256": "97006c9135607d8b3110961e34e9138288446c0c6a2a2c018acf739542de9412",
+          "size": 1467
         },
         {
           "path": "tools.json",
@@ -8456,12 +8570,13 @@
           "size": 4773
         }
       ],
-      "bundle_sha256": "40a52a29f254c9fed47310e7c55091ce9de77f3df65339cd5b29bcd2aba75fe0"
+      "bundle_sha256": "0ad918e36a0d59930f4975cf84e5dc4562f5f7832a37c9350666d58af01695d0"
     },
     {
       "name": "web",
       "id": "totalclaw-mcp/web/web",
       "display_name": "网页抓取",
+      "display_name_en": "Web Fetch",
       "description": "Fetch web pages and extract readable text; supports batch fetch and JSON endpoints. No credentials.",
       "description_zh": "抓取网页并抽取正文纯文本，支持批量抓取与 JSON 接口，零凭据。",
       "version": "0.1.0",
@@ -8532,8 +8647,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "d0f8e8fb89aa4325c64f79df9d9e914b5dbe27e6952d9d19b261cfaef333a079",
-          "size": 1286
+          "sha256": "156e24ffd85d0844c755da0963299855a0a4a93ce6c439e87d429e1c64528c50",
+          "size": 1313
         },
         {
           "path": "tools.json",
@@ -8541,7 +8656,7 @@
           "size": 1563
         }
       ],
-      "bundle_sha256": "1f974148abf1092c10d5e26935e80b4c03bd2404e3d7582415a84d9c545f0c9c"
+      "bundle_sha256": "5e746f7d1c9e7a8f45571434dadc1cc2812046105da1016bf72e3acd5b32b7c5"
     }
   ]
 }

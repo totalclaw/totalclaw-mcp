@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: infimind_video
 display_name: 极睿视频
+display_name_en: Infimind Video
 version: 0.1.0
 description: Create professional videos from prompts and reference media, track generation progress, and
   analyze videos into reusable creative insights.

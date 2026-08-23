@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: qcc_legal
 display_name: 企查查·法律数据
+display_name_en: QCC Legal
 version: 0.1.0
 description: 'QCC Legal is a Chinese legal-data connector for searching, researching, and verifying statutes
   and judicial cases. On the regulation side it covers the full body of in-force Chinese law — laws, administrative

@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: tplus_api
 display_name: 畅捷通T+
+display_name_en: Chanjet T+
 version: 0.1.0
 description: 'Natural-language access to Chanjet T+Cloud: query and manage sales orders, purchase orders,
   inventory vouchers, production orders, financial documents, reports, and master data.'

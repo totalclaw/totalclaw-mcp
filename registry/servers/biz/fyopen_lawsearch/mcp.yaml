@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: fyopen_lawsearch
 display_name: 法研·法律法规检索
+display_name_en: fyopen·lawSearch
 version: 0.1.0
 description: Support natural language to obtain accurate and currently effective regulatory provisions,
   seamlessly integrating high-quality and massive regulatory knowledge bases into various AI applications

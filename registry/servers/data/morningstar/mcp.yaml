@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: morningstar
 display_name: 晨星 Morningstar
+display_name_en: Morningstar
 version: 0.1.0
 description: Morningstar global and China fund data, analyst research and portfolio analytics for fund
   screening, risk, holdings, fees and reviews.

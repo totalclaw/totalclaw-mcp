@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: ezjoin_meeting
 display_name: EzyJoin智慧会议
+display_name_en: EzyJoin Smart Meeting
 version: 0.1.0
 description: 'Manage EzyJoin meetings via natural language: book rooms, create or cancel meetings, view
   schedules.'

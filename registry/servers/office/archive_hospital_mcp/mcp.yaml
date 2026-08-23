@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: archive_hospital_mcp
 display_name: 腾讯健康全周期管理平台
+display_name_en: Tencent Health Full-Cycle Care Platform
 version: 0.1.0
 description: MCP connector for the provider-side AI agent of the Full-Cycle Patient Management Platform
   (Tengmed Patient Archive). Built on the existing platform, it enables clinical operations through conversational

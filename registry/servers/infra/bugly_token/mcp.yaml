@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: bugly_token
 display_name: Bugly 质量概览
+display_name_en: Bugly Quality Overview
 version: 0.1.0
 description: View the product quality overview, including crash rate, ANR rate, FOOM (OOM) rate, and startup
   latency.

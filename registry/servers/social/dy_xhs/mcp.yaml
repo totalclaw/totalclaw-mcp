@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: dy_xhs
 display_name: 抖音 / 小红书
+display_name_en: Douyin / Xiaohongshu
 version: 0.1.0
 description: 抖音 / 小红书 MCP server.
 description_zh: 抖音+小红书内容提取/去水印/语音转文字:get_douyin_download_link / extract_douyin_text / parse_douyin_video_info

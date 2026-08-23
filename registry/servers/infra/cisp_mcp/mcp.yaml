@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: cisp_mcp
 display_name: 水滴征信
+display_name_en: Zenicredit
 version: 0.1.0
 description: Query multi-dimensional enterprise information via Zenicredit, including business registration,
   IP, public opinion, financials, land, corporate relationships, related parties, and verification services.

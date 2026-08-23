@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_sqlite
 display_name: SQLite
+display_name_en: SQLite
 version: 0.1.0
 description: SQLite MCP server.
 description_zh: SQLite 本地数据库读写 — list_tables / describe_table / read_query / write_query / create_table。轻量本地存储工作流。已归档但仍可用。

@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: tec_do
 display_name: Tec-Do 2.0 广告与增长情报
+display_name_en: Tec-Do 2.0 Ad & Growth Intelligence
 version: 0.1.0
 description: An AI capability suite for global advertising and growth teams.
 description_zh: 面向出海广告投放和增长团队的 AI 能力集合。

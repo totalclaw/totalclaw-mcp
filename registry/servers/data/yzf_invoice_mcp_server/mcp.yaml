@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: yzf_invoice_mcp_server
 display_name: 云帐房AI开票
+display_name_en: Yunzhangfang AI Invoicing
 version: 0.1.0
 description: Use Yunzhangfang AI invoicing services to extract billing information and open the e-tax
   bureau invoicing flow.

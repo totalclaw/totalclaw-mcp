@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: tdx_connector
 display_name: 通达信
+display_name_en: Tongdaxin Finance
 version: 0.1.0
 description: Query global stock data via Tongdaxin MCP. Supports screening, reports, and macro analysis.
 description_zh: 通过通达信 MCP 查询全球股票行情数据、条件选股、研究报告、公告资讯和宏观信息。支持个股基本面分析、同行业对比和智能选股筛查。

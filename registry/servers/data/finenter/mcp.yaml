@@ -9,6 +9,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: finenter
 display_name: 进门投研
+display_name_en: Finenter
 version: 0.1.0
 description: Finenter MCP covers public roadshow content from securities firms, listed companies, and
   asset management institutions; integrates institutional-grade insights from domestic and international

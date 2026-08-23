@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: opendata
 display_name: 及刻智能·时空数据MCP
+display_name_en: Jike Spatiotemporal Data MCP
 version: 0.1.0
 description: Query offline spatiotemporal data via natural language — area heat maps, scene recognition,
   customer-flow analysis, POI search and more — to power business insights and site-selection scenarios.

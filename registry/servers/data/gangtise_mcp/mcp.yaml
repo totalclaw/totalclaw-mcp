@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: gangtise_mcp
 display_name: Gangtise投研
+display_name_en: Gangtise Research
 version: 0.1.0
 description: Gangtise MCP aggregates institutional-grade insights, meeting notes, event calendars, and
   other alternative data, while providing AI-agent-ready, pre-generated research content alongside structured

@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: playwright-py
 display_name: Playwright (built-in Python)
+display_name_en: Playwright (built-in Python)
 version: 0.1.0
 description: Playwright (built-in Python) MCP server.
 description_zh: 纯 Python Playwright MCP —— 浏览器自动化首选(零 Node)。navigate/snapshot/click/type/eval/screenshot/back。BROWSER_CDP_URL

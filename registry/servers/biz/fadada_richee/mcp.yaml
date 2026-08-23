@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: fadada_richee
 display_name: 法大大睿契
+display_name_en: Fadada-Richee
 version: 0.1.0
 description: Search laws, regulations, and similar legal cases, look up enterprise information, and review
   contract risks with Richee.

@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: playwright
 display_name: Playwright
+display_name_en: Playwright
 version: 0.1.0
 description: Playwright MCP server.
 description_zh: 微软 Playwright MCP — 跨浏览器(Chromium/Firefox/WebKit)自动化 + 截图 + 网络拦截 + accessibility tree。比

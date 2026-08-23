@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: tencent_survey
 display_name: 腾讯问卷
+display_name_en: Tencent Survey
 version: 0.1.0
 description: Read Tencent Survey questionnaires and their collected answers.
 description_zh: 查询腾讯问卷的问卷详情与回收的答卷数据。

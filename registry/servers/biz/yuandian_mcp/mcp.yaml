@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: yuandian_mcp
 display_name: 华宇元典法律数据
+display_name_en: Huayu Yuandian Legal Data
 version: 0.1.0
 description: Huayu Yuandian Legal Data provides agents with MCP tool capabilities for laws and regulations,
   case documents, and enterprise information.

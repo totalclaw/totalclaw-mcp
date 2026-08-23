@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: kdocs
 display_name: 金山文档
+display_name_en: Kingsoft Docs
 version: 0.1.0
 description: Create, search, and manage Kingsoft Docs (WPS Cloud Docs). Supports creating multiple document
   types (Word/Excel/PDF/PPT/Smart Sheet/Multi-dimTable/Smart Doc), reading and searching content, editing,

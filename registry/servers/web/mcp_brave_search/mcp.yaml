@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_brave_search
 display_name: Brave Search
+display_name_en: Brave Search
 version: 0.1.0
 description: Brave Search MCP server.
 description_zh: Brave 搜索 API — web_search / local_search。隐私友好的搜索后端,与 LLM 主搜索流互补。已归档但仍可用。

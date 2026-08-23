@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: ima_mcp
 display_name: ima知识库
+display_name_en: Tencent ima Knowledge Base
 version: 0.1.0
 description: Reference knowledge base materials and files, browse knowledge base details.
 description_zh: 引用知识库资料及文件，浏览知识库详情。

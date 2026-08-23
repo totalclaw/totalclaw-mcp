@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: sq_company_dynamic
 display_name: 上奇产业通-企业动态追踪
+display_name_en: Company Dynamic Tracking
 version: 0.1.0
 description: 'Tracks company dynamics across its full lifecycle: investment, equity changes, innovation
   platforms, bidding, IP, rankings, migration, certifications, business changes, IPO, standards, recruitment,

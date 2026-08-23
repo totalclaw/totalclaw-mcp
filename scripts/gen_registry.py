@@ -281,6 +281,8 @@ def _collect_server(server_dir: Path, category: str, strict: bool) -> dict:
         "name": name,
         "id": f"{REGISTRY_NAME}/{category}/{name}",
         "display_name": manifest.get("display_name") or name,
+        # 中英各存一份，接口按 lang 挑。少了它，英文界面上 84 个条目只能显示中文名。
+        "display_name_en": manifest.get("display_name_en") or "",
         "description": manifest.get("description") or "",
         **({"description_zh": manifest["description_zh"]} if manifest.get("description_zh") else {}),
         "version": str(manifest["version"]),

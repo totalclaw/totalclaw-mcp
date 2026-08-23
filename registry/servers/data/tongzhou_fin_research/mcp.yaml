@@ -7,6 +7,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: tongzhou_fin_research
 display_name: 同舟金融研究
+display_name_en: Tongzhou Financial Research
 version: 0.1.0
 description: Connects market data, research, industry graphs, and Tongzhou evidence for public-equity
   analysis.

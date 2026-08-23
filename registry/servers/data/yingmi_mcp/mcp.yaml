@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: yingmi_mcp
 display_name: 盈米MCP
+display_name_en: Yingmi MCP
 version: 0.1.0
 description: Access fund and market data for investment research, portfolio analysis, wealth planning,
   and financial content creation.

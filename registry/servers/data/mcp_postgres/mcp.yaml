@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_postgres
 display_name: PostgreSQL
+display_name_en: PostgreSQL
 version: 0.1.0
 description: PostgreSQL MCP server.
 description_zh: PostgreSQL 只读查询 — 暴露 query / schema / 表元信息工具。Connection string 在 args 末。已归档但仍可用。

@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: tianyancha
 display_name: 天眼查
+display_name_en: Tianyancha
 version: 0.1.0
 description: Look up Chinese company registration, shareholders, staff, investments, changes and lawsuits
   via Tianyancha.

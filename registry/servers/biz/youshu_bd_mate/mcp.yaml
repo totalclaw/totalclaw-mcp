@@ -5,6 +5,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: youshu_bd_mate
 display_name: 智客AI · 对公(To B)营销助手
+display_name_en: YouShu BD Mate
 version: 0.1.0
 description: The BD Mate is an intelligent corporate marketing assistant built on full-dimensional enterprise
   data, delivering a complete business development closed-loop from pre-visit one-pagers and customer

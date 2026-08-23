@@ -14,6 +14,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: awesun
 display_name: 向日葵远程控制
+display_name_en: AweSun
 version: 0.1.0
 description: Manage and remotely control devices through the local AweSun client — device inventory, wake/shutdown,
   remote shell, screenshots, port forwarding and desktop input.

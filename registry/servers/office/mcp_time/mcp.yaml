@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_time
 display_name: Time
+display_name_en: Time
 version: 0.1.0
 description: Time MCP server.
 description_zh: 时间 + 时区转换 — get_current_time(timezone) / convert_time(time, from_tz, to_tz)。补 LLM 时间盲区。

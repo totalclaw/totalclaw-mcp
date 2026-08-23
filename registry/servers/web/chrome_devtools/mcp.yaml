@@ -4,6 +4,7 @@ requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: chrome_devtools
 display_name: Chrome DevTools
+display_name_en: Chrome DevTools
 version: 0.1.0
 description: Chrome DevTools MCP server.
 description_zh: 谷歌浏览器(Chrome)DevTools 控制 — 自动化导航/点击/填表、性能 trace + Lighthouse 审计、网络请求观察、控制台日志读取、JS 执行、heap
