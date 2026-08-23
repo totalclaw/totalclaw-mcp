@@ -228,8 +228,13 @@
 - [ ] **C2.1（剩余）** 还有 60 个条目没有工具清单，都要真凭据：
   - **http 型 40 个**：2026-08-23 全量匿名探过，**40 个全部 401**，无一能匿名列工具。
     这一项不是「还没探」，是**确实要凭据**——别再重跑匿名探测了。
-  - **stdio 型 4 个**：`duoguan_fengchao` / `infimind_ecommerce_image`（Unauthorized）/
-    `sentry` / `matrixmedia`（要本地装好的目录）。
+  - **stdio 型 3 个**（`sentry` 已修好并实探到 9 个工具，见上）：
+    - `infimind_ecommerce_image` —— Unauthorized，要厂商凭据；
+    - `matrixmedia` —— 要本地已装好的产品目录（`MATRIXMEDIA_DIR`）；
+    - `duoguan_fengchao` —— 报的是 **`Runtime manifest 缺少受信任的 Ed25519 签名`**，
+      挂在签名校验那一步而不是鉴权那一步。它是个「校验+缓存+启动真正 runtime」的
+      启动器，签名从哪儿来、给不给凭据就能拿到，**没有凭据无法判定** ——
+      有可能和已删掉的 `ai_hive` 一样是厂商专属启动器。拿到凭据先验这一条。
   - 拿到凭据后：`export <VAR>=… && python3 scripts/probe_server.py <名>`；
     OAuth 型先 `totalclaw mcp login <名>`。去哪儿申请，registry.json 里就有。
 
@@ -310,9 +315,18 @@
     `shanglv_mcp_gateway` 的网关挂着 Keycloak 登录页，抓到的是
     `.../keycloak.v2/favicon.svg`，挂上去等于给商旅贴了 Keycloak 的标。
     已按关键词过滤（keycloak/auth0/okta/swagger/wordpress…）并复核了全部 43 个文件。
-- [ ] **C5.1（剩余）** 还有 16 个条目连顶级域上也没有可用图标（站点只有 HTML，
-  或图标是 CSS/JS 里画的）。要么等厂商给素材，要么人工找到产品站再单独抓。
-  在此期间它们回落字母块，界面不会开天窗。
+- [ ] **C5.1（剩余，16 个）** —— **上一行我写过头了，这里更正**：我原先写的是
+  「连顶级域上也没有可用图标」，但逐个复核后发现**多数根本没连上**：
+  `kuaicha365.com` / `cjbdi.com` / `mozlen.com` / `microdata-inc.com` /
+  `tcredit.com` / `lexiang-app.com` / `epicgames.com` / `gangtise.com` /
+  `morningstar.cn` / `dknowc.cn` / `tec-do.cn` 全是 ConnectError / ProxyError /
+  ConnectTimeout —— 是**我这台机器的网络够不着**，不是站点没有图标。
+  （同一个坑我之前踩过一次：把代理不通误判成「DNS 解析不了」。）
+  - 真正确认「站上没有」的只有 3 个：`gildata.com`（200，无 manifest/og:image/
+    TileImage）、`yql.net`（403）、以及 3 个挂在伞状域名下、按规则不回退的
+    （`api.tanyuan.qq.com` / `sse.qidian.qq.com` / `stockbuddy.qq.com`）。
+  - **换一个能连通这些站的网络重跑 `scripts/fetch_icons.py` 很可能还能补上一批。**
+    在此期间它们回落字母块，界面不会开天窗。
 
 ---
 
