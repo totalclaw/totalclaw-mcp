@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tools
+display_name: Signet
+display_name_en: Signet
+version: 0.1.0
+description: Standalone MCP server exposing Signet signing, verification, and content hash tools
+description_zh: 为 AI Agent / MCP 工具调用生成可校验的 Ed25519 签名回执，并写入本地追加式、哈希链审计日志；支持离线验签，提供 CLI、TypeScript `SigningTransport` 和 Python
+  SDK，MCP 服务端无需改造。
+author: Prismer-AI
+license: Apache-2.0 OR MIT
+homepage: https://github.com/Prismer-AI/signet
+repository: https://github.com/Prismer-AI/signet
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@signet-auth/mcp-tools@0.10.0'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

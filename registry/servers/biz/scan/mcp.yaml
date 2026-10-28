@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: scan
+display_name: mcp-scan
+display_name_en: mcp-scan
+version: 0.1.0
+description: Open-source security scanner for Model Context Protocol (MCP) servers. Audits Claude Desktop, VS Code, Cursor,
+  Windsurf, and 12 more AI tools for secrets, prompt injection, supply-chain risks, and 17 security checks.
+description_zh: 开源 MCP 服务器安全扫描器：审计 Claude Desktop、VS Code、Cursor、Windsurf 等 17 款 AI 客户端的 MCP 配置，检测硬编码密钥、提示注入、工具目录投毒（tool-catalog
+  poisoning）、恶意/仿冒包、CVE 漏洞依赖、网络外联与数据流向分析；结果映射到 SOC 2 / GDPR / HIPAA / PCI-DSS / NIST 合规控制项，支持 SBOM（CycloneDX/SPDX）与 SARIF
+  输出接入 GitHub Code Scanning。
+author: Abanoub-Rodolf
+license: MIT
+homepage: https://github.com/Abanoub-Rodolf/mcp-scan
+repository: https://github.com/Abanoub-Rodolf/mcp-scan
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-scan@2.3.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

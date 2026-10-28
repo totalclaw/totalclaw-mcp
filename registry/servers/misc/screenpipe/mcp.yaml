@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: screenpipe
+display_name: screenpipe
+display_name_en: screenpipe
+version: 0.1.0
+description: MCP server for screenpipe - search your screen recordings and audio transcriptions
+description_zh: 通过 MCP 检索带时间戳的屏幕文字和音频转录，为回忆、会议笔记和工作总结提供上下文。采集记录默认保存在本地；启用云端转录、AI、同步或外部集成时，相关数据可能离开设备。
+author: screenpipe
+license: SEE LICENSE IN LICENSE.md
+homepage: https://github.com/screenpipe/screenpipe
+repository: https://github.com/screenpipe/screenpipe
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - screenpipe-mcp@0.20.3
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: hfspace
+display_name: mcp-hfspace
+display_name_en: mcp-hfspace
+version: 0.1.0
+description: MCP Server to connect to Hugging Face spaces. Simple configuration, Claude Desktop friendly.
+description_zh: 直接从 Claude 使用 HuggingFace Spaces。使用开源图像生成、聊天、视觉任务等。支持图像、音频和文本上传/下载。
+author: evalstate
+homepage: https://github.com/evalstate/mcp-hfspace
+repository: https://github.com/evalstate/mcp-hfspace
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@llmindset/mcp-hfspace@0.5.4'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

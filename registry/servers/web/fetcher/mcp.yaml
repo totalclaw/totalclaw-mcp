@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: fetcher
+display_name: fetcher-mcp
+display_name_en: fetcher-mcp
+version: 0.1.0
+description: MCP server for fetching web content using Playwright browser
+description_zh: 使用 Playwright 无头浏览器获取网页内容，支持 JS 渲染和智能提取 (Markdown/HTML)。
+author: jae-jae
+license: ISC
+homepage: https://github.com/jae-jae/fetcher-mcp
+repository: https://github.com/jae-jae/fetcher-mcp
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - fetcher-mcp@0.3.9
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

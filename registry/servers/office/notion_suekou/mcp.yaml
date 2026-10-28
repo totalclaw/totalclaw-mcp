@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: notion_suekou
+display_name: mcp-notion-server
+display_name_en: mcp-notion-server
+version: 0.1.0
+description: AI-friendly MCP server for the Notion API
+description_zh: 与 Notion API 交互。
+author: suekou
+license: MIT
+homepage: https://github.com/suekou/mcp-notion-server
+repository: https://github.com/suekou/mcp-notion-server
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@suekou/mcp-notion-server@2.0.2'
+  requires:
+    node: '>=18'
+requires_env:
+- name: NOTION_API_TOKEN
+  description: mcp-notion-server 的访问令牌（NOTION_API_TOKEN），获取方式见项目说明。
+  prompt: 请输入 NOTION_API_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/suekou/mcp-notion-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

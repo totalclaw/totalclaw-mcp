@@ -1,0 +1,50 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: dinox
+display_name: DINO-X-MCP
+display_name_en: DINO-X-MCP
+version: 0.1.0
+description: Official DINO-X Model Context Protocol (MCP) server that empowers LLMs with real-world visual perception through
+  image object detection, localization, and captioning APIs.
+description_zh: 让 AI 具备细粒度的图像理解能力：识别、定位、描述你看到的任何目标。
+author: IDEA-Research
+homepage: https://github.com/IDEA-Research/DINO-X-MCP
+repository: https://github.com/IDEA-Research/DINO-X-MCP
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@deepdataspace/dinox-mcp@1.0.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: DINOX_API_KEY
+  description: DINO-X-MCP 的API 密钥（DINOX_API_KEY），获取方式见项目说明。
+  prompt: 请输入 DINOX_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/IDEA-Research/DINO-X-MCP
+  doc_label: 查看项目说明（如何获取）
+- name: IMAGE_STORAGE_DIRECTORY
+  description: DINO-X-MCP 的路径（IMAGE_STORAGE_DIRECTORY），获取方式见项目说明。
+  prompt: 请输入 IMAGE_STORAGE_DIRECTORY
+  secret: false
+  required: true
+  doc_url: https://github.com/IDEA-Research/DINO-X-MCP
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

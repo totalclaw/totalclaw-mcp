@@ -1,0 +1,50 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: wb
+display_name: wb-mcp-server
+display_name_en: wb-mcp-server
+version: 0.1.0
+description: 'MCP server for Wildberries Seller API: 197 tools for products, prices, orders, ads, supplies, reviews, finance
+  and analytics, with response sizes measured on a live account and trimmed from 770k to 75k tokens across a 27-response corpus'
+description_zh: 俄罗斯电商平台 Wildberries 卖家 API 的 MCP 服务器，197 个工具：商品卡片、价格、促销、广告、订单、发货、评价、退货、财务与分析。支持多店铺，令牌加密存储，网页面板可查看每一次调用，内置自诊断（平台改接口时能区分是密钥问题还是
+  API 变更）。针对上下文预算做过实测优化。
+author: DeviceIngineering
+homepage: https://github.com/DeviceIngineering/wb-mcp-server
+repository: https://github.com/DeviceIngineering/wb-mcp-server
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - wb-mcp-server==2.6.1
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: WB_API_TOKEN
+  description: wb-mcp-server 的访问令牌（WB_API_TOKEN），获取方式见项目说明。
+  prompt: 请输入 WB_API_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/DeviceIngineering/wb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: DATA_DIR
+  description: wb-mcp-server 的路径（DATA_DIR），获取方式见项目说明。
+  prompt: 请输入 DATA_DIR
+  secret: false
+  required: true
+  doc_url: https://github.com/DeviceIngineering/wb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

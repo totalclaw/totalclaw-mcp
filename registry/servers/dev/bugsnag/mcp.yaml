@@ -1,0 +1,42 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: bugsnag
+display_name: bugsnag-mcp
+display_name_en: bugsnag-mcp
+version: 0.1.0
+description: A Bugsnag MCP server for interacting with Bugsnag API
+description_zh: 用于与 Bugsnag 交互的 MCP 服务器。
+author: tgeselle
+homepage: https://github.com/tgeselle/bugsnag-mcp
+repository: https://github.com/tgeselle/bugsnag-mcp
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - bugsnag-mcp-server@1.1.0
+  requires:
+    node: '>=18'
+requires_env:
+- name: BUGSNAG_API_KEY
+  description: bugsnag-mcp 的API 密钥（BUGSNAG_API_KEY），获取方式见项目说明。
+  prompt: 请输入 BUGSNAG_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/tgeselle/bugsnag-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

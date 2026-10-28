@@ -1,0 +1,32 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: you
+display_name: You.com
+display_name_en: You.com
+version: 0.1.0
+description: You.com 官方远程 MCP 服务器，提供实时网页搜索、URL 内容提取与带引用的深度研究（工具 `you-search` / `you-contents` / `you-research`），并附赠多平台 Agent
+  技能包（Claude Code、Codex、Cursor、Copilot CLI 等）。
+description_zh: You.com 官方远程 MCP 服务器，提供实时网页搜索、URL 内容提取与带引用的深度研究（工具 `you-search` / `you-contents` / `you-research`），并附赠多平台
+  Agent 技能包（Claude Code、Codex、Cursor、Copilot CLI 等）。
+author: youdotcom-oss
+homepage: https://github.com/youdotcom-oss/agent-skills
+repository: https://github.com/youdotcom-oss/agent-skills
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://api.you.com/mcp
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

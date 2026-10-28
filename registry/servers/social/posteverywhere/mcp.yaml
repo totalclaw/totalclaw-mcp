@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: posteverywhere
+display_name: PostEverywhere MCP
+display_name_en: PostEverywhere MCP
+version: 0.1.0
+description: MCP server for PostEverywhere. Schedule and publish to 13 platforms (Instagram, TikTok, YouTube, LinkedIn, Facebook,
+  X, Threads, Pinterest, Bluesky, Telegram, Discord, WordPress and Google Business Profile) from Claude, ChatGPT, Cursor,
+  OpenAI Codex and o
+description_zh: PostEverywhere 官方 MCP 服务器（33 个工具），让 AI Agent 将帖子定时发布到 Instagram、TikTok、YouTube、LinkedIn、X、Facebook、Threads、Pinterest、Bluesky、Telegram、Discord
+  共 11 个平台，支持媒体上传、AI 配文与数据分析。
+author: posteverywhere
+license: MIT
+homepage: https://github.com/posteverywhere/mcp
+repository: https://github.com/posteverywhere/mcp
+verified: false
+category: social
+tags:
+- social
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@posteverywhere/mcp@1.14.2'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

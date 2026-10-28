@@ -1,0 +1,61 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: elevenlabs
+display_name: ElevenLabs
+display_name_en: ElevenLabs
+version: 0.1.0
+description: A Model Context Protocol server providing ElevenLabs text-to-speech integration
+description_zh: 集成 ElevenLabs TTS API，能生成包含多种声音的完整画外音。
+author: mamertofabian
+homepage: https://github.com/mamertofabian/elevenlabs-mcp-server
+repository: https://github.com/mamertofabian/elevenlabs-mcp-server
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - elevenlabs-mcp-server==0.1.2
+  env:
+    ELEVENLABS_MODEL_ID: eleven_flash_v2
+    ELEVENLABS_STABILITY: '0.5'
+    ELEVENLABS_SIMILARITY_BOOST: '0.75'
+    ELEVENLABS_STYLE: '0.1'
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: ELEVENLABS_API_KEY
+  description: ElevenLabs 的API 密钥（ELEVENLABS_API_KEY），获取方式见项目说明。
+  prompt: 请输入 ELEVENLABS_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/mamertofabian/elevenlabs-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: ELEVENLABS_VOICE_ID
+  description: ElevenLabs 的ID（ELEVENLABS_VOICE_ID），获取方式见项目说明。
+  prompt: 请输入 ELEVENLABS_VOICE_ID
+  secret: false
+  required: true
+  doc_url: https://github.com/mamertofabian/elevenlabs-mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env:
+- name: ELEVENLABS_OUTPUT_DIR
+  description: ElevenLabs 的路径（ELEVENLABS_OUTPUT_DIR），不填用默认值 output。
+  prompt: 请输入 ELEVENLABS_OUTPUT_DIR
+  secret: false
+  required: false
+  doc_url: https://github.com/mamertofabian/elevenlabs-mcp-server
+  doc_label: 查看项目说明（如何获取）
+  default: output
+defaults:
+  enabled: true
+  timeout: 120

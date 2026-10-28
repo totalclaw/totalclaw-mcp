@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: virustotal
+display_name: mcp-virustotal
+display_name_en: mcp-virustotal
+version: 0.1.0
+description: MCP server for VirusTotal API integration
+description_zh: 用于查询 VirusTotal API 的 MCP 服务器。提供扫描 URL、分析文件哈希和检索 IP 地址报告的工具。
+author: BurtTheCoder
+license: MIT
+homepage: https://github.com/BurtTheCoder/mcp-virustotal
+repository: https://github.com/BurtTheCoder/mcp-virustotal
+verified: false
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@burtthecoder/mcp-virustotal@1.0.35'
+  requires:
+    node: '>=18'
+requires_env:
+- name: VIRUSTOTAL_API_KEY
+  description: mcp-virustotal 的API 密钥（VIRUSTOTAL_API_KEY），获取方式见项目说明。
+  prompt: 请输入 VIRUSTOTAL_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/BurtTheCoder/mcp-virustotal
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

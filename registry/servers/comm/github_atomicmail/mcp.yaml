@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: github_atomicmail
+display_name: Atomic Mail
+display_name_en: Atomic Mail
+version: 0.1.0
+description: Atomic Mail MCP server — local stdio proxy with PoW auth and JMAP, for AI agents. (github install channel)
+description_zh: 面向 AI 代理的邮件服务：代理可通过工作量证明自主注册收件箱（无需邮箱验证、域名或信用卡），支持自定义域名，基于开放的 JMAP 标准完整收发邮件。
+author: Atomic-Mail
+license: MIT
+homepage: https://github.com/Atomic-Mail/atomic-mail-agentic
+repository: https://github.com/Atomic-Mail/atomic-mail-agentic
+verified: false
+category: comm
+tags:
+- comm
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@atomicmail/mcp-github@0.3.31'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

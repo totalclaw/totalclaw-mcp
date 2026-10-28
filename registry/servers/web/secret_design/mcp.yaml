@@ -1,0 +1,50 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: secret_design
+display_name: Secret MCP
+display_name_en: Secret MCP
+version: 0.1.0
+description: Local MCP server and web viewer for isolated per-result GDWEB design specifications
+description_zh: 搜索近期 GDWEB 设计参考，并通过 MCP Sampling 将每个结果转换为可直接用于实现的设计规格。
+author: yyeongjin
+license: MIT
+homepage: https://github.com/yyeongjin/secret_mcp
+repository: https://github.com/yyeongjin/secret_mcp
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - secret-design-mcp@0.6.0
+  requires:
+    node: '>=18'
+requires_env:
+- name: DESIGN_INDEX_OUTPUT_DIR
+  description: Secret MCP 的路径（DESIGN_INDEX_OUTPUT_DIR），获取方式见项目说明。
+  prompt: 请输入 DESIGN_INDEX_OUTPUT_DIR
+  secret: false
+  required: true
+  doc_url: https://github.com/yyeongjin/secret_mcp
+  doc_label: 查看项目说明（如何获取）
+- name: SECRET_MCP_WEB_ORIGIN
+  description: Secret MCP 的密钥（SECRET_MCP_WEB_ORIGIN），获取方式见项目说明。
+  prompt: 请输入 SECRET_MCP_WEB_ORIGIN
+  secret: true
+  required: true
+  doc_url: https://github.com/yyeongjin/secret_mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

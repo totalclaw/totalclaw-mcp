@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: maxstat
+display_name: MaxStat MCP
+display_name_en: MaxStat MCP
+version: 0.1.0
+description: 让 AI 查询 MAX 即时通讯平台的实时索引：筛选频道和帖子、比较 30 天受众增长、分析浏览与反应并追踪转发；生产示例从同一频道返回 +14.5% 增长及 184 次转发。
+description_zh: 让 AI 查询 MAX 即时通讯平台的实时索引：筛选频道和帖子、比较 30 天受众增长、分析浏览与反应并追踪转发；生产示例从同一频道返回 +14.5% 增长及 184 次转发。
+author: fbmdata
+homepage: https://github.com/fbmdata/maxstat-mcp
+repository: https://github.com/fbmdata/maxstat-mcp
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://maxstat.ru/api/mcp
+  auth: header
+  headers:
+    X-API-Token: ${MCP_MAXSTAT_X_API_TOKEN}
+requires_env:
+- name: X_API_TOKEN
+  env_key: MCP_MAXSTAT_X_API_TOKEN
+  description: MaxStat MCP 的访问令牌（X_API_TOKEN），获取方式见项目说明。
+  prompt: 请输入 X_API_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/fbmdata/maxstat-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

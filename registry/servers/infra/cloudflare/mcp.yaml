@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cloudflare
+display_name: Cloudflare
+display_name_en: Cloudflare
+version: 0.1.0
+description: MCP server for interacting with Cloudflare API
+description_zh: 连接Cloudflare服务的MCP服务器，支持DNS和CDN管理
+author: upstream
+license: Apache-2.0
+homepage: https://www.npmjs.com/package/@cloudflare/mcp-server-cloudflare
+verified: false
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@cloudflare/mcp-server-cloudflare@0.2.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: CLOUDFLARE_API_TOKEN
+  description: Cloudflare 的访问令牌（CLOUDFLARE_API_TOKEN），获取方式见项目说明。
+  prompt: 请输入 CLOUDFLARE_API_TOKEN
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: image_compression
+display_name: mcp-image-compression
+display_name_en: mcp-image-compression
+version: 0.1.0
+description: '## Project Overview'
+description_zh: 用于本地压缩各种图像格式的 MCP 服务器。
+author: InhiblabCore
+license: MIT
+homepage: https://github.com/InhiblabCore/mcp-image-compression
+repository: https://github.com/InhiblabCore/mcp-image-compression
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@inhiblab-core/mcp-image-compression@0.1.2'
+  requires:
+    node: '>=18'
+requires_env:
+- name: IMAGE_COMPRESSION_DOWNLOAD_DIR
+  description: mcp-image-compression 的路径（IMAGE_COMPRESSION_DOWNLOAD_DIR），获取方式见项目说明。
+  prompt: 请输入 IMAGE_COMPRESSION_DOWNLOAD_DIR
+  secret: false
+  required: true
+  doc_url: https://github.com/InhiblabCore/mcp-image-compression
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

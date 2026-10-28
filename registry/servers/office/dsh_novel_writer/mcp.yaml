@@ -1,0 +1,49 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: dsh_novel_writer
+display_name: dsh-novel-writer
+display_name_en: dsh-novel-writer
+version: 0.1.0
+description: '[](https://glama.ai/mcp/servers/siweina/dsh-novel-writer)      - Offline novel-writing toolkit for Chinese web-novel
+  authors: chapter stats, style checks, plot-thread tracking, continuity audits and semantic search.'
+description_zh: 网文作者的本地章节体检工具集：16 个工具覆盖章节统计、风格基线自检、伏笔与剧情线登记、连贯性/OOC 审计、关键词与句式分析、本地语义检索；全离线运行，无需 API Key。
+author: siweina
+license: MIT
+homepage: https://github.com/siweina/dsh-novel-writer
+repository: https://github.com/siweina/dsh-novel-writer
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - -p
+  - dsh-novel-writer@6.9.0
+  - dsh-novel-writer-mcp
+  - --root
+  - ${MCP_DSH_NOVEL_WRITER_ROOT}
+  requires:
+    node: '>=18'
+requires_env:
+- name: ROOT
+  env_key: MCP_DSH_NOVEL_WRITER_ROOT
+  description: dsh-novel-writer 的启动参数（--root），示例：/你的小说库路径
+  prompt: 请输入 ROOT
+  secret: false
+  required: true
+  doc_url: https://github.com/siweina/dsh-novel-writer
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

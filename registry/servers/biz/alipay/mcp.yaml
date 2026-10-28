@@ -1,0 +1,50 @@
+# 由 fau-tools/mcp-import 从 厂商官方说明（人工核实） 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: alipay
+display_name: 支付宝
+display_name_en: ''
+version: 0.1.0
+description: 由支付宝开放平台提供的支付创建和管理 MCP 服务。A mcp server to create and process payment with Alipay open APIs.
+description_zh: 支付宝官方 MCP：创建手机 / 网页支付、查询订单、退款与退款查询；需要开放平台应用的 APPID、应用私钥与支付宝公钥，涉及真实资金。
+author: upstream
+license: See license in https://ds.alipay.com/fd-
+homepage: https://www.npmjs.com/package/@alipay/mcp-server-alipay
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@alipay/mcp-server-alipay@2.0.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: AP_APP_ID
+  description: 支付宝 的ID（AP_APP_ID），获取方式见项目说明。
+  prompt: 请输入 AP_APP_ID
+  secret: false
+  required: true
+- name: AP_APP_KEY
+  description: 支付宝 的配置项（AP_APP_KEY），获取方式见项目说明。
+  prompt: 请输入 AP_APP_KEY
+  secret: true
+  required: true
+- name: AP_PUB_KEY
+  description: 支付宝 的配置项（AP_PUB_KEY），获取方式见项目说明。
+  prompt: 请输入 AP_PUB_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

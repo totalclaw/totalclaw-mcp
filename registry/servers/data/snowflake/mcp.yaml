@@ -1,0 +1,105 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: snowflake
+display_name: mcp-snowflake-server
+display_name_en: mcp-snowflake-server
+version: 0.1.0
+description: A simple Snowflake MCP server
+description_zh: Snowflake 集成，实现读和（可选）写操作以及洞察跟踪。
+author: isaacwasserman
+homepage: https://github.com/isaacwasserman/mcp-snowflake-server
+repository: https://github.com/isaacwasserman/mcp-snowflake-server
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --python=3.12
+  - mcp_snowflake_server==0.4.0
+  - --account
+  - ${MCP_SNOWFLAKE_ACCOUNT}
+  - --warehouse
+  - ${MCP_SNOWFLAKE_WAREHOUSE}
+  - --user
+  - ${MCP_SNOWFLAKE_USER}
+  - --password
+  - ${MCP_SNOWFLAKE_PASSWORD}
+  - --role
+  - ${MCP_SNOWFLAKE_ROLE}
+  - --database
+  - ${MCP_SNOWFLAKE_DATABASE}
+  - --schema
+  - ${MCP_SNOWFLAKE_SCHEMA}
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: ACCOUNT
+  env_key: MCP_SNOWFLAKE_ACCOUNT
+  description: mcp-snowflake-server 的启动参数（--account），示例：your_account
+  prompt: 请输入 ACCOUNT
+  secret: false
+  required: true
+  doc_url: https://github.com/isaacwasserman/mcp-snowflake-server
+  doc_label: 查看项目说明（如何获取）
+- name: WAREHOUSE
+  env_key: MCP_SNOWFLAKE_WAREHOUSE
+  description: mcp-snowflake-server 的启动参数（--warehouse），示例：your_warehouse
+  prompt: 请输入 WAREHOUSE
+  secret: false
+  required: true
+  doc_url: https://github.com/isaacwasserman/mcp-snowflake-server
+  doc_label: 查看项目说明（如何获取）
+- name: USER
+  env_key: MCP_SNOWFLAKE_USER
+  description: mcp-snowflake-server 的启动参数（--user），示例：your_user
+  prompt: 请输入 USER
+  secret: false
+  required: true
+  doc_url: https://github.com/isaacwasserman/mcp-snowflake-server
+  doc_label: 查看项目说明（如何获取）
+- name: PASSWORD
+  env_key: MCP_SNOWFLAKE_PASSWORD
+  description: mcp-snowflake-server 的启动参数（--password），示例：your_password
+  prompt: 请输入 PASSWORD
+  secret: true
+  required: true
+  doc_url: https://github.com/isaacwasserman/mcp-snowflake-server
+  doc_label: 查看项目说明（如何获取）
+- name: ROLE
+  env_key: MCP_SNOWFLAKE_ROLE
+  description: mcp-snowflake-server 的启动参数（--role），示例：your_role
+  prompt: 请输入 ROLE
+  secret: false
+  required: true
+  doc_url: https://github.com/isaacwasserman/mcp-snowflake-server
+  doc_label: 查看项目说明（如何获取）
+- name: DATABASE
+  env_key: MCP_SNOWFLAKE_DATABASE
+  description: mcp-snowflake-server 的启动参数（--database），示例：your_database
+  prompt: 请输入 DATABASE
+  secret: false
+  required: true
+  doc_url: https://github.com/isaacwasserman/mcp-snowflake-server
+  doc_label: 查看项目说明（如何获取）
+- name: SCHEMA
+  env_key: MCP_SNOWFLAKE_SCHEMA
+  description: mcp-snowflake-server 的启动参数（--schema），示例：your_schema
+  prompt: 请输入 SCHEMA
+  secret: false
+  required: true
+  doc_url: https://github.com/isaacwasserman/mcp-snowflake-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

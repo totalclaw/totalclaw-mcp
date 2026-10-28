@@ -1,0 +1,61 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: minimax
+display_name: MiniMax (官方)
+display_name_en: ''
+version: 0.1.0
+description: Minimax MCP Server
+description_zh: MiniMax 官方 MCP 服务器，调用其文本转语音、图像生成与视频生成 API。
+author: MiniMax-AI
+homepage: https://github.com/MiniMax-AI/MiniMax-MCP
+repository: https://github.com/MiniMax-AI/MiniMax-MCP
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - minimax-mcp==0.0.19
+  - -y
+  env:
+    MINIMAX_API_RESOURCE_MODE: optional, [url|local], url is default, audio/image/video are downloaded locally or provided
+      in URL format
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: MINIMAX_API_KEY
+  description: MiniMax (官方) 的API 密钥（MINIMAX_API_KEY），获取方式见项目说明。
+  prompt: 请输入 MINIMAX_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/MiniMax-AI/MiniMax-MCP
+  doc_label: 查看项目说明（如何获取）
+optional_env:
+- name: MINIMAX_MCP_BASE_PATH
+  description: MiniMax (官方) 的服务地址（MINIMAX_MCP_BASE_PATH），不填用默认值 local-output-dir-path, such as /User/xxx/Desktop。
+  prompt: 请输入 MINIMAX_MCP_BASE_PATH
+  secret: false
+  required: false
+  doc_url: https://github.com/MiniMax-AI/MiniMax-MCP
+  doc_label: 查看项目说明（如何获取）
+  default: local-output-dir-path, such as /User/xxx/Desktop
+- name: MINIMAX_API_HOST
+  description: MiniMax (官方) 的主机地址（MINIMAX_API_HOST），不填用默认值 api host, https://api.minimax.io | https://api.minimaxi.com。
+  prompt: 请输入 MINIMAX_API_HOST
+  secret: false
+  required: false
+  doc_url: https://github.com/MiniMax-AI/MiniMax-MCP
+  doc_label: 查看项目说明（如何获取）
+  default: api host, https://api.minimax.io | https://api.minimaxi.com
+defaults:
+  enabled: true
+  timeout: 120

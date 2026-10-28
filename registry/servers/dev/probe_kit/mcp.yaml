@@ -1,0 +1,74 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: probe_kit
+display_name: mcp-probe-kit
+display_name_en: mcp-probe-kit
+version: 0.1.0
+description: AI-powered MCP development toolkit with 29 default tools (24 base + 5 History Session), 35 with Memory, 39-tool
+  compatibility mode, ARC-8 architecture support, and MCP Apps workbenches
+description_zh: 规格驱动的通用开发工作流 MCP（30 工具）：`start_feature` / `start_bugfix` / `start_ui` 编排全流程，自动 Skill + AGENTS.md bootstrap，跨项目向量记忆（Qdrant），GitNexus
+  代码图谱，规格校验与质量闸门。任意 MCP 客户端可用。
+author: mybolide
+license: MIT
+homepage: https://github.com/mybolide/mcp-probe-kit
+repository: https://github.com/mybolide/mcp-probe-kit
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-probe-kit@4.1.1
+  env:
+    MEMORY_QDRANT_COLLECTION: mcp_probe_memory
+    MEMORY_EMBEDDING_PROVIDER: openai-compatible
+    MEMORY_EMBEDDING_MODEL: nomic-ai/nomic-embed-text-v1.5
+    MEMORY_SEARCH_LIMIT: '3'
+    MEMORY_SUMMARY_MAX_CHARS: '280'
+  requires:
+    node: '>=18'
+requires_env:
+- name: MEMORY_QDRANT_API_KEY
+  description: mcp-probe-kit 的API 密钥（MEMORY_QDRANT_API_KEY），获取方式见项目说明。
+  prompt: 请输入 MEMORY_QDRANT_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/mybolide/mcp-probe-kit
+  doc_label: 查看项目说明（如何获取）
+- name: MEMORY_EMBEDDING_API_KEY
+  description: mcp-probe-kit 的API 密钥（MEMORY_EMBEDDING_API_KEY），获取方式见项目说明。
+  prompt: 请输入 MEMORY_EMBEDDING_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/mybolide/mcp-probe-kit
+  doc_label: 查看项目说明（如何获取）
+optional_env:
+- name: MEMORY_QDRANT_URL
+  description: mcp-probe-kit 的服务地址（MEMORY_QDRANT_URL），不填用默认值 http://127.0.0.1:50008。
+  prompt: 请输入 MEMORY_QDRANT_URL
+  secret: false
+  required: false
+  doc_url: https://github.com/mybolide/mcp-probe-kit
+  doc_label: 查看项目说明（如何获取）
+  default: http://127.0.0.1:50008
+- name: MEMORY_EMBEDDING_URL
+  description: mcp-probe-kit 的服务地址（MEMORY_EMBEDDING_URL），不填用默认值 http://127.0.0.1:50012/embeddings。
+  prompt: 请输入 MEMORY_EMBEDDING_URL
+  secret: false
+  required: false
+  doc_url: https://github.com/mybolide/mcp-probe-kit
+  doc_label: 查看项目说明（如何获取）
+  default: http://127.0.0.1:50012/embeddings
+defaults:
+  enabled: true
+  timeout: 120

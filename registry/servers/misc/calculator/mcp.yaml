@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: calculator
+display_name: Calculator
+display_name_en: Calculator
+version: 0.1.0
+description: A Model Context Protocol server for calculating
+description_zh: 使 LLM 能够使用计算器进行精确的数值计算。
+author: githejie
+license: MIT
+homepage: https://github.com/githejie/mcp-server-calculator
+repository: https://github.com/githejie/mcp-server-calculator
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - mcp-server-calculator==0.2.1
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

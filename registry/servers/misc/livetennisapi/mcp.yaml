@@ -1,0 +1,45 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: livetennisapi
+display_name: livetennisapi-mcp
+display_name_en: livetennisapi-mcp
+version: 0.1.0
+description: MCP server for the Live Tennis API — give Claude, Cursor and other LLM agents real-time tennis scores, players
+  and fixtures for ATP, WTA, Challenger, ITF and juniors. Odds, rankings, match statistics, charting and model win-probability
+  tools require the P
+description_zh: 实时网球数据 MCP 服务器：比分、赛程、球员、H2H、排名与模型胜率，覆盖 ATP/WTA/挑战赛/ITF/青少年五大巡回赛，提供免费套餐。
+author: livetennisapi
+license: MIT
+homepage: https://github.com/livetennisapi/livetennisapi-mcp
+repository: https://github.com/livetennisapi/livetennisapi-mcp
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - livetennisapi-mcp@1.6.4
+  requires:
+    node: '>=18'
+requires_env:
+- name: LIVETENNISAPI_KEY
+  description: livetennisapi-mcp 的API 密钥（LIVETENNISAPI_KEY），获取方式见项目说明。
+  prompt: 请输入 LIVETENNISAPI_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/livetennisapi/livetennisapi-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

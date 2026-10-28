@@ -1,0 +1,50 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tasty_agent
+display_name: tasty-agent
+display_name_en: tasty-agent
+version: 0.1.0
+description: A Model Context Protocol server for Tastytrade brokerage accounts
+description_zh: Tastyworks API 集成，处理 Tastytrade 上的交易活动。
+author: ferdousbhai
+license: MIT
+homepage: https://github.com/ferdousbhai/tasty-agent
+repository: https://github.com/ferdousbhai/tasty-agent
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - tasty-agent@7.1.0
+  requires:
+    node: '>=18'
+requires_env:
+- name: TASTYTRADE_CLIENT_SECRET
+  description: tasty-agent 的密钥（TASTYTRADE_CLIENT_SECRET），获取方式见项目说明。
+  prompt: 请输入 TASTYTRADE_CLIENT_SECRET
+  secret: true
+  required: true
+  doc_url: https://github.com/ferdousbhai/tasty-agent
+  doc_label: 查看项目说明（如何获取）
+- name: TASTYTRADE_REFRESH_TOKEN
+  description: tasty-agent 的访问令牌（TASTYTRADE_REFRESH_TOKEN），获取方式见项目说明。
+  prompt: 请输入 TASTYTRADE_REFRESH_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/ferdousbhai/tasty-agent
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

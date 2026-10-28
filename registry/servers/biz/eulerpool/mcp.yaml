@@ -1,0 +1,29 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: eulerpool
+display_name: Eulerpool
+display_name_en: Eulerpool
+version: 0.1.0
+description: 机构级金融数据 API，覆盖股票、ETF、基金、加密货币、外汇、债券及宏观经济数据（FRED/ECB/IMF/世界银行），提供基本面、分析师预期、持股、内部人及美国国会交易、筛选器等 157+ 工具。
+description_zh: 机构级金融数据 API，覆盖股票、ETF、基金、加密货币、外汇、债券及宏观经济数据（FRED/ECB/IMF/世界银行），提供基本面、分析师预期、持股、内部人及美国国会交易、筛选器等 157+ 工具。
+author: upstream
+homepage: https://eulerpool.com/financial-data-api/mcp
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://api.eulerpool.com/mcp
+  auth: header
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,56 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: opanel
+display_name: opanel-mcp
+display_name_en: opanel-mcp
+version: 0.1.0
+description: OPanel MCP Server for AI agents
+description_zh: OPanel服务器管理面板集成MCP服务器，用于大模型辅助管理Minecraft服务器
+author: opanel-mc
+license: MPL-2.0
+homepage: https://github.com/opanel-mc/opanel-mcp
+repository: https://github.com/opanel-mc/opanel-mcp
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - opanel-mcp@0.1.4
+  - --server
+  - ${MCP_OPANEL_SERVER}
+  - --token
+  - ${MCP_OPANEL_TOKEN}
+  requires:
+    node: '>=18'
+requires_env:
+- name: SERVER
+  env_key: MCP_OPANEL_SERVER
+  description: opanel-mcp 的启动参数（--server），示例：...
+  prompt: 请输入 SERVER
+  secret: false
+  required: true
+  doc_url: https://github.com/opanel-mc/opanel-mcp
+  doc_label: 查看项目说明（如何获取）
+- name: TOKEN
+  env_key: MCP_OPANEL_TOKEN
+  description: opanel-mcp 的启动参数（--token），示例：...
+  prompt: 请输入 TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/opanel-mc/opanel-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

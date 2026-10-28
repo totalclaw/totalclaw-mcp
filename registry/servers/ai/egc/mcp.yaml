@@ -1,0 +1,38 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: egc
+display_name: EGC
+display_name_en: EGC
+version: 0.1.0
+description: 'EGC is a local-first MCP runtime that gives every AI agent the same brain: persistent shared memory, security
+  guardrails, and up to 90% token savings across 29 AI coding tools.'
+description_zh: 跨会话持久记忆 MCP 服务，支持 Claude Code、Cursor、Gemini CLI、Codex、Windsurf 等多种 AI 编程工具，SQLite 本地存储，上下文重置后状态保持。提供 egc-memory（14
+  工具）与 egc-guardian（5 工具）。`npm install -g @egchq/egc`
+author: Fmarzochi
+license: Apache-2.0
+homepage: https://github.com/Fmarzochi/EGC
+repository: https://github.com/Fmarzochi/EGC
+verified: false
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@egchq/egc@1.1.23'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

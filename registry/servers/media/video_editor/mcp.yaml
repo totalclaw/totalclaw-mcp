@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: video_editor
+display_name: video-editing-mcp
+display_name_en: video-editing-mcp
+version: 0.1.0
+description: Video Jungle MCP Server for Adding, Analysing, Searching, and Editing Videos
+description_zh: 视频编辑神器，支持添加、分析、搜索和生成视频剪辑。
+author: burningion
+homepage: https://github.com/burningion/video-editing-mcp
+repository: https://github.com/burningion/video-editing-mcp
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - video-editor-mcp==0.1.59
+  - ${MCP_VIDEO_EDITOR_ARG_1}
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: ARG_1
+  env_key: MCP_VIDEO_EDITOR_ARG_1
+  description: video-editing-mcp 的启动参数，示例：YOURAPIKEY
+  prompt: 请输入 ARG_1
+  secret: false
+  required: true
+  doc_url: https://github.com/burningion/video-editing-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

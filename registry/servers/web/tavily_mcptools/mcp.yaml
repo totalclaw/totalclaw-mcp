@@ -1,0 +1,44 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tavily_mcptools
+display_name: mcp-tavily
+display_name_en: mcp-tavily
+version: 0.1.0
+description: A Model Context Protocol (MCP) server implementation for Tavily API, providing advanced search and content extraction
+  capabilities
+description_zh: Tavily AI 搜索 API (社区实现版本)。
+author: kshern
+license: MIT
+homepage: https://github.com/kshern/mcp-tavily.git
+repository: https://github.com/kshern/mcp-tavily.git
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@mcptools/mcp-tavily@1.0.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: TAVILY_API_KEY
+  description: mcp-tavily 的API 密钥（TAVILY_API_KEY），获取方式见项目说明。
+  prompt: 请输入 TAVILY_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/kshern/mcp-tavily.git
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

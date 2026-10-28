@@ -1,0 +1,2289 @@
+{
+ "12306": {
+  "score": 734,
+  "downloads_weekly": 9140,
+  "stars": 2410
+ },
+ "5dive": {
+  "score": 171,
+  "downloads_weekly": 50
+ },
+ "actablesite": {
+  "score": 0
+ },
+ "actors": {
+  "score": 406,
+  "downloads_weekly": 11448
+ },
+ "adb_mysql": {
+  "score": 324,
+  "downloads_weekly": 52,
+  "stars": 32
+ },
+ "adbpg": {
+  "score": 318,
+  "downloads_weekly": 88,
+  "stars": 16
+ },
+ "adls2": {
+  "score": 236,
+  "downloads_weekly": 32,
+  "stars": 6
+ },
+ "admapix": {
+  "score": 223,
+  "downloads_weekly": 23,
+  "stars": 6
+ },
+ "adx": {
+  "score": 384,
+  "downloads_weekly": 114,
+  "stars": 59
+ },
+ "agent": {
+  "score": 235,
+  "stars": 221
+ },
+ "agent_reach": {
+  "score": 326,
+  "downloads_weekly": 1828
+ },
+ "agent_recall": {
+  "score": 203,
+  "downloads_weekly": 107
+ },
+ "agent_shield": {
+  "score": 297,
+  "downloads_weekly": 57,
+  "stars": 15
+ },
+ "agentgate": {
+  "score": 161,
+  "downloads_weekly": 40
+ },
+ "agentql": {
+  "score": 449,
+  "downloads_weekly": 169,
+  "stars": 181
+ },
+ "agentrpc": {
+  "score": 115,
+  "downloads_weekly": 13
+ },
+ "agentset": {
+  "score": 143,
+  "downloads_weekly": 26
+ },
+ "agentwarden_cli": {
+  "score": 163,
+  "downloads_weekly": 42
+ },
+ "ai_economics": {
+  "score": 0
+ },
+ "airbnb": {
+  "score": 274,
+  "stars": 551
+ },
+ "airtable": {
+  "score": 607,
+  "downloads_weekly": 2543,
+  "stars": 456
+ },
+ "airtable_rashidazarang": {
+  "score": 194,
+  "stars": 87
+ },
+ "aitoearn": {
+  "score": 0
+ },
+ "aiven": {
+  "score": 365,
+  "downloads_weekly": 152,
+  "stars": 28
+ },
+ "alchemy": {
+  "score": 628,
+  "downloads_weekly": 4506,
+  "stars": 422
+ },
+ "alibabacloud_dataworks": {
+  "score": 361,
+  "downloads_weekly": 73,
+  "stars": 54
+ },
+ "alipay": {
+  "score": 305,
+  "downloads_weekly": 1119
+ },
+ "alphavantage": {
+  "score": 371,
+  "downloads_weekly": 67,
+  "stars": 74
+ },
+ "amap_maps": {
+  "score": 0
+ },
+ "amazon_bedrock": {
+  "score": 141,
+  "stars": 25
+ },
+ "ancestry": {
+  "score": 136,
+  "downloads_weekly": 22
+ },
+ "anilist": {
+  "score": 406,
+  "downloads_weekly": 122,
+  "stars": 92
+ },
+ "any_chat_completions": {
+  "score": 0
+ },
+ "anymd": {
+  "score": 302,
+  "stars": 1055
+ },
+ "apifox": {
+  "score": 311,
+  "downloads_weekly": 1274
+ },
+ "apifox_wangmhaha": {
+  "score": 0
+ },
+ "apple": {
+  "score": 170,
+  "downloads_weekly": 49
+ },
+ "apple_docs_2_0": {
+  "score": 366,
+  "downloads_weekly": 168,
+  "stars": 26
+ },
+ "apple_events": {
+  "score": 347,
+  "downloads_weekly": 2931
+ },
+ "apple_music_playlists": {
+  "score": 211,
+  "downloads_weekly": 42,
+  "stars": 2
+ },
+ "apple_notes": {
+  "score": 0
+ },
+ "apple_shortcuts": {
+  "score": 507,
+  "downloads_weekly": 329,
+  "stars": 352
+ },
+ "archive_hospital_mcp": {
+  "score": 0
+ },
+ "arxiv": {
+  "score": 782,
+  "downloads_weekly": 20316,
+  "stars": 3237
+ },
+ "arxiv_latex": {
+  "score": 492,
+  "downloads_weekly": 555,
+  "stars": 149
+ },
+ "asana": {
+  "score": 218,
+  "stars": 149
+ },
+ "atlassian": {
+  "score": 913,
+  "downloads_weekly": 221324,
+  "stars": 6056
+ },
+ "attio": {
+  "score": 292,
+  "downloads_weekly": 48,
+  "stars": 16
+ },
+ "awesun": {
+  "score": 95,
+  "stars": 8
+ },
+ "aws": {
+  "score": 185,
+  "downloads_weekly": 69
+ },
+ "azure_devops": {
+  "score": 260,
+  "stars": 397
+ },
+ "baidu_map": {
+  "score": 250,
+  "downloads_weekly": 317
+ },
+ "baidu_netdisk": {
+  "score": 0
+ },
+ "balldontlie": {
+  "score": 316,
+  "downloads_weekly": 52,
+  "stars": 26
+ },
+ "bandcamp": {
+  "score": 153,
+  "downloads_weekly": 33
+ },
+ "basic_memory": {
+  "score": 789,
+  "downloads_weekly": 17729,
+  "stars": 4374
+ },
+ "bazhuayu": {
+  "score": 0
+ },
+ "bear": {
+  "score": 262,
+  "downloads_weekly": 8,
+  "stars": 45
+ },
+ "bernstein": {
+  "score": 448,
+  "downloads_weekly": 29923
+ },
+ "bestax": {
+  "score": 444,
+  "downloads_weekly": 1976,
+  "stars": 13
+ },
+ "better_design": {
+  "score": 0
+ },
+ "bhived": {
+  "score": 312,
+  "downloads_weekly": 36,
+  "stars": 35
+ },
+ "bibigpt": {
+  "score": 212,
+  "stars": 131
+ },
+ "bigquery": {
+  "score": 548,
+  "downloads_weekly": 2015,
+  "stars": 148
+ },
+ "bigquery_lucashild": {
+  "score": 602,
+  "downloads_weekly": 7912,
+  "stars": 131
+ },
+ "bilibili": {
+  "score": 163,
+  "stars": 42
+ },
+ "bilibili_2": {
+  "score": 146,
+  "downloads_weekly": 28
+ },
+ "bilibili_js": {
+  "score": 489,
+  "downloads_weekly": 392,
+  "stars": 196
+ },
+ "bitcoin": {
+  "score": 345,
+  "downloads_weekly": 35,
+  "stars": 77
+ },
+ "blender": {
+  "score": 478,
+  "downloads_weekly": 60067
+ },
+ "boltpatternhq": {
+  "score": 95,
+  "downloads_weekly": 8
+ },
+ "box": {
+  "score": 256,
+  "downloads_weekly": 29,
+  "stars": 11
+ },
+ "brave_search": {
+  "score": 751,
+  "downloads_weekly": 20893,
+  "stars": 1536
+ },
+ "brightdata": {
+  "score": 749,
+  "downloads_weekly": 11552,
+  "stars": 2691
+ },
+ "browser_kit": {
+  "score": 175,
+  "stars": 55
+ },
+ "browser_tools": {
+  "score": 387,
+  "stars": 7337
+ },
+ "browser_use": {
+  "score": 165,
+  "downloads_weekly": 44
+ },
+ "browsermcp": {
+  "score": 398,
+  "downloads_weekly": 9526
+ },
+ "bugly_token": {
+  "score": 0
+ },
+ "bugsnag": {
+  "score": 455,
+  "downloads_weekly": 1355,
+  "stars": 25
+ },
+ "buywhere": {
+  "score": 120,
+  "stars": 15
+ },
+ "cabal_hunter": {
+  "score": 149,
+  "downloads_weekly": 30
+ },
+ "cal": {
+  "score": 253,
+  "downloads_weekly": 23,
+  "stars": 13
+ },
+ "calculator": {
+  "score": 599,
+  "downloads_weekly": 6032,
+  "stars": 160
+ },
+ "call4": {
+  "score": 123,
+  "stars": 16
+ },
+ "callmemcp": {
+  "score": 141,
+  "stars": 25
+ },
+ "camscanner_mcp": {
+  "score": 0
+ },
+ "canli_validation": {
+  "score": 300,
+  "downloads_weekly": 499,
+  "stars": 1
+ },
+ "canva": {
+  "score": 0
+ },
+ "cdp_bridge": {
+  "score": 480,
+  "downloads_weekly": 206,
+  "stars": 304
+ },
+ "chainflip_broker": {
+  "score": 104,
+  "stars": 10
+ },
+ "chart": {
+  "score": 700,
+  "downloads_weekly": 2294,
+  "stars": 4406
+ },
+ "chess": {
+  "score": 344,
+  "downloads_weekly": 29,
+  "stars": 91
+ },
+ "chinese_text_tools": {
+  "score": 138,
+  "downloads_weekly": 23
+ },
+ "chroma": {
+  "score": 764,
+  "downloads_weekly": 71961,
+  "stars": 600
+ },
+ "chrome_devtools": {
+  "score": 641,
+  "downloads_weekly": 2587036
+ },
+ "chronulus": {
+  "score": 143,
+  "downloads_weekly": 26
+ },
+ "chuhaijiang": {
+  "score": 0
+ },
+ "cisp_mcp": {
+  "score": 0
+ },
+ "clawtouch": {
+  "score": 281,
+  "downloads_weekly": 45,
+  "stars": 13
+ },
+ "cli": {
+  "score": 624,
+  "downloads_weekly": 9721,
+  "stars": 177
+ },
+ "cli_wong2": {
+  "score": 265,
+  "stars": 447
+ },
+ "clojars_deps": {
+  "score": 185,
+  "downloads_weekly": 9,
+  "stars": 6
+ },
+ "cloudflare": {
+  "score": 0
+ },
+ "cn_commerce": {
+  "score": 396,
+  "downloads_weekly": 99,
+  "stars": 90
+ },
+ "cnb": {
+  "score": 0
+ },
+ "code_graph_rag": {
+  "score": 674,
+  "downloads_weekly": 1042,
+  "stars": 5290
+ },
+ "code_relay": {
+  "score": 154,
+  "downloads_weekly": 34
+ },
+ "codemcp": {
+  "score": 497,
+  "downloads_weekly": 57,
+  "stars": 1603
+ },
+ "codewiki": {
+  "score": 296,
+  "downloads_weekly": 45,
+  "stars": 19
+ },
+ "codex": {
+  "score": 272,
+  "downloads_weekly": 19,
+  "stars": 25
+ },
+ "codex_control_plane": {
+  "score": 397,
+  "downloads_weekly": 74,
+  "stars": 124
+ },
+ "coding_tools": {
+  "score": 0
+ },
+ "coincap": {
+  "score": 196,
+  "downloads_weekly": 90
+ },
+ "composio": {
+  "score": 0
+ },
+ "concord": {
+  "score": 274,
+  "downloads_weekly": 554
+ },
+ "confluent": {
+  "score": 306,
+  "downloads_weekly": 1158
+ },
+ "context7": {
+  "score": 0
+ },
+ "contextstream": {
+  "score": 321,
+  "downloads_weekly": 1632
+ },
+ "cos": {
+  "score": 214,
+  "downloads_weekly": 136
+ },
+ "dart": {
+  "score": 393,
+  "downloads_weekly": 65,
+  "stars": 128
+ },
+ "data_studio": {
+  "score": 242,
+  "downloads_weekly": 65,
+  "stars": 3
+ },
+ "database": {
+  "score": 355,
+  "downloads_weekly": 36,
+  "stars": 95
+ },
+ "datetime": {
+  "score": 454,
+  "downloads_weekly": 1078,
+  "stars": 31
+ },
+ "davinci_resolve": {
+  "score": 730,
+  "downloads_weekly": 5213,
+  "stars": 3808
+ },
+ "dchub": {
+  "score": 281,
+  "downloads_weekly": 160,
+  "stars": 3
+ },
+ "dcs_cloud": {
+  "score": 154,
+  "downloads_weekly": 34
+ },
+ "desktop_commander": {
+  "score": 401,
+  "stars": 10144
+ },
+ "developertoolkit": {
+  "score": 30,
+  "stars": 1
+ },
+ "dexpaprika": {
+  "score": 239,
+  "downloads_weekly": 244
+ },
+ "didlogic": {
+  "score": 204,
+  "downloads_weekly": 21,
+  "stars": 4
+ },
+ "dingtalk": {
+  "score": 0
+ },
+ "dingtalk_open": {
+  "score": 315,
+  "downloads_weekly": 1406
+ },
+ "dinox": {
+  "score": 205,
+  "stars": 112
+ },
+ "dknowc_mcp": {
+  "score": 0
+ },
+ "dnstwist": {
+  "score": 0
+ },
+ "docker": {
+  "score": 271,
+  "downloads_weekly": 506
+ },
+ "docs": {
+  "score": 0
+ },
+ "docs_qq": {
+  "score": 0
+ },
+ "dolphindb": {
+  "score": 225,
+  "downloads_weekly": 21,
+  "stars": 7
+ },
+ "ds": {
+  "score": 493,
+  "downloads_weekly": 154,
+  "stars": 544
+ },
+ "dsh_novel_writer": {
+  "score": 459,
+  "downloads_weekly": 1567,
+  "stars": 24
+ },
+ "duckdb": {
+  "score": 226,
+  "stars": 179
+ },
+ "duckduckgo": {
+  "score": 766,
+  "downloads_weekly": 29666,
+  "stars": 1553
+ },
+ "dumplingai": {
+  "score": 154,
+  "downloads_weekly": 34
+ },
+ "duoguan_fengchao": {
+  "score": 118,
+  "downloads_weekly": 14
+ },
+ "dy_xhs": {
+  "score": 323,
+  "downloads_weekly": 340,
+  "stars": 4
+ },
+ "edgeone_pages": {
+  "score": 241,
+  "downloads_weekly": 259
+ },
+ "edinet": {
+  "score": 361,
+  "downloads_weekly": 203,
+  "stars": 19
+ },
+ "egc": {
+  "score": 243,
+  "downloads_weekly": 271
+ },
+ "elasticsearch": {
+  "score": 345,
+  "downloads_weekly": 2821
+ },
+ "elevenlabs": {
+  "score": 208,
+  "stars": 119
+ },
+ "elevenlabs_2": {
+  "score": 766,
+  "downloads_weekly": 29517,
+  "stars": 1541
+ },
+ "email_client": {
+  "score": 197,
+  "downloads_weekly": 93
+ },
+ "emulo": {
+  "score": 174,
+  "downloads_weekly": 54
+ },
+ "engine_dj": {
+  "score": 210,
+  "downloads_weekly": 62,
+  "stars": 1
+ },
+ "engram_rs": {
+  "score": 299,
+  "downloads_weekly": 33,
+  "stars": 28
+ },
+ "episkeyai": {
+  "score": 266,
+  "stars": 461
+ },
+ "estat": {
+  "score": 266,
+  "downloads_weekly": 41,
+  "stars": 10
+ },
+ "eulerpool": {
+  "score": 0
+ },
+ "evc_team_relay": {
+  "score": 235,
+  "downloads_weekly": 55,
+  "stars": 3
+ },
+ "everything_search": {
+  "score": 544,
+  "downloads_weekly": 740,
+  "stars": 367
+ },
+ "evm": {
+  "score": 0
+ },
+ "exa": {
+  "score": 372,
+  "stars": 5189
+ },
+ "exa_2": {
+  "score": 412,
+  "downloads_weekly": 13200
+ },
+ "example": {
+  "score": 161,
+  "stars": 40
+ },
+ "example_pskill9": {
+  "score": 220,
+  "stars": 157
+ },
+ "excel": {
+  "score": 375,
+  "downloads_weekly": 58,
+  "stars": 95
+ },
+ "excel_haris_musa": {
+  "score": 829,
+  "downloads_weekly": 45325,
+  "stars": 4268
+ },
+ "excel_negokaz": {
+  "score": 0
+ },
+ "exchangerate": {
+  "score": 0
+ },
+ "ezjoin_meeting": {
+  "score": 0
+ },
+ "fadada_richee": {
+  "score": 0
+ },
+ "fanruan_growth_advisor": {
+  "score": 0
+ },
+ "fazhi_law": {
+  "score": 0
+ },
+ "fbs_connector": {
+  "score": 0
+ },
+ "feishu": {
+  "score": 0
+ },
+ "feishu_2": {
+  "score": 245,
+  "downloads_weekly": 284
+ },
+ "fencescan": {
+  "score": 100,
+  "downloads_weekly": 9
+ },
+ "fetch": {
+  "score": 661,
+  "downloads_weekly": 4897,
+  "stars": 835
+ },
+ "fetcher": {
+  "score": 665,
+  "downloads_weekly": 4071,
+  "stars": 1088
+ },
+ "fidelis_memory": {
+  "score": 310,
+  "downloads_weekly": 49,
+  "stars": 24
+ },
+ "figma_developer": {
+  "score": 494,
+  "downloads_weekly": 86336
+ },
+ "figwright": {
+  "score": 643,
+  "downloads_weekly": 2215,
+  "stars": 1200
+ },
+ "file_merger": {
+  "score": 278,
+  "downloads_weekly": 20,
+  "stars": 28
+ },
+ "find": {
+  "score": 85,
+  "stars": 6
+ },
+ "finenter": {
+  "score": 0
+ },
+ "finlight": {
+  "score": 164,
+  "downloads_weekly": 43
+ },
+ "firebase": {
+  "score": 535,
+  "downloads_weekly": 905,
+  "stars": 247
+ },
+ "firecrawl": {
+  "score": 505,
+  "downloads_weekly": 111561
+ },
+ "firstdata_deepminer_com": {
+  "score": 227,
+  "stars": 185
+ },
+ "flameox": {
+  "score": 443,
+  "downloads_weekly": 119,
+  "stars": 223
+ },
+ "flomo": {
+  "score": 226,
+  "downloads_weekly": 181
+ },
+ "flova": {
+  "score": 0
+ },
+ "flow_horustek": {
+  "score": 70,
+  "stars": 4
+ },
+ "for_blender": {
+  "score": 595,
+  "downloads_weekly": 895546
+ },
+ "forevervm": {
+  "score": 423,
+  "downloads_weekly": 72,
+  "stars": 230
+ },
+ "freeaudiototext": {
+  "score": 138,
+  "downloads_weekly": 23
+ },
+ "friday_memory": {
+  "score": 324,
+  "downloads_weekly": 24,
+  "stars": 68
+ },
+ "frontrun": {
+  "score": 251,
+  "downloads_weekly": 160,
+  "stars": 1
+ },
+ "fyopen_lawsearch": {
+  "score": 0
+ },
+ "gangtise_mcp": {
+  "score": 0
+ },
+ "gaodun_job": {
+  "score": 0
+ },
+ "genieacs": {
+  "score": 198,
+  "downloads_weekly": 94
+ },
+ "getengram": {
+  "score": 132,
+  "stars": 20
+ },
+ "getyoutubetranscript": {
+  "score": 136,
+  "stars": 22
+ },
+ "gildata": {
+  "score": 0
+ },
+ "giphy": {
+  "score": 372,
+  "downloads_weekly": 141,
+  "stars": 36
+ },
+ "gitee": {
+  "score": 0
+ },
+ "gitee_oschina": {
+  "score": 450,
+  "downloads_weekly": 473,
+  "stars": 66
+ },
+ "github": {
+  "score": 0
+ },
+ "github_actions": {
+  "score": 266,
+  "downloads_weekly": 10,
+  "stars": 41
+ },
+ "github_atomicmail": {
+  "score": 449,
+  "downloads_weekly": 114,
+  "stars": 265
+ },
+ "github_enterprise": {
+  "score": 232,
+  "downloads_weekly": 6,
+  "stars": 29
+ },
+ "githubcopilot": {
+  "score": 453,
+  "stars": 34010
+ },
+ "gitlab": {
+  "score": 0
+ },
+ "gmail_autoauth": {
+  "score": 721,
+  "downloads_weekly": 13845,
+  "stars": 1169
+ },
+ "godot": {
+  "score": 381,
+  "stars": 6389
+ },
+ "goldprice": {
+  "score": 0
+ },
+ "gomdori": {
+  "score": 345,
+  "stars": 2807
+ },
+ "gongyi_open_mcp": {
+  "score": 0
+ },
+ "google_calendar": {
+  "score": 178,
+  "stars": 59
+ },
+ "google_news": {
+  "score": 0
+ },
+ "google_search": {
+  "score": 186,
+  "stars": 71
+ },
+ "google_sheets": {
+  "score": 740,
+  "downloads_weekly": 24725,
+  "stars": 1016
+ },
+ "gotohuman": {
+  "score": 328,
+  "downloads_weekly": 35,
+  "stars": 52
+ },
+ "graphlit": {
+  "score": 515,
+  "downloads_weekly": 369,
+  "stars": 378
+ },
+ "graphql": {
+  "score": 553,
+  "downloads_weekly": 823,
+  "stars": 407
+ },
+ "graphql_schema": {
+  "score": 303,
+  "downloads_weekly": 22,
+  "stars": 46
+ },
+ "greptimedb": {
+  "score": 349,
+  "downloads_weekly": 102,
+  "stars": 29
+ },
+ "gsuite": {
+  "score": 560,
+  "downloads_weekly": 815,
+  "stars": 491
+ },
+ "gwmcp_lkcoffee": {
+  "score": 0
+ },
+ "hackmd": {
+  "score": 368,
+  "downloads_weekly": 69,
+  "stars": 67
+ },
+ "headless_gmail": {
+  "score": 175,
+  "stars": 55
+ },
+ "hfspace": {
+  "score": 259,
+  "stars": 390
+ },
+ "hn": {
+  "score": 189,
+  "stars": 76
+ },
+ "home_assistant": {
+  "score": 184,
+  "stars": 68
+ },
+ "hotnews": {
+  "score": 0
+ },
+ "huggingface": {
+  "score": 249,
+  "stars": 309
+ },
+ "hushvert": {
+  "score": 178,
+  "downloads_weekly": 29,
+  "stars": 1
+ },
+ "hyperbrowser": {
+  "score": 549,
+  "downloads_weekly": 387,
+  "stars": 791
+ },
+ "ida_pro": {
+  "score": 759,
+  "downloads_weekly": 2969,
+  "stars": 13177
+ },
+ "ima_mcp": {
+  "score": 0
+ },
+ "image_compression": {
+  "score": 250,
+  "downloads_weekly": 8,
+  "stars": 34
+ },
+ "image_gen": {
+  "score": 362,
+  "downloads_weekly": 80,
+  "stars": 51
+ },
+ "imap_mail": {
+  "score": 0
+ },
+ "infimind_ecommerce_image": {
+  "score": 333,
+  "downloads_weekly": 2158
+ },
+ "infimind_video": {
+  "score": 242,
+  "downloads_weekly": 261
+ },
+ "influxdb": {
+  "score": 415,
+  "downloads_weekly": 298,
+  "stars": 46
+ },
+ "installer": {
+  "score": 0
+ },
+ "interactive": {
+  "score": 423,
+  "downloads_weekly": 47,
+  "stars": 351
+ },
+ "ip2location_io": {
+  "score": 276,
+  "downloads_weekly": 33,
+  "stars": 16
+ },
+ "ipfs": {
+  "score": 294,
+  "downloads_weekly": 37,
+  "stars": 22
+ },
+ "ipinfo": {
+  "score": 320,
+  "downloads_weekly": 34,
+  "stars": 44
+ },
+ "iterm": {
+  "score": 480,
+  "downloads_weekly": 109,
+  "stars": 570
+ },
+ "jacobian": {
+  "score": 470,
+  "downloads_weekly": 149,
+  "stars": 331
+ },
+ "jarp": {
+  "score": 104,
+  "downloads_weekly": 10
+ },
+ "jev_use": {
+  "score": 294,
+  "downloads_weekly": 860
+ },
+ "jiandaoyun": {
+  "score": 0
+ },
+ "jinshuju": {
+  "score": 0
+ },
+ "jiushuyun": {
+  "score": 0
+ },
+ "job_searchoor": {
+  "score": 230,
+  "downloads_weekly": 2,
+  "stars": 65
+ },
+ "jobson_xhs": {
+  "score": 272,
+  "stars": 519
+ },
+ "jshook": {
+  "score": 332,
+  "stars": 2069
+ },
+ "json": {
+  "score": 353,
+  "downloads_weekly": 36,
+  "stars": 90
+ },
+ "jvm": {
+  "score": 130,
+  "downloads_weekly": 19
+ },
+ "kagimcp": {
+  "score": 561,
+  "downloads_weekly": 742,
+  "stars": 549
+ },
+ "kdocs": {
+  "score": 0
+ },
+ "keboola": {
+  "score": 294,
+  "downloads_weekly": 879
+ },
+ "keystash": {
+  "score": 186,
+  "downloads_weekly": 72
+ },
+ "kibela": {
+  "score": 115,
+  "stars": 13
+ },
+ "kilo_kit": {
+  "score": 146,
+  "stars": 28
+ },
+ "kling_ai_plugin": {
+  "score": 0
+ },
+ "kling_ai_plugin_ai": {
+  "score": 0
+ },
+ "knowlyr_datacheck": {
+  "score": 78,
+  "downloads_weekly": 5
+ },
+ "knowlyr_modelaudit": {
+  "score": 138,
+  "downloads_weekly": 7,
+  "stars": 2
+ },
+ "knowlyr_sandbox": {
+  "score": 95,
+  "downloads_weekly": 8
+ },
+ "kordoc": {
+  "score": 799,
+  "downloads_weekly": 34729,
+  "stars": 2814
+ },
+ "kuaicha_search": {
+  "score": 0
+ },
+ "kubectl": {
+  "score": 564,
+  "downloads_weekly": 456,
+  "stars": 965
+ },
+ "kubernetes": {
+  "score": 723,
+  "downloads_weekly": 10522,
+  "stars": 1609
+ },
+ "leetcode": {
+  "score": 209,
+  "downloads_weekly": 123
+ },
+ "lexiang": {
+  "score": 0
+ },
+ "linear": {
+  "score": 0
+ },
+ "linear_jerhadf": {
+  "score": 540,
+  "downloads_weekly": 722,
+  "stars": 346
+ },
+ "linear_tacticlaunch": {
+  "score": 217,
+  "stars": 148
+ },
+ "lingshu_solver": {
+  "score": 180,
+  "downloads_weekly": 62
+ },
+ "lingxing_mcp": {
+  "score": 0
+ },
+ "linkfox_product_selection": {
+  "score": 0
+ },
+ "livetennisapi": {
+  "score": 501,
+  "downloads_weekly": 697,
+  "stars": 147
+ },
+ "llm_context": {
+  "score": 207,
+  "downloads_weekly": 117
+ },
+ "local": {
+  "score": 398,
+  "downloads_weekly": 733,
+  "stars": 12
+ },
+ "local_gpu_imagegen": {
+  "score": 0
+ },
+ "lockdocs": {
+  "score": 30,
+  "stars": 1
+ },
+ "lrvx": {
+  "score": 143,
+  "downloads_weekly": 26
+ },
+ "mac_messages": {
+  "score": 517,
+  "downloads_weekly": 439,
+  "stars": 338
+ },
+ "magic": {
+  "score": 380,
+  "stars": 6280
+ },
+ "magichour": {
+  "score": 100,
+  "stars": 9
+ },
+ "maigret": {
+  "score": 193,
+  "downloads_weekly": 85
+ },
+ "mailkite": {
+  "score": 0
+ },
+ "makehq": {
+  "score": 224,
+  "stars": 174
+ },
+ "manto": {
+  "score": 30,
+  "stars": 1
+ },
+ "markdownify": {
+  "score": 580,
+  "downloads_weekly": 208,
+  "stars": 2996
+ },
+ "marketplaces_ru": {
+  "score": 406,
+  "downloads_weekly": 200,
+  "stars": 56
+ },
+ "markitdown": {
+  "score": 978,
+  "downloads_weekly": 31320,
+  "stars": 192582
+ },
+ "mastergo": {
+  "score": 0
+ },
+ "matrixmedia": {
+  "score": 306,
+  "stars": 1135
+ },
+ "maxstat": {
+  "score": 60,
+  "stars": 3
+ },
+ "mcp_brave_search": {
+  "score": 249,
+  "stars": 305
+ },
+ "mcp_everything": {
+  "score": 496,
+  "stars": 91615
+ },
+ "mcp_fetch": {
+  "score": 1036,
+  "downloads_weekly": 247436,
+  "stars": 91615
+ },
+ "mcp_filesystem": {
+  "score": 496,
+  "stars": 91615
+ },
+ "mcp_git": {
+  "score": 988,
+  "downloads_weekly": 82310,
+  "stars": 91615
+ },
+ "mcp_memory": {
+  "score": 496,
+  "stars": 91615
+ },
+ "mcp_postgres": {
+  "score": 249,
+  "stars": 305
+ },
+ "mcp_sequential_thinking": {
+  "score": 496,
+  "stars": 91615
+ },
+ "mcp_sqlite": {
+  "score": 249,
+  "stars": 305
+ },
+ "mcp_time": {
+  "score": 1021,
+  "downloads_weekly": 175450,
+  "stars": 91615
+ },
+ "mcptoon": {
+  "score": 573,
+  "downloads_weekly": 1326,
+  "stars": 401
+ },
+ "meeting_tencent": {
+  "score": 0
+ },
+ "mem0": {
+  "score": 556,
+  "downloads_weekly": 549,
+  "stars": 662
+ },
+ "memory": {
+  "score": 145,
+  "stars": 27
+ },
+ "memory_engine": {
+  "score": 311,
+  "downloads_weekly": 9,
+  "stars": 127
+ },
+ "milvus": {
+  "score": 491,
+  "downloads_weekly": 326,
+  "stars": 245
+ },
+ "mindmap": {
+  "score": 569,
+  "downloads_weekly": 2037,
+  "stars": 240
+ },
+ "minimax": {
+  "score": 320,
+  "stars": 1593
+ },
+ "miro": {
+  "score": 367,
+  "downloads_weekly": 40,
+  "stars": 113
+ },
+ "miro_k_jarzyna": {
+  "score": 182,
+  "stars": 65
+ },
+ "mobile": {
+  "score": 400,
+  "stars": 10056
+ },
+ "mobilebuildmcp": {
+  "score": 327,
+  "downloads_weekly": 1845
+ },
+ "moka": {
+  "score": 0
+ },
+ "mongo": {
+  "score": 461,
+  "downloads_weekly": 143,
+  "stars": 283
+ },
+ "mongo_quantgeekdev": {
+  "score": 357,
+  "downloads_weekly": 20,
+  "stars": 176
+ },
+ "mongodb": {
+  "score": 804,
+  "downloads_weekly": 95570,
+  "stars": 1150
+ },
+ "mongodb_lens": {
+  "score": 390,
+  "downloads_weekly": 37,
+  "stars": 208
+ },
+ "morningstar": {
+  "score": 0
+ },
+ "motherduck": {
+  "score": 643,
+  "downloads_weekly": 4967,
+  "stars": 536
+ },
+ "motomarks": {
+  "score": 0
+ },
+ "ms_365": {
+  "score": 304,
+  "stars": 1090
+ },
+ "multiverse": {
+  "score": 192,
+  "stars": 82
+ },
+ "mx_ds_mcp": {
+  "score": 0
+ },
+ "mysql": {
+  "score": 710,
+  "downloads_weekly": 9010,
+  "stars": 1403
+ },
+ "mysql_benborla29": {
+  "score": 413,
+  "downloads_weekly": 13521
+ },
+ "mysql_f4ww4z": {
+  "score": 454,
+  "downloads_weekly": 202,
+  "stars": 169
+ },
+ "mysql_legacy": {
+  "score": 145,
+  "downloads_weekly": 27
+ },
+ "mzl_trademark": {
+  "score": 0
+ },
+ "n8n": {
+  "score": 500,
+  "downloads_weekly": 100472
+ },
+ "nationalparks": {
+  "score": 342,
+  "downloads_weekly": 62,
+  "stars": 41
+ },
+ "naver_search": {
+  "score": 194,
+  "stars": 87
+ },
+ "neo_crm": {
+  "score": 0
+ },
+ "news_ycombinator": {
+  "score": 90,
+  "stars": 7
+ },
+ "nocodb": {
+  "score": 363,
+  "downloads_weekly": 55,
+  "stars": 76
+ },
+ "notion": {
+  "score": 0
+ },
+ "notion_notionhq": {
+  "score": 0
+ },
+ "notion_suekou": {
+  "score": 297,
+  "stars": 925
+ },
+ "novada": {
+  "score": 60,
+  "stars": 3
+ },
+ "ns": {
+  "score": 325,
+  "downloads_weekly": 27,
+  "stars": 63
+ },
+ "ns_private_access": {
+  "score": 111,
+  "downloads_weekly": 12
+ },
+ "observatory": {
+  "score": 213,
+  "stars": 135
+ },
+ "obsidian": {
+  "score": 736,
+  "downloads_weekly": 5068,
+  "stars": 4505
+ },
+ "obsidian_2": {
+  "score": 288,
+  "downloads_weekly": 763
+ },
+ "office_powerpoint": {
+  "score": 737,
+  "downloads_weekly": 12614,
+  "stars": 1860
+ },
+ "office_word": {
+  "score": 754,
+  "downloads_weekly": 16535,
+  "stars": 2110
+ },
+ "onchain": {
+  "score": 190,
+  "stars": 78
+ },
+ "opanel": {
+  "score": 138,
+  "downloads_weekly": 11,
+  "stars": 1
+ },
+ "open_apps": {
+  "score": 349,
+  "downloads_weekly": 82,
+  "stars": 36
+ },
+ "open_websearch": {
+  "score": 711,
+  "downloads_weekly": 6850,
+  "stars": 1879
+ },
+ "openai": {
+  "score": 189,
+  "stars": 77
+ },
+ "openai_pierrebrunelle": {
+  "score": 186,
+  "downloads_weekly": 72
+ },
+ "openai_websearch": {
+  "score": 406,
+  "downloads_weekly": 119,
+  "stars": 94
+ },
+ "openapi_schema": {
+  "score": 406,
+  "downloads_weekly": 224,
+  "stars": 50
+ },
+ "openchainbench": {
+  "score": 0
+ },
+ "opendal": {
+  "score": 310,
+  "downloads_weekly": 34,
+  "stars": 35
+ },
+ "opendata": {
+  "score": 0
+ },
+ "openhire": {
+  "score": 118,
+  "stars": 14
+ },
+ "openosint": {
+  "score": 618,
+  "downloads_weekly": 823,
+  "stars": 1819
+ },
+ "openshorts": {
+  "score": 0
+ },
+ "opik": {
+  "score": 0
+ },
+ "osm": {
+  "score": 236,
+  "stars": 230
+ },
+ "oura": {
+  "score": 160,
+  "stars": 39
+ },
+ "output_firewall": {
+  "score": 148,
+  "downloads_weekly": 29
+ },
+ "oxylabs": {
+  "score": 626,
+  "downloads_weekly": 17334,
+  "stars": 104
+ },
+ "ozon": {
+  "score": 293,
+  "downloads_weekly": 94,
+  "stars": 8
+ },
+ "pal": {
+  "score": 665,
+  "downloads_weekly": 373,
+  "stars": 11810
+ },
+ "palisadeemail": {
+  "score": 0
+ },
+ "pandadata": {
+  "score": 0
+ },
+ "pangolinfo": {
+  "score": 30,
+  "stars": 1
+ },
+ "parlayapi": {
+  "score": 183,
+  "downloads_weekly": 33,
+  "stars": 1
+ },
+ "perplexity_ai": {
+  "score": 0
+ },
+ "picset_commerce_images": {
+  "score": 0
+ },
+ "picset_video_generation": {
+  "score": 0
+ },
+ "piia_engram": {
+  "score": 256,
+  "downloads_weekly": 362
+ },
+ "pkulaw": {
+  "score": 0
+ },
+ "platform": {
+  "score": 330,
+  "downloads_weekly": 182,
+  "stars": 10
+ },
+ "playwright": {
+  "score": 459,
+  "stars": 38719
+ },
+ "playwright-py": {
+  "score": 0
+ },
+ "playwright_automatalabs": {
+  "score": 0
+ },
+ "playwright_blackwhite084": {
+  "score": 431,
+  "downloads_weekly": 107,
+  "stars": 188
+ },
+ "playwright_executeautomation": {
+  "score": 768,
+  "downloads_weekly": 8520,
+  "stars": 5675
+ },
+ "pluggedin_proxy": {
+  "score": 0
+ },
+ "posteverywhere": {
+  "score": 85,
+  "stars": 6
+ },
+ "probe_kit": {
+  "score": 359,
+  "downloads_weekly": 96,
+  "stars": 39
+ },
+ "proboost": {
+  "score": 0
+ },
+ "prometheus": {
+  "score": 272,
+  "stars": 520
+ },
+ "proxy": {
+  "score": 0
+ },
+ "python_interpreter": {
+  "score": 532,
+  "downloads_weekly": 1982,
+  "stars": 104
+ },
+ "qcc": {
+  "score": 0
+ },
+ "qcc_legal": {
+  "score": 0
+ },
+ "qdrant": {
+  "score": 411,
+  "downloads_weekly": 12846
+ },
+ "qixinhuiyan_mcp": {
+  "score": 0
+ },
+ "quickchart": {
+  "score": 439,
+  "downloads_weekly": 152,
+  "stars": 159
+ },
+ "rad_security": {
+  "score": 85,
+  "stars": 6
+ },
+ "rag_web_browser": {
+  "score": 376,
+  "downloads_weekly": 27,
+  "stars": 206
+ },
+ "redis": {
+  "score": 638,
+  "downloads_weekly": 3770,
+  "stars": 641
+ },
+ "ref_tools": {
+  "score": 605,
+  "downloads_weekly": 937,
+  "stars": 1185
+ },
+ "rememberizer": {
+  "score": 302,
+  "downloads_weekly": 27,
+  "stars": 36
+ },
+ "remotearc": {
+  "score": 0
+ },
+ "remotify": {
+  "score": 355,
+  "downloads_weekly": 887,
+  "stars": 3
+ },
+ "replicate": {
+  "score": 512,
+  "downloads_weekly": 1397,
+  "stars": 94
+ },
+ "replicate_flux": {
+  "score": 551,
+  "downloads_weekly": 2995,
+  "stars": 106
+ },
+ "repomap": {
+  "score": 90,
+  "stars": 7
+ },
+ "restcsv": {
+  "score": 189,
+  "downloads_weekly": 5,
+  "stars": 12
+ },
+ "rijksmuseum": {
+  "score": 312,
+  "downloads_weekly": 17,
+  "stars": 72
+ },
+ "roundtable_ai": {
+  "score": 153,
+  "downloads_weekly": 33
+ },
+ "runcomfy": {
+  "score": 30,
+  "stars": 1
+ },
+ "safari": {
+  "score": 542,
+  "downloads_weekly": 1165,
+  "stars": 225
+ },
+ "salesnail_instructor": {
+  "score": 0
+ },
+ "salestouch": {
+  "score": 0
+ },
+ "scan": {
+  "score": 320,
+  "downloads_weekly": 788,
+  "stars": 1
+ },
+ "scrapling_fetch": {
+  "score": 209,
+  "downloads_weekly": 123
+ },
+ "screenpipe": {
+  "score": 335,
+  "downloads_weekly": 2226
+ },
+ "screenshotone": {
+  "score": 0
+ },
+ "search1api": {
+  "score": 276,
+  "downloads_weekly": 581
+ },
+ "searxng": {
+  "score": 720,
+  "downloads_weekly": 11799,
+  "stars": 1331
+ },
+ "searxng_secretiveshell": {
+  "score": 434,
+  "downloads_weekly": 163,
+  "stars": 131
+ },
+ "secret_design": {
+  "score": 141,
+  "downloads_weekly": 25
+ },
+ "security_audit": {
+  "score": 172,
+  "downloads_weekly": 52
+ },
+ "semble": {
+  "score": 380,
+  "stars": 6311
+ },
+ "semgrep": {
+  "score": 350,
+  "downloads_weekly": 3145
+ },
+ "sentry": {
+  "score": 0
+ },
+ "serato_dj": {
+  "score": 186,
+  "downloads_weekly": 35,
+  "stars": 1
+ },
+ "serena_agent": {
+  "score": 913,
+  "downloads_weekly": 43883,
+  "stars": 30776
+ },
+ "shadcn_ui": {
+  "score": 349,
+  "stars": 3073
+ },
+ "shanglv_mcp_gateway": {
+  "score": 0
+ },
+ "shell": {
+  "score": 231,
+  "stars": 201
+ },
+ "shodan": {
+  "score": 0
+ },
+ "simple_arxiv": {
+  "score": 312,
+  "downloads_weekly": 1332
+ },
+ "simple_openai_assistant": {
+  "score": 174,
+  "downloads_weekly": 54
+ },
+ "simple_pubmed": {
+  "score": 208,
+  "downloads_weekly": 120
+ },
+ "simple_timeserver": {
+  "score": 160,
+  "downloads_weekly": 39
+ },
+ "since_cutoff": {
+  "score": 287,
+  "downloads_weekly": 66,
+  "stars": 10
+ },
+ "singlestore": {
+  "score": 198,
+  "downloads_weekly": 94
+ },
+ "skills_wondel": {
+  "score": 30,
+  "stars": 1
+ },
+ "snowflake": {
+  "score": 518,
+  "downloads_weekly": 814,
+  "stars": 184
+ },
+ "socialcrawl": {
+  "score": 375,
+  "downloads_weekly": 201,
+  "stars": 27
+ },
+ "speakai": {
+  "score": 0
+ },
+ "sq_company_dynamic": {
+  "score": 0
+ },
+ "squirrelscan": {
+  "score": 248,
+  "stars": 299
+ },
+ "starknet": {
+  "score": 90,
+  "stars": 7
+ },
+ "starrocks": {
+  "score": 613,
+  "downloads_weekly": 6870,
+  "stars": 195
+ },
+ "strava": {
+  "score": 270,
+  "stars": 502
+ },
+ "stripe": {
+  "score": 0
+ },
+ "summarizer": {
+  "score": 307,
+  "downloads_weekly": 6,
+  "stars": 167
+ },
+ "supabase": {
+  "score": 0
+ },
+ "supabase_2": {
+  "score": 0
+ },
+ "supabase_alexander_zuev": {
+  "score": 292,
+  "stars": 834
+ },
+ "supermemory": {
+  "score": 450,
+  "stars": 31436
+ },
+ "talivia": {
+  "score": 152,
+  "stars": 32
+ },
+ "tanyuan_assistant": {
+  "score": 0
+ },
+ "tapd": {
+  "score": 0
+ },
+ "tapetide": {
+  "score": 411,
+  "downloads_weekly": 89,
+  "stars": 143
+ },
+ "task_master_ai": {
+  "score": 400,
+  "downloads_weekly": 10007
+ },
+ "taskade": {
+  "score": 223,
+  "stars": 170
+ },
+ "taskwarrior": {
+  "score": 354,
+  "downloads_weekly": 66,
+  "stars": 51
+ },
+ "tasty_agent": {
+  "score": 315,
+  "downloads_weekly": 15,
+  "stars": 88
+ },
+ "tavily": {
+  "score": 763,
+  "downloads_weekly": 17274,
+  "stars": 2463
+ },
+ "tavily_mcptools": {
+  "score": 111,
+  "stars": 12
+ },
+ "tdx_connector": {
+  "score": 0
+ },
+ "teacher_assistant": {
+  "score": 0
+ },
+ "tec_do": {
+  "score": 0
+ },
+ "telegram": {
+  "score": 254,
+  "stars": 349
+ },
+ "tencent_cloudbase": {
+  "score": 0
+ },
+ "tencent_edgeone": {
+  "score": 0
+ },
+ "tencent_ioa": {
+  "score": 0
+ },
+ "tencent_map": {
+  "score": 0
+ },
+ "tencent_qidian_cs": {
+  "score": 0
+ },
+ "tencent_survey": {
+  "score": 0
+ },
+ "tencent_tchouse_c": {
+  "score": 0
+ },
+ "tencent_weiyun": {
+  "score": 0
+ },
+ "terraform": {
+  "score": 319,
+  "stars": 1554
+ },
+ "text_editor": {
+  "score": 457,
+  "downloads_weekly": 181,
+  "stars": 202
+ },
+ "threatcluster": {
+  "score": 223,
+  "downloads_weekly": 56,
+  "stars": 2
+ },
+ "tianyancha": {
+  "score": 0
+ },
+ "tiktok": {
+  "score": 332,
+  "downloads_weekly": 9,
+  "stars": 207
+ },
+ "timeplus": {
+  "score": 0
+ },
+ "timeserver": {
+  "score": 314,
+  "downloads_weekly": 31,
+  "stars": 42
+ },
+ "tinybird": {
+  "score": 361,
+  "downloads_weekly": 50,
+  "stars": 79
+ },
+ "todoist": {
+  "score": 0
+ },
+ "tomba": {
+  "score": 95,
+  "stars": 8
+ },
+ "tongzhou_fin_research": {
+  "score": 0
+ },
+ "toolbox_sdk": {
+  "score": 0
+ },
+ "tools": {
+  "score": 0
+ },
+ "tplus_api": {
+  "score": 0
+ },
+ "tradingview": {
+  "score": 698,
+  "downloads_weekly": 1850,
+  "stars": 5156
+ },
+ "transcriptapi": {
+  "score": 115,
+  "stars": 13
+ },
+ "transcriptfetch": {
+  "score": 148,
+  "downloads_weekly": 29
+ },
+ "triage": {
+  "score": 152,
+  "downloads_weekly": 10,
+  "stars": 2
+ },
+ "trieve": {
+  "score": 474,
+  "downloads_weekly": 19,
+  "stars": 2722
+ },
+ "tryunsora": {
+  "score": 60,
+  "stars": 3
+ },
+ "typescribe": {
+  "score": 173,
+  "downloads_weekly": 53
+ },
+ "uizze": {
+  "score": 186,
+  "stars": 71
+ },
+ "unichat": {
+  "score": 301,
+  "downloads_weekly": 24,
+  "stars": 40
+ },
+ "unreal_engine": {
+  "score": 0
+ },
+ "vectorize": {
+  "score": 206,
+  "stars": 115
+ },
+ "vibe_check": {
+  "score": 270,
+  "stars": 502
+ },
+ "video_editor": {
+  "score": 450,
+  "downloads_weekly": 107,
+  "stars": 294
+ },
+ "vikingdb": {
+  "score": 234,
+  "downloads_weekly": 30,
+  "stars": 6
+ },
+ "virustotal": {
+  "score": 0
+ },
+ "voyp": {
+  "score": 143,
+  "downloads_weekly": 26
+ },
+ "vrchat": {
+  "score": 115,
+  "downloads_weekly": 13
+ },
+ "wb": {
+  "score": 302,
+  "downloads_weekly": 209,
+  "stars": 4
+ },
+ "web": {
+  "score": 0
+ },
+ "webclaw": {
+  "score": 338,
+  "stars": 2398
+ },
+ "webresearch": {
+  "score": 248,
+  "stars": 298
+ },
+ "wechat-desktop": {
+  "score": 0
+ },
+ "wecom": {
+  "score": 0
+ },
+ "weisheng_scrm": {
+  "score": 140,
+  "downloads_weekly": 24
+ },
+ "wenyan_md": {
+  "score": 313,
+  "stars": 1350
+ },
+ "weread": {
+  "score": 209,
+  "downloads_weekly": 122
+ },
+ "westock_mcp": {
+  "score": 0
+ },
+ "whois": {
+  "score": 179,
+  "stars": 60
+ },
+ "wireshark": {
+  "score": 256,
+  "stars": 360
+ },
+ "wkinfo": {
+  "score": 0
+ },
+ "wolfram_alpha": {
+  "score": 339,
+  "downloads_weekly": 31,
+  "stars": 76
+ },
+ "worklittle": {
+  "score": 0
+ },
+ "ws": {
+  "score": 134,
+  "stars": 21
+ },
+ "x": {
+  "score": 179,
+  "stars": 61
+ },
+ "xcodebuildmcp": {
+  "score": 495,
+  "downloads_weekly": 89697
+ },
+ "xiaohongshu": {
+  "score": 0
+ },
+ "xingtu_claw_risk": {
+  "score": 0
+ },
+ "xiyan": {
+  "score": 238,
+  "stars": 238
+ },
+ "yepcode": {
+  "score": 0
+ },
+ "yfmcp": {
+  "score": 514,
+  "downloads_weekly": 664,
+  "stars": 205
+ },
+ "yingmi_mcp": {
+  "score": 0
+ },
+ "you": {
+  "score": 199,
+  "stars": 97
+ },
+ "youshu_bd_mate": {
+  "score": 0
+ },
+ "youtube": {
+  "score": 0
+ },
+ "youtube_transcript": {
+  "score": 278,
+  "stars": 602
+ },
+ "yuandian_mcp": {
+  "score": 0
+ },
+ "yuque": {
+  "score": 252,
+  "downloads_weekly": 332
+ },
+ "yzf_invoice_mcp_server": {
+  "score": 0
+ },
+ "zero_api_key_web_search": {
+  "score": 118,
+  "downloads_weekly": 14
+ },
+ "zoom_search": {
+  "score": 70,
+  "stars": 4
+ },
+ "zoomeye": {
+  "score": 381,
+  "downloads_weekly": 77,
+  "stars": 82
+ },
+ "zotero": {
+  "score": 751,
+  "downloads_weekly": 5723,
+  "stars": 5607
+ },
+ "zotero_kaliaboi": {
+  "score": 417,
+  "downloads_weekly": 89,
+  "stars": 163
+ },
+ "zubeid_youtube": {
+  "score": 259,
+  "downloads_weekly": 392
+ }
+}

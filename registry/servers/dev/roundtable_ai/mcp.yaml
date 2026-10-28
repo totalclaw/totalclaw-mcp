@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: roundtable_ai
+display_name: Roundtable
+display_name_en: Roundtable
+version: 0.1.0
+description: Zero-configuration MCP server that unifies multiple AI coding assistants (Codex, Claude Code, Cursor, Gemini)
+  through intelligent auto-discovery and standardized interface
+description_zh: 统一AI编程助手的零配置MCP服务器，专为自主代理开发设计，简化多AI工具集成工作流程。
+author: askbudi
+homepage: https://github.com/askbudi/roundtable
+repository: https://github.com/askbudi/roundtable
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - roundtable-ai==0.8.0
+  - --agents
+  - gemini,claude,codex,cursor
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

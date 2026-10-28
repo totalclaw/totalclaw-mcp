@@ -1,0 +1,57 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: vectorize
+display_name: vectorize-mcp-server
+display_name_en: vectorize-mcp-server
+version: 0.1.0
+description: MCP server for Vectorize.io.
+description_zh: Vectorize MCP 服务器，用于高级检索、私有深度研究、任意文件转 Markdown 提取和文本分块。
+author: vectorize-io
+license: ISC
+homepage: https://github.com/vectorize-io/vectorize-mcp-server
+repository: https://github.com/vectorize-io/vectorize-mcp-server
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@vectorize-io/vectorize-mcp-server@0.4.3'
+  requires:
+    node: '>=18'
+requires_env:
+- name: VECTORIZE_ORG_ID
+  description: vectorize-mcp-server 的ID（VECTORIZE_ORG_ID），获取方式见项目说明。
+  prompt: 请输入 VECTORIZE_ORG_ID
+  secret: false
+  required: true
+  doc_url: https://github.com/vectorize-io/vectorize-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: VECTORIZE_TOKEN
+  description: vectorize-mcp-server 的访问令牌（VECTORIZE_TOKEN），获取方式见项目说明。
+  prompt: 请输入 VECTORIZE_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/vectorize-io/vectorize-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: VECTORIZE_PIPELINE_ID
+  description: vectorize-mcp-server 的ID（VECTORIZE_PIPELINE_ID），获取方式见项目说明。
+  prompt: 请输入 VECTORIZE_PIPELINE_ID
+  secret: false
+  required: true
+  doc_url: https://github.com/vectorize-io/vectorize-mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

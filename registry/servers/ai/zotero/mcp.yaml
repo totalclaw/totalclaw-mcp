@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: zotero
+display_name: zotero-mcp
+display_name_en: zotero-mcp
+version: 0.1.0
+description: 'Zotero MCP server and CLI: chat with your Zotero research library in Claude, ChatGPT, Cursor, Codex and other
+  AI agents'
+description_zh: 连接 Zotero 文献库与 Claude 等 AI 助手，支持讨论论文、生成摘要、分析引文与检索笔记，兼容本地 Zotero 与云端 API。
+author: 54yyyu
+homepage: https://github.com/54yyyu/zotero-mcp
+repository: https://github.com/54yyyu/zotero-mcp
+verified: false
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - zotero-mcp-server==0.15.1
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

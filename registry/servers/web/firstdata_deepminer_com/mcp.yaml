@@ -1,0 +1,30 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: firstdata_deepminer_com
+display_name: FirstData
+display_name_en: FirstData
+version: 0.1.0
+description: 全球最全面的权威数据源知识库，132+ 经验证数据源（政府、国际组织、学术机构），帮助 AI 减少幻觉。提供结构化元数据、100% URL 验证、中英双语支持。目标：1000+ 数据源。
+description_zh: 全球最全面的权威数据源知识库，132+ 经验证数据源（政府、国际组织、学术机构），帮助 AI 减少幻觉。提供结构化元数据、100% URL 验证、中英双语支持。目标：1000+ 数据源。
+author: MLT-OSS
+homepage: https://github.com/MLT-OSS/FirstData
+repository: https://github.com/MLT-OSS/FirstData
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://firstdata.deepminer.com.cn/mcp
+  auth: header
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

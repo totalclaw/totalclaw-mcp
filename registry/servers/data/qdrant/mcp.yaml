@@ -1,0 +1,57 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: qdrant
+display_name: Qdrant
+display_name_en: Qdrant
+version: 0.1.0
+description: MCP server for retrieving context from a Qdrant vector database
+description_zh: Qdrant 官方集成，基于 Qdrant 向量搜索引擎实现语义记忆层。
+author: qdrant
+homepage: https://github.com/qdrant/mcp-server-qdrant/
+repository: https://github.com/qdrant/mcp-server-qdrant/
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - mcp-server-qdrant==0.8.1
+  env:
+    EMBEDDING_MODEL: sentence-transformers/all-MiniLM-L6-v2
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: QDRANT_URL
+  description: Qdrant 的服务地址（QDRANT_URL），获取方式见项目说明。
+  prompt: 请输入 QDRANT_URL
+  secret: false
+  required: true
+  doc_url: https://github.com/qdrant/mcp-server-qdrant/
+  doc_label: 查看项目说明（如何获取）
+- name: QDRANT_API_KEY
+  description: Qdrant 的API 密钥（QDRANT_API_KEY），获取方式见项目说明。
+  prompt: 请输入 QDRANT_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/qdrant/mcp-server-qdrant/
+  doc_label: 查看项目说明（如何获取）
+- name: COLLECTION_NAME
+  description: Qdrant 的配置项（COLLECTION_NAME），获取方式见项目说明。
+  prompt: 请输入 COLLECTION_NAME
+  secret: false
+  required: true
+  doc_url: https://github.com/qdrant/mcp-server-qdrant/
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

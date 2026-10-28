@@ -1,0 +1,30 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: transcriptapi
+display_name: TranscriptAPI
+display_name_en: TranscriptAPI
+version: 0.1.0
+description: 远程 MCP 服务，获取 YouTube 视频字幕/转录文本，并支持视频与频道搜索、频道视频列表、播放列表提取、新上传追踪，共 6 个工具，返回 Markdown 或结构化 JSON。
+description_zh: 远程 MCP 服务，获取 YouTube 视频字幕/转录文本，并支持视频与频道搜索、频道视频列表、播放列表提取、新上传追踪，共 6 个工具，返回 Markdown 或结构化 JSON。
+author: ZeroPointRepo
+homepage: https://github.com/ZeroPointRepo/youtube-mcp
+repository: https://github.com/ZeroPointRepo/youtube-mcp
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://transcriptapi.com/mcp
+  auth: header
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,50 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: vrchat
+display_name: vrchat-mcp
+display_name_en: vrchat-mcp
+version: 0.1.0
+description: VRChat MCP Server - Access VRChat API through Model Context Protocol
+description_zh: 与 VRChat API 交互的 MCP 服务器。可获取好友、世界、虚拟形象等信息。
+author: sawa-zen
+license: MIT
+homepage: https://github.com/sawa-zen/vrchat-mcp
+repository: https://github.com/sawa-zen/vrchat-mcp
+verified: false
+category: comm
+tags:
+- comm
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - vrchat-mcp@0.15.0
+  requires:
+    node: '>=18'
+requires_env:
+- name: VRCHAT_USERNAME
+  description: vrchat-mcp 的用户名（VRCHAT_USERNAME），获取方式见项目说明。
+  prompt: 请输入 VRCHAT_USERNAME
+  secret: false
+  required: true
+  doc_url: https://github.com/sawa-zen/vrchat-mcp
+  doc_label: 查看项目说明（如何获取）
+- name: VRCHAT_AUTH_TOKEN
+  description: vrchat-mcp 的访问令牌（VRCHAT_AUTH_TOKEN），获取方式见项目说明。
+  prompt: 请输入 VRCHAT_AUTH_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/sawa-zen/vrchat-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

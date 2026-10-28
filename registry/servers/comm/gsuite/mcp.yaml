@@ -1,0 +1,54 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: gsuite
+display_name: mcp-gsuite
+display_name_en: mcp-gsuite
+version: 0.1.0
+description: MCP Server to connect to Google G-Suite
+description_zh: Gmail 和 Google Calendar 集成。
+author: MarkusPfundstein
+homepage: https://github.com/MarkusPfundstein/mcp-gsuite
+repository: https://github.com/MarkusPfundstein/mcp-gsuite
+verified: false
+category: comm
+tags:
+- comm
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - mcp-gsuite==0.4.1
+  - --accounts-file
+  - ${MCP_GSUITE_ACCOUNTS_FILE}
+  - --credentials-dir
+  - ${MCP_GSUITE_CREDENTIALS_DIR}
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: ACCOUNTS_FILE
+  env_key: MCP_GSUITE_ACCOUNTS_FILE
+  description: mcp-gsuite 的启动参数（--accounts-file），示例：/path/to/custom/.accounts.json
+  prompt: 请输入 ACCOUNTS_FILE
+  secret: false
+  required: true
+  doc_url: https://github.com/MarkusPfundstein/mcp-gsuite
+  doc_label: 查看项目说明（如何获取）
+- name: CREDENTIALS_DIR
+  env_key: MCP_GSUITE_CREDENTIALS_DIR
+  description: mcp-gsuite 的启动参数（--credentials-dir），示例：/path/to/custom/credentials
+  prompt: 请输入 CREDENTIALS_DIR
+  secret: true
+  required: true
+  doc_url: https://github.com/MarkusPfundstein/mcp-gsuite
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

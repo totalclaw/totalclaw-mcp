@@ -1,0 +1,30 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: supermemory
+display_name: supermemory
+display_name_en: supermemory
+version: 0.1.0
+description: 高性能、可本地运行的记忆与上下文引擎，提供 MCP 接入，为 AI 提供可扩展的长期记忆 API。
+description_zh: 高性能、可本地运行的记忆与上下文引擎，提供 MCP 接入，为 AI 提供可扩展的长期记忆 API。
+author: supermemoryai
+homepage: https://github.com/supermemoryai/supermemory
+repository: https://github.com/supermemoryai/supermemory
+verified: false
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.supermemory.ai/mcp
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,44 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: goldprice
+display_name: goldprice.dev
+display_name_en: goldprice.dev
+version: 0.1.0
+description: Stdio bridge for the goldprice.dev Model Context Protocol server. Drops Claude Desktop, Cursor, or any MCP client
+  into live gold prices in 30 seconds.
+description_zh: 黄金/白银/铜现货与期货价格、各国实物金商报价、期权×预测市场概率面，支持 31 种货币。
+author: nusantara-ventures
+license: MIT
+homepage: https://github.com/nusantara-ventures/goldprice-mcp
+repository: https://github.com/nusantara-ventures/goldprice-mcp
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@nusantara-ventures/goldprice-mcp@0.2.1'
+  requires:
+    node: '>=18'
+requires_env:
+- name: GP_KEY
+  description: goldprice.dev 的配置项（GP_KEY），获取方式见项目说明。
+  prompt: 请输入 GP_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/nusantara-ventures/goldprice-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

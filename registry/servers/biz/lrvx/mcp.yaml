@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: lrvx
+display_name: flox
+display_name_en: flox
+version: 0.1.0
+description: Model Context Protocol server for lrvx — gives AI agents grounded access to indicators, error codes, and the
+  C API.
+description_zh: FLOX 交易系统框架的 MCP 服务器，约 30 个工具：运行回测、生成策略模板、检测前瞻偏差、下单、查询盈亏，通过 Claude/Cursor 调用。同一份策略代码从回测到模拟到实盘运行（CcxtBroker
+  或原生连接器）。
+author: FLOX-Foundation
+homepage: https://github.com/FLOX-Foundation/flox/tree/main/mcp
+repository: https://github.com/FLOX-Foundation/flox/tree/main/mcp
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - lrvx-mcp==0.11.0
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

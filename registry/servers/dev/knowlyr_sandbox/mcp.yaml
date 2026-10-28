@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: knowlyr_sandbox
+display_name: knowlyr-sandbox
+display_name_en: knowlyr-sandbox
+version: 0.1.0
+description: Code Agent execution sandbox - reproducible Docker environments for isolated code task execution and trajectory
+  replay
+description_zh: Code Agent 执行沙箱 — Docker 隔离、文件捕获、超时控制，为 LLM 代码代理提供安全的运行环境。
+author: liuxiaotong
+homepage: https://github.com/liuxiaotong/knowlyr-agent/tree/main/packages/sandbox
+repository: https://github.com/liuxiaotong/knowlyr-agent/tree/main/packages/sandbox
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - knowlyr-sandbox==0.1.2
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

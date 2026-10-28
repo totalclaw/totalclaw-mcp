@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: shodan
+display_name: mcp-shodan
+display_name_en: mcp-shodan
+version: 0.1.0
+description: A Model Context Protocol server for Shodan API queries.
+description_zh: 用于查询 Shodan API 和 Shodan CVEDB 的 MCP 服务器。提供 IP 查找、设备搜索、DNS 查找、漏洞查询等工具。
+author: BurtTheCoder
+license: MIT
+homepage: https://github.com/BurtTheCoder/mcp-shodan
+repository: https://github.com/BurtTheCoder/mcp-shodan
+verified: false
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@burtthecoder/mcp-shodan@1.0.34'
+  requires:
+    node: '>=18'
+requires_env:
+- name: SHODAN_API_KEY
+  description: mcp-shodan 的API 密钥（SHODAN_API_KEY），获取方式见项目说明。
+  prompt: 请输入 SHODAN_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/BurtTheCoder/mcp-shodan
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

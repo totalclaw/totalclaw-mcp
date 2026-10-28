@@ -1,0 +1,75 @@
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mysql_benborla29
+display_name: MySQL
+display_name_en: MySQL
+version: 0.1.0
+description: MCP server for interacting with MySQL databases with write operations support
+description_zh: MySQL数据库的MCP服务器，支持数据库操作和管理
+author: upstream
+license: MIT
+homepage: https://www.npmjs.com/package/@benborla29/mcp-server-mysql
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@benborla29/mcp-server-mysql@2.0.9'
+  env:
+    ALLOW_INSERT_OPERATION: 'false'
+    ALLOW_UPDATE_OPERATION: 'false'
+    ALLOW_DELETE_OPERATION: 'false'
+  requires:
+    node: '>=18'
+requires_env:
+- name: MYSQL_HOST
+  description: MySQL 的主机地址（MYSQL_HOST），获取方式见项目说明。
+  prompt: 请输入 MYSQL_HOST
+  secret: false
+  required: true
+- name: MYSQL_USER
+  description: MySQL 的用户名（MYSQL_USER），获取方式见项目说明。
+  prompt: 请输入 MYSQL_USER
+  secret: false
+  required: true
+- name: MYSQL_PASS
+  description: MySQL 的密码（MYSQL_PASS），获取方式见项目说明。
+  prompt: 请输入 MYSQL_PASS
+  secret: true
+  required: true
+- name: MYSQL_DB
+  description: MySQL 的配置项（MYSQL_DB），获取方式见项目说明。
+  prompt: 请输入 MYSQL_DB
+  secret: false
+  required: true
+- name: PATH
+  description: MySQL 的路径（PATH），获取方式见项目说明。
+  prompt: 请输入 PATH
+  secret: false
+  required: true
+- name: NODE_PATH
+  description: MySQL 的路径（NODE_PATH），获取方式见项目说明。
+  prompt: 请输入 NODE_PATH
+  secret: false
+  required: true
+optional_env:
+- name: MYSQL_PORT
+  description: MySQL 的端口（MYSQL_PORT），不填用默认值 3306。
+  prompt: 请输入 MYSQL_PORT
+  secret: false
+  required: false
+  default: '3306'
+defaults:
+  enabled: true
+  timeout: 120

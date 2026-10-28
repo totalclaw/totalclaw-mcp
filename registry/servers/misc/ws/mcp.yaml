@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: ws
+display_name: ws-mcp
+display_name_en: ws-mcp
+version: 0.1.0
+description: Wrap MCP servers with a WebSocket.
+description_zh: 用 WebSocket 包装 MCP 服务器 (用于 [kitbitz](https://github.com/nick1udwig/kibitz))。
+author: nick1udwig
+homepage: https://github.com/nick1udwig/ws-mcp
+repository: https://github.com/nick1udwig/ws-mcp
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --refresh
+  - ws-mcp==0.1.11
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

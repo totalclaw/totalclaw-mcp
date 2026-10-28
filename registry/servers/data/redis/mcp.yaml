@@ -1,0 +1,46 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: redis
+display_name: mcp-redis
+display_name_en: mcp-redis
+version: 0.1.0
+description: Redis MCP Server - Model Context Protocol server for Redis
+description_zh: Redis 官方 MCP 服务器，为智能体应用提供自然语言接口，高效管理和搜索 Redis 中的数据。
+author: redis
+homepage: https://github.com/redis/mcp-redis
+repository: https://github.com/redis/mcp-redis
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --from
+  - redis-mcp-server==0.5.1
+  - redis-mcp-server
+  - --url
+  - ${MCP_REDIS_URL}
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: URL
+  env_key: MCP_REDIS_URL
+  description: mcp-redis 的启动参数（--url），示例：redis://localhost:6379/0
+  prompt: 请输入 URL
+  secret: false
+  required: true
+  doc_url: https://github.com/redis/mcp-redis
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

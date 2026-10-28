@@ -1,0 +1,44 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: buywhere
+display_name: BuyWhere
+display_name_en: BuyWhere
+version: 0.1.0
+description: Stdio bridge to the hosted BuyWhere MCP server — 300M+ products, 150,000+ stores, deliver_to ranking.
+description_zh: 跨境电商商品目录 MCP：跨 SG/MY/VN/TH/PH/US/JP 七个国家 3.7 亿+ 商品实时搜索与比价（`deliver_to` 配送信号），覆盖 13 个工具（search_products / find_best_price
+  / get_deals 等）。OAuth 2.1 Bearer 鉴权，免邮箱注册。已上架官方 MCP Registry（`io.github.BuyWhere/buywhere-mcp@1.1.0`）。
+author: BuyWhere
+license: MIT
+homepage: https://github.com/BuyWhere/buywhere-mcp
+repository: https://github.com/BuyWhere/buywhere-mcp
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@buywhere/mcp-server@0.4.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: BUYWHERE_API_KEY
+  description: BuyWhere 的API 密钥（BUYWHERE_API_KEY），获取方式见项目说明。
+  prompt: 请输入 BUYWHERE_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/BuyWhere/buywhere-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

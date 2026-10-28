@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: engram_rs
+display_name: engram-rs
+display_name_en: engram-rs
+version: 0.1.0
+description: MCP server for engram — hierarchical memory engine for AI agents
+description_zh: 三层记忆引擎（Buffer→Working→Core），记忆根据重要性自动晋升、衰减和合并。混合语义+关键词召回，单 Rust 二进制文件。
+author: kael-bit
+license: MIT
+homepage: https://github.com/kael-bit/engram-rs
+repository: https://github.com/kael-bit/engram-rs
+verified: false
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - engram-rs-mcp@0.14.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

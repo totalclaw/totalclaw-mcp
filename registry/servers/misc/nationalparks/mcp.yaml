@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: nationalparks
+display_name: mcp-server-nationalparks
+display_name_en: mcp-server-nationalparks
+version: 0.1.0
+description: MCP Server for the National Park Service (NPS) API, providing real-time information about U.S. National Parks,
+  including park details, alerts, and activities.
+description_zh: 国家公园服务 API 集成，提供美国国家公园的公园详情、警报、游客中心、露营地和活动的最新信息。
+author: KyrieTangSheng
+license: MIT
+homepage: https://github.com/KyrieTangSheng/mcp-server-nationalparks
+repository: https://github.com/KyrieTangSheng/mcp-server-nationalparks
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-server-nationalparks@1.0.1
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

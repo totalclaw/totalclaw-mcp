@@ -1,0 +1,30 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: magichour
+display_name: Magic Hour MCP
+display_name_en: Magic Hour MCP
+version: 0.1.0
+description: 由 [Magic Hour](https://magichour.ai) 官方维护的远程 MCP 服务器，让 AI 助手生成和编辑视频、图像与音频。
+description_zh: 由 [Magic Hour](https://magichour.ai) 官方维护的远程 MCP 服务器，让 AI 助手生成和编辑视频、图像与音频。
+author: magichourhq
+homepage: https://github.com/magichourhq/magic-hour-mcp
+repository: https://github.com/magichourhq/magic-hour-mcp
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.magichour.ai/
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

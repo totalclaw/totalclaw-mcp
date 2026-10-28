@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: basic_memory
+display_name: Basic Memory
+display_name_en: Basic Memory
+version: 0.1.0
+description: Local-first knowledge management combining Zettelkasten with knowledge graphs
+description_zh: 本地优先的知识管理系统，从 Markdown 文件构建语义图，实现跨对话持久记忆。
+author: basicmachines-co
+license: AGPL-3.0-or-later
+homepage: https://github.com/basicmachines-co/basic-memory
+repository: https://github.com/basicmachines-co/basic-memory
+verified: false
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --prerelease=allow
+  - basic-memory==0.24.1
+  - mcp
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

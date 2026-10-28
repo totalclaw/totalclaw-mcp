@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: xiyan
+display_name: xiyan_mcp_server
+display_name_en: xiyan_mcp_server
+version: 0.1.0
+description: A Model Context Protocol (MCP) server that utilizes XiyanSQL with databases. This server enables AI assistants
+  to list tables, read data, and execute natural language queries
+description_zh: 支持使用自然语言查询从数据库获取数据的 MCP 服务器，由 XiyanSQL 作为 text-to-SQL LLM 驱动。
+author: XGenerationLab
+homepage: https://github.com/XGenerationLab/xiyan_mcp_server
+repository: https://github.com/XGenerationLab/xiyan_mcp_server
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - xiyan_mcp_server==0.1.7
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

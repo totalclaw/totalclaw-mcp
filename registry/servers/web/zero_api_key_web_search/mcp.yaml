@@ -1,0 +1,38 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: zero_api_key_web_search
+display_name: Free Web Search Ultimate
+display_name_en: Free Web Search Ultimate
+version: 0.1.0
+description: 'npm/npx wrapper for AI-agent search infrastructure: MCP, LLM context, browsing, and claim verification.'
+description_zh: 'Zero-cost, privacy-first universal web search MCP server. Enforces a Search-First paradigm — instructs LLMs
+  to retrieve real-time web information before answering factual questions, eliminating hallucinations. Supports text, news,
+  images, books, and videos via DuckDuckGo. No API key required. Install: `pip install free-web-search-ultimate`'
+author: wd041216-bit
+license: MIT
+homepage: https://github.com/wd041216-bit/free-web-search-ultimate
+repository: https://github.com/wd041216-bit/free-web-search-ultimate
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - zero-api-key-web-search@21.0.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

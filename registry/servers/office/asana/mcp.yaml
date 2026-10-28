@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: asana
+display_name: mcp-server-asana
+display_name_en: mcp-server-asana
+version: 0.1.0
+description: MCP Server for Asana
+description_zh: Asana 的 MCP 服务器实现，允许从 MCP 客户端与 Asana API 对话。
+author: roychri
+license: MIT
+homepage: https://github.com/roychri/mcp-server-asana
+repository: https://github.com/roychri/mcp-server-asana
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@roychri/mcp-server-asana@1.8.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: ASANA_ACCESS_TOKEN
+  description: mcp-server-asana 的访问令牌（ASANA_ACCESS_TOKEN），获取方式见项目说明。
+  prompt: 请输入 ASANA_ACCESS_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/roychri/mcp-server-asana
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

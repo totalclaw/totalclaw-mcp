@@ -1,0 +1,32 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: bibigpt
+display_name: BibiGPT
+display_name_en: BibiGPT
+version: 0.1.0
+description: AI 驱动的视频、音频和播客总结工具，支持 YouTube、Bilibili、TikTok 等平台。提供远程 MCP 服务器 (https://bibigpt.co/api/mcp) 和 Claude Code Skill
+  两种集成方式。
+description_zh: AI 驱动的视频、音频和播客总结工具，支持 YouTube、Bilibili、TikTok 等平台。提供远程 MCP 服务器 (https://bibigpt.co/api/mcp) 和 Claude Code
+  Skill 两种集成方式。
+author: JimmyLv
+homepage: https://github.com/JimmyLv/bibigpt-skill
+repository: https://github.com/JimmyLv/bibigpt-skill
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://bibigpt.co/api/mcp
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

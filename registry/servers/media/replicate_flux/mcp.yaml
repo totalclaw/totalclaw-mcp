@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: replicate_flux
+display_name: replicate-flux-mcp
+display_name_en: replicate-flux-mcp
+version: 0.1.0
+description: MCP for Replicate Flux Model
+description_zh: 提供通过 Replicate API 生成图像的能力。
+author: awkoy
+license: MIT
+homepage: https://github.com/awkoy/replicate-flux-mcp
+repository: https://github.com/awkoy/replicate-flux-mcp
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - replicate-flux-mcp@0.4.0
+  requires:
+    node: '>=18'
+requires_env:
+- name: REPLICATE_API_TOKEN
+  description: replicate-flux-mcp 的访问令牌（REPLICATE_API_TOKEN），获取方式见项目说明。
+  prompt: 请输入 REPLICATE_API_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/awkoy/replicate-flux-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: llm_context
+display_name: llm-context.py
+display_name_en: llm-context.py
+version: 0.1.0
+description: Share code with LLMs via Model Context Protocol or clipboard. Rule-based customization enables easy switching
+  between different tasks (like code review and documentation). Code outlining support is included as a standard feature.
+description_zh: 通过 MCP 或剪贴板与 LLM 共享代码上下文。
+author: cyberchitta
+homepage: https://github.com/cyberchitta/llm-context.py
+repository: https://github.com/cyberchitta/llm-context.py
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --from
+  - llm-context==0.7.2
+  - lc-mcp
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

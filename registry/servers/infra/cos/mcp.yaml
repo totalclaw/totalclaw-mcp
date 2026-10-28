@@ -1,0 +1,60 @@
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cos
+display_name: 腾讯云COS
+display_name_en: ''
+version: 0.1.0
+description: 基于MCP协议的腾讯云COS MCP Server，无需编码即可让大模型快速接入腾讯云存储(COS)和数据万象(CI)能力
+description_zh: 腾讯云对象存储(COS)的MCP服务器，支持文件上传、下载和管理
+author: upstream
+license: MIT
+homepage: https://www.npmjs.com/package/cos-mcp
+verified: false
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - cos-mcp@1.0.15
+  requires:
+    node: '>=18'
+requires_env:
+- name: Region
+  description: 腾讯云COS 的配置项（Region），获取方式见项目说明。
+  prompt: 请输入 Region
+  secret: false
+  required: true
+- name: Bucket
+  description: 腾讯云COS 的配置项（Bucket），获取方式见项目说明。
+  prompt: 请输入 Bucket
+  secret: false
+  required: true
+- name: SecretId
+  description: 腾讯云COS 的密钥（SecretId），获取方式见项目说明。
+  prompt: 请输入 SecretId
+  secret: true
+  required: true
+- name: SecretKey
+  description: 腾讯云COS 的密钥（SecretKey），获取方式见项目说明。
+  prompt: 请输入 SecretKey
+  secret: true
+  required: true
+- name: DatasetName
+  description: 腾讯云COS 的配置项（DatasetName），获取方式见项目说明。
+  prompt: 请输入 DatasetName
+  secret: false
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

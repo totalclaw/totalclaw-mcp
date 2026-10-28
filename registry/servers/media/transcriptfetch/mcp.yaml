@@ -1,0 +1,46 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: transcriptfetch
+display_name: mcp-server
+display_name_en: mcp-server
+version: 0.1.0
+description: 'Model Context Protocol (MCP) server for TranscriptFetch, a production transcript API: give Claude, Cursor, or
+  any MCP client transcripts from YouTube, TikTok, Instagram and media URLs, with automatic AI transcription when captions
+  don''t exist - plus video'
+description_zh: 远程 MCP 服务，获取 YouTube、TikTok、Instagram 视频及播客（Spotify、Apple、RSS）的字幕/转录文本，无字幕时自动语音转写；支持 YouTube 视频搜索、频道视频列表与播放列表，共
+  5 个工具，返回纯文本或带时间戳的 JSON。
+author: TranscriptFetch
+license: MIT
+homepage: https://github.com/TranscriptFetch/mcp-server
+repository: https://github.com/TranscriptFetch/mcp-server
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - transcriptfetch-mcp@0.2.8
+  requires:
+    node: '>=18'
+requires_env:
+- name: TRANSCRIPTFETCH_API_KEY
+  description: mcp-server 的API 密钥（TRANSCRIPTFETCH_API_KEY），获取方式见项目说明。
+  prompt: 请输入 TRANSCRIPTFETCH_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/TranscriptFetch/mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

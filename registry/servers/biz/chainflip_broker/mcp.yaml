@@ -1,0 +1,30 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: chainflip_broker
+display_name: broker-as-a-service
+display_name_en: broker-as-a-service
+version: 0.1.0
+description: 基于 Chainflip 协议的跨链兑换 MCP 服务器,支持报价、简单或 DCA 兑换,以及兑换进度跟踪,覆盖原生 BTC、ETH、SOL 等资产。
+description_zh: 基于 Chainflip 协议的跨链兑换 MCP 服务器,支持报价、简单或 DCA 兑换,以及兑换进度跟踪,覆盖原生 BTC、ETH、SOL 等资产。
+author: CumpsD
+homepage: https://github.com/CumpsD/broker-as-a-service
+repository: https://github.com/CumpsD/broker-as-a-service
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://chainflip-broker.io/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

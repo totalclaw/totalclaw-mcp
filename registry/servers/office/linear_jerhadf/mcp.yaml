@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: linear_jerhadf
+display_name: Linear (by jerhadf)
+display_name_en: Linear (by jerhadf)
+version: 0.1.0
+description: A Model Context Protocol server for the Linear API.
+description_zh: 与 Linear API 交互进行项目管理，包括搜索、创建和更新 Issues。
+author: jerhadf
+license: MIT
+homepage: https://github.com/jerhadf/linear-mcp-server
+repository: https://github.com/jerhadf/linear-mcp-server
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - linear-mcp-server@0.1.0
+  requires:
+    node: '>=18'
+requires_env:
+- name: LINEAR_API_KEY
+  description: Linear (by jerhadf) 的API 密钥（LINEAR_API_KEY），获取方式见项目说明。
+  prompt: 请输入 LINEAR_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/jerhadf/linear-mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

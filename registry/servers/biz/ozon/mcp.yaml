@@ -1,0 +1,56 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: ozon
+display_name: ozon-mcp-server
+display_name_en: ozon-mcp-server
+version: 0.1.0
+description: 'MCP server for Ozon Seller API + Performance API: 156 tools for prices, promos, ads, orders, returns and finance,
+  with response sizes measured on a live account and trimmed from 476k to 64k tokens across a 16-response corpus'
+description_zh: 俄罗斯电商平台 Ozon 卖家 API + 广告 API 的 MCP 服务器，156 个工具：价格、促销、广告、FBS/FBO 订单、退货、评价、财务与分析。与 wb-mcp-server 同一套设计，同样针对上下文预算做过实测优化。
+author: DeviceIngineering
+homepage: https://github.com/DeviceIngineering/ozon-mcp-server
+repository: https://github.com/DeviceIngineering/ozon-mcp-server
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - ozon-mcp-server==2.5.2
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: OZON_CLIENT_ID
+  description: ozon-mcp-server 的ID（OZON_CLIENT_ID），获取方式见项目说明。
+  prompt: 请输入 OZON_CLIENT_ID
+  secret: false
+  required: true
+  doc_url: https://github.com/DeviceIngineering/ozon-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: OZON_API_KEY
+  description: ozon-mcp-server 的API 密钥（OZON_API_KEY），获取方式见项目说明。
+  prompt: 请输入 OZON_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/DeviceIngineering/ozon-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: DATA_DIR
+  description: ozon-mcp-server 的路径（DATA_DIR），获取方式见项目说明。
+  prompt: 请输入 DATA_DIR
+  secret: false
+  required: true
+  doc_url: https://github.com/DeviceIngineering/ozon-mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

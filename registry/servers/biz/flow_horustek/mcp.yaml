@@ -1,0 +1,41 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: flow_horustek
+display_name: Horus Flow Intelligence
+display_name_en: Horus Flow Intelligence
+version: 0.1.0
+description: '[](https://glama.ai/mcp/servers/horustechltd/horus-flow-mcp)   - Crypto and US equity order flow engine for
+  real-time liquidity analysis.'
+description_zh: 加密货币与美股订单流分析 MCP 服务器：币安 L2 实时订单流、美股订单流与多资产扫描，提供微观结构分析与欺骗（spoofing）检测信号。
+author: horustechltd
+homepage: https://github.com/horustechltd/horus-flow-mcp
+repository: https://github.com/horustechltd/horus-flow-mcp
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://flow.horustek.pro/mcp
+  auth: none
+  headers:
+    X-RapidAPI-Key: ${MCP_FLOW_HORUSTEK_X_RAPIDAPI_KEY}
+requires_env:
+- name: X_RAPIDAPI_KEY
+  env_key: MCP_FLOW_HORUSTEK_X_RAPIDAPI_KEY
+  description: Horus Flow Intelligence 的API 密钥（X_RAPIDAPI_KEY），获取方式见项目说明。
+  prompt: 请输入 X_RAPIDAPI_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/horustechltd/horus-flow-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

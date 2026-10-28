@@ -1,0 +1,38 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cabal_hunter
+display_name: cabal-hunter-mcp
+display_name_en: cabal-hunter-mcp
+version: 0.1.0
+description: MCP server for Cabal-Hunter — Solana token rug & cabal detection for AI agents. Wallet clusters, same-block bundles,
+  deployer track record with peak market caps, honeypot and authority traps. 5 free scans/month, or 250 with a free key. Card,
+  USDC or x402.
+description_zh: Solana cabal/rug 检测 MCP 服务器：资金簇追踪、同区块 bundle、协同砸盘与连环 rug 的 deployer 历史，一次调用返回 exit-liquidity 风险裁决，每项附链上证据。
+author: paulf280-ui
+license: MIT
+homepage: https://github.com/paulf280-ui/cabal-hunter-mcp
+repository: https://github.com/paulf280-ui/cabal-hunter-mcp
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - cabal-hunter-mcp@1.0.5
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

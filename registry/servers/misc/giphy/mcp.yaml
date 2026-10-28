@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: giphy
+display_name: mcp-server-giphy
+display_name_en: mcp-server-giphy
+version: 0.1.0
+description: An implementation of Giphy integration with Model Context Protocol
+description_zh: 通过 Giphy API 从 Giphy 的庞大库中搜索和检索 GIF。
+author: magarcia
+license: MIT
+homepage: https://github.com/magarcia/mcp-server-giphy
+repository: https://github.com/magarcia/mcp-server-giphy
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-server-giphy@1.0.3
+  requires:
+    node: '>=18'
+requires_env:
+- name: GIPHY_API_KEY
+  description: mcp-server-giphy 的API 密钥（GIPHY_API_KEY），获取方式见项目说明。
+  prompt: 请输入 GIPHY_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/magarcia/mcp-server-giphy
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

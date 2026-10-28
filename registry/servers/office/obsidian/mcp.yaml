@@ -1,0 +1,55 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: obsidian
+display_name: mcp-obsidian
+display_name_en: mcp-obsidian
+version: 0.1.0
+description: MCP server to work with Obsidian via the remote REST plugin
+description_zh: 通过 REST API 与 Obsidian 交互。
+author: MarkusPfundstein
+homepage: https://github.com/MarkusPfundstein/mcp-obsidian
+repository: https://github.com/MarkusPfundstein/mcp-obsidian
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - mcp-obsidian==0.2.3
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: OBSIDIAN_API_KEY
+  description: mcp-obsidian 的API 密钥（OBSIDIAN_API_KEY），获取方式见项目说明。
+  prompt: 请输入 OBSIDIAN_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/MarkusPfundstein/mcp-obsidian
+  doc_label: 查看项目说明（如何获取）
+- name: OBSIDIAN_HOST
+  description: mcp-obsidian 的主机地址（OBSIDIAN_HOST），获取方式见项目说明。
+  prompt: 请输入 OBSIDIAN_HOST
+  secret: false
+  required: true
+  doc_url: https://github.com/MarkusPfundstein/mcp-obsidian
+  doc_label: 查看项目说明（如何获取）
+- name: OBSIDIAN_PORT
+  description: mcp-obsidian 的端口（OBSIDIAN_PORT），获取方式见项目说明。
+  prompt: 请输入 OBSIDIAN_PORT
+  secret: false
+  required: true
+  doc_url: https://github.com/MarkusPfundstein/mcp-obsidian
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,48 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: oxylabs
+display_name: Oxylabs
+display_name_en: Oxylabs
+version: 0.1.0
+description: Oxylabs MCP server
+description_zh: 使用 Oxylabs Web API 抓取网站，支持动态渲染和结构化数据提取。
+author: oxylabs
+homepage: https://github.com/oxylabs/oxylabs-mcp
+repository: https://github.com/oxylabs/oxylabs-mcp
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - oxylabs-mcp==0.10.0
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: OXYLABS_API_TOKEN
+  description: Oxylabs 的访问令牌（OXYLABS_API_TOKEN），获取方式见项目说明。
+  prompt: 请输入 OXYLABS_API_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/oxylabs/oxylabs-mcp
+  doc_label: 查看项目说明（如何获取）
+- name: OXYLABS_AI_STUDIO_API_KEY
+  description: Oxylabs 的API 密钥（OXYLABS_AI_STUDIO_API_KEY），获取方式见项目说明。
+  prompt: 请输入 OXYLABS_AI_STUDIO_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/oxylabs/oxylabs-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

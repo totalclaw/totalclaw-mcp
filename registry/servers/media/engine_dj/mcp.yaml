@@ -1,0 +1,38 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: engine_dj
+display_name: engine-dj-mcp
+display_name_en: engine-dj-mcp
+version: 0.1.0
+description: 'Ask an AI assistant about your Engine DJ library: find tracks by BPM, key, genre or comment, audit duplicates
+  and missing files, read cues and beatgrids, and, only once you turn writes on, build playlists and edit genre, comment,
+  label, year or rating, wi'
+description_zh: 让 Claude 等 AI 助手查询本地 Engine DJ（Denon）音乐库：按 BPM 与 Camelot 调性搜索曲目，检查重复和丢失的文件，读取 cue 点与节拍网格，并可按需创建播放列表或修改标签（需显式开启，首次写入前自动备份）。
+author: Venut-Technologies
+license: MIT
+homepage: https://github.com/Venut-Technologies/engine-dj-mcp
+repository: https://github.com/Venut-Technologies/engine-dj-mcp
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - engine-dj-mcp@0.18.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

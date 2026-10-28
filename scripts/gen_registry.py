@@ -358,6 +358,12 @@ def build(strict: bool = False) -> dict:
     names = [e["name"] for e in entries]
     if len(names) != len(set(names)):
         _fail(f"服务器 name 重复：{sorted(n for n in names if names.count(n) > 1)}")
+    # 热度（npm 周下载 / PyPI 周下载 / GitHub 星标）单独放一份文件：定期刷新不必改各条清单的版本号。
+    # 客户端按 score 排「热门常用」；没有数据的条目记 0。
+    pop_file = ROOT / "registry" / "popularity.json"
+    popularity = json.loads(pop_file.read_text(encoding="utf-8")) if pop_file.exists() else {}
+    for e in entries:
+        e["popularity"] = popularity.get(e["name"]) or {"score": 0}
     return {
         "schema_version": 1,
         "registry": REGISTRY_NAME,

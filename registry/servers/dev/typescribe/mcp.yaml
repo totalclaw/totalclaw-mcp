@@ -1,0 +1,46 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: typescribe
+display_name: mcp-typescribe
+display_name_en: mcp-typescribe
+version: 0.1.0
+description: An MCP server that answers questions about TypeScript APIs using TypeDoc JSON documentation
+description_zh: 高效地向代理提供 TypeScript API 信息，使其能够处理未经训练的 API。
+author: yWorks
+license: MIT
+homepage: https://github.com/yWorks/mcp-typescribe
+repository: https://github.com/yWorks/mcp-typescribe
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-typescribe@0.8.1
+  - run-server
+  - ${MCP_TYPESCRIBE_ARG_2}
+  requires:
+    node: '>=18'
+requires_env:
+- name: ARG_2
+  env_key: MCP_TYPESCRIBE_ARG_2
+  description: mcp-typescribe 的启动参数，示例：<PATH_TO_API_DOT_JSON>
+  prompt: 请输入 ARG_2
+  secret: false
+  required: true
+  doc_url: https://github.com/yWorks/mcp-typescribe
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

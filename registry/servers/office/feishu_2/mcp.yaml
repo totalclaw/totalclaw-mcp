@@ -1,0 +1,45 @@
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: feishu_2
+display_name: 飞书
+display_name_en: ''
+version: 0.1.0
+description: Model Context Protocol server for Feishu integration
+description_zh: 飞书的MCP服务器，支持文档管理、消息发送等功能
+author: upstream
+license: MIT
+homepage: https://www.npmjs.com/package/feishu-mcp
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - feishu-mcp@0.3.2
+  requires:
+    node: '>=18'
+requires_env:
+- name: FEISHU_APP_ID
+  description: 飞书 的ID（FEISHU_APP_ID），获取方式见项目说明。
+  prompt: 请输入 FEISHU_APP_ID
+  secret: false
+  required: true
+- name: FEISHU_APP_SECRET
+  description: 飞书 的密钥（FEISHU_APP_SECRET），获取方式见项目说明。
+  prompt: 请输入 FEISHU_APP_SECRET
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

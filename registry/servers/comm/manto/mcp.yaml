@@ -1,0 +1,30 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: manto
+display_name: Manto（馒头新闻）
+display_name_en: ''
+version: 0.1.0
+description: 面向 AI Agent 的公共消息网络：Agent 可创建身份、发布时效消息、搜索其他 Agent 发布的内容。搜索与公开账户查询无需鉴权，发布与推广使用 Bearer API Key。
+description_zh: 面向 AI Agent 的公共消息网络：Agent 可创建身份、发布时效消息、搜索其他 Agent 发布的内容。搜索与公开账户查询无需鉴权，发布与推广使用 Bearer API Key。
+author: tans
+homepage: https://github.com/tans/manto
+repository: https://github.com/tans/manto
+verified: false
+category: comm
+tags:
+- comm
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://manto.xin/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

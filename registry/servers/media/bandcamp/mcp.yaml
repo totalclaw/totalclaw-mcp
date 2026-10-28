@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: bandcamp
+display_name: bandcamp-mcp
+display_name_en: bandcamp-mcp
+version: 0.1.0
+description: 'Dig Bandcamp from Claude and other AI assistants: search artists, albums, labels and tracks, browse genre tags
+  for new and top releases, and read tracklists and prices. No account or API key. Unofficial, not affiliated with Bandcamp.'
+description_zh: 无需账号或 API Key，让 AI 助手在 Bandcamp 上发掘音乐：搜索艺人、专辑、厂牌和单曲，按流派标签浏览新作与热门，查看曲目列表和价格。只读。
+author: Venut-Technologies
+license: MIT
+homepage: https://github.com/Venut-Technologies/bandcamp-mcp
+repository: https://github.com/Venut-Technologies/bandcamp-mcp
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - bandcamp-mcp@0.1.2
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

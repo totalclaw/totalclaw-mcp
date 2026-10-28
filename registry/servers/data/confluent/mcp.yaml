@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: confluent
+display_name: mcp-confluent
+display_name_en: mcp-confluent
+version: 0.1.0
+description: Confluent MCP Server
+description_zh: Confluent 集成，与 Confluent Kafka 和 Confluent Cloud REST API 交互。
+author: confluentinc
+license: MIT
+homepage: https://github.com/confluentinc/mcp-confluent
+repository: https://github.com/confluentinc/mcp-confluent
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@confluentinc/mcp-confluent@1.6.1'
+  - --init-config
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

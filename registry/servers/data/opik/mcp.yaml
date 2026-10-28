@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: opik
+display_name: Comet Opik
+display_name_en: Comet Opik
+version: 0.1.0
+description: Model Context Protocol server for Opik (Comet's LLM observability platform).
+description_zh: Comet 官方集成，用自然语言查询和分析 Opik 日志、追踪、提示等 LLM 遥测数据。
+author: comet-ml
+license: Apache-2.0
+homepage: https://github.com/comet-ml/opik-mcp
+repository: https://github.com/comet-ml/opik-mcp
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - opik-mcp==3.0.7
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env:
+- name: OPIK_URL
+  description: Comet Opik 的服务地址（OPIK_URL），不填用默认值 http://localhost:5173/api。
+  prompt: 请输入 OPIK_URL
+  secret: false
+  required: false
+  doc_url: https://github.com/comet-ml/opik-mcp
+  doc_label: 查看项目说明（如何获取）
+  default: http://localhost:5173/api
+defaults:
+  enabled: true
+  timeout: 120

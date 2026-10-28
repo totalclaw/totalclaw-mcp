@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: boltpatternhq
+display_name: boltpatternhq-mcp
+display_name_en: boltpatternhq-mcp
+version: 0.1.0
+description: Official BoltPatternHQ MCP Server for instant automotive wheel fitment, PCD (Pitch Circle Diameter), center bore,
+  thread size, and offset data query.
+description_zh: 为 AI 编程助手提供实时的汽车轮毂改装、PCD 孔距、偏距和螺栓尺寸硬件数据查询（覆盖全球超 1.1 万款车型）。
+author: double2dev
+license: MIT
+homepage: https://github.com/double2dev/boltpatternhq-mcp
+repository: https://github.com/double2dev/boltpatternhq-mcp
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - boltpatternhq-mcp@1.0.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

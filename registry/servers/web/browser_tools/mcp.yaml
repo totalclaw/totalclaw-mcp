@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: browser_tools
+display_name: browser-tools-mcp
+display_name_en: browser-tools-mcp
+version: 0.1.0
+description: MCP server exposing live browser telemetry (console logs, network requests, screenshots, Lighthouse audits) from
+  your real Chrome session
+description_zh: 把浏览器的控制台日志、网络请求、DOM 元素与截图直接喂给 Cursor 等 MCP 客户端，并可跑 Lighthouse 审计（性能/可访问性/SEO），前端调试不用再手工复制粘贴。
+author: AgentDeskAI
+license: MIT
+homepage: https://github.com/AgentDeskAI/browser-tools-mcp
+repository: https://github.com/AgentDeskAI/browser-tools-mcp
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@agentdeskai/browser-tools-mcp@2.0.4'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

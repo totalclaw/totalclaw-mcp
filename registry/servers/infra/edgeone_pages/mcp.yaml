@@ -1,0 +1,45 @@
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: edgeone_pages
+display_name: Tencent EdgeOne Pages
+display_name_en: Tencent EdgeOne Pages
+version: 0.1.0
+description: An MCP service for deploying HTML content to EdgeOne Pages and obtaining a publicly accessible URL.
+description_zh: Tencent EdgeOne Pages的MCP服务器，支持页面管理和部署
+author: upstream
+license: MIT
+homepage: https://www.npmjs.com/package/edgeone-pages-mcp
+verified: false
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - edgeone-pages-mcp@0.0.16
+  requires:
+    node: '>=18'
+requires_env:
+- name: EDGEONE_PAGES_API_TOKEN
+  description: Tencent EdgeOne Pages 的访问令牌（EDGEONE_PAGES_API_TOKEN），获取方式见项目说明。
+  prompt: 请输入 EDGEONE_PAGES_API_TOKEN
+  secret: true
+  required: true
+- name: EDGEONE_PAGES_PROJECT_NAME
+  description: Tencent EdgeOne Pages 的配置项（EDGEONE_PAGES_PROJECT_NAME），获取方式见项目说明。
+  prompt: 请输入 EDGEONE_PAGES_PROJECT_NAME
+  secret: false
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,32 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: uizze
+display_name: UIZZE
+display_name_en: UIZZE
+version: 0.1.0
+description: 面向 Codex、Claude Code、Cursor、Copilot 等编程代理的 UI 参考检索 MCP 与 Skill：提供 `find_ui_references`（检索真实 Web / iOS 界面参考）与
+  `find_ui_materials` 两个工具，基于 800,000+ 个真实界面；另提供 `anti-ui-slop`、`ui-design`、`ui-radar` 三个免费公开 Skill。
+description_zh: 面向 Codex、Claude Code、Cursor、Copilot 等编程代理的 UI 参考检索 MCP 与 Skill：提供 `find_ui_references`（检索真实 Web / iOS 界面参考）与
+  `find_ui_materials` 两个工具，基于 800,000+ 个真实界面；另提供 `anti-ui-slop`、`ui-design`、`ui-radar` 三个免费公开 Skill。
+author: uizze
+homepage: https://github.com/uizze/uizze
+repository: https://github.com/uizze/uizze
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://uizze.com/mcp
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

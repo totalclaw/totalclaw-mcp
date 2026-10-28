@@ -1,0 +1,30 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: exa
+display_name: Exa
+display_name_en: Exa
+version: 0.1.0
+description: Real-time web search using the Exa AI Search API.
+description_zh: Exa 官方集成，使用专为 AI 设计的 Exa 搜索引擎进行搜索。
+author: exa-labs
+homepage: https://github.com/exa-labs/exa-mcp-server
+repository: https://github.com/exa-labs/exa-mcp-server
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.exa.ai/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

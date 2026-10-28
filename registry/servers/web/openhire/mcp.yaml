@@ -1,0 +1,38 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: openhire
+display_name: openhire
+display_name_en: openhire
+version: 0.1.0
+description: 'MCP server + CLI: job postings with the employer''s real posting date, pulled from Greenhouse / Lever / Ashby
+  / Workable / SmartRecruiters / Workday / Beisen / Moka ATS APIs and first-party career sites. Employers in AI infra, autonomous
+  driving and embodied AI; HR and recruiting roles have their own'
+description_zh: 直连雇主自己招聘系统（Greenhouse、Lever、Ashby、北森、Moka）的公开接口搜索在架岗位，每条带雇主原始发布日期、在架天数、ghost_score 与直达投递链接；139 家雇主，覆盖 AI 基础设施、智驾与具身智能，含小鹏、宇树、优必选等国内公司。简历不经过服务器，匹配在本机完成。
+author: gzchenhao
+license: MIT
+homepage: https://github.com/gzchenhao/openhire
+repository: https://github.com/gzchenhao/openhire
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - openhire==0.8.28
+  - serve
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

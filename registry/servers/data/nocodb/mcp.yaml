@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: nocodb
+display_name: nocodb-mcp-server
+display_name_en: nocodb-mcp-server
+version: 0.1.0
+description: Model Context Protocol server for nocodb
+description_zh: Nocodb 数据库集成，读写能力。
+author: edwinbernadus
+license: MIT
+homepage: https://github.com/edwinbernadus/nocodb-mcp-server
+repository: https://github.com/edwinbernadus/nocodb-mcp-server
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - nocodb-mcp-server@1.0.24
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

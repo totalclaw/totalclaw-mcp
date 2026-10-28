@@ -1,0 +1,47 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cli
+display_name: cli-mcp-server
+display_name_en: cli-mcp-server
+version: 0.1.0
+description: Command line interface for MCP clients with secure execution and customizable security policies
+description_zh: 具有安全执行和可自定义安全策略的命令行接口。
+author: MladenSU
+homepage: https://github.com/MladenSU/cli-mcp-server
+repository: https://github.com/MladenSU/cli-mcp-server
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - cli-mcp-server==0.2.5
+  env:
+    ALLOWED_COMMANDS: ls,cat,pwd,echo
+    ALLOWED_FLAGS: -l,-a,--help,--version
+    MAX_COMMAND_LENGTH: '1024'
+    COMMAND_TIMEOUT: '30'
+    ALLOW_SHELL_OPERATORS: 'false'
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: ALLOWED_DIR
+  description: cli-mcp-server 的路径（ALLOWED_DIR），获取方式见项目说明。
+  prompt: 请输入 ALLOWED_DIR
+  secret: false
+  required: true
+  doc_url: https://github.com/MladenSU/cli-mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

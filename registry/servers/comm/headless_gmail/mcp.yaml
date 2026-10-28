@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: headless_gmail
+display_name: Gmail Headless
+display_name_en: Gmail Headless
+version: 0.1.0
+description: A simple Gmail MCP server (no authentication flow)
+description_zh: 可远程托管的 Gmail 服务器，无需本地凭证或文件系统即可收发邮件。
+author: baryhuang
+license: MIT
+homepage: https://github.com/baryhuang/mcp-headless-gmail
+repository: https://github.com/baryhuang/mcp-headless-gmail
+verified: false
+category: comm
+tags:
+- comm
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@peakmojo/mcp-server-headless-gmail@0.1.0'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: remotify
+display_name: remotify-mcp
+display_name_en: remotify-mcp
+version: 0.1.0
+description: MCP server that lets AI assistants run shell commands on remote computers, with optional per-command approval,
+  using only curl and bash on the remote computer.
+description_zh: 通过 HTTP 中继让 AI 客户端在远程计算机上执行 Shell 命令，可选择逐条人工确认或自动执行；远端仅需 curl 和 bash。工具：`remote_exec`、`remote_session_info`、`remote_session_reset`。
+author: onlsol
+license: Apache-2.0
+homepage: https://github.com/onlsol/relay.remotify.run/tree/main/mcp
+repository: https://github.com/onlsol/relay.remotify.run/tree/main/mcp
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - remotify-mcp@0.6.2
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

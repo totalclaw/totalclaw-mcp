@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: search1api
+display_name: Search1API
+display_name_en: Search1API
+version: 0.1.0
+description: A Model Context Protocol (MCP) server that provides search and crawl functionality using Search1API
+description_zh: Search1API 官方集成，一个 API 实现搜索、抓取和站点地图功能 (需付费 API Key)。
+author: fatwang2
+license: MIT
+homepage: https://github.com/fatwang2/search1api-mcp
+repository: https://github.com/fatwang2/search1api-mcp
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - search1api-mcp@0.9.0
+  requires:
+    node: '>=18'
+requires_env:
+- name: SEARCH1API_KEY
+  description: Search1API 的API 密钥（SEARCH1API_KEY），获取方式见项目说明。
+  prompt: 请输入 SEARCH1API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/fatwang2/search1api-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

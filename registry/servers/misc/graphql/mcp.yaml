@@ -1,0 +1,44 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: graphql
+display_name: mcp-graphql
+display_name_en: mcp-graphql
+version: 0.1.0
+description: '[![smithery badge](https://smithery.ai/badge/mcp-graphql)](https://smithery.ai/server/mcp-graphql)'
+description_zh: 允许 AI 查询 GraphQL 服务器。
+author: blurrah
+license: MIT
+homepage: https://github.com/blurrah/mcp-graphql
+repository: https://github.com/blurrah/mcp-graphql
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-graphql@2.0.4
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env:
+- name: ENDPOINT
+  description: mcp-graphql 的服务地址（ENDPOINT），不填用默认值 http://localhost:3000/graphql。
+  prompt: 请输入 ENDPOINT
+  secret: false
+  required: false
+  doc_url: https://github.com/blurrah/mcp-graphql
+  doc_label: 查看项目说明（如何获取）
+  default: http://localhost:3000/graphql
+defaults:
+  enabled: true
+  timeout: 120

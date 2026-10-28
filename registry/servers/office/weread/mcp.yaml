@@ -1,0 +1,50 @@
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: weread
+display_name: 微信读书
+display_name_en: ''
+version: 0.1.0
+description: A WeRead MCP Server
+description_zh: 微信读书的MCP服务器，支持微信读书的读取和写入
+author: upstream
+homepage: https://www.npmjs.com/package/mcp-server-weread
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-server-weread@0.2.2
+  requires:
+    node: '>=18'
+requires_env:
+- name: CC_ID
+  description: 微信读书 的ID（CC_ID），获取方式见项目说明。
+  prompt: 请输入 CC_ID
+  secret: false
+  required: true
+- name: CC_PASSWORD
+  description: 微信读书 的密码（CC_PASSWORD），获取方式见项目说明。
+  prompt: 请输入 CC_PASSWORD
+  secret: true
+  required: true
+optional_env:
+- name: CC_URL
+  description: 微信读书 的服务地址（CC_URL），不填用默认值 https://cc.chenge.ink。
+  prompt: 请输入 CC_URL
+  secret: false
+  required: false
+  default: https://cc.chenge.ink
+defaults:
+  enabled: true
+  timeout: 120

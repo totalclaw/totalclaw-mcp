@@ -1,0 +1,30 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: news_ycombinator
+display_name: AInotate
+display_name_en: AInotate
+version: 0.1.0
+description: 为 AI Agent 提供带标注的屏幕截图：带序号步骤、箭头、红框、文字标签，自动涂黑敏感信息（Token、邮箱等）。
+description_zh: 为 AI Agent 提供带标注的屏幕截图：带序号步骤、箭头、红框、文字标签，自动涂黑敏感信息（Token、邮箱等）。
+author: dontpayfull
+homepage: https://github.com/dontpayfull/AInotate
+repository: https://github.com/dontpayfull/AInotate
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://news.ycombinator.com
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

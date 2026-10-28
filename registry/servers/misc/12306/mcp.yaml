@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: '12306'
+display_name: 12306-mcp
+display_name_en: 12306-mcp
+version: 0.1.0
+description: 'This is a 12306 ticket search server based on the Model Context Protocol (MCP). '
+description_zh: 基于 MCP 的 12306 火车票查询服务器，支持车次、余票、经停站等信息查询。
+author: Joooook
+license: MIT
+homepage: https://github.com/Joooook/12306-mcp
+repository: https://github.com/Joooook/12306-mcp
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - 12306-mcp@0.3.10
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

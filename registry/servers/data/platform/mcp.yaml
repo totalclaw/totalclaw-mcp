@@ -1,0 +1,55 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: platform
+display_name: mcp-flowcore-platform
+display_name_en: mcp-flowcore-platform
+version: 0.1.0
+description: MCP server for managing and interacting with Flowcore Platform
+description_zh: 与 Flowcore 交互以执行操作、摄取数据，并分析、交叉引用和利用数据核心中的任何数据。
+author: flowcore-io
+homepage: https://github.com/flowcore-io/mcp-flowcore-platform
+repository: https://github.com/flowcore-io/mcp-flowcore-platform
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@flowcore/platform-mcp-server@1.7.1'
+  - --username
+  - ${MCP_PLATFORM_USERNAME}
+  - --pat
+  - ${MCP_PLATFORM_PAT}
+  requires:
+    node: '>=18'
+requires_env:
+- name: USERNAME
+  env_key: MCP_PLATFORM_USERNAME
+  description: mcp-flowcore-platform 的启动参数（--username），示例：<username>
+  prompt: 请输入 USERNAME
+  secret: false
+  required: true
+  doc_url: https://github.com/flowcore-io/mcp-flowcore-platform
+  doc_label: 查看项目说明（如何获取）
+- name: PAT
+  env_key: MCP_PLATFORM_PAT
+  description: mcp-flowcore-platform 的启动参数（--pat），示例：<pat>
+  prompt: 请输入 PAT
+  secret: false
+  required: true
+  doc_url: https://github.com/flowcore-io/mcp-flowcore-platform
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

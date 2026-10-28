@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: bilibili_js
+display_name: bilibili-mcp-js
+display_name_en: bilibili-mcp-js
+version: 0.1.0
+description: Search Bilibili content, with LangChain integration examples.
+description_zh: 支持搜索 Bilibili 内容的 MCP 服务器。
+author: '34892002'
+license: MIT
+homepage: https://github.com/34892002/bilibili-mcp-js
+repository: https://github.com/34892002/bilibili-mcp-js
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - bilibili-mcp-js@0.1.4
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

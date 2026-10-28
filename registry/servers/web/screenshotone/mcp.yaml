@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: screenshotone
+display_name: ScreenshotOne
+display_name_en: ScreenshotOne
+version: 0.1.0
+description: Render website screenshots of any website and get them as images.
+description_zh: 使用 ScreenshotOne 服务渲染网站截图。
+author: screenshotone
+license: MIT
+homepage: https://github.com/screenshotone/mcp/
+repository: https://github.com/screenshotone/mcp/
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@screenshotone/mcp@1.1.1'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

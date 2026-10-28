@@ -1,0 +1,52 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: azure_devops
+display_name: mcp-server-azure-devops
+display_name_en: mcp-server-azure-devops
+version: 0.1.0
+description: Azure DevOps reference server for the Model Context Protocol (MCP)
+description_zh: 用于仓库管理、工作项和流水线的 Azure DevOps 集成。
+author: Tiberriver256
+license: MIT
+homepage: https://github.com/Tiberriver256/mcp-server-azure-devops
+repository: https://github.com/Tiberriver256/mcp-server-azure-devops
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@tiberriver256/mcp-server-azure-devops@0.1.53'
+  env:
+    AZURE_DEVOPS_AUTH_METHOD: azure-identity
+  requires:
+    node: '>=18'
+requires_env:
+- name: AZURE_DEVOPS_ORG_URL
+  description: mcp-server-azure-devops 的服务地址（AZURE_DEVOPS_ORG_URL），获取方式见项目说明。
+  prompt: 请输入 AZURE_DEVOPS_ORG_URL
+  secret: false
+  required: true
+  doc_url: https://github.com/Tiberriver256/mcp-server-azure-devops
+  doc_label: 查看项目说明（如何获取）
+- name: AZURE_DEVOPS_DEFAULT_PROJECT
+  description: mcp-server-azure-devops 的配置项（AZURE_DEVOPS_DEFAULT_PROJECT），获取方式见项目说明。
+  prompt: 请输入 AZURE_DEVOPS_DEFAULT_PROJECT
+  secret: false
+  required: true
+  doc_url: https://github.com/Tiberriver256/mcp-server-azure-devops
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

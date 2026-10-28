@@ -1,0 +1,38 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: motherduck
+display_name: MotherDuck
+display_name_en: MotherDuck
+version: 0.1.0
+description: A MCP server for MotherDuck and local DuckDB
+description_zh: MotherDuck 官方集成，使用 MotherDuck 和本地 DuckDB 查询和分析数据。
+author: motherduckdb
+homepage: https://github.com/motherduckdb/mcp-server-motherduck
+repository: https://github.com/motherduckdb/mcp-server-motherduck
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - mcp-server-motherduck==1.1.0
+  - --db-path
+  - ':memory:'
+  - --read-write
+  - --allow-switch-databases
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

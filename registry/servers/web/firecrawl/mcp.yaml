@@ -1,0 +1,38 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: firecrawl
+display_name: Firecrawl
+display_name_en: Firecrawl
+version: 0.1.0
+description: 'Firecrawl MCP server, the context API for AI agents: search, scrape, parse, crawl, map, and interact with the
+  web, run Agent and Monitor jobs, and search scientific papers (PubMed, bioRxiv, medRxiv, arXiv). Works with Firecrawl cloud
+  or a self-hosted inst'
+description_zh: 使用 Firecrawl 提取网页数据，支持 JavaScript 渲染。
+author: mendableai
+license: MIT
+homepage: https://github.com/mendableai/firecrawl-mcp-server
+repository: https://github.com/mendableai/firecrawl-mcp-server
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - firecrawl-mcp@3.36.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,42 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: rijksmuseum
+display_name: rijksmuseum-mcp
+display_name_en: rijksmuseum-mcp
+version: 0.1.0
+description: '![rijksmuseum logo](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Logo_Rijksmuseum.svg/799px-Logo_Rijksmuseum.svg.png)'
+description_zh: Rijksmuseum API 集成，用于艺术品搜索、详情和收藏。
+author: r-huijts
+homepage: https://github.com/r-huijts/rijksmuseum-mcp
+repository: https://github.com/r-huijts/rijksmuseum-mcp
+verified: false
+category: creative
+tags:
+- creative
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-server-rijksmuseum@1.0.5
+  requires:
+    node: '>=18'
+requires_env:
+- name: RIJKSMUSEUM_API_KEY
+  description: rijksmuseum-mcp 的API 密钥（RIJKSMUSEUM_API_KEY），获取方式见项目说明。
+  prompt: 请输入 RIJKSMUSEUM_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/r-huijts/rijksmuseum-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

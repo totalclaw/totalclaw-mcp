@@ -1,0 +1,45 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: excel_haris_musa
+display_name: Excel (by haris-musa)
+display_name_en: Excel (by haris-musa)
+version: 0.1.0
+description: MCP server for creating, reading and editing Excel workbooks without Microsoft Excel
+description_zh: Excel 操作，包括读写、工作表管理、格式化、图表和数据透视表 (提供更高级的功能)。
+author: haris-musa
+homepage: https://github.com/haris-musa/excel-mcp-server
+repository: https://github.com/haris-musa/excel-mcp-server
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - excel-mcp-server==2.2.2
+  - stdio
+  - --allow-dir
+  - ${MCP_EXCEL_HARIS_MUSA_ALLOW_DIR}
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: ALLOW_DIR
+  env_key: MCP_EXCEL_HARIS_MUSA_ALLOW_DIR
+  description: Excel (by haris-musa) 的启动参数（--allow-dir），示例：/path/to/workbooks
+  prompt: 请输入 ALLOW_DIR
+  secret: false
+  required: true
+  doc_url: https://github.com/haris-musa/excel-mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

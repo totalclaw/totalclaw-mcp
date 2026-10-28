@@ -1,0 +1,44 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: speakai
+display_name: Speak AI
+display_name_en: Speak AI
+version: 0.1.0
+description: Official Speak AI MCP Server — capture meetings, search thousands of recordings, run async voice and video surveys,
+  create clips, and automate workflows from your AI assistant.
+description_zh: 语音与视频转录（支持 100+ 种语言）、AI 分析与基于自定义评分标准的通话评分；官方 MCP 服务器，npm 包 @speakai/mcp-server。
+author: speakai
+license: MIT
+homepage: https://github.com/speakai/speakai-mcp
+repository: https://github.com/speakai/speakai-mcp
+verified: false
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@speakai/mcp-server@1.39.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: SPEAK_API_KEY
+  description: Speak AI 的API 密钥（SPEAK_API_KEY），获取方式见项目说明。
+  prompt: 请输入 SPEAK_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/speakai/speakai-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

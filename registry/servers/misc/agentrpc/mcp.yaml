@@ -1,0 +1,44 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: agentrpc
+display_name: AgentRPC
+display_name_en: AgentRPC
+version: 0.1.0
+description: Node SDK for AgentRPC
+description_zh: AgentRPC 官方集成，跨网络边界连接任何语言的任何函数。
+author: agentrpc
+license: Apache-2.0
+homepage: https://github.com/agentrpc/agentrpc
+repository: https://github.com/agentrpc/agentrpc
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - agentrpc@0.0.16
+  - mcp
+  requires:
+    node: '>=18'
+requires_env:
+- name: AGENTRPC_API_SECRET
+  description: AgentRPC 的密钥（AGENTRPC_API_SECRET），获取方式见项目说明。
+  prompt: 请输入 AGENTRPC_API_SECRET
+  secret: true
+  required: true
+  doc_url: https://github.com/agentrpc/agentrpc
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

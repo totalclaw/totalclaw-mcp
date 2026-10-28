@@ -1,0 +1,57 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: graphlit
+display_name: Graphlit
+display_name_en: Graphlit
+version: 0.1.0
+description: Graphlit MCP Server
+description_zh: Graphlit 官方集成，将各种来源（Slack, Gmail, 播客等）内容摄入可搜索的 Graphlit 项目。
+author: graphlit
+license: MIT
+homepage: https://github.com/graphlit/graphlit-mcp-server
+repository: https://github.com/graphlit/graphlit-mcp-server
+verified: false
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - graphlit-mcp-server@1.0.20260112001
+  requires:
+    node: '>=18'
+requires_env:
+- name: GRAPHLIT_ORGANIZATION_ID
+  description: Graphlit 的ID（GRAPHLIT_ORGANIZATION_ID），获取方式见项目说明。
+  prompt: 请输入 GRAPHLIT_ORGANIZATION_ID
+  secret: false
+  required: true
+  doc_url: https://github.com/graphlit/graphlit-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: GRAPHLIT_ENVIRONMENT_ID
+  description: Graphlit 的ID（GRAPHLIT_ENVIRONMENT_ID），获取方式见项目说明。
+  prompt: 请输入 GRAPHLIT_ENVIRONMENT_ID
+  secret: false
+  required: true
+  doc_url: https://github.com/graphlit/graphlit-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: GRAPHLIT_JWT_SECRET
+  description: Graphlit 的密钥（GRAPHLIT_JWT_SECRET），获取方式见项目说明。
+  prompt: 请输入 GRAPHLIT_JWT_SECRET
+  secret: true
+  required: true
+  doc_url: https://github.com/graphlit/graphlit-mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

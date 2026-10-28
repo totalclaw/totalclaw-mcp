@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: wenyan_md
+display_name: wenyan-mcp
+display_name_en: wenyan-mcp
+version: 0.1.0
+description: MCP server for Wenyan, a Markdown formatting tool that allows AI assistants to apply elegant built-in themes
+  and publish articles directly to 微信公众号.
+description_zh: 文颜 MCP Server， 让 AI 将 Markdown 文章自动排版后发布至微信公众号。
+author: caol64
+license: Apache-2.0
+homepage: https://github.com/caol64/wenyan-mcp
+repository: https://github.com/caol64/wenyan-mcp
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@wenyan-md/mcp@2.0.4'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

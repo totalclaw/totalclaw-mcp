@@ -1,0 +1,45 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: threatcluster
+display_name: Threat-Intelligence-MCP
+display_name_en: Threat-Intelligence-MCP
+version: 0.1.0
+description: 'MCP server for the ThreatCluster threat-intelligence API: incident clusters, entity profiles, CVEs and ransomware
+  leak-site victims as tools for Claude, Cursor, VS Code and any MCP client'
+description_zh: ThreatCluster 威胁情报：事件聚类、已验证 IOC、CVE/KEV/EPSS 查询、勒索软件泄露站受害者、实体画像。托管端点 `https://threatcluster.io/mcp`，或 `npx
+  -y threatcluster-mcp`，需免费 API key。
+author: Jam0k
+license: GPL-3.0-or-later
+homepage: https://github.com/Jam0k/Threat-Intelligence-MCP
+repository: https://github.com/Jam0k/Threat-Intelligence-MCP
+verified: false
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - threatcluster-mcp@0.2.5
+  requires:
+    node: '>=18'
+requires_env:
+- name: THREATCLUSTER_API_KEY
+  description: Threat-Intelligence-MCP 的API 密钥（THREATCLUSTER_API_KEY），获取方式见项目说明。
+  prompt: 请输入 THREATCLUSTER_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/Jam0k/Threat-Intelligence-MCP
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

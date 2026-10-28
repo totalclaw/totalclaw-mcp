@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: finlight
+display_name: finlight-mcp
+display_name_en: finlight-mcp
+version: 0.1.0
+description: 'Real-time financial news for AI agents: search by ticker, source, and language, with sentiment and entities.'
+description_zh: 面向 AI 代理的实时财经新闻 MCP 服务器，覆盖全球市场、地缘政治及公司层面的新闻，可按股票代码、新闻源和语言检索文章，并附带情感评分和公司实体标注。
+author: callbk
+license: MIT
+homepage: https://github.com/callbk/finlight-mcp
+repository: https://github.com/callbk/finlight-mcp
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - finlight-mcp@1.0.3
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

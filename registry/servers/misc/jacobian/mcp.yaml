@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: jacobian
+display_name: jacobian
+display_name_en: jacobian
+version: 0.1.0
+description: Atomic mathematical tools for agents over MCP and Python
+description_zh: 面向可组合数学的 MCP 服务器、CLI 和 Python 库：支持多项式映射、线性代数与图算法的精确计算和猜想检验。
+author: morluto
+license: MIT
+homepage: https://github.com/morluto/jacobian
+repository: https://github.com/morluto/jacobian
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - jacobian==0.23.0
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

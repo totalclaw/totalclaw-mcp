@@ -1,0 +1,45 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tapetide
+display_name: Tapetide
+display_name_en: Tapetide
+version: 0.1.0
+description: 'NSE BSE Indian stock market MCP server — 55 tools for Indian stock market data & research: live NSE/BSE quotes,
+  financials, technicals, stock screener (326 ratios), analyst ratings, FII/DII flows, option chains & IV, index performance,
+  parsed filings (ann'
+description_zh: 印度股市（NSE、BSE）MCP 服务器，覆盖约 8,200 只上市股票：实时行情、季度财报、股东结构、326 项指标选股器、FII/DII 资金流向、期权链与隐含波动率、公司公告、IPO 与持仓跟踪。
+author: Tapetide-hq
+license: MIT
+homepage: https://github.com/Tapetide-hq/nse-bse-indian-stock-market-data-mcp
+repository: https://github.com/Tapetide-hq/nse-bse-indian-stock-market-data-mcp
+verified: false
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - tapetide-mcp@1.0.9
+  requires:
+    node: '>=18'
+requires_env:
+- name: TAPETIDE_TOKEN
+  description: Tapetide 的访问令牌（TAPETIDE_TOKEN），获取方式见项目说明。
+  prompt: 请输入 TAPETIDE_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/Tapetide-hq/nse-bse-indian-stock-market-data-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

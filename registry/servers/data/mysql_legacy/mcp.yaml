@@ -1,0 +1,62 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mysql_legacy
+display_name: mysql-legacy-mcp
+display_name_en: mysql-legacy-mcp
+version: 0.1.0
+description: MCP queries and schema inspection for legacy MySQL 5.0–5.6, with opt-in INSERT/UPDATE/DELETE/DDL; verified live
+  against each version.
+description_zh: 面向 MySQL 5.0–5.6 的 MCP 服务器：默认 schema 检查与 SELECT，INSERT/UPDATE/DELETE/DDL 按需开启。已在 5.0–8.0 上实测。
+author: Rufflet
+license: MIT
+homepage: https://github.com/Rufflet/mysql-legacy-mcp
+repository: https://github.com/Rufflet/mysql-legacy-mcp
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mysql-legacy-mcp@0.2.1
+  env:
+    MYSQL_LEGACY_USER: legacy_reader
+  requires:
+    node: '>=18'
+requires_env:
+- name: MYSQL_LEGACY_PASSWORD
+  description: mysql-legacy-mcp 的密码（MYSQL_LEGACY_PASSWORD），获取方式见项目说明。
+  prompt: 请输入 MYSQL_LEGACY_PASSWORD
+  secret: true
+  required: true
+  doc_url: https://github.com/Rufflet/mysql-legacy-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env:
+- name: MYSQL_LEGACY_HOST
+  description: mysql-legacy-mcp 的主机地址（MYSQL_LEGACY_HOST），不填用默认值 127.0.0.1。
+  prompt: 请输入 MYSQL_LEGACY_HOST
+  secret: false
+  required: false
+  doc_url: https://github.com/Rufflet/mysql-legacy-mcp
+  doc_label: 查看项目说明（如何获取）
+  default: 127.0.0.1
+- name: MYSQL_LEGACY_DATABASE
+  description: mysql-legacy-mcp 的服务地址（MYSQL_LEGACY_DATABASE），不填用默认值 legacy_app。
+  prompt: 请输入 MYSQL_LEGACY_DATABASE
+  secret: false
+  required: false
+  doc_url: https://github.com/Rufflet/mysql-legacy-mcp
+  doc_label: 查看项目说明（如何获取）
+  default: legacy_app
+defaults:
+  enabled: true
+  timeout: 120

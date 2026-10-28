@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: piia_engram
+display_name: piia-engram
+display_name_en: piia-engram
+version: 0.1.0
+description: Local-first personal AI identity and memory for MCP-compatible coding tools — lessons, decisions, playbooks,
+  and project context you can see, edit, and override.
+description_zh: 跨工具持久化 AI 记忆——你的身份、偏好、经验教训跟随你在 Claude Code、Cursor、Codex 等工具间流转。本地存储，无需云端。
+author: Patdolitse
+homepage: https://github.com/Patdolitse/piia-engram
+repository: https://github.com/Patdolitse/piia-engram
+verified: false
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - piia-engram==4.26.0
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

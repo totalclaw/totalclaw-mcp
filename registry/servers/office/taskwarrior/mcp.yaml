@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: taskwarrior
+display_name: mcp-server-taskwarrior
+display_name_en: mcp-server-taskwarrior
+version: 0.1.0
+description: MCP server for taskwarrior
+description_zh: 用于基本本地 taskwarrior 使用的 MCP 服务器 (添加/更新/删除任务)。
+author: awwaiid
+license: MIT
+homepage: https://github.com/awwaiid/mcp-server-taskwarrior
+repository: https://github.com/awwaiid/mcp-server-taskwarrior
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-server-taskwarrior@1.0.1
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

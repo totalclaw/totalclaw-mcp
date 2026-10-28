@@ -1,0 +1,38 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: vibe_check
+display_name: vibe-check-mcp-server
+display_name_en: vibe-check-mcp-server
+version: 0.1.0
+description: 'Metacognitive AI agent oversight: adaptive CPI interrupts for alignment, reflection and safety'
+description_zh: 通过调用 "Vibe-check" Agent 来确保用户对齐，防止级联错误和范围蔓延的 MCP 服务器。
+author: PV-Bhat
+license: MIT
+homepage: https://github.com/PV-Bhat/vibe-check-mcp-server
+repository: https://github.com/PV-Bhat/vibe-check-mcp-server
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@pv-bhat/vibe-check-mcp@2.7.6'
+  - start
+  - --stdio
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: agent_recall
+display_name: AgentRecall
+display_name_en: AgentRecall
+version: 0.1.0
+description: Memory Palace MCP server for AI agents
+description_zh: 跨会话的持久化累积记忆系统，使用智能距离协议召回最相关历史记忆。提供 5 个工具：`session_start`、`remember`、`recall`、`check`、`session_end`。`npx agent-recall-mcp`
+author: Goldentrii
+license: MIT
+homepage: https://github.com/Goldentrii/AgentRecall
+repository: https://github.com/Goldentrii/AgentRecall
+verified: false
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - agent-recall-mcp@3.5.2
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

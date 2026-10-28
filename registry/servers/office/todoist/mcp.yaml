@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: todoist
+display_name: Todoist
+display_name_en: Todoist
+version: 0.1.0
+description: MCP server for Todoist API integration
+description_zh: 与 Todoist 交互来管理你的任务。
+author: abhiz123
+license: MIT
+homepage: https://github.com/abhiz123/todoist-mcp-server
+repository: https://github.com/abhiz123/todoist-mcp-server
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@abhiz123/todoist-mcp-server@0.1.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: TODOIST_API_TOKEN
+  description: Todoist 的访问令牌（TODOIST_API_TOKEN），获取方式见项目说明。
+  prompt: 请输入 TODOIST_API_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/abhiz123/todoist-mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

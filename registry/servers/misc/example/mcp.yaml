@@ -1,0 +1,30 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: example
+display_name: hn-server
+display_name_en: hn-server
+version: 0.1.0
+description: Parse Hacker News pages into structured data for top, new, ask, show and job stories.
+description_zh: 解析 news.ycombinator.com (Hacker News) 的 HTML 内容，并为不同类型的故事提供结构化数据。
+author: pskill9
+homepage: https://github.com/pskill9/hn-server
+repository: https://github.com/pskill9/hn-server
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://example.com/story
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,45 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: pluggedin_proxy
+display_name: pluggedin-mcp-proxy
+display_name_en: pluggedin-mcp-proxy
+version: 0.1.0
+description: Unified MCP proxy that aggregates all your MCP servers (STDIO, SSE, Streamable HTTP) into one powerful interface.
+  Access any tool through a single connection, search across unified documents with built-in RAG, and receive notifications
+  from any model. Tes
+description_zh: 将多个 MCP 服务器组合到单个接口的综合代理服务器，具有广泛可见性功能 (工具/提示/资源/模板发现管理，调试平台)。
+author: VeriTeknik
+license: Apache-2.0
+homepage: https://github.com/VeriTeknik/pluggedin-mcp-proxy
+repository: https://github.com/VeriTeknik/pluggedin-mcp-proxy
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@pluggedin/pluggedin-mcp-proxy@3.0.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: PLUGGEDIN_API_KEY
+  description: pluggedin-mcp-proxy 的API 密钥（PLUGGEDIN_API_KEY），获取方式见项目说明。
+  prompt: 请输入 PLUGGEDIN_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/VeriTeknik/pluggedin-mcp-proxy
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

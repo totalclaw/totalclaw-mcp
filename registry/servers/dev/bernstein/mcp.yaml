@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: bernstein
+display_name: Bernstein
+display_name_en: Bernstein
+version: 0.1.0
+description: The open-source governance layer for AI agents. No model in the coordination loop, so replaying a plan reproduces
+  its task graph byte-identically, and run receipts are byte-identical across independent builds. Signed lineage plus an opt-in
+  HMAC audit chain a reviewer checks offline, without rerunnin
+description_zh: 多智能体编排器，协调 37 个 CLI 编码代理（Claude Code、Codex、Gemini CLI、Cursor、Aider 等）在并行 Git worktree 中运行。内置 MCP 服务器模式（stdio
+  + HTTP/SSE）。
+author: sipyourdrink-ltd
+homepage: https://github.com/sipyourdrink-ltd/bernstein
+repository: https://github.com/sipyourdrink-ltd/bernstein
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - bernstein==3.23.0
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

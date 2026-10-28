@@ -1,0 +1,29 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: meeting_tencent
+display_name: 腾讯会议 MCP
+display_name_en: ''
+version: 0.1.0
+description: 腾讯会议官方远程 MCP：安排会议、查询参会人、获取录制与转写内容。
+description_zh: 腾讯会议官方远程 MCP：安排会议、查询参会人、获取录制与转写内容。
+author: upstream
+homepage: https://meeting.tencent.com/ai-skill.html
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.meeting.tencent.com/mcp/wemeet-open/v1
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: anilist
+display_name: anilist-mcp
+display_name_en: anilist-mcp
+version: 0.1.0
+description: AniList MCP server for accessing AniList API data
+description_zh: 集成 AniList API 的 MCP 服务器，用于动漫和漫画信息。
+author: yuna0x0
+license: MIT
+homepage: https://github.com/yuna0x0/anilist-mcp
+repository: https://github.com/yuna0x0/anilist-mcp
+verified: false
+category: creative
+tags:
+- creative
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - anilist-mcp@1.4.0
+  requires:
+    node: '>=18'
+requires_env:
+- name: ANILIST_TOKEN
+  description: anilist-mcp 的访问令牌（ANILIST_TOKEN），获取方式见项目说明。
+  prompt: 请输入 ANILIST_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/yuna0x0/anilist-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

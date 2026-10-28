@@ -1,0 +1,46 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: multiverse
+display_name: mcp-server-multiverse
+display_name_en: mcp-server-multiverse
+version: 0.1.0
+description: A middleware server that enables multiple isolated instances of the same MCP servers to coexist independently
+  with unique namespaces and configurations.
+description_zh: 中间件服务器，使同一 MCP 服务器的多个隔离实例能以独特的命名空间和配置独立共存。
+author: lamemind
+license: MIT
+homepage: https://github.com/lamemind/mcp-server-multiverse
+repository: https://github.com/lamemind/mcp-server-multiverse
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@lamemind/mcp-server-multiverse@1.1.4'
+  - ${MCP_MULTIVERSE_PATH}
+  requires:
+    node: '>=18'
+requires_env:
+- name: PATH
+  env_key: MCP_MULTIVERSE_PATH
+  description: mcp-server-multiverse 的启动参数，示例：/path/to/your/job-multiverse.json
+  prompt: 请输入 PATH
+  secret: false
+  required: true
+  doc_url: https://github.com/lamemind/mcp-server-multiverse
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

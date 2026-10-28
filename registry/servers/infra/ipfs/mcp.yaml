@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: ipfs
+display_name: mcp-ipfs
+display_name_en: mcp-ipfs
+version: 0.1.0
+description: MCP Server for interacting with the IPFS Storacha Network
+description_zh: 上传和操作 IPFS 存储。
+author: alexbakers
+license: MIT
+homepage: https://github.com/alexbakers/mcp-ipfs
+repository: https://github.com/alexbakers/mcp-ipfs
+verified: false
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-ipfs@0.1.9
+  requires:
+    node: '>=18'
+requires_env:
+- name: W3_LOGIN_EMAIL
+  description: mcp-ipfs 的配置项（W3_LOGIN_EMAIL），获取方式见项目说明。
+  prompt: 请输入 W3_LOGIN_EMAIL
+  secret: false
+  required: true
+  doc_url: https://github.com/alexbakers/mcp-ipfs
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

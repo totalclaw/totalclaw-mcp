@@ -1,0 +1,38 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: lingshu_solver
+display_name: lingshu-solver
+display_name_en: lingshu-solver
+version: 0.1.0
+description: 'Lingshu Solver — the certified deterministic (non-LLM) compute layer for AI agents: real equation systems (≤6
+  vars) and polynomial roots with Krawczyk interval certification and per-result trust tiers. The tool agents call instead
+  of computing arithmetic '
+description_zh: 确定性（非大模型）实数方程组求解器：结果可验证、不随机、不幻觉；浏览器打开即用，也可作为 MCP 工具被 AI 智能体调用。免费、零依赖。
+author: genesis-plan
+license: SEE LICENSE IN LICENSE
+homepage: https://github.com/genesis-plan/lingshu-solver
+repository: https://github.com/genesis-plan/lingshu-solver
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - lingshu-solver@1.0.25
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

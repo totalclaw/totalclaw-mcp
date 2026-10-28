@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: desktop_commander
+display_name: DesktopCommanderMCP
+display_name_en: DesktopCommanderMCP
+version: 0.1.0
+description: MCP server for terminal operations and file editing
+description_zh: 增强的文件系统和搜索工具，以及特定于编码的命令和提示。(也含命令行功能)
+author: wonderwhy-er
+license: MIT
+homepage: https://github.com/wonderwhy-er/DesktopCommanderMCP
+repository: https://github.com/wonderwhy-er/DesktopCommanderMCP
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@wonderwhy-er/desktop-commander@0.3.1'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

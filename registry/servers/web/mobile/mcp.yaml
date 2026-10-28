@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mobile
+display_name: mobile-mcp
+display_name_en: mobile-mcp
+version: 0.1.0
+description: Mobile MCP
+description_zh: 面向移动端自动化与抓取的 MCP 服务器，统一驱动 iOS、Android、模拟器与真机，让 AI 代理通过无障碍树或坐标操作 App、抓取屏幕内容并执行 E2E 测试。
+author: mobile-next
+license: Apache-2.0
+homepage: https://github.com/mobile-next/mobile-mcp
+repository: https://github.com/mobile-next/mobile-mcp
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@mobilenext/mobile-mcp@1.0.14'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

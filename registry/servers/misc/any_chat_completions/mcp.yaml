@@ -1,0 +1,54 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: any_chat_completions
+display_name: any-chat-completions-mcp
+display_name_en: any-chat-completions-mcp
+version: 0.1.0
+description: A Model Context Protocol server for integrating with any OpenAI SDK compatible Chat Completion API
+description_zh: 与任何其他 OpenAI SDK 兼容的聊天完成 API 聊天，如 Perplexity, Groq, xAI 等。
+author: pyroprompts
+license: MIT
+homepage: https://github.com/pyroprompts/any-chat-completions-mcp
+repository: https://github.com/pyroprompts/any-chat-completions-mcp
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@pyroprompts/any-chat-completions-mcp@0.1.1'
+  env:
+    AI_CHAT_NAME: OpenAI
+    AI_CHAT_MODEL: gpt-4o
+  requires:
+    node: '>=18'
+requires_env:
+- name: AI_CHAT_KEY
+  description: any-chat-completions-mcp 的配置项（AI_CHAT_KEY），获取方式见项目说明。
+  prompt: 请输入 AI_CHAT_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/pyroprompts/any-chat-completions-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env:
+- name: AI_CHAT_BASE_URL
+  description: any-chat-completions-mcp 的服务地址（AI_CHAT_BASE_URL），不填用默认值 https://api.openai.com/v1。
+  prompt: 请输入 AI_CHAT_BASE_URL
+  secret: false
+  required: false
+  doc_url: https://github.com/pyroprompts/any-chat-completions-mcp
+  doc_label: 查看项目说明（如何获取）
+  default: https://api.openai.com/v1
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,80 @@
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: task_master_ai
+display_name: 任务大师
+display_name_en: ''
+version: 0.1.0
+description: A task management system for ambitious AI-driven development that doesn't overwhelm and confuse Cursor.
+description_zh: 智能任务管理和自动化的MCP工具
+author: upstream
+license: MIT WITH Commons-Clause
+homepage: https://www.npmjs.com/package/task-master-ai
+verified: false
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - task-master-ai@0.43.1
+  requires:
+    node: '>=18'
+requires_env:
+- name: ANTHROPIC_API_KEY
+  description: 任务大师 的API 密钥（ANTHROPIC_API_KEY），获取方式见项目说明。
+  prompt: 请输入 ANTHROPIC_API_KEY
+  secret: true
+  required: true
+- name: PERPLEXITY_API_KEY
+  description: 任务大师 的API 密钥（PERPLEXITY_API_KEY），获取方式见项目说明。
+  prompt: 请输入 PERPLEXITY_API_KEY
+  secret: true
+  required: true
+- name: OPENAI_API_KEY
+  description: 任务大师 的API 密钥（OPENAI_API_KEY），获取方式见项目说明。
+  prompt: 请输入 OPENAI_API_KEY
+  secret: true
+  required: true
+- name: GOOGLE_API_KEY
+  description: 任务大师 的API 密钥（GOOGLE_API_KEY），获取方式见项目说明。
+  prompt: 请输入 GOOGLE_API_KEY
+  secret: true
+  required: true
+- name: MISTRAL_API_KEY
+  description: 任务大师 的API 密钥（MISTRAL_API_KEY），获取方式见项目说明。
+  prompt: 请输入 MISTRAL_API_KEY
+  secret: true
+  required: true
+- name: OPENROUTER_API_KEY
+  description: 任务大师 的API 密钥（OPENROUTER_API_KEY），获取方式见项目说明。
+  prompt: 请输入 OPENROUTER_API_KEY
+  secret: true
+  required: true
+- name: XAI_API_KEY
+  description: 任务大师 的API 密钥（XAI_API_KEY），获取方式见项目说明。
+  prompt: 请输入 XAI_API_KEY
+  secret: true
+  required: true
+- name: AZURE_OPENAI_API_KEY
+  description: 任务大师 的API 密钥（AZURE_OPENAI_API_KEY），获取方式见项目说明。
+  prompt: 请输入 AZURE_OPENAI_API_KEY
+  secret: true
+  required: true
+- name: OLLAMA_API_KEY
+  description: 任务大师 的API 密钥（OLLAMA_API_KEY），获取方式见项目说明。
+  prompt: 请输入 OLLAMA_API_KEY
+  secret: true
+  required: true
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

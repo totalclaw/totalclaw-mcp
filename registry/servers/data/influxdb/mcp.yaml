@@ -1,0 +1,66 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: influxdb
+display_name: influxdb-mcp-server
+display_name_en: influxdb-mcp-server
+version: 0.1.0
+description: A Model Context Protocol (MCP) server for InfluxDB that enables Claude and other AI assistants to work with time-series
+  data
+description_zh: 对 InfluxDB OSS API v2 执行查询。
+author: idoru
+license: MIT
+homepage: https://github.com/idoru/influxdb-mcp-server
+repository: https://github.com/idoru/influxdb-mcp-server
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - influxdb-mcp-server@0.4.0
+  requires:
+    node: '>=18'
+requires_env:
+- name: INFLUXDB_TOKEN
+  description: influxdb-mcp-server 的访问令牌（INFLUXDB_TOKEN），获取方式见项目说明。
+  prompt: 请输入 INFLUXDB_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/idoru/influxdb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: INFLUXDB_ORG
+  description: influxdb-mcp-server 的配置项（INFLUXDB_ORG），获取方式见项目说明。
+  prompt: 请输入 INFLUXDB_ORG
+  secret: false
+  required: true
+  doc_url: https://github.com/idoru/influxdb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: INFLUXDB_BUCKET
+  description: influxdb-mcp-server 的配置项（INFLUXDB_BUCKET），获取方式见项目说明。
+  prompt: 请输入 INFLUXDB_BUCKET
+  secret: false
+  required: true
+  doc_url: https://github.com/idoru/influxdb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env:
+- name: INFLUXDB_URL
+  description: influxdb-mcp-server 的服务地址（INFLUXDB_URL），不填用默认值 http://localhost:8086。
+  prompt: 请输入 INFLUXDB_URL
+  secret: false
+  required: false
+  doc_url: https://github.com/idoru/influxdb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+  default: http://localhost:8086
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: dart
+display_name: Dart
+display_name_en: Dart
+version: 0.1.0
+description: The Dart MCP server
+description_zh: Dart 官方集成，与 AI 原生项目管理工具 Dart 中的任务、文档、项目数据交互。
+author: its-dart
+license: MIT
+homepage: https://github.com/its-dart/dart-mcp-server
+repository: https://github.com/its-dart/dart-mcp-server
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - dart-mcp-server@0.2.2
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

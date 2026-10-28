@@ -1,0 +1,45 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: genieacs
+display_name: genieacs-mcp
+display_name_en: genieacs-mcp
+version: 0.1.0
+description: MCP server that bridges any GenieACS (TR-069 ACS) instance, exposing device data, firmware management, and CPE
+  actions over JSON-RPC
+description_zh: 面向开源 TR-069 ACS GenieACS 的 MCP 服务器：按标签、型号、固件或任意 TR-069 参数查询路由器、ONT 等 CPE 设备，读取参数、任务与故障，并可重启设备、下发固件、设置参数。
+author: GeiserX
+license: GPL-3.0-or-later
+homepage: https://github.com/GeiserX/genieacs-mcp
+repository: https://github.com/GeiserX/genieacs-mcp
+verified: false
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - genieacs-mcp@0.4.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env:
+- name: ACS_URL
+  description: genieacs-mcp 的服务地址（ACS_URL），不填用默认值 http://localhost:7557。
+  prompt: 请输入 ACS_URL
+  secret: false
+  required: false
+  doc_url: https://github.com/GeiserX/genieacs-mcp
+  doc_label: 查看项目说明（如何获取）
+  default: http://localhost:7557
+defaults:
+  enabled: true
+  timeout: 120

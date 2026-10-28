@@ -1,0 +1,42 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: google_news
+display_name: google-news-mcp-server
+display_name_en: google-news-mcp-server
+version: 0.1.0
+description: MCP server for Google News search via SerpAPI
+description_zh: Google News 集成，自动主题分类，多语言支持，全面搜索能力 (SerpAPI)。
+author: ChanMeng666
+homepage: https://github.com/ChanMeng666/server-google-news
+repository: https://github.com/ChanMeng666/server-google-news
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@chanmeng666/google-news-server@1.0.1'
+  requires:
+    node: '>=18'
+requires_env:
+- name: SERP_API_KEY
+  description: google-news-mcp-server 的API 密钥（SERP_API_KEY），获取方式见项目说明。
+  prompt: 请输入 SERP_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/ChanMeng666/server-google-news
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

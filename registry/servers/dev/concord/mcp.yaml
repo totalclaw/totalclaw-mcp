@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: concord
+display_name: Concord MCP
+display_name_en: Concord MCP
+version: 0.1.0
+description: Cross-harness communication and shared work-state for coding agents through MCP.
+description_zh: 为 Claude Code、Codex、Gemini CLI、OpenCode 等编码代理提供跨 harness 通信与共享工作状态：任务认领、编辑冲突检测、持久进度更新、所有权转移和证据化交接。
+author: Get-Concord-AI
+license: MIT
+homepage: https://github.com/Get-Concord-AI/concord-mcp
+repository: https://github.com/Get-Concord-AI/concord-mcp
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@concord-ai/concord-mcp@0.17.1'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

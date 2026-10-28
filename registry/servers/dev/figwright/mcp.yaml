@@ -1,0 +1,37 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: figwright
+display_name: figwright
+display_name_en: figwright
+version: 0.1.0
+description: Free, two-way Figma MCP server. Turn designs into framework-aware code, and push code back to the canvas. Works
+  with Claude Code, Cursor, Codex, and any MCP client.
+description_zh: 免费的双向 Figma MCP：设计稿转框架感知代码，也可把代码改动推回 Figma 画布；配套 Figma 插件，无需 Dev Mode 席位。
+author: awdr74100
+license: MIT
+homepage: https://github.com/awdr74100/figwright
+repository: https://github.com/awdr74100/figwright
+verified: false
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@figwright/mcp@0.7.0'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

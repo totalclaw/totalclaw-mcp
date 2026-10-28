@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: output_firewall
+display_name: mcp-output-firewall
+display_name_en: mcp-output-firewall
+version: 0.1.0
+description: Three-layer firewall for MCP servers — content inspection, egress policy and action policy. Runs as a proxy or
+  as a standalone MCP server an agent can call before it acts. Catches prompt injection, tool poisoning, exfiltration and
+  leaked secrets.
+description_zh: MCP 三层防火墙：①内容层检查不可信内容（提示注入、外泄载荷、密钥泄露）；②出口层检查工具调用的参数实际发往哪个主机（内容扫描器看不到这一层）；③行为层按确定性策略拦截破坏性操作。既可作代理壳包住已有服务器，也可独立作为
+  MCP 服务器运行，向 Agent 暴露 4 个工具。[含中文文档](https://github.com/tangfei7777-cell/mcp-output-firewall/blob/main/README.zh-CN.md)。
+author: tangfei7777-cell
+license: MIT
+homepage: https://github.com/tangfei7777-cell/mcp-output-firewall
+repository: https://github.com/tangfei7777-cell/mcp-output-firewall
+verified: false
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-output-firewall@0.3.0
+  - serve
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

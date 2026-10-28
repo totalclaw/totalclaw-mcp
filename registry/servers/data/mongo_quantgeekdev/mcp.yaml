@@ -1,0 +1,45 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mongo_quantgeekdev
+display_name: mongo-mcp
+display_name_en: mongo-mcp
+version: 0.1.0
+description: MCP server for interacting with MongoDB databases
+description_zh: MongoDB 集成，使 LLM 能够直接与数据库交互。
+author: QuantGeekDev
+license: MIT
+homepage: https://github.com/QuantGeekDev/mongo-mcp
+repository: https://github.com/QuantGeekDev/mongo-mcp
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mongo-mcp@0.2.0
+  - ${MCP_MONGO_QUANTGEEKDEV_PATH}
+  requires:
+    node: '>=18'
+requires_env:
+- name: PATH
+  env_key: MCP_MONGO_QUANTGEEKDEV_PATH
+  description: mongo-mcp 的启动参数，示例：mongodb://<username>:<password>@<host>:<port>/<database>?aut
+  prompt: 请输入 PATH
+  secret: false
+  required: true
+  doc_url: https://github.com/QuantGeekDev/mongo-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

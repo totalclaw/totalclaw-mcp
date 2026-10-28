@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: hyperbrowser
+display_name: Hyperbrowser
+display_name_en: Hyperbrowser
+version: 0.1.0
+description: Hyperbrowser Model Context Protocol Server
+description_zh: 新一代 AI 代理浏览器自动化平台，支持大规模、无缝操作。
+author: hyperbrowserai
+license: ISC
+homepage: https://github.com/hyperbrowserai/mcp
+repository: https://github.com/hyperbrowserai/mcp
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - hyperbrowser-mcp@1.0.25
+  requires:
+    node: '>=18'
+requires_env:
+- name: HYPERBROWSER_API_KEY
+  description: Hyperbrowser 的API 密钥（HYPERBROWSER_API_KEY），获取方式见项目说明。
+  prompt: 请输入 HYPERBROWSER_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/hyperbrowserai/mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: google_sheets
+display_name: mcp-google-sheets
+display_name_en: mcp-google-sheets
+version: 0.1.0
+description: This MCP server integrates with your Google Drive and Google Sheets, to enable creating and modifying spreadsheets.
+description_zh: 用于与 Google Sheets 交互的模型上下文协议服务器。提供创建、读取、更新和管理电子表格的工具。
+author: xing5
+homepage: https://github.com/xing5/mcp-google-sheets
+repository: https://github.com/xing5/mcp-google-sheets
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - mcp-google-sheets==0.6.3
+  - --include-tools
+  - get_sheet_data,update_cells,list_spreadsheets,list_sheets
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: SERVICE_ACCOUNT_PATH
+  description: mcp-google-sheets 的路径（SERVICE_ACCOUNT_PATH），获取方式见项目说明。
+  prompt: 请输入 SERVICE_ACCOUNT_PATH
+  secret: false
+  required: true
+  doc_url: https://github.com/xing5/mcp-google-sheets
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

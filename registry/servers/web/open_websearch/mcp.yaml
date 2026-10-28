@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: open_websearch
+display_name: open-webSearch
+display_name_en: open-webSearch
+version: 0.1.0
+description: web search the internet
+description_zh: 一个基于多引擎搜索结果的模型上下文协议(MCP)服务器，支持免费网络搜索，无需API密钥。
+author: Aas-ee
+homepage: https://github.com/Aas-ee/open-webSearch
+repository: https://github.com/Aas-ee/open-webSearch
+verified: false
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - open-websearch@2.2.0
+  env:
+    MODE: stdio
+    DEFAULT_SEARCH_ENGINE: duckduckgo
+    ALLOWED_SEARCH_ENGINES: duckduckgo,bing,exa
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

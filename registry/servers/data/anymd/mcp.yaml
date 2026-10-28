@@ -1,0 +1,38 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: anymd
+display_name: anymd
+display_name_en: anymd
+version: 0.1.0
+description: 'Any file → clean Markdown for AI agents: PDF, Word, PowerPoint, Excel, EPUB, HTML and web pages, images (OCR),
+  audio and video (metadata, subtitles, transcripts). A fast Rust MCP server and CLI that runs on your machine. No API key.'
+description_zh: 把任意文件转成干净的 Markdown 供 AI 使用：PDF、Word、PowerPoint、Excel/CSV、EPUB、HTML/网页 URL、图片（可选 OCR）与音视频元数据/字幕；提供 read、search、inspect
+  三个工具，PDF 表格与双栏阅读顺序可还原，并带页码引用锚点。原名 pdf-reader-mcp。
+author: SylphxAI
+license: MIT
+homepage: https://github.com/SylphxAI/anymd
+repository: https://github.com/SylphxAI/anymd
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@sylphx/anymd@8.5.5'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

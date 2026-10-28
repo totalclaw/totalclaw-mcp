@@ -1,0 +1,45 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: box
+display_name: box-mcp-server
+display_name_en: box-mcp-server
+version: 0.1.0
+description: MCP Server for interacting with Box
+description_zh: Box 集成，用于列出、读取和搜索文件 (社区实现版本)。
+author: hmk
+license: BSD-3-Clause
+homepage: https://github.com/hmk/box-mcp-server
+repository: https://github.com/hmk/box-mcp-server
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - box-mcp-server@0.3.1
+  env:
+    BOX_USER_ID: '123456'
+  requires:
+    node: '>=18'
+requires_env:
+- name: BOX_JWT_BASE64
+  description: box-mcp-server 的服务地址（BOX_JWT_BASE64），获取方式见项目说明。
+  prompt: 请输入 BOX_JWT_BASE64
+  secret: false
+  required: true
+  doc_url: https://github.com/hmk/box-mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

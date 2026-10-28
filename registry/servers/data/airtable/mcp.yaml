@@ -1,0 +1,53 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: airtable
+display_name: airtable-mcp-server
+display_name_en: airtable-mcp-server
+version: 0.1.0
+description: A Model Context Protocol server that provides read and write access to Airtable databases. This server enables
+  LLMs to inspect database schemas, then read and write records.
+description_zh: 读写 Airtable 数据库，带模式检查。
+author: domdomegg
+license: MIT
+homepage: https://github.com/domdomegg/airtable-mcp-server
+repository: https://github.com/domdomegg/airtable-mcp-server
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - airtable-mcp-server@1.14.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env:
+- name: MCP_TRANSPORT
+  description: airtable-mcp-server 的端口（MCP_TRANSPORT），不填用默认值 http。
+  prompt: 请输入 MCP_TRANSPORT
+  secret: false
+  required: false
+  doc_url: https://github.com/domdomegg/airtable-mcp-server
+  doc_label: 查看项目说明（如何获取）
+  default: http
+- name: PORT
+  description: airtable-mcp-server 的端口（PORT），不填用默认值 3000。
+  prompt: 请输入 PORT
+  secret: false
+  required: false
+  doc_url: https://github.com/domdomegg/airtable-mcp-server
+  doc_label: 查看项目说明（如何获取）
+  default: '3000'
+defaults:
+  enabled: true
+  timeout: 120

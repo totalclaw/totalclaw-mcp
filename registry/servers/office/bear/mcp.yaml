@@ -1,0 +1,36 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: bear
+display_name: bear-mcp-server
+display_name_en: bear-mcp-server
+version: 0.1.0
+description: '[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/akseyh-bear-mcp-server-badge.png)](https://mseep.ai/app/akseyh-bear-mcp-server)'
+description_zh: 允许 AI 读取你的 Bear 笔记 (仅 macOS)。
+author: akseyh
+license: ISC
+homepage: https://github.com/akseyh/bear-mcp-server
+repository: https://github.com/akseyh/bear-mcp-server
+verified: false
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - bear-mcp-server@1.0.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

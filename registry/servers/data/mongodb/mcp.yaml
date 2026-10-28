@@ -1,0 +1,45 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mongodb
+display_name: mongodb-mcp-server
+display_name_en: mongodb-mcp-server
+version: 0.1.0
+description: MongoDB Model Context Protocol Server
+description_zh: MongoDB 官方 MCP 服务器，连接 MongoDB 数据库与 Atlas 集群，支持查询、聚合、索引管理与集群运维。
+author: mongodb-js
+license: Apache-2.0
+homepage: https://github.com/mongodb-js/mongodb-mcp-server
+repository: https://github.com/mongodb-js/mongodb-mcp-server
+verified: false
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mongodb-mcp-server@3.1.0
+  - --readOnly
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env:
+- name: MDB_MCP_CONNECTION_STRING
+  description: mongodb-mcp-server 的配置项（MDB_MCP_CONNECTION_STRING），不填用默认值 mongodb://localhost:27017/myDatabase。
+  prompt: 请输入 MDB_MCP_CONNECTION_STRING
+  secret: false
+  required: false
+  doc_url: https://github.com/mongodb-js/mongodb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+  default: mongodb://localhost:27017/myDatabase
+defaults:
+  enabled: true
+  timeout: 120

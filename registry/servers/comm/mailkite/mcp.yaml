@@ -1,0 +1,45 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mailkite
+display_name: MailKite
+display_name_en: MailKite
+version: 0.1.0
+description: Model Context Protocol server for MailKite — exposes the MailKite API to LLM agents as tools. A thin layer over
+  the MailKite Node SDK and the shared sdks/spec contract.
+description_zh: 让 AI Agent 拥有一个属于自己的真实邮箱：入站邮件以结构化工具调用的形式送达，Agent 从你验证过的域名（SPF/DKIM）发信，而不是代理你已有的 Gmail/IMAP 邮箱。60+ 个工具，覆盖单封与批量发信、附件、入站路由、Webhook
+  设置与测试、域名注册与 DNS 验证、模板、联系人列表、群发和邮件检索。
+author: mailkite
+license: MIT
+homepage: https://github.com/mailkite/mailkite-mcp
+repository: https://github.com/mailkite/mailkite-mcp
+verified: false
+category: comm
+tags:
+- comm
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@mailkite/mcp@0.20.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: MAILKITE_API_KEY
+  description: MailKite 的API 密钥（MAILKITE_API_KEY），获取方式见项目说明。
+  prompt: 请输入 MAILKITE_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/mailkite/mailkite-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

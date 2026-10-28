@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: summarizer
+display_name: mcp-summarizer
+display_name_en: mcp-summarizer
+version: 0.1.0
+description: A MCP server for summarizing text
+description_zh: AI 摘要 MCP 服务器，支持多种内容类型：纯文本、网页、PDF 文档、EPUB 书籍、HTML 内容。
+author: 0xshellming
+homepage: https://github.com/0xshellming/mcp-summarizer
+repository: https://github.com/0xshellming/mcp-summarizer
+verified: false
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - mcp-summarizer@1.0.0-alpha.2
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120

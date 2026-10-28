@@ -1,0 +1,54 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: memory
+display_name: mcp-memory-server
+display_name_en: mcp-memory-server
+version: 0.1.0
+description: Hosted long-term memory for AI agents over MCP. Write and read memories from Claude Code, Cursor, VS Code and
+  ChatGPT; rating a recalled memory as helpful or misleading re-ranks what comes back next. OAuth sign-in or API key, free
+  plan.
+description_zh: 面向 AI Agent 的持久记忆 MCP 服务器：一份记忆在 Claude Code、Cursor、VS Code、ChatGPT 之间共用；对召回结果反馈「有用」或「误导」后，下次召回会据此重新排序。支持托管远程端点（OAuth）或本地
+  `npx` 接入。
+author: mnemoverse
+license: MIT
+homepage: https://github.com/mnemoverse/mcp-memory-server
+repository: https://github.com/mnemoverse/mcp-memory-server
+verified: false
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@mnemoverse/mcp-memory-server@0.16.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: MNEMOVERSE_API_KEY
+  description: mcp-memory-server 的API 密钥（MNEMOVERSE_API_KEY），获取方式见项目说明。
+  prompt: 请输入 MNEMOVERSE_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/mnemoverse/mcp-memory-server
+  doc_label: 查看项目说明（如何获取）
+optional_env:
+- name: MNEMOVERSE_API_URL
+  description: mcp-memory-server 的服务地址（MNEMOVERSE_API_URL），不填用默认值 https://core.mnemoverse.com/api/v1。
+  prompt: 请输入 MNEMOVERSE_API_URL
+  secret: false
+  required: false
+  doc_url: https://github.com/mnemoverse/mcp-memory-server
+  doc_label: 查看项目说明（如何获取）
+  default: https://core.mnemoverse.com/api/v1
+defaults:
+  enabled: true
+  timeout: 120
