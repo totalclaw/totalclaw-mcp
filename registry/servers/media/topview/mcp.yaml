@@ -6,10 +6,12 @@ tested_with: '>=0.63.72'
 name: topview
 display_name: TopView AI 营销视频
 version: 0.1.0
-description: 'TopView AI marketing video via the OpenAPI (API key, works unattended): product link to
-  UGC-style ad video and stock-avatar talking-head video. For image/video generation, TTS and e-commerce
+description: 'TopView AI via API keys (works unattended). Legacy OpenAPI (API key + UID): product link
+  to UGC-style ad video and stock-avatar talking-head video. New API Router (one platform key): Seedance
+  / WAN / MiniMax / GPT Image video and image generation. Configure at least one. For TTS and e-commerce
   data use topview_official.'
-description_zh: 用 TopView 把商品链接一键做成带货短视频，并支持公模数字人口播（API Key 鉴权，可无人值守）。生图生视频、配音、电商数据请用官方的 topview_official。
+description_zh: 用 TopView 把商品链接一键做成带货短视频、公模数字人口播（旧版 API：API Key + UID），或用新版 API Router 调 Seedance / WAN
+  / MiniMax / GPT Image 生视频生图（一个 Platform Key）。两套凭据至少配一套，都可无人值守。配音、电商数据请用官方的 topview_official。
 author: totalclaw
 license: Apache-2.0
 homepage: https://gitee.com/jlzdyx/totalclaw-mcp
@@ -45,20 +47,28 @@ runtimes:
 requires_env:
 - name: TOPVIEW_API_KEY
   env_key: TOPVIEW_API_KEY
-  description: TopView OpenAPI 的 API Key，在 topview.ai 登录后的 API Settings 页复制
-  prompt: 请粘贴 TopView API Settings 页里的 API Key
+  description: 旧版 API 的 API Key（带货视频、数字人），仅 Pro / Business 会员可在 API 设置页看到；与 UID 成对填写。只用新版 API Router 可留空
+  prompt: 旧版 API Key（可选）
   secret: true
-  required: true
-  doc_url: https://www.topview.ai/openapi
-  doc_label: 前往 TopView 开通 API 并复制 API Key
+  required: false
+  doc_url: https://www.topview.ai/api-settings
+  doc_label: 前往 TopView 旧版 API 设置
 - name: TOPVIEW_UID
   env_key: TOPVIEW_UID
-  description: TopView 账号 UID，与 API Key 在同一页（API Settings），也可点右上角头像复制
-  prompt: 请粘贴 TopView API Settings 页里的 UID
+  description: 旧版 API 的 UID，与 API Key 在同一页，也可点右上角头像复制。只用新版 API Router 可留空
+  prompt: 旧版 UID（可选）
   secret: false
-  required: true
-  doc_url: https://www.topview.ai/openapi
-  doc_label: 前往 TopView 复制 UID
+  required: false
+  doc_url: https://www.topview.ai/api-settings
+  doc_label: 前往 TopView 旧版 API 设置
+- name: TOPVIEW_API_PLATFORM_KEY
+  env_key: TOPVIEW_API_PLATFORM_KEY
+  description: 新版 API Router 的 Platform Key（生图生视频，按美元余额计费，免费账号也能开），创建时勾选 models:generate 与 requests:read。只用旧版可留空
+  prompt: 新版 API Router Key（可选）
+  secret: true
+  required: false
+  doc_url: https://platform.topview.ai/api-keys
+  doc_label: 前往 platform.topview.ai 创建 Key
 optional_env: []
 defaults:
   enabled: false
@@ -66,7 +76,7 @@ defaults:
   connect_timeout: 60
 tools:
   probed_runtime: console
-  count: 8
+  count: 11
   file: tools.json
 security:
   scan_verdict: allow

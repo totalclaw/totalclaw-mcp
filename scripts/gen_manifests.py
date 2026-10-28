@@ -83,7 +83,11 @@ def _requires_env(desc: dict) -> list[dict]:
     # 原生模块可导出 ENV_DOCS：{变量: {description, prompt, doc_url, doc_label}}，
     # 让安装向导告诉用户凭据去哪儿拿，而不是只有一句「请输入 XXX」
     env_docs = desc.get("env_docs") or {}
-    for v in desc.get("required_env") or []:
+    required = list(desc.get("required_env") or [])
+    # 有 ENV_DOCS 的可选凭据也放进来（required: False）：安装向导只渲染 requires_env，
+    # 像 topview 这种「两套凭据配一套即可」的服务器，否则用户在界面上无处可填
+    optional = [v for v in desc.get("optional_env") or [] if v in env_docs]
+    for v in required + optional:
         doc = env_docs.get(v) or {}
         item = {
             "name": v,
@@ -91,7 +95,7 @@ def _requires_env(desc: dict) -> list[dict]:
             "description": doc.get("description") or f"{desc['display_name']} 所需的 {v}",
             "prompt": doc.get("prompt") or f"请输入 {v}",
             "secret": any(h in v.upper() for h in secret_hint),
-            "required": True,
+            "required": v in required,
         }
         for k in ("doc_url", "doc_label"):
             if doc.get(k):
@@ -147,9 +151,10 @@ def build_manifest(desc: dict) -> tuple[dict, str]:
             },
         ],
         "requires_env": req_env,
-        "optional_env": list(desc.get("optional_env") or []),
+        "optional_env": [v for v in desc.get("optional_env") or []
+                         if v not in {e["name"] for e in req_env}],
         "defaults": {
-            # 有必填凭据的默认不启用：装上先让用户填，避免一堆红色失败态
+            # 有凭据项的默认不启用：装上先让用户填，避免一堆红色失败态
             "enabled": not req_env,
             "timeout": 120,
             "connect_timeout": 60,

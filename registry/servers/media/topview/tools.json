@@ -1,7 +1,7 @@
 [
   {
     "name": "get_credit",
-    "description": "查询 TopView 账户剩余积分。生成任务前可先查，避免积分不足（code 4100）。",
+    "description": "查询 TopView 旧版 API 的剩余积分（需 API Key + UID）。生成任务前可先查，避免积分不足（code 4100）。新版 API Router 的美元余额不在这里。",
     "read_only": true,
     "input_schema": {
       "type": "object",
@@ -256,7 +256,7 @@
   },
   {
     "name": "query_task",
-    "description": "查询生成任务的进度与结果。state=done 时 urls 里是成片地址；state=running 请稍后再查，不要重复提交任务。",
+    "description": "查询生成任务的进度与结果。state=done 时 urls 里是成片地址；state=running 请稍后再查，不要重复提交任务；state=payment_required 表示 API Router 余额不足，充值后自动结算。",
     "read_only": true,
     "input_schema": {
       "type": "object",
@@ -265,9 +265,10 @@
           "type": "string",
           "enum": [
             "marketing_video",
-            "avatar_video"
+            "avatar_video",
+            "router"
           ],
-          "description": "任务类型，与提交时用的工具对应"
+          "description": "任务类型：marketing_video / avatar_video 对应旧版工具，router 对应 router_generate"
         },
         "task_id": {
           "type": "string",
@@ -278,6 +279,125 @@
         "kind",
         "task_id"
       ]
+    }
+  },
+  {
+    "name": "router_list_models",
+    "description": "【新版 API Router】列出可用的生图 / 生视频模型、各自支持的模式、分辨率与时长取值。不联网、不需要凭据。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "router_generate",
+    "description": "【新版 API Router】用 Seedance / WAN / MiniMax / Topview T1 生视频，或 GPT Image 2 生图、改图（需 TOPVIEW_API_PLATFORM_KEY）。按美元余额计费，会花钱。图片 / 参考素材填公网 URL，本地文件先用 router_upload_file 换成 URL。返回任务状态与产物 urls。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "模型，如 bytedance/seedance-2.5、alibaba/wan-3.0、openai/gpt-image-2（见 router_list_models）"
+        },
+        "mode": {
+          "type": "string",
+          "description": "text-to-video / image-to-video / omni-reference-to-video / reference-to-video（WAN）/ text-to-image / edit（GPT Image）"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "画面描述；不用 body 时必填"
+        },
+        "first_frame_url": {
+          "type": "string",
+          "description": "首帧图 URL；image-to-video 必填"
+        },
+        "last_frame_url": {
+          "type": "string",
+          "description": "尾帧图 URL（可选）"
+        },
+        "reference_image_urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "参考图 URL；GPT Image 的 edit 模式里是要编辑的图"
+        },
+        "reference_video_urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "参考视频 URL（omni / reference 模式）"
+        },
+        "reference_audio_urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "参考音频 URL（omni / reference 模式）"
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "description": "画幅，如 16:9、9:16、1:1、adaptive；不填用模型默认"
+        },
+        "resolution": {
+          "type": "string",
+          "description": "分辨率，大小写按模型：Seedance 720p、WAN 720P、MiniMax 768P、GPT Image 1k"
+        },
+        "duration": {
+          "type": "integer",
+          "description": "视频秒数，-1 为自动；范围见 router_list_models"
+        },
+        "generate_audio": {
+          "type": "boolean",
+          "description": "是否同时生成声音（视频模型）"
+        },
+        "extra": {
+          "type": "object",
+          "description": "其余模型参数原样并入请求（WAN 并入 parameters），如 seed、quality、n"
+        },
+        "body": {
+          "type": "object",
+          "description": "完整请求体，给了就原样提交、忽略上面的字段；用于未内置的新模型"
+        },
+        "wait_seconds": {
+          "type": "integer",
+          "description": "提交后在工具内等待结果的秒数，0-100，默认 100。超时未完成会返回 taskId，之后用 query_task 继续查"
+        }
+      },
+      "required": [
+        "model",
+        "mode"
+      ]
+    }
+  },
+  {
+    "name": "router_upload_file",
+    "description": "【新版 API Router】把本地文件或公网 https 链接存入 API Router 素材库，返回可填进 router_generate 的临时 url。单个不超过 20 MiB，音视频不超过 300 秒；图片仅 PNG/JPEG/WebP。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "本机文件绝对路径"
+        },
+        "url": {
+          "type": "string",
+          "description": "公网 https 直链（由 TopView 服务端拉取）"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "image",
+            "video",
+            "audio"
+          ],
+          "description": "素材类型；不填按扩展名推断"
+        }
+      }
     }
   }
 ]

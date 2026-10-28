@@ -52,5 +52,7 @@
   官方的 `topview_avatar_video` 只能用照片驱动。
 
 其余生成能力（生图、生视频、配音、克隆音色、抠图、商品模特图）和电商数据都走官方 MCP。
+需要无人值守的生图、生视频，用自研 `topview` 的 `router_*` 工具，走新版 API Router，
+只要一个 Platform Key。
 
 同一账号还有 Canvas 画布 MCP，见 `topview_canvas`。
