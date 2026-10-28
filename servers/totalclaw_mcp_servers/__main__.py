@@ -77,6 +77,7 @@ def _describe(pack_name: str) -> int:
             "description": mod.DESCRIPTION,
             "description_en": getattr(mod, "DESCRIPTION_EN", ""), "kind": "native",
             "required_env": list(mod.REQUIRED_ENV), "optional_env": list(mod.OPTIONAL_ENV),
+            "env_docs": getattr(mod, "ENV_DOCS", {}),
             "tools": [{"name": t["name"], "description": t["description"],
                        "read_only": t.get("read_only", True), "params": t["schema"]}
                       for t in mod.TOOLS],

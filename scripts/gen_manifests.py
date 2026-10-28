@@ -46,6 +46,7 @@ META: dict[str, dict] = {
     "moka":        {"category": "hr",      "tags": ["招聘", "候选人", "职位", "组织架构"]},
     "tencent_survey": {"category": "office", "tags": ["腾讯问卷", "问卷", "调研", "答卷"]},
     "tencent_edgeone": {"category": "infra", "tags": ["腾讯云", "edgeone", "cdn", "加速", "刷新预热"]},
+    "topview":     {"category": "media",   "tags": ["topview", "营销视频", "带货视频", "数字人", "ugc广告", "跨境电商"]},
 }
 DEFAULT_CATEGORY = "misc"
 
@@ -79,15 +80,23 @@ def _list_servers() -> list[str]:
 def _requires_env(desc: dict) -> list[dict]:
     secret_hint = ("KEY", "TOKEN", "SECRET", "PASSWORD", "PASSWD")
     items = []
+    # 原生模块可导出 ENV_DOCS：{变量: {description, prompt, doc_url, doc_label}}，
+    # 让安装向导告诉用户凭据去哪儿拿，而不是只有一句「请输入 XXX」
+    env_docs = desc.get("env_docs") or {}
     for v in desc.get("required_env") or []:
-        items.append({
+        doc = env_docs.get(v) or {}
+        item = {
             "name": v,
             "env_key": v,          # 保留原变量名：服务器进程直接读它
-            "description": f"{desc['display_name']} 所需的 {v}",
-            "prompt": f"请输入 {v}",
+            "description": doc.get("description") or f"{desc['display_name']} 所需的 {v}",
+            "prompt": doc.get("prompt") or f"请输入 {v}",
             "secret": any(h in v.upper() for h in secret_hint),
             "required": True,
-        })
+        }
+        for k in ("doc_url", "doc_label"):
+            if doc.get(k):
+                item[k] = doc[k]
+        items.append(item)
     return items
 
 

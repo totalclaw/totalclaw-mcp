@@ -11,7 +11,7 @@ import importlib
 import pkgutil
 from types import ModuleType
 
-_MODULES = ("imap_mail", "web")
+_MODULES = ("imap_mail", "web", "topview")
 
 
 def list_native() -> list[str]:

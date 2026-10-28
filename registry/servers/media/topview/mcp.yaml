@@ -1,0 +1,74 @@
+# 由 scripts/gen_manifests.py 从 servers/ 的自研实现生成，请勿手改。
+# 实现位置：servers/totalclaw_mcp_servers/{packs,native}/
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: topview
+display_name: TopView AI 营销视频
+version: 0.1.0
+description: 'TopView AI marketing video: product link to UGC-style ad video, avatar talking-head video,
+  TTS and image-to-video via the TopView OpenAPI (API key).'
+description_zh: 用 TopView 把商品链接一键做成带货短视频，并支持数字人口播、配音、图生视频（API Key 鉴权）。
+author: totalclaw
+license: Apache-2.0
+homepage: https://gitee.com/jlzdyx/totalclaw-mcp
+category: media
+tags:
+- totalclaw
+- self-hosted
+- topview
+- 营销视频
+- 带货视频
+- 数字人
+- ugc广告
+- 跨境电商
+kind: mcp_server
+runtimes:
+- id: console
+  type: stdio
+  launcher: binary
+  command: totalclaw-mcp-server
+  args:
+  - topview
+  requires:
+    python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - totalclaw-mcp-servers==0.1.0
+  - topview
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: TOPVIEW_API_KEY
+  env_key: TOPVIEW_API_KEY
+  description: TopView OpenAPI 的 API Key，在 topview.ai 登录后的 API Settings 页复制
+  prompt: 请粘贴 TopView API Settings 页里的 API Key
+  secret: true
+  required: true
+  doc_url: https://www.topview.ai/openapi
+  doc_label: 前往 TopView 开通 API 并复制 API Key
+- name: TOPVIEW_UID
+  env_key: TOPVIEW_UID
+  description: TopView 账号 UID，与 API Key 在同一页（API Settings），也可点右上角头像复制
+  prompt: 请粘贴 TopView API Settings 页里的 UID
+  secret: false
+  required: true
+  doc_url: https://www.topview.ai/openapi
+  doc_label: 前往 TopView 复制 UID
+optional_env: []
+defaults:
+  enabled: false
+  timeout: 120
+  connect_timeout: 60
+tools:
+  probed_runtime: console
+  count: 10
+  file: tools.json
+security:
+  scan_verdict: allow
+  prompt_injection_findings: []
+  osv: clean
+  note: 本仓自研实现，非第三方托管端点

@@ -1,0 +1,45 @@
+# 手写条目——端点是 TopView 官方自有的 MCP 服务器（topviewai/skill 的 mcp.example.json）。
+# 实测 2026-10-27：POST https://mcp.topview.ai/mcp 返回 401 + WWW-Authenticate 带
+# resource_metadata（/.well-known/oauth-protected-resource，scope mcp:tools），
+# 故 auth: oauth —— 不需要预置凭据，装完跑 totalclaw mcp login topview_official 浏览器授权。
+# 与自研的 topview（API Key、含商品链接出片 m2v）互补：官方端点不含 m2v，
+# 但有 Amazon / TikTok Shop / Shopee / YouTube 达人数据与更多生成模型。人工修改后请递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: topview_official
+display_name: TopView 官方 MCP（电商数据 + AI 生成）
+display_name_en: TopView MCP
+version: 0.1.0
+description: TopView's official hosted MCP — AI image/video/avatar/voice generation plus Amazon, TikTok Shop, Shopee and YouTube KOL data. OAuth sign-in; no product-link-to-video (use the topview server for that).
+description_zh: TopView 官方托管 MCP：AI 生图/生视频/数字人/配音，以及 Amazon、TikTok Shop、Shopee、YouTube 达人数据。浏览器 OAuth 登录；不含商品链接出片（用自研 topview）。
+author: vendor
+homepage: https://www.topview.ai
+repository: https://github.com/topviewai/skill
+category: media
+tags:
+- vendor
+- topview
+- 营销视频
+- 数字人
+- 跨境电商
+- 选品
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.topview.ai/mcp
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+examples:
+- 查一下我的 TopView 积分余额
+- 调研美国站 Amazon 上便携榨汁杯的市场规模与头部竞品
+- 用这张商品图生成一段 10 秒的 9:16 展示视频

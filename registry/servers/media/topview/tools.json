@@ -1,0 +1,366 @@
+[
+  {
+    "name": "get_credit",
+    "description": "查询 TopView 账户剩余积分。生成任务前可先查，避免积分不足（code 4100）。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "list_avatars",
+    "description": "列出可用的数字人（公模或自己的私模），返回 aiavatarId、名称、性别、封面、预览视频与默认音色 voiceoverIdDefault。用于 create_marketing_video / create_avatar_video 的 avatar_id。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "gender": {
+          "type": "string",
+          "enum": [
+            "male",
+            "female"
+          ]
+        },
+        "custom": {
+          "type": "boolean",
+          "description": "true 只看自己的私模，默认 false（公模）"
+        },
+        "page": {
+          "type": "integer",
+          "description": "页码，默认 1"
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "每页条数，1-50，默认 20"
+        }
+      }
+    }
+  },
+  {
+    "name": "list_voices",
+    "description": "列出可用音色，返回 voiceId、名称、擅长语言、口音、性别、年龄、风格与试听地址。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string",
+          "description": "语言代码，如 en、zh-CN、ja，默认 en"
+        },
+        "gender": {
+          "type": "string",
+          "enum": [
+            "male",
+            "female"
+          ]
+        },
+        "style": {
+          "type": "string",
+          "enum": [
+            "UGC",
+            "Advertisement"
+          ]
+        },
+        "custom": {
+          "type": "boolean",
+          "description": "true 只看自己克隆的音色"
+        },
+        "page": {
+          "type": "integer",
+          "description": "页码，默认 1"
+        },
+        "page_size": {
+          "type": "integer",
+          "description": "每页条数，1-50，默认 20"
+        }
+      }
+    }
+  },
+  {
+    "name": "list_captions",
+    "description": "列出可用的字幕样式，返回 captionId 与预览图。不传 caption_id 时 TopView 随机选一个。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "upload_file",
+    "description": "把素材上传到 TopView，返回 fileId 供生成工具使用。三种来源三选一：path（本机文件）、url（公网直链，拒绝内网地址）、base64_data（需同时给 format）。支持 mp4/mov/png/jpg/jpeg/bmp/webp/mp3/wav/m4a，单个不超过 200 MB。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "本机文件绝对路径"
+        },
+        "url": {
+          "type": "string",
+          "description": "公网 http(s) 直链"
+        },
+        "base64_data": {
+          "type": "string",
+          "description": "文件内容的 base64，适合 10 MB 以内"
+        },
+        "format": {
+          "type": "string",
+          "description": "文件格式，如 png、mp4；path/url 可按扩展名推断"
+        }
+      }
+    }
+  },
+  {
+    "name": "create_marketing_video",
+    "description": "【核心】商品链接一键出带货短视频：TopView 自动解析商品、写脚本、选数字人与配音、剪辑成片。也可不给链接，改用 file_ids（上传的商品图/视频）+ 商品名与描述。custom_script 给了就按你的脚本念（适合先让 LLM 写好文案）。这会消耗 TopView 积分。返回任务状态与成片 videoUrl。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "product_link": {
+          "type": "string",
+          "description": "商品页链接（Shopify / Amazon / TikTok Shop / 独立站等），优先于 file_ids"
+        },
+        "file_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "upload_file 返回的商品图/视频 fileId"
+        },
+        "product_name": {
+          "type": "string",
+          "description": "商品名；无链接时必填"
+        },
+        "product_description": {
+          "type": "string",
+          "description": "商品卖点描述；无链接且不用 custom_script 时必填"
+        },
+        "custom_script": {
+          "type": "string",
+          "description": "自定义口播脚本；给了就不让 AI 写"
+        },
+        "target_audience": {
+          "type": "string",
+          "description": "目标人群，帮助 AI 写脚本"
+        },
+        "language": {
+          "type": "string",
+          "description": "成片语言代码，如 en、zh-CN、ja、es，默认 en"
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "enum": [
+            "9:16",
+            "3:4",
+            "1:1",
+            "4:3",
+            "16:9"
+          ],
+          "description": "画幅，默认 9:16（竖屏）"
+        },
+        "video_length_type": {
+          "type": "integer",
+          "enum": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "description": "时长档：1=30-50s，2=15-30s，3=30-45s，4=45-60s；默认 2"
+        },
+        "avatar_id": {
+          "type": "string",
+          "description": "数字人 ID（list_avatars），不填由 AI 选"
+        },
+        "voice_id": {
+          "type": "string",
+          "description": "音色 ID（list_voices），不填由 AI 选"
+        },
+        "caption_id": {
+          "type": "string",
+          "description": "字幕样式 ID（list_captions）"
+        },
+        "logo_file_id": {
+          "type": "string",
+          "description": "品牌 logo 的 fileId"
+        },
+        "wait_seconds": {
+          "type": "integer",
+          "description": "提交后在工具内等待结果的秒数，0-100，默认 100。超时未完成会返回 taskId，之后用 query_task 继续查"
+        }
+      }
+    }
+  },
+  {
+    "name": "create_avatar_video",
+    "description": "数字人口播：让数字人念一段文本（或对上一段音频的口型）。数字人来源三选一：avatar_id（公模/私模）、image_file_id（一张人像图）、video_file_id（一段人像视频）。这会消耗 TopView 积分。返回成片 videoUrl。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "script": {
+          "type": "string",
+          "description": "口播文本（走 TTS）；与 audio_file_id 二选一"
+        },
+        "audio_file_id": {
+          "type": "string",
+          "description": "已上传音频的 fileId"
+        },
+        "avatar_id": {
+          "type": "string",
+          "description": "数字人 ID（list_avatars）"
+        },
+        "custom_avatar": {
+          "type": "boolean",
+          "description": "avatar_id 是否为私模，默认 false"
+        },
+        "image_file_id": {
+          "type": "string",
+          "description": "人像图片 fileId（需 avatar2/avatar4 模式）"
+        },
+        "video_file_id": {
+          "type": "string",
+          "description": "人像视频 fileId"
+        },
+        "voice_id": {
+          "type": "string",
+          "description": "音色 ID；公模 + 文本时可不填（用数字人默认音色），其余文本场景必填"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "avatar1",
+            "avatar2",
+            "avatar4",
+            "avatar4_fast"
+          ],
+          "description": "avatar1 只改口型（默认）；avatar2/avatar4 以首帧驱动全身动作，支持图片"
+        },
+        "voice_speed": {
+          "type": "number",
+          "description": "语速 0.8-1.2，默认 1"
+        },
+        "caption_id": {
+          "type": "string",
+          "description": "字幕样式 ID，仅公模支持"
+        },
+        "wait_seconds": {
+          "type": "integer",
+          "description": "提交后在工具内等待结果的秒数，0-100，默认 100。超时未完成会返回 taskId，之后用 query_task 继续查"
+        }
+      }
+    }
+  },
+  {
+    "name": "create_speech",
+    "description": "文本转语音，返回音频地址。这会消耗 TopView 积分。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "要朗读的文本"
+        },
+        "voice_id": {
+          "type": "string",
+          "description": "音色 ID（list_voices）"
+        },
+        "speed": {
+          "type": "number",
+          "description": "语速 0.8-1.2，默认 1"
+        },
+        "wait_seconds": {
+          "type": "integer",
+          "description": "提交后在工具内等待结果的秒数，0-100，默认 100。超时未完成会返回 taskId，之后用 query_task 继续查"
+        }
+      },
+      "required": [
+        "text",
+        "voice_id"
+      ]
+    }
+  },
+  {
+    "name": "create_image_to_video",
+    "description": "图生视频：把一张商品图/场景图做成 5 或 10 秒的动态视频。这会消耗 TopView 积分。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "image_file_id": {
+          "type": "string",
+          "description": "图片 fileId（upload_file）"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "画面运动描述"
+        },
+        "negative_prompt": {
+          "type": "string",
+          "description": "不希望出现的内容"
+        },
+        "duration": {
+          "type": "integer",
+          "enum": [
+            5,
+            10
+          ],
+          "description": "时长秒数，默认 5"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "lite",
+            "pro",
+            "plus",
+            "best"
+          ],
+          "description": "质量档位，越高越贵，默认 lite"
+        },
+        "count": {
+          "type": "integer",
+          "description": "生成条数 1-4，默认 1"
+        },
+        "wait_seconds": {
+          "type": "integer",
+          "description": "提交后在工具内等待结果的秒数，0-100，默认 100。超时未完成会返回 taskId，之后用 query_task 继续查"
+        }
+      },
+      "required": [
+        "image_file_id"
+      ]
+    }
+  },
+  {
+    "name": "query_task",
+    "description": "查询生成任务的进度与结果。state=done 时 urls 里是成片地址；state=running 请稍后再查，不要重复提交任务。",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "marketing_video",
+            "avatar_video",
+            "speech",
+            "image_to_video"
+          ],
+          "description": "任务类型，与提交时用的工具对应"
+        },
+        "task_id": {
+          "type": "string",
+          "description": "提交时返回的 task_id"
+        }
+      },
+      "required": [
+        "kind",
+        "task_id"
+      ]
+    }
+  }
+]

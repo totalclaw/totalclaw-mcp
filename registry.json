@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-10-28T02:20:46Z",
+  "generated_at": "2026-10-28T02:39:30Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -26147,6 +26147,192 @@
         }
       ],
       "bundle_sha256": "2bedd1ef07dcd64a3258bbf7b2481c8e2262547e3eb7ef6d9a2d0a127682a53d",
+      "popularity": {
+        "score": 0
+      }
+    },
+    {
+      "name": "topview",
+      "id": "totalclaw-mcp/media/topview",
+      "display_name": "TopView AI 营销视频",
+      "display_name_en": "",
+      "description": "TopView AI marketing video: product link to UGC-style ad video, avatar talking-head video, TTS and image-to-video via the TopView OpenAPI (API key).",
+      "description_zh": "用 TopView 把商品链接一键做成带货短视频，并支持数字人口播、配音、图生视频（API Key 鉴权）。",
+      "version": "0.1.0",
+      "author": "totalclaw",
+      "license": "Apache-2.0",
+      "homepage": "https://gitee.com/jlzdyx/totalclaw-mcp",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "media",
+      "icon": "",
+      "tags": [
+        "totalclaw",
+        "self-hosted",
+        "topview",
+        "营销视频",
+        "带货视频",
+        "数字人",
+        "ugc广告",
+        "跨境电商"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "binary",
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "console",
+          "type": "stdio",
+          "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "TOPVIEW_API_KEY",
+          "description": "TopView OpenAPI 的 API Key，在 topview.ai 登录后的 API Settings 页复制",
+          "prompt": "请粘贴 TopView API Settings 页里的 API Key",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://www.topview.ai/openapi",
+          "doc_label": "前往 TopView 开通 API 并复制 API Key"
+        },
+        {
+          "name": "TOPVIEW_UID",
+          "description": "TopView 账号 UID，与 API Key 在同一页（API Settings），也可点右上角头像复制",
+          "prompt": "请粘贴 TopView API Settings 页里的 UID",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://www.topview.ai/openapi",
+          "doc_label": "前往 TopView 复制 UID"
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 10,
+      "tools": [
+        "get_credit",
+        "list_avatars",
+        "list_voices",
+        "list_captions",
+        "upload_file",
+        "create_marketing_video",
+        "create_avatar_video",
+        "create_speech",
+        "create_image_to_video",
+        "query_task"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "prompt_injection_findings": [],
+        "osv": "clean",
+        "note": "本仓自研实现，非第三方托管端点"
+      },
+      "path": "registry/servers/media/topview",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/media/topview",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/media/topview"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "9cb183d6e2757ab07b213979bf5924107226a0bc4be8a204b51e39f89081f698",
+          "size": 2727
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "1285a35c7cb3feab6b6006f6b67594f52f8b2968e67509f7b1f69b29a8984b61",
+          "size": 2068
+        },
+        {
+          "path": "tools.json",
+          "sha256": "8a13f496985a87f0056066a486861361856cf9ac7a16c8c6404ddc534c4d7f48",
+          "size": 11456
+        }
+      ],
+      "bundle_sha256": "1a8a9408b10d5df6ed34ec75ca60dd8bece4a923b9ecf0abd2789d5c810a2b4d",
+      "popularity": {
+        "score": 0
+      }
+    },
+    {
+      "name": "topview_official",
+      "id": "totalclaw-mcp/media/topview_official",
+      "display_name": "TopView 官方 MCP（电商数据 + AI 生成）",
+      "display_name_en": "TopView MCP",
+      "description": "TopView's official hosted MCP — AI image/video/avatar/voice generation plus Amazon, TikTok Shop, Shopee and YouTube KOL data. OAuth sign-in; no product-link-to-video (use the topview server for that).",
+      "description_zh": "TopView 官方托管 MCP：AI 生图/生视频/数字人/配音，以及 Amazon、TikTok Shop、Shopee、YouTube 达人数据。浏览器 OAuth 登录；不含商品链接出片（用自研 topview）。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://www.topview.ai",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "media",
+      "icon": "",
+      "tags": [
+        "vendor",
+        "topview",
+        "营销视频",
+        "数字人",
+        "跨境电商",
+        "选品"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "oauth",
+          "url": "https://mcp.topview.ai/mcp"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/media/topview_official",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/media/topview_official",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/media/topview_official"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "de733c4f3f9f8a6e2e4c003d164d537765e6300b1b82ecaefb767b7e41b9f161",
+          "size": 1895
+        }
+      ],
+      "bundle_sha256": "d1e7a2084044203c3b25b77f3e0a32e010e22cac4a9073deb71ba73999d3d3fc",
       "popularity": {
         "score": 0
       }
