@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-10-28T02:02:40Z",
+  "generated_at": "2026-10-28T02:20:46Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -27049,7 +27049,7 @@
       "display_name_en": "",
       "description": "MCP server for using the AMap Maps API",
       "description_zh": "高德地图的MCP服务器",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "upstream",
       "license": "ISC",
       "homepage": "https://www.npmjs.com/package/@amap/amap-maps-mcp-server",
@@ -27083,9 +27083,9 @@
       ],
       "requires_env": [
         {
-          "name": "AMAP_Maps_API_KEY",
-          "description": "高德地图 的API 密钥（AMAP_Maps_API_KEY），获取方式见项目说明。",
-          "prompt": "请输入 AMAP_Maps_API_KEY",
+          "name": "AMAP_MAPS_API_KEY",
+          "description": "高德地图 的API 密钥（AMAP_MAPS_API_KEY），获取方式见项目说明。",
+          "prompt": "请输入 AMAP_MAPS_API_KEY",
           "secret": true,
           "required": true
         }
@@ -27105,11 +27105,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "5b7f116db841ab9271767b0ddd7c12164e7fbfb52510bddaf46d0b31d39511ac",
+          "sha256": "8ec9c88104d2c45ba4a0de4c9d43dd22d7728c4d4de1e6406e6f1edd04f13f2a",
           "size": 980
         }
       ],
-      "bundle_sha256": "9b10841ab36a4049bec9e5b3b03fc316ae2706a42fe9bebf4f50465fb9dee07e",
+      "bundle_sha256": "e36db3ac3970b4c6912f0d5ab56a29c4d8f1f43e4c405a5bc9826b975bb84c4b",
       "popularity": {
         "score": 0
       }

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: amap_maps
 display_name: 高德地图
 display_name_en: ''
-version: 0.1.0
+version: 0.1.1
 description: MCP server for using the AMap Maps API
 description_zh: 高德地图的MCP服务器
 author: upstream
@@ -29,9 +29,9 @@ runtimes:
   requires:
     node: '>=18'
 requires_env:
-- name: AMAP_Maps_API_KEY
-  description: 高德地图 的API 密钥（AMAP_Maps_API_KEY），获取方式见项目说明。
-  prompt: 请输入 AMAP_Maps_API_KEY
+- name: AMAP_MAPS_API_KEY
+  description: 高德地图 的API 密钥（AMAP_MAPS_API_KEY），获取方式见项目说明。
+  prompt: 请输入 AMAP_MAPS_API_KEY
   secret: true
   required: true
 optional_env: []
