@@ -255,87 +255,6 @@
     }
   },
   {
-    "name": "create_speech",
-    "description": "文本转语音，返回音频地址。这会消耗 TopView 积分。",
-    "read_only": false,
-    "input_schema": {
-      "type": "object",
-      "properties": {
-        "text": {
-          "type": "string",
-          "description": "要朗读的文本"
-        },
-        "voice_id": {
-          "type": "string",
-          "description": "音色 ID（list_voices）"
-        },
-        "speed": {
-          "type": "number",
-          "description": "语速 0.8-1.2，默认 1"
-        },
-        "wait_seconds": {
-          "type": "integer",
-          "description": "提交后在工具内等待结果的秒数，0-100，默认 100。超时未完成会返回 taskId，之后用 query_task 继续查"
-        }
-      },
-      "required": [
-        "text",
-        "voice_id"
-      ]
-    }
-  },
-  {
-    "name": "create_image_to_video",
-    "description": "图生视频：把一张商品图/场景图做成 5 或 10 秒的动态视频。这会消耗 TopView 积分。",
-    "read_only": false,
-    "input_schema": {
-      "type": "object",
-      "properties": {
-        "image_file_id": {
-          "type": "string",
-          "description": "图片 fileId（upload_file）"
-        },
-        "prompt": {
-          "type": "string",
-          "description": "画面运动描述"
-        },
-        "negative_prompt": {
-          "type": "string",
-          "description": "不希望出现的内容"
-        },
-        "duration": {
-          "type": "integer",
-          "enum": [
-            5,
-            10
-          ],
-          "description": "时长秒数，默认 5"
-        },
-        "mode": {
-          "type": "string",
-          "enum": [
-            "lite",
-            "pro",
-            "plus",
-            "best"
-          ],
-          "description": "质量档位，越高越贵，默认 lite"
-        },
-        "count": {
-          "type": "integer",
-          "description": "生成条数 1-4，默认 1"
-        },
-        "wait_seconds": {
-          "type": "integer",
-          "description": "提交后在工具内等待结果的秒数，0-100，默认 100。超时未完成会返回 taskId，之后用 query_task 继续查"
-        }
-      },
-      "required": [
-        "image_file_id"
-      ]
-    }
-  },
-  {
     "name": "query_task",
     "description": "查询生成任务的进度与结果。state=done 时 urls 里是成片地址；state=running 请稍后再查，不要重复提交任务。",
     "read_only": true,
@@ -346,9 +265,7 @@
           "type": "string",
           "enum": [
             "marketing_video",
-            "avatar_video",
-            "speech",
-            "image_to_video"
+            "avatar_video"
           ],
           "description": "任务类型，与提交时用的工具对应"
         },

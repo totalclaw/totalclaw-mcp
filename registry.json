@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-10-28T02:39:30Z",
+  "generated_at": "2026-10-28T02:39:40Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -26156,8 +26156,8 @@
       "id": "totalclaw-mcp/media/topview",
       "display_name": "TopView AI 营销视频",
       "display_name_en": "",
-      "description": "TopView AI marketing video: product link to UGC-style ad video, avatar talking-head video, TTS and image-to-video via the TopView OpenAPI (API key).",
-      "description_zh": "用 TopView 把商品链接一键做成带货短视频，并支持数字人口播、配音、图生视频（API Key 鉴权）。",
+      "description": "TopView AI marketing video via the OpenAPI (API key, works unattended): product link to UGC-style ad video and stock-avatar talking-head video. For image/video generation, TTS and e-commerce data use topview_official.",
+      "description_zh": "用 TopView 把商品链接一键做成带货短视频，并支持公模数字人口播（API Key 鉴权，可无人值守）。生图生视频、配音、电商数据请用官方的 topview_official。",
       "version": "0.1.0",
       "author": "totalclaw",
       "license": "Apache-2.0",
@@ -26223,7 +26223,7 @@
         }
       ],
       "optional_env": [],
-      "tools_count": 10,
+      "tools_count": 8,
       "tools": [
         "get_credit",
         "list_avatars",
@@ -26232,8 +26232,6 @@
         "upload_file",
         "create_marketing_video",
         "create_avatar_video",
-        "create_speech",
-        "create_image_to_video",
         "query_task"
       ],
       "security": {
@@ -26251,21 +26249,21 @@
       "files": [
         {
           "path": "README.md",
-          "sha256": "9cb183d6e2757ab07b213979bf5924107226a0bc4be8a204b51e39f89081f698",
-          "size": 2727
+          "sha256": "a2516ea68dcee9e3ea8b556eec748da934a437f65d1ee26429789a6a2f61edec",
+          "size": 2537
         },
         {
           "path": "mcp.yaml",
-          "sha256": "1285a35c7cb3feab6b6006f6b67594f52f8b2968e67509f7b1f69b29a8984b61",
-          "size": 2068
+          "sha256": "af8a6665aec0dd7e270d434a6031b1eccbcdf08a9743deb34364e35f067666ab",
+          "size": 2212
         },
         {
           "path": "tools.json",
-          "sha256": "8a13f496985a87f0056066a486861361856cf9ac7a16c8c6404ddc534c4d7f48",
-          "size": 11456
+          "sha256": "59a55933547808c9f7355d3cd05b083936110e0ee99d7e598933b581a39ff406",
+          "size": 9115
         }
       ],
-      "bundle_sha256": "1a8a9408b10d5df6ed34ec75ca60dd8bece4a923b9ecf0abd2789d5c810a2b4d",
+      "bundle_sha256": "1382cb4369d9ca5133d0e032a6356a3abe6779da8c5c72574bf7bed749970c8e",
       "popularity": {
         "score": 0
       }
@@ -26276,7 +26274,7 @@
       "display_name": "TopView 官方 MCP（电商数据 + AI 生成）",
       "display_name_en": "TopView MCP",
       "description": "TopView's official hosted MCP — AI image/video/avatar/voice generation plus Amazon, TikTok Shop, Shopee and YouTube KOL data. OAuth sign-in; no product-link-to-video (use the topview server for that).",
-      "description_zh": "TopView 官方托管 MCP：AI 生图/生视频/数字人/配音，以及 Amazon、TikTok Shop、Shopee、YouTube 达人数据。浏览器 OAuth 登录；不含商品链接出片（用自研 topview）。",
+      "description_zh": "TopView 官方托管 MCP：AI 生图/生视频（Seedance、Kling、Veo 等）/照片数字人/配音/抠图/商品模特图，以及 Amazon、TikTok Shop、Shopee、YouTube 达人数据。浏览器 OAuth 登录，Unlimited 套餐不可用；不含商品链接出片与公模数字人（用自研 topview）。",
       "version": "0.1.0",
       "author": "vendor",
       "homepage": "https://www.topview.ai",
@@ -26328,11 +26326,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "de733c4f3f9f8a6e2e4c003d164d537765e6300b1b82ecaefb767b7e41b9f161",
-          "size": 1895
+          "sha256": "c231fcfdb04006a6c7a71bef233b5dc80dcfbab10ccf43a9a65b3c44380e0998",
+          "size": 2136
         }
       ],
-      "bundle_sha256": "d1e7a2084044203c3b25b77f3e0a32e010e22cac4a9073deb71ba73999d3d3fc",
+      "bundle_sha256": "2f8587a48516d3cd68c47c17ec89d59f4965b8a323aae16b73c71cd442f340a3",
       "popularity": {
         "score": 0
       }

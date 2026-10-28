@@ -144,10 +144,18 @@ def test_avatar_video_validation():
 
 
 def test_wait_zero_returns_task_id_without_sleeping(api):
-    api("POST", "/v1/voice/text2voice/task/submit", _ok({"taskId": "t5"}))
-    api("GET", "/v1/voice/text2voice/task/query", _ok({"taskId": "t5", "status": "running"}))
-    out = topview.create_speech(text="hi", voice_id="v1", wait_seconds=0)
+    api("POST", "/v1/video_avatar/task/submit", _ok({"taskId": "t5"}))
+    api("GET", "/v1/video_avatar/task/query", _ok({"taskId": "t5", "status": "running"}))
+    out = topview.create_avatar_video(script="hi", avatar_id="av1", wait_seconds=0)
     assert out["data"]["task_id"] == "t5" and out["data"]["state"] == "running"
+
+
+def test_only_capabilities_missing_from_official_mcp():
+    """与官方 MCP 分工：图/视频生成、TTS 走 topview_official，这里不重复实现。"""
+    names = {t["name"] for t in topview.TOOLS}
+    assert "create_marketing_video" in names and "create_avatar_video" in names
+    assert not names & {"create_speech", "create_image_to_video"}
+    assert set(topview._QUERY) == {"marketing_video", "avatar_video"}
 
 
 def test_upload_three_steps(api, tmp_path):

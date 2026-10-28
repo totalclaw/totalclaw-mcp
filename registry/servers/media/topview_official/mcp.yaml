@@ -4,6 +4,7 @@
 # 故 auth: oauth —— 不需要预置凭据，装完跑 totalclaw mcp login topview_official 浏览器授权。
 # 与自研的 topview（API Key、含商品链接出片 m2v）互补：官方端点不含 m2v，
 # 但有 Amazon / TikTok Shop / Shopee / YouTube 达人数据与更多生成模型。人工修改后请递增 version。
+# 官方页面 https://www.topview.ai/mcp 注明：Unlimited 套餐不支持 MCP / Plugin / Skill（不支持自动化工作流）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
@@ -12,7 +13,7 @@ display_name: TopView 官方 MCP（电商数据 + AI 生成）
 display_name_en: TopView MCP
 version: 0.1.0
 description: TopView's official hosted MCP — AI image/video/avatar/voice generation plus Amazon, TikTok Shop, Shopee and YouTube KOL data. OAuth sign-in; no product-link-to-video (use the topview server for that).
-description_zh: TopView 官方托管 MCP：AI 生图/生视频/数字人/配音，以及 Amazon、TikTok Shop、Shopee、YouTube 达人数据。浏览器 OAuth 登录；不含商品链接出片（用自研 topview）。
+description_zh: TopView 官方托管 MCP：AI 生图/生视频（Seedance、Kling、Veo 等）/照片数字人/配音/抠图/商品模特图，以及 Amazon、TikTok Shop、Shopee、YouTube 达人数据。浏览器 OAuth 登录，Unlimited 套餐不可用；不含商品链接出片与公模数字人（用自研 topview）。
 author: vendor
 homepage: https://www.topview.ai
 repository: https://github.com/topviewai/skill

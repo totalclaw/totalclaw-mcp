@@ -1,8 +1,8 @@
 # TopView AI 营销视频
 
-用 TopView 把商品链接一键做成带货短视频，并支持数字人口播、配音、图生视频（API Key 鉴权）。
+用 TopView 把商品链接一键做成带货短视频，并支持公模数字人口播（API Key 鉴权，可无人值守）。生图生视频、配音、电商数据请用官方的 topview_official。
 
-由 TotalClaw 自研实现（`totalclaw-mcp-servers` 包），共 10 个工具（只读 5 / 写入 5）。
+由 TotalClaw 自研实现（`totalclaw-mcp-servers` 包），共 8 个工具（只读 5 / 写入 3）。
 
 ## 工具
 
@@ -13,8 +13,6 @@
 - `upload_file`（**写入**）— 把素材上传到 TopView，返回 fileId 供生成工具使用。三种来源三选一：path（本机文件）、url（公网直链，拒绝内网地址）、base64_data（需同时给 format）。支持 mp4/mov/png/jpg/jpeg/bmp/webp/mp3/wav/m4a，单个不超过 200 MB。
 - `create_marketing_video`（**写入**）— 【核心】商品链接一键出带货短视频：TopView 自动解析商品、写脚本、选数字人与配音、剪辑成片。也可不给链接，改用 file_ids（上传的商品图/视频）+ 商品名与描述。custom_script 给了就按你的脚本念（适合先让 LLM 写好文案）。这会消耗 TopView 积分。返回任务状态与成片 videoUrl。
 - `create_avatar_video`（**写入**）— 数字人口播：让数字人念一段文本（或对上一段音频的口型）。数字人来源三选一：avatar_id（公模/私模）、image_file_id（一张人像图）、video_file_id（一段人像视频）。这会消耗 TopView 积分。返回成片 videoUrl。
-- `create_speech`（**写入**）— 文本转语音，返回音频地址。这会消耗 TopView 积分。
-- `create_image_to_video`（**写入**）— 图生视频：把一张商品图/场景图做成 5 或 10 秒的动态视频。这会消耗 TopView 积分。
 - `query_task`（只读）— 查询生成任务的进度与结果。state=done 时 urls 里是成片地址；state=running 请稍后再查，不要重复提交任务。
 
 ## 安装

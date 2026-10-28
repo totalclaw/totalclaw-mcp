@@ -6,9 +6,10 @@ tested_with: '>=0.63.72'
 name: topview
 display_name: TopView AI 营销视频
 version: 0.1.0
-description: 'TopView AI marketing video: product link to UGC-style ad video, avatar talking-head video,
-  TTS and image-to-video via the TopView OpenAPI (API key).'
-description_zh: 用 TopView 把商品链接一键做成带货短视频，并支持数字人口播、配音、图生视频（API Key 鉴权）。
+description: 'TopView AI marketing video via the OpenAPI (API key, works unattended): product link to
+  UGC-style ad video and stock-avatar talking-head video. For image/video generation, TTS and e-commerce
+  data use topview_official.'
+description_zh: 用 TopView 把商品链接一键做成带货短视频，并支持公模数字人口播（API Key 鉴权，可无人值守）。生图生视频、配音、电商数据请用官方的 topview_official。
 author: totalclaw
 license: Apache-2.0
 homepage: https://gitee.com/jlzdyx/totalclaw-mcp
@@ -65,7 +66,7 @@ defaults:
   connect_timeout: 60
 tools:
   probed_runtime: console
-  count: 10
+  count: 8
   file: tools.json
 security:
   scan_verdict: allow

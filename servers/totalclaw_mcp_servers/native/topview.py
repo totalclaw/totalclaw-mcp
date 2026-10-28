@@ -1,12 +1,19 @@
-"""TopView（topview.ai）AI 营销视频 MCP 服务器 —— 商品链接出带货视频、数字人口播、配音、图生视频。
+"""TopView（topview.ai）AI 营销视频 MCP 服务器 —— 商品链接出带货视频、公模数字人口播。
 
 这是原生实现而非声明式 pack，原因有三：
   1. 上传是三步（取凭证 → PUT 到 S3 预签名地址 → 校验），声明式引擎表达不了二进制 PUT；
   2. 鉴权要两个头（Authorization: Bearer <key> + Topview-Uid），pack 的默认头不做 ${ENV} 代入；
   3. 生成任务是异步的，工具内要能短轮询，否则模型只能拿着 taskId 干等。
 
-为什么不直接用官方 MCP（https://mcp.topview.ai/mcp）：官方端点只支持 OAuth，
-且不含「商品链接 → 营销视频」（m2v）。本服务器走 OpenAPI + API Key，服务端无人值守也能用。
+与官方 MCP（https://www.topview.ai/mcp → https://mcp.topview.ai/mcp，registry 里的
+topview_official）的分工 —— 本服务器只做官方做不到的：
+  - 商品链接 → 营销视频（m2v）：官方 skill 文档明确写「Marketing-video project generation
+    is outside this skill's direct tools」，只能去网页端；
+  - 公模数字人库口播（video_avatar，aiAvatarId）：官方的 topview_avatar_video 只收人像照片；
+  - API Key 鉴权：官方只能浏览器 OAuth 登录，服务端无人值守用不了。
+图/视频生成（Seedance / Kling / Veo 等多模型）、TTS、克隆音色、抠图、商品模特图、电商数据
+一律走官方 MCP，本服务器不重复实现（旧版 v1 图生视频只有 lite/pro 档，远不如官方）。
+官方页面注明 Unlimited 套餐不支持 MCP / Plugin / Skill；OpenAPI 是否同样受限待实测。
 
 接口依据（2026-10 核对）：
     https://s.apifox.cn/apidoc/shared/115a0d85-28a5-479d-8b8b-83d7898a7246   英文版
@@ -51,8 +58,6 @@ _CODES = {
 _QUERY = {
     "marketing_video": "/v1/m2v/task/query",
     "avatar_video": "/v1/video_avatar/task/query",
-    "speech": "/v1/voice/text2voice/task/query",
-    "image_to_video": "/v1/common_task/image2video/result",
 }
 _DONE = {"success"}
 _FAILED = {"fail", "failed"}
@@ -154,15 +159,6 @@ def _normalize(kind: str, r: dict) -> dict[str, Any]:
             urls = [r["outputVideoUrl"]]
         if r.get("costCredit") is not None:
             out["cost_credit"] = r["costCredit"]
-    elif kind == "speech":
-        voice = r.get("voice") or {}
-        if voice.get("demoAudioUrl"):
-            urls = [voice["demoAudioUrl"]]
-    elif kind == "image_to_video":
-        for v in r.get("videos") or []:
-            fp = ((v or {}).get("originVideo") or {}).get("filePath")
-            if fp:
-                urls.append(fp)
     out["urls"] = urls
     if status in _FAILED:
         out["state"] = "failed"
@@ -371,28 +367,6 @@ def create_avatar_video(*, script: str | None = None, audio_file_id: str | None 
     return _wait("avatar_video", task_id, wait_seconds)
 
 
-def create_speech(*, text: str, voice_id: str, speed: float = 1.0,
-                  wait_seconds: int | None = None) -> dict[str, Any]:
-    task_id = _submit("/v1/voice/text2voice/task/submit", {
-        "voiceId": voice_id, "voiceText": text,
-        "voiceSpeed": min(max(float(speed), 0.8), 1.2),
-    })
-    return _wait("speech", task_id, wait_seconds)
-
-
-def create_image_to_video(*, image_file_id: str, prompt: str | None = None,
-                          negative_prompt: str | None = None, duration: int = 5,
-                          mode: str = "lite", count: int = 1,
-                          wait_seconds: int | None = None) -> dict[str, Any]:
-    if duration not in (5, 10):
-        raise TopviewError("duration 只能是 5 或 10")
-    task_id = _submit("/v1/common_task/image2video/submit", {
-        "imageFileId": image_file_id, "prompt": prompt, "negativePrompt": negative_prompt,
-        "duration": duration, "mode": mode, "generatingCount": min(max(int(count), 1), 4),
-    })
-    return _wait("image_to_video", task_id, wait_seconds)
-
-
 def query_task(*, kind: str, task_id: str) -> dict[str, Any]:
     if kind not in _QUERY:
         raise TopviewError(f"kind 只能是 {', '.join(_QUERY)}")
@@ -531,42 +505,6 @@ TOOLS: list[dict[str, Any]] = [
         },
     },
     {
-        "name": "create_speech",
-        "description": "文本转语音，返回音频地址。这会消耗 TopView 积分。",
-        "read_only": False,
-        "handler": create_speech,
-        "schema": {
-            "type": "object",
-            "properties": {
-                "text": {"type": "string", "description": "要朗读的文本"},
-                "voice_id": {"type": "string", "description": "音色 ID（list_voices）"},
-                "speed": {"type": "number", "description": "语速 0.8-1.2，默认 1"},
-                "wait_seconds": _WAIT_PROP,
-            },
-            "required": ["text", "voice_id"],
-        },
-    },
-    {
-        "name": "create_image_to_video",
-        "description": "图生视频：把一张商品图/场景图做成 5 或 10 秒的动态视频。这会消耗 TopView 积分。",
-        "read_only": False,
-        "handler": create_image_to_video,
-        "schema": {
-            "type": "object",
-            "properties": {
-                "image_file_id": {"type": "string", "description": "图片 fileId（upload_file）"},
-                "prompt": {"type": "string", "description": "画面运动描述"},
-                "negative_prompt": {"type": "string", "description": "不希望出现的内容"},
-                "duration": {"type": "integer", "enum": [5, 10], "description": "时长秒数，默认 5"},
-                "mode": {"type": "string", "enum": ["lite", "pro", "plus", "best"],
-                         "description": "质量档位，越高越贵，默认 lite"},
-                "count": {"type": "integer", "description": "生成条数 1-4，默认 1"},
-                "wait_seconds": _WAIT_PROP,
-            },
-            "required": ["image_file_id"],
-        },
-    },
-    {
         "name": "query_task",
         "description": "查询生成任务的进度与结果。state=done 时 urls 里是成片地址；"
                        "state=running 请稍后再查，不要重复提交任务。",
@@ -586,9 +524,11 @@ TOOLS: list[dict[str, Any]] = [
 
 SERVER_NAME = "topview"
 DISPLAY_NAME = "TopView AI 营销视频"
-DESCRIPTION = "用 TopView 把商品链接一键做成带货短视频，并支持数字人口播、配音、图生视频（API Key 鉴权）。"
-DESCRIPTION_EN = ("TopView AI marketing video: product link to UGC-style ad video, avatar "
-                  "talking-head video, TTS and image-to-video via the TopView OpenAPI (API key).")
+DESCRIPTION = ("用 TopView 把商品链接一键做成带货短视频，并支持公模数字人口播（API Key 鉴权，可无人值守）。"
+               "生图生视频、配音、电商数据请用官方的 topview_official。")
+DESCRIPTION_EN = ("TopView AI marketing video via the OpenAPI (API key, works unattended): product "
+                  "link to UGC-style ad video and stock-avatar talking-head video. For image/video "
+                  "generation, TTS and e-commerce data use topview_official.")
 REQUIRED_ENV = ["TOPVIEW_API_KEY", "TOPVIEW_UID"]
 ENV_DOCS = {
     "TOPVIEW_API_KEY": {
