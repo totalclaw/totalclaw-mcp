@@ -314,6 +314,8 @@ def _collect_server(server_dir: Path, category: str, strict: bool) -> dict:
             {k: v for k, v in {
                 "id": rt["id"], "type": rt["type"], "launcher": rt.get("launcher"),
                 "auth": rt.get("auth"), "hosted": rt.get("hosted"),
+                # 客户端拿它去重（与内置目录、与已添加的连接器比包名 / 地址），不必为每条再拉 mcp.yaml
+                "package": _runtime_package(rt), "url": rt.get("url") if rt["type"] == "http" else None,
             }.items() if v is not None}
             for rt in runtimes
         ],
@@ -340,6 +342,40 @@ def _collect_server(server_dir: Path, category: str, strict: bool) -> dict:
         "bundle_sha256": _bundle_hash(files),
     }
     return entry
+
+
+_UVX_VALUE_FLAGS = {"--with", "-w", "--python", "-p", "--index-url", "--extra-index-url", "--with-editable",
+                    "--with-requirements", "--refresh-package", "--index", "--default-index"}
+
+
+def _runtime_package(rt: dict) -> str | None:
+    """npx / uvx 运行时的包规格（含钉住的版本），其它启动方式返回 None。"""
+    launcher = rt.get("launcher") or rt.get("command")
+    args = [str(a) for a in rt.get("args") or []]
+    if launcher == "npx":
+        i = 0
+        while i < len(args):
+            a = args[i]
+            if a in ("-p", "--package") and i + 1 < len(args):
+                return args[i + 1]
+            if not a.startswith("-"):
+                return a
+            i += 1
+        return None
+    if launcher == "uvx":
+        if "--from" in args:
+            i = args.index("--from")
+            return args[i + 1] if i + 1 < len(args) else None
+        i = 0
+        while i < len(args):
+            a = args[i]
+            if a in _UVX_VALUE_FLAGS:
+                i += 2
+                continue
+            if not a.startswith("-"):
+                return a
+            i += 1
+    return None
 
 
 def build(strict: bool = False) -> dict:

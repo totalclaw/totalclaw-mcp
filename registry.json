@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-10-28T01:54:23Z",
+  "generated_at": "2026-10-28T02:02:40Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -41,7 +41,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "agent-recall-mcp@3.5.2"
         }
       ],
       "requires_env": [],
@@ -105,7 +106,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@agentset/mcp@1.3.0"
         }
       ],
       "requires_env": [],
@@ -169,7 +171,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "basic-memory==0.24.1"
         }
       ],
       "requires_env": [],
@@ -234,7 +237,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "bhived-mcp@1.4.0"
         }
       ],
       "requires_env": [],
@@ -299,7 +303,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "codewiki-mcp@1.1.2"
         }
       ],
       "requires_env": [],
@@ -364,7 +369,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@contextstream/mcp-server@1.0.36"
         }
       ],
       "requires_env": [],
@@ -428,7 +434,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@egchq/egc@1.1.23"
         }
       ],
       "requires_env": [],
@@ -492,7 +499,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "emulo==0.6.7"
         }
       ],
       "requires_env": [],
@@ -556,7 +564,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "engram-rs-mcp@0.14.0"
         }
       ],
       "requires_env": [],
@@ -621,7 +630,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "fidelis-memory==0.2.0"
         }
       ],
       "requires_env": [],
@@ -686,7 +696,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "friday-memory==1.5.2"
         }
       ],
       "requires_env": [],
@@ -748,7 +759,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.getengram.app/mcp"
         }
       ],
       "requires_env": [],
@@ -812,7 +824,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "graphlit-mcp-server@1.0.20260112001"
         }
       ],
       "requires_env": [
@@ -905,7 +918,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@awareness.market/local@0.21.1"
         }
       ],
       "requires_env": [],
@@ -970,7 +984,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@mnemoverse/mcp-memory-server@0.16.0"
         }
       ],
       "requires_env": [
@@ -1045,7 +1060,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "memory-engine==0.0.1"
         }
       ],
       "requires_env": [],
@@ -1109,7 +1125,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "piia-engram==4.26.0"
         }
       ],
       "requires_env": [],
@@ -1172,7 +1189,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-rememberizer==0.1.6"
         }
       ],
       "requires_env": [
@@ -1244,7 +1262,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://skills.wondel.ai/mcp"
         }
       ],
       "requires_env": [],
@@ -1307,7 +1326,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-summarizer@1.0.0-alpha.2"
         }
       ],
       "requires_env": [],
@@ -1369,7 +1389,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.supermemory.ai/mcp"
         }
       ],
       "requires_env": [],
@@ -1432,7 +1453,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "zotero-mcp-server==0.15.1"
         }
       ],
       "requires_env": [],
@@ -1497,7 +1519,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-zotero@1.0.6"
         }
       ],
       "requires_env": [],
@@ -1562,7 +1585,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@alipay/mcp-server-alipay@2.0.0"
         }
       ],
       "requires_env": [
@@ -1648,7 +1672,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "alphavantage-mcp==0.3.24"
         }
       ],
       "requires_env": [],
@@ -1713,7 +1738,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "cabal-hunter-mcp@1.0.5"
         }
       ],
       "requires_env": [],
@@ -1777,7 +1803,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "canli-validation-mcp@0.14.1"
         }
       ],
       "requires_env": [],
@@ -1839,7 +1866,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://chainflip-broker.io/mcp"
         }
       ],
       "requires_env": [],
@@ -1900,7 +1928,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.gateway.chuhaijiang.com/mcp/oauth"
         }
       ],
       "requires_env": [],
@@ -1969,7 +1998,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-cn-commerce==0.1.6"
         }
       ],
       "requires_env": [],
@@ -2034,7 +2064,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@codex-data/codex-mcp@0.1.3"
         }
       ],
       "requires_env": [
@@ -2109,7 +2140,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "coincap-mcp@0.9.3"
         }
       ],
       "requires_env": [],
@@ -2170,7 +2202,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "header"
+          "auth": "header",
+          "url": "https://rube.composio.dev/mcp"
         }
       ],
       "requires_env": [
@@ -2246,7 +2279,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "dexpaprika-mcp@2.9.2"
         }
       ],
       "requires_env": [],
@@ -2308,7 +2342,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@duoguan-fengchao/mcp-launcher@1.0.8"
         }
       ],
       "requires_env": [
@@ -2383,7 +2418,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "edinet-mcp==0.9.0"
         }
       ],
       "requires_env": [],
@@ -2447,7 +2483,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "estat-mcp==0.2.6"
         }
       ],
       "requires_env": [
@@ -2519,7 +2556,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "header"
+          "auth": "header",
+          "url": "https://api.eulerpool.com/mcp"
         }
       ],
       "requires_env": [],
@@ -2582,7 +2620,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@mcpdotdirect/evm-mcp-server@2.0.4"
         }
       ],
       "requires_env": [],
@@ -2645,7 +2684,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@nusantara-ventures/exchangerate-mcp@0.2.2"
         }
       ],
       "requires_env": [],
@@ -2705,7 +2745,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://claw.richee.cn/claw-api/mcp"
         }
       ],
       "requires_env": [],
@@ -2772,7 +2813,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://www.mossdo.com/api/v1/mcp"
         }
       ],
       "requires_env": [
@@ -2849,7 +2891,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://bizveris.kuaicha365.com/law_agent/mcp"
         }
       ],
       "requires_env": [
@@ -2938,7 +2981,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://api2.u3w.com/fbs-mcp/mcp"
         }
       ],
       "requires_env": [],
@@ -3025,7 +3069,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "finlight-mcp@1.0.3"
         }
       ],
       "requires_env": [],
@@ -3086,7 +3131,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://flow.horustek.pro/mcp"
         }
       ],
       "requires_env": [
@@ -3160,7 +3206,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "frontrun-mcp-server@2.7.0"
         }
       ],
       "requires_env": [],
@@ -3222,7 +3269,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://api.cjbdi.com:8443/354347/mcp_law_service"
         }
       ],
       "requires_env": [],
@@ -3287,7 +3335,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@nusantara-ventures/goldprice-mcp@0.2.1"
         }
       ],
       "requires_env": [
@@ -3357,7 +3406,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://work.jiushuyun.com/mcp"
         }
       ],
       "requires_env": [],
@@ -3424,7 +3474,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://openmcp.lingxing.com/mcp-servers/lingxing-mcp"
         }
       ],
       "requires_env": [
@@ -3501,7 +3552,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://mcp-tool-gateway.linkfox.com/mcp/any-tool"
         }
       ],
       "requires_env": [
@@ -3580,7 +3632,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "lrvx-mcp==0.11.0"
         }
       ],
       "requires_env": [],
@@ -3643,7 +3696,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "marketplaces-mcp-ru==0.6.1"
         }
       ],
       "requires_env": [],
@@ -3707,7 +3761,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@modelcontextprotocol/server-memory@2026.7.4"
         }
       ],
       "requires_env": [],
@@ -3794,7 +3849,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@modelcontextprotocol/server-sequential-thinking@2026.7.4"
         }
       ],
       "requires_env": [],
@@ -3869,7 +3925,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://www.mozlen.com/mcp"
         }
       ],
       "requires_env": [],
@@ -3931,7 +3988,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.xiaoshouyi.com/mcp"
         }
       ],
       "requires_env": [],
@@ -4001,7 +4059,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@bankless/onchain-mcp@1.0.6"
         }
       ],
       "requires_env": [
@@ -4072,7 +4131,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://openchainbench.com/api/mcp/mcp"
         }
       ],
       "requires_env": [],
@@ -4134,7 +4194,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "ozon-mcp-server==2.5.2"
         }
       ],
       "requires_env": [
@@ -4224,7 +4285,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "header"
+          "auth": "header",
+          "url": "https://mcp.pangolinfo.com/mcp"
         }
       ],
       "requires_env": [],
@@ -4285,7 +4347,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://apim-gateway.pkulaw.com/mcp-law-agg/1.0.0/mcp"
         }
       ],
       "requires_env": [],
@@ -4352,7 +4415,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://mcp.microdata-inc.com/mcp-servers/proboost-tiktok-amazon-patent-mcp/mcp"
         }
       ],
       "requires_env": [],
@@ -4509,7 +4573,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://agent.qcc.com/mcp/legal/stream"
         }
       ],
       "requires_env": [],
@@ -4576,7 +4641,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://sn.long-arena.com/mcp"
         }
       ],
       "requires_env": [],
@@ -4643,7 +4709,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://touch.long-arena.com/mcp"
         }
       ],
       "requires_env": [],
@@ -4713,7 +4780,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-scan@2.3.0"
         }
       ],
       "requires_env": [],
@@ -4778,7 +4846,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@mcpdotdirect/starknet-mcp-server@1.0.3"
         }
       ],
       "requires_env": [],
@@ -4842,7 +4911,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@stripe/mcp@0.3.3"
         }
       ],
       "requires_env": [
@@ -4910,7 +4980,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://api.tanyuan.qq.com/wb/mcp"
         }
       ],
       "requires_env": [],
@@ -4980,7 +5051,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "tapetide-mcp@1.0.9"
         }
       ],
       "requires_env": [
@@ -5055,7 +5127,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "tasty-agent@7.1.0"
         }
       ],
       "requires_env": [
@@ -5136,7 +5209,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://tec-chi-external-skill-mcp.tec-do.cn/mcp"
         }
       ],
       "requires_env": [],
@@ -5200,7 +5274,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "tradingview-mcp-server==0.8.1"
         }
       ],
       "requires_env": [],
@@ -5264,7 +5339,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "wb-mcp-server==2.6.1"
         }
       ],
       "requires_env": [
@@ -5346,7 +5422,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-server-weisheng-scrm@0.0.6"
         }
       ],
       "requires_env": [
@@ -5431,7 +5508,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.wkinfo.com.cn/mcp-servers/integrated/"
         }
       ],
       "requires_env": [],
@@ -5498,7 +5576,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://claw-mcp.tcredit.com/mcp"
         }
       ],
       "requires_env": [],
@@ -5562,7 +5641,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "yfmcp==0.14.0"
         }
       ],
       "requires_env": [],
@@ -5624,7 +5704,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://open.yscredit.com/ys-mcp/report"
         }
       ],
       "requires_env": [
@@ -5701,7 +5782,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://open.chineselaw.com/mcp"
         }
       ],
       "requires_env": [],
@@ -5768,7 +5850,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://call4.me/mcp"
         }
       ],
       "requires_env": [],
@@ -5829,7 +5912,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://callmemcp.com/mcp"
         }
       ],
       "requires_env": [],
@@ -5892,7 +5976,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "didlogic_mcp==1.0.4"
         }
       ],
       "requires_env": [],
@@ -5967,7 +6052,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -6067,7 +6153,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "dingtalk-mcp@1.1.21"
         }
       ],
       "requires_env": [
@@ -6149,7 +6236,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "email_client==1.5.2"
         }
       ],
       "requires_env": [],
@@ -6210,7 +6298,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://www.ezyjoin.cn/api/mcp/message"
         }
       ],
       "requires_env": [],
@@ -6291,7 +6380,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -6392,7 +6482,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@atomicmail/mcp-github@0.3.31"
         }
       ],
       "requires_env": [],
@@ -6457,7 +6548,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@gongrzhe/server-gmail-autoauth-mcp@1.1.11"
         }
       ],
       "requires_env": [],
@@ -6519,7 +6611,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://ssl.gongyi.qq.com/gygw-web/api/open/tob/mcp"
         }
       ],
       "requires_env": [],
@@ -6589,7 +6682,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@takumi0706/google-calendar-mcp@2.0.0"
         }
       ],
       "requires_env": [
@@ -6674,7 +6768,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@gotohuman/mcp-server@0.2.2"
         }
       ],
       "requires_env": [
@@ -6748,7 +6843,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-gsuite==0.4.1"
         }
       ],
       "requires_env": [
@@ -6832,7 +6928,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@peakmojo/mcp-server-headless-gmail@0.1.0"
         }
       ],
       "requires_env": [],
@@ -6907,7 +7004,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -7011,7 +7109,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.lexiang-app.com/mcp"
         }
       ],
       "requires_env": [],
@@ -7075,7 +7174,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mac-messages-mcp==1.1.0"
         }
       ],
       "requires_env": [],
@@ -7140,7 +7240,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@mailkite/mcp@0.20.0"
         }
       ],
       "requires_env": [
@@ -7210,7 +7311,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://manto.xin/mcp"
         }
       ],
       "requires_env": [],
@@ -7274,7 +7376,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@softeria/ms-365-mcp-server@0.175.0"
         }
       ],
       "requires_env": [],
@@ -7335,7 +7438,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp-gateway.yql.net/mcp/"
         }
       ],
       "requires_env": [],
@@ -7399,7 +7503,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@chaindead/telegram-mcp@0.2.0"
         }
       ],
       "requires_env": [
@@ -7479,7 +7584,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://sse.qidian.qq.com/qidian-cs/mcp"
         }
       ],
       "requires_env": [],
@@ -7549,7 +7655,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@tomba-io/tomba-mcp-server@1.2.0"
         }
       ],
       "requires_env": [
@@ -7632,7 +7739,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "vrchat-mcp@0.15.0"
         }
       ],
       "requires_env": [
@@ -7810,7 +7918,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -7909,7 +8018,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "x-mcp==0.1.0"
         }
       ],
       "requires_env": [],
@@ -7973,7 +8083,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "anilist-mcp@1.4.0"
         }
       ],
       "requires_env": [
@@ -8045,7 +8156,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "blender-mcp==1.6.4"
         }
       ],
       "requires_env": [],
@@ -8141,7 +8253,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://ai-tools.camscanner.com/mcp"
         }
       ],
       "requires_env": [],
@@ -8221,7 +8334,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -8312,7 +8426,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://service.flova.tv/api/mcp/"
         }
       ],
       "requires_env": [],
@@ -8420,7 +8535,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@infimind/image-mcp-cli@1.0.9"
         }
       ],
       "requires_env": [
@@ -8494,7 +8610,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@infimind/video-mcp-cli@1.0.11"
         }
       ],
       "requires_env": [
@@ -8578,7 +8695,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://klingai.com/mcp"
         }
       ],
       "requires_env": [],
@@ -8645,7 +8763,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://kling.ai/mcp"
         }
       ],
       "requires_env": [],
@@ -8714,12 +8833,14 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@mastergo/magic-mcp@0.2.8"
         },
         {
           "id": "npx-vibe",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@mastergo/vibe-mcp@1.0.28"
         }
       ],
       "requires_env": [
@@ -8810,7 +8931,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://picsetai.cn/functions/v1/agent-mcp-v1/mcp"
         }
       ],
       "requires_env": [
@@ -8887,7 +9009,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://picsetai.cn/functions/v1/agent-video-mcp-v1/mcp"
         }
       ],
       "requires_env": [
@@ -8966,7 +9089,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-server-rijksmuseum@1.0.5"
         }
       ],
       "requires_env": [
@@ -9036,7 +9160,8 @@
       "runtimes": [
         {
           "id": "remote",
-          "type": "http"
+          "type": "http",
+          "url": "http://127.0.0.1:8000/mcp"
         }
       ],
       "requires_env": [],
@@ -9103,7 +9228,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "adb-mysql-mcp-server==2.0.0"
         }
       ],
       "requires_env": [],
@@ -9167,7 +9293,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "adbpg-mcp-server==2.0.3"
         }
       ],
       "requires_env": [],
@@ -9231,7 +9358,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "adx_mcp_server==1.1.0"
         }
       ],
       "requires_env": [],
@@ -9296,7 +9424,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "airtable-mcp-server@1.14.0"
         }
       ],
       "requires_env": [],
@@ -9364,7 +9493,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@rashidazarang/airtable-mcp@4.0.1"
         }
       ],
       "requires_env": [
@@ -9447,7 +9577,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-aiven@1.18.0"
         }
       ],
       "requires_env": [
@@ -9521,7 +9652,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-alchemy==2026.10.15.202659"
         }
       ],
       "requires_env": [
@@ -9596,7 +9728,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@sylphx/anymd@8.5.5"
         }
       ],
       "requires_env": [],
@@ -9660,7 +9793,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@ergut/mcp-bigquery-server@1.0.4"
         }
       ],
       "requires_env": [
@@ -9734,7 +9868,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-bigquery==0.3.2"
         }
       ],
       "requires_env": [
@@ -9818,7 +9953,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "box-mcp-server@0.3.1"
         }
       ],
       "requires_env": [
@@ -9893,7 +10029,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@antv/mcp-server-chart@0.9.10"
         }
       ],
       "requires_env": [],
@@ -9957,7 +10094,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "chroma-mcp==0.2.6"
         }
       ],
       "requires_env": [],
@@ -10021,7 +10159,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "chronulus-mcp==0.0.3"
         }
       ],
       "requires_env": [],
@@ -10085,7 +10224,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@confluentinc/mcp-confluent@1.6.1"
         }
       ],
       "requires_env": [],
@@ -10149,7 +10289,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@upstash/context7-mcp@4.4.4"
         }
       ],
       "requires_env": [],
@@ -10212,7 +10353,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@geek-fun/data-studio-mcp@0.1.12"
         }
       ],
       "requires_env": [],
@@ -10276,7 +10418,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "database-mcp==0.1.4"
         }
       ],
       "requires_env": [],
@@ -10343,7 +10486,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "dchub-mcp-server@2.12.44"
         }
       ],
       "requires_env": [
@@ -10415,7 +10559,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.dknowc.cn/s6/mcp"
         }
       ],
       "requires_env": [],
@@ -10479,7 +10624,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "dolphindb-mcp-server==0.1.0"
         }
       ],
       "requires_env": [],
@@ -10543,7 +10689,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-ds==0.1.5"
         }
       ],
       "requires_env": [],
@@ -10607,7 +10754,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-duckdb==1.1.0"
         }
       ],
       "requires_env": [
@@ -10680,7 +10828,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "elasticsearch-mcp-server==2.1.6"
         }
       ],
       "requires_env": [
@@ -10753,7 +10902,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-everything-search==0.3.3"
         }
       ],
       "requires_env": [],
@@ -10820,7 +10970,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-excel-server==1.0.4"
         }
       ],
       "requires_env": [],
@@ -10884,7 +11035,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "excel-mcp-server==2.2.2"
         }
       ],
       "requires_env": [
@@ -10959,7 +11111,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@exoticknight/mcp-file-merger@1.0.1"
         }
       ],
       "requires_env": [
@@ -11031,7 +11184,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp-server-global.comein.cn/mcp-servers/mcp-server-brm/mcp"
         }
       ],
       "requires_env": [],
@@ -11101,7 +11255,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@gannonh/firebase-mcp@1.4.9"
         }
       ],
       "requires_env": [
@@ -11182,7 +11337,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://openapi.gangtise.com/application/open-mcp/"
         }
       ],
       "requires_env": [
@@ -11268,7 +11424,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://api.gildata.com/mcp-servers/aidata-assistant-srv-tool?token=${GILDATA_TOKEN}"
         }
       ],
       "requires_env": [
@@ -11342,7 +11499,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-google-sheets==0.6.3"
         }
       ],
       "requires_env": [
@@ -11417,7 +11575,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "greptimedb-mcp-server==0.6.1"
         }
       ],
       "requires_env": [],
@@ -11482,7 +11641,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@hushvert/mcp@0.1.3"
         }
       ],
       "requires_env": [
@@ -11557,7 +11717,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "influxdb-mcp-server@0.4.0"
         }
       ],
       "requires_env": [
@@ -11651,7 +11812,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@gongrzhe/server-json-mcp@1.0.3"
         }
       ],
       "requires_env": [],
@@ -11715,7 +11877,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "keboola-mcp-server==1.110.0"
         }
       ],
       "requires_env": [],
@@ -11778,7 +11941,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "knowlyr-datacheck==0.5.1"
         }
       ],
       "requires_env": [],
@@ -11842,7 +12006,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "kordoc@4.24.14"
         }
       ],
       "requires_env": [],
@@ -11904,7 +12069,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://bizveris.kuaicha365.com/mcp"
         }
       ],
       "requires_env": [
@@ -11991,7 +12157,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "llm-context==0.7.2"
         }
       ],
       "requires_env": [],
@@ -12055,7 +12222,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-markdownify-server@1.1.0"
         }
       ],
       "requires_env": [],
@@ -12119,7 +12287,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "markitdown-mcp==0.0.1a8"
         }
       ],
       "requires_env": [],
@@ -12181,7 +12350,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "header"
+          "auth": "header",
+          "url": "https://maxstat.ru/api/mcp"
         }
       ],
       "requires_env": [
@@ -12254,7 +12424,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@modelcontextprotocol/server-postgres@0.6.2"
         }
       ],
       "requires_env": [
@@ -12339,7 +12510,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-sqlite==2025.4.25"
         }
       ],
       "requires_env": [
@@ -12429,7 +12601,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-milvus==0.1.1.dev9"
         }
       ],
       "requires_env": [],
@@ -12493,7 +12666,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mindmap-mcp-server==0.1.1"
         }
       ],
       "requires_env": [],
@@ -12558,7 +12732,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-mongo-server@3.0.1"
         }
       ],
       "requires_env": [],
@@ -12623,7 +12798,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mongo-mcp@0.2.0"
         }
       ],
       "requires_env": [
@@ -12698,7 +12874,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mongodb-mcp-server@3.1.0"
         }
       ],
       "requires_env": [],
@@ -12765,7 +12942,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mongodb-lens@9.1.4"
         }
       ],
       "requires_env": [
@@ -12837,7 +13015,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.morningstar.cn/mcp"
         }
       ],
       "requires_env": [],
@@ -12906,7 +13085,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-motherduck==1.1.0"
         }
       ],
       "requires_env": [],
@@ -12968,7 +13148,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mxapi.eastmoney.com/mxds/v2/mcp"
         }
       ],
       "requires_env": [],
@@ -13037,7 +13218,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mysql-mcp-server==0.4.4"
         }
       ],
       "requires_env": [
@@ -13133,7 +13315,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@benborla29/mcp-server-mysql@2.0.9"
         }
       ],
       "requires_env": [
@@ -13242,7 +13425,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@f4ww4z/mcp-mysql-server@0.1.0"
         }
       ],
       "requires_env": [
@@ -13317,7 +13501,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mysql-legacy-mcp@0.2.1"
         }
       ],
       "requires_env": [
@@ -13394,7 +13579,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "nocodb-mcp-server@1.0.24"
         }
       ],
       "requires_env": [],
@@ -13459,7 +13645,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-opendal==0.2.0"
         }
       ],
       "requires_env": [
@@ -13531,7 +13718,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://mcp.isjike.com/mcp-servers/opendata/mcp"
         }
       ],
       "requires_env": [
@@ -13623,7 +13811,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "opik-mcp==3.0.7"
         }
       ],
       "requires_env": [],
@@ -13685,7 +13874,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://pandadatamcp.pandaaiquant.com/mcp"
         }
       ],
       "requires_env": [],
@@ -13754,7 +13944,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@flowcore/platform-mcp-server@1.7.1"
         }
       ],
       "requires_env": [
@@ -13837,7 +14028,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "prometheus_mcp_server==1.6.2"
         }
       ],
       "requires_env": [],
@@ -13911,7 +14103,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -14009,7 +14202,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-qdrant==0.8.1"
         }
       ],
       "requires_env": [
@@ -14098,7 +14292,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.qixin.com/mcp"
         }
       ],
       "requires_env": [],
@@ -14168,7 +14363,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@gongrzhe/quickchart-mcp-server@1.0.6"
         }
       ],
       "requires_env": [],
@@ -14232,7 +14428,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "redis-mcp-server==0.5.1"
         }
       ],
       "requires_env": [
@@ -14306,7 +14503,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "singlestore-mcp-server==0.4.19"
         }
       ],
       "requires_env": [],
@@ -14369,7 +14567,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp_snowflake_server==0.4.0"
         }
       ],
       "requires_env": [
@@ -14495,7 +14694,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://api.chanyedata.com/mcp/c3f5924cc60dbe1729f5cc332e627304/mcp"
         }
       ],
       "requires_env": [
@@ -14575,7 +14775,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-starrocks==0.4.0"
         }
       ],
       "requires_env": [],
@@ -14637,7 +14838,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.supabase.com/mcp"
         }
       ],
       "requires_env": [],
@@ -14700,7 +14902,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@supabase/mcp-server-supabase@0.14.0"
         }
       ],
       "requires_env": [
@@ -14770,7 +14973,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "supabase-mcp-server==0.4"
         }
       ],
       "requires_env": [],
@@ -14831,7 +15035,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://talivia.com/mcp"
         }
       ],
       "requires_env": [],
@@ -14892,7 +15097,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://txmcp.tdx.com.cn:3001/txmcp"
         }
       ],
       "requires_env": [],
@@ -14973,7 +15179,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -15067,7 +15274,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-timeplus==0.1.6"
         }
       ],
       "requires_env": [
@@ -15166,7 +15374,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-tinybird==1.0.3"
         }
       ],
       "requires_env": [],
@@ -15228,7 +15437,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp-gateway.textmind-gz.com/mcp/tongzhou-research"
         }
       ],
       "requires_env": [],
@@ -15298,7 +15508,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@toolbox-sdk/server@1.15.0"
         }
       ],
       "requires_env": [],
@@ -15360,7 +15571,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-vikingdb==0.1.2"
         }
       ],
       "requires_env": [],
@@ -15422,7 +15634,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://stockbuddy.qq.com/cgi/cgi-bin/openai/mcp/mcp"
         }
       ],
       "requires_env": [],
@@ -15491,7 +15704,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "xiyan_mcp_server==0.1.7"
         }
       ],
       "requires_env": [],
@@ -15552,7 +15766,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://stargate.yingmi.com/mcp/v2?apiKey=${YINGMI_API_KEY}"
         }
       ],
       "requires_env": [
@@ -15629,7 +15844,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://super-ai-app.yunzhangfang.com/api/mcp/invoice/stream"
         }
       ],
       "requires_env": [],
@@ -15699,7 +15915,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@5dive/mcp@0.2.0"
         }
       ],
       "requires_env": [],
@@ -15763,7 +15980,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "apifox-mcp-server@0.0.18"
         }
       ],
       "requires_env": [
@@ -15842,7 +16060,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "apple-docs-2.0-mcp@3.0.0"
         }
       ],
       "requires_env": [],
@@ -15907,7 +16126,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@tiberriver256/mcp-server-azure-devops@0.1.53"
         }
       ],
       "requires_env": [
@@ -15989,7 +16209,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "bernstein==3.23.0"
         }
       ],
       "requires_env": [],
@@ -16053,7 +16274,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "bestax-mcp@1.18.13"
         }
       ],
       "requires_env": [],
@@ -16115,7 +16337,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://better-design.com/api/mcp"
         }
       ],
       "requires_env": [],
@@ -16177,7 +16400,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "bugsnag-mcp-server@1.1.0"
         }
       ],
       "requires_env": [
@@ -16251,7 +16475,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "clawtouch-mcp==0.5.2"
         }
       ],
       "requires_env": [],
@@ -16315,7 +16540,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "cli-mcp-server==0.2.5"
         }
       ],
       "requires_env": [
@@ -16389,7 +16615,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@cnbcool/mcp-server@0.6.7"
         }
       ],
       "requires_env": [
@@ -16509,7 +16736,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "code-graph-rag==0.3.13"
         }
       ],
       "requires_env": [],
@@ -16574,7 +16802,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "code-relay-mcp@3.1.0"
         }
       ],
       "requires_env": [],
@@ -16638,7 +16867,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "codemcp==0.6.0"
         }
       ],
       "requires_env": [],
@@ -16702,7 +16932,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "codex-control-plane-mcp==0.2.1"
         }
       ],
       "requires_env": [],
@@ -16766,7 +16997,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "coding-tools-mcp==0.5.0"
         }
       ],
       "requires_env": [
@@ -16839,7 +17071,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@concord-ai/concord-mcp@0.17.1"
         }
       ],
       "requires_env": [],
@@ -16903,7 +17136,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@wonderwhy-er/desktop-commander@0.3.1"
         }
       ],
       "requires_env": [],
@@ -16964,7 +17198,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://developertoolkit.ai/mcp"
         }
       ],
       "requires_env": [],
@@ -17028,7 +17263,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-fetch-server@1.1.2"
         }
       ],
       "requires_env": [],
@@ -17093,7 +17329,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@figwright/mcp@0.7.0"
         }
       ],
       "requires_env": [],
@@ -17157,7 +17394,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "flameox==0.2.9"
         }
       ],
       "requires_env": [],
@@ -17222,7 +17460,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "forevervm-mcp@0.1.35"
         }
       ],
       "requires_env": [],
@@ -17296,7 +17535,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -17389,7 +17629,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@gitee/mcp-gitee@1.0.0"
         }
       ],
       "requires_env": [
@@ -17474,7 +17715,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -17571,7 +17813,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "github-actions-mcp@1.0.1"
         }
       ],
       "requires_env": [],
@@ -17636,7 +17879,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@ddukbg/github-enterprise-mcp@1.3.0"
         }
       ],
       "requires_env": [
@@ -17717,7 +17961,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://api.githubcopilot.com/mcp/"
         }
       ],
       "requires_env": [],
@@ -17781,7 +18026,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@zereight/mcp-gitlab@2.3.13"
         }
       ],
       "requires_env": [
@@ -17856,7 +18102,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://huggingface.co/mcp?login"
         }
       ],
       "requires_env": [],
@@ -17920,7 +18167,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "iterm-mcp@1.2.6"
         }
       ],
       "requires_env": [],
@@ -17985,7 +18233,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "jarp-mcp@1.0.4"
         }
       ],
       "requires_env": [],
@@ -18049,7 +18298,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "jev-use@0.8.0"
         }
       ],
       "requires_env": [],
@@ -18112,7 +18362,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "jvm-mcp-server==0.1.0"
         }
       ],
       "requires_env": [],
@@ -18176,7 +18427,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@vodailocz/kilo-kit-mcp@1.9.0"
         }
       ],
       "requires_env": [],
@@ -18239,7 +18491,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "knowlyr-sandbox==0.1.2"
         }
       ],
       "requires_env": [],
@@ -18312,7 +18565,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -18405,7 +18659,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "lingshu-solver@1.0.25"
         }
       ],
       "requires_env": [],
@@ -18469,7 +18724,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@sylphx/lockdocs@0.7.0"
         }
       ],
       "requires_env": [],
@@ -18533,7 +18789,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@21st-dev/magic@0.2.3"
         }
       ],
       "requires_env": [],
@@ -18596,7 +18853,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@modelcontextprotocol/server-everything@2026.8.18"
         }
       ],
       "requires_env": [],
@@ -18685,7 +18943,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-git==2026.8.18"
         }
       ],
       "requires_env": [],
@@ -18777,7 +19036,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcptoon==0.8.31"
         }
       ],
       "requires_env": [],
@@ -18842,7 +19102,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mem0-mcp-server==0.2.1"
         }
       ],
       "requires_env": [
@@ -18926,7 +19187,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mobilebuildmcp@2.7.1"
         }
       ],
       "requires_env": [],
@@ -18987,7 +19249,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://news.ycombinator.com"
         }
       ],
       "requires_env": [],
@@ -19050,7 +19313,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "pal-mcp-server==11.8.2"
         }
       ],
       "requires_env": [],
@@ -19115,7 +19379,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-probe-kit@4.1.1"
         }
       ],
       "requires_env": [
@@ -19201,7 +19466,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@jetbrains/mcp-proxy@1.8.0"
         }
       ],
       "requires_env": [],
@@ -19263,7 +19529,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-python-interpreter==1.2.3"
         }
       ],
       "requires_env": [],
@@ -19327,7 +19594,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "ref-tools-mcp@3.0.3"
         }
       ],
       "requires_env": [],
@@ -19389,7 +19657,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://mcp.remotearc.app/mcp"
         }
       ],
       "requires_env": [],
@@ -19452,7 +19721,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "remotify-mcp@0.6.2"
         }
       ],
       "requires_env": [],
@@ -19517,7 +19787,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@sylphx/repomap@1.9.0"
         }
       ],
       "requires_env": [],
@@ -19581,7 +19852,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "restcsv-mcp-server@1.0.1"
         }
       ],
       "requires_env": [
@@ -19655,7 +19927,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "roundtable-ai==0.8.0"
         }
       ],
       "requires_env": [],
@@ -19718,7 +19991,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "semble==0.7.0"
         }
       ],
       "requires_env": [],
@@ -19782,7 +20056,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "semgrep-mcp==0.9.0"
         }
       ],
       "requires_env": [
@@ -19855,7 +20130,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@sentry/mcp-server@0.37.0"
         }
       ],
       "requires_env": [
@@ -19949,7 +20225,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "serena-agent==2.1.0"
         }
       ],
       "requires_env": [],
@@ -20014,7 +20291,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@jpisnice/shadcn-ui-mcp-server@3.0.0"
         }
       ],
       "requires_env": [
@@ -20088,7 +20366,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-shell-server==1.1.14"
         }
       ],
       "requires_env": [],
@@ -20151,7 +20430,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "since-cutoff==0.5.0"
         }
       ],
       "requires_env": [],
@@ -20213,7 +20493,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://mcp.squirrelscan.com/mcp"
         }
       ],
       "requires_env": [],
@@ -20287,7 +20568,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -20398,7 +20680,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -20495,7 +20778,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-text-editor==1.2.2"
         }
       ],
       "requires_env": [],
@@ -20560,7 +20844,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-typescribe@0.8.1"
         }
       ],
       "requires_env": [
@@ -20631,7 +20916,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://uizze.com/mcp"
         }
       ],
       "requires_env": [],
@@ -20695,7 +20981,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "xcodebuildmcp@2.7.0"
         }
       ],
       "requires_env": [],
@@ -20759,7 +21046,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@yepcode/mcp-server@1.6.0"
         }
       ],
       "requires_env": [
@@ -20829,7 +21117,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://apigateway.gaodun.com/dyson/mcp"
         }
       ],
       "requires_env": [],
@@ -20909,7 +21198,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -21001,7 +21291,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://aiteach.qq.com/mcp"
         }
       ],
       "requires_env": [],
@@ -21071,7 +21362,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "adls2-mcp-server==0.1.4"
         }
       ],
       "requires_env": [],
@@ -21136,7 +21428,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@elliotllliu/agent-shield@0.16.0"
         }
       ],
       "requires_env": [],
@@ -21201,7 +21494,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-agentgate@0.67.61"
         }
       ],
       "requires_env": [],
@@ -21265,7 +21559,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "agentwarden-cli@0.3.7"
         }
       ],
       "requires_env": [],
@@ -21329,7 +21624,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "alibabacloud-dataworks-mcp-server@1.0.45"
         }
       ],
       "requires_env": [
@@ -21559,7 +21855,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "aws-mcp==1.7.0"
         }
       ],
       "requires_env": [],
@@ -21620,7 +21917,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://bugly.tds.qq.com/mcp"
         }
       ],
       "requires_env": [
@@ -21697,7 +21995,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://cisp.zenitera.com/mcp"
         }
       ],
       "requires_env": [
@@ -21777,7 +22076,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@cloudflare/mcp-server-cloudflare@0.2.0"
         }
       ],
       "requires_env": [
@@ -21848,7 +22148,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "cos-mcp@1.0.15"
         }
       ],
       "requires_env": [
@@ -21946,7 +22247,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "dcs-cloud-mcp-server@2.0.0"
         }
       ],
       "requires_env": [
@@ -22029,7 +22331,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@burtthecoder/mcp-dnstwist@1.1.1"
         }
       ],
       "requires_env": [],
@@ -22091,7 +22394,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "docker-mcp==0.2.0"
         }
       ],
       "requires_env": [],
@@ -22174,7 +22478,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "edgeone-pages-mcp@0.0.16"
         }
       ],
       "requires_env": [
@@ -22253,7 +22558,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "fencescan@0.1.4"
         }
       ],
       "requires_env": [],
@@ -22317,7 +22623,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "genieacs-mcp@0.4.0"
         }
       ],
       "requires_env": [],
@@ -22382,7 +22689,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "ida-pro-mcp==1.4.0"
         }
       ],
       "requires_env": [],
@@ -22447,7 +22755,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-ipfs@0.1.9"
         }
       ],
       "requires_env": [
@@ -22522,7 +22831,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@jshookmcp/jshook@0.4.2"
         }
       ],
       "requires_env": [],
@@ -22586,7 +22896,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "keystash==0.4.2"
         }
       ],
       "requires_env": [],
@@ -22649,7 +22960,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "knowlyr-modelaudit==0.4.1"
         }
       ],
       "requires_env": [],
@@ -22714,7 +23026,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "kubectl-mcp-server@2.0.0"
         }
       ],
       "requires_env": [],
@@ -22779,7 +23092,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-server-kubernetes@4.2.1"
         }
       ],
       "requires_env": [],
@@ -22844,7 +23158,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-maigret@1.0.17"
         }
       ],
       "requires_env": [],
@@ -22910,7 +23225,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@johnneerdael/ns-private-access-mcp@6.3.0"
         }
       ],
       "requires_env": [],
@@ -22974,7 +23290,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@kryptosai/mcp-observatory@1.50.1"
         }
       ],
       "requires_env": [],
@@ -23037,7 +23354,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "openosint==2.36.1"
         }
       ],
       "requires_env": [],
@@ -23102,7 +23420,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-output-firewall@0.3.0"
         }
       ],
       "requires_env": [],
@@ -23166,7 +23485,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@palisadeemail/mcp@0.2.1"
         }
       ],
       "requires_env": [],
@@ -23229,7 +23549,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@rad-security/mcp-server@0.0.47"
         }
       ],
       "requires_env": [],
@@ -23293,7 +23614,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-security-audit@1.0.4"
         }
       ],
       "requires_env": [],
@@ -23357,7 +23679,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@burtthecoder/mcp-shodan@1.0.34"
         }
       ],
       "requires_env": [
@@ -23441,7 +23764,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -23536,7 +23860,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "header"
+          "auth": "header",
+          "url": "https://mcp.terraform.io/mcp"
         }
       ],
       "requires_env": [],
@@ -23600,7 +23925,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "threatcluster-mcp@0.2.5"
         }
       ],
       "requires_env": [
@@ -23672,7 +23998,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcphub.chanapp.chanjet.com/151/mcp"
         }
       ],
       "requires_env": [],
@@ -23742,7 +24069,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@burtthecoder/mcp-virustotal@1.0.35"
         }
       ],
       "requires_env": [
@@ -23815,7 +24143,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@bharathvaj/whois-mcp@1.0.1"
         }
       ],
       "requires_env": [],
@@ -23878,7 +24207,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "wireshark-mcp==4.0.0"
         }
       ],
       "requires_env": [],
@@ -23942,7 +24272,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@zxkane/mcp-server-amazon-bedrock@0.1.1"
         }
       ],
       "requires_env": [
@@ -24033,7 +24364,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "apple-music-playlists==1.6.1"
         }
       ],
       "requires_env": [],
@@ -24098,7 +24430,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "bandcamp-mcp@0.1.2"
         }
       ],
       "requires_env": [],
@@ -24159,7 +24492,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://bibigpt.co/api/mcp"
         }
       ],
       "requires_env": [],
@@ -24223,7 +24557,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@xzxzzx/bilibili-mcp@1.14.5"
         }
       ],
       "requires_env": [],
@@ -24287,7 +24622,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "bilibili-mcp@0.1.2"
         }
       ],
       "requires_env": [],
@@ -24351,7 +24687,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "davinci-resolve-mcp@4.15.5"
         }
       ],
       "requires_env": [],
@@ -24415,7 +24752,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@deepdataspace/dinox-mcp@1.0.0"
         }
       ],
       "requires_env": [
@@ -24497,7 +24835,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "elevenlabs-mcp-server==0.1.2"
         }
       ],
       "requires_env": [
@@ -24581,7 +24920,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "elevenlabs-mcp==0.12.2"
         }
       ],
       "requires_env": [
@@ -24656,7 +24996,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "engine-dj-mcp@0.18.0"
         }
       ],
       "requires_env": [],
@@ -24721,7 +25062,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "figma-developer-mcp@0.13.2"
         }
       ],
       "requires_env": [
@@ -24794,7 +25136,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-for-blender==2.2.4"
         }
       ],
       "requires_env": [],
@@ -24858,7 +25201,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "freeaudiototext-mcp@1.0.0"
         }
       ],
       "requires_env": [],
@@ -24919,7 +25263,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "header"
+          "auth": "header",
+          "url": "https://getyoutubetranscript.com/api/mcp"
         }
       ],
       "requires_env": [],
@@ -24983,7 +25328,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@inhiblab-core/mcp-image-compression@0.1.2"
         }
       ],
       "requires_env": [
@@ -25058,7 +25404,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@gongrzhe/image-gen-server@1.0.1"
         }
       ],
       "requires_env": [
@@ -25132,7 +25479,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "local-gpu-imagegen==0.9.1"
         }
       ],
       "requires_env": [],
@@ -25192,7 +25540,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://mcp.magichour.ai/"
         }
       ],
       "requires_env": [],
@@ -25255,7 +25604,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@modelcontextprotocol/server-filesystem@2026.7.10"
         }
       ],
       "requires_env": [
@@ -25353,7 +25703,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "minimax-mcp==0.0.19"
         }
       ],
       "requires_env": [
@@ -25427,7 +25778,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.openshorts.app/mcp"
         }
       ],
       "requires_env": [],
@@ -25490,7 +25842,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-replicate@0.1.1"
         }
       ],
       "requires_env": [],
@@ -25555,7 +25908,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "replicate-flux-mcp@0.4.0"
         }
       ],
       "requires_env": [
@@ -25627,7 +25981,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "header"
+          "auth": "header",
+          "url": "https://mcp.runcomfy.com/mcp"
         }
       ],
       "requires_env": [],
@@ -25691,7 +26046,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "serato-dj-mcp@0.1.1"
         }
       ],
       "requires_env": [],
@@ -25756,7 +26112,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@speakai/mcp-server@1.39.0"
         }
       ],
       "requires_env": [
@@ -25826,7 +26183,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "header"
+          "auth": "header",
+          "url": "https://transcriptapi.com/mcp"
         }
       ],
       "requires_env": [],
@@ -25890,7 +26248,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "transcriptfetch-mcp@0.2.8"
         }
       ],
       "requires_env": [
@@ -25961,7 +26320,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.tryunsora.com/mcp"
         }
       ],
       "requires_env": [],
@@ -26024,7 +26384,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "video-editor-mcp==0.1.59"
         }
       ],
       "requires_env": [
@@ -26099,7 +26460,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@anaisbetts/mcp-youtube@0.8.0"
         }
       ],
       "requires_env": [],
@@ -26162,7 +26524,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@kimtaeyoon83/mcp-server-youtube-transcript@0.1.1"
         }
       ],
       "requires_env": [],
@@ -26226,7 +26589,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "zubeid-youtube-mcp-server@1.0.2"
         }
       ],
       "requires_env": [
@@ -26318,7 +26682,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "12306-mcp@0.3.10"
         }
       ],
       "requires_env": [],
@@ -26380,7 +26745,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://actablesite.com/mcp/"
         }
       ],
       "requires_env": [],
@@ -26442,7 +26808,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "agent-reach==0.1.0"
         }
       ],
       "requires_env": [],
@@ -26506,7 +26873,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "agentrpc@0.0.16"
         }
       ],
       "requires_env": [
@@ -26580,7 +26948,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@michalpiszczek/ai-economics-mcp@1.0.2"
         }
       ],
       "requires_env": [],
@@ -26643,7 +27012,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@openbnb/mcp-server-airbnb@0.3.0"
         }
       ],
       "requires_env": [],
@@ -26707,7 +27077,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@amap/amap-maps-mcp-server@0.0.8"
         }
       ],
       "requires_env": [
@@ -26778,7 +27149,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-ancestry==0.1.1"
         }
       ],
       "requires_env": [],
@@ -26842,7 +27214,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@pyroprompts/any-chat-completions-mcp@0.1.1"
         }
       ],
       "requires_env": [
@@ -26917,7 +27290,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@wangmhaha/apifox-mcp-server@1.7.5"
         }
       ],
       "requires_env": [
@@ -26995,7 +27369,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@dhravya/apple-mcp@0.2.7"
         }
       ],
       "requires_env": [],
@@ -27059,7 +27434,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@baidumap/mcp-server-baidu-map@1.0.5"
         }
       ],
       "requires_env": [
@@ -27131,7 +27507,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "balldontlie-mcp@0.6.5"
         }
       ],
       "requires_env": [
@@ -27206,7 +27583,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "bitcoin-mcp@0.0.6"
         }
       ],
       "requires_env": [],
@@ -27271,7 +27649,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "boltpatternhq-mcp@1.0.0"
         }
       ],
       "requires_env": [],
@@ -27335,7 +27714,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "cal-mcp@1.0.6"
         }
       ],
       "requires_env": [],
@@ -27400,7 +27780,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-calculator==0.2.1"
         }
       ],
       "requires_env": [],
@@ -27464,7 +27845,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "chess_mcp==0.1.7"
         }
       ],
       "requires_env": [],
@@ -27528,7 +27910,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@wong2/mcp-cli@2.0.0"
         }
       ],
       "requires_env": [],
@@ -27592,7 +27975,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-datetime==0.1.4"
         }
       ],
       "requires_env": [],
@@ -27654,7 +28038,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://example.com/story"
         }
       ],
       "requires_env": [],
@@ -27715,7 +28100,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://example.com"
         }
       ],
       "requires_env": [],
@@ -27779,7 +28165,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-server-giphy@1.0.3"
         }
       ],
       "requires_env": [
@@ -27854,7 +28241,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@coding-solo/godot-mcp@0.1.1"
         }
       ],
       "requires_env": [],
@@ -27915,7 +28303,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://mcp.gomdori.app/law?oc=honggildong"
         }
       ],
       "requires_env": [],
@@ -27979,7 +28368,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-graphql@2.0.4"
         }
       ],
       "requires_env": [],
@@ -28046,7 +28436,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-graphql-schema@0.0.2"
         }
       ],
       "requires_env": [
@@ -28118,7 +28509,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://gwmcp.lkcoffee.com/order/user/mcp"
         }
       ],
       "requires_env": [],
@@ -28180,7 +28572,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@llmindset/mcp-hfspace@0.5.4"
         }
       ],
       "requires_env": [],
@@ -28244,7 +28637,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@anaisbetts/mcp-installer@0.5.0"
         }
       ],
       "requires_env": [],
@@ -28307,7 +28701,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "interactive-mcp@1.10.1"
         }
       ],
       "requires_env": [],
@@ -28371,7 +28766,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-ip2location-io==1.1.2"
         }
       ],
       "requires_env": [
@@ -28445,7 +28841,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-ipinfo==0.7.0"
         }
       ],
       "requires_env": [],
@@ -28510,7 +28907,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "jacobian==0.23.0"
         }
       ],
       "requires_env": [],
@@ -28575,7 +28973,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@jinzcdev/leetcode-mcp-server@1.4.0"
         }
       ],
       "requires_env": [
@@ -28647,7 +29046,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "livetennisapi-mcp@1.6.4"
         }
       ],
       "requires_env": [
@@ -28719,7 +29119,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://motomarks.io/api/mcp"
         }
       ],
       "requires_env": [],
@@ -28782,7 +29183,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@lamemind/mcp-server-multiverse@1.1.4"
         }
       ],
       "requires_env": [
@@ -28856,7 +29258,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-server-nationalparks@1.0.1"
         }
       ],
       "requires_env": [],
@@ -28920,7 +29323,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "ns-mcp-server@0.1.6"
         }
       ],
       "requires_env": [],
@@ -28985,7 +29389,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "opanel-mcp@0.1.4"
         }
       ],
       "requires_env": [
@@ -29069,7 +29474,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@mzxrai/mcp-openai@0.1.1"
         }
       ],
       "requires_env": [
@@ -29143,7 +29549,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-openai==0.1.4"
         }
       ],
       "requires_env": [],
@@ -29207,7 +29614,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-openapi-schema@0.0.1"
         }
       ],
       "requires_env": [
@@ -29281,7 +29689,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "osm-mcp-server==0.1.1"
         }
       ],
       "requires_env": [],
@@ -29345,7 +29754,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "oura-mcp-server==0.1.3"
         }
       ],
       "requires_env": [
@@ -29419,7 +29829,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "parlayapi-mcp==0.3.8"
         }
       ],
       "requires_env": [
@@ -29494,7 +29905,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@pluggedin/pluggedin-mcp-proxy@3.0.0"
         }
       ],
       "requires_env": [
@@ -29567,7 +29979,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "screenpipe-mcp@0.20.3"
         }
       ],
       "requires_env": [],
@@ -29630,7 +30043,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-simple-openai-assistant==0.4.1"
         }
       ],
       "requires_env": [],
@@ -29693,7 +30107,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-simple-timeserver==3.3.2"
         }
       ],
       "requires_env": [],
@@ -29757,7 +30172,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@r-huijts/strava-mcp-server@1.2.1"
         }
       ],
       "requires_env": [],
@@ -29821,7 +30237,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "task-master-ai@0.43.1"
         }
       ],
       "requires_env": [
@@ -29955,7 +30372,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -30059,7 +30477,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -30160,7 +30579,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "tiktok-mcp@0.0.1"
         }
       ],
       "requires_env": [],
@@ -30224,7 +30644,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "MCP-timeserver==0.1.0"
         }
       ],
       "requires_env": [],
@@ -30289,7 +30710,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@signet-auth/mcp-tools@0.10.0"
         }
       ],
       "requires_env": [],
@@ -30352,7 +30774,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-triage@0.2.0"
         }
       ],
       "requires_env": [],
@@ -30416,7 +30839,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "unichat-mcp-server==0.2.21"
         }
       ],
       "requires_env": [
@@ -30491,7 +30915,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@pv-bhat/vibe-check-mcp@2.7.6"
         }
       ],
       "requires_env": [],
@@ -30555,7 +30980,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "voyp-mcp@0.1.0"
         }
       ],
       "requires_env": [],
@@ -30618,7 +31044,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-wolfram-alpha==0.2.1"
         }
       ],
       "requires_env": [],
@@ -30680,7 +31107,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://mcp.worklittle.com/"
         }
       ],
       "requires_env": [],
@@ -30742,7 +31170,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "ws-mcp==0.1.11"
         }
       ],
       "requires_env": [],
@@ -30806,7 +31235,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-server-apple-events@1.6.2"
         }
       ],
       "requires_env": [],
@@ -30870,7 +31300,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@ailenshen/apple-notes-mcp@2.0.2"
         }
       ],
       "requires_env": [],
@@ -30933,7 +31364,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-server-apple-shortcuts@1.0.1"
         }
       ],
       "requires_env": [],
@@ -30995,7 +31427,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://bingli.tengmed.com/mcp"
         }
       ],
       "requires_env": [],
@@ -31065,7 +31498,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@roychri/mcp-server-asana@1.8.0"
         }
       ],
       "requires_env": [
@@ -31138,7 +31572,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-atlassian==0.23.1"
         }
       ],
       "requires_env": [
@@ -31258,7 +31693,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "attio-mcp-server@0.0.2"
         }
       ],
       "requires_env": [
@@ -31343,7 +31779,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -31434,7 +31871,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "bear-mcp-server@1.0.0"
         }
       ],
       "requires_env": [],
@@ -31499,7 +31937,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "chinese-text-tools@1.0.3"
         }
       ],
       "requires_env": [],
@@ -31563,7 +32002,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "dart-mcp-server@0.2.2"
         }
       ],
       "requires_env": [],
@@ -31628,7 +32068,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@mastra/mcp-docs-server@1.3.9"
         }
       ],
       "requires_env": [],
@@ -31688,7 +32129,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://docs.qq.com/openapi/mcp"
         }
       ],
       "requires_env": [],
@@ -31751,7 +32193,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "dsh-novel-writer@6.9.0"
         }
       ],
       "requires_env": [
@@ -31826,7 +32269,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "evc-team-relay-mcp==1.0.9"
         }
       ],
       "requires_env": [
@@ -31910,7 +32354,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@negokaz/excel-mcp-server@0.12.0"
         }
       ],
       "requires_env": [],
@@ -31973,7 +32418,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "feishu-mcp@0.3.2"
         }
       ],
       "requires_env": [
@@ -32052,7 +32498,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-server-flomo@0.0.11"
         }
       ],
       "requires_env": [
@@ -32124,7 +32571,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "hackmd-mcp@1.5.7"
         }
       ],
       "requires_env": [
@@ -32198,7 +32646,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-home-assistant==0.1.0"
         }
       ],
       "requires_env": [],
@@ -32259,7 +32708,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://ima.qq.com/mcp"
         }
       ],
       "requires_env": [],
@@ -32339,7 +32789,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -32440,7 +32891,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -32526,7 +32978,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://mcp-center.wps.cn/skill_hub/mcp"
         }
       ],
       "requires_env": [],
@@ -32860,7 +33313,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@kj455/mcp-kibela@0.3.1"
         }
       ],
       "requires_env": [],
@@ -32924,7 +33378,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "linear-mcp-server@0.1.0"
         }
       ],
       "requires_env": [
@@ -32999,7 +33454,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@tacticlaunch/mcp-linear@1.4.5"
         }
       ],
       "requires_env": [],
@@ -33063,7 +33519,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@makehq/mcp-server@0.5.0"
         }
       ],
       "requires_env": [],
@@ -33126,7 +33583,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-time==2026.8.18"
         }
       ],
       "requires_env": [],
@@ -33203,7 +33661,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.meeting.tencent.com/mcp/wemeet-open/v1"
         }
       ],
       "requires_env": [],
@@ -33265,7 +33724,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@llmindset/mcp-miro@0.1.1"
         }
       ],
       "requires_env": [],
@@ -33330,7 +33790,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@k-jarzyna/mcp-miro@1.0.11"
         }
       ],
       "requires_env": [
@@ -33404,7 +33865,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "n8n-mcp@2.99.2"
         }
       ],
       "requires_env": [],
@@ -33477,7 +33939,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -33571,7 +34034,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@notionhq/notion-mcp-server@2.5.2"
         }
       ],
       "requires_env": [
@@ -33642,7 +34106,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@suekou/mcp-notion-server@2.0.2"
         }
       ],
       "requires_env": [
@@ -33715,7 +34180,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-obsidian==0.2.3"
         }
       ],
       "requires_env": [
@@ -33807,7 +34273,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-obsidian@1.0.0"
         }
       ],
       "requires_env": [],
@@ -33870,7 +34337,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "office-powerpoint-mcp-server==2.0.7"
         }
       ],
       "requires_env": [],
@@ -33934,7 +34402,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "office-word-mcp-server==1.1.11"
         }
       ],
       "requires_env": [],
@@ -33999,7 +34468,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@2nd1st/open-mcp-apps@0.10.1"
         }
       ],
       "requires_env": [],
@@ -34064,7 +34534,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@taskade/mcp-server@0.1.4"
         }
       ],
       "requires_env": [
@@ -34138,7 +34609,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-server-taskwarrior@1.0.1"
         }
       ],
       "requires_env": [],
@@ -34213,7 +34685,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -34299,7 +34772,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://www.weiyun.com/api/v3/mcpserver"
         }
       ],
       "requires_env": [],
@@ -34369,7 +34843,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@abhiz123/todoist-mcp-server@0.1.0"
         }
       ],
       "requires_env": [
@@ -34442,7 +34917,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@wenyan-md/mcp@2.0.4"
         }
       ],
       "requires_env": [],
@@ -34505,7 +34981,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-server-weread@0.2.2"
         }
       ],
       "requires_env": [
@@ -34586,7 +35063,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "yuque-mcp@1.0.0"
         }
       ],
       "requires_env": [
@@ -34660,7 +35138,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@taisly/agent@0.2.10"
         }
       ],
       "requires_env": [],
@@ -34720,7 +35199,8 @@
       "runtimes": [
         {
           "id": "remote",
-          "type": "http"
+          "type": "http",
+          "url": "https://aitoearn.ai/api/unified/mcp"
         }
       ],
       "requires_env": [
@@ -34795,7 +35275,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "douyin-mcp-server==1.2.1"
         }
       ],
       "requires_env": [],
@@ -34880,7 +35361,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "jobson-xhs-mcp==0.1.1"
         }
       ],
       "requires_env": [
@@ -35030,7 +35512,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@posteverywhere/mcp@1.14.2"
         }
       ],
       "requires_env": [],
@@ -35093,7 +35576,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "socialcrawl-mcp@1.9.0"
         }
       ],
       "requires_env": [
@@ -35184,7 +35668,8 @@
       "runtimes": [
         {
           "id": "remote",
-          "type": "http"
+          "type": "http",
+          "url": "http://localhost:18060/mcp"
         }
       ],
       "requires_env": [],
@@ -35252,7 +35737,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@apify/actors-mcp-server@0.19.5"
         }
       ],
       "requires_env": [],
@@ -35315,7 +35801,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "admapix-mcp==1.0.0"
         }
       ],
       "requires_env": [],
@@ -35380,7 +35867,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "agentql-mcp@1.0.1"
         }
       ],
       "requires_env": [],
@@ -35444,7 +35932,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "arxiv-mcp-server==0.8.2"
         }
       ],
       "requires_env": [],
@@ -35508,7 +35997,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "arxiv-latex-mcp==0.3.0"
         }
       ],
       "requires_env": [],
@@ -35570,7 +36060,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://mcp.bazhuayu.com?includeTools=search_templates,execute_task,get_task_status,export_data,search_tasks,start_or_stop_task"
         }
       ],
       "requires_env": [],
@@ -35640,7 +36131,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "bilibili-mcp-js@0.1.4"
         }
       ],
       "requires_env": [],
@@ -35705,7 +36197,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@brave/brave-search-mcp-server@2.1.4"
         }
       ],
       "requires_env": [
@@ -35780,7 +36273,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@brightdata/mcp@4.1.0"
         }
       ],
       "requires_env": [],
@@ -35845,7 +36339,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@mcp-browser-kit/server@11.0.1"
         }
       ],
       "requires_env": [],
@@ -35909,7 +36404,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@agentdeskai/browser-tools-mcp@2.0.4"
         }
       ],
       "requires_env": [],
@@ -35973,7 +36469,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "browser-use-mcp-server==1.0.3"
         }
       ],
       "requires_env": [],
@@ -36037,7 +36534,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@browsermcp/mcp@2.1.0"
         }
       ],
       "requires_env": [],
@@ -36101,7 +36599,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@buywhere/mcp-server@0.4.0"
         }
       ],
       "requires_env": [
@@ -36174,7 +36673,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "cdp-bridge==0.1.25"
         }
       ],
       "requires_env": [],
@@ -36238,7 +36738,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "chrome-devtools-mcp@1.7.0"
         }
       ],
       "requires_env": [],
@@ -36344,7 +36845,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "clojars-deps-server@0.2.0"
         }
       ],
       "requires_env": [],
@@ -36408,7 +36910,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "duckduckgo-mcp-server==0.7.0"
         }
       ],
       "requires_env": [],
@@ -36473,7 +36976,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-server-dumplingai@1.1.3"
         }
       ],
       "requires_env": [
@@ -36544,7 +37048,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "header"
+          "auth": "header",
+          "url": "https://mcp.episkeyai.com/groksearch_rs/mcp"
         }
       ],
       "requires_env": [],
@@ -36605,7 +37110,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none"
+          "auth": "none",
+          "url": "https://mcp.exa.ai/mcp"
         }
       ],
       "requires_env": [],
@@ -36668,7 +37174,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "exa-mcp-server@3.4.2"
         }
       ],
       "requires_env": [
@@ -36740,7 +37247,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "fetcher-mcp@0.3.9"
         }
       ],
       "requires_env": [],
@@ -36805,7 +37313,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@agentage/find-mcp@1.13.2"
         }
       ],
       "requires_env": [],
@@ -36869,7 +37378,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "firecrawl-mcp@3.36.0"
         }
       ],
       "requires_env": [],
@@ -36930,7 +37440,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "header"
+          "auth": "header",
+          "url": "https://firstdata.deepminer.com.cn/mcp"
         }
       ],
       "requires_env": [],
@@ -36993,7 +37504,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@chanmeng666/google-news-server@1.0.1"
         }
       ],
       "requires_env": [
@@ -37065,7 +37577,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@adenot/mcp-google-search@0.3.1"
         }
       ],
       "requires_env": [
@@ -37147,7 +37660,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-hn==0.1.0"
         }
       ],
       "requires_env": [],
@@ -37211,7 +37725,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@wopal/mcp-server-hotnews@0.2.0"
         }
       ],
       "requires_env": [],
@@ -37274,7 +37789,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "hyperbrowser-mcp@1.0.25"
         }
       ],
       "requires_env": [
@@ -37349,7 +37865,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "job-searchoor@0.1.5"
         }
       ],
       "requires_env": [],
@@ -37413,7 +37930,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "kagimcp==1.0.2"
         }
       ],
       "requires_env": [],
@@ -37477,7 +37995,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@modelcontextprotocol/server-brave-search@0.6.2"
         }
       ],
       "requires_env": [
@@ -37563,7 +38082,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-fetch==2026.8.18"
         }
       ],
       "requires_env": [],
@@ -37642,7 +38162,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@mobilenext/mobile-mcp@1.0.14"
         }
       ],
       "requires_env": [],
@@ -37706,7 +38227,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@isnow890/naver-search-mcp@1.0.54"
         }
       ],
       "requires_env": [],
@@ -37767,7 +38289,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "header"
+          "auth": "header",
+          "url": "https://mcp.novada.com/mcp"
         }
       ],
       "requires_env": [],
@@ -37830,7 +38353,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "open-websearch@2.2.0"
         }
       ],
       "requires_env": [],
@@ -37894,7 +38418,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "openai-websearch-mcp==0.4.3"
         }
       ],
       "requires_env": [
@@ -37969,7 +38494,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "openhire==0.8.28"
         }
       ],
       "requires_env": [],
@@ -38032,7 +38558,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "oxylabs-mcp==0.10.0"
         }
       ],
       "requires_env": [
@@ -38116,7 +38643,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@perplexity-ai/mcp-server@1.3.0"
         }
       ],
       "requires_env": [
@@ -38188,7 +38716,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@playwright/mcp@0.0.79"
         }
       ],
       "requires_env": [],
@@ -38373,7 +38902,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@automatalabs/mcp-server-playwright@1.2.1"
         }
       ],
       "requires_env": [],
@@ -38435,7 +38965,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "playwright-server==0.2.1"
         }
       ],
       "requires_env": [],
@@ -38500,7 +39031,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@executeautomation/playwright-mcp-server@1.0.12"
         }
       ],
       "requires_env": [],
@@ -38564,7 +39096,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@apify/mcp-server-rag-web-browser@0.1.4"
         }
       ],
       "requires_env": [
@@ -38639,7 +39172,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "safari-mcp@2.22.19"
         }
       ],
       "requires_env": [],
@@ -38703,7 +39237,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "scrapling-fetch-mcp==0.2.6"
         }
       ],
       "requires_env": [],
@@ -38767,7 +39302,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@screenshotone/mcp@1.1.1"
         }
       ],
       "requires_env": [],
@@ -38830,7 +39366,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "search1api-mcp@0.9.0"
         }
       ],
       "requires_env": [
@@ -38904,7 +39441,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "mcp-searxng@2.9.0"
         }
       ],
       "requires_env": [
@@ -38978,7 +39516,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-searxng==0.1.0"
         }
       ],
       "requires_env": [],
@@ -39043,7 +39582,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "secret-design-mcp@0.6.0"
         }
       ],
       "requires_env": [
@@ -39125,7 +39665,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-simple-arxiv==0.6.0"
         }
       ],
       "requires_env": [],
@@ -39188,7 +39729,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-simple-pubmed==0.1.16"
         }
       ],
       "requires_env": [],
@@ -39252,7 +39794,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "tavily-mcp@0.2.22"
         }
       ],
       "requires_env": [],
@@ -39317,7 +39860,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@mcptools/mcp-tavily@1.0.0"
         }
       ],
       "requires_env": [
@@ -39401,7 +39945,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [
@@ -39493,7 +40038,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "trieve-mcp-server@0.1.3"
         }
       ],
       "requires_env": [
@@ -39568,7 +40114,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@vectorize-io/vectorize-mcp-server@0.4.3"
         }
       ],
       "requires_env": [
@@ -39669,7 +40216,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "totalclaw-mcp-servers==0.1.0"
         }
       ],
       "requires_env": [],
@@ -39750,7 +40298,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@webclaw/mcp@0.7.0"
         }
       ],
       "requires_env": [],
@@ -39814,7 +40363,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "@mzxrai/mcp-webresearch@0.1.7"
         }
       ],
       "requires_env": [],
@@ -39875,7 +40425,8 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "oauth"
+          "auth": "oauth",
+          "url": "https://api.you.com/mcp"
         }
       ],
       "requires_env": [],
@@ -39939,7 +40490,8 @@
         {
           "id": "npx",
           "type": "stdio",
-          "launcher": "npx"
+          "launcher": "npx",
+          "package": "zero-api-key-web-search@21.0.0"
         }
       ],
       "requires_env": [],
@@ -40002,7 +40554,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "zoom-search==0.1.6"
         }
       ],
       "requires_env": [],
@@ -40066,7 +40619,8 @@
         {
           "id": "uvx",
           "type": "stdio",
-          "launcher": "uvx"
+          "launcher": "uvx",
+          "package": "mcp-server-zoomeye==0.1.6"
         }
       ],
       "requires_env": [
