@@ -1,0 +1,44 @@
+# 手写条目——端点是 TopView 官方自有的 Canvas MCP（topviewai/plugins 的 plugins/topview-browser/.mcp.json）。
+# 实测 2026-10-28：POST https://mcp-browser.topview.ai 返回 401 + WWW-Authenticate 带
+# resource_metadata；/.well-known/oauth-protected-resource 的 authorization_servers 是 https://mcp.topview.ai，
+# scope mcp:tools，故 auth: oauth —— 装完跑 totalclaw mcp login topview_canvas 浏览器授权。
+# 与 topview_official（生成 + 电商数据）不同：这里操作 Canvas 画布节点、分镜、时间线与导出。人工修改后请递增 version。
+# 官方页面 https://www.topview.ai/mcp 注明：Unlimited 套餐不支持 MCP / Plugin / Skill（不支持自动化工作流）。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: topview_canvas
+display_name: TopView Canvas 画布 MCP
+display_name_en: TopView Canvas MCP
+version: 0.1.0
+description: TopView's official Canvas MCP — create and edit Canvas boards, storyboard scenes, generation cards, timelines and video export. OAuth sign-in.
+description_zh: TopView 官方 Canvas 画布 MCP：建画布、加素材/文本/分镜节点、在画布上提交生图生视频、拼时间线并导出长视频。浏览器 OAuth 登录，Unlimited 套餐不可用。
+author: vendor
+homepage: https://www.topview.ai/canvas
+repository: https://github.com/topviewai/plugins
+category: media
+tags:
+- vendor
+- topview
+- 画布
+- 分镜
+- 长视频
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp-browser.topview.ai
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: unscanned
+  prompt_injection_findings: []
+  osv: unscanned
+examples:
+- 新建一个 TopView 画布，按这份脚本拆成 5 个分镜
+- 把画布上这几段视频按顺序拼进时间线并导出成片
+- 列出我最近的 TopView 画布

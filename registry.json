@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-10-28T02:39:40Z",
+  "generated_at": "2026-10-28T04:31:41Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -26269,13 +26269,84 @@
       }
     },
     {
+      "name": "topview_canvas",
+      "id": "totalclaw-mcp/media/topview_canvas",
+      "display_name": "TopView Canvas 画布 MCP",
+      "display_name_en": "TopView Canvas MCP",
+      "description": "TopView's official Canvas MCP — create and edit Canvas boards, storyboard scenes, generation cards, timelines and video export. OAuth sign-in.",
+      "description_zh": "TopView 官方 Canvas 画布 MCP：建画布、加素材/文本/分镜节点、在画布上提交生图生视频、拼时间线并导出长视频。浏览器 OAuth 登录，Unlimited 套餐不可用。",
+      "version": "0.1.0",
+      "author": "vendor",
+      "homepage": "https://www.topview.ai/canvas",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "media",
+      "icon": "",
+      "tags": [
+        "vendor",
+        "topview",
+        "画布",
+        "分镜",
+        "长视频"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "http"
+      ],
+      "launchers": [],
+      "runtimes": [
+        {
+          "id": "remote",
+          "type": "http",
+          "auth": "oauth",
+          "url": "https://mcp-browser.topview.ai"
+        }
+      ],
+      "requires_env": [],
+      "optional_env": [],
+      "tools_count": 0,
+      "tools": [],
+      "security": {
+        "scan_verdict": "unscanned",
+        "prompt_injection_findings": [],
+        "osv": "unscanned"
+      },
+      "path": "registry/servers/media/topview_canvas",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/media/topview_canvas",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/media/topview_canvas"
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "f1a5f4763a26cb375c8f8e2fee25c710ee8718bf5f9d128cef1f9d367af8b11c",
+          "size": 2987
+        },
+        {
+          "path": "mcp.yaml",
+          "sha256": "6fe5d021328e7c8eb9e8cc27bb5bfc2a78c5ad6b040d741a883acca00c4990aa",
+          "size": 1924
+        }
+      ],
+      "bundle_sha256": "efc5b0ec33c3e3890082ecf673eb92e36845ed15943f258c49c15d9d9ea40e92",
+      "popularity": {
+        "score": 0
+      }
+    },
+    {
       "name": "topview_official",
       "id": "totalclaw-mcp/media/topview_official",
       "display_name": "TopView 官方 MCP（电商数据 + AI 生成）",
       "display_name_en": "TopView MCP",
       "description": "TopView's official hosted MCP — AI image/video/avatar/voice generation plus Amazon, TikTok Shop, Shopee and YouTube KOL data. OAuth sign-in; no product-link-to-video (use the topview server for that).",
       "description_zh": "TopView 官方托管 MCP：AI 生图/生视频（Seedance、Kling、Veo 等）/照片数字人/配音/抠图/商品模特图，以及 Amazon、TikTok Shop、Shopee、YouTube 达人数据。浏览器 OAuth 登录，Unlimited 套餐不可用；不含商品链接出片与公模数字人（用自研 topview）。",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "vendor",
       "homepage": "https://www.topview.ai",
       "verified": true,
@@ -26325,12 +26396,17 @@
       },
       "files": [
         {
+          "path": "README.md",
+          "sha256": "6f4e782f0fc903e38b2fc8f99093363ceaaa47a7e370ecfc266292fe1b824649",
+          "size": 3476
+        },
+        {
           "path": "mcp.yaml",
-          "sha256": "c231fcfdb04006a6c7a71bef233b5dc80dcfbab10ccf43a9a65b3c44380e0998",
-          "size": 2136
+          "sha256": "8be2ad65f2a1a1b1bd92e212edc20bdbfbad61d53d640b5f9ed9262762f86113",
+          "size": 2251
         }
       ],
-      "bundle_sha256": "2f8587a48516d3cd68c47c17ec89d59f4965b8a323aae16b73c71cd442f340a3",
+      "bundle_sha256": "926d0d7b2e9f5608d74833e0859113ad56053d3d71d82f6d5cdc95436a3b113a",
       "popularity": {
         "score": 0
       }
