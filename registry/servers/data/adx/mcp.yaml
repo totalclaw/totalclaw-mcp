@@ -1,15 +1,17 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：拒绝（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：osv 已知漏洞 GHSA-vphc-468g-8rfp（HIGH）：Azure Data Explorer MCP Server: KQL Injection in multiple tools allows MCP client to execute arbitrary Kusto queries；osv 已知漏洞 PYSEC-2026-2327（UNKNOWN）：Azure Data Explorer MCP Server: KQL Injection in multiple tools allows MCP client to execute arbitrary Kusto queries
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: adx
 display_name: adx-mcp-server
 display_name_en: adx-mcp-server
-version: 0.1.0
+version: 0.1.1
 description: MCP server for Azure Data Explorer integration
 description_zh: 查询和分析 Azure Data Explorer 数据库。
 author: pab1it0
+license: MIT
 homepage: https://github.com/pab1it0/adx-mcp-server
 repository: https://github.com/pab1it0/adx-mcp-server
 verified: false
@@ -32,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: block
+  osv: advisories:2

@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: chart
 display_name: AntV mcp-server-chart
 display_name_en: AntV mcp-server-chart
-version: 0.1.0
+version: 0.1.1
 description: A Model Context Protocol server for generating charts using AntV. This is a TypeScript-based MCP server that
   provides chart generation capabilities. It allows you to create various types of charts through MCP tools.
 description_zh: 蚂蚁 AntV 官方图表 MCP：25+ 种可视化图表（折线、柱状、饼图、桑基、思维导图、流程图、地理图等），让 AI 直接产出图表并返回图片链接。
@@ -14,7 +14,7 @@ author: antvis
 license: MIT
 homepage: https://github.com/antvis/mcp-server-chart
 repository: https://github.com/antvis/mcp-server-chart
-verified: false
+verified: true
 category: data
 tags:
 - data
@@ -35,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

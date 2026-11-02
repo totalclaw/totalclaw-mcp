@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,13 @@ tested_with: '>=0.63.72'
 name: callmemcp
 display_name: Call Me
 display_name_en: Call Me
-version: 0.1.0
+version: 0.1.1
 description: 让 AI Agent 拨打你的 iPhone：在真实来电中读出它的问题，并把你的语音回答转成文字作为工具结果返回；也可以给你发消息并等待回复。
 description_zh: 让 AI Agent 拨打你的 iPhone：在真实来电中读出它的问题，并把你的语音回答转成文字作为工具结果返回；也可以给你发消息并等待回复。
 author: radres
 homepage: https://github.com/radres/call-me
 repository: https://github.com/radres/call-me
-verified: false
+verified: true
 category: comm
 tags:
 - comm
@@ -28,3 +28,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

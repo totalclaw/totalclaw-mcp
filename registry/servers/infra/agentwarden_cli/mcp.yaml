@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: agentwarden_cli
 display_name: AgentWarden
 display_name_en: AgentWarden
-version: 0.1.0
+version: 0.1.1
 description: Zero-dependency static security gate, integrity lock and provenance SBOM for AI Agent Skills and MCP configurations
 description_zh: AI Agent Skill、Tool 与 MCP 配置静态安全门禁，检测凭证泄露、危险命令、提示词注入与供应链风险，用 skills.lock 锁定完整性并验证 Ed25519 来源。输出脱敏 SARIF /
   CycloneDX 1.5 SBOM，支持 GitHub Actions CI 阻断。
@@ -14,7 +14,7 @@ author: juangh123
 license: MIT
 homepage: https://github.com/juangh123/AgentWarden
 repository: https://github.com/juangh123/AgentWarden
-verified: false
+verified: true
 category: infra
 tags:
 - infra
@@ -35,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

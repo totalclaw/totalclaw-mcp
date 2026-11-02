@@ -1,12 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：没有找到开源许可证声明；包内含预编译二进制（静态看不到行为）：video_editor_mcp-0.1.59/video-player/downloader, video_editor_mcp-0.1.59/video-player/open-window, video_editor_mcp-0.1.59/video-player/vj-player 等 65 个
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: video_editor
 display_name: video-editing-mcp
 display_name_en: video-editing-mcp
-version: 0.1.0
+version: 0.1.1
 description: Video Jungle MCP Server for Adding, Analysing, Searching, and Editing Videos
 description_zh: 视频编辑神器，支持添加、分析、搜索和生成视频剪辑。
 author: burningion
@@ -41,3 +42,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

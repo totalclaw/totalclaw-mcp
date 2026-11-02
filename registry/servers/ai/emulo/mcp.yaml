@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: emulo
 display_name: Ditto
 display_name_en: Ditto
-version: 0.1.0
+version: 0.1.1
 description: Mine the messages you typed in local AI coding sessions into a you.md profile with dated receipts, and install
   it where your agent can read it.
 description_zh: 从本地 Claude Code、Codex 和 OpenCode 会话记录中提炼带证据的个人工作、设计和写作画像，并通过 MCP 向 AI 代理提供已生成的私有画像。
@@ -14,7 +14,7 @@ author: ohad6k
 license: MIT
 homepage: https://github.com/ohad6k/ditto
 repository: https://github.com/ohad6k/ditto
-verified: false
+verified: true
 category: ai
 tags:
 - ai
@@ -35,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

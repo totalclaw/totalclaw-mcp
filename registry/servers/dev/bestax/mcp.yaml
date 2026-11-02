@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: bestax
 display_name: Bestax
 display_name_en: Bestax
-version: 0.1.0
+version: 0.1.1
 description: MCP server for @allxsmith/bestax-bulma — component props, examples, CSS variables and agent skills, served offline
   from a version-pinned index
 description_zh: 为编码 Agent 提供 Bestax（基于 Bulma v1 的 React 组件库）的组件 props、示例、CSS 变量和 Agent Skills，离线运行。
@@ -14,7 +14,7 @@ author: allxsmith
 license: MIT
 homepage: https://github.com/allxsmith/bestax/tree/main/bestax-mcp
 repository: https://github.com/allxsmith/bestax/tree/main/bestax-mcp
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -35,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

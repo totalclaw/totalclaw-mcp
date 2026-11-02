@@ -1,12 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：人工复核：命中是敏感路径保护名单；postinstall 只给自带的 safari-helper 重签名（固定标识，保留辅助功能授权）；包内含预编译二进制（静态看不到行为）：package/safari-helper
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: safari
 display_name: safari-mcp
 display_name_en: safari-mcp
-version: 0.1.0
+version: 0.1.1
 description: Safari browser automation for AI agents — native macOS, zero Chrome overhead. 98 tools via AppleScript + JavaScript.
 description_zh: 原生 Safari 浏览器自动化，专为 macOS 设计。通过 AppleScript + JavaScript 提供 80 个工具，零 Chrome 开销，保留登录状态，后台静默运行。
 author: achiya-automation
@@ -34,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

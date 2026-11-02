@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: tapetide
 display_name: Tapetide
 display_name_en: Tapetide
-version: 0.1.0
+version: 0.1.1
 description: 'NSE BSE Indian stock market MCP server — 55 tools for Indian stock market data & research: live NSE/BSE quotes,
   financials, technicals, stock screener (326 ratios), analyst ratings, FII/DII flows, option chains & IV, index performance,
   parsed filings (ann'
@@ -15,7 +15,7 @@ author: Tapetide-hq
 license: MIT
 homepage: https://github.com/Tapetide-hq/nse-bse-indian-stock-market-data-mcp
 repository: https://github.com/Tapetide-hq/nse-bse-indian-stock-market-data-mcp
-verified: false
+verified: true
 category: biz
 tags:
 - biz
@@ -43,3 +43,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -29,3 +29,7 @@ registry.json.sig.tmp
 .idea/
 .vscode/
 *.swp
+
+# 静态审核逐条明细（大、含第三方代码片段），只留本地
+docs/review-*.json
+!docs/review-*-manual.json

@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,15 +6,16 @@ tested_with: '>=0.63.72'
 name: mysql
 display_name: mysql_mcp_server
 display_name_en: mysql_mcp_server
-version: 0.1.0
+version: 0.1.1
 description: A Model Context Protocol (MCP) server that enables secure interaction with MySQL databases. This server allows
   AI assistants to list tables, read data, and execute SQL queries through a controlled interface, making database exploration
   and analysis safer and more structured.
 description_zh: Python 实现的 MySQL 集成，带访问控制和模式检查。
 author: designcomputer
+license: MIT
 homepage: https://github.com/designcomputer/mysql_mcp_server
 repository: https://github.com/designcomputer/mysql_mcp_server
-verified: false
+verified: true
 category: data
 tags:
 - data
@@ -73,3 +74,6 @@ optional_env:
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

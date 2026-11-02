@@ -1,0 +1,306 @@
+{
+ "admapix": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中的 install.sh 是 sdist 里的手动安装助手（调用 nodesource 官方脚本），有 wheel，uvx 不会执行它"
+ },
+ "agentwarden_cli": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中的是安全检测规则里的特征字符串"
+ },
+ "atlassian": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中在 SSRF 单元测试的样例地址里"
+ },
+ "basic_memory": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是「请先安装 uv」的提示文案与路径穿越测试样例"
+ },
+ "bernstein": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是安装提示文案、异常行为检测规则与 SSH 后端配置示例"
+ },
+ "coding_tools": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是 cloudflared 公网隧道功能（用户主动开启）的报错文案"
+ },
+ "concord": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：curl … | sh 只出现在升级提示里，由 update-notifier 打印给用户，不会自动执行"
+ },
+ "davinci_resolve": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是「安装 ollama」的提示文案"
+ },
+ "duckduckgo": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中在 SSRF 单元测试的样例地址里"
+ },
+ "egc": {
+  "dismiss": [
+   "代码命中",
+   "有安装期执行的脚本 preinstall"
+  ],
+  "reason": "人工复核：preinstall 只检查 Node 版本与全局目录写权限；其余命中是受保护路径名单与提示文案"
+ },
+ "flameox": {
+  "dismiss": [
+   "代码命中",
+   "包内含预编译二进制"
+  ],
+  "reason": "人工复核：命中在测试夹具里（把环境变量写进本地临时文件做断言）；mcp-publisher 二进制（MCP 官方注册表发布工具）只误打进了 sdist，uvx 安装的 wheel 里没有"
+ },
+ "keboola": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是 flow 示例数据里的 webhook.site 样例地址"
+ },
+ "mcptoon": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中在测试里（192.0.2.1 为文档保留地址）"
+ },
+ "observatory": {
+  "dismiss": [
+   "代码命中",
+   "有安装期执行的脚本 postinstall"
+  ],
+  "reason": "人工复核：命中是检测规则；postinstall 只在安装方是 MCP 项目且显式开启 autoSetupCi 时写一份 CI workflow，默认不动"
+ },
+ "open_apps": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是代码注释"
+ },
+ "open_websearch": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中在 URL 安全测试的样例地址里"
+ },
+ "openhire": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是「安装 uv」的诊断提示与 SSRF 测试样例"
+ },
+ "openosint": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是「安装 ollama」的提示文案与 SSRF 测试样例"
+ },
+ "output_firewall": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是对抗样本语料与演示数据（本身是输出防火墙）"
+ },
+ "pal": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是 run-server.sh 里「安装 uv」的提示"
+ },
+ "piia_engram": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中在脱敏与 SSRF 测试样例里"
+ },
+ "roundtable_ai": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是「安装 Cursor」的提示文案"
+ },
+ "safari": {
+  "dismiss": [
+   "代码命中",
+   "有安装期执行的脚本 postinstall"
+  ],
+  "reason": "人工复核：命中是敏感路径保护名单；postinstall 只给自带的 safari-helper 重签名（固定标识，保留辅助功能授权）"
+ },
+ "scan": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是安全扫描规则里的敏感路径与可疑域名名单"
+ },
+ "serena_agent": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是语言服务器安装提示"
+ },
+ "since_cutoff": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中在测试样例里"
+ },
+ "starknet": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是 URL 拦截名单"
+ },
+ "task_master_ai": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是文档模板里的 nvm 安装说明"
+ },
+ "wireshark": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中是评测脚本里的提示注入对抗样本（203.0.113.0/24 为文档保留地址）"
+ },
+ "zotero": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "reason": "人工复核：命中在 Zotero 插件的诊断功能（调用 uv 官方安装脚本，非 MCP 服务进程）与测试里"
+ },
+ "ds": {
+  "dismiss": [
+   "代码命中",
+   "有安装期执行的脚本 setup.py"
+  ],
+  "reason": "人工复核：setup.py 是交互式开发助手（每一步先问 y/n），不是构建脚本；且有 wheel，uvx 不会执行它"
+ },
+ "markdownify": {
+  "dismiss": [
+   "有安装期执行的脚本 preinstall"
+  ],
+  "reason": "人工复核：preinstall 在包目录建 venv 并 pip 安装 markitdown[all]（微软官方包）"
+ },
+ "apple_events": {
+  "dismiss": [
+   "有安装期执行的脚本 postinstall"
+  ],
+  "reason": "人工复核：postinstall 只在缺少预编译 event 程序时从源码编译"
+ },
+ "kubectl": {
+  "dismiss": [
+   "有安装期执行的脚本 postinstall"
+  ],
+  "reason": "人工复核：postinstall 只检测 python / uv 版本并打印提示"
+ },
+ "local": {
+  "dismiss": [
+   "有安装期执行的脚本 postinstall"
+  ],
+  "reason": "人工复核：postinstall 只 npm 安装 @huggingface/transformers@^3"
+ },
+ "linear_tacticlaunch": {
+  "dismiss": [
+   "有安装期执行的脚本 postinstall"
+  ],
+  "reason": "人工复核：postinstall 只给入口文件 chmod 755"
+ },
+ "fetcher": {
+  "dismiss": [
+   "有安装期执行的脚本 postinstall"
+  ],
+  "reason": "人工复核：postinstall 为 playwright install chromium（下载 Playwright 官方 Chromium）"
+ },
+ "webresearch": {
+  "dismiss": [
+   "有安装期执行的脚本 postinstall"
+  ],
+  "reason": "人工复核：postinstall 为 playwright install chromium（下载 Playwright 官方 Chromium）"
+ },
+ "genieacs": {
+  "verdict": "warn",
+  "reason": "人工复核：postinstall 从 GitHub Release 下载预编译 Go 二进制（按包内 checksums.txt 校验 sha256），实际运行的是二进制，静态看不到行为"
+ },
+ "desktop_commander": {
+  "verdict": "warn",
+  "reason": "人工复核：postinstall 未经同意向 telemetry.desktopcommander.app 上报安装环境（含 CI 仓库名、工作流名等）"
+ },
+ "agent_shield": {
+  "verdict": "block",
+  "reason": "人工复核：MCP 工具 multi_engine_scan 运行时自动安装扫描引擎——curl 下载 aguara 最新版二进制，失败则 curl main 分支 install.sh | bash，并以 pip3 --break-system-packages 安装 semgrep 等，属于「下载并执行远程脚本」（看不出恶意，但行为本身越界）；另外条目 npx 启动的是 CLI（agent-shield），不是 MCP 服务（agent-shield-mcp）"
+ },
+ "apple_music_playlists": {
+  "verdict": "warn",
+  "reason": "人工复核：会读取并解密 Apple Music for Windows（WebView2）cookie 库里的 media-user-token（只取这一项、只发往 api.music.apple.com），并从网页 JS 抓取 Apple 开发者令牌；无外传迹象，但涉及解密浏览器 cookie 库"
+ },
+ "job_searchoor": {
+  "verdict": "warn",
+  "reason": "人工复核：服务端写死为作者个人 ngrok 免费隧道 terribly-true-mullet.ngrok-free.app，搜索内容发往不可信、随时会失效的地址"
+ },
+ "remotify": {
+  "verdict": "warn",
+  "reason": "人工复核：设计上经第三方中继 relay.remotify.run 在远程机器执行 shell 命令（目标机需 curl … | bash 运行 runner 脚本），命令与输出都经过第三方服务器"
+ },
+ "email_client": {
+  "verdict": "block",
+  "reason": "人工复核：装错包——PyPI 上的 email_client 是 2020 年的无关旧包（元数据仓库 Flesspro/email-client 已不存在）；条目所指 ZilongXue/claude-post 只支持源码安装，它的包名虽然也叫 email_client 但从未发布到 PyPI"
+ },
+ "agent_reach": {
+  "verdict": "block",
+  "reason": "人工复核：装错包——条目所指 Panniantong/Agent-Reach 的安装文档明确写着「PyPI 上名为 agent-reach 的包不是本项目，切勿从 PyPI 安装」；PyPI 包实为 jgalea/agent-reach"
+ },
+ "github_actions": {
+  "verdict": "warn",
+  "reason": "人工复核：条目仓库 ko1ynnky/github-actions-mcp-server 只支持源码安装，npm 包由 fork 仓库 msoq/github-actions-mcp 发布"
+ },
+ "milvus": {
+  "dismiss": [
+   "代码命中"
+  ],
+  "verdict": "warn",
+  "reason": "人工复核：PyPI 包由第三方 danchev 从 zilliztech 官方仓库 fork 后发布（dev 版本），官方仓库只支持源码安装"
+ },
+ "example": {
+  "verdict": "block",
+  "reason": "人工复核：导入错误——url 是上游 README 里工具调用参数的示例地址（example.com），不是 MCP 端点；上游 pskill9/hn-server 是本地 stdio 服务器"
+ },
+ "example_pskill9": {
+  "verdict": "block",
+  "reason": "人工复核：导入错误——url 是上游 README 里工具调用参数的示例地址（example.com），不是 MCP 端点；上游 pskill9/website-downloader 是本地 stdio 服务器"
+ },
+ "news_ycombinator": {
+  "verdict": "block",
+  "reason": "人工复核：导入错误——url 是 Hacker News 网站首页（上游 README 里的示例参数），不是 MCP 端点；上游 dontpayfull/AInotate 是本地 stdio 服务器（ainotate mcp）"
+ },
+ "gomdori": {
+  "verdict": "warn",
+  "reason": "人工复核：url 写死了韩国法制处 OPEN API 的示例 OC 参数 honggildong（示例用户名），需要用户换成自己的 OC 才能正常使用"
+ },
+ "stripe": {
+  "dismiss": [
+   "仓库 stripe/ai 的清单文件"
+  ],
+  "reason": "人工复核：stripe/ai 是 monorepo，tools/modelcontextprotocol/package.json 声明 @stripe/mcp 0.3.3，与钉的版本一致；@stripe 是 Stripe 官方 npm 组织"
+ },
+ "forevervm": {
+  "dismiss": [
+   "仓库 jamsocket/forevervm 的清单文件"
+  ],
+  "reason": "人工复核：jamsocket/forevervm 是 monorepo，javascript/mcp-server/package.json 声明同名包 forevervm-mcp"
+ }
+}

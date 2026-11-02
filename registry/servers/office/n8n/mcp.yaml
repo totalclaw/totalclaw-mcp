@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,14 @@ tested_with: '>=0.63.72'
 name: n8n
 display_name: n8n-mcp
 display_name_en: n8n-mcp
-version: 0.1.0
+version: 0.1.1
 description: Integration between n8n workflow automation and Model Context Protocol (MCP)
 description_zh: 让 Claude Code / Cursor / Windsurf 直接构建 n8n 工作流：提供 n8n 全部节点的文档、参数与校验能力，AI 生成的工作流可先校验再部署。
 author: czlonkowski
 license: MIT
 homepage: https://github.com/czlonkowski/n8n-mcp
 repository: https://github.com/czlonkowski/n8n-mcp
-verified: false
+verified: true
 category: office
 tags:
 - office
@@ -34,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,14 @@ tested_with: '>=0.63.72'
 name: palisadeemail
 display_name: Palisade
 display_name_en: Palisade
-version: 0.1.0
+version: 0.1.1
 description: 'Local stdio bridge to the Palisade MCP server (email authentication: SPF, DKIM, DMARC, MTA-STS, BIMI).'
 description_zh: Palisade 官方 MCP 服务器，让 AI 代理管理 DMARC、SPF、DKIM、BIMI、MTA-STS、DNS 记录、域名验证与邮件认证修复任务。
 author: palisadeemail
 license: MIT
 homepage: https://github.com/palisadeemail/palisade-mcp
 repository: https://github.com/palisadeemail/palisade-mcp
-verified: false
+verified: true
 category: infra
 tags:
 - infra
@@ -34,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

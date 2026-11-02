@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,14 @@ tested_with: '>=0.63.72'
 name: makehq
 display_name: Make
 display_name_en: Make
-version: 0.1.0
+version: 0.1.1
 description: MCP server for interacting with Make automations
 description_zh: Make 官方集成，将 Make 场景转换为 AI 助手可调用的工具。
 author: integromat
 license: MIT
 homepage: https://github.com/integromat/make-mcp-server
 repository: https://github.com/integromat/make-mcp-server
-verified: false
+verified: true
 category: office
 tags:
 - office
@@ -34,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: fidelis_memory
 display_name: Fidelis Memory
 display_name_en: Fidelis Memory
-version: 0.1.0
+version: 0.1.1
 description: 'Fidelis Memory: faithful agent memory with zero-LLM retrieval by default. By Hermes Labs.'
 description_zh: 面向 Claude Code、Codex 等 AI Agent 的本地优先记忆服务：默认 MCP 召回为本地向量检索，可显式启用关键词 + 向量混合检索（BM25 + RRF，需 hybrid 扩展），均不调用生成式模型改写记忆，返回原始存储的笔记片段而非改写摘要；MCP
   提供 `fidelis_recall`、`fidelis_query`、`fidelis_health`、`fidelis_orient` 4 个工具。
@@ -14,7 +14,7 @@ author: hermes-labs-ai
 license: MIT
 homepage: https://github.com/hermes-labs-ai/fidelis
 repository: https://github.com/hermes-labs-ai/fidelis
-verified: false
+verified: true
 category: ai
 tags:
 - ai
@@ -34,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

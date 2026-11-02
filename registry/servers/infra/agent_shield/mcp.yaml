@@ -1,12 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：拒绝（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：人工复核：MCP 工具 multi_engine_scan 运行时自动安装扫描引擎——curl 下载 aguara 最新版二进制，失败则 curl main 分支 install.sh | bash，并以 pip3 --break-system-packages 安装 semgrep 等，属于「下载并执行远程脚本」（看不出恶意，但行为本身越界）；另外条目 npx 启动的是 CLI（agent-shield），不是 MCP 服务（agent-shield-mcp）；代码命中「下载即执行(curl|sh)」：package/dist/engines/aguara.js；代码命中「下载即执行(curl|sh)」：package/dist/engines/auto-install.js；代码命中「可疑外传端点」：package/dist/rules/prompt-injection.js；代码命中「读取 SSH 私钥」：package/dist/rules/sensitive-read.js；代码命中「下载即执行(curl|sh)」：package/dist/rules/skill-hijack.js
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: agent_shield
 display_name: AgentShield
 display_name_en: AgentShield
-version: 0.1.0
+version: 0.1.1
 description: Multi-engine AI agent security scanner — one scan, four engines, one report
 description_zh: AI Agent 技能、MCP 服务器和插件安全扫描器。30 条检测规则，支持 AST 污点追踪、跨文件数据流分析、杀伤链检测、8 语言提示注入检测（中/日/韩/俄/阿/西/法/德）。零安装 (npx)，100%
   离线运行。
@@ -35,3 +36,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: block
+  osv: clean

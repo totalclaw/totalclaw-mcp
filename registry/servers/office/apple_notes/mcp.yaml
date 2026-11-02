@@ -1,12 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：包内含预编译二进制（静态看不到行为）：package/AppleNotesMCP.app/Contents/MacOS/AppleNotesMCP
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: apple_notes
 display_name: apple-notes-mcp
 display_name_en: apple-notes-mcp
-version: 0.1.0
+version: 0.1.1
 description: 'Read and edit Apple Notes from AI assistants over MCP: native formatting, in-place edits, tables, iCloud sync'
 description_zh: Apple Notes 双向 Markdown 转换：读取笔记为 Markdown，写入 Markdown 自动转为原生格式。SQLite 直连 <100ms，支持 stdio + HTTP 双模式。
 author: ailenshen
@@ -34,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

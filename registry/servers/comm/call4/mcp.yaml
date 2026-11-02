@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,13 @@ tested_with: '>=0.63.72'
 name: call4
 display_name: call4me
 display_name_en: call4me
-version: 0.1.0
+version: 0.1.1
 description: 让 AI 代理替用户拨打真实电话：预约看诊、订餐厅、取消订阅、改签航班等，可自动处理电话语音菜单，结束后返回通话记录和结果，也可把用户接入正在进行的通话。
 description_zh: 让 AI 代理替用户拨打真实电话：预约看诊、订餐厅、取消订阅、改签航班等，可自动处理电话语音菜单，结束后返回通话记录和结果，也可把用户接入正在进行的通话。
 author: skeptrunedev
 homepage: https://github.com/skeptrunedev/call4me
 repository: https://github.com/skeptrunedev/call4me
-verified: false
+verified: true
 category: comm
 tags:
 - comm
@@ -28,3 +28,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: pangolinfo
 display_name: pangolinfo-mcp
 display_name_en: pangolinfo-mcp
-version: 0.1.0
+version: 0.1.1
 description: 亚马逊数据 MCP 服务，提供 19 个只读工具：商品详情、评论、关键词搜索、类目与蓝海细分分析、Best Sellers、New Releases、卖家店铺在售商品，以及 AI Overview / AI Mode
   搜索结果与关键词趋势；另含 WIPO 商标检索与美国 PACER 专利诉讼查询，可在上架前排查 IP 风险。通过远程 Streamable HTTP 端点接入，无需自建爬虫与代理池。
 description_zh: 亚马逊数据 MCP 服务，提供 19 个只读工具：商品详情、评论、关键词搜索、类目与蓝海细分分析、Best Sellers、New Releases、卖家店铺在售商品，以及 AI Overview / AI Mode
@@ -14,7 +14,7 @@ description_zh: 亚马逊数据 MCP 服务，提供 19 个只读工具：商品�
 author: Pangolin-spg
 homepage: https://github.com/Pangolin-spg/pangolinfo-mcp
 repository: https://github.com/Pangolin-spg/pangolinfo-mcp
-verified: false
+verified: true
 category: biz
 tags:
 - biz
@@ -30,3 +30,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,14 @@ tested_with: '>=0.63.72'
 name: pal
 display_name: PAL MCP Server
 display_name_en: PAL MCP Server
-version: 0.1.0
+version: 0.1.1
 description: AI-powered MCP server with multiple model providers
 description_zh: 多模型协作 MCP（原 Zen MCP）：让 Claude Code / Gemini CLI / Codex 在一次会话里调用 Gemini、GPT、OpenRouter、Ollama 等多个模型，做代码审查、debug、预提交检查与共识决策，跨模型共享同一上下文。
 author: BeehiveInnovations
+license: Apache-2.0
 homepage: https://github.com/BeehiveInnovations/pal-mcp-server
 repository: https://github.com/BeehiveInnovations/pal-mcp-server
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -32,3 +33,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

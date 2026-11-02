@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,15 @@ tested_with: '>=0.63.72'
 name: local_gpu_imagegen
 display_name: Local GPU Imagegen
 display_name_en: Local GPU Imagegen
-version: 0.1.0
+version: 0.1.1
 description: MCP-first control plane for ComfyUI workflows with explicit approvals and no silent downloads.
 description_zh: 可审计、显式审批的本地 GPU 生图控制平面（ComfyUI）：SHA-256 模型身份验证、许可审批、证据留存、17 工具 human-in-the-loop 工作流；支持 Codex、Claude Code、DeepSeek
   Harness。
 author: ChevalGrand520
+license: MIT
 homepage: https://github.com/ChevalGrand520/local-gpu-imagegen
 repository: https://github.com/ChevalGrand520/local-gpu-imagegen
-verified: false
+verified: true
 category: media
 tags:
 - media
@@ -33,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

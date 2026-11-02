@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: open_apps
 display_name: open-mcp-apps
 display_name_en: open-mcp-apps
-version: 0.1.0
+version: 0.1.1
 description: 'Persistent, interactive MCP Apps for any MCP host: the AI builds an app once, you both reuse it — data outlives
   the conversation.'
 description_zh: 开源 MCP Apps 引擎：AI 按需写出可交互的 UI 应用（待办看板、习惯打卡、仪表盘等），保存后可在后续任意对话中按名字直接打开；数据存放在独立的 collections 里，跨会话留存。内置 22 个现成应用的应用商店。
@@ -14,7 +14,7 @@ author: 2nd1st
 license: MIT
 homepage: https://github.com/2nd1st/open-mcp-apps
 repository: https://github.com/2nd1st/open-mcp-apps
-verified: false
+verified: true
 category: office
 tags:
 - office
@@ -35,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

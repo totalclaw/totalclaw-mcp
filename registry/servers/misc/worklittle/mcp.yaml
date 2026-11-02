@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,13 @@ tested_with: '>=0.63.72'
 name: worklittle
 display_name: Worklittle Jobs MCP
 display_name_en: Worklittle Jobs MCP
-version: 0.1.0
+version: 0.1.1
 description: 求职 MCP：检索 400 万+ 职位，支持签证、薪资、距离等筛选，可在 AI 应用内"滑动申请"并保存到 Worklittle 账户。
 description_zh: 求职 MCP：检索 400 万+ 职位，支持签证、薪资、距离等筛选，可在 AI 应用内"滑动申请"并保存到 Worklittle 账户。
 author: worklittle
 homepage: https://github.com/worklittle/jobs-mcp
 repository: https://github.com/worklittle/jobs-mcp
-verified: false
+verified: true
 category: misc
 tags:
 - misc
@@ -28,3 +28,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

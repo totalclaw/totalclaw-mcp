@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,13 @@ tested_with: '>=0.63.72'
 name: episkeyai
 display_name: GrokSearch-rs
 display_name_en: GrokSearch-rs
-version: 0.1.0
+version: 0.1.1
 description: Rust 编写的 MCP 服务器，提供 Grok 联网搜索与 Tavily 支持的来源检索，为 AI 代理补充实时网络信息。
 description_zh: Rust 编写的 MCP 服务器，提供 Grok 联网搜索与 Tavily 支持的来源检索，为 AI 代理补充实时网络信息。
 author: Episkey-G
 homepage: https://github.com/Episkey-G/GrokSearch-rs
 repository: https://github.com/Episkey-G/GrokSearch-rs
-verified: false
+verified: true
 category: web
 tags:
 - web
@@ -28,3 +28,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: 5dive
 display_name: 5dive MCP
 display_name_en: 5dive MCP
-version: 0.1.0
+version: 0.1.1
 description: Model Context Protocol server for 5dive, over stdio or Streamable HTTP. Exposes the 5dive agent-fleet CLI (tasks,
   agents, digest) as MCP tools, locally or to a remote client such as ChatGPT.
 description_zh: 5dive 官方 MCP 服务器，把 5dive 智能体舰队 CLI（任务、智能体、摘要）暴露为 MCP 工具，让 MCP 客户端直接调度运行在你自己服务器上的多个自治编码智能体。
@@ -14,7 +14,7 @@ author: 5dive-ai
 license: MIT
 homepage: https://github.com/5dive-ai/5dive-mcp
 repository: https://github.com/5dive-ai/5dive-mcp
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -37,3 +37,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

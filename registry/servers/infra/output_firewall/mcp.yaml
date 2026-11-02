@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: output_firewall
 display_name: mcp-output-firewall
 display_name_en: mcp-output-firewall
-version: 0.1.0
+version: 0.1.1
 description: Three-layer firewall for MCP servers — content inspection, egress policy and action policy. Runs as a proxy or
   as a standalone MCP server an agent can call before it acts. Catches prompt injection, tool poisoning, exfiltration and
   leaked secrets.
@@ -16,7 +16,7 @@ author: tangfei7777-cell
 license: MIT
 homepage: https://github.com/tangfei7777-cell/mcp-output-firewall
 repository: https://github.com/tangfei7777-cell/mcp-output-firewall
-verified: false
+verified: true
 category: infra
 tags:
 - infra
@@ -38,3 +38,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

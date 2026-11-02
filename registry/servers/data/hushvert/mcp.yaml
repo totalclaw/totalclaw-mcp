@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: hushvert
 display_name: mcp
 display_name_en: mcp
-version: 0.1.0
+version: 0.1.1
 description: 'Model Context Protocol server for hushvert: gives an AI agent a convert_file tool over the hosted file-conversion
   API (office to PDF, PDF to Word, large video). Pairs a browser cannot do, billed per use.'
 description_zh: 面向 AI 智能体的文件转换服务：通过 hushvert 托管 API 完成 Office 文档转 PDF、PDF 转 Word、文档互转（Markdown/HTML/EPUB/LaTeX）与音视频转码；浏览器可本地完成的转换会引导使用免费本地引擎而不计费。
@@ -14,7 +14,7 @@ author: hushvert
 license: MIT
 homepage: https://github.com/hushvert/mcp
 repository: https://github.com/hushvert/mcp
-verified: false
+verified: true
 category: data
 tags:
 - data
@@ -42,3 +42,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

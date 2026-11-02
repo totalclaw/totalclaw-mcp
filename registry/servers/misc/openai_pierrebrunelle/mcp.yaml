@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,14 @@ tested_with: '>=0.63.72'
 name: openai_pierrebrunelle
 display_name: mcp-server-openai
 display_name_en: mcp-server-openai
-version: 0.1.0
+version: 0.1.1
 description: A Model Context Protocol server providing tools to manage OpenAI API keys & spending
 description_zh: 直接从 Claude 使用 MCP 协议查询 OpenAI 模型。
 author: pierrebrunelle
 license: MIT
 homepage: https://github.com/pierrebrunelle/mcp-server-openai
 repository: https://github.com/pierrebrunelle/mcp-server-openai
-verified: false
+verified: true
 category: misc
 tags:
 - misc
@@ -33,3 +33,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

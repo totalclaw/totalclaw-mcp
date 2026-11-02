@@ -1,17 +1,19 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：周下载量很低（2）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: memory_engine
 display_name: agent-memory-engine
 display_name_en: agent-memory-engine
-version: 0.1.0
+version: 0.1.1
 description: 面向编码 Agent 的本地优先持久记忆与项目知识运行时。维护证据支撑的结构化记忆树（约束/架构/决策/故障/流程），复杂任务前自动按意图召回相关上下文，任务后反思并据置信度决定是否留存。SQLite FTS5 检索、分支感知记忆、统一
   ContextPack（token 预算），数据全留在 `.memory-engine/`、无云调用。
 description_zh: 面向编码 Agent 的本地优先持久记忆与项目知识运行时。维护证据支撑的结构化记忆树（约束/架构/决策/故障/流程），复杂任务前自动按意图召回相关上下文，任务后反思并据置信度决定是否留存。SQLite FTS5
   检索、分支感知记忆、统一 ContextPack（token 预算），数据全留在 `.memory-engine/`、无云调用。
 author: uudam42
+license: MIT
 homepage: https://github.com/uudam42/agent-memory-engine
 repository: https://github.com/uudam42/agent-memory-engine
 verified: false
@@ -34,3 +36,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

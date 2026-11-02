@@ -1,15 +1,17 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：周下载量很低（18）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: chronulus
 display_name: chronulus-mcp
 display_name_en: chronulus-mcp
-version: 0.1.0
+version: 0.1.1
 description: An MCP Server for Chronulus AI Forecasting and Prediction Agents
 description_zh: 使用 Chronulus AI 预测和预测代理预测任何事物。
 author: ChronulusAI
+license: MIT
 homepage: https://github.com/ChronulusAI/chronulus-mcp
 repository: https://github.com/ChronulusAI/chronulus-mcp
 verified: false
@@ -32,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

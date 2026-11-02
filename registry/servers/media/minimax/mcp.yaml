@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,14 @@ tested_with: '>=0.63.72'
 name: minimax
 display_name: MiniMax (官方)
 display_name_en: ''
-version: 0.1.0
+version: 0.1.1
 description: Minimax MCP Server
 description_zh: MiniMax 官方 MCP 服务器，调用其文本转语音、图像生成与视频生成 API。
 author: MiniMax-AI
+license: MIT
 homepage: https://github.com/MiniMax-AI/MiniMax-MCP
 repository: https://github.com/MiniMax-AI/MiniMax-MCP
-verified: false
+verified: true
 category: media
 tags:
 - media
@@ -59,3 +60,6 @@ optional_env:
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

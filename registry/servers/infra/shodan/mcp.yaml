@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,14 @@ tested_with: '>=0.63.72'
 name: shodan
 display_name: mcp-shodan
 display_name_en: mcp-shodan
-version: 0.1.0
+version: 0.1.1
 description: A Model Context Protocol server for Shodan API queries.
 description_zh: 用于查询 Shodan API 和 Shodan CVEDB 的 MCP 服务器。提供 IP 查找、设备搜索、DNS 查找、漏洞查询等工具。
 author: BurtTheCoder
 license: MIT
 homepage: https://github.com/BurtTheCoder/mcp-shodan
 repository: https://github.com/BurtTheCoder/mcp-shodan
-verified: false
+verified: true
 category: infra
 tags:
 - infra
@@ -41,3 +41,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

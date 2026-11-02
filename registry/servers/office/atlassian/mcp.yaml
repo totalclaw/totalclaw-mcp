@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,15 +6,16 @@ tested_with: '>=0.63.72'
 name: atlassian
 display_name: mcp-atlassian
 display_name_en: mcp-atlassian
-version: 0.1.0
+version: 0.1.1
 description: The Model Context Protocol (MCP) Atlassian integration is an open-source implementation that bridges Atlassian
   products (Jira and Confluence) with AI language models following Anthropic's MCP specification. This project enables secure,
   contextual AI interactions with Atlassian tools while maintainin
 description_zh: Atlassian 产品 (Confluence 和 Jira) 的 MCP 服务器。支持 Cloud/Server/DC。提供全面的工具用于搜索、读取、创建和管理内容。
 author: sooperset
+license: MIT
 homepage: https://github.com/sooperset/mcp-atlassian
 repository: https://github.com/sooperset/mcp-atlassian
-verified: false
+verified: true
 category: office
 tags:
 - office
@@ -76,3 +77,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

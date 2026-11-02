@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,14 @@ tested_with: '>=0.63.72'
 name: bilibili
 display_name: Bilibili MCP
 display_name_en: Bilibili MCP
-version: 0.1.0
+version: 0.1.1
 description: Bilibili MCP tool for video metadata, transcripts, subtitles, and comment summarization
 description_zh: 面向中文用户的 Bilibili MCP 服务器，可提取视频元数据、字幕与结构化转录、章节和热门评论，并在无字幕时支持本地 ASR 回退。
 author: XZXZZX-Ai
 license: Apache-2.0
 homepage: https://github.com/XZXZZX-Ai/bilibili-mcp
 repository: https://github.com/XZXZZX-Ai/bilibili-mcp
-verified: false
+verified: true
 category: media
 tags:
 - media
@@ -35,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

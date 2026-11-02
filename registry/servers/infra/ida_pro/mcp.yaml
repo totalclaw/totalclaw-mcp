@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,14 @@ tested_with: '>=0.63.72'
 name: ida_pro
 display_name: ida-pro-mcp
 display_name_en: ida-pro-mcp
-version: 0.1.0
+version: 0.1.1
 description: Vibe reversing with IDA Pro
 description_zh: IDA Pro 的 MCP 服务器，允许使用 AI 助手执行二进制分析。此插件实现反编译、反汇编，并允许自动生成恶意软件分析报告。
 author: mrexodia
+license: MIT
 homepage: https://github.com/mrexodia/ida-pro-mcp
 repository: https://github.com/mrexodia/ida-pro-mcp
-verified: false
+verified: true
 category: infra
 tags:
 - infra
@@ -32,3 +33,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

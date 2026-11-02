@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: balldontlie
 display_name: balldontlie-mcp
 display_name_en: balldontlie-mcp
-version: 0.1.0
+version: 0.1.1
 description: An MCP Server implementation that integrates the Balldontlie API, to provide information about players, teams
   and games for the NBA, NFL and MLB
 description_zh: 集成 balldontlie API，提供 NBA、NFL 和 MLB 的球员、球队和比赛信息。
@@ -14,7 +14,7 @@ author: mikechao
 license: MIT
 homepage: https://github.com/mikechao/balldontlie-mcp
 repository: https://github.com/mikechao/balldontlie-mcp
-verified: false
+verified: true
 category: misc
 tags:
 - misc
@@ -42,3 +42,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

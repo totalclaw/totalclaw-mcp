@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: apple_docs_2_0
 display_name: Apple Docs 2.0 MCP
 display_name_en: Apple Docs 2.0 MCP
-version: 0.1.0
+version: 0.1.1
 description: 'MCP server for Apple Developer Documentation: API reference, Human Interface Guidelines, App Store Connect Help,
   sample code and 1,700 WWDC sessions with transcripts and code. A fork of Apple Docs MCP.'
 description_zh: 让编码 Agent 写 Swift 前先查 Apple 官方资料：文档搜索结果与 developer.apple.com 一致；完整 API 页面含签名、继承关系与各系统版本可用性；离线索引 336,629 个页面，可按名称或名称片段查找；内置
@@ -15,7 +15,7 @@ author: mishafyi
 license: MIT
 homepage: https://github.com/mishafyi/Apple-Docs-2.0-MCP
 repository: https://github.com/mishafyi/Apple-Docs-2.0-MCP
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -36,3 +36,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,14 @@ tested_with: '>=0.63.72'
 name: davinci_resolve
 display_name: davinci-resolve-mcp
 display_name_en: davinci-resolve-mcp
-version: 0.1.0
+version: 0.1.1
 description: NPM bootstrapper for the DaVinci Resolve MCP Server.
 description_zh: DaVinci Resolve 的 MCP 服务器集成，提供视频编辑、调色、媒体管理和项目控制的强大工具。
 author: samuelgursky
 license: MIT
 homepage: https://github.com/samuelgursky/davinci-resolve-mcp
 repository: https://github.com/samuelgursky/davinci-resolve-mcp
-verified: false
+verified: true
 category: media
 tags:
 - media
@@ -34,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

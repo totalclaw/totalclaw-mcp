@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,14 @@ tested_with: '>=0.63.72'
 name: figma_developer
 display_name: Figma-Context-MCP
 display_name_en: Figma-Context-MCP
-version: 0.1.0
+version: 0.1.1
 description: Give your coding agent access to your Figma data. Implement designs in any framework in one-shot.
 description_zh: 将 Figma 设计稿的布局信息提供给 Cursor、Claude 等 AI 编程代理，实现「设计稿一键转代码」，还原度更高。
 author: GLips
 license: MIT
 homepage: https://github.com/GLips/Figma-Context-MCP
 repository: https://github.com/GLips/Figma-Context-MCP
-verified: false
+verified: true
 category: media
 tags:
 - media
@@ -44,3 +44,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

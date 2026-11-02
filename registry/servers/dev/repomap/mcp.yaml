@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: repomap
 display_name: repomap
 display_name_en: repomap
-version: 0.1.0
+version: 0.1.1
 description: 'A map of your codebase for AI agents: code graph, search, call paths and change impact. No API key.'
 description_zh: 给 AI 编程代理的代码库地图：基于 tree-sitter 的代码图谱（13 种语言），提供 map、search（BM25 + 符号混合检索）、context（代码、调用者与被调用者）、trace（调用路径）、impact（改动影响面，支持
   git diff）五个工具，另附交互式 WebGL 图谱界面。
@@ -14,7 +14,7 @@ author: SylphxAI
 license: MIT
 homepage: https://github.com/SylphxAI/repomap
 repository: https://github.com/SylphxAI/repomap
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -36,3 +36,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

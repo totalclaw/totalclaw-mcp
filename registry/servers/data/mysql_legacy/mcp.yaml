@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: mysql_legacy
 display_name: mysql-legacy-mcp
 display_name_en: mysql-legacy-mcp
-version: 0.1.0
+version: 0.1.1
 description: MCP queries and schema inspection for legacy MySQL 5.0–5.6, with opt-in INSERT/UPDATE/DELETE/DDL; verified live
   against each version.
 description_zh: 面向 MySQL 5.0–5.6 的 MCP 服务器：默认 schema 检查与 SELECT，INSERT/UPDATE/DELETE/DDL 按需开启。已在 5.0–8.0 上实测。
@@ -14,7 +14,7 @@ author: Rufflet
 license: MIT
 homepage: https://github.com/Rufflet/mysql-legacy-mcp
 repository: https://github.com/Rufflet/mysql-legacy-mcp
-verified: false
+verified: true
 category: data
 tags:
 - data
@@ -60,3 +60,6 @@ optional_env:
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

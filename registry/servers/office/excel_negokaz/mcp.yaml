@@ -1,12 +1,13 @@
-# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：找不到 GitHub 源码仓库，无法核对包出自哪里；包内含预编译二进制（静态看不到行为）：package/dist/excel-mcp-server_darwin_amd64_v1/excel-mcp-server, package/dist/excel-mcp-server_darwin_arm64_v8.0/excel-mcp-server, package/dist/excel-mcp-server_linux_386_sse2/excel-mcp-server 等 8 个
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: excel_negokaz
 display_name: Excel MCP
 display_name_en: Excel MCP
-version: 0.1.0
+version: 0.1.1
 description: An MCP server that reads and writes spreadsheet data to MS Excel file
 description_zh: Excel文件的MCP服务器，支持Excel文件的读取和写入
 author: upstream
@@ -33,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

@@ -1,15 +1,17 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：周下载量很低（19）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: ip2location_io
 display_name: mcp-ip2location-io
 display_name_en: mcp-ip2location-io
-version: 0.1.0
+version: 0.1.1
 description: Add your description here
 description_zh: 使用 IP2Location.io API 获取 IP 地址地理位置和网络信息。
 author: ip2location
+license: MIT
 homepage: https://github.com/ip2location/mcp-ip2location-io
 repository: https://github.com/ip2location/mcp-ip2location-io
 verified: false
@@ -39,3 +41,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

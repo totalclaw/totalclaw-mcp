@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: novada
 display_name: Novada-mcp
 display_name_en: Novada-mcp
-version: 0.1.0
+version: 0.1.1
 description: 托管 Streamable-HTTP MCP 服务器，提供 25+ 网页数据工具：搜索、SERP、抓取、提取、地图、爬取、深度研究及 6 种代理类型，覆盖 195 个国家。免安装，每月 1000 次免费调用。`npx
   novada-mcp`
 description_zh: 托管 Streamable-HTTP MCP 服务器，提供 25+ 网页数据工具：搜索、SERP、抓取、提取、地图、爬取、深度研究及 6 种代理类型，覆盖 195 个国家。免安装，每月 1000 次免费调用。`npx
@@ -14,7 +14,7 @@ description_zh: 托管 Streamable-HTTP MCP 服务器，提供 25+ 网页数据�
 author: NovadaLabs
 homepage: https://github.com/NovadaLabs/Novada-mcp
 repository: https://github.com/NovadaLabs/Novada-mcp
-verified: false
+verified: true
 category: web
 tags:
 - web
@@ -30,3 +30,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,13 @@ tested_with: '>=0.63.72'
 name: task_master_ai
 display_name: 任务大师
 display_name_en: ''
-version: 0.1.0
+version: 0.1.1
 description: A task management system for ambitious AI-driven development that doesn't overwhelm and confuse Cursor.
 description_zh: 智能任务管理和自动化的MCP工具
 author: upstream
 license: MIT WITH Commons-Clause
 homepage: https://www.npmjs.com/package/task-master-ai
-verified: false
+verified: true
 category: misc
 tags:
 - misc
@@ -78,3 +78,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

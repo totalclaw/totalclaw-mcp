@@ -1,12 +1,13 @@
-# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：源码仓库 github.com/yourusername/bilibili-mcp 访问不到（404）；仓库 yourusername/bilibili-mcp 的清单文件和 README 里都找不到包名 bilibili-mcp，无法确认包出自此仓库
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: bilibili_2
 display_name: Bilibili
 display_name_en: Bilibili
-version: 0.1.0
+version: 0.1.1
 description: B站视频搜索 MCP（Model Context Protocol）服务
 description_zh: Bilibili的MCP服务器，支持Bilibili的内容搜索
 author: upstream
@@ -33,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

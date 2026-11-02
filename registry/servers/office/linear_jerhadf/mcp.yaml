@@ -1,12 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：源码仓库 github.com/modelcontextprotocol/linear-server 访问不到（404）；条目写的仓库 jerhadf/linear-mcp-server 与包元数据里的仓库 modelcontextprotocol/linear-server 不一致；仓库 modelcontextprotocol/linear-server 的清单文件和 README 里都找不到包名 linear-mcp-server，无法确认包出自此仓库
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: linear_jerhadf
 display_name: Linear (by jerhadf)
 display_name_en: Linear (by jerhadf)
-version: 0.1.0
+version: 0.1.1
 description: A Model Context Protocol server for the Linear API.
 description_zh: 与 Linear API 交互进行项目管理，包括搜索、创建和更新 Issues。
 author: jerhadf
@@ -41,3 +42,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

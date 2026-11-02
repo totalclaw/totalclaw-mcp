@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,12 +6,12 @@ tested_with: '>=0.63.72'
 name: motomarks
 display_name: Motomarks
 display_name_en: Motomarks
-version: 0.1.0
+version: 0.1.1
 description: 官方汽车厂商标志 MCP：按名称检索已发布品牌，读取品牌数据，并生成标志图的 CDN 地址。
 description_zh: 官方汽车厂商标志 MCP：按名称检索已发布品牌，读取品牌数据，并生成标志图的 CDN 地址。
 author: upstream
 homepage: https://motomarks.io/docs/mcp
-verified: false
+verified: true
 category: misc
 tags:
 - misc
@@ -27,3 +27,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

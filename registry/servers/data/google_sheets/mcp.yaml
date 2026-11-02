@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,14 @@ tested_with: '>=0.63.72'
 name: google_sheets
 display_name: mcp-google-sheets
 display_name_en: mcp-google-sheets
-version: 0.1.0
+version: 0.1.1
 description: This MCP server integrates with your Google Drive and Google Sheets, to enable creating and modifying spreadsheets.
 description_zh: 用于与 Google Sheets 交互的模型上下文协议服务器。提供创建、读取、更新和管理电子表格的工具。
 author: xing5
+license: MIT
 homepage: https://github.com/xing5/mcp-google-sheets
 repository: https://github.com/xing5/mcp-google-sheets
-verified: false
+verified: true
 category: data
 tags:
 - data
@@ -41,3 +42,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

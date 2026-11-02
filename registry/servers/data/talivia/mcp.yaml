@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,13 @@ tested_with: '>=0.63.72'
 name: talivia
 display_name: Talivia Agent Kit
 display_name_en: Talivia Agent Kit
-version: 0.1.0
+version: 0.1.1
 description: Talivia 官方 MCP 服务器、CLI 与 Agent Skill，帮助 AI Agent 安装网站分析追踪、验证实时事件，并将引荐来源、营销活动与客户旅程关联到支付收入。
 description_zh: Talivia 官方 MCP 服务器、CLI 与 Agent Skill，帮助 AI Agent 安装网站分析追踪、验证实时事件，并将引荐来源、营销活动与客户旅程关联到支付收入。
 author: talivia-group
 homepage: https://github.com/talivia-group/agent
 repository: https://github.com/talivia-group/agent
-verified: false
+verified: true
 category: data
 tags:
 - data
@@ -28,3 +28,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

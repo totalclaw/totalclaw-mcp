@@ -1,12 +1,13 @@
-# 由 fau-tools/mcp-import 从 厂商官方说明（人工核实） 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 厂商官方说明（人工核实） 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：找不到 GitHub 源码仓库，无法核对包出自哪里；许可证不是开源许可证：See license in https://ds.alipay.com/fd-ifz2dlhv/index.html
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: alipay
 display_name: 支付宝
 display_name_en: ''
-version: 0.1.0
+version: 0.1.1
 description: 由支付宝开放平台提供的支付创建和管理 MCP 服务。A mcp server to create and process payment with Alipay open APIs.
 description_zh: 支付宝官方 MCP：创建手机 / 网页支付、查询订单、退款与退款查询；需要开放平台应用的 APPID、应用私钥与支付宝公钥，涉及真实资金。
 author: upstream
@@ -48,3 +49,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

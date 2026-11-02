@@ -1,12 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：人工复核：url 写死了韩国法制处 OPEN API 的示例 OC 参数 honggildong（示例用户名），需要用户换成自己的 OC 才能正常使用
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: gomdori
 display_name: korean-law-mcp
 display_name_en: korean-law-mcp
-version: 0.1.0
+version: 0.1.1
 description: 韩国法律 MCP 服务器与 CLI：通过韩国法制处官方 Open API 检索法令、判例、行政规则、地方自治法规、条约和法令解释例，并可核验 LLM 输出中法律引用的存在性与内容。
 description_zh: 韩国法律 MCP 服务器与 CLI：通过韩国法制处官方 Open API 检索法令、判例、行政规则、地方自治法规、条约和法令解释例，并可核验 LLM 输出中法律引用的存在性与内容。
 author: chrisryugj
@@ -28,3 +29,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

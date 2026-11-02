@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,14 @@ tested_with: '>=0.63.72'
 name: evm
 display_name: EVM MCP Server
 display_name_en: EVM MCP Server
-version: 0.1.0
+version: 0.1.1
 description: MCP server for interacting with EVM-compatible blockchains - supports 22 tools and 10 prompts across 60+ networks
 description_zh: 为 30+ EVM 网络提供全面的区块链服务，支持代币、NFT、智能合约、交易和 ENS。
 author: mcpdotdirect
 license: MIT
 homepage: https://github.com/mcpdotdirect/evm-mcp-server
 repository: https://github.com/mcpdotdirect/evm-mcp-server
-verified: false
+verified: true
 category: biz
 tags:
 - biz
@@ -34,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

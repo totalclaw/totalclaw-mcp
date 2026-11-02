@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: keystash
 display_name: keystash
 display_name_en: keystash
-version: 0.1.0
+version: 0.1.1
 description: 'Local secret broker for AI agents: values live in the macOS Keychain, only metadata stays on disk, and no tool
   ever returns a secret.'
 description_zh: 本地单文件加密的密钥库，`keystash mcp` 把它变成 MCP 服务器：AI 能把密钥注入命令的环境变量、复制进剪贴板或生成新密钥，但始终看不到明文值；另有 `doctor` 扫描散落各处的明文密钥。
@@ -14,7 +14,7 @@ author: thu-lawyer
 license: MIT
 homepage: https://github.com/thu-lawyer/keystash
 repository: https://github.com/thu-lawyer/keystash
-verified: false
+verified: true
 category: infra
 tags:
 - infra
@@ -34,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,13 @@ tested_with: '>=0.63.72'
 name: squirrelscan
 display_name: squirrelscan
 display_name_en: squirrelscan
-version: 0.1.0
+version: 0.1.1
 description: 面向编码代理（Claude Code、Cursor 等）的网站审计工具：运行 260+ 条规则检查 SEO、性能、安全、无障碍与 Agent 体验问题，并给出可直接映射到源码的修复建议；通过 MCP 可从任意客户端发起审计、读取报告并修复问题。
 description_zh: 面向编码代理（Claude Code、Cursor 等）的网站审计工具：运行 260+ 条规则检查 SEO、性能、安全、无障碍与 Agent 体验问题，并给出可直接映射到源码的修复建议；通过 MCP 可从任意客户端发起审计、读取报告并修复问题。
 author: squirrelscan
 homepage: https://github.com/squirrelscan/squirrelscan
 repository: https://github.com/squirrelscan/squirrelscan
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -28,3 +28,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

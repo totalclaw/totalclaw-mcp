@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: ai_economics
 display_name: ai-economics-mcp
 display_name_en: ai-economics-mcp
-version: 0.1.0
+version: 0.1.1
 description: 'MCP server for AI economics: token cost, context windows, agent-hour cost, LLM energy, joules per verified task,
   Proof-Adjusted Autonomy, revocation exposure and more. Wraps the free piszczek.pl/tools API — no key required.'
 description_zh: 把 12 个 AI 经济性计算器暴露为 MCP 工具：各厂商 token 成本、上下文窗口规模、Agent 工时成本、模型路由节省、LLM 能耗与碳排放、每个已验证任务的焦耳数、token 消耗速率、验证瓶颈、撤销敞口等。全部计算在本地完成，也可调用免费且无需
@@ -15,7 +15,7 @@ author: pich
 license: MIT
 homepage: https://github.com/pich/ai-economics-mcp
 repository: https://github.com/pich/ai-economics-mcp
-verified: false
+verified: true
 category: misc
 tags:
 - misc
@@ -36,3 +36,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

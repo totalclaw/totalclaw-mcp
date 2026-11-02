@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,14 @@ tested_with: '>=0.63.72'
 name: clawtouch
 display_name: ClawTouch MCP
 display_name_en: ClawTouch MCP
-version: 0.1.0
+version: 0.1.1
 description: MCP stdio server exposing HID mouse/keyboard tools backed by ClawTouch Pico hardware.
 description_zh: 通过外接 USB HID 硬件（树莓派 Pico 2，固件开源）驱动真实鼠标键盘：移动、点击、拖拽、输入、组合键、滚动；另有窗口枚举与按窗口裁剪的截图。被控机不需要安装任何软件；`--mock` 模式可无硬件试用。
 author: tinqiao-oss
+license: MIT
 homepage: https://github.com/tinqiao-oss/clawtouch-mcp
 repository: https://github.com/tinqiao-oss/clawtouch-mcp
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -32,3 +33,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

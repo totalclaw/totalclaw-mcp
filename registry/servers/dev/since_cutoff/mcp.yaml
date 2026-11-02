@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,16 +6,17 @@ tested_with: '>=0.63.72'
 name: since_cutoff
 display_name: since-cutoff
 display_name_en: since-cutoff
-version: 0.1.0
+version: 0.1.1
 description: Find which dependency APIs your code uses changed after your coding model's training cutoff, and write short
   AGENTS.md notes from the API diff, each with its source.
 description_zh: 找出编码模型训练截止日期之后、项目锁定的依赖版本里改动过的公开 API：读取 lockfile，为每个依赖定位模型截止时的版本，用 griffe 静态对比该版本与锁定版本的公开 API（移除、签名变更、弃用）；MCP
   提供 `api_changes`（单个库）、`project_changes`（整个项目）和 `model_cutoff` 三个工具，供 Agent 写代码前查询。CLI 还可实测模型会写错哪些 API，并生成经 basedpyright
   类型检查验证的 AGENTS.md / CLAUDE.md 说明。[含中文文档](https://github.com/MohammadHijjawi97/since-cutoff/blob/main/README.zh-CN.md)。
 author: MohammadHijjawi97
+license: MIT
 homepage: https://github.com/MohammadHijjawi97/since-cutoff
 repository: https://github.com/MohammadHijjawi97/since-cutoff
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -36,3 +37,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

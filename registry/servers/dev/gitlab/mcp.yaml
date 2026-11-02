@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,13 @@ tested_with: '>=0.63.72'
 name: gitlab
 display_name: GitLab
 display_name_en: GitLab
-version: 0.1.0
+version: 0.1.1
 description: GitLab MCP server for projects, merge requests, issues, pipelines, wiki, releases, and more
 description_zh: GitLab的MCP服务器，支持GitLab的读取和写入
 author: upstream
 license: MIT
 homepage: https://www.npmjs.com/package/@zereight/mcp-gitlab
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -48,3 +48,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

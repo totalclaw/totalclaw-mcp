@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,13 @@ tested_with: '>=0.63.72'
 name: apple
 display_name: Apple MCP
 display_name_en: Apple MCP
-version: 0.1.0
+version: 0.1.1
 description: Apple MCP tools for contacts, notes, messages, and mail integration
 description_zh: Apple生态系统集成的MCP工具
 author: upstream
 license: MIT
 homepage: https://www.npmjs.com/package/@dhravya/apple-mcp
-verified: false
+verified: true
 category: misc
 tags:
 - misc
@@ -33,3 +33,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

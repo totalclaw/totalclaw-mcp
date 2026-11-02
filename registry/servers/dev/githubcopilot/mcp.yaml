@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,13 @@ tested_with: '>=0.63.72'
 name: githubcopilot
 display_name: github-mcp-server
 display_name_en: github-mcp-server
-version: 0.1.0
+version: 0.1.1
 description: GitHub integration for repository management, pull requests, issues and more.
 description_zh: GitHub 官方出品，让 AI 通过 API 深度集成 GitHub，实现自动化工作流等。
 author: github
 homepage: https://github.com/github/github-mcp-server
 repository: https://github.com/github/github-mcp-server
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -28,3 +28,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,12 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：源码仓库 github.com/cobrowser/browser-use-mcp-server 访问不到（404）；条目写的仓库 kontext-security/browser-use-mcp-server 与包元数据里的仓库 cobrowser/browser-use-mcp-server 不一致；仓库 cobrowser/browser-use-mcp-server 的清单文件和 README 里都找不到包名 browser-use-mcp-server，无法确认包出自此仓库
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: browser_use
 display_name: browser-use-mcp-server
 display_name_en: browser-use-mcp-server
-version: 0.1.0
+version: 0.1.1
 description: MCP browser-use server library
 description_zh: 将 browser-use 打包为带 SSE 传输的 MCP 服务器，含 Dockerfile。
 author: co-browser
@@ -33,3 +34,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

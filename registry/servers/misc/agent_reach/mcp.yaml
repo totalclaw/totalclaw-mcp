@@ -1,17 +1,19 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：拒绝（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：人工复核：装错包——条目所指 Panniantong/Agent-Reach 的安装文档明确写着「PyPI 上名为 agent-reach 的包不是本项目，切勿从 PyPI 安装」；PyPI 包实为 jgalea/agent-reach；条目写的仓库 Panniantong/Agent-Reach 与包元数据里的仓库 jgalea/agent-reach 不一致
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: agent_reach
 display_name: Agent Reach
 display_name_en: Agent Reach
-version: 0.1.0
+version: 0.1.1
 description: Give an agent the channels it needs, and only those. Install per channel, one output shape, with caching and
   a token budget.
 description_zh: 一句话给 AI Agent 装上全网搜索能力。一键安装 + 配置 13+ 平台工具（Twitter、Reddit、YouTube、GitHub、B站、小红书、抖音、微信公众号、LinkedIn 等），通过 mcporter
   接入多个 MCP 服务。
 author: Panniantong
+license: MIT
 homepage: https://github.com/Panniantong/Agent-Reach
 repository: https://github.com/Panniantong/Agent-Reach
 verified: false
@@ -34,3 +36,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: block
+  osv: clean

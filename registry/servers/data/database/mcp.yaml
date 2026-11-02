@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,14 @@ tested_with: '>=0.63.72'
 name: database
 display_name: legion-mcp
 display_name_en: legion-mcp
-version: 0.1.0
+version: 0.1.1
 description: A MCP server that helps access and query data in various popular databases
 description_zh: 通用数据库 MCP 服务器，支持 PG, Redshift, CockroachDB, MySQL, RDS MySQL, MS SQL Server, BigQuery, Oracle DB, SQLite。
 author: TheRaLabs
+license: GPL-3.0-or-later
 homepage: https://github.com/TheRaLabs/legion-mcp
 repository: https://github.com/TheRaLabs/legion-mcp
-verified: false
+verified: true
 category: data
 tags:
 - data
@@ -42,3 +43,6 @@ optional_env:
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

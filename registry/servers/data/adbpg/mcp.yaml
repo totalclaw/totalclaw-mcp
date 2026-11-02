@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,15 +6,16 @@ tested_with: '>=0.63.72'
 name: adbpg
 display_name: Alibaba Cloud AnalyticDB for PostgreSQL
 display_name_en: Alibaba Cloud AnalyticDB for PostgreSQL
-version: 0.1.0
+version: 0.1.1
 description: AnalyticDB PostgreSQL MCP Server serves as a universal interface between AI Agents and AnalyticDB PostgreSQL
   databases. It enables seamless communication between AI Agents and AnalyticDB PostgreSQL, helping AI Agents retrieve database
   metadata and execute SQL operations.
 description_zh: 阿里云 AnalyticDB for PostgreSQL 官方集成，连接 AnalyticDB for PostgreSQL 实例，查询和分析数据。
 author: aliyun
+license: Apache-2.0
 homepage: https://github.com/aliyun/alibabacloud-adbpg-mcp-server
 repository: https://github.com/aliyun/alibabacloud-adbpg-mcp-server
-verified: false
+verified: true
 category: data
 tags:
 - data
@@ -34,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

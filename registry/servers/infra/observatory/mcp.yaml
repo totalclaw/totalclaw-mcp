@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: observatory
 display_name: mcp-observatory
 display_name_en: mcp-observatory
-version: 0.1.0
+version: 0.1.1
 description: Free, MIT-licensed MCP security testing from ClearFrame. Scan, audit, compare and review MCP evidence locally;
   continue in ClearFrame CLI or Mac.
 description_zh: MCP 服务器可观测性平台 — 监控和分析 MCP 服务器性能、可用性和使用指标，提供健康检查与告警。
@@ -14,7 +14,7 @@ author: KryptosAI
 license: MIT
 homepage: https://github.com/KryptosAI/mcp-observatory
 repository: https://github.com/KryptosAI/mcp-observatory
-verified: false
+verified: true
 category: infra
 tags:
 - infra
@@ -35,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

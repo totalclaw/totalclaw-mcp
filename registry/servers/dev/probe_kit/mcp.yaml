@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: probe_kit
 display_name: mcp-probe-kit
 display_name_en: mcp-probe-kit
-version: 0.1.0
+version: 0.1.1
 description: AI-powered MCP development toolkit with 29 default tools (24 base + 5 History Session), 35 with Memory, 39-tool
   compatibility mode, ARC-8 architecture support, and MCP Apps workbenches
 description_zh: 规格驱动的通用开发工作流 MCP（30 工具）：`start_feature` / `start_bugfix` / `start_ui` 编排全流程，自动 Skill + AGENTS.md bootstrap，跨项目向量记忆（Qdrant），GitNexus
@@ -15,7 +15,7 @@ author: mybolide
 license: MIT
 homepage: https://github.com/mybolide/mcp-probe-kit
 repository: https://github.com/mybolide/mcp-probe-kit
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -72,3 +72,6 @@ optional_env:
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: mcptoon
 display_name: mcptoon
 display_name_en: mcptoon
-version: 0.1.0
+version: 0.1.1
 description: 'One zero-dependency CLI to manage every MCP server and agent skill: token optimization for tool discovery (71,929
   -> 581 tokens, -99.2% measured, schemas stay out of context), one config for every agent.'
 description_zh: 零依赖的 MCP 客户端 CLI：自动发现并接管机器上的 MCP server，把上百个工具的清单压缩成 agent 友好的紧凑格式（工具发现 token 省 99.2%，tiktoken 实测）；`mcptoon
@@ -15,7 +15,7 @@ author: activeing123
 license: Apache-2.0
 homepage: https://github.com/activeing123/mcptoon
 repository: https://github.com/activeing123/mcptoon
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -35,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

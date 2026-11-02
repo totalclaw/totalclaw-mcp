@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: find
 display_name: Find MCP
 display_name_en: Find MCP
-version: 0.1.0
+version: 0.1.1
 description: 'Find MCP - the npm client for the agentage MCP directory: thin stdio MCP proxy bridging stdio-only clients (Claude
   Desktop, Cursor, VS Code) to catalog.agentage.io/mcp - search 17,000+ MCP servers from any MCP client.'
 description_zh: 搜索 17,000+ 个 MCP 服务器 (与官方 MCP Registry 实时同步)，支持云端 Streamable HTTP 与本地 stdio 两种接入方式。
@@ -14,7 +14,7 @@ author: agentage
 license: MIT
 homepage: https://github.com/agentage/find-mcp
 repository: https://github.com/agentage/find-mcp
-verified: false
+verified: true
 category: web
 tags:
 - web
@@ -35,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

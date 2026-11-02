@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,14 @@ tested_with: '>=0.63.72'
 name: secret_design
 display_name: Secret MCP
 display_name_en: Secret MCP
-version: 0.1.0
+version: 0.1.1
 description: Local MCP server and web viewer for isolated per-result GDWEB design specifications
 description_zh: 搜索近期 GDWEB 设计参考，并通过 MCP Sampling 将每个结果转换为可直接用于实现的设计规格。
 author: yyeongjin
 license: MIT
 homepage: https://github.com/yyeongjin/secret_mcp
 repository: https://github.com/yyeongjin/secret_mcp
-verified: false
+verified: true
 category: web
 tags:
 - web
@@ -48,3 +48,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,14 @@ tested_with: '>=0.63.72'
 name: cli
 display_name: cli-mcp-server
 display_name_en: cli-mcp-server
-version: 0.1.0
+version: 0.1.1
 description: Command line interface for MCP clients with secure execution and customizable security policies
 description_zh: 具有安全执行和可自定义安全策略的命令行接口。
 author: MladenSU
+license: MIT
 homepage: https://github.com/MladenSU/cli-mcp-server
 repository: https://github.com/MladenSU/cli-mcp-server
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -45,3 +46,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

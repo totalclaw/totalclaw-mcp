@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,14 @@ tested_with: '>=0.63.72'
 name: admapix
 display_name: AdMapix
 display_name_en: AdMapix
-version: 0.1.0
+version: 0.1.1
 description: AdMapix MCP Server — AI-powered ad creative search
 description_zh: 广告创意检索 MCP：按关键词、平台、国家、语言和日期搜索全球广告素材并返回结构化数据，适合竞品广告研究与市场分析（工具 `search_creatives`）。
 author: fly0pants
+license: MIT
 homepage: https://github.com/fly0pants/admapix
 repository: https://github.com/fly0pants/admapix
-verified: false
+verified: true
 category: web
 tags:
 - web
@@ -32,3 +33,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

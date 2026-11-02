@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,13 @@ tested_with: '>=0.63.72'
 name: remotearc
 display_name: Remote Arc
 display_name_en: Remote Arc
-version: 0.1.0
+version: 0.1.1
 description: 通过 MCP 将 ChatGPT、Claude、Codex、Cursor 等 AI 客户端连接到用户显式配对的 Windows、macOS 与 Linux 电脑，可远程读取/编辑文件、查看进程并按设备权限执行终端命令。
 description_zh: 通过 MCP 将 ChatGPT、Claude、Codex、Cursor 等 AI 客户端连接到用户显式配对的 Windows、macOS 与 Linux 电脑，可远程读取/编辑文件、查看进程并按设备权限执行终端命令。
 author: yaohuangguan
 homepage: https://github.com/yaohuangguan/remote-arc
 repository: https://github.com/yaohuangguan/remote-arc
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -28,3 +28,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

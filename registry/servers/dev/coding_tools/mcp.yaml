@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,14 @@ tested_with: '>=0.63.72'
 name: coding_tools
 display_name: Coding Tools MCP
 display_name_en: Coding Tools MCP
-version: 0.1.0
+version: 0.1.1
 description: Workspace-confined coding tools exposed as an MCP server.
 description_zh: 模型中立的编码运行时，通过 MCP 给任意 AI 聊天或 Agent 一双「安全的手」操作代码库。
 author: xyTom
+license: Apache-2.0
 homepage: https://github.com/xyTom/coding-tools-mcp
 repository: https://github.com/xyTom/coding-tools-mcp
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -43,3 +44,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

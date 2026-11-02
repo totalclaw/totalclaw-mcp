@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,13 @@ tested_with: '>=0.63.72'
 name: getengram
 display_name: Engram
 display_name_en: Engram
-version: 0.1.0
+version: 0.1.1
 description: AI Agent 的持久长期记忆服务：完整保存对话记录，并通过语义向量按含义检索。远程 MCP（Streamable HTTP），无需本地安装。
 description_zh: AI Agent 的持久长期记忆服务：完整保存对话记录，并通过语义向量按含义检索。远程 MCP（Streamable HTTP），无需本地安装。
 author: get-engram
 homepage: https://github.com/get-engram/engram
 repository: https://github.com/get-engram/engram
-verified: false
+verified: true
 category: ai
 tags:
 - ai
@@ -28,3 +28,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

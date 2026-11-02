@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: runcomfy
 display_name: RunComfy (官方)
 display_name_en: ''
-version: 0.1.0
+version: 0.1.1
 description: '[](https://glama.ai/mcp/servers/runcomfy-com/runcomfy-mcp)    - Manage RunComfy ComfyUI serverless deployments,
   hosted model inference and LoRA training jobs.'
 description_zh: RunComfy 官方远程 MCP 服务器，共 31 个工具，覆盖三块能力：ComfyUI Serverless 部署（创建/更新/删除部署、提交异步推理、查询结果、取消请求、实例代理）、托管模型推理（浏览模型与分类、运行模型、查询/取消任务）、LoRA
@@ -14,7 +14,7 @@ description_zh: RunComfy 官方远程 MCP 服务器，共 31 个工具，覆盖�
 author: runcomfy-com
 homepage: https://github.com/runcomfy-com/runcomfy-mcp
 repository: https://github.com/runcomfy-com/runcomfy-mcp
-verified: false
+verified: true
 category: media
 tags:
 - media
@@ -30,3 +30,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

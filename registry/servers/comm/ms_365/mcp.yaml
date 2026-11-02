@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: ms_365
 display_name: ms-365-mcp-server
 display_name_en: ms-365-mcp-server
-version: 0.1.0
+version: 0.1.1
 description: ' A Model Context Protocol (MCP) server for interacting with Microsoft 365 and Office services through the Graph
   API'
 description_zh: 连接整个 Microsoft 365 套件 (Graph API)，包括邮件、文件、Excel、日历等的 MCP 服务器。
@@ -14,7 +14,7 @@ author: softeria
 license: MIT
 homepage: https://github.com/softeria/ms-365-mcp-server
 repository: https://github.com/softeria/ms-365-mcp-server
-verified: false
+verified: true
 category: comm
 tags:
 - comm
@@ -36,3 +36,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

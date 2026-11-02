@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: taskade
 display_name: Taskade MCP
 display_name_en: Taskade MCP
-version: 0.1.0
+version: 0.1.1
 description: The **Workspace MCP** server connects any MCP-compatible AI client (Claude, Cursor, Claude Code, …) to your Taskade
   workspace, exposing **62 tools** to read and write your projects, tasks, agents, and custom fields.
 description_zh: Taskade 官方 MCP 集成，连接任务、项目、自动化流程和 AI Agent，实现团队协作与工作流自动化。
@@ -14,7 +14,7 @@ author: taskade
 license: MIT
 homepage: https://github.com/taskade/mcp
 repository: https://github.com/taskade/mcp
-verified: false
+verified: true
 category: office
 tags:
 - office
@@ -42,3 +42,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

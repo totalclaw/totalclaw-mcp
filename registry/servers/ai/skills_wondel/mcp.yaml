@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: skills_wondel
 display_name: Wondel.ai Skills MCP
 display_name_en: Wondel.ai Skills MCP
-version: 0.1.0
+version: 0.1.1
 description: 只读远程 MCP 服务器，基于 50 个源自书籍的 Agent 技能与 12 条引导式旅程：`recommend_skills` 为任务路由到合适的方法论框架（并说明该跳过哪些），`load_skill` 在会话中提供真实的
   SKILL.md。无需安装、无需账号、无需鉴权。
 description_zh: 只读远程 MCP 服务器，基于 50 个源自书籍的 Agent 技能与 12 条引导式旅程：`recommend_skills` 为任务路由到合适的方法论框架（并说明该跳过哪些），`load_skill` 在会话中提供真实的
@@ -14,7 +14,7 @@ description_zh: 只读远程 MCP 服务器，基于 50 个源自书籍的 Agent 
 author: mjaskolski
 homepage: https://github.com/mjaskolski/wondel-skills-mcp
 repository: https://github.com/mjaskolski/wondel-skills-mcp
-verified: false
+verified: true
 category: ai
 tags:
 - ai
@@ -30,3 +30,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

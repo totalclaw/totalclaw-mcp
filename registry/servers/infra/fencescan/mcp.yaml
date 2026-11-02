@@ -1,12 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：周下载量很低（9）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: fencescan
 display_name: fencescan
 display_name_en: fencescan
-version: 0.1.0
+version: 0.1.1
 description: Find tool calls that could fire the same effect twice. Reports evidence, renders no verdict. Zero dependencies.
 description_zh: 扫描 MCP 服务器代码，找出重试后可能重复执行的工具调用（如重复扣款、重复发送）。只给出证据和候选项，不给判定——真正的判断需要读代码。零依赖，`npx fencescan` 直接运行。
 author: aurumflux20
@@ -34,3 +35,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

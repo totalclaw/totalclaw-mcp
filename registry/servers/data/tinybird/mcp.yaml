@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,13 +6,14 @@ tested_with: '>=0.63.72'
 name: tinybird
 display_name: Tinybird
 display_name_en: Tinybird
-version: 0.1.0
+version: 0.1.1
 description: An MCP server to interact with a Tinybird Workspace from any MCP client.
 description_zh: Tinybird 官方集成，与 Tinybird 无服务器 ClickHouse 平台交互 (查询和 API 能力)。
 author: tinybirdco
+license: Apache-2.0
 homepage: https://github.com/tinybirdco/mcp-tinybird
 repository: https://github.com/tinybirdco/mcp-tinybird
-verified: false
+verified: true
 category: data
 tags:
 - data
@@ -32,3 +33,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

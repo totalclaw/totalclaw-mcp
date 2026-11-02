@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: agent
 display_name: Taisly Agent Kit
 display_name_en: Taisly Agent Kit
-version: 0.1.0
+version: 0.1.1
 description: Free AI-first agent kit for publishing short-form videos to TikTok, Instagram Reels, YouTube Shorts, X, and Facebook
   through Taisly.
 description_zh: Taisly 官方 MCP 服务器、CLI、SDK 与 Agent Skill，帮助 AI Agent 将短视频发布到 TikTok、Instagram Reels、YouTube Shorts、X、Facebook
@@ -15,7 +15,7 @@ author: taisly
 license: MIT
 homepage: https://github.com/taisly/agent
 repository: https://github.com/taisly/agent
-verified: false
+verified: true
 category: social
 tags:
 - social
@@ -37,3 +37,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

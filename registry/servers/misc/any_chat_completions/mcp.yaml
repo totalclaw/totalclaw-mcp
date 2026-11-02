@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,14 @@ tested_with: '>=0.63.72'
 name: any_chat_completions
 display_name: any-chat-completions-mcp
 display_name_en: any-chat-completions-mcp
-version: 0.1.0
+version: 0.1.1
 description: A Model Context Protocol server for integrating with any OpenAI SDK compatible Chat Completion API
 description_zh: 与任何其他 OpenAI SDK 兼容的聊天完成 API 聊天，如 Perplexity, Groq, xAI 等。
 author: pyroprompts
 license: MIT
 homepage: https://github.com/pyroprompts/any-chat-completions-mcp
 repository: https://github.com/pyroprompts/any-chat-completions-mcp
-verified: false
+verified: true
 category: misc
 tags:
 - misc
@@ -52,3 +52,6 @@ optional_env:
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

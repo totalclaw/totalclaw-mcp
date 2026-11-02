@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,14 +6,14 @@ tested_with: '>=0.63.72'
 name: maigret
 display_name: mcp-maigret
 display_name_en: mcp-maigret
-version: 0.1.0
+version: 0.1.1
 description: MCP server that lets AI agents run maigret, an OSINT tool that searches a username across thousands of sites
 description_zh: maigret MCP 服务器，强大的 OSINT 工具，从各种公共来源收集用户账户信息。提供跨社交网络搜索用户名和分析 URL 的工具。
 author: BurtTheCoder
 license: MIT
 homepage: https://github.com/BurtTheCoder/mcp-maigret
 repository: https://github.com/BurtTheCoder/mcp-maigret
-verified: false
+verified: true
 category: infra
 tags:
 - infra
@@ -42,3 +42,6 @@ optional_env:
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

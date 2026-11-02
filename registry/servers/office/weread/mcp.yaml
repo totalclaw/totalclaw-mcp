@@ -1,12 +1,13 @@
-# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 审核意见：找不到 GitHub 源码仓库，无法核对包出自哪里；没有找到开源许可证声明
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: weread
 display_name: 微信读书
 display_name_en: ''
-version: 0.1.0
+version: 0.1.1
 description: A WeRead MCP Server
 description_zh: 微信读书的MCP服务器，支持微信读书的读取和写入
 author: upstream
@@ -48,3 +49,6 @@ optional_env:
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: warn
+  osv: clean

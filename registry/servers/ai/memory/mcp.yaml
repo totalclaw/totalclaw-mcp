@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: memory
 display_name: mcp-memory-server
 display_name_en: mcp-memory-server
-version: 0.1.0
+version: 0.1.1
 description: Hosted long-term memory for AI agents over MCP. Write and read memories from Claude Code, Cursor, VS Code and
   ChatGPT; rating a recalled memory as helpful or misleading re-ranks what comes back next. OAuth sign-in or API key, free
   plan.
@@ -16,7 +16,7 @@ author: mnemoverse
 license: MIT
 homepage: https://github.com/mnemoverse/mcp-memory-server
 repository: https://github.com/mnemoverse/mcp-memory-server
-verified: false
+verified: true
 category: ai
 tags:
 - ai
@@ -52,3 +52,6 @@ optional_env:
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

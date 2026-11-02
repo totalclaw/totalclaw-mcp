@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；未经审核、未做安全扫描。
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: jshook
 display_name: jshookmcp
 display_name_en: jshookmcp
-version: 0.1.0
+version: 0.1.1
 description: MCP server with built-in tools across multiple domains for AI-assisted JavaScript analysis and security analysis
   — browser automation, CDP debugging, network monitoring, JS hooks, code analysis, and workflow orchestration
 description_zh: 面向前端 / JavaScript 逆向的 MCP 工作区：运行时 Hook、网络拦截（含 TLS keylog）、bundle 反混淆、CDP 控制真实 Chrome、WASM 反汇编；735 工具 / 36
@@ -15,7 +15,7 @@ author: vmoranv
 license: AGPL-3.0-only
 homepage: https://github.com/vmoranv/jshookmcp
 repository: https://github.com/vmoranv/jshookmcp
-verified: false
+verified: true
 category: infra
 tags:
 - infra
@@ -39,3 +39,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean
