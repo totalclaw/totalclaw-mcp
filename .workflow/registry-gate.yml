@@ -1,0 +1,37 @@
+# Gitee Go 流水线：MCP 注册表合入门禁（说明见仓库根 SECURITY-GATE.md）。
+# 语法依据 https://help.gitee.com/gitee-go/pipeline/trigger 与 https://help.gitee.com/gitee-go/plugin/ci-build
+# 只跑离线、只读的检查：不联网审包、不安装任何被审核的第三方包。
+# 唯一装的东西是 gen_registry.py 自己要的 PyYAML（镜像里没有才装，钉版本、只收 wheel、不执行安装脚本）。
+version: '1.0'
+name: registry-gate
+displayName: MCP 注册表门禁
+triggers:
+  trigger: auto
+  push:
+    branches:
+      precise:
+        - master
+  pr:
+    branches:
+      prefix:
+        - ''
+stages:
+  - name: security_gate
+    displayName: 查毒与一致性
+    strategy: naturally
+    trigger: auto
+    executor: []
+    steps:
+      - step: build@python
+        name: registry_gate
+        displayName: 清单查毒 + registry.json 一致性
+        pythonVersion: 3.9
+        commands: |
+          set -e
+          python3 --version
+          python3 scripts/review_static.py --selftest
+          python3 scripts/review_static.py --scan-registry
+          python3 -c 'import yaml' 2>/dev/null || pip3 install --only-binary=:all: 'PyYAML==6.0.2'
+          python3 scripts/gen_registry.py --check --strict
+        strategy:
+          retry: '0'
