@@ -140,15 +140,8 @@ def build_manifest(desc: dict) -> tuple[dict, str]:
                 "args": [name],
                 "requires": {"python": ">=3.10"},
             },
-            # 备选：uvx 按需拉起，无需预装
-            {
-                "id": "uvx",
-                "type": "stdio",
-                "launcher": "uvx",
-                "command": "uvx",
-                "args": [f"totalclaw-mcp-servers=={PKG_VERSION}", name],
-                "requires": {"python": ">=3.10"},
-            },
+            # 不加 uvx 运行时：totalclaw-mcp-servers 没发到 PyPI，谁抢注这个名字装上的就是谁的代码。
+            # 等我们自己在 PyPI 发了这个包（名字归我们），再按精确版本加回来。
         ],
         "requires_env": req_env,
         "optional_env": [v for v in desc.get("optional_env") or []

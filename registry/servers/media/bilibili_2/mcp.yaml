@@ -1,13 +1,13 @@
-# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-02 静态审核：拒绝（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：源码仓库 github.com/yourusername/bilibili-mcp 访问不到（404）；仓库 yourusername/bilibili-mcp 的清单文件和 README 里都找不到包名 bilibili-mcp，无法确认包出自此仓库
+# 审核意见：人工复核（2026-11-02）：出处核实不清——npm 包元数据的仓库是模板占位地址 yourusername/bilibili-mcp、作者「bilibili-mcp contributors」，找不到源码仓库核对包内代码；市场已有出处可查的 bilibili 条目；源码仓库 github.com/yourusername/bilibili-mcp 访问不到（404）；仓库 yourusername/bilibili-mcp 的清单文件和 README 里都找不到包名 bilibili-mcp，无法确认包出自此仓库
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: bilibili_2
 display_name: Bilibili
 display_name_en: Bilibili
-version: 0.1.1
+version: 0.1.2
 description: B站视频搜索 MCP（Model Context Protocol）服务
 description_zh: Bilibili的MCP服务器，支持Bilibili的内容搜索
 author: upstream
@@ -35,5 +35,6 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: block
   osv: clean
+  reason: "人工复核（2026-11-02）：出处核实不清——npm 包元数据的仓库是模板占位地址 yourusername/bilibili-mcp、作者「bilibili-mcp contributors」，找不到源码仓库核对包内代码；市场已有出处可查的 bilibili 条目；源码仓库 github.com/yourusername/bilibili-mcp 访问不到（404）；仓库 yourusername/bilibili-mcp 的清单文件和 README 里都找不到包名 bilibili-mcp，无法确认包出自此仓库"

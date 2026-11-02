@@ -29,15 +29,6 @@ runtimes:
   - linear
   requires:
     python: '>=3.10'
-- id: uvx
-  type: stdio
-  launcher: uvx
-  command: uvx
-  args:
-  - totalclaw-mcp-servers==0.1.0
-  - linear
-  requires:
-    python: '>=3.10'
 requires_env:
 - name: LINEAR_API_KEY
   env_key: LINEAR_API_KEY

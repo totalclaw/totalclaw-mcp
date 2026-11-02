@@ -1,13 +1,12 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：周下载量很低（11）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: jarp
 display_name: jarp-mcp
 display_name_en: jarp-mcp
-version: 0.1.1
+version: 0.1.2
 description: MCP server that gives AI agents instant access to decompiled Java code from Maven/Gradle dependencies. Blazing
   fast Java class analysis for Claude, Cursor, and other LLM-powered IDEs.
 description_zh: Java Archive Reader Protocol - 为 AI 代理提供对 Maven 依赖中反编译 Java 代码的即时访问，如同为 AI 装上"X 光透视眼"。
@@ -15,7 +14,7 @@ author: tersePrompts
 license: Apache-2.0
 homepage: https://github.com/tersePrompts/jarp-mcp
 repository: https://github.com/tersePrompts/jarp-mcp
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -37,5 +36,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

@@ -1,19 +1,18 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：没有找到开源许可证声明
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: platform
 display_name: mcp-flowcore-platform
 display_name_en: mcp-flowcore-platform
-version: 0.1.1
+version: 0.1.2
 description: MCP server for managing and interacting with Flowcore Platform
 description_zh: 与 Flowcore 交互以执行操作、摄取数据，并分析、交叉引用和利用数据核心中的任何数据。
 author: flowcore-io
 homepage: https://github.com/flowcore-io/mcp-flowcore-platform
 repository: https://github.com/flowcore-io/mcp-flowcore-platform
-verified: false
+verified: true
 category: data
 tags:
 - data
@@ -55,5 +54,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

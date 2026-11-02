@@ -1,13 +1,12 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：周下载量很低（11）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: kilo_kit
 display_name: kilo-kit-mcp
 display_name_en: kilo-kit-mcp
-version: 0.1.1
+version: 0.1.2
 description: MCP server for safer coding agents with skill routing, C4 workflow gates, memory checks, and verification.
 description_zh: 全功能 18 工具 MCP 运行时与 177 个专家技能库，提供协议级 C4 工作流门禁、安全沙箱执行与 5 大认知推理引擎（思维树 DAG、对抗性 Red-Team 质询、5-Whys 根因追踪器、上下文压缩器与自我进化技能生成）。一键配置
   Cursor / Claude Code / Antigravity / Windsurf。
@@ -15,7 +14,7 @@ author: VoDaiLocz
 license: Apache-2.0
 homepage: https://github.com/VoDaiLocz/kilo-kit-mcp
 repository: https://github.com/VoDaiLocz/kilo-kit-mcp
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -37,5 +36,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

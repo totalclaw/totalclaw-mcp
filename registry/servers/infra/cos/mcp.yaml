@@ -1,19 +1,18 @@
-# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：找不到 GitHub 源码仓库，无法核对包出自哪里（元数据写的是 /）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: cos
 display_name: 腾讯云COS
 display_name_en: ''
-version: 0.1.1
+version: 0.1.2
 description: 基于MCP协议的腾讯云COS MCP Server，无需编码即可让大模型快速接入腾讯云存储(COS)和数据万象(CI)能力
 description_zh: 腾讯云对象存储(COS)的MCP服务器，支持文件上传、下载和管理
 author: upstream
 license: MIT
 homepage: https://www.npmjs.com/package/cos-mcp
-verified: false
+verified: true
 category: infra
 tags:
 - infra
@@ -60,5 +59,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

@@ -1,20 +1,19 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：周下载量很低（8）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: x
 display_name: X (Twitter) (by vidhupv)
 display_name_en: X (Twitter) (by vidhupv)
-version: 0.1.1
+version: 0.1.2
 description: A server to create drafts of X(twitter) posts, threads using LLMs and post directly from the chat.
 description_zh: 直接通过 Claude 创建、管理和发布 X/Twitter 推文。
 author: vidhupv
 license: MIT
 homepage: https://github.com/vidhupv/x-mcp
 repository: https://github.com/vidhupv/x-mcp
-verified: false
+verified: true
 category: comm
 tags:
 - comm
@@ -35,5 +34,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

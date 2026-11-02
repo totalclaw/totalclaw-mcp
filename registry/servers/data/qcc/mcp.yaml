@@ -30,15 +30,6 @@ runtimes:
   - qcc
   requires:
     python: '>=3.10'
-- id: uvx
-  type: stdio
-  launcher: uvx
-  command: uvx
-  args:
-  - totalclaw-mcp-servers==0.1.0
-  - qcc
-  requires:
-    python: '>=3.10'
 requires_env:
 - name: QCC_APP_KEY
   env_key: QCC_APP_KEY

@@ -30,15 +30,6 @@ runtimes:
   - tapd
   requires:
     python: '>=3.10'
-- id: uvx
-  type: stdio
-  launcher: uvx
-  command: uvx
-  args:
-  - totalclaw-mcp-servers==0.1.0
-  - tapd
-  requires:
-    python: '>=3.10'
 requires_env:
 - name: TAPD_API_PASSWORD
   env_key: TAPD_API_PASSWORD

@@ -1,13 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：拒绝（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：拒绝（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：人工复核：导入错误——url 是上游 README 里工具调用参数的示例地址（example.com），不是 MCP 端点；上游 pskill9/website-downloader 是本地 stdio 服务器
+# 审核意见：人工复核（2026-11-02）：导入错误——url 是上游 README 里工具调用参数的示例地址（example.com），不是 MCP 端点；上游 pskill9/website-downloader 是本地 stdio 服务器
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: example_pskill9
 display_name: website-downloader
 display_name_en: website-downloader
-version: 0.1.1
+version: 0.1.2
 description: Download entire websites using wget, preserving their structure and converting links to work locally.
 description_zh: 使用 wget 下载整个网站的 MCP 服务器。保留网站结构并将链接转换为本地工作。
 author: pskill9
@@ -32,3 +32,4 @@ defaults:
 security:
   scan_verdict: block
   osv: clean
+  reason: "人工复核（2026-11-02）：导入错误——url 是上游 README 里工具调用参数的示例地址（example.com），不是 MCP 端点；上游 pskill9/website-downloader 是本地 stdio 服务器"

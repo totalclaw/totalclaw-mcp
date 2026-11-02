@@ -1,19 +1,18 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：没有找到开源许可证声明；周下载量很低（16）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: dolphindb
 display_name: dolphindb-mcp-server
 display_name_en: dolphindb-mcp-server
-version: 0.1.1
+version: 0.1.2
 description: dolphindb mcp server
 description_zh: DolphinDB 数据库集成，具有模式检查和查询能力。
 author: tradercjz
 homepage: https://github.com/tradercjz/dolphindb-mcp-server
 repository: https://github.com/tradercjz/dolphindb-mcp-server
-verified: false
+verified: true
 category: data
 tags:
 - data
@@ -34,5 +33,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

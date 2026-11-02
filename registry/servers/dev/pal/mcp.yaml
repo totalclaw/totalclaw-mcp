@@ -1,19 +1,21 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-02 投毒排查：拒绝（详见 docs/review-2026-11-02.md「投毒排查」）
+# 审核意见：人工复核（2026-11-02）：抢注官方包名——官方 BeehiveInnovations/pal-mcp-server 只支持 git 安装（uvx --from git+https://…），从未发布到 PyPI；PyPI 上的 pal-mcp-server 由 fork 仓库 laurigates/pal-mcp-server（2026-05 创建）发布，PyPI 构建来源证明指向该 fork
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: pal
 display_name: PAL MCP Server
 display_name_en: PAL MCP Server
-version: 0.1.1
+version: 0.1.2
 description: AI-powered MCP server with multiple model providers
 description_zh: 多模型协作 MCP（原 Zen MCP）：让 Claude Code / Gemini CLI / Codex 在一次会话里调用 Gemini、GPT、OpenRouter、Ollama 等多个模型，做代码审查、debug、预提交检查与共识决策，跨模型共享同一上下文。
 author: BeehiveInnovations
 license: Apache-2.0
 homepage: https://github.com/BeehiveInnovations/pal-mcp-server
 repository: https://github.com/BeehiveInnovations/pal-mcp-server
-verified: true
+verified: false
 category: dev
 tags:
 - dev
@@ -34,5 +36,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: allow
-  osv: clean
+  scan_verdict: block
+  reason: "人工复核（2026-11-02）：抢注官方包名——官方 BeehiveInnovations/pal-mcp-server 只支持 git 安装（uvx --from git+https://…），从未发布到 PyPI；PyPI 上的 pal-mcp-server 由 fork 仓库 laurigates/pal-mcp-server（2026-05 创建）发布，PyPI 构建来源证明指向该 fork"

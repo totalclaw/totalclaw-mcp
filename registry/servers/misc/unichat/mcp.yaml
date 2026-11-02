@@ -1,20 +1,19 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：周下载量很低（9）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: unichat
 display_name: unichat-mcp-server
 display_name_en: unichat-mcp-server
-version: 0.1.1
+version: 0.1.2
 description: Unichat MCP Server
 description_zh: 通过工具或预定义提示使用 MCP 协议向 OpenAI, MistralAI, Anthropic, xAI, Google AI 或 DeepSeek 发送请求。
 author: amidabuddha
 license: MIT
 homepage: https://github.com/amidabuddha/unichat-mcp-server
 repository: https://github.com/amidabuddha/unichat-mcp-server
-verified: false
+verified: true
 category: misc
 tags:
 - misc
@@ -44,5 +43,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

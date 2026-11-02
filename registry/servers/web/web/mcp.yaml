@@ -29,15 +29,6 @@ runtimes:
   - web
   requires:
     python: '>=3.10'
-- id: uvx
-  type: stdio
-  launcher: uvx
-  command: uvx
-  args:
-  - totalclaw-mcp-servers==0.1.0
-  - web
-  requires:
-    python: '>=3.10'
 requires_env: []
 optional_env:
 - TOTALCLAW_MCP_WEB_ALLOW_PRIVATE

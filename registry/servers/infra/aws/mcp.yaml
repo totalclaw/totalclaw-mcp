@@ -1,13 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：拒绝（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：拒绝（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：osv 已知漏洞 GHSA-fgmx-xfp3-w28p（CRITICAL）：aws-mcp has a Command Injection Remote Code Execution Vulnerability；osv 已知漏洞 PYSEC-2026-288（UNKNOWN）：aws-mcp has a Command Injection Remote Code Execution Vulnerability
+# 审核意见：人工复核（2026-11-02）：osv 严重漏洞 GHSA-fgmx-xfp3-w28p（命令注入远程执行，CRITICAL），钉的 1.7.0 受影响；osv 已知漏洞 GHSA-fgmx-xfp3-w28p（CRITICAL）：aws-mcp has a Command Injection Remote Code Execution Vulnerability；osv 已知漏洞 PYSEC-2026-288（UNKNOWN）：aws-mcp has a Command Injection Remote Code Execution Vulnerability
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: aws
 display_name: aws-mcp-server
 display_name_en: aws-mcp-server
-version: 0.1.1
+version: 0.1.2
 description: AWS Model Context Protocol Server
 description_zh: 轻量级服务器，让 AI 执行 AWS CLI 命令 (带 Unix 管道和模板)，支持 Docker 安全运行 (多架构)。
 author: alexei-led
@@ -37,3 +37,4 @@ defaults:
 security:
   scan_verdict: block
   osv: advisories:2
+  reason: "人工复核（2026-11-02）：osv 严重漏洞 GHSA-fgmx-xfp3-w28p（命令注入远程执行，CRITICAL），钉的 1.7.0 受影响；osv 已知漏洞 GHSA-fgmx-xfp3-w28p（CRITICAL）：aws-mcp has a Command Injection Remote Code Execution Vulnerability；osv 已知漏洞 PYSEC-2026-288（UNKNOWN）：aws-mcp has a Command Injection Remote Code Execution Vulnerability"

@@ -1,16 +1,19 @@
 # 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+# 2026-11-02 投毒排查：拒绝（详见 docs/review-2026-11-02.md「投毒排查」）
+# 审核意见：人工复核（2026-11-02）：端点 rube.composio.dev 的 TLS 证书已于 2026-07-10 过期（Let's Encrypt，4 个月未续），连接校验失败，端点已失效；带着 COMPOSIO_API_KEY 连一个证书失效的地址不安全
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: composio
 display_name: Composio
 display_name_en: Composio
-version: 0.1.0
+version: 0.1.1
 description: Composio MCP server.
 description_zh: 500+ SaaS 工具统一接入枢纽:Gmail / Slack / GitHub / Notion / Linear / Jira / HubSpot / Salesforce
   / Calendar / Drive 等。支持 OAuth 流程 + 多账号上下文 + 沙箱工作台。
 author: upstream
 homepage: https://github.com/composiohq/composio
+verified: false
 category: biz
 tags:
 - biz
@@ -34,3 +37,6 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 240
+security:
+  scan_verdict: block
+  reason: "人工复核（2026-11-02）：端点 rube.composio.dev 的 TLS 证书已于 2026-07-10 过期（Let's Encrypt，4 个月未续），连接校验失败，端点已失效；带着 COMPOSIO_API_KEY 连一个证书失效的地址不安全"

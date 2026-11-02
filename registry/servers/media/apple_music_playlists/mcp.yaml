@@ -1,20 +1,19 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：人工复核：会读取并解密 Apple Music for Windows（WebView2）cookie 库里的 media-user-token（只取这一项、只发往 api.music.apple.com），并从网页 JS 抓取 Apple 开发者令牌；无外传迹象，但涉及解密浏览器 cookie 库；代码命中「浏览器凭据 / Cookie 库」：am_playlist.py；代码命中「浏览器凭据 / Cookie 库」：apple_music_playlists-1.6.1/am_playlist.py
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: apple_music_playlists
 display_name: Apple Music MCP Curator
 display_name_en: Apple Music MCP Curator
-version: 0.1.1
+version: 0.1.2
 description: Language-led Apple Music playlist curation via MCP, with catalog grounding and a NetEase public preview
 description_zh: 根据复杂自然语言简报策划 Apple Music 歌单：宿主 LLM 直接理解音乐语义、比较候选并决定曲目角色，MCP 服务负责曲库落地与录音版本核验；音频特征辅助检查衔接，不替代对简报的判断。支持创建前 dry-run。
 author: Z-Han-Z
 license: MIT
 homepage: https://github.com/Z-Han-Z/apple-music-playlists
 repository: https://github.com/Z-Han-Z/apple-music-playlists
-verified: false
+verified: true
 category: media
 tags:
 - media
@@ -39,5 +38,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

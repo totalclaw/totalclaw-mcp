@@ -4,7 +4,7 @@
 不依赖任何第三方托管端点。
 
 ```bash
-pip install -e servers                    # 或 uvx totalclaw-mcp-servers==0.1.0 <name>
+pip install -e servers                    # 本包没发到 PyPI，别用 uvx totalclaw-mcp-servers（名字可被抢注）
 
 totalclaw-mcp-server --list               # 列出全部服务器
 totalclaw-mcp-server --check              # 校验全部定义（CI 用，不发请求）

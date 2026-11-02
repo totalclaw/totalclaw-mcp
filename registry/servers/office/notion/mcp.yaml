@@ -29,15 +29,6 @@ runtimes:
   - notion
   requires:
     python: '>=3.10'
-- id: uvx
-  type: stdio
-  launcher: uvx
-  command: uvx
-  args:
-  - totalclaw-mcp-servers==0.1.0
-  - notion
-  requires:
-    python: '>=3.10'
 requires_env:
 - name: NOTION_API_KEY
   env_key: NOTION_API_KEY

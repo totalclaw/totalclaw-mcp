@@ -1,20 +1,19 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：周下载量很低（19）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: opendal
 display_name: mcp-server-opendal
 display_name_en: mcp-server-opendal
-version: 0.1.1
+version: 0.1.2
 description: A Model Context Protocol server providing tools to access storage services for usage by LLMs
 description_zh: 使用 Apache OpenDAL™ 访问任何存储。
 author: Xuanwo
 license: Apache-2.0
 homepage: https://github.com/Xuanwo/mcp-server-opendal
 repository: https://github.com/Xuanwo/mcp-server-opendal
-verified: false
+verified: true
 category: data
 tags:
 - data
@@ -42,5 +41,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

@@ -1,13 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：拒绝（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：人工复核：PyPI 包由第三方 danchev 从 zilliztech 官方仓库 fork 后发布（dev 版本），官方仓库只支持源码安装；条目写的仓库 zilliztech/mcp-server-milvus 与包元数据里的仓库 danchev/mcp-server-milvus 不一致
+# 审核意见：人工复核（2026-11-02）：抢注官方包名——Zilliz 官方 zilliztech/mcp-server-milvus 只支持源码安装、从未发布到 PyPI；PyPI 上的 mcp-server-milvus 由第三方 danchev 从 fork 以官方同名发布，且钉的是 dev 预发布版 0.1.1.dev9；条目写的仓库 zilliztech/mcp-server-milvus 与包元数据里的仓库 danchev/mcp-server-milvus 不一致
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: milvus
 display_name: Milvus
 display_name_en: Milvus
-version: 0.1.1
+version: 0.1.2
 description: MCP server for Milvus
 description_zh: Zilliz/Milvus 官方集成，搜索、查询和交互 Milvus 向量数据库中的数据。
 author: zilliztech
@@ -35,5 +35,6 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: block
   osv: clean
+  reason: "人工复核（2026-11-02）：抢注官方包名——Zilliz 官方 zilliztech/mcp-server-milvus 只支持源码安装、从未发布到 PyPI；PyPI 上的 mcp-server-milvus 由第三方 danchev 从 fork 以官方同名发布，且钉的是 dev 预发布版 0.1.1.dev9；条目写的仓库 zilliztech/mcp-server-milvus 与包元数据里的仓库 danchev/mcp-server-milvus 不一致"

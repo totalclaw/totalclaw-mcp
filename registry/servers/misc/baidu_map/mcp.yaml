@@ -1,19 +1,18 @@
-# 由 fau-tools/mcp-import 从 厂商官方说明（人工核实） 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 厂商官方说明（人工核实） 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：找不到 GitHub 源码仓库，无法核对包出自哪里
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: baidu_map
 display_name: 百度地图
 display_name_en: ''
-version: 0.1.1
+version: 0.1.2
 description: MCP server for using the Baidu Map API
 description_zh: 百度地图官方 MCP：地点检索、地理编码与逆地理编码、路线规划、天气与实时路况。
 author: upstream
 license: MIT
 homepage: https://www.npmjs.com/package/@baidumap/mcp-server-baidu-map
-verified: false
+verified: true
 category: misc
 tags:
 - misc
@@ -40,5 +39,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

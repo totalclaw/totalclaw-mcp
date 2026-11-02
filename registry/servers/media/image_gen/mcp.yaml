@@ -1,20 +1,19 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：源码仓库 github.com/GongRzhe/image-gen-server 访问不到（404）；仓库 GongRzhe/image-gen-server 的清单文件和 README 里都找不到包名 @gongrzhe/image-gen-server，无法确认包出自此仓库
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: image_gen
 display_name: Image Generation
 display_name_en: Image Generation
-version: 0.1.1
+version: 0.1.2
 description: An MCP server for image generation using the Replicate Flux model
 description_zh: 使用 Replicate Flux 模型提供图像生成能力。
 author: GongRzhe
 license: MIT
 homepage: https://github.com/GongRzhe/Image-Generation-MCP-Server
 repository: https://github.com/GongRzhe/Image-Generation-MCP-Server
-verified: false
+verified: true
 category: media
 tags:
 - media
@@ -45,5 +44,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

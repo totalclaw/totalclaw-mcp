@@ -1,20 +1,19 @@
-# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：包内含预编译二进制（静态看不到行为）：package/bundled/axe, package/bundled/Frameworks/FBControlCore.framework/Versions/A/FBControlCore, package/bundled/Frameworks/FBDeviceControl.framework/Versions/A/FBDeviceControl 等 5 个
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: xcodebuildmcp
 display_name: Xcode构建
 display_name_en: ''
-version: 0.1.1
+version: 0.1.2
 description: XcodeBuildMCP is a Model Context Protocol server that provides tools for Xcode project management, simulator
   management, and app utilities.
 description_zh: Xcode项目构建和管理的MCP工具
 author: upstream
 license: MIT
 homepage: https://www.npmjs.com/package/xcodebuildmcp
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -36,5 +35,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

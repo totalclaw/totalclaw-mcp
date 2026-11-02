@@ -1,13 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：拒绝（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：拒绝（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：人工复核：导入错误——url 是上游 README 里工具调用参数的示例地址（example.com），不是 MCP 端点；上游 pskill9/hn-server 是本地 stdio 服务器；端点返回 404，地址可能已变更
+# 审核意见：人工复核（2026-11-02）：导入错误——url 是上游 README 里工具调用参数的示例地址（example.com），不是 MCP 端点；上游 pskill9/hn-server 是本地 stdio 服务器；端点返回 404，地址可能已变更
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: example
 display_name: hn-server
 display_name_en: hn-server
-version: 0.1.1
+version: 0.1.2
 description: Parse Hacker News pages into structured data for top, new, ask, show and job stories.
 description_zh: 解析 news.ycombinator.com (Hacker News) 的 HTML 内容，并为不同类型的故事提供结构化数据。
 author: pskill9
@@ -32,3 +32,4 @@ defaults:
 security:
   scan_verdict: block
   osv: clean
+  reason: "人工复核（2026-11-02）：导入错误——url 是上游 README 里工具调用参数的示例地址（example.com），不是 MCP 端点；上游 pskill9/hn-server 是本地 stdio 服务器；端点返回 404，地址可能已变更"

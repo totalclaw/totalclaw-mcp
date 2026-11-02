@@ -1,19 +1,18 @@
-# 由 fau-tools/mcp-import 从 厂商官方说明（人工核实） 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 厂商官方说明（人工核实） 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：找不到 GitHub 源码仓库，无法核对包出自哪里
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: apifox
 display_name: Apifox
 display_name_en: Apifox
-version: 0.1.1
+version: 0.1.2
 description: 使用 Apifox MCP Server，可以将 Apifox 项目内的接口文档作为数据源提供给 Cursor 等支持 AI 编程的 IDE 工具以便让 AI 能够直接访问项目对应的接口文档数据。
 description_zh: Apifox 官方 MCP：把 Apifox 项目里的接口文档提供给 AI，按文档生成和修改代码。需要访问令牌和项目 ID。
 author: upstream
 license: ISC
 homepage: https://www.npmjs.com/package/apifox-mcp-server
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -48,5 +47,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

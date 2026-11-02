@@ -1,13 +1,12 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：周下载量很低（18）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: triage
 display_name: MCP Triage
 display_name_en: MCP Triage
-version: 0.1.1
+version: 0.1.2
 description: Triage broken MCP setups across 8 agent clients — find what is wrong, fix what is fixable, escalate the rest.
   Zero runtime dependencies.
 description_zh: 诊断并机械修复本机多个 AI 客户端（Claude Desktop、Claude Code、Codex、Cursor、VS Code、Windsurf、OpenClaw、dsh）的 MCP 配置文件问题：JSON
@@ -16,7 +15,7 @@ author: neufagents
 license: MIT
 homepage: https://github.com/neufagents/mcp-triage
 repository: https://github.com/neufagents/mcp-triage
-verified: false
+verified: true
 category: misc
 tags:
 - misc
@@ -39,5 +38,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

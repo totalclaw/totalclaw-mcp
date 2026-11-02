@@ -104,7 +104,14 @@ HIGH_PATTERNS = [
     ("加密钱包", r"wallet\.dat|nkbihfbeogaeaoehlefnkodbefgpgknn|bfnaelmomeimhlpmgjnjophhpkkoljpa"
               r"|\.ethereum[\\/]keystore|solana[\\/]id\.json|exodus\.wallet"),
     ("可疑外传端点", r"discord(?:app)?\.com/api/webhooks|webhook\.site|pipedream\.net|requestbin|\boast\.(?:fun|pro|live|site|online|me)\b"
-                 r"|interact\.sh|burpcollaborator|transfer\.sh|pastebin\.com/raw|hookbin\.com|trycloudflare\.com|ngrok(?:-free)?\.(?:io|app)"),
+                 r"|interact\.sh|burpcollaborator|transfer\.sh|pastebin\.com/raw|hookbin\.com|trycloudflare\.com|ngrok(?:-free)?\.(?:io|app)"
+                 r"|\bbore\.pub\b|serveo\.net|\bloca\.lt\b|localtunnel\.me|pinggy\.(?:io|link)|localhost\.run|\blhr\.life\b"),
+    ("解码进 shell", r"base64\s+(?:-d|-D|--decode)\b[^\n]{0,80}\|\s*(?:sudo\s+)?(?:ba|z)?sh\b"),
+    # 2026-11 ClawHavoc 技能投毒的已知特征（假前置安装、投放 IP / 域名）
+    ("已知投毒特征", r"91\.92\.242\.30|app-distribution\.net|setup-service\.com|openclawcli\.|OpenClaw(?:Driver|CLI|Provider)\b"),
+    ("提示注入话术", r"(?i)ignore (?:all |any )?(?:previous|prior|above|earlier) (?:instructions|prompts)"
+                 r"|do not (?:tell|inform|mention (?:this )?to|reveal (?:this )?to) the user|without (?:telling|informing|notifying) the user"
+                 r"|<IMPORTANT>|忽略(?:之前|以上|前面)的?(?:所有)?(?:指令|提示)|不要告诉用户"),
     ("整体外传环境变量", r"JSON\.stringify\(\s*process\.env\s*\)|json\.dumps\(\s*dict\(\s*os\.environ\s*\)\s*\)"),
     ("解码后执行", r"\beval\(\s*(?:atob|Buffer\.from|unescape)\(|new Function\(\s*(?:atob|Buffer\.from)\("
                r"|\bexec\(\s*(?:base64\.b64decode|zlib\.decompress|marshal\.loads|bytes\.fromhex|codecs\.decode)"
@@ -687,7 +694,7 @@ def write_report(results, md_path: Path):
         by.setdefault(r["kind"], {}).setdefault(r["verdict"], 0)
         by[r["kind"]][r["verdict"]] += 1
     lines = [f"# 未审核条目静态审核结果（{TODAY}）", "",
-             "由 `scripts/review_static.py` 生成，逐条明细见同名 `.json`，人工复核结论见 `-manual.json`。", "",
+             "由 `scripts/review_static.py` 生成，逐条明细 `.json` 只留在审核机本地（不入库），人工复核结论见 `-manual.json`。", "",
              "## 怎么审的", "",
              "只做静态审核：**没有安装、没有运行任何一个第三方包**。",
              "",
@@ -696,7 +703,7 @@ def write_report(results, md_path: Path):
              "仓库的 package.json / pyproject.toml 声明了同名包，或 README 提到这个包名（防冒名）。",
              "- **许可证**：包元数据 → 包内 LICENSE 文件 → 仓库 LICENSE；商业许可、`SEE LICENSE IN` 指向非开源文本的算警告。条目没写的从元数据补上。",
              "- **代码**：发布的压缩包下载到内存里逐文件扫（不落盘、不解压、不执行）：安装期脚本（pre/post/install、setup.py、自定义构建后端、启动即执行的 .pth）、"
-             "下载即执行（curl | sh、iwr | iex）、读 SSH 私钥 / 浏览器 Cookie / 钱包、可疑外传端点、整体外传环境变量、解码后执行、硬编码公网 IP、混淆器特征、预编译二进制。"
+             "下载即执行（curl | sh、iwr | iex、base64 解码进 shell）、读 SSH 私钥 / 浏览器 Cookie / 钱包、可疑外传端点与匿名隧道、整体外传环境变量、解码后执行、硬编码公网 IP、混淆器特征、预编译二进制、已知投毒特征（ClawHavoc 假前置安装与投放地址）、工具描述里的提示注入话术。"
              "README / PKG-INFO / METADATA / Dockerfile / CI 配置不扫（npx / uvx 不会执行它们）。命中的每一条都人工读过代码，确认无害的记在 `-manual.json` 里。",
              "- **漏洞**：osv.dev 查钉的版本，HIGH / CRITICAL 拒绝，其余警告。",
              f"- **热度**：最近一次发布超过 2 年、或周下载量低于 {LOW_DOWNLOADS}（每天不到 3 次，基本只剩镜像 / 爬虫流量）的，警告。",
@@ -706,7 +713,7 @@ def write_report(results, md_path: Path):
              "判定：全部无问题 → 通过（清单置 `verified: true`、`scan_verdict: allow`）；有疑点 → 警告（`warn`，保持未审核）；"
              "包 / 版本不存在、装错包、越界的下载执行行为、高危漏洞、端点不是 MCP 服务 → 拒绝（`block`，安装器永不安装）。拿不准的一律归警告。",
              "",
-             "**没覆盖到的**：工具描述里的提示注入、运行时实际出网域名（要真跑起来才查得到，所以 `prompt_injection_findings` / `egress` 没写）；"
+             "**没覆盖到的**：运行时动态生成的工具描述与实际出网域名（要真跑起来才查得到，所以 `prompt_injection_findings` / `egress` 没写）；"
              "间接依赖（只审了包本身）；预编译二进制的行为；远程端点背后的服务端代码。",
              "",
              "## 统计", "", "| 运行方式 | 通过 | 警告 | 拒绝 | 合计 |", "|---|---|---|---|---|"]
@@ -775,6 +782,8 @@ def apply(json_path: Path):
             val = lic if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9.+\- ]*", lic) else json.dumps(lic, ensure_ascii=False)
             body = re.sub(r"(?m)^(author: [^\n]*\n)", lambda m: m.group(1) + f"license: {val}\n", body, count=1)
         body = body.rstrip("\n") + f"\nsecurity:\n  scan_verdict: {r['verdict']}\n  osv: {r['osv_field']}\n"
+        if r["verdict"] == "block":  # 下架理由随索引下发（桌面端按 block 隐藏并停用已装的同名连接器）
+            body += f"  reason: {json.dumps(r['reason'], ensure_ascii=False)}\n"
         new = head + body
         if new == old:
             continue
@@ -820,6 +829,9 @@ def selftest():
     ok = finalize(dict(r, issues=[]), {"t": {"dismiss": ["代码命中", "包内含预编译二进制"], "reason": "读过代码"}})
     assert ok["verdict"] == "allow" and ok["reason"] == "读过代码", ok
     assert license_from_text("# Acme Commercial License\nincludes MIT License parts") == "Proprietary"
+    for label, s in {"解码进 shell": "echo 'Y3VybA==' | base64 -D | bash", "已知投毒特征": "install OpenClawDriver first",
+                     "可疑外传端点": "https://bore.pub:7000", "提示注入话术": "Ignore previous instructions"}.items():
+        assert any(lb == label and rx.search(s) for lb, rx in HIGH_RES), label
     print("✓ selftest")
 
 

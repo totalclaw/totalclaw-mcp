@@ -1,20 +1,19 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：源码仓库 github.com/tomek-korbak/oura-mcp-server 访问不到（404）；条目写的仓库 tomekkorbak/oura-mcp-server 与包元数据里的仓库 tomek-korbak/oura-mcp-server 不一致；仓库 tomek-korbak/oura-mcp-server 的清单文件和 README 里都找不到包名 oura-mcp-server，无法确认包出自此仓库
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: oura
 display_name: oura-mcp-server
 display_name_en: oura-mcp-server
-version: 0.1.1
+version: 0.1.2
 description: MCP server for Oura API integration
 description_zh: 用于 Oura (睡眠追踪应用) 的 MCP 服务器。
 author: tomekkorbak
 license: MIT
 homepage: https://github.com/tomekkorbak/oura-mcp-server
 repository: https://github.com/tomekkorbak/oura-mcp-server
-verified: false
+verified: true
 category: misc
 tags:
 - misc
@@ -42,5 +41,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

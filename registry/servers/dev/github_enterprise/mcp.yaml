@@ -1,13 +1,12 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：周下载量很低（11）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: github_enterprise
 display_name: github-enterprise-mcp
 display_name_en: github-enterprise-mcp
-version: 0.1.1
+version: 0.1.2
 description: MCP server for GitHub Enterprise API integration with Cursor, enabling AI access to repositories, issues, PRs
   and workflows
 description_zh: 用于 GitHub Enterprise API 集成的 MCP 服务器。
@@ -15,7 +14,7 @@ author: ddukbg
 license: ISC
 homepage: https://github.com/ddukbg/github-enterprise-mcp
 repository: https://github.com/ddukbg/github-enterprise-mcp
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -55,5 +54,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

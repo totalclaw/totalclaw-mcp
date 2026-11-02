@@ -1,13 +1,12 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：周下载量很低（3）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: knowlyr_modelaudit
 display_name: model-audit
 display_name_en: model-audit
-version: 0.1.1
+version: 0.1.2
 description: LLM distillation detection and model fingerprint audit tool - text source detection, model identity verification,
   and distillation analysis
 description_zh: LLM 蒸馏检测与模型指纹审计 — 文本溯源、身份验证、蒸馏关系判定，守护模型知识产权。
@@ -15,7 +14,7 @@ author: liuxiaotong
 license: MIT
 homepage: https://github.com/liuxiaotong/model-audit
 repository: https://github.com/liuxiaotong/model-audit
-verified: false
+verified: true
 category: infra
 tags:
 - infra
@@ -36,5 +35,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

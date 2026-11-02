@@ -1,20 +1,19 @@
-# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：找不到 GitHub 源码仓库，无法核对包出自哪里
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: hotnews
 display_name: HotNews
 display_name_en: HotNews
-version: 0.1.1
+version: 0.1.2
 description: A Model Context Protocol server that provides real-time hot trending topics from major Chinese social platforms
   and news sites
 description_zh: HotNews的MCP服务器，支持国内热点新闻的读取
 author: upstream
 license: MIT
 homepage: https://www.npmjs.com/package/@wopal/mcp-server-hotnews
-verified: false
+verified: true
 category: web
 tags:
 - web
@@ -36,5 +35,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

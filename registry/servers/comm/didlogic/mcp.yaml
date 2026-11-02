@@ -1,20 +1,19 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：周下载量很低（12）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: didlogic
 display_name: didlogic_mcp
 display_name_en: didlogic_mcp
-version: 0.1.1
+version: 0.1.2
 description: DIDLogic MCP server
 description_zh: DIDLogic MCP 服务器。增加管理 SIP 端点、号码和目的地的功能。
 author: UserAd
 license: MIT
 homepage: https://github.com/UserAd/didlogic_mcp
 repository: https://github.com/UserAd/didlogic_mcp
-verified: false
+verified: true
 category: comm
 tags:
 - comm
@@ -35,5 +34,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

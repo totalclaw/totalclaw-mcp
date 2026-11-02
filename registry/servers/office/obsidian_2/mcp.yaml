@@ -1,13 +1,13 @@
-# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-02 静态审核：拒绝（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：找不到 GitHub 源码仓库，无法核对包出自哪里；没有找到开源许可证声明
+# 审核意见：人工复核（2026-11-02）：出处核实不清——npm 包 mcp-obsidian@1.0.0 没有声明源码仓库，作者原仓库已不存在，也没有许可证；市场已有出处可查的 obsidian 条目；找不到 GitHub 源码仓库，无法核对包出自哪里；没有找到开源许可证声明
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: obsidian_2
 display_name: Obsidian
 display_name_en: Obsidian
-version: 0.1.1
+version: 0.1.2
 description: Model Context Protocol server for Obsidian Vaults
 description_zh: Obsidian的MCP服务器，支持Obsidian的读取和写入
 author: upstream
@@ -34,5 +34,6 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: block
   osv: clean
+  reason: "人工复核（2026-11-02）：出处核实不清——npm 包 mcp-obsidian@1.0.0 没有声明源码仓库，作者原仓库已不存在，也没有许可证；市场已有出处可查的 obsidian 条目；找不到 GitHub 源码仓库，无法核对包出自哪里；没有找到开源许可证声明"

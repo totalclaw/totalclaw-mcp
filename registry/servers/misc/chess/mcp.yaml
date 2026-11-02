@@ -1,13 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：拒绝（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：源码仓库 github.com/yourusername/chess-mcp 访问不到（404）；条目写的仓库 pab1it0/chess-mcp 与包元数据里的仓库 yourusername/chess-mcp 不一致；仓库 yourusername/chess-mcp 的清单文件和 README 里都找不到包名 chess_mcp，无法确认包出自此仓库；周下载量很低（16）
+# 审核意见：人工复核（2026-11-02）：装错包——PyPI 上的 chess_mcp 是另一个项目（单文件的国际象棋对局服务器，作者与仓库都是模板占位 Your Name / yourusername），包内文件与条目所指 pab1it0/chess-mcp（Chess.com API 服务）对不上；源码仓库 github.com/yourusername/chess-mcp 访问不到（404）；条目写的仓库 pab1it0/chess-mcp 与包元数据里的仓库 yourusername/chess-mcp 不一致；仓库 yourusername/chess-mcp 的清单文件和 README 里都找不到包名 chess_mcp，无法确认包出自此仓库；周下载量很低（16）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: chess
 display_name: chess-mcp
 display_name_en: chess-mcp
-version: 0.1.1
+version: 0.1.2
 description: A Model Context Protocol server for chess games using Stockfish
 description_zh: 访问 Chess.com 玩家数据、对局记录和其他公共信息，允许 AI 助手搜索和分析国际象棋信息。
 author: pab1it0
@@ -35,5 +35,6 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: block
   osv: clean
+  reason: "人工复核（2026-11-02）：装错包——PyPI 上的 chess_mcp 是另一个项目（单文件的国际象棋对局服务器，作者与仓库都是模板占位 Your Name / yourusername），包内文件与条目所指 pab1it0/chess-mcp（Chess.com API 服务）对不上；源码仓库 github.com/yourusername/chess-mcp 访问不到（404）；条目写的仓库 pab1it0/chess-mcp 与包元数据里的仓库 yourusername/chess-mcp 不一致；仓库 yourusername/chess-mcp 的清单文件和 README 里都找不到包名 chess_mcp，无法确认包出自此仓库；周下载量很低（16）"

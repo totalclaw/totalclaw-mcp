@@ -1,13 +1,13 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：拒绝（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：周下载量很低（12）
+# 审核意见：人工复核（2026-11-02）：装上不能用——npm 包只是一层壳，要求另行 pip 安装同名 Python 包；条目参数不带 zero-mcp 子命令，启动只打印帮助后退出，不是 MCP 服务；简介里还有要求模型「先搜索再回答」的指令性话术；周下载量很低（12）
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: zero_api_key_web_search
 display_name: Free Web Search Ultimate
 display_name_en: Free Web Search Ultimate
-version: 0.1.1
+version: 0.1.2
 description: 'npm/npx wrapper for AI-agent search infrastructure: MCP, LLM context, browsing, and claim verification.'
 description_zh: 'Zero-cost, privacy-first universal web search MCP server. Enforces a Search-First paradigm — instructs LLMs
   to retrieve real-time web information before answering factual questions, eliminating hallucinations. Supports text, news,
@@ -38,5 +38,6 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: block
   osv: clean
+  reason: "人工复核（2026-11-02）：装上不能用——npm 包只是一层壳，要求另行 pip 安装同名 Python 包；条目参数不带 zero-mcp 子命令，启动只打印帮助后退出，不是 MCP 服务；简介里还有要求模型「先搜索再回答」的指令性话术；周下载量很低（12）"

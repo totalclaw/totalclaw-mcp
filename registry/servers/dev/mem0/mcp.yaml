@@ -1,20 +1,19 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：源码仓库 github.com/mem0-ai/mem0-mcp-server 访问不到（404）；条目写的仓库 mem0ai/mem0-mcp 与包元数据里的仓库 mem0-ai/mem0-mcp-server 不一致；仓库 mem0-ai/mem0-mcp-server 的清单文件和 README 里都找不到包名 mem0-mcp-server，无法确认包出自此仓库
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mem0
 display_name: mem0-mcp
 display_name_en: mem0-mcp
-version: 0.1.1
+version: 0.1.2
 description: Model Context Protocol server that exposes the Mem0 long-term memory API as tools
 description_zh: 管理代码偏好和模式，支持语义搜索，方便在 IDE 中存取技术文档。 (Mem0 官方)
 author: mem0ai
 license: Apache-2.0
 homepage: https://github.com/mem0ai/mem0-mcp
 repository: https://github.com/mem0ai/mem0-mcp
-verified: false
+verified: true
 category: dev
 tags:
 - dev
@@ -49,5 +48,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean

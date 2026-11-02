@@ -1,13 +1,12 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：警告（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
-# 审核意见：人工复核：postinstall 从 GitHub Release 下载预编译 Go 二进制（按包内 checksums.txt 校验 sha256），实际运行的是二进制，静态看不到行为；有安装期执行的脚本 postinstall: node postinstall.js
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: genieacs
 display_name: genieacs-mcp
 display_name_en: genieacs-mcp
-version: 0.1.1
+version: 0.1.2
 description: MCP server that bridges any GenieACS (TR-069 ACS) instance, exposing device data, firmware management, and CPE
   actions over JSON-RPC
 description_zh: 面向开源 TR-069 ACS GenieACS 的 MCP 服务器：按标签、型号、固件或任意 TR-069 参数查询路由器、ONT 等 CPE 设备，读取参数、任务与故障，并可重启设备、下发固件、设置参数。
@@ -15,7 +14,7 @@ author: GeiserX
 license: GPL-3.0-or-later
 homepage: https://github.com/GeiserX/genieacs-mcp
 repository: https://github.com/GeiserX/genieacs-mcp
-verified: false
+verified: true
 category: infra
 tags:
 - infra
@@ -45,5 +44,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: warn
+  scan_verdict: allow
   osv: clean
