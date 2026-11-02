@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-02T10:09:48Z",
+  "generated_at": "2026-11-02T10:34:08Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -6114,13 +6114,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -6171,8 +6178,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "7f6359e3702d1bb90b783c5575781ca944ff1f167b5d9971c085429c6ddf04c6",
-          "size": 1483
+          "sha256": "a5bd7f9e9b53de3fd865582602429742809e024f20e4484f7e5dc2b2c8f25feb",
+          "size": 1755
         },
         {
           "path": "tools.json",
@@ -6180,7 +6187,7 @@
           "size": 4832
         }
       ],
-      "bundle_sha256": "d15bfad5c14d06edcf3e08addddd72bef458f5676e63ffb49a1a7c333c241804",
+      "bundle_sha256": "16c61c6d1401c1edd5c8d79ae6cfe3615b56b6fa56f2dec1169904df4ef57838",
       "popularity": {
         "score": 0
       }
@@ -6438,13 +6445,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -6496,8 +6510,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "fed4492d57cd9497e81911efea9af1ed63461abbd8f4620be25fdc01d55b6424",
-          "size": 1494
+          "sha256": "b3e85c874950d154d983dff139a839b4acfa90b9014742ff7dc11859c51f4a98",
+          "size": 1764
         },
         {
           "path": "tools.json",
@@ -6505,7 +6519,7 @@
           "size": 6523
         }
       ],
-      "bundle_sha256": "da3d6567c33cc449d0a42252a508e2aa9f347702dc4f677c283028a304b169a7",
+      "bundle_sha256": "743cbfb5f554008c8929dcf8ad9e13f5fb14945a958771e3948b1aafb8a6ab51",
       "popularity": {
         "score": 0
       }
@@ -7062,13 +7076,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -7126,8 +7147,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "7785d0c77778d28fb83a21431e8b3ff60d6328e5b1b4b01e4f4f59a85b57d1b3",
-          "size": 1758
+          "sha256": "cf5818ced9afe5305691ec6cf824c7379a4b3140696310f5c5f13fa65167ea25",
+          "size": 2031
         },
         {
           "path": "tools.json",
@@ -7135,7 +7156,7 @@
           "size": 2681
         }
       ],
-      "bundle_sha256": "91a615f1984162bbabad636ab11861e847d31bd2e40d446206923cd17dec13ee",
+      "bundle_sha256": "21b666cdfd0a902ab122ea0f3d98f59fd2d583b8c4cbe3592867c7a730775bd1",
       "popularity": {
         "score": 0
       }
@@ -7978,13 +7999,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -8035,8 +8063,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "13791be354fb45d93b74903b80fb205f84bfd7d5ea34a33c28a17f75a1ec545b",
-          "size": 1458
+          "sha256": "80a4dbdae8f720caea35238a369c4a9cdb164ff39e319d30ba6861a0576e73e4",
+          "size": 1727
         },
         {
           "path": "tools.json",
@@ -8044,7 +8072,7 @@
           "size": 4223
         }
       ],
-      "bundle_sha256": "655c5de1307f4b1268da369c2d16d94a369ba2e224816e5a667a40a060b1b685",
+      "bundle_sha256": "cf6a3f986c5cdfb574e5548f784cd69c2b46709c52f2959d6c7fd3b8eeb3cf9a",
       "popularity": {
         "score": 0
       }
@@ -8390,13 +8418,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -8441,8 +8476,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "211b91b935fc9b0dc62fb3186dd7064be7d12a512df344007b04ae625356e5c6",
-          "size": 1335
+          "sha256": "e747b016ab8a963416e395af37fda5301403d7c90c8ee3c1ae780c174e2c3a76",
+          "size": 1604
         },
         {
           "path": "tools.json",
@@ -8450,7 +8485,7 @@
           "size": 5963
         }
       ],
-      "bundle_sha256": "04909635339e668b09802d71640a6bf935e823131c2906a0c84f7ba2ebc0c894",
+      "bundle_sha256": "53093965df286079304c9bb13a3bbc10acdb2f0f241b47a6c5f0743331b4fc70",
       "popularity": {
         "score": 0
       }
@@ -14236,13 +14271,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -14292,8 +14334,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "6261bcb13b7cf64842893b82a71d64189633b3f27d2f9557af70ffa64a8348e4",
-          "size": 1460
+          "sha256": "3780a4be2a7ef1367d9b40d10c6cdcc45c2b6b7b4cd48def1d4df8f19076e513",
+          "size": 1727
         },
         {
           "path": "tools.json",
@@ -14301,7 +14343,7 @@
           "size": 3699
         }
       ],
-      "bundle_sha256": "7a1b0733d79093730828382dbb73e1c94a480fa6f8a0795bf29f29249519bef1",
+      "bundle_sha256": "1c2d76dbf549c9a263e0155deec5c6370182e1fc8d1a25f5b7e745265c13d86f",
       "popularity": {
         "score": 0
       }
@@ -15320,13 +15362,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -15372,8 +15421,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "87533018a970523534bb445eaf340c753de2c9eb6eda31c8786f0d97ab011d65",
-          "size": 1387
+          "sha256": "a137de0416cc4d8ceab0d248efa544e15d1b1387cdf030f4360e0b41dc284cf6",
+          "size": 1661
         },
         {
           "path": "tools.json",
@@ -15381,7 +15430,7 @@
           "size": 5832
         }
       ],
-      "bundle_sha256": "57007a71964dc6954aeb385121446d429cec7c00beef22d2b09e30dc584ad1a3",
+      "bundle_sha256": "d06353410a9262c72f9cce729aeb8f264e168e8a984f95d4db1bfe06fdfd58bb",
       "popularity": {
         "score": 0
       }
@@ -17706,13 +17755,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -17756,8 +17812,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "9d92d58344b6920d4d7e7c0549667d8b6a9e3c7c52bdeb2a741f0d228538af1b",
-          "size": 1268
+          "sha256": "f936cb233f278690b45e4519537eb629ecb6738d82739b06f777be5203abdfb8",
+          "size": 1537
         },
         {
           "path": "tools.json",
@@ -17765,7 +17821,7 @@
           "size": 5291
         }
       ],
-      "bundle_sha256": "ffd85306aeb7fe3b69c97c6f8db990dae9bfeb047220a00aac361129e2868a1a",
+      "bundle_sha256": "a43c89c173dc83db62b1608b0fed08598aa3097f55bc1d7e4e5214fba2d9f8d1",
       "popularity": {
         "score": 0
       }
@@ -17880,13 +17936,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -17934,8 +17997,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "afbbb9938cb2177f630135218d2434e701b2fa596532525db4732f32d2775d6f",
-          "size": 1276
+          "sha256": "ba1cd6a87a8342a2b5764211a061a4583c31f1aadfe7f43cbe3771ea612c03f6",
+          "size": 1546
         },
         {
           "path": "tools.json",
@@ -17943,7 +18006,7 @@
           "size": 8560
         }
       ],
-      "bundle_sha256": "a034ffdc4edd9325e609594306d83521ae03821ebaca67bfc49eedd499be9ee1",
+      "bundle_sha256": "c6c059bca6bac7f14691cf7faf4f45213df4c0b0894e60f864fd8375e5f5ea18",
       "popularity": {
         "score": 0
       }
@@ -18737,13 +18800,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -18787,8 +18857,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "81d8f41e8b278f70def840fa116bb491cf79bd0aa7f5b7f2aff510c8af244272",
-          "size": 1242
+          "sha256": "dda6007ccfd456da7010632eb0ad4f3e8deed7f91a1c1459576029476147552d",
+          "size": 1512
         },
         {
           "path": "tools.json",
@@ -18796,7 +18866,7 @@
           "size": 3856
         }
       ],
-      "bundle_sha256": "19779b19679e6ca1608de7e409ba32a9a027484e7e105611018f21b02bb00824",
+      "bundle_sha256": "cf997c43cffe098343eab6ea280c68651bd19808bce14392dcc292ffe452376c",
       "popularity": {
         "score": 0
       }
@@ -20767,13 +20837,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -20825,8 +20902,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "a1d75c236cb2b4754b1abeb49dbf0b863956e41defe8bbc64edc6f5fb20ecae5",
-          "size": 1413
+          "sha256": "57863dfe6b5afd5a159a9b33a443da0988f927f69ad0141f7d8128e274421ca1",
+          "size": 1681
         },
         {
           "path": "tools.json",
@@ -20834,7 +20911,7 @@
           "size": 8574
         }
       ],
-      "bundle_sha256": "b47a2caa293a41b2bd78098b24610b2f572a0e695bd2825d5694b6a8d3f8dc39",
+      "bundle_sha256": "6e380904de368f5c3969e60fdc5d526bb95fc78807dfb98a32937ef7ceb1874f",
       "popularity": {
         "score": 0
       }
@@ -20872,13 +20949,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -20926,8 +21010,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "2211cc77370b7bc9ac60c645db321f6c0481dd2afd68ae30045e968357bc3284",
-          "size": 1599
+          "sha256": "49236dd63e82b29cfe07acc910a06100dc1fada6e773a35dc39500689255d7a7",
+          "size": 1880
         },
         {
           "path": "tools.json",
@@ -20935,7 +21019,7 @@
           "size": 2366
         }
       ],
-      "bundle_sha256": "5eeeccf10a49737e4198a769008947773f97e4a6448466b869625514b7f16fdc",
+      "bundle_sha256": "9a2980683eaf6e7f14d244d5a78566dd046a85fe74ecb70de4689304b48741bc",
       "popularity": {
         "score": 0
       }
@@ -21388,13 +21472,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -21440,8 +21531,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "c1536b9962b538c9215eaa003fbef8dbf2610c02f226a2cf586aa655047c4809",
-          "size": 1452
+          "sha256": "c363de7e5c1d49a4eb8db94b745393d6a4caf25f99fafc73363137d99412dc0c",
+          "size": 1720
         },
         {
           "path": "tools.json",
@@ -21449,7 +21540,7 @@
           "size": 2701
         }
       ],
-      "bundle_sha256": "7c6750f8bc1a294a85e6f3000a18146253ed517c318d2eed5d316de75cd4d599",
+      "bundle_sha256": "5cac2e9bae1285c2d4ad4f03635d5c13d8840d0915c69be506a28a64e57f0b1b",
       "popularity": {
         "score": 0
       }
@@ -23981,13 +24072,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -24036,8 +24134,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "79b6bb475f8d3fbac3fc97dd356b74e65a7d2d2f1bc152a39ad7d5977c85e0a5",
-          "size": 1573
+          "sha256": "cd74b6a50c57c265b5a14b55b93ec0c73bb833d2c549defac61063fb2d94d4f8",
+          "size": 1852
         },
         {
           "path": "tools.json",
@@ -24045,7 +24143,7 @@
           "size": 5348
         }
       ],
-      "bundle_sha256": "de412f690668b526aa5ff4799d224303cda9fad838741957c0710500217e82b9",
+      "bundle_sha256": "fb57cc0f137203dffba41c2c1187689714c71dcf281ace3bf48982dc996f11f1",
       "popularity": {
         "score": 0
       }
@@ -26448,13 +26546,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -26521,8 +26626,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "5f1c2a55601af1f4cfcc01c1804f57b04c0727eaf967a6ab0f11367b5cf4d5e6",
-          "size": 2813
+          "sha256": "c5784b90dc1afc53ea31a68fb684200e77532391a680a61a71bcb9035dce3716",
+          "size": 3084
         },
         {
           "path": "tools.json",
@@ -26530,7 +26635,7 @@
           "size": 13654
         }
       ],
-      "bundle_sha256": "d6895a9347edbd848a429506d44a4c709a2b934d99f67ef5ce02608b3e50ec5c",
+      "bundle_sha256": "d606716ff86d30205dcf8913f3e8901e752b8540409a89e909265bea00b3f19e",
       "popularity": {
         "score": 0
       }
@@ -30962,13 +31067,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -31017,8 +31129,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "976a00b1e956bfd8ff1f7a8a9c7af94956343c8c4ea92bc669ecf3bb3f368447",
-          "size": 1589
+          "sha256": "0eccb34600f2303fe630911011a6fed2616a7363de725c51e57ae5744034d5d9",
+          "size": 1864
         },
         {
           "path": "tools.json",
@@ -31026,7 +31138,7 @@
           "size": 5211
         }
       ],
-      "bundle_sha256": "6a4827dadb877c7934f054d1f2f1c77470d78f7b339aabd93f77e69a8fc88fdc",
+      "bundle_sha256": "260b39d4f156010548423b16640107afb21744af399fd4be1ff3202bfd688b89",
       "popularity": {
         "score": 0
       }
@@ -31060,13 +31172,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -31118,8 +31237,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "187e916ef51ef86542f401ca17de6aed28bfb632af80d3b9ee3b3506e699e1cf",
-          "size": 1634
+          "sha256": "3fb6f3a891e69c3868578b660f5287f1562af893a94004f3d09c6819bc4bc321",
+          "size": 1915
         },
         {
           "path": "tools.json",
@@ -31127,7 +31246,7 @@
           "size": 6533
         }
       ],
-      "bundle_sha256": "c3867ae627f88754f825579677bc9e81f636c35c4aad0882fb2b716586c44994",
+      "bundle_sha256": "dafba3a463ca4b71ec4a1b54b6d19e8287f8e1d6c7782e7b197b0c1d8b70e1bc",
       "popularity": {
         "score": 0
       }
@@ -32375,13 +32494,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -32423,8 +32549,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "b3ce5417dcc1f9d00fda29170e5a79fe8545580d6678aa7cb4eaecdc684bae19",
-          "size": 1365
+          "sha256": "fc1bff158c84dca55e534af12beba6b48fab4f3079f943a6f8c9e4e58dc38aa0",
+          "size": 1642
         },
         {
           "path": "tools.json",
@@ -32432,7 +32558,7 @@
           "size": 4894
         }
       ],
-      "bundle_sha256": "6f79c40bb3113cd6969d4f7e606c6a893f7ca6c41a10f1401a7dc85e0451641a",
+      "bundle_sha256": "a7db15423f299dbfa4ab9b91accce3b75037432507013bb401bfa44a91227556",
       "popularity": {
         "score": 0
       }
@@ -33391,13 +33517,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -33439,8 +33572,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "439a303d088c23b71c8e11590735d68135c7e12ada1b61e7504c50788a72bed4",
-          "size": 1356
+          "sha256": "e1208fcf788947245abe2685f80ca048f7a85ae99a1f93e0be5c5c065b37e030",
+          "size": 1630
         },
         {
           "path": "tools.json",
@@ -33448,7 +33581,7 @@
           "size": 4224
         }
       ],
-      "bundle_sha256": "8575c9b0de2706cf574fa4f1483575e3f131bcf285fe6454aa77c20be77c9996",
+      "bundle_sha256": "97e10ac0251995a263ed5c5d22da3d278294a842764e40590beedea4c6dfa354",
       "popularity": {
         "score": 0
       }
@@ -33486,13 +33619,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -33532,8 +33672,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "41a8e815a0d8bef5c94c41116dcf588b45bf68368107b1ff0492bccffc4c1ebe",
-          "size": 1313
+          "sha256": "0ed53d5c75719962cd866b08dd6b21b350f4151f26702b83f7db8504ee77e863",
+          "size": 1585
         },
         {
           "path": "tools.json",
@@ -33541,7 +33681,7 @@
           "size": 2403
         }
       ],
-      "bundle_sha256": "e3aa1812513543df3c8c585b612e04087f1c898f74d51434b23cc626b7015875",
+      "bundle_sha256": "b0c93df65b7d9069b752ac2f71aa569fe47ce57198cd8d8320097b007345a849",
       "popularity": {
         "score": 0
       }
@@ -34536,13 +34676,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -34587,8 +34734,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "6e06b2acbadbb79255f457a68e34a718e96084d1632ac3adc9abeda9e1c23647",
-          "size": 1227
+          "sha256": "d13ee81b1f1c8af957d8716a19e2ab6dc9fe4a8e025678643aa9d259ae0a4243",
+          "size": 1497
         },
         {
           "path": "tools.json",
@@ -34596,7 +34743,7 @@
           "size": 5425
         }
       ],
-      "bundle_sha256": "07a13286786cd9a62812562ec1282991d6483aa0489c0f51bbb0101ada0130fc",
+      "bundle_sha256": "1e7971456c48b9b1543d2f3a60c0471c6c85c6719563722b25a0188bfd3f3d20",
       "popularity": {
         "score": 0
       }
@@ -35289,13 +35436,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -35335,8 +35489,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "b9f13e4a2e8d16414ff812de5e987faffa289350eb2ef9e88069b738db7f3345",
-          "size": 1348
+          "sha256": "21d45590328db04900cbd3f0a3ccdba30f33e8f7af2c4c4aead46c83031093d1",
+          "size": 1626
         },
         {
           "path": "tools.json",
@@ -35344,7 +35498,7 @@
           "size": 1173
         }
       ],
-      "bundle_sha256": "0ce3969d841531f313ba1f4356f7d0928de3e92b41cc894fa62023bed202f4cc",
+      "bundle_sha256": "0ac3e0ecd23e6368f3a225a642c782c4257726920d46acf37b2004a65d9e8d55",
       "popularity": {
         "score": 0
       }
@@ -40624,13 +40778,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [
@@ -40673,8 +40834,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "daa99c890adb457aa28067aede6dbf9a46080dfedf73b455d1253cb0967ec956",
-          "size": 1322
+          "sha256": "3c2cc87962f269ca01dd7e170180c0283775aecf0bf99e09c2721fd8dab58287",
+          "size": 1597
         },
         {
           "path": "tools.json",
@@ -40682,7 +40843,7 @@
           "size": 4773
         }
       ],
-      "bundle_sha256": "068836ad175504d4bf55629f1a1cda10b8e2a8aba883959c9134c0ab18ea4846",
+      "bundle_sha256": "51b717f1144f6986fdd0e71a61d1e768710897cb50d73eb88a5276fa9ce4c72a",
       "popularity": {
         "score": 0
       }
@@ -40890,13 +41051,20 @@
         "stdio"
       ],
       "launchers": [
-        "binary"
+        "binary",
+        "uvx"
       ],
       "runtimes": [
         {
           "id": "console",
           "type": "stdio",
           "launcher": "binary"
+        },
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers"
         }
       ],
       "requires_env": [],
@@ -40928,8 +41096,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "daff046b42a1d36c411d0f462c5432f8f67f703dee5c3d29d1e118595f8854b5",
-          "size": 1176
+          "sha256": "034da9fd61521297b03b0a158986d238861fec1d0124d237e6e8fac0a8c18e94",
+          "size": 1443
         },
         {
           "path": "tools.json",
@@ -40937,7 +41105,7 @@
           "size": 1563
         }
       ],
-      "bundle_sha256": "b2e37c20493870f94e325e2ff812364f2324e399a41540261dc9348404105b57",
+      "bundle_sha256": "a4d710e02dd65d12d60e0138cef5812fe7f2d2eb702ec35453407ac6e572e927",
       "popularity": {
         "score": 0
       }

@@ -83,7 +83,8 @@ def _warn(msg: str, strict: bool) -> None:
     WARNINGS.append(msg)
 
 
-# ── 包版本 pin 检查（与 totalclaw_cli/mcp_catalog.package_pin_problem 同规则） ──
+# ── 包版本 pin 检查（与 totalclaw_cli/mcp_catalog.package_pin_problem 同规则，另认 git 来源钉 40 位提交号；
+#    agent 那条规则只查它自己的内置精选目录，不查注册表安装） ──
 
 # 哪个选项后面跟的是**包名**、哪个后面跟的是别的东西，按 launcher 分：
 #   npx -p / --package <包> <bin名>    -p 后面是包，再后面那个是要跑的可执行名
@@ -144,7 +145,8 @@ def _pin_problem(launcher: str, args: list[str]) -> str | None:
         if ver in ("latest", "") or not re.match(r"^\d", ver):
             return f"npm 包版本非精确：{pkg}"
     else:  # uvx / pipx
-        if "==" not in pkg:
+        # 自研 servers/ 走 git 来源钉提交号（见 gen_manifests.SERVERS_COMMIT）；分支 / tag 会漂，不算
+        if "==" not in pkg and not re.match(r"git\+https://[^@\s#]+@[0-9a-f]{40}(?:#|$)", pkg):
             return f"PyPI 包未 pin 版本：{pkg}"
     return None
 

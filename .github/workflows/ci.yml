@@ -35,6 +35,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        # gen_manifests 要核对 SERVERS_COMMIT 在 origin/master 上、servers/ 与它一致，浅克隆查不了
+        with: { fetch-depth: 0 }
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
       - run: pip install -e servers pytest

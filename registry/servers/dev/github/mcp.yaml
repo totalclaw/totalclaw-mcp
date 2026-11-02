@@ -30,6 +30,18 @@ runtimes:
   - github
   requires:
     python: '>=3.10'
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --from
+  - git+https://gitee.com/jlzdyx/totalclaw-mcp.git@289d9c344390b7ac433a17095c85f413237fbf50#subdirectory=servers
+  - totalclaw-mcp-server
+  - github
+  requires:
+    python: '>=3.10'
+    git: true
 requires_env:
 - name: GITHUB_TOKEN
   env_key: GITHUB_TOKEN
