@@ -1,12 +1,14 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-10 依赖链查毒：拒绝（详见 docs/removed-2026-11-10.md）
+# 审核意见：人工复核（2026-11-10）：包所在组织出过投毒事件——osv MAL-2026-4069 记录 @antv/mcp-server-chart 0.10.10 / 0.11.10 被植入恶意代码；钉的 0.9.10 不在受影响版本内，按保守原则下架，待上游说明事件并核实发布账号后再恢复
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: chart
 display_name: AntV mcp-server-chart
 display_name_en: AntV mcp-server-chart
-version: 0.1.1
+version: 0.1.2
 description: A Model Context Protocol server for generating charts using AntV. This is a TypeScript-based MCP server that
   provides chart generation capabilities. It allows you to create various types of charts through MCP tools.
 description_zh: 蚂蚁 AntV 官方图表 MCP：25+ 种可视化图表（折线、柱状、饼图、桑基、思维导图、流程图、地理图等），让 AI 直接产出图表并返回图片链接。
@@ -14,7 +16,7 @@ author: antvis
 license: MIT
 homepage: https://github.com/antvis/mcp-server-chart
 repository: https://github.com/antvis/mcp-server-chart
-verified: true
+verified: false
 category: data
 tags:
 - data
@@ -36,5 +38,5 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: allow
-  osv: clean
+  scan_verdict: block
+  reason: "人工复核（2026-11-10）：包所在组织出过投毒事件——osv MAL-2026-4069 记录 @antv/mcp-server-chart 0.10.10 / 0.11.10 被植入恶意代码；钉的 0.9.10 不在受影响版本内，按保守原则下架，待上游说明事件并核实发布账号后再恢复"
