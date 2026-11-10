@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-10T11:38:17Z",
+  "generated_at": "2026-11-10T11:49:48Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -17334,7 +17334,7 @@
       "display_name_en": "DesktopCommanderMCP",
       "description": "MCP server for terminal operations and file editing",
       "description_zh": "增强的文件系统和搜索工具，以及特定于编码的命令和提示。(也含命令行功能)",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "author": "wonderwhy-er",
       "license": "MIT",
       "homepage": "https://github.com/wonderwhy-er/DesktopCommanderMCP",
@@ -17372,7 +17372,10 @@
       "tools": [],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "enforced_env": {
+          "DESKTOP_COMMANDER_DISABLE_TELEMETRY": "1"
+        }
       },
       "path": "registry/servers/dev/desktop_commander",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/desktop_commander",
@@ -17383,11 +17386,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "891ed951a43fbe5724c171fb100e20bd563b651491f7d14ccae0578e7eb2312f",
-          "size": 1115
+          "sha256": "0a49920d2484863d77bb697c5ace51fbf9d28ec75232ab1c0c6dce939a4ea11b",
+          "size": 1306
         }
       ],
-      "bundle_sha256": "860c01c8f6ad411539e09954e8c01e274bc32250985623933cbee1e043eef362",
+      "bundle_sha256": "dd4c9346c39242f9841380b097bf27be5a44a1f5ce2c79a97dbb266a6d6a8a6b",
       "popularity": {
         "score": 401,
         "stars": 10144
@@ -23108,7 +23111,7 @@
       "display_name_en": "jshookmcp",
       "description": "MCP server with built-in tools across multiple domains for AI-assisted JavaScript analysis and security analysis — browser automation, CDP debugging, network monitoring, JS hooks, code analysis, and workflow orchestration",
       "description_zh": "面向前端 / JavaScript 逆向的 MCP 工作区：运行时 Hook、网络拦截（含 TLS keylog）、bundle 反混淆、CDP 控制真实 Chrome、WASM 反汇编；735 工具 / 36 域。search-first —— 只注入约 3K token 的工具摘要、按需激活域，避免 735 个 schema 撑爆上下文。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "vmoranv",
       "license": "AGPL-3.0-only",
       "homepage": "https://github.com/vmoranv/jshookmcp",
@@ -23146,7 +23149,10 @@
       "tools": [],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "enforced_env": {
+          "JSHOOK_OBSERVABILITY_EXPORTER": "none"
+        }
       },
       "path": "registry/servers/infra/jshook",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/jshook",
@@ -23157,11 +23163,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "6b12b906ea0701df18ba044763910a6a74a81d5de75dd39ee79c0549a3247e73",
-          "size": 1481
+          "sha256": "13d4bc12ff50e21a2e2426bb7dfe07d15efc14b103b328e27a7de2951f383c91",
+          "size": 1669
         }
       ],
-      "bundle_sha256": "ba9d470317b02bdf9d549ab1e76469f5009a36215e5c66ddce6e0f1318ec1d29",
+      "bundle_sha256": "c9003e46e46c1a7be6c3983b71451d6cbfc211ae23b84a9eccda5b89edcb56eb",
       "popularity": {
         "score": 332,
         "stars": 2069
@@ -25453,7 +25459,7 @@
       "display_name_en": "blender-mcp",
       "description": "Open source Blender integration through the Model Context Protocol (not affiliated with Blender Foundation)",
       "description_zh": "让 Claude 等 AI 直接控制 Blender 进行 3D 建模、场景创建与材质编辑，用自然语言完成三维内容创作。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "ahujasid",
       "license": "MIT",
       "homepage": "https://github.com/ahujasid/blender-mcp",
@@ -25491,7 +25497,10 @@
       "tools": [],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "enforced_env": {
+          "BLENDER_MCP_DISABLE_TELEMETRY": "true"
+        }
       },
       "path": "registry/servers/media/for_blender",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/media/for_blender",
@@ -25502,11 +25511,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "8e3e6ee7fa9a240575cd35a3f25a58d895ab03a5abb90543f7df0ada7b92a661",
-          "size": 1128
+          "sha256": "75e582fa0aea762502cb86b88d2bdcab26a33fe4fd7aa0196557978bbd6cda12",
+          "size": 1316
         }
       ],
-      "bundle_sha256": "998def434970b484eab866e2897e11acc58ea901f26f1c0d419f4255ce8deb57",
+      "bundle_sha256": "b941b8a73df50bff0b9e478cf485cb5d3aa4abd1d30526767b70f44b5b3cfbea",
       "popularity": {
         "score": 595,
         "downloads_weekly": 895546

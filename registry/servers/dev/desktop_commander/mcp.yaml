@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: desktop_commander
 display_name: DesktopCommanderMCP
 display_name_en: DesktopCommanderMCP
-version: 0.1.3
+version: 0.1.4
 description: MCP server for terminal operations and file editing
 description_zh: 增强的文件系统和搜索工具，以及特定于编码的命令和提示。(也含命令行功能)
 author: wonderwhy-er
@@ -39,3 +39,6 @@ defaults:
 security:
   scan_verdict: allow
   osv: clean
+  # 关遥测：已装的老用户也由桌面端 MCP 医生 / agent mcp_hub 按这里补上（与 runtimes[].env 保持一致）
+  enforced_env:
+    DESKTOP_COMMANDER_DISABLE_TELEMETRY: '1'

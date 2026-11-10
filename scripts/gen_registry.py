@@ -77,6 +77,42 @@ def _fail(msg: str) -> None:
     raise SystemExit(f"✗ {msg}")
 
 
+_ENV_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]{0,127}$")
+
+
+def _validate_enforced_env(security: dict, manifest: dict, where: str) -> None:
+    """security.enforced_env：本机已装的连接器也要被补上的固定环境变量（如关遥测）。
+
+    桌面端 MCP 医生与 agent mcp_hub 拉注册表时按它改写老用户的 mcp_servers.<name>.env；新装走 runtimes[].env。
+    两处必须一致，否则新老用户拿到的值不同：每个 stdio 运行时的 env 都要含同名同值的键。
+    只许固定值——不许 ${VAR} 引用、不许和 requires_env 撞名（那是用户自己的凭据）。
+    """
+    enforced = security.get("enforced_env")
+    if enforced is None:
+        return
+    if not isinstance(enforced, dict) or not enforced:
+        _fail(f"{where}: security.enforced_env 必须是非空映射 {{变量名: 值}}")
+    for k, v in enforced.items():
+        if not isinstance(k, str) or not _ENV_NAME_RE.match(k):
+            _fail(f"{where}: security.enforced_env 变量名不合法：{k!r}")
+        if not isinstance(v, str) or not v or "${" in v:
+            _fail(f"{where}: security.enforced_env.{k} 必须是非空字符串固定值（加引号，不许 ${{VAR}}）")
+    creds = {str(e.get("name")) for key in ("requires_env", "optional_env")
+             for e in (manifest.get(key) or []) if isinstance(e, dict)}
+    clash = sorted(creds & set(enforced))
+    if clash:
+        _fail(f"{where}: security.enforced_env 不能改写用户凭据变量：{', '.join(clash)}")
+    stdio = [rt for rt in manifest.get("runtimes") or [] if isinstance(rt, dict) and rt.get("type") == "stdio"]
+    if not stdio:
+        _fail(f"{where}: security.enforced_env 只对本地命令（stdio）运行时有意义，本条目没有")
+    for rt in stdio:
+        env = rt.get("env") or {}
+        for k, v in enforced.items():
+            if str(env.get(k)) != v:
+                _fail(f"{where}: runtime {rt.get('id')} 的 env 缺少或不同于 security.enforced_env.{k}={v!r}"
+                      "（新装用户拿 runtimes[].env，老用户拿 enforced_env，两处要一致）")
+
+
 def _warn(msg: str, strict: bool) -> None:
     if strict:
         _fail(msg)
@@ -275,6 +311,7 @@ def _collect_server(server_dir: Path, category: str, strict: bool) -> dict:
 
     security = dict(manifest.get("security") or {})
     security.setdefault("scan_verdict", "allow" if tools_meta else "unscanned")
+    _validate_enforced_env(security, manifest, where)
 
     rel_root = server_dir.relative_to(ROOT).as_posix()
     files = []

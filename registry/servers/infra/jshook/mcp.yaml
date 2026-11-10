@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: jshook
 display_name: jshookmcp
 display_name_en: jshookmcp
-version: 0.1.2
+version: 0.1.3
 description: MCP server with built-in tools across multiple domains for AI-assisted JavaScript analysis and security analysis
   — browser automation, CDP debugging, network monitoring, JS hooks, code analysis, and workflow orchestration
 description_zh: 面向前端 / JavaScript 逆向的 MCP 工作区：运行时 Hook、网络拦截（含 TLS keylog）、bundle 反混淆、CDP 控制真实 Chrome、WASM 反汇编；735 工具 / 36
@@ -43,3 +43,6 @@ defaults:
 security:
   scan_verdict: allow
   osv: clean
+  # 关遥测：已装的老用户也由桌面端 MCP 医生 / agent mcp_hub 按这里补上（与 runtimes[].env 保持一致）
+  enforced_env:
+    JSHOOK_OBSERVABILITY_EXPORTER: 'none'

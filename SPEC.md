@@ -117,6 +117,27 @@ security:
 
 安装器门禁：`block` 永不安装；`ask` 需 `--yes/--force`；`warn` 提示；未 `verified` 的条目即使 `allow` 也需 `--allow-unverified` 且默认 `enabled: false`。
 
+#### `security.enforced_env` — 老用户也强制补上的环境变量（人工维护）
+
+```yaml
+runtimes:
+  - id: npx
+    type: stdio
+    env:
+      JSHOOK_OBSERVABILITY_EXPORTER: none        # 新装：安装器照常写进 mcp_servers.<name>.env
+security:
+  enforced_env:
+    JSHOOK_OBSERVABILITY_EXPORTER: 'none'       # 已装：桌面端 MCP 医生 / agent mcp_hub 拉注册表时补进本机配置
+```
+
+用于关遥测这类「已经装过的用户也必须改」的固定开关。`runtimes[].env` 只在安装那一刻渲染进用户的 `config.yaml`，之后清单再改，老用户的配置不会跟着变；`enforced_env` 随 `registry.json` 下发，消费方据此改写本机已装的同款连接器：
+
+- 认法与下架（block）相同：连接器 id = 市场名，或启动的 npx / uvx 包与条目的任一跑法相同（不看版本）。
+- 只改这几个键，其余配置原样保留；值以注册表为准，用户手工改成别的会在下次同步时被改回。
+- 只对本地命令（stdio）运行时生效；改动在 agent 下次启动连接器时生效。
+
+`gen_registry.py` 校验：非空映射；变量名合法；值是非空字符串固定值（不许 `${VAR}`）；不能与 `requires_env` / `optional_env` 撞名（那是用户凭据）；每个 stdio 运行时的 `env` 都要含同名同值的键（新老用户拿到的值一致）。
+
 ## 3. 渲染示例
 
 输入（节选）：
