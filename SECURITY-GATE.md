@@ -15,7 +15,19 @@
 python3 scripts/review_static.py --selftest        # 扫描规则自检
 python3 scripts/review_static.py --scan-registry   # 注册表文本查毒（命中退出码 1）
 python3 scripts/gen_registry.py --check --strict   # registry.json 与清单逐文件 sha256 一致、包版本必须钉死
+python3 scripts/dep_gate.py --selftest             # 黑名单版本比较自检
+python3 scripts/dep_gate.py --check                # 各条目钉住的顶层包不在恶意版本黑名单里（命中退出码 1）
 ```
+
+### 恶意版本黑名单（依赖链）
+
+`npx -y pkg@x.y.z` / `uvx pkg==x.y.z` 只钉住顶层包，间接依赖在用户安装那一刻才按范围解析。axios、chalk、debug、litellm 这类被广泛依赖的库都出过「发布账号被劫持 → 发一个带毒版本」的事件，顶层钉得再死，安装时也可能拉到带毒的间接依赖。
+
+- `registry/malicious-versions.json`：黑名单，由 `python3 scripts/dep_gate.py --refresh` 生成，勿手改。内容是 osv.dev 的恶意包记录（`MAL-`）里列出的受影响版本 / 区间，查询范围是全部未下架条目依赖树里出现过的包名，加上已下架条目的顶层包名（恢复上架时能拦住）；只增不减。
+- `--refresh`（联网，复扫时跑，需要本机 node）：解析每个条目今天安装会拉到的完整依赖树（npm 全树、PyPI 全树，自研条目按 `servers/pyproject.toml`），刷新黑名单；有条目的依赖树落到黑名单版本 → 列出 `条目：包@版本（MAL-…）` 并退出码 1。只读公开元数据，不下载压缩包、不安装。
+- `--check`（离线，进门禁）：只核对清单里钉住的顶层包。间接依赖要联网解析，门禁不跑，靠复扫时的 `--refresh`。
+
+`--refresh` 命中时的处理：顶层包本身命中 → 换钉一个不受影响的版本，或按下架流程 block；间接依赖命中 → 换钉一个依赖范围避开带毒版本的顶层版本，做不到就下架，同时提醒已装用户重装。
 
 `--scan-registry` 把 `review_static.py` 的高危规则（下载即执行、解码进 shell、已知投毒特征、可疑外传端点与匿名隧道、提示注入话术、硬编码公网 IP、解码后执行、读 SSH 私钥 / 浏览器凭据 / 钱包等）加上隐藏 Unicode（零宽、双向控制、Tag 字符）检查，跑遍 `registry/servers/` 下全部文本文件（mcp.yaml、README.md、tools.json、svg）。只打印 `文件:行  [规则]`，不打印原文。两处有意跳过：
 
@@ -49,9 +61,10 @@ python3 scripts/gen_registry.py --check --strict   # registry.json 与清单逐�
 
 ## 已知局限
 
-1. Gitee Go 对 PR 用**源分支最新提交里的 yml 和脚本**跑，所以一个 PR 可以顺手把门禁本身改弱。动到 `.workflow/`、`scripts/review_static.py`、`scripts/gen_registry.py` 的 PR 必须人工逐行看（也可以用 Gitee 的 CODEOWNERS 给这些路径指定负责人）。
+1. Gitee Go 对 PR 用**源分支最新提交里的 yml 和脚本**跑，所以一个 PR 可以顺手把门禁本身改弱。动到 `.workflow/`、`scripts/review_static.py`、`scripts/gen_registry.py`、`scripts/dep_gate.py`、`registry/malicious-versions.json` 的 PR 必须人工逐行看（黑名单只该因 `--refresh` 变长，被删条目就是有人在开口子）（也可以用 Gitee 的 CODEOWNERS 给这些路径指定负责人）。
 2. 有权限的人仍可强制合并。push master 触发的那次流水线只能事后发现，不能阻止。
 3. 门禁只看注册表文本；包代码要靠 `review_static.py` 的联网静态审核（下载到内存扫描），那一步不在门禁里跑。
+4. 黑名单只能拦已经被 osv 收录的投毒版本。从带毒版本发布到被收录之间有空窗期，这段时间里用户安装照样可能拉到；间接依赖的检查也只在 `--refresh` 时做，不是每次安装时做。
 
 ## 依据的 Gitee 文档
 

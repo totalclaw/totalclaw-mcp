@@ -24,7 +24,7 @@ stages:
     steps:
       - step: build@python
         name: registry_gate
-        displayName: 清单查毒 + registry.json 一致性
+        displayName: 清单查毒 + registry.json 一致性 + 恶意版本黑名单
         pythonVersion: 3.9
         commands: |
           set -e
@@ -33,5 +33,7 @@ stages:
           python3 scripts/review_static.py --scan-registry
           python3 -c 'import yaml' 2>/dev/null || pip3 install --only-binary=:all: 'PyYAML==6.0.2'
           python3 scripts/gen_registry.py --check --strict
+          python3 scripts/dep_gate.py --selftest
+          python3 scripts/dep_gate.py --check
         strategy:
           retry: '0'
