@@ -1,11 +1,13 @@
 # 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+# 2026-11-10 复扫：拒绝（详见 docs/removed-2026-11-10.md）
+# 审核意见：人工复核（2026-11-10）：已知漏洞 GHSA-4h8q-hh2j-755w（路径穿越任意写文件，MODERATE）——download_polyhaven_asset 不校验 API 返回的 include 路径，中间人或提示注入可写入 ../../.bashrc 等文件实现持久化执行；钉的 1.6.4 受影响，1.6.5 修复
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: blender
 display_name: Blender
 display_name_en: Blender
-version: 0.2.0
+version: 0.2.1
 description: Drive a live Blender session for modeling, scenes, and renders.
 author: upstream
 category: creative
@@ -40,6 +42,7 @@ tools:
   count: 22
   file: tools.json
 security:
-  scan_verdict: allow
+  scan_verdict: block
+  reason: "人工复核（2026-11-10）：已知漏洞 GHSA-4h8q-hh2j-755w（路径穿越任意写文件，MODERATE）——download_polyhaven_asset 不校验 API 返回的 include 路径，中间人或提示注入可写入 ../../.bashrc 等文件实现持久化执行；钉的 1.6.4 受影响，1.6.5 修复"
   prompt_injection_findings: []
   osv: unscanned

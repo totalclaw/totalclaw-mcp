@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-10T10:15:42Z",
+  "generated_at": "2026-11-10T11:38:17Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -8226,7 +8226,7 @@
       "display_name": "Blender",
       "display_name_en": "Blender",
       "description": "Drive a live Blender session for modeling, scenes, and renders.",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "author": "upstream",
       "verified": true,
       "tested_with": ">=0.63.72",
@@ -8284,7 +8284,8 @@
         "import_generated_asset_hunyuan"
       ],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-10）：已知漏洞 GHSA-4h8q-hh2j-755w（路径穿越任意写文件，MODERATE）——download_polyhaven_asset 不校验 API 返回的 include 路径，中间人或提示注入可写入 ../../.bashrc 等文件实现持久化执行；钉的 1.6.4 受影响，1.6.5 修复",
         "prompt_injection_findings": [],
         "osv": "unscanned"
       },
@@ -8302,8 +8303,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "2c5ab139d96e8233c54755f324a8ef3c971309f4ab87dfcf118cf2e88fd98328",
-          "size": 913
+          "sha256": "8db4fe8bc1a9b9f2625149f837add522969124ab3ee01d830a43af1ccb0bd966",
+          "size": 1606
         },
         {
           "path": "tools.json",
@@ -8311,7 +8312,7 @@
           "size": 21114
         }
       ],
-      "bundle_sha256": "5dd4b7951369547384b504a35cf1beb6cf9ab754650b9509ada9e62b04e6d28e",
+      "bundle_sha256": "935d330b0a21999644888dbabcb8dbbc2b844eaa0180530e34910e84f3b97c06",
       "popularity": {
         "score": 478,
         "downloads_weekly": 60067
@@ -17333,7 +17334,7 @@
       "display_name_en": "DesktopCommanderMCP",
       "description": "MCP server for terminal operations and file editing",
       "description_zh": "增强的文件系统和搜索工具，以及特定于编码的命令和提示。(也含命令行功能)",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "wonderwhy-er",
       "license": "MIT",
       "homepage": "https://github.com/wonderwhy-er/DesktopCommanderMCP",
@@ -17382,11 +17383,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "ca5c1b54c285b895243a5539e78f74afbde1d4b4f1f93615e8af172111df6732",
-          "size": 1063
+          "sha256": "891ed951a43fbe5724c171fb100e20bd563b651491f7d14ccae0578e7eb2312f",
+          "size": 1115
         }
       ],
-      "bundle_sha256": "b167af5e679de42ab83e8f9ba718c4f78f394e9648940d50cbb2460d328dec44",
+      "bundle_sha256": "860c01c8f6ad411539e09954e8c01e274bc32250985623933cbee1e043eef362",
       "popularity": {
         "score": 401,
         "stars": 10144
@@ -23107,7 +23108,7 @@
       "display_name_en": "jshookmcp",
       "description": "MCP server with built-in tools across multiple domains for AI-assisted JavaScript analysis and security analysis — browser automation, CDP debugging, network monitoring, JS hooks, code analysis, and workflow orchestration",
       "description_zh": "面向前端 / JavaScript 逆向的 MCP 工作区：运行时 Hook、网络拦截（含 TLS keylog）、bundle 反混淆、CDP 控制真实 Chrome、WASM 反汇编；735 工具 / 36 域。search-first —— 只注入约 3K token 的工具摘要、按需激活域，避免 735 个 schema 撑爆上下文。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "vmoranv",
       "license": "AGPL-3.0-only",
       "homepage": "https://github.com/vmoranv/jshookmcp",
@@ -23156,11 +23157,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f60feab846919f172796da63b53f0bd80eef0d4c9f7204972fa989ff8de49c6f",
-          "size": 1441
+          "sha256": "6b12b906ea0701df18ba044763910a6a74a81d5de75dd39ee79c0549a3247e73",
+          "size": 1481
         }
       ],
-      "bundle_sha256": "f298aa9c113f523004348d3bd62683cbd8aa0b6c32c971074e26aa79be7b9c35",
+      "bundle_sha256": "ba9d470317b02bdf9d549ab1e76469f5009a36215e5c66ddce6e0f1318ec1d29",
       "popularity": {
         "score": 332,
         "stars": 2069
@@ -25452,7 +25453,7 @@
       "display_name_en": "blender-mcp",
       "description": "Open source Blender integration through the Model Context Protocol (not affiliated with Blender Foundation)",
       "description_zh": "让 Claude 等 AI 直接控制 Blender 进行 3D 建模、场景创建与材质编辑，用自然语言完成三维内容创作。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "ahujasid",
       "license": "MIT",
       "homepage": "https://github.com/ahujasid/blender-mcp",
@@ -25501,11 +25502,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a18ad3a4c8ed0007ea6bf941f9629bfeff3894f153eac1251de2cb0297e73386",
-          "size": 1079
+          "sha256": "8e3e6ee7fa9a240575cd35a3f25a58d895ab03a5abb90543f7df0ada7b92a661",
+          "size": 1128
         }
       ],
-      "bundle_sha256": "9ad14550ac98a62ef23a5ad3d82d5e7feae60e5b89b838bf4ee8c514e83efa7b",
+      "bundle_sha256": "998def434970b484eab866e2897e11acc58ea901f26f1c0d419f4255ce8deb57",
       "popularity": {
         "score": 595,
         "downloads_weekly": 895546

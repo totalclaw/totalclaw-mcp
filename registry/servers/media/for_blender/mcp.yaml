@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: for_blender
 display_name: blender-mcp
 display_name_en: blender-mcp
-version: 0.1.1
+version: 0.1.2
 description: Open source Blender integration through the Model Context Protocol (not affiliated with Blender Foundation)
 description_zh: 让 Claude 等 AI 直接控制 Blender 进行 3D 建模、场景创建与材质编辑，用自然语言完成三维内容创作。
 author: ahujasid
@@ -26,6 +26,8 @@ runtimes:
   command: uvx
   args:
   - mcp-for-blender==2.2.4
+  env:
+    BLENDER_MCP_DISABLE_TELEMETRY: 'true'
   requires:
     python: '>=3.10'
 requires_env: []
