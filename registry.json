@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-10T11:49:48Z",
+  "generated_at": "2026-11-11T02:49:31Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -35954,7 +35954,7 @@
       "display_name_en": "AiToEarn",
       "description": "AiToEarn MCP server.",
       "description_zh": "13+ 社交平台统一发布(视频/图文) + 自动点赞/评论/回复 + AI 文案生成 + 任务化变现执行。统一 unified MCP 接口。国内站点改 base 为 https://aitoearn.cn/api。",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "upstream",
       "homepage": "https://github.com/yikart/AiToEarn",
       "verified": true,
@@ -35979,7 +35979,7 @@
         {
           "id": "remote",
           "type": "http",
-          "url": "https://aitoearn.ai/api/unified/mcp"
+          "url": "https://aitoearn.ai/api/ai/agent/mcp"
         }
       ],
       "requires_env": [
@@ -36011,11 +36011,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "d7b448e8b3ae4c1042f3312963dc2829c479bde9220dbafba8a3fa58f422ad91",
-          "size": 956
+          "sha256": "e4de52256cab8c39dd4cbfc21f1d5446be547c434615df68ef4dd12be0a4b151",
+          "size": 957
         }
       ],
-      "bundle_sha256": "84377484e0f67a0654eda16490d8c18625743af89f433402293390264c99d9a0",
+      "bundle_sha256": "71f2fca58405860d549660f594ad048bb445f27be928e210ab2617d9bee27178",
       "popularity": {
         "score": 0
       }

@@ -5,7 +5,7 @@ tested_with: '>=0.63.72'
 name: aitoearn
 display_name: AiToEarn
 display_name_en: AiToEarn
-version: 0.1.0
+version: 0.1.1
 description: AiToEarn MCP server.
 description_zh: 13+ 社交平台统一发布(视频/图文) + 自动点赞/评论/回复 + AI 文案生成 + 任务化变现执行。统一 unified MCP 接口。国内站点改 base 为 https://aitoearn.cn/api。
 author: upstream
@@ -18,7 +18,7 @@ kind: mcp_server
 runtimes:
 - id: remote
   type: http
-  url: https://aitoearn.ai/api/unified/mcp
+  url: https://aitoearn.ai/api/ai/agent/mcp
   headers:
     x-api-key: ${RELAY_API_KEY}
 requires_env:
