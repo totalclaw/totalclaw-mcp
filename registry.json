@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-11T02:49:31Z",
+  "generated_at": "2026-11-12T08:40:30Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -2346,81 +2346,6 @@
       "popularity": {
         "score": 239,
         "downloads_weekly": 244
-      }
-    },
-    {
-      "name": "duoguan_fengchao",
-      "id": "totalclaw-mcp/biz/duoguan_fengchao",
-      "display_name": "夺冠蜂巢",
-      "display_name_en": "Duoguan Fengchao",
-      "description": "AI-powered content operations platform. From topic planning and copywriting to podcast voiceover and video packaging — all in one place.",
-      "description_zh": "AI 自媒体内容运营系统。从选题策划、文案撰写、图片配图到播客配音、视频封装，一站式内容生产。",
-      "version": "0.1.0",
-      "author": "vendor",
-      "verified": true,
-      "tested_with": ">=0.63.72",
-      "category": "biz",
-      "icon": "",
-      "tags": [
-        "biz",
-        "vendor"
-      ],
-      "kind": "mcp_server",
-      "platforms": [
-        "darwin",
-        "linux",
-        "win32"
-      ],
-      "transports": [
-        "stdio"
-      ],
-      "launchers": [
-        "npx"
-      ],
-      "runtimes": [
-        {
-          "id": "npx",
-          "type": "stdio",
-          "launcher": "npx",
-          "package": "@duoguan-fengchao/mcp-launcher@1.0.8"
-        }
-      ],
-      "requires_env": [
-        {
-          "name": "AGENT_KEY",
-          "description": "以 ca_live_ 开头的完整凭证字符串。不要使用 Key ID、邀请码或网页登录 Token。",
-          "prompt": "ca_live_xxxxxxxxxxxxxxxxxx",
-          "secret": true,
-          "required": true,
-          "doc_url": "https://fc.duoguan.com/agent/mcp",
-          "doc_label": "如何获取 Agent Key？"
-        }
-      ],
-      "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
-      "security": {
-        "scan_verdict": "unscanned",
-        "prompt_injection_findings": [],
-        "osv": "unscanned"
-      },
-      "path": "registry/servers/biz/duoguan_fengchao",
-      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/duoguan_fengchao",
-      "git_sparse": {
-        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
-        "subdir": "registry/servers/biz/duoguan_fengchao"
-      },
-      "files": [
-        {
-          "path": "mcp.yaml",
-          "sha256": "83f204486c8fa91e2a239287ecf4d371ccaa4b238b87a999f63b3bf46b962c47",
-          "size": 1942
-        }
-      ],
-      "bundle_sha256": "47fdacf01c2b9ac72197c5e503cd36436821f37bf228d6eb724f2b55d4ce48de",
-      "popularity": {
-        "score": 118,
-        "downloads_weekly": 14
       }
     },
     {
@@ -8597,81 +8522,6 @@
       "bundle_sha256": "25579759a5fb21b363622d3b3bd0c3622c3120ce96d40cba29e454e1e75411f6",
       "popularity": {
         "score": 0
-      }
-    },
-    {
-      "name": "infimind_ecommerce_image",
-      "id": "totalclaw-mcp/creative/infimind_ecommerce_image",
-      "display_name": "极睿电商生图",
-      "display_name_en": "Infimind Ecom Image",
-      "description": "Generate KOC seeding collages, product main images, and product detail pages through MCP, then track task results.",
-      "description_zh": "通过 MCP 生成 KOC 种草拼图、商品主图与电商商品详情页，并查询任务生成结果。",
-      "version": "0.1.0",
-      "author": "vendor",
-      "verified": true,
-      "tested_with": ">=0.63.72",
-      "category": "creative",
-      "icon": "",
-      "tags": [
-        "creative",
-        "vendor"
-      ],
-      "kind": "mcp_server",
-      "platforms": [
-        "darwin",
-        "linux",
-        "win32"
-      ],
-      "transports": [
-        "stdio"
-      ],
-      "launchers": [
-        "npx"
-      ],
-      "runtimes": [
-        {
-          "id": "npx",
-          "type": "stdio",
-          "launcher": "npx",
-          "package": "@infimind/image-mcp-cli@1.0.9"
-        }
-      ],
-      "requires_env": [
-        {
-          "name": "MCP_TOKEN",
-          "description": "仅填写本人账户创建的独立 Token，请勿在其他 MCP 客户端复用。",
-          "prompt": "登录极睿个人账户 → MCP Token 管理 → 创建 Token → 名称填写 WorkBuddy",
-          "secret": true,
-          "required": true,
-          "doc_url": "https://my.feishu.cn/wiki/X9vHw25KvidOhVktH7ScwZ5Anxb?fromScene=spaceOverview",
-          "doc_label": "查看 WorkBuddy Token 获取与配置教程"
-        }
-      ],
-      "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
-      "security": {
-        "scan_verdict": "unscanned",
-        "prompt_injection_findings": [],
-        "osv": "unscanned"
-      },
-      "path": "registry/servers/creative/infimind_ecommerce_image",
-      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/infimind_ecommerce_image",
-      "git_sparse": {
-        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
-        "subdir": "registry/servers/creative/infimind_ecommerce_image"
-      },
-      "files": [
-        {
-          "path": "mcp.yaml",
-          "sha256": "a745037f940818e4c1b548fe69eba841dfa8403ad952310e5289488c11525e2f",
-          "size": 2092
-        }
-      ],
-      "bundle_sha256": "5070c89a1d129b18d69d561edcdb23cfd1a52d274b365ec6cdab4468d7088099",
-      "popularity": {
-        "score": 333,
-        "downloads_weekly": 2158
       }
     },
     {
@@ -36179,82 +36029,6 @@
       "popularity": {
         "score": 272,
         "stars": 519
-      }
-    },
-    {
-      "name": "matrixmedia",
-      "id": "totalclaw-mcp/social/matrixmedia",
-      "display_name": "MatrixMedia 媒体矩阵",
-      "display_name_en": "MatrixMedia",
-      "description": "MatrixMedia 媒体矩阵 MCP server.",
-      "description_zh": "媒体矩阵账号管理 + 视频跨平台批量发布 + 发布历史查询;提供 list_accounts / list_history / publish_video 3 个工具。",
-      "version": "0.1.0",
-      "author": "upstream",
-      "homepage": "https://github.com/hanliang97/MatrixMedia",
-      "verified": true,
-      "tested_with": ">=0.63.72",
-      "category": "social",
-      "icon": "",
-      "tags": [
-        "social",
-        "preset"
-      ],
-      "kind": "mcp_server",
-      "platforms": [
-        "darwin",
-        "linux",
-        "win32"
-      ],
-      "transports": [
-        "stdio"
-      ],
-      "launchers": [
-        "node"
-      ],
-      "runtimes": [
-        {
-          "id": "node",
-          "type": "stdio",
-          "launcher": "node"
-        }
-      ],
-      "requires_env": [
-        {
-          "name": "MATRIXMEDIA_DIR",
-          "description": "MATRIXMEDIA_DIR for matrixmedia",
-          "prompt": "请输入 MATRIXMEDIA_DIR",
-          "secret": false,
-          "required": true
-        }
-      ],
-      "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
-      "security": {
-        "scan_verdict": "unscanned"
-      },
-      "path": "registry/servers/social/matrixmedia",
-      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/social/matrixmedia",
-      "git_sparse": {
-        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
-        "subdir": "registry/servers/social/matrixmedia"
-      },
-      "files": [
-        {
-          "path": "README.md",
-          "sha256": "39f53abec6d0272cb49cf2dba30d4c7f1f8e6f1a7d0aae3afc032250a84e7461",
-          "size": 572
-        },
-        {
-          "path": "mcp.yaml",
-          "sha256": "91b0c8a0abe50e2dd779338e53537730b63e1fffe5cb01fb32194cf077c4b06e",
-          "size": 1001
-        }
-      ],
-      "bundle_sha256": "ecbf911faa762ad098e4e4653e58acbc238d798b85162f2a0bc5c22c43354821",
-      "popularity": {
-        "score": 306,
-        "stars": 1135
       }
     },
     {
