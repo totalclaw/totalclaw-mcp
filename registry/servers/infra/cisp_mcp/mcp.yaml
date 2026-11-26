@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: cisp_mcp
 display_name: 水滴征信
 display_name_en: Zenicredit
-version: 0.1.0
+version: 0.1.1
 description: Query multi-dimensional enterprise information via Zenicredit, including business registration,
   IP, public opinion, financials, land, corporate relationships, related parties, and verification services.
 description_zh: 通过水滴征信企业信息服务平台查询工商、知识产权、舆情、财务、土地、企业关联关系、关联方等企业多维信息，并支持企业二要素/三要素核验。
@@ -22,7 +22,7 @@ runtimes:
   url: https://cisp.zenitera.com/mcp
   headers:
     Authorization: Bearer ${CISP_API_KEY}
-  auth: none
+  auth: header
 requires_env:
 - name: CISP_API_KEY
   env_key: CISP_API_KEY

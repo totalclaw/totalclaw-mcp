@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-12T08:40:30Z",
+  "generated_at": "2026-11-26T14:23:59Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -2691,7 +2691,7 @@
       "display_name_en": "Fadada-Richee",
       "description": "Search laws, regulations, and similar legal cases, look up enterprise information, and review contract risks with Richee.",
       "description_zh": "提供法律法规检索、类案检索、企业信息查询与合同审查能力，帮助用户快速查找相关法条、相似案例、核验企业信息并完成合同风险审查。",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "vendor",
       "homepage": "https://claw.richee.cn",
       "verified": true,
@@ -2716,7 +2716,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none",
+          "auth": "oauth",
           "url": "https://claw.richee.cn/claw-api/mcp"
         }
       ],
@@ -2743,11 +2743,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "4a21f55f6cbea05d75f5ea42ccb118f0c0abfc363b2a789b55b1401eee216e6c",
-          "size": 1565
+          "sha256": "65ca9961219767b7698b92fe8e4d97e72925308a740678d44c748331dc3fd179",
+          "size": 1566
         }
       ],
-      "bundle_sha256": "738404b4b6e80c164f58016c060beefd6821fe76569304ec52cff359c682fdef",
+      "bundle_sha256": "395b99242d86342c7c0a9133f99c3a992fd4d7076762e9316264786deaf2d5c5",
       "popularity": {
         "score": 0
       }
@@ -2759,7 +2759,7 @@
       "display_name_en": "Fanruan Growth Advisor",
       "description": "Enterprise insight and growth analysis: query public business data such as operational risks, public opinion, bidding, patents, qualifications, and policies, and call authorized MOSS Growth Advisor agents to generate analysis and reports.",
       "description_zh": "企业洞察与增长分析：查询企业经营风险、舆情、招投标、专利、资质、政策等公开商业数据，并调用已授权的 MOSS 增长谋士 Agent 生成分析与报告。",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "vendor",
       "homepage": "https://www.mossdo.com",
       "verified": true,
@@ -2784,7 +2784,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none",
+          "auth": "header",
           "url": "https://www.mossdo.com/api/v1/mcp"
         }
       ],
@@ -2821,11 +2821,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "9d8192c12344b7bcad3c3fbc04ae0ba6daa7b78ea5f7db86c8b7de8609a2004d",
-          "size": 1747
+          "sha256": "1adf2c905210d7ad6585283a4b9d272a0ea6c921a2e1811bbcbab3eb533377bb",
+          "size": 1749
         }
       ],
-      "bundle_sha256": "3856bd4d00e1e4b8df3309c646c0e43275d885a0b3965f177fbf6f8c701c6a6e",
+      "bundle_sha256": "22e7df7f972b3fb486b00d606a88e6c5d343b59771b552340889b25db5958b7e",
       "popularity": {
         "score": 0
       }
@@ -2927,7 +2927,7 @@
       "display_name_en": "Fbsir",
       "description": "FBSir: identity, scene plans, progress, reward status, and expert handoffs.",
       "description_zh": "福帮手人机协同连接器：识别当前身份与专家入口，匹配可执行场景方案，记录首值与继续使用进度，并查询乐包状态或衔接后续服务。",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "vendor",
       "homepage": "https://api2.u3w.com",
       "verified": true,
@@ -2952,7 +2952,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none",
+          "auth": "oauth",
           "url": "https://api2.u3w.com/fbs-mcp/mcp"
         }
       ],
@@ -2991,8 +2991,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "5810eeac208b13ec3ada44bb645c1126ac7503ccf8bafaffbf56d49b1ba342e1",
-          "size": 1645
+          "sha256": "c75acd2fbc3ed39ffbdfd6b1d1d249cf440b4097e961be1aa85916161bb3bf32",
+          "size": 1646
         },
         {
           "path": "tools.json",
@@ -3000,7 +3000,7 @@
           "size": 58779
         }
       ],
-      "bundle_sha256": "7a4bfb6cd050e19bb35366cb02a912d4473a1812474547ca84a66cf11534e7ae",
+      "bundle_sha256": "ecda78e2451521111b10b8c1a275e28dcfd7594bb0e2278f7e760ac84bd23941",
       "popularity": {
         "score": 0
       }
@@ -5674,7 +5674,7 @@
       "display_name_en": "YouShu BD Mate",
       "description": "The BD Mate is an intelligent corporate marketing assistant built on full-dimensional enterprise data, delivering a complete business development closed-loop from pre-visit one-pagers and customer intelligence reports to product-based customer acquisition, key-person profiling, sales scripts, and enterprise-based product recommendations.",
       "description_zh": "对公营销助手是基于企业全维数据构建的对公营销智能助手，提供从生成访前一页纸、访前客情报告、产品找客、关键人画像、营销话术及按企荐品的完整展业闭环能力。",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "vendor",
       "homepage": "https://open.yscredit.com",
       "verified": true,
@@ -5699,7 +5699,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none",
+          "auth": "header",
           "url": "https://open.yscredit.com/ys-mcp/report"
         }
       ],
@@ -5736,11 +5736,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "cbadcdaf66a104cb9fc5c886114dbacbfc037b38ba85f3c599b2ec1d1523c497",
-          "size": 2139
+          "sha256": "1d60a05504b6d9b0401707289273d3727c56e5137162f9cae9b6b60f2abc56b1",
+          "size": 2141
         }
       ],
-      "bundle_sha256": "2580ed5869537515544e3ace74250980d4b862460a410558b3ddfbd9cb5a6d06",
+      "bundle_sha256": "601e06388ca1e4ce9fb3a0cfc9fd0d6dd213745c0b9fe5131d8dec7da3f9f94f",
       "popularity": {
         "score": 0
       }
@@ -6590,7 +6590,7 @@
       "display_name_en": "Tencent Charity Org Platform",
       "description": "Tencent Charity organization platform connector: query the current organization's user and org info, projects, progress, and financial disclosures with natural language.",
       "description_zh": "腾讯公益机构服务平台连接器：用自然语言查询当前登录机构的用户与机构信息、项目、进展、财务披露等机构侧业务数据。",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "vendor",
       "homepage": "https://ssl.gongyi.qq.com",
       "verified": true,
@@ -6615,7 +6615,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none",
+          "auth": "oauth",
           "url": "https://ssl.gongyi.qq.com/gygw-web/api/open/tob/mcp"
         }
       ],
@@ -6642,11 +6642,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "d19c44953aab8a91c70ad183be6d8fd53722444dad0d29d0a78b1a60d856c80a",
-          "size": 1420
+          "sha256": "d6672fb9d8d0e517ea9c8f7ddb7b68e439339eecc9a82d4ae9fc17d45c935c47",
+          "size": 1421
         }
       ],
-      "bundle_sha256": "c0df396bbd1cf71ab19441ebea0930417fe661b6917170930be2a5fe49384eb5",
+      "bundle_sha256": "0c7e57433bed88fd1ff5d38c8bd52039a9999eba7952c93e9993c739f730d76e",
       "popularity": {
         "score": 0
       }
@@ -8853,7 +8853,7 @@
       "display_name_en": "Picset AI Commerce Images",
       "description": "Design and generate ecommerce main images, detail images, and coordinated Listing image suites through Picset AI.",
       "description_zh": "Picset AI 面向电商卖家、设计师和品牌团队，提供设计并制作电商套图、商品主图和商品详情图等。适用于设计制作电商套图、商品套图、主图、详情图、电商图、Listing 图、上架图、卖点图、功能图、场景图、详情长图或长详情页等商品图片需求时使用。适配 Amazon、淘宝、天猫、1688、Temu、TikTok Shop、拼多多、抖音电商、OZON、独立站、Shopify、Shopee、阿里巴巴国际站、Alibaba.com、速卖通、AliExpress、SHEIN、京东等国内国际主流电商平台",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "vendor",
       "homepage": "https://picsetai.cn",
       "verified": true,
@@ -8878,7 +8878,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none",
+          "auth": "header",
           "url": "https://picsetai.cn/functions/v1/agent-mcp-v1/mcp"
         }
       ],
@@ -8915,11 +8915,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "ea2ddca4bc5eac37189d7b74faf786508adcd59c796f0fb5812c53f9e3b730ff",
-          "size": 2075
+          "sha256": "b59dcec4a448a729625ec1bb08d4595ba460823414830d490f956ef8a84c3094",
+          "size": 2077
         }
       ],
-      "bundle_sha256": "1e9b3b15e853ea5ef41033453de978b8270a75ce3d913b79042d27a5588e92e3",
+      "bundle_sha256": "df3bb0ad1f2b95cc1b98cabb6837f0b15de836762230f4e5489691b9760f1b18",
       "popularity": {
         "score": 0
       }
@@ -8931,7 +8931,7 @@
       "display_name_en": "Picset AI Video Generation",
       "description": "Picset AI video creation connector for ecommerce product video generation, viral video recreation, and model image generation with asset upload registration, script planning, credit estimates, explicit confirmation, asynchronous generation, and task status tools. The MVP supports Seedance 2.0, Seedance 2.0 Fast, and Seedance 2.0 Mini models, with Seedance 2.0 as the default.",
       "description_zh": "Picset AI 视频创作连接器支持在支持 MCP 的客户端中通过密钥调用电商商品视频生成、爆款视频复刻和模特图生成能力，完成素材上传登记、脚本规划、视频脚本生成、积分预估、确认提交、异步生成和任务状态查询。MVP 支持 Seedance 2.0、Seedance 2.0 Fast、Seedance 2.0 Mini 三个模型，默认使用 Seedance 2.0。",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "vendor",
       "homepage": "https://picsetai.cn",
       "verified": true,
@@ -8956,7 +8956,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none",
+          "auth": "header",
           "url": "https://picsetai.cn/functions/v1/agent-video-mcp-v1/mcp"
         }
       ],
@@ -8993,11 +8993,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "f3feb6e16438ce48688e92445b0b2809c78cac58d0bc8940820b3c2556d72361",
-          "size": 2416
+          "sha256": "5ab090f6a5c191afe911ef17a264efcad665695d489d1d0e673f82f69b710fcd",
+          "size": 2418
         }
       ],
-      "bundle_sha256": "1514c9155dc6a3e77b5eb977c1e450027a2a5eefdba7bfbfe9207cbc31247b51",
+      "bundle_sha256": "c171eaf5012e6b9eac927087929292e3abd71efd7a662ede70a4bfc944eb45df",
       "popularity": {
         "score": 0
       }
@@ -13720,7 +13720,7 @@
       "display_name_en": "Jike Spatiotemporal Data MCP",
       "description": "Query offline spatiotemporal data via natural language — area heat maps, scene recognition, customer-flow analysis, POI search and more — to power business insights and site-selection scenarios.",
       "description_zh": "通过自然语言查询线下时空数据，提供区域热力、场景识别、客流分析、POI查询等能力，助力商业洞察、开店选址等应用场景。",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "vendor",
       "homepage": "https://mcp.isjike.com",
       "verified": true,
@@ -13745,7 +13745,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none",
+          "auth": "header",
           "url": "https://mcp.isjike.com/mcp-servers/opendata/mcp"
         }
       ],
@@ -13789,8 +13789,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "be4eed22ed3af943a9481d7dd2762e695dc3166168a2d64b7f2c48d5b554cd71",
-          "size": 2011
+          "sha256": "29d6df8617d415c0b438d15c96aa918589cd12083b1ec6702e2b5d5bc6a398fd",
+          "size": 2013
         },
         {
           "path": "tools.json",
@@ -13798,7 +13798,7 @@
           "size": 10594
         }
       ],
-      "bundle_sha256": "e18818d7dc55b0dc229cab4c7f5e32767dfcea7d1212dcb317075d586554b99e",
+      "bundle_sha256": "c7cf13f3c1d3b7fddeb6652ba2f68b6cdbfb0bd4ccfef6df5730a0fb2eb51ecb",
       "popularity": {
         "score": 0
       }
@@ -22041,7 +22041,7 @@
       "display_name_en": "Bugly Quality Overview",
       "description": "View the product quality overview, including crash rate, ANR rate, FOOM (OOM) rate, and startup latency.",
       "description_zh": "查看产品的质量概览 包括崩溃率 anr率 foom（oom）率 启动耗时",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "vendor",
       "homepage": "https://bugly.tds.qq.com",
       "verified": true,
@@ -22066,7 +22066,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none",
+          "auth": "header",
           "url": "https://bugly.tds.qq.com/mcp"
         }
       ],
@@ -22103,11 +22103,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "2e1fcbb78452e12a13ad05d814019e34237624c94683e3d466dd3c5cceb3875f",
-          "size": 1484
+          "sha256": "3034a15be5fddfab0bc1f854f07411afae885bf2d24ff77fc19f389fb4e6b838",
+          "size": 1486
         }
       ],
-      "bundle_sha256": "5e93cce1feaedcf838856d03350c5c6ece014df1c0402fd437cfbede69888f32",
+      "bundle_sha256": "69ed7b19486af12c718c3eab4fffde04085a34874e5580b46a783979ceefd86b",
       "popularity": {
         "score": 0
       }
@@ -22119,7 +22119,7 @@
       "display_name_en": "Zenicredit",
       "description": "Query multi-dimensional enterprise information via Zenicredit, including business registration, IP, public opinion, financials, land, corporate relationships, related parties, and verification services.",
       "description_zh": "通过水滴征信企业信息服务平台查询工商、知识产权、舆情、财务、土地、企业关联关系、关联方等企业多维信息，并支持企业二要素/三要素核验。",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "vendor",
       "homepage": "https://cisp.zenitera.com",
       "verified": true,
@@ -22144,7 +22144,7 @@
         {
           "id": "remote",
           "type": "http",
-          "auth": "none",
+          "auth": "header",
           "url": "https://cisp.zenitera.com/mcp"
         }
       ],
@@ -22181,11 +22181,11 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "baa2d41d1db4579ef2f56c974b4cae197b14516ca879dabcb72c1277bbd45348",
-          "size": 1693
+          "sha256": "36f985e2987e3435b319834cc3853c6ae5d9ffba913d758a4a64d144e623af62",
+          "size": 1695
         }
       ],
-      "bundle_sha256": "6d11a5b95a65761622038206283cd230610be1a2606af70d90438fd866d34249",
+      "bundle_sha256": "90299d9b22a5f7951280d754e697f046db4422553401cd3cae23c4c42e53254f",
       "popularity": {
         "score": 0
       }
@@ -35803,8 +35803,8 @@
       "display_name": "AiToEarn",
       "display_name_en": "AiToEarn",
       "description": "AiToEarn MCP server.",
-      "description_zh": "13+ 社交平台统一发布(视频/图文) + 自动点赞/评论/回复 + AI 文案生成 + 任务化变现执行。统一 unified MCP 接口。国内站点改 base 为 https://aitoearn.cn/api。",
-      "version": "0.1.1",
+      "description_zh": "13+ 社交平台统一发布(视频/图文) + 自动点赞/评论/回复 + AI 文案生成 + 任务化变现执行。统一 MCP 接口。国内站点改 url 为 https://aitoearn.cn/api/ai/agent/mcp。",
+      "version": "0.1.2",
       "author": "upstream",
       "homepage": "https://github.com/yikart/AiToEarn",
       "verified": true,
@@ -35829,18 +35829,11 @@
         {
           "id": "remote",
           "type": "http",
+          "auth": "oauth",
           "url": "https://aitoearn.ai/api/ai/agent/mcp"
         }
       ],
-      "requires_env": [
-        {
-          "name": "RELAY_API_KEY",
-          "description": "RELAY_API_KEY for aitoearn",
-          "prompt": "请输入 RELAY_API_KEY",
-          "secret": true,
-          "required": true
-        }
-      ],
+      "requires_env": [],
       "optional_env": [],
       "tools_count": 0,
       "tools": [],
@@ -35856,16 +35849,16 @@
       "files": [
         {
           "path": "README.md",
-          "sha256": "13e50f24b2bd588f3e68d6ab97d1b198b5ca6586dfdc17217e3515df17e4fb6f",
-          "size": 502
+          "sha256": "acb5f2cf48d5fa562d3cea55ee1510a276ef77535648b3a6a7c5e4a603b53afc",
+          "size": 577
         },
         {
           "path": "mcp.yaml",
-          "sha256": "e4de52256cab8c39dd4cbfc21f1d5446be547c434615df68ef4dd12be0a4b151",
-          "size": 957
+          "sha256": "f833ca89fa4621641654fd5acd68e3386cabffcf3d4dc00b3630c3cc9dbd80fa",
+          "size": 780
         }
       ],
-      "bundle_sha256": "71f2fca58405860d549660f594ad048bb445f27be928e210ab2617d9bee27178",
+      "bundle_sha256": "ca8c0e2c0150c26dfdd8d08e8869f4d7b6975fbdbecefe68422fa21254eb2baa",
       "popularity": {
         "score": 0
       }

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: gongyi_open_mcp
 display_name: 腾讯公益机构服务平台
 display_name_en: Tencent Charity Org Platform
-version: 0.1.0
+version: 0.1.1
 description: 'Tencent Charity organization platform connector: query the current organization''s user
   and org info, projects, progress, and financial disclosures with natural language.'
 description_zh: 腾讯公益机构服务平台连接器：用自然语言查询当前登录机构的用户与机构信息、项目、进展、财务披露等机构侧业务数据。
@@ -20,7 +20,7 @@ runtimes:
 - id: remote
   type: http
   url: https://ssl.gongyi.qq.com/gygw-web/api/open/tob/mcp
-  auth: none
+  auth: oauth
 requires_env: []
 optional_env: []
 defaults:

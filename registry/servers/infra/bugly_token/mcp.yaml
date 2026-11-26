@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: bugly_token
 display_name: Bugly 质量概览
 display_name_en: Bugly Quality Overview
-version: 0.1.0
+version: 0.1.1
 description: View the product quality overview, including crash rate, ANR rate, FOOM (OOM) rate, and startup
   latency.
 description_zh: 查看产品的质量概览 包括崩溃率 anr率 foom（oom）率 启动耗时
@@ -22,7 +22,7 @@ runtimes:
   url: https://bugly.tds.qq.com/mcp
   headers:
     Authorization: Bearer ${BUGLY_ACCESS_TOKEN}
-  auth: none
+  auth: header
 requires_env:
 - name: BUGLY_ACCESS_TOKEN
   env_key: BUGLY_ACCESS_TOKEN

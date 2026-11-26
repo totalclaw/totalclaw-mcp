@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: youshu_bd_mate
 display_name: 智客AI · 对公(To B)营销助手
 display_name_en: YouShu BD Mate
-version: 0.1.0
+version: 0.1.1
 description: The BD Mate is an intelligent corporate marketing assistant built on full-dimensional enterprise
   data, delivering a complete business development closed-loop from pre-visit one-pagers and customer
   intelligence reports to product-based customer acquisition, key-person profiling, sales scripts, and
@@ -24,7 +24,7 @@ runtimes:
   url: https://open.yscredit.com/ys-mcp/report
   headers:
     Authorization: Bearer ${API_KEY}
-  auth: none
+  auth: header
 requires_env:
 - name: API_KEY
   env_key: API_KEY

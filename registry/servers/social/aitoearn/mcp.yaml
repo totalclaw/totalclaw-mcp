@@ -5,9 +5,9 @@ tested_with: '>=0.63.72'
 name: aitoearn
 display_name: AiToEarn
 display_name_en: AiToEarn
-version: 0.1.1
+version: 0.1.2
 description: AiToEarn MCP server.
-description_zh: 13+ 社交平台统一发布(视频/图文) + 自动点赞/评论/回复 + AI 文案生成 + 任务化变现执行。统一 unified MCP 接口。国内站点改 base 为 https://aitoearn.cn/api。
+description_zh: 13+ 社交平台统一发布(视频/图文) + 自动点赞/评论/回复 + AI 文案生成 + 任务化变现执行。统一 MCP 接口。国内站点改 url 为 https://aitoearn.cn/api/ai/agent/mcp。
 author: upstream
 homepage: https://github.com/yikart/AiToEarn
 category: social
@@ -19,15 +19,8 @@ runtimes:
 - id: remote
   type: http
   url: https://aitoearn.ai/api/ai/agent/mcp
-  headers:
-    x-api-key: ${RELAY_API_KEY}
-requires_env:
-- name: RELAY_API_KEY
-  env_key: RELAY_API_KEY
-  description: RELAY_API_KEY for aitoearn
-  prompt: 请输入 RELAY_API_KEY
-  secret: true
-  required: true
+  auth: oauth
+requires_env: []
 optional_env: []
 defaults:
   enabled: true

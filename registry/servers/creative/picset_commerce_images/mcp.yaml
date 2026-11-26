@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: picset_commerce_images
 display_name: Picset AI 电商图片
 display_name_en: Picset AI Commerce Images
-version: 0.1.0
+version: 0.1.1
 description: Design and generate ecommerce main images, detail images, and coordinated Listing image suites
   through Picset AI.
 description_zh: Picset AI 面向电商卖家、设计师和品牌团队，提供设计并制作电商套图、商品主图和商品详情图等。适用于设计制作电商套图、商品套图、主图、详情图、电商图、Listing
@@ -23,7 +23,7 @@ runtimes:
   url: https://picsetai.cn/functions/v1/agent-mcp-v1/mcp
   headers:
     Authorization: Bearer ${PICSET_AGENT_SK}
-  auth: none
+  auth: header
 requires_env:
 - name: PICSET_AGENT_SK
   env_key: PICSET_AGENT_SK

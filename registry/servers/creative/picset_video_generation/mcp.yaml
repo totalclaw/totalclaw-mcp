@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: picset_video_generation
 display_name: Picset AI 视频创作
 display_name_en: Picset AI Video Generation
-version: 0.1.0
+version: 0.1.1
 description: Picset AI video creation connector for ecommerce product video generation, viral video recreation,
   and model image generation with asset upload registration, script planning, credit estimates, explicit
   confirmation, asynchronous generation, and task status tools. The MVP supports Seedance 2.0, Seedance
@@ -25,7 +25,7 @@ runtimes:
   url: https://picsetai.cn/functions/v1/agent-video-mcp-v1/mcp
   headers:
     Authorization: Bearer ${PICSET_AGENT_SK}
-  auth: none
+  auth: header
 requires_env:
 - name: PICSET_AGENT_SK
   env_key: PICSET_AGENT_SK
