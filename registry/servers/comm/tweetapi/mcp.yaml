@@ -1,0 +1,33 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: tweetapi
+display_name: TweetAPI MCP
+display_name_en: TweetAPI MCP
+version: 0.1.1
+description: TweetAPI 官方 MCP 服务器：只读获取 Twitter 公开数据（推文搜索、用户资料、关注者、列表、社区、Spaces），并可查询 TweetAPI 文档。
+description_zh: TweetAPI 官方 MCP 服务器：只读获取 Twitter 公开数据（推文搜索、用户资料、关注者、列表、社区、Spaces），并可查询 TweetAPI 文档。
+author: tweetapi
+homepage: https://github.com/tweetapi/tweetapi-mcp
+repository: https://github.com/tweetapi/tweetapi-mcp
+verified: true
+category: comm
+tags:
+- comm
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.tweetapi.com/mcp
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

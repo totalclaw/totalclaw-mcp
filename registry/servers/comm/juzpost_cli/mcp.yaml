@@ -1,0 +1,41 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: juzpost_cli
+display_name: JuzPost
+display_name_en: JuzPost
+version: 0.1.1
+description: Social media scheduling from the terminal — schedule & auto-post short-form videos to TikTok, YouTube Shorts
+  & Instagram. A fast, scriptable CLI social media scheduler.
+description_zh: 社交媒体排程与发布平台的官方 MCP：起草帖子、上传图片或视频、排程或立即发布到 X、LinkedIn、Instagram、TikTok、YouTube、Bluesky 等账号，并按频道组自动排期。
+author: juzpost
+license: MIT
+homepage: https://github.com/juzpost/juzpost-cli
+repository: https://github.com/juzpost/juzpost-cli
+verified: true
+category: comm
+tags:
+- comm
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - juzpost-cli@0.2.1
+  - mcp
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

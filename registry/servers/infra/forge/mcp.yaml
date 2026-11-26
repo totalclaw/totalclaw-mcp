@@ -1,0 +1,46 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: forge
+display_name: Reliant Forge
+display_name_en: Reliant Forge
+version: 0.1.1
+description: 'Guardrails for apps in any agent harness. Deploy with no account: a live URL plus a claim link. Forge is an
+  open-source CLI and MCP server for Claude Code, Codex, Cursor or a harness you wrote: run `npx -y @reliantlabs/forge@latest
+  env deploy prod --claim'
+description_zh: Reliant Labs 官方 MCP 服务器：`deploy_claimable` 无需账号即可把 Vite 应用、Next.js 静态导出或 forge 项目部署到 Reliant 托管，返回公开 URL 和认领链接（未认领的部署保留
+  72 小时）；另提供 forge（Go + protobuf + SQL 迁移）项目的 lint、代码生成和项目内省工具，共 14 个工具。
+author: reliant-labs
+license: Apache-2.0
+homepage: https://github.com/reliant-labs/forge
+repository: https://github.com/reliant-labs/forge
+verified: true
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@reliantlabs/forge@1.11.0'
+  - mcp
+  - '#'
+  - Claude
+  - Code
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

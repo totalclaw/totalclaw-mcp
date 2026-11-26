@@ -1,0 +1,46 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: lucyd
+display_name: mcp-server
+display_name_en: mcp-server
+version: 0.1.1
+description: 'MCP server for Lucyd prediction markets: let AI agents browse markets and trade'
+description_zh: 链上比特币 Up/Down 预测市场 Lucyd（Sepolia 测试网）的 MCP：浏览 5 分钟到 1 天的 BTC 市场、读取订单簿、下限价/市价单、平仓、领取收益；无私钥时只读。
+author: Lucyd-trade
+license: MIT
+homepage: https://github.com/Lucyd-trade/mcp-server
+repository: https://github.com/Lucyd-trade/mcp-server
+verified: true
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@lucyd/mcp@0.1.3'
+  requires:
+    node: '>=18'
+requires_env:
+- name: LUCYD_PRIVATE_KEY
+  description: mcp-server 的配置项（LUCYD_PRIVATE_KEY），获取方式见项目说明。
+  prompt: 请输入 LUCYD_PRIVATE_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/Lucyd-trade/mcp-server
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

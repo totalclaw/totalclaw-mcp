@@ -1,0 +1,42 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: blockhand
+display_name: blockhand-mcp
+display_name_en: blockhand-mcp
+version: 0.1.1
+description: 'BlockHand: MCP server for Minecraft Education Edition over the official /connect (/wsserver) WebSocket. No add-on
+  or behavior pack needed. Agent robot control, 24 build shapes merged into minimal /fill commands, block reading, region
+  comparison and game e'
+description_zh: Minecraft 教育版（Education Edition）的 MCP 服务器：通过游戏内置的 /connect WebSocket 连接，无需安装附加包；可操控 Agent 机器人、用 24 种形状建造（自动合并成最少的
+  /fill 指令）、读取方块、比对区域、订阅游戏事件。
+author: gjlmotea
+license: MIT
+homepage: https://github.com/gjlmotea/blockhand-mcp
+repository: https://github.com/gjlmotea/blockhand-mcp
+verified: true
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@gjlmotea/blockhand-mcp@0.1.1'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

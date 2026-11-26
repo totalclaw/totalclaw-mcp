@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: hack123_henryht
+display_name: 黑123 Hackathons
+display_name_en: 黑123 Hackathons
+version: 0.1.1
+description: 中英双语黑客松检索 MCP：按关键词、状态（报名中/未开始/已结束）、线上线下、城市、主题等搜索国内外黑客松，查看单场详情（时间、奖金、报名链接），还能搜组队帖和往届作品（工具 `search_hackathons`
+  / `get_hackathon` / `search_team_posts` / `search_works`）。
+description_zh: 中英双语黑客松检索 MCP：按关键词、状态（报名中/未开始/已结束）、线上线下、城市、主题等搜索国内外黑客松，查看单场详情（时间、奖金、报名链接），还能搜组队帖和往届作品（工具 `search_hackathons`
+  / `get_hackathon` / `search_team_posts` / `search_works`）。
+author: onehumanbeing
+homepage: https://github.com/onehumanbeing/hack123-mcp
+repository: https://github.com/onehumanbeing/hack123-mcp
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://hack123.henryht.sh/api/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: kubernetes_containers
+display_name: Kubernetes and OpenShift
+display_name_en: Kubernetes and OpenShift
+version: 0.1.1
+description: Model Context Protocol (MCP) server for Kubernetes and OpenShift
+description_zh: 功能强大的 Kubernetes MCP 服务器，额外支持 OpenShift。提供 CRUD 操作及专用工具。
+author: containers
+license: Apache-2.0
+homepage: https://github.com/containers/kubernetes-mcp-server
+repository: https://github.com/containers/kubernetes-mcp-server
+verified: true
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - kubernetes-mcp-server@0.1.3
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

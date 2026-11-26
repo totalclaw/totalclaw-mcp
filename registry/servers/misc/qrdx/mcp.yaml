@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: qrdx
+display_name: QRdx
+display_name_en: QRdx
+version: 0.1.1
+description: 二维码与条形码 MCP：`design_qr` 校验内容与样式、给出扫码评分并自动调整样式直到评分为 Great，返回 SVG、PNG 和在线编辑链接；可生成 Wi-Fi、联系人、邮件、短信、位置及银行支付（Pix、SEPA、PayNow、PromptPay、VietQR）载荷；`generate_barcode`
+  校验并生成 EAN-13、UPC-A、UPC-E、EAN-8、Code 128、Code 39、ITF-14、GS1-128、Data Matrix、PDF417、Aztec 条码。
+description_zh: 二维码与条形码 MCP：`design_qr` 校验内容与样式、给出扫码评分并自动调整样式直到评分为 Great，返回 SVG、PNG 和在线编辑链接；可生成 Wi-Fi、联系人、邮件、短信、位置及银行支付（Pix、SEPA、PayNow、PromptPay、VietQR）载荷；`generate_barcode`
+  校验并生成 EAN-13、UPC-A、UPC-E、EAN-8、Code 128、Code 39、ITF-14、GS1-128、Data Matrix、PDF417、Aztec 条码。
+author: bucharitesh
+homepage: https://github.com/bucharitesh/qrdx
+repository: https://github.com/bucharitesh/qrdx
+verified: true
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.qrdx.dev/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: plushsource
+display_name: PlushSource
+display_name_en: PlushSource
+version: 0.1.1
+description: MCP server for the PlushSource directory, which lists custom plush manufacturers and does not audit them
+description_zh: 检索、筛选并对比 PlushSource 目录中的定制毛绒玩具制造商。数据按厂商自行提供的信息记录，未公布字段显示为 Not stated。本地 stdio，打包数据，无需 API Key。
+author: quickman924
+license: MIT
+homepage: https://github.com/quickman924/plushsource-mcp
+repository: https://github.com/quickman924/plushsource-mcp
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - plushsource-mcp@0.1.2
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

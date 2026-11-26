@@ -1,0 +1,48 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: desearch
+display_name: Desearch
+display_name_en: Desearch
+version: 0.1.1
+description: AI search (web, Reddit, Hacker News, arXiv, Wikipedia, and Twitter), X (Twitter) search, web search, the Search
+  API, public TikTok, Facebook, Instagram, YouTube (including transcripts), Reddit, and Threads data, People Search exports,
+  page extraction, X d
+description_zh: Desearch 官方 MCP 服务器，提供 AI 搜索（网页、X (Twitter)、Reddit、Hacker News、arXiv、Wikipedia）、网页搜索、网页内容提取与 X 数据工具。
+author: Desearch-ai
+license: MIT
+homepage: https://github.com/Desearch-ai/mcp-desearch
+repository: https://github.com/Desearch-ai/mcp-desearch
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - desearch-mcp-server@0.12.0
+  requires:
+    node: '>=18'
+requires_env:
+- name: DESEARCH_API_KEY
+  description: Desearch 的API 密钥（DESEARCH_API_KEY），获取方式见项目说明。
+  prompt: 请输入 DESEARCH_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/Desearch-ai/mcp-desearch
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

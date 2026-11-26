@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: eda_agent
+display_name: eda-agent
+display_name_en: eda-agent
+version: 0.1.1
+description: MCP server for EDA tool automation, currently supports Altium Designer. Around 600 tools for schematic, PCB,
+  and library ops via DelphiScript bridge.
+description_zh: 让 AI 直接操作正在运行的 Altium Designer（另支持 KiCad 与 EasyEDA Pro）：约 600 个工具，覆盖原理图、PCB、元件库与工程操作、设计审查与检查，修改在编辑器中当场可见。
+author: salitronic
+license: Apache-2.0
+homepage: https://github.com/salitronic/eda-agent
+repository: https://github.com/salitronic/eda-agent
+verified: true
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - eda-agent==0.8.2
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

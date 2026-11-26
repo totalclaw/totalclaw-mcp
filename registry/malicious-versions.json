@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-10",
+ "generated": "2026-11-26",
  "source": "osv.dev 恶意包记录（MAL-）；查询范围：全部未下架条目依赖树里出现过的包名，加上已下架条目的顶层包名。由 scripts/dep_gate.py --refresh 生成，勿手改。",
  "npm": {
   "@antv/mcp-server-chart": {

@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: usb_rea
+display_name: usb-rea
+display_name_en: usb-rea
+version: 0.1.1
+description: 'Reverse Engineer any USB gadget: capture, diff, infer, and generate open drivers with evidence'
+description_zh: USB 协议逆向 MCP：在使用厂商 Windows 软件（机箱 LCD、RGB、鼠标等）时抓取 USB 流量（usbmon / pcap），按操作对比数据包、推断协议，并生成 Linux 用户态驱动骨架、Wireshark
+  解析器和 HID 描述符解析；内置离线 VID:PID 已知设备查询。
+author: emirmrkaljevic
+license: MIT
+homepage: https://github.com/emirmrkaljevic/usb-rea
+repository: https://github.com/emirmrkaljevic/usb-rea
+verified: true
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - usb-rea==0.7.14
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

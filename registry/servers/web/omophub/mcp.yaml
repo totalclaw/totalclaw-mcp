@@ -1,0 +1,47 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: omophub
+display_name: OMOPHub
+display_name_en: OMOPHub
+version: 0.1.1
+description: MCP server for OHDSI OMOP standardized medical vocabularies - search, lookup, map, and navigate concepts via
+  AI agents
+description_zh: 检索和映射 OHDSI OMOP 标准医学术语：覆盖 SNOMED CT、ICD-10、RxNorm、LOINC 等 120+ 个词表的 1100 万+ 概念，支持语义搜索、跨词表映射和层级导航。
+author: OMOPHub
+license: MIT
+homepage: https://github.com/OMOPHub/omophub-mcp
+repository: https://github.com/OMOPHub/omophub-mcp
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@omophub/omophub-mcp@1.6.3'
+  requires:
+    node: '>=18'
+requires_env:
+- name: OMOPHUB_API_KEY
+  description: OMOPHub 的API 密钥（OMOPHUB_API_KEY），获取方式见项目说明。
+  prompt: 请输入 OMOPHUB_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/OMOPHub/omophub-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

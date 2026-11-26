@@ -1,0 +1,33 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: readgzh
+display_name: readgzh
+display_name_en: readgzh
+version: 0.1.1
+description: 读取已有的微信公众号文章链接，返回标题、作者、发布时间和 Markdown 正文，支持图文（小绿书）格式；长文自动分段，并可检索 ReadGZH 已缓存的文章。
+description_zh: 读取已有的微信公众号文章链接，返回标题、作者、发布时间和 Markdown 正文，支持图文（小绿书）格式；长文自动分段，并可检索 ReadGZH 已缓存的文章。
+author: sweesama
+homepage: https://github.com/sweesama/readgzh
+repository: https://github.com/sweesama/readgzh
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://api.readgzh.site/mcp-server
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

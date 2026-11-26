@@ -1,0 +1,33 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: axiomlab
+display_name: Axiom Lab (官方)
+display_name_en: ''
+version: 0.1.1
+description: 由 [Axiom Lab](https://axiomlab.online) 官方维护的商业视频生成 MCP 服务器：上传 PDF 路演文稿、PPTX、文档或产品图片，先免费生成结构化制片方案并确认建议时长，再渲染项目介绍、产品宣传片、企业介绍与人物名片视频（[中文文档](https://axiomlab.online/zh/developers/cli-mcp)）。
+description_zh: 由 [Axiom Lab](https://axiomlab.online) 官方维护的商业视频生成 MCP 服务器：上传 PDF 路演文稿、PPTX、文档或产品图片，先免费生成结构化制片方案并确认建议时长，再渲染项目介绍、产品宣传片、企业介绍与人物名片视频（[中文文档](https://axiomlab.online/zh/developers/cli-mcp)）。
+author: Axiom-lab-tech
+homepage: https://github.com/Axiom-lab-tech/axiomlab-mcp
+repository: https://github.com/Axiom-lab-tech/axiomlab-mcp
+verified: true
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://axiomlab.online/mcp
+  auth: header
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,0 +1,41 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: dawnmere_connector
+display_name: Dawnmere
+display_name_en: Dawnmere
+version: 0.1.1
+description: Connect your AI apps to Dawnmere, one memory shared across Claude, Cursor, Codex and more. Talks to Dawnmere
+  on your Mac.
+description_zh: 在 Mac 本地保存一份长期记忆，供 Claude Code、Codex 和 Cursor 共用（Windsurf、Gemini CLI、VS Code 也可接入，仅限工作笔记）：单个 SQLite 文件，本地检索，提供
+  recall、remember、forget、access_status 四个工具，可按应用设置访问级别，无需账号。
+author: LF-Labs-Inc
+license: MIT
+homepage: https://github.com/LF-Labs-Inc/dawnmere
+repository: https://github.com/LF-Labs-Inc/dawnmere
+verified: true
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - dawnmere-connector@0.1.3
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

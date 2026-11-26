@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: preloop
+display_name: Preloop
+display_name_en: Preloop
+version: 0.1.1
+description: Preloop - Control plane & safety layer for your agentic AI workforce
+description_zh: 开源 AI 智能体控制平面与软件工厂：每一次工具调用和模型调用都会被允许、拒绝或交由人工审批，计入预算并记录；智能体可由工单、Webhook 和 CI 触发，在托管容器或自有 runner 中运行，以 Pull
+  Request 交付成果。
+author: preloop
+license: Apache-2.0
+homepage: https://github.com/preloop/preloop
+repository: https://github.com/preloop/preloop
+verified: true
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - preloop==1.0.2
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

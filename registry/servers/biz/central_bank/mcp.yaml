@@ -1,0 +1,47 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: central_bank
+display_name: central-bank-mcp
+display_name_en: central-bank-mcp
+version: 0.1.1
+description: MCP server for official central-bank and tax-authority exchange rates — let AI tools (Claude Code, Cursor, Claude
+  Desktop) fetch official rates from 180+ institutions (ECB, Fed, HMRC, BOJ, ...) via the AllRatesToday API.
+description_zh: 央行与税务机关官方汇率：查询 ECB、美联储、日本央行、RBI、HMRC、美国财政部等 100+ 家机构发布的官方汇率表，返回机构自己的发布日期，适用于发票、增值税、报关与审计。
+author: AllRates-Today
+license: MIT
+homepage: https://github.com/AllRates-Today/central-bank-mcp
+repository: https://github.com/AllRates-Today/central-bank-mcp
+verified: true
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@allratestoday/central-bank-mcp@0.3.19'
+  requires:
+    node: '>=18'
+requires_env:
+- name: ALLRATES_API_KEY
+  description: central-bank-mcp 的API 密钥（ALLRATES_API_KEY），获取方式见项目说明。
+  prompt: 请输入 ALLRATES_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/AllRates-Today/central-bank-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

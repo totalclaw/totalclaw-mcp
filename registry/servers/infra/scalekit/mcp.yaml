@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: scalekit
+display_name: Scalekit MCP Server
+display_name_en: Scalekit MCP Server
+version: 0.1.1
+description: '[](https://glama.ai/mcp/servers/scalekit-inc/scalekit-mcp-server)    - Manage Scalekit organizations, users
+  and SSO.'
+description_zh: Scalekit（AI 智能体集成平台）官方 MCP 服务器：在 Claude、Cursor 等 MCP 客户端中通过 OAuth 登录后，以登录用户身份配置智能体集成——设置终端用户的智能体所调用的连接器，并管理环境、组织、用户、OIDC
+  连接、角色与权限范围。
+author: scalekit-inc
+homepage: https://github.com/scalekit-inc/scalekit-mcp-server
+repository: https://github.com/scalekit-inc/scalekit-mcp-server
+verified: true
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.scalekit.com/
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

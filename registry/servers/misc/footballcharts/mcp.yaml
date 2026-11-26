@@ -1,0 +1,47 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: footballcharts
+display_name: footballcharts-mcp
+display_name_en: footballcharts-mcp
+version: 0.1.1
+description: MCP server for football-charts.com — tables, results, fixtures, goal timing, a public baseline model and Monte
+  Carlo season projections for 98 football leagues, including the lower divisions other sources skip.
+description_zh: 查询足球联赛的赛果、半场比分、进球时间分布、积分榜与赛程，覆盖中超、低级别联赛和女足联赛。
+author: ddevetak
+license: MIT
+homepage: https://github.com/ddevetak/footballcharts-mcp
+repository: https://github.com/ddevetak/footballcharts-mcp
+verified: true
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - footballcharts-mcp@0.7.0
+  requires:
+    node: '>=18'
+requires_env:
+- name: FC_API_KEY
+  description: footballcharts-mcp 的API 密钥（FC_API_KEY），获取方式见项目说明。
+  prompt: 请输入 FC_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/ddevetak/footballcharts-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

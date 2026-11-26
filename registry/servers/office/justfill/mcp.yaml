@@ -1,0 +1,38 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: justfill
+display_name: JustFill MCP (justfill-mcp)
+display_name_en: JustFill MCP (justfill-mcp)
+version: 0.1.1
+description: Fill existing PDF forms from JSON or Excel with MCP agents; review fields and reuse templates
+description_zh: 面向现有 PDF 表单（含扫描件与扁平 PDF）的 MCP 服务器：让 AI 检测并审阅字段布局，基于结构化 JSON 数据填充 PDF 并复用已审阅的表单模板；在线文档见 [justfill.app/mcp](https://justfill.app/mcp)。
+author: mrmaciej1
+license: MIT
+homepage: https://github.com/mrmaciej1/justfill-mcp
+repository: https://github.com/mrmaciej1/justfill-mcp
+verified: true
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - justfill-mcp==0.4.10
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

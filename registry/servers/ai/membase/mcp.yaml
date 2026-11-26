@@ -1,0 +1,33 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: membase
+display_name: membase-mcp
+display_name_en: membase-mcp
+version: 0.1.1
+description: 通过 Membase 以分布式方式保存和查询你的 Agent 记忆。
+description_zh: 通过 Membase 以分布式方式保存和查询你的 Agent 记忆。
+author: unibaseio
+homepage: https://github.com/unibaseio/membase
+repository: https://github.com/unibaseio/membase
+verified: true
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://api.app.membase.com/mcp-http
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

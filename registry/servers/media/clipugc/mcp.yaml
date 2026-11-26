@@ -1,0 +1,42 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: clipugc
+display_name: ClipUGC (官方)
+display_name_en: ''
+version: 0.1.1
+description: Official CLI for ClipUGC — create AI characters, generate looks, and produce UGC-style videos for your mobile
+  app from the terminal.
+description_zh: ClipUGC 官方 MCP 服务器与 CLI：为移动应用制作竖屏 UGC 短视频。用一句话描述 AI 网红并保持同一张脸，生成形象与视频片段，再把应用录屏和开头 hook 合成为可直接发布到 TikTok、Reels、Shorts
+  的成片。
+author: clipugc
+license: MIT
+homepage: https://github.com/clipugc/ClipUGC-CLI
+repository: https://github.com/clipugc/ClipUGC-CLI
+verified: true
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - clipugc@1.4.2
+  - mcp
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

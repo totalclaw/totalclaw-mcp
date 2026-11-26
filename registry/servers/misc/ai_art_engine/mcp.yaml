@@ -1,0 +1,43 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: ai_art_engine
+display_name: AI Art Engine
+display_name_en: AI Art Engine
+version: 0.1.1
+description: Zero-dependency MCP stdio bridge for AI Art Engine — 102 local tools for editable Photoshop PSD (TySh), Unity/Godot
+  UI, Spine 2D rigging, Machinations game economy solver, short-drama CapCut timeline, Blender 3D, offline ONNX vision & playable
+  HTML5
+description_zh: 开源节点式 AI 游戏资产工作台与 Blender 桥接服务：内置双端点 Streamable HTTP MCP Server（`/mcp` 与 `/mcp/blender`，共 53 个工具），让 Claude
+  Code、Cursor、Codex 等编码 Agent 编排 2D 精灵图、Spine 2D / DragonBones / Live2D 骨骼绑定、Blender 3D 建模、PBR 贴图、Shader 与音效节点图，并一键导出至 Unity、Godot
+  4 与 Cocos Creator。
+author: Justin-sky
+license: GPL-3.0-only
+homepage: https://github.com/Justin-sky/ai-art-engine
+repository: https://github.com/Justin-sky/ai-art-engine
+verified: true
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - ai-art-engine-mcp@8.9.4
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

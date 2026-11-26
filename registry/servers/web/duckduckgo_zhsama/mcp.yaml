@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: duckduckgo_zhsama
+display_name: duckduckgo-mcp-server
+display_name_en: duckduckgo-mcp-server
+version: 0.1.1
+description: A TypeScript-based MCP server that provides DuckDuckGo search functionality.
+description_zh: 提供 DuckDuckGo 搜索功能的基于 TypeScript 的 MCP 服务器。
+author: zhsama
+license: MIT
+homepage: https://github.com/zhsama/duckduckgo-mcp-server
+repository: https://github.com/zhsama/duckduckgo-mcp-server
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - duckduckgo-mcp-server@0.1.2
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

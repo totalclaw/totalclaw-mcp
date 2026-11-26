@@ -1,0 +1,33 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: landed
+display_name: Landed MCP
+display_name_en: Landed MCP
+version: 0.1.1
+description: 按岗位要求检索 AI 与科技职位并按匹配度排序，可读取职位的申请表字段，并获取免费面试准备资料（工具 `search_jobs`、`get_job_form`、`get_learning_content`）。
+description_zh: 按岗位要求检索 AI 与科技职位并按匹配度排序，可读取职位的申请表字段，并获取免费面试准备资料（工具 `search_jobs`、`get_job_form`、`get_learning_content`）。
+author: landedjobs
+homepage: https://github.com/landedjobs/landed-mcp
+repository: https://github.com/landedjobs/landed-mcp
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.landed.jobs/mcp
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: exit1
+display_name: exit1-mcp
+display_name_en: exit1-mcp
+version: 0.1.1
+description: MCP server for Exit1 uptime monitoring — set up monitors, configure alerts, and query uptime from AI assistants
+description_zh: exit1.dev 网站可用性监控的官方 MCP 服务器：让 AI 助手创建和管理监控（网站、API、ping、TCP、DNS、域名到期、心跳），查询可用率、响应时间和 SSL 证书状态，配置邮件、Slack、Discord、Teams
+  或 Webhook 告警并发送测试告警。
+author: Mopra
+license: MIT
+homepage: https://github.com/Mopra/exit1.dev.mcp
+repository: https://github.com/Mopra/exit1.dev.mcp
+verified: true
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - exit1-mcp@0.4.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,0 +1,54 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: wiro
+display_name: Wiro AI
+display_name_en: Wiro AI
+version: 0.1.1
+description: Official MCP server for Wiro AI. Run Wiro AI models, build and run workflows, and talk to Studio and your Wiro
+  agents from Cursor, Claude, Windsurf and any MCP-compatible AI assistant
+description_zh: Wiro AI 官方 MCP 服务器：搜索 1000+ 个图像、视频、音频与大语言模型，查看每个模型的参数和价格后直接运行并取回结果；还能构建、运行串联多个模型的工作流，部署并管理自己的 AI Agent。
+author: wiroai
+license: MIT
+homepage: https://github.com/wiroai/Wiro-MCP
+repository: https://github.com/wiroai/Wiro-MCP
+verified: true
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@wiro-ai/wiro-mcp@2.0.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: WIRO_API_KEY
+  description: Wiro AI 的API 密钥（WIRO_API_KEY），获取方式见项目说明。
+  prompt: 请输入 WIRO_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/wiroai/Wiro-MCP
+  doc_label: 查看项目说明（如何获取）
+- name: WIRO_API_SECRET
+  description: Wiro AI 的密钥（WIRO_API_SECRET），获取方式见项目说明。
+  prompt: 请输入 WIRO_API_SECRET
+  secret: true
+  required: true
+  doc_url: https://github.com/wiroai/Wiro-MCP
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

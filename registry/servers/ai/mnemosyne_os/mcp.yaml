@@ -1,0 +1,44 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mnemosyne_os
+display_name: Mnemosyne OS
+display_name_en: Mnemosyne OS
+version: 0.1.1
+description: MCP server for Mnemosyne OS. Gives AI agents access to vault memory, resonances, git context, and to what the
+  other coding agents on this machine are doing.
+description_zh: Mnemosyne OS 桌面应用的官方 MCP 服务器。用户指定的文件夹各自成为独立的记忆库，向量检索与本地 BM25 混合搜索，中文文档同样可检索。编程 Agent 可以在用户的画布上显示状态卡片，并查看同一
+  git 工作树上正在运行的其他会话。**应用界面完整支持简体中文**，更新说明有中文版，助手能听懂中文指令。
+author: Mnemosyne-OS
+license: MIT
+homepage: https://github.com/Mnemosyne-OS/Mnemosyne-Neural-OS/tree/main/packages/mcp
+repository: https://github.com/Mnemosyne-OS/Mnemosyne-Neural-OS/tree/main/packages/mcp
+verified: true
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@mnemosyne_os/mcp@2.5.0'
+  env:
+    MNEMO_DEFAULT_VAULT: DEV
+    MNEMO_VAULTS: DEV,PERSONAL,SOCIAL
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

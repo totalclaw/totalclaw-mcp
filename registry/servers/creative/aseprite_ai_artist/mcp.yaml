@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: aseprite_ai_artist
+display_name: Aseprite AI Artist
+display_name_en: Aseprite AI Artist
+version: 0.1.1
+description: Agent-native control layer for Aseprite. MCP server (2025-11-25 spec, designed forward to 2026-07-28) + cross-agent
+  skills for Claude Code, omp, Codex, Gemini CLI and Cursor.
+description_zh: 让编码 Agent 直接在你已打开的 Aseprite 窗口里逐像素绘制像素画和动画，每一步都可用 Ctrl+Z 撤销；提供 MCP Server 与配套 Skills。
+author: with-pebbly
+license: MIT
+homepage: https://github.com/with-pebbly/aseprite-ai-artist
+repository: https://github.com/with-pebbly/aseprite-ai-artist
+verified: true
+category: creative
+tags:
+- creative
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@pebbly/aseprite-ai-artist@0.8.4'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

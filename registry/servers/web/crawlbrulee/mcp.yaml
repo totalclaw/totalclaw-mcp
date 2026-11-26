@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: crawlbrulee
+display_name: crawlbrulee
+display_name_en: crawlbrulee
+version: 0.1.1
+description: official mcp server for crawlbrulee — EU-native web scraping for AI agents & developers. native scrape and map
+  tools for your agent.
+description_zh: 面向 AI 代理与开发者的欧盟原生网页抓取：把任意网页转为 Markdown、截图等。
+author: crawlbrulee
+license: Apache-2.0
+homepage: https://github.com/crawlbrulee/crawlbrulee-mcp
+repository: https://github.com/crawlbrulee/crawlbrulee-mcp
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@crawlbrulee/mcp@2.0.0'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

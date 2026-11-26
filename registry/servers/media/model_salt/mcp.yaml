@@ -1,0 +1,41 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: model_salt
+display_name: Model Salt
+display_name_en: Model Salt
+version: 0.1.1
+description: An MCP server that gives your model randomness from outside it, so one prompt gives different answers that still
+  do what you asked. For Claude Code, Codex, Gemini CLI and Kimi Code.
+description_zh: 只有一个工具 `model_salt` 的 MCP 服务器：模型在做创作类任务前调用它，拿到这一次要定下来的几个选择（配色、姿势、名字、开头一句等），这些选择来自模型之外的随机源（random.org 大气噪声、量子随机数、drand）。同一个提示词因此会给出不同的结果，但仍按原请求完成；随机度为
+  0 时给出常规答案。支持 Claude Code、Codex、Gemini CLI、Kimi Code，一条命令接入：`npx -y model-salt setup claude`。
+author: modelsalt
+license: MIT
+homepage: https://github.com/modelsalt/model-salt
+repository: https://github.com/modelsalt/model-salt
+verified: true
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@modelsalt/model-salt@1.1.0'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

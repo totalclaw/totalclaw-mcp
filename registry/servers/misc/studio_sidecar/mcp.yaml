@@ -1,0 +1,70 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: studio_sidecar
+display_name: studio-sidecar-mcp
+display_name_en: studio-sidecar-mcp
+version: 0.1.1
+description: 'Studio Sidecar: companion MCP server for Roblox Studio''s built-in MCP (StudioMCP). Opens places, manages StudioMCP
+  broker and stub processes, guards writes by PlaceId, runs Luau past the 100k output limit, and uploads, updates or archives
+  assets through R'
+description_zh: Roblox Studio 内置 MCP 的补完层：打开尚未开启的 place、清理 StudioMCP 进程、以 PlaceId 防止写错游戏、突破 Luau 100k 输出上限，并通过 Open Cloud
+  上传或更新资源。
+author: gjlmotea
+license: MIT
+homepage: https://github.com/gjlmotea/studio-sidecar-mcp
+repository: https://github.com/gjlmotea/studio-sidecar-mcp
+verified: true
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@gjlmotea/studio-sidecar-mcp@0.1.1'
+  requires:
+    node: '>=18'
+requires_env:
+- name: ROBLOX_API_KEY
+  description: studio-sidecar-mcp 的API 密钥（ROBLOX_API_KEY），获取方式见项目说明。
+  prompt: 请输入 ROBLOX_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/gjlmotea/studio-sidecar-mcp
+  doc_label: 查看项目说明（如何获取）
+- name: ROBLOX_CREATOR_USER_ID
+  description: studio-sidecar-mcp 的ID（ROBLOX_CREATOR_USER_ID），获取方式见项目说明。
+  prompt: 请输入 ROBLOX_CREATOR_USER_ID
+  secret: false
+  required: true
+  doc_url: https://github.com/gjlmotea/studio-sidecar-mcp
+  doc_label: 查看项目说明（如何获取）
+- name: ROBLOX_UPLOAD_ROOT
+  description: studio-sidecar-mcp 的路径（ROBLOX_UPLOAD_ROOT），获取方式见项目说明。
+  prompt: 请输入 ROBLOX_UPLOAD_ROOT
+  secret: false
+  required: true
+  doc_url: https://github.com/gjlmotea/studio-sidecar-mcp
+  doc_label: 查看项目说明（如何获取）
+- name: ROBLOX_PUBLISH_PLACE_IDS
+  description: studio-sidecar-mcp 的配置项（ROBLOX_PUBLISH_PLACE_IDS），获取方式见项目说明。
+  prompt: 请输入 ROBLOX_PUBLISH_PLACE_IDS
+  secret: false
+  required: true
+  doc_url: https://github.com/gjlmotea/studio-sidecar-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

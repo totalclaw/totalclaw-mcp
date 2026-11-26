@@ -1,0 +1,47 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: unblockingapi
+display_name: mcp
+display_name_en: mcp
+version: 0.1.1
+description: Official MCP server for UnblockingAPI — read any web page (bot-protected, JavaScript-heavy, geo-blocked) and
+  parse it to JSON with templates
+description_zh: UnblockingAPI 官方 MCP 服务器：为 AI 代理抓取有反爬保护或重度依赖 JavaScript 的网页（按站点自动选择普通 HTTP 请求或真实浏览器），也可用已发布的模板将页面解析为结构化 JSON。
+author: unblockingapi
+license: MIT
+homepage: https://github.com/unblockingapi/mcp
+repository: https://github.com/unblockingapi/mcp
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@unblockingapi/mcp@0.9.1'
+  requires:
+    node: '>=18'
+requires_env:
+- name: UNBLOCKINGAPI_KEY
+  description: mcp 的API 密钥（UNBLOCKINGAPI_KEY），获取方式见项目说明。
+  prompt: 请输入 UNBLOCKINGAPI_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/unblockingapi/mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

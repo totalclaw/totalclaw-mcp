@@ -1,0 +1,41 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: octeract_context
+display_name: octeract-context
+display_name_en: octeract-context
+version: 0.1.1
+description: 'Octeract v4.9.0: 5 Master Apertures Facade with Raup 1966 Conchological Morphospace & Nautilus Chambers, Non-Blocking
+  MCP Stdio, Slash Skills, Sieve, and 4D Hypercube Shield'
+description_zh: 面向编码 Agent 的上下文工具，提供 AST 代码结构摘要、符号与依赖分析，以及修改前检查。
+author: miguelguerra200022-sudo
+license: BSL-1.1
+homepage: https://github.com/miguelguerra200022-sudo/octeract-context
+repository: https://github.com/miguelguerra200022-sudo/octeract-context
+verified: true
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - octeract-context@4.9.0
+  - mcp
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

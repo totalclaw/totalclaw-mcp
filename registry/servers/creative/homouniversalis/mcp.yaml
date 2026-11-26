@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: homouniversalis
+display_name: Homo Universalis — Viveka (viveka-oracle)
+display_name_en: Homo Universalis — Viveka (viveka-oracle)
+version: 0.1.1
+description: 确定性瑞士星历表 (`pyswisseph`) 与七大传统历法计算 MCP 服务器：提供西方黄道十二宫与守护星、印度恒星占星二十七宿 (Jyotish Nakshatra)、中国八字四柱与五行日主 (BaZi & Wu
+  Xing)、易经六十四卦与人类图太阳闸门、玛雅卓尔金历 (Tzolk'in)、埃及十度区与毕达哥拉斯数秘术计算，内置双人/双智能体星盘合盘共振 (`calculate_karmic_synastry`) 与实时星历快照 (`get_today_universal_ephemeris`)。
+description_zh: 确定性瑞士星历表 (`pyswisseph`) 与七大传统历法计算 MCP 服务器：提供西方黄道十二宫与守护星、印度恒星占星二十七宿 (Jyotish Nakshatra)、中国八字四柱与五行日主 (BaZi &
+  Wu Xing)、易经六十四卦与人类图太阳闸门、玛雅卓尔金历 (Tzolk'in)、埃及十度区与毕达哥拉斯数秘术计算，内置双人/双智能体星盘合盘共振 (`calculate_karmic_synastry`) 与实时星历快照 (`get_today_universal_ephemeris`)。
+author: David-Porto-Baraldes
+homepage: https://github.com/David-Porto-Baraldes/Viveka_Web
+repository: https://github.com/David-Porto-Baraldes/Viveka_Web
+verified: true
+category: creative
+tags:
+- creative
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://homouniversalis.ai/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

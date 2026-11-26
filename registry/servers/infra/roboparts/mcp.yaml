@@ -1,0 +1,33 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: roboparts
+display_name: RoboParts
+display_name_en: RoboParts
+version: 0.1.1
+description: 查询跨品牌机器人零件及机械接口资料，检查兼容性；对缺失参数返回未知，并支持生成转接件模型。
+description_zh: 查询跨品牌机器人零件及机械接口资料，检查兼容性；对缺失参数返回未知，并支持生成转接件模型。
+author: lm203688
+homepage: https://github.com/lm203688/roboparts
+repository: https://github.com/lm203688/roboparts
+verified: true
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://roboparts.cc/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

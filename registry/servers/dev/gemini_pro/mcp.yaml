@@ -1,0 +1,41 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: gemini_pro
+display_name: gemini-pro-mcp
+display_name_en: gemini-pro-mcp
+version: 0.1.1
+description: 'Use your Google AI Pro subscription from Claude, Codex, Antigravity and Gemini CLI: Gemini via the Antigravity
+  CLI, Deep Research, Flow video, Gemini Notebooks, Jules, plus Omni video and Nano Banana images. One-command setup. MCP
+  server.'
+description_zh: 让 Claude Code、Codex 等编程 Agent 直接使用你的 Google AI Pro 订阅：通过 Antigravity CLI 调用 Gemini 做代码审查、读取本地文件和 Deep Research，还能启动
+  Jules 任务、操作 Gemini Notebooks、用 Google Flow 生成视频。
+author: Muzaqil555
+license: MIT
+homepage: https://github.com/Muzaqil555/gemini-pro-mcp
+repository: https://github.com/Muzaqil555/gemini-pro-mcp
+verified: true
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - gemini-pro-mcp==0.1.8
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

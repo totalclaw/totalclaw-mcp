@@ -1,0 +1,47 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: ghcard
+display_name: ghcard
+display_name_en: ghcard
+version: 0.1.1
+description: Generate embeddable GitHub profile and repository cards from the terminal, CI, or an AI agent (MCP server included).
+description_zh: GitHubCard 官方 MCP 服务器：为 GitHub 用户或仓库生成可嵌入 README、链接预览的卡片图片（SVG/PNG），可列出模板与配色、管理已创建的卡片；本地模式可直接把卡片写入 README。
+author: ghcardhq
+license: MIT
+homepage: https://github.com/ghcardhq/ghcard
+repository: https://github.com/ghcardhq/ghcard
+verified: true
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@ghcardhq/ghcard@0.2.1'
+  - mcp
+  requires:
+    node: '>=18'
+requires_env:
+- name: GHCARD_API_KEY
+  description: ghcard 的API 密钥（GHCARD_API_KEY），获取方式见项目说明。
+  prompt: 请输入 GHCARD_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/ghcardhq/ghcard
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

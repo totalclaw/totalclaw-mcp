@@ -1,0 +1,51 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: recall
+display_name: recall
+display_name_en: recall
+version: 0.1.1
+description: 'Your Claude Code memory, in every agent: read and write Claude Code auto memory (Markdown + [[wiki-links]])
+  from code or over MCP. Zero dependencies, no vectors.'
+description_zh: 读写 Claude Code 按项目保存的自动记忆（Markdown 文件，支持 wiki 链接），让 Codex、Cursor 等 MCP 客户端共享同一份记忆；零依赖，支持只读模式。
+author: fainir
+license: MIT
+homepage: https://github.com/fainir/recall
+repository: https://github.com/fainir/recall
+verified: true
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@fainir/recall@0.3.0'
+  - --claude-code
+  - ${MCP_RECALL_CLAUDE_CODE}
+  - --read-only
+  requires:
+    node: '>=18'
+requires_env:
+- name: CLAUDE_CODE
+  env_key: MCP_RECALL_CLAUDE_CODE
+  description: recall 的启动参数（--claude-code），示例：/path/to/your/repo
+  prompt: 请输入 CLAUDE_CODE
+  secret: false
+  required: true
+  doc_url: https://github.com/fainir/recall
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

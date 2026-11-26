@@ -1,0 +1,34 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: ads
+display_name: MCP Ads
+display_name_en: MCP Ads
+version: 0.1.1
+description: 广告投放 MCP 服务器：在任意 MCP 客户端中查询和管理 Google Ads、Meta Ads、TikTok、LinkedIn、Microsoft Ads 以及 GA4、Search Console、Tag Manager，支持跨账户效果报表、无转化搜索词排查、预算与出价调整（修改前需确认，新建广告系列默认暂停）。
+description_zh: 广告投放 MCP 服务器：在任意 MCP 客户端中查询和管理 Google Ads、Meta Ads、TikTok、LinkedIn、Microsoft Ads 以及 GA4、Search Console、Tag
+  Manager，支持跨账户效果报表、无转化搜索词排查、预算与出价调整（修改前需确认，新建广告系列默认暂停）。
+author: RoyAzran
+homepage: https://github.com/RoyAzran/mcp-ads
+repository: https://github.com/RoyAzran/mcp-ads
+verified: true
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp-ads.com/mcp-slim
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

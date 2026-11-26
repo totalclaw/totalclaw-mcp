@@ -1,0 +1,42 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: supercarto
+display_name: supercarto
+display_name_en: supercarto
+version: 0.1.1
+description: LLM-native spatial middleware. Give an AI agent a map of any location on earth as a token-budgeted topological
+  graph, with geocoding, places, walk and transit routes, indoor floors, weather, air quality, and traffic, that it can reason
+  over directly.
+description_zh: 把任意坐标周边的实时 OpenStreetMap、地形、天气、日出与 GTFS 公交编译为一份 token 预算内的拓扑图谱，供 AI 代理直接推理；所有裁剪都记录在 `omitted:` 发出的省略清单中，模型因此分得清"没有"与"未显示"。
+author: Unselfisheologism
+license: Apache-2.0
+homepage: https://github.com/Unselfisheologism/supercarto
+repository: https://github.com/Unselfisheologism/supercarto
+verified: true
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - supercarto@0.7.0
+  - mcp
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

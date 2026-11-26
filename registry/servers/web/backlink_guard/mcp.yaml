@@ -1,0 +1,38 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: backlink_guard
+display_name: backlink-guard
+display_name_en: backlink-guard
+version: 0.1.1
+description: Check a link source before you submit to it, verify the listing, and audit your own backlinks for link-spam patterns
+description_zh: 外链检测：提交网站之前先查目录、awesome 列表、客座文章站等外链来源，按 Google 链接垃圾政策给出建议（跳过 / 先看看 / 只免费提交 / 价值低 / 可以提交）并附证据；上线后核实链接是否传权重、在页面哪个位置，也能体检自己的外链。不替你提交任何东西。
+author: zhuyansen
+license: MIT
+homepage: https://github.com/zhuyansen/backlink-guard
+repository: https://github.com/zhuyansen/backlink-guard
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - backlink-guard==0.12.2
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

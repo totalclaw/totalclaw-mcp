@@ -1,0 +1,35 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: parallelstudio_youtube_transcripts_apify
+display_name: YouTube Transcripts MCP
+display_name_en: YouTube Transcripts MCP
+version: 0.1.1
+description: 让 AI 读取 YouTube 视频字幕/转录文本（纯文本、带时间戳段落、分段 JSON 或 SRT，可机翻），搜索视频，获取章节（无创作者章节时根据字幕自动划分），并生成结构化摘要。4 个只读工具：get_transcript、search_videos、get_video_chapters、summarize_transcript，无需
+  YouTube API Key。
+description_zh: 让 AI 读取 YouTube 视频字幕/转录文本（纯文本、带时间戳段落、分段 JSON 或 SRT，可机翻），搜索视频，获取章节（无创作者章节时根据字幕自动划分），并生成结构化摘要。4 个只读工具：get_transcript、search_videos、get_video_chapters、summarize_transcript，无需
+  YouTube API Key。
+author: gunnargray-dev
+homepage: https://github.com/gunnargray-dev/youtube-transcripts-mcp
+repository: https://github.com/gunnargray-dev/youtube-transcripts-mcp
+verified: true
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://parallelstudio--youtube-transcripts-mcp.apify.actor/mcp
+  auth: header
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

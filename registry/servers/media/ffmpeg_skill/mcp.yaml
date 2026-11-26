@@ -1,0 +1,41 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: ffmpeg_skill
+display_name: ffmpeg-skill
+display_name_en: ffmpeg-skill
+version: 0.1.1
+description: 'Agent Skill that gives coding agents (Claude Code, Cursor, Codex) a local video editor: 42 FFmpeg tools with
+  a machine-readable contract, contract-derived MCP server, FFmpeg capability detection, probe-first / verify-last workflow.
+  Cut, join, silence remo'
+description_zh: 给编码 Agent 一个本地视频编辑器：42 个基于 FFmpeg 的工具（剪辑、拼接、字幕、调色、转码等），带机器可读的调用约定，Agent 编辑后会自行检查输出结果；无云端、无需 API Key。
+author: kajisho5
+license: MIT
+homepage: https://github.com/kajisho5/ffmpeg-skill
+repository: https://github.com/kajisho5/ffmpeg-skill
+verified: true
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - ffmpeg-skill@4.8.3
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

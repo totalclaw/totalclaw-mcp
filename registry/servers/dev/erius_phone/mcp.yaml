@@ -1,0 +1,53 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: erius_phone
+display_name: ERIUS PHONE MCP
+display_name_en: ERIUS PHONE MCP
+version: 0.1.1
+description: 'MCP server that gives your AI agent a real Android phone (ERIUS PHONE): read the screen, tap, type, launch apps,
+  read crash logs.'
+description_zh: 让 AI Agent 读取和控制持久云端 Android 手机：界面树、截图、点击、输入、应用管理和崩溃日志；云服务为早期访问，仅限邀请。
+author: Protremix
+license: MIT
+homepage: https://github.com/Protremix/erius-phone-mcp
+repository: https://github.com/Protremix/erius-phone-mcp
+verified: true
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - erius-phone-mcp==0.2.0
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: ERIUS_PHONE_API_KEY
+  description: ERIUS PHONE MCP 的API 密钥（ERIUS_PHONE_API_KEY），获取方式见项目说明。
+  prompt: 请输入 ERIUS_PHONE_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/Protremix/erius-phone-mcp
+  doc_label: 查看项目说明（如何获取）
+- name: ERIUS_PHONE_DEFAULT_DEVICE
+  description: ERIUS PHONE MCP 的配置项（ERIUS_PHONE_DEFAULT_DEVICE），获取方式见项目说明。
+  prompt: 请输入 ERIUS_PHONE_DEFAULT_DEVICE
+  secret: false
+  required: true
+  doc_url: https://github.com/Protremix/erius-phone-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

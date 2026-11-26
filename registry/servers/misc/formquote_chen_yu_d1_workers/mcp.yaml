@@ -1,0 +1,33 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: formquote_chen_yu_d1_workers
+display_name: Formquote MCP
+display_name_en: Formquote MCP
+version: 0.1.1
+description: 查询人工核对过的公开标价和授权条款：按数量和已有额度比较邮箱验证的总价，判断音效素材包、字体授权是否适合你的用途，每条附核对日期、来源链接和待确认事项。只读，不能下单。
+description_zh: 查询人工核对过的公开标价和授权条款：按数量和已有额度比较邮箱验证的总价，判断音效素材包、字体授权是否适合你的用途，每条附核对日期、来源链接和待确认事项。只读，不能下单。
+author: Keith-CY
+homepage: https://github.com/Keith-CY/formquote-mcp
+repository: https://github.com/Keith-CY/formquote-mcp
+verified: true
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://formquote-mcp.chen-yu-d1.workers.dev/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

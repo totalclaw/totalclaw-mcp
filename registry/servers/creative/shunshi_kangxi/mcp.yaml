@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: shunshi_kangxi
+display_name: kangxi-mcp
+display_name_en: kangxi-mcp
+version: 0.1.1
+description: MCP server for the 康熙字典 (Kangxi Dictionary) — give your AI agent offline lookup of Kangxi stroke counts, radicals,
+  Five Elements, Bopomofo and the original 1716 source text. Powered by Shunshi.AI.
+description_zh: 离线查询《康熙字典》原文、康熙笔画、部首、拼音与注音，支持按笔画、部首等条件检索汉字及分析文本。
+author: shunshi-ai
+license: MIT
+homepage: https://github.com/shunshi-ai/kangxi-mcp
+repository: https://github.com/shunshi-ai/kangxi-mcp
+verified: true
+category: creative
+tags:
+- creative
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - shunshi-kangxi-mcp@0.1.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

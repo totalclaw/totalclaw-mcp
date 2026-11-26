@@ -1,0 +1,52 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: pixelbolt
+display_name: Pixelbolt
+display_name_en: Pixelbolt
+version: 0.1.1
+description: Agent-first pixel art and animation toolkit with a CLI, MCP server and local studio. Deterministic JSON recipes
+  to PNG, APNG and sprite atlases; zero dependencies.
+description_zh: 让 AI 智能体用可编辑的 JSON 配方绘制、检查和修改像素画与精灵动画，可导出 PNG 精灵表、纹理图集、APNG、GIF、逐帧 PNG，以及 Godot 4 和 Tiled 资源文件；火焰、烟雾、水、史莱姆等特效由在本机
+  CPU 上运行的流体模拟生成。无需 API 密钥，不调用图像模型，也不依赖网络服务。
+author: skulitom
+license: MIT
+homepage: https://github.com/skulitom/Pixelbolt
+repository: https://github.com/skulitom/Pixelbolt
+verified: true
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - pixelbolt@0.21.0
+  - mcp
+  - --out
+  - ${MCP_PIXELBOLT_OUT}
+  requires:
+    node: '>=18'
+requires_env:
+- name: OUT
+  env_key: MCP_PIXELBOLT_OUT
+  description: Pixelbolt 的启动参数（--out），示例：/absolute/path/to/pixelbolt-output
+  prompt: 请输入 OUT
+  secret: false
+  required: true
+  doc_url: https://github.com/skulitom/Pixelbolt
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

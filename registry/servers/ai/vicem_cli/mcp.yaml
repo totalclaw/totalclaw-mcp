@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: vicem_cli
+display_name: vicem
+display_name_en: vicem
+version: 0.1.1
+description: Zero-Dependency, Zero-Network AI Agent Context Baton & Diet Suite (CLI + MCP Server + Web Studio)
+description_zh: 为不同 AI 编程客户端保存项目上下文，通过 `.vicem/BATON.md` 交接状态，并提供代码结构摘要与符号按需查询。
+author: RAKKUNN
+license: MIT
+homepage: https://github.com/RAKKUNN/vicem
+repository: https://github.com/RAKKUNN/vicem
+verified: true
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - vicem-cli@1.3.0
+  - mcp
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

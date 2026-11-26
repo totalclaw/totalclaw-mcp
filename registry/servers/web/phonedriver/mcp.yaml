@@ -1,0 +1,44 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: phonedriver
+display_name: phonedriver
+display_name_en: phonedriver
+version: 0.1.1
+description: MCP server and CLI that lets AI agents like Claude Code, Codex and Cursor see and control Android and iOS phones.
+  6.9x fewer tokens than mobile-mcp, asks before it pays, no telemetry.
+description_zh: 让 AI 代理查看并操作 Android 与 iOS 手机（真机、模拟器、iOS Simulator）：屏幕以带编号的简短文本列表返回，点击、输入、滑动后只返回发生变化的行；点击“支付”“下单”等按钮前会暂停并等待用户确认。
+author: hridaya423
+license: AGPL-3.0-only
+homepage: https://github.com/hridaya423/phonedriver
+repository: https://github.com/hridaya423/phonedriver
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - phonedriver@0.1.7
+  - mcp
+  - '#'
+  - Claude
+  - Code
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

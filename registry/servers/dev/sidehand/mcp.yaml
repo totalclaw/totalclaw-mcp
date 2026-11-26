@@ -1,0 +1,42 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: sidehand
+display_name: Sidehand
+display_name_en: Sidehand
+version: 0.1.1
+description: 'Let your AI agent use Windows apps while you keep working: reads and operates desktop controls without stealing
+  your focus, from Windows or WSL. Zero dependencies.'
+description_zh: 让 AI Agent 在用户当前窗口后面读取和操作 Windows 应用：通过 UI Automation 把每个控件读成一行短文本，输入、点击、选择都不移动鼠标、不抢键盘和前台；自绘界面的应用用 Windows
+  自带 OCR 读取；多个 Agent 可同时操作不同应用。
+author: Blue-B
+license: PolyForm-Shield-1.0.0
+homepage: https://github.com/Blue-B/sidehand
+repository: https://github.com/Blue-B/sidehand
+verified: true
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - sidehand@0.6.0
+  - mcp
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

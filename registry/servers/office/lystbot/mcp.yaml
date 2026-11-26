@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: lystbot
+display_name: LystBot
+display_name_en: LystBot
+version: 0.1.1
+description: LystBot CLI - Manage your lists from the terminal
+description_zh: 人和 AI 智能体共用的清单（购物、待办等）。本地 stdio MCP Server 和 CLI 让智能体添加或勾选条目，改动会同步到 iOS/Android App。
+author: TourAround
+license: MIT
+homepage: https://github.com/TourAround/LystBot
+repository: https://github.com/TourAround/LystBot
+verified: true
+category: office
+tags:
+- office
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - lystbot@0.4.1
+  - mcp
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

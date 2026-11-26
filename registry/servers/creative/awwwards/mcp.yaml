@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: awwwards
+display_name: Awwwards MCP
+display_name_en: Awwwards MCP
+version: 0.1.1
+description: Awwwards design inspiration, screenshots, motion and scene evidence for AI agents.
+description_zh: 为 AI 编码 Agent 提供来自 Awwwards 获奖网站的设计灵感：按风格、行业、配色等检索案例并返回截图与元信息，供前端设计参考。
+author: INSANE0777
+license: MIT
+homepage: https://github.com/INSANE0777/Awwwards-mcp
+repository: https://github.com/INSANE0777/Awwwards-mcp
+verified: true
+category: creative
+tags:
+- creative
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - awwwards-mcp@1.22.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

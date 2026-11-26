@@ -1,0 +1,41 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: feeling_search
+display_name: Feeling Search
+display_name_en: Feeling Search
+version: 0.1.1
+description: 'MCP server for feeling-search: one colloquial sentence in, the best-matching visual style out. Runs fully local
+  (762-word lexicon + Chinese/English semantic engines), no network, no API key.'
+description_zh: 把一句口语化的感受描述（例如「留白很多，几何克制，低饱和」）检索成最匹配的视觉风格，并给出触发它的感受词（背后是一份中文美术对照表），返回风格标签、对应风格标签及其配色与材质线索；另含词条反查、风格详情、词表状态，共
+  5 个工具。适合让 AI 在写绘画提示词之前，先把模糊的审美描述落到具体词上。
+author: xixi048
+license: MIT
+homepage: https://github.com/xixi048/feeling-search-mcp
+repository: https://github.com/xixi048/feeling-search-mcp
+verified: true
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - feeling-search-mcp@0.2.6
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

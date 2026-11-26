@@ -1,0 +1,33 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: posy
+display_name: Posy
+display_name_en: Posy
+version: 0.1.1
+description: 开源的 link-in-bio 个人主页生成器（Linktree 替代）：通过 MCP 创建和编辑页面，添加、修改、移动、删除链接卡片，设置主题与个人资料，导入已有页面并发布。
+description_zh: 开源的 link-in-bio 个人主页生成器（Linktree 替代）：通过 MCP 创建和编辑页面，添加、修改、移动、删除链接卡片，设置主题与个人资料，导入已有页面并发布。
+author: Himanshu-Sangshetti
+homepage: https://github.com/Himanshu-Sangshetti/posy
+repository: https://github.com/Himanshu-Sangshetti/posy
+verified: true
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://posy.page/api/mcp
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

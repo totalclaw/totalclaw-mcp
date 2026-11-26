@@ -1,0 +1,47 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: reqlan
+display_name: reqlan
+display_name_en: reqlan
+version: 0.1.1
+description: MCP server exposing reqlan requirement graph tools
+description_zh: 需求图谱的 MCP 服务器：需求写成 `.rq` 文件里的具名条目（idea），用 `implemented in` / `proven by` 链接到实现文件和测试文件，代码和测试注释里的 `rq:` 标记指回具体条目；`reqlan
+  check` 静态检查这些链接，当 `rq:` 标记指向的条目被改名、或被链接的测试文件被删除时，报错并返回退出码 1。提供 5 个工具：`click`（检索条目及其上下文）、`check`、`diff`（比较两个 git 版本间的条目）、`completion_status`、`prompt`。
+author: littletuna4
+license: AGPL-3.0-only
+homepage: https://github.com/littletuna4/reqlan/tree/main/packages/mcp
+repository: https://github.com/littletuna4/reqlan/tree/main/packages/mcp
+verified: true
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@reqlan/mcp@0.13.0'
+  requires:
+    node: '>=18'
+requires_env:
+- name: REQLAN_WORKSPACE
+  description: reqlan 的配置项（REQLAN_WORKSPACE），获取方式见项目说明。
+  prompt: 请输入 REQLAN_WORKSPACE
+  secret: false
+  required: true
+  doc_url: https://github.com/littletuna4/reqlan/tree/main/packages/mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

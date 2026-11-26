@@ -1,0 +1,47 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: sightradar
+display_name: SightRadar Face Recognition API MCP
+display_name_en: SightRadar Face Recognition API MCP
+version: 0.1.1
+description: 'Official MCP server for the SightRadar face recognition API: index photos, search faces, register selfies, run
+  batches, manage webhooks and billing from Claude, ChatGPT, Cursor and any MCP client'
+description_zh: SightRadar 人脸识别 API 的官方 MCP 服务器：为照片建立索引、凭一张自拍找出本人出现的所有照片、人脸比对与检测、批量处理。支持远程（OAuth）与本地（npx）。
+author: sightradar-hq
+license: MIT
+homepage: https://github.com/sightradar-hq/sightradar-mcp
+repository: https://github.com/sightradar-hq/sightradar-mcp
+verified: true
+category: media
+tags:
+- media
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - sightradar-mcp@0.1.1
+  requires:
+    node: '>=18'
+requires_env:
+- name: SIGHTRADAR_API_KEY
+  description: SightRadar Face Recognition API MCP 的API 密钥（SIGHTRADAR_API_KEY），获取方式见项目说明。
+  prompt: 请输入 SIGHTRADAR_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/sightradar-hq/sightradar-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

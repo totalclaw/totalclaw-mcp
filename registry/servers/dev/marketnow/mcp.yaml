@@ -1,0 +1,33 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: marketnow
+display_name: MARKETNOW
+display_name_en: MARKETNOW
+version: 0.1.1
+description: 为 AI 代理提供信任卡验签、信任评分和工具指纹漂移检测，支持在工具调用前执行信任检查。
+description_zh: 为 AI 代理提供信任卡验签、信任评分和工具指纹漂移检测，支持在工具调用前执行信任检查。
+author: alicelabs-llc
+homepage: https://github.com/alicelabs-llc/MARKETNOW
+repository: https://github.com/alicelabs-llc/MARKETNOW
+verified: true
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://marketnow.site/api/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

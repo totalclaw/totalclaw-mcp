@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: contextfetch
+display_name: ContextFetch
+display_name_en: ContextFetch
+version: 0.1.1
+description: 'ContextFetch MCP server: neural web search and LLM-ready Markdown for AI agents from $0.75 per 1,000. Works
+  keyless, zero signup.'
+description_zh: ContextFetch 官方 MCP 服务器：网页搜索，并把任意网页转为 LLM 可直接使用的 Markdown，只保留与查询相关的段落；另有带引用的答案、多查询研究、站点爬取与站点地图。
+author: lachy3433
+license: MIT
+homepage: https://github.com/lachy3433/contextfetch-mcp
+repository: https://github.com/lachy3433/contextfetch-mcp
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@contextfetch/mcp@1.2.1'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

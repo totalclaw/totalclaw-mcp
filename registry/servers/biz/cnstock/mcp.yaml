@@ -1,0 +1,42 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cnstock
+display_name: cnstock
+display_name_en: cnstock
+version: 0.1.1
+description: 中国股票数据命令行工具与 MCP 服务：行情、财报、估值与研报，免 API Key、零配置。A-share market data CLI and MCP server.
+description_zh: A 股行情、财报、估值与研报工具：实时行情、前复权日 K 线、财报 TTM 折算、DCF 与 PB-ROE 估值，并对全市场 5500+ 只 A 股做分层财务风险筛查（规则用 313 家 ST 公司做过验证，无效规则已剔除）。免
+  API Key，多数据源自动降级。
+author: WilShi
+license: MIT
+homepage: https://github.com/WilShi/cnstock
+repository: https://github.com/WilShi/cnstock
+verified: true
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - --package
+  - '@wilshi/cnstock@0.1.2'
+  - cnstock-mcp
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

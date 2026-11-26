@@ -1,0 +1,47 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: scrapely
+display_name: scrapely-mcp
+display_name_en: scrapely-mcp
+version: 0.1.1
+description: 'Model Context Protocol server for Scrape.ly: find, run and inspect Actors, and read their results.'
+description_zh: Scrape.ly 官方 MCP 服务器：让 AI 代理在 Scrape.ly 商店中搜索现成的网页抓取器（Google 地图、Amazon、LinkedIn、TikTok 等），在云端运行并读取结构化结果、运行日志与数据集。
+author: scrapely-app
+license: MIT
+homepage: https://github.com/scrapely-app/scrapely-mcp
+repository: https://github.com/scrapely-app/scrapely-mcp
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --from
+  - scrapely-mcp==0.3.16
+  - scrapely-mcp-server
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: SCRAPELY_TOKEN
+  description: scrapely-mcp 的访问令牌（SCRAPELY_TOKEN），获取方式见项目说明。
+  prompt: 请输入 SCRAPELY_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/scrapely-app/scrapely-mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

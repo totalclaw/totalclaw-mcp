@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: memgit
+display_name: memgit
+display_name_en: memgit
+version: 0.1.1
+description: memgit MCP server, run as npx memgit-mcp. One memory for Claude Code, Cursor and Codex on every machine, versioned.
+description_zh: 面向 Claude Code、Cursor、Codex 等 AI 编程工具的版本化共享记忆：导入 Claude Code 自带的记忆文件，每次修改都是一个检查点，可 diff 和回滚，BM25 召回，可选端到端加密的多机同步。
+author: code4161
+license: MIT
+homepage: https://github.com/code4161/memgit
+repository: https://github.com/code4161/memgit
+verified: true
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - memgit-mcp@0.16.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

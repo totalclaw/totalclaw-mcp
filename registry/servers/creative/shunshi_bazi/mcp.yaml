@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: shunshi_bazi
+display_name: bazi-reader-mcp
+display_name_en: bazi-reader-mcp
+version: 0.1.1
+description: MCP server for Bazi (八字) — powered by Shunshi.AI. Thin MCP wrapper over shunshi-bazi-core. Accurate Bazi charts
+  with true solar time correction.
+description_zh: 八字排盘与黄历查询，支持真太阳时校正、四柱、十神、大运、刑冲合会与神煞。
+author: shunshi-ai
+license: MIT
+homepage: https://github.com/shunshi-ai/bazi-reader-mcp
+repository: https://github.com/shunshi-ai/bazi-reader-mcp
+verified: true
+category: creative
+tags:
+- creative
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - shunshi-bazi-mcp@0.2.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

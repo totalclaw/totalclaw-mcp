@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: ai_price
+display_name: 水獭 AI 订阅比价（shuita-ai-price）
+display_name_en: ''
+version: 0.1.1
+description: MCP server for AI subscription price comparison — 70+ products across 130+ verified shops on shuita.xyz, with
+  per-shop offers and 30-day price trends
+description_zh: 查询水獭（shuita.xyz）收录的 AI 会员订阅实时报价：每天两次抓取 120+ 家发卡网与小铺的在售价格与库存，覆盖 ChatGPT、Claude、Gemini、Grok、Cursor 等，并与美区官方价对照。工具：`search_products`、`get_lowest_price`、`list_shops`、`get_site_stats`、`list_all_products`。
+author: gm365
+license: MIT
+homepage: https://github.com/gm365/shuita-ai-price
+repository: https://github.com/gm365/shuita-ai-price
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - ai-price-mcp@1.5.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

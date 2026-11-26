@@ -1,0 +1,41 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: proxy_toolkit
+display_name: ipvolt Proxy Toolkit
+display_name_en: ipvolt Proxy Toolkit
+version: 0.1.1
+description: Reviewed proxy documentation, tested configuration templates, bounded local route diagnostics and optional ipvolt
+  account tools, with a no-key sandbox, for MCP clients.
+description_zh: 帮编码 Agent 配置和排查 HTTP 代理：检索经过审核的代理配置与排错指南，生成 curl、Python Requests、HTTPX、Playwright 配置模板（凭据保留为环境变量占位符），并根据状态码、异常和请求阶段诊断
+  407、429、超时等错误、给出下一步检查。适用于任意代理服务商。
+author: ipvolt
+license: MIT
+homepage: https://github.com/ipvolt/proxy-toolkit-mcp
+repository: https://github.com/ipvolt/proxy-toolkit-mcp
+verified: true
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@ipvolt/proxy-toolkit-mcp@0.3.1'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

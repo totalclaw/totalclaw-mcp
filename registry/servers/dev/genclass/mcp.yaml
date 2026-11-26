@@ -1,0 +1,42 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: genclass
+display_name: GenClass MCP
+display_name_en: GenClass MCP
+version: 0.1.1
+description: 'GenClass for coding agents: an MCP server that sees what happens inside your app''s pages (clicks, requests,
+  the order responses arrived, state writes, errors), re-runs them with the network answering in different orders to find
+  race conditions, and replay'
+description_zh: 让编程 Agent 按因果顺序查看本机 Web 应用开发页面里发生的事（点击、请求、响应及其能观察到的状态写入），用不同的响应到达顺序重跑页面以发现竞态条件，按同一顺序重放以验证修复，并生成 Playwright
+  回归测试；共 9 个工具。
+author: genclass-dev
+license: Apache-2.0
+homepage: https://github.com/genclass-dev/GenClass/tree/main/packages/mcp
+repository: https://github.com/genclass-dev/GenClass/tree/main/packages/mcp
+verified: true
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - '@genclass/mcp@0.2.2'
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: mcpsurfr
+display_name: mcp-local-rag
+display_name_en: mcp-local-rag
+version: 0.1.1
+description: 'Local web search for LLMs over MCP: no API keys, on-device re-ranking, and only the passages that answer the
+  question.'
+description_zh: 本地运行的 RAG 式网页搜索，使用 MediaPipe Embedder 和 DuckDuckGo。
+author: nkapila6
+license: MIT
+homepage: https://github.com/nkapila6/mcpsurfr
+repository: https://github.com/nkapila6/mcpsurfr
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - mcpsurfr==1.2.3
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cloakbrowser
+display_name: CloakBrowser MCP
+display_name_en: CloakBrowser MCP
+version: 0.1.1
+description: Playwright MCP-compatible browser automation bridge for CloakBrowser Chromium.
+description_zh: 使用 CloakBrowser Chromium 运行 Playwright MCP，保留上游浏览器工具，支持网页导航、交互和截图。
+author: swimmwatch
+license: MIT
+homepage: https://github.com/swimmwatch/cloakbrowser-mcp
+repository: https://github.com/swimmwatch/cloakbrowser-mcp
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - cloakbrowser-mcp@1.15.1
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

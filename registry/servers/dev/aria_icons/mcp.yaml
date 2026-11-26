@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: aria_icons
+display_name: Aria Icons
+display_name_en: Aria Icons
+version: 0.1.1
+description: Find any icon, put it in your codebase, and let AI use it. CLI + MCP server for Aria Icons.
+description_zh: 在约 140 万个开源 SVG 图标（Lucide、Tabler、Heroicons、theSVG 品牌图标及 200+ Iconify 图标集）中搜索，并以 SVG 或 React/Vue/Svelte/Solid
+  组件源码写入项目。
+author: LeulAria
+license: MIT
+homepage: https://github.com/LeulAria/Aria-Icons
+repository: https://github.com/LeulAria/Aria-Icons
+verified: true
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - aria-icons@0.1.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

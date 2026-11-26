@@ -1,0 +1,42 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cloudgpu
+display_name: CloudGPU MCP
+display_name_en: CloudGPU MCP
+version: 0.1.1
+description: 'MCP server and command-line tool for cloudgpu.app: let Claude Code, Cursor, Cline, opencode, goose and other
+  MCP clients (or you, from a terminal) rent a GPU with explicit billing quotes, run a job, fetch the results and shut it
+  down, with spending limits'
+description_zh: 让 AI 代理按分钟租用 GPU：先报价、经用户确认后创建实例，运行命令和后台任务，上传/下载文件，查看日志，取回结果后销毁实例、停止计费；同一个 API Key 还可调用 CloudGPU 的 OpenAI 兼容模型
+  API。
+author: cloudgpu-app
+license: MIT
+homepage: https://github.com/cloudgpu-app/cloudgpu-mcp
+repository: https://github.com/cloudgpu-app/cloudgpu-mcp
+verified: true
+category: infra
+tags:
+- infra
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - cloudgpu-mcp@0.16.9
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

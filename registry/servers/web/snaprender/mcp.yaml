@@ -1,0 +1,47 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: snaprender
+display_name: SnapRender
+display_name_en: SnapRender
+version: 0.1.1
+description: 'MCP server for the SnapRender screenshot API: lets AI agents capture websites as PNG, JPEG, WebP or PDF, extract
+  content and run batches'
+description_zh: 使用 SnapRender 截图 API 渲染网页：任意 URL 转为 PNG、JPEG、WebP 或 PDF，支持整页截图、设备预设、深色模式，并自动移除广告与 Cookie 弹窗，也可把页面内容提取为 Markdown。
+author: User0856
+license: MIT
+homepage: https://github.com/User0856/snaprender-integrations
+repository: https://github.com/User0856/snaprender-integrations
+verified: true
+category: web
+tags:
+- web
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - snaprender-mcp@1.6.0
+  requires:
+    node: '>=18'
+requires_env:
+- name: SNAPRENDER_API_KEY
+  description: SnapRender 的API 密钥（SNAPRENDER_API_KEY），获取方式见项目说明。
+  prompt: 请输入 SNAPRENDER_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/User0856/snaprender-integrations
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

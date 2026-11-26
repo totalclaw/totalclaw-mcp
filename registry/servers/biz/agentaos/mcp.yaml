@@ -1,0 +1,33 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: agentaos
+display_name: AgentaOS
+display_name_en: AgentaOS
+version: 0.1.1
+description: AgentaOS 官方集成，面向 AI 代理的记录商家（Merchant of Record）：创建产品、结账链接、订阅、折扣和发票，自动处理增值税和销售税。
+description_zh: AgentaOS 官方集成，面向 AI 代理的记录商家（Merchant of Record）：创建产品、结账链接、订阅、折扣和发票，自动处理增值税和销售税。
+author: AgentaOS
+homepage: https://github.com/AgentaOS/agentaos
+repository: https://github.com/AgentaOS/agentaos
+verified: true
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://mcp.agentaos.ai/mcp
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

@@ -1,0 +1,47 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: faxforagents
+display_name: Fax for Agents
+display_name_en: Fax for Agents
+version: 0.1.1
+description: 'MCP server for Fax for Agents: let Claude, Cursor, Codex and other agents send and receive faxes through the
+  Fax for Agents API, with quotes, human review, delegated policies, delivery evidence, guide resources and prompts.'
+description_zh: Fax for Agents 是一套传真 API、托管 MCP 服务器和 SDK，让 AI Agent 能够收发传真，由 JSB Holdings LLC 出品。15 个工具，覆盖报价、人工审核、委托策略和投递凭证，附带指南资源与提示词。沙盒免费，正式发送按页预付。
+author: faxforagents
+license: MIT
+homepage: https://github.com/faxforagents/mcp
+repository: https://github.com/faxforagents/mcp
+verified: true
+category: comm
+tags:
+- comm
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - faxforagents-mcp@0.5.9
+  requires:
+    node: '>=18'
+requires_env:
+- name: FAXFORAGENTS_API_KEY
+  description: Fax for Agents 的API 密钥（FAXFORAGENTS_API_KEY），获取方式见项目说明。
+  prompt: 请输入 FAXFORAGENTS_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/faxforagents/mcp
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

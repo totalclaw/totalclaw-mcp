@@ -1,0 +1,51 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: sqlite_graph_memory
+display_name: sqlite-graph-memory
+display_name_en: sqlite-graph-memory
+version: 0.1.1
+description: 'Associative memory for LLM agents: Graph RAG over a folder of markdown notes, in one SQLite file, with no server
+  to run.'
+description_zh: 面向 Claude Code、Cursor、Codex 的持久记忆：基于 Markdown / Obsidian 笔记，先用向量检索定位入口，再沿笔记中已有的双向链接做图跳转，数据存于单个 SQLite 文件。
+author: tonydzi
+license: MIT
+homepage: https://github.com/tonydzi/sqlite-graph-memory
+repository: https://github.com/tonydzi/sqlite-graph-memory
+verified: true
+category: ai
+tags:
+- ai
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --python
+  - '3.12'
+  - --from
+  - sqlite-graph-memory==0.3.9
+  - sgm-mcp
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env:
+- name: BRAIN_INDEX_DIR
+  description: sqlite-graph-memory 的路径（BRAIN_INDEX_DIR），不填用默认值 $HOME/.sgm-index。
+  prompt: 请输入 BRAIN_INDEX_DIR
+  secret: false
+  required: false
+  doc_url: https://github.com/tonydzi/sqlite-graph-memory
+  doc_label: 查看项目说明（如何获取）
+  default: $HOME/.sgm-index
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

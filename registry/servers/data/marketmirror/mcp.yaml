@@ -1,0 +1,39 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: marketmirror
+display_name: MarketMirror
+display_name_en: MarketMirror
+version: 0.1.1
+description: MCP server that tests ads, prices, emails and sales pitches on simulated buyers and returns a go / iterate /
+  no-go report.
+description_zh: 营销与销售模拟工具，基于 MiroFish/OASIS 组织 LLM 模拟买家参与广告、问卷和销售话术测试，输出模拟报告与 HTML 仪表盘，支持与真实广告数据比较。
+author: DarkWorldCoder
+license: AGPL-3.0-only
+homepage: https://github.com/DarkWorldCoder/market-mirror
+repository: https://github.com/DarkWorldCoder/market-mirror
+verified: true
+category: data
+tags:
+- data
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - marketmirror==0.4.2
+  requires:
+    python: '>=3.10'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

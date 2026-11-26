@@ -1,0 +1,33 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: hpsilab
+display_name: HPSILab Quant Research
+display_name_en: HPSILab Quant Research
+version: 0.1.1
+description: 美股与期权研究 MCP 服务器：下单前风险扫描（硬性规则写在代码里）、隐含波动率结构与偏斜、期权链压力（Max Pain、Gamma 墙）、蒙特卡洛价格区间、回测净值曲线；只做研究，不下单。
+description_zh: 美股与期权研究 MCP 服务器：下单前风险扫描（硬性规则写在代码里）、隐含波动率结构与偏斜、期权链压力（Max Pain、Gamma 墙）、蒙特卡洛价格区间、回测净值曲线；只做研究，不下单。
+author: haiyunsky
+homepage: https://github.com/haiyunsky/hpsilab-quant-finance-mcp
+repository: https://github.com/haiyunsky/hpsilab-quant-finance-mcp
+verified: true
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://hpsilab.com/mcp
+  auth: none
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

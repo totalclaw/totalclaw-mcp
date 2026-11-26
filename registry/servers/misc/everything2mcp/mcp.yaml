@@ -1,0 +1,40 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: everything2mcp
+display_name: Everything2MCP
+display_name_en: Everything2MCP
+version: 0.1.1
+description: 'Everything can become MCP / 万物都能 MCP: auto-discover local & platform caps, bridge heterogeneous protocols into
+  one MCP surface. Safe/Full policy, console UX, Partner ingress (Feishu/DingTalk/WeCom).'
+description_zh: 将本地能力和服务适配器配置为统一的 MCP 工具入口，支持配置热重载、管理控制台与 Safe/Full 权限模式。
+author: shcdwz1234
+license: Apache-2.0
+homepage: https://github.com/shcdwz1234/Everything2MCP
+repository: https://github.com/shcdwz1234/Everything2MCP
+verified: true
+category: misc
+tags:
+- misc
+- community
+kind: mcp_server
+runtimes:
+- id: npx
+  type: stdio
+  launcher: npx
+  command: npx
+  args:
+  - -y
+  - everything2mcp@0.1.0
+  requires:
+    node: '>=18'
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean

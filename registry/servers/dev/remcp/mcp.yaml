@@ -1,0 +1,34 @@
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
+# 人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: remcp
+display_name: ReMCP
+display_name_en: ReMCP
+version: 0.1.1
+description: '[](https://glama.ai/mcp/servers/getremcp/remcp)      - Secure remote MCP bridge to paired computers: files,
+  terminal sessions, screenshots, search, processes, and binary transfers with outbound-only device agents.'
+description_zh: 通过 OAuth 连接用户明确配对的 Windows、macOS、Linux 计算机，向 MCP 客户端提供文件管理、终端命令、进程诊断、Chromium 浏览器及原生桌面自动化工具；部分操作会修改设备状态。
+author: getremcp
+homepage: https://github.com/getremcp/remcp
+repository: https://github.com/getremcp/remcp
+verified: true
+category: dev
+tags:
+- dev
+- community
+kind: mcp_server
+runtimes:
+- id: remote
+  type: http
+  url: https://remcp.site/mcp
+  auth: oauth
+requires_env: []
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+security:
+  scan_verdict: allow
+  osv: clean
