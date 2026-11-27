@@ -768,7 +768,7 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
   - agent `06a04361d`：`list_installed()` 对注册表条目在有新版本时带 `update_available: {version}`（形状按本仓 API.md 的 InstalledEntry），
     `/v1/mcp/installed` 透传；纯数字点分比较、解析不了不提示；已下架不提示；注册表不可用 / 只有内置目录时不声称有新版本。MCP 相关 79 个用例通过
   - qiye-app `58268b7e0`：已安装页版本列显示「有新版本 x.y.z」、该行「更新」按钮突出；旧 agent 不带字段时不显示；补 en/ar/ms/vi 译文。McpMarketView 31 个用例通过
-- [ ] **F15** U3 发版（5 个分支已推送；qiye-app 两个分支已在本地 `integrate/mcp-2026-11-27` 快进合好、测试过，推 master 待用户确认；agent 三个分支按 totalclaw-agent-29 要求等它那一轮落到 origin 后由本会话合进 core-kernel）：agent 分支合进 core-kernel → main 并打版；qiye-app 分支合进 master 并 bump agent 子模块（`scripts/check-agent-pointer.mjs`）。
+- [ ] **F15** U3 发版（qiye-app 部分已合入 master：`58268b7e0` + F18 `99e8c6e42`，2026-11-27 用户确认后快进推送；agent 侧 feat/mcp-update-available、fix/url-safety-fake-ip-translated、fix/mcp-install-enabled-with-provided-env、fix/env-interpolation-defaults、feat/mcp-render-requires-node 等 totalclaw-agent-29 一轮落到 origin 后由本会话合进 core-kernel，再打版并 bump qiye-app 子模块）：agent 分支合进 core-kernel → main 并打版；qiye-app 分支合进 master 并 bump agent 子模块（`scripts/check-agent-pointer.mjs`）。
   合并前在共用的 agent 目录先看 `git diff HEAD -- totalclaw_core/mcp_hub.py totalclaw_qiye_api/mcp_hub_api.py`（另一会话会有并行改动）
 - [ ] **F16** agent `url_safety`：fake-ip 代理回 `::ffff:0:198.18.x.x` 式 AAAA 时整个域名被判私网 —— gitee raw 跳转主机被拦，
   桌面端 MCP 市场静默回落内置 26 条（开着 Clash 类 fake-ip 代理的用户都中）。修复在 agent 分支 `fix/url-safety-fake-ip-translated`（`79331c3e7`，
@@ -778,5 +778,5 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
 - [ ] **F18** qiye-app 查毒代理 `mcpPackageGuard`：拉包体不带客户端 UA，Electron 默认浏览器 UA 被清华 PyPI 镜像 403（国内默认第一优先源）
   → 桌面端所有要现场下载的 uvx 连接器都装不上。修复在 qiye-app 分支 `fix/mcp-package-guard-artifact-ua`（`d57a3c938`），
   单测修复前失败、后通过（含真 npm / uv 装包），最小 Electron 脚本证实 net.fetch 带 uv UA 即 200。
-  **完整应用内已验证（2026-11-27）**：空 uv 缓存、默认走清华镜像，修复后的构建 V3 13/13 通过；同条件下未修复的构建 uvx 连接器全部失败。（上次起不来 qiye-api 是 worktree 里 `resources/vendor` 是入库目录，`.venv` 没链接过去。）**已推送分支，待审阅合并**
+  **已合入 qiye-app master（99e8c6e42）**；完整应用内已验证（2026-11-27）：空 uv 缓存、默认走清华镜像，修复后的构建 V3 13/13 通过；同条件下未修复的构建 uvx 连接器全部失败。（上次起不来 qiye-api 是 worktree 里 `resources/vendor` 是入库目录，`.venv` 没链接过去。）**已推送分支，待审阅合并**
 
