@@ -200,6 +200,11 @@ def _server_params(manifest: dict, runtime_id: str | None):
     env = {k: os.environ.get(k, "") for k in
            ("PATH", "HOME", "USER", "LANG", "LC_ALL", "TERM", "SHELL", "TMPDIR")}
     env = {k: v for k, v in env.items() if v}
+    # 包管理器设置（源、缓存、索引）跟随调用方：在命令行设 npm_config_registry / UV_DEFAULT_INDEX
+    # 换源重探时要真的传到 npx / uvx，否则还是走 ~/.npmrc 里的镜像
+    for k, v in os.environ.items():
+        if v and (k.lower().startswith("npm_config_") or k.startswith(("UV_", "PIP_"))):
+            env[k] = v
     for e in manifest.get("requires_env") or []:
         key = e.get("env_key") or e.get("name")
         if key and os.environ.get(key):

@@ -1,19 +1,21 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27 全量杀毒 / 实探复核：拒绝（详见 docs/removed-2026-11-27.md）
+# 审核意见：人工复核（2026-11-27）：bitcoin-mcp 全部 6 个版本被原维护者在 npm 标记弃用（Package no longer supported）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: bitcoin
 display_name: bitcoin-mcp
 display_name_en: bitcoin-mcp
-version: 0.1.1
+version: 0.1.2
 description: A Model Context Protocol server for interacting with Bitcoin.
 description_zh: 使 AI 模型能与比特币交互的 MCP 服务器 (生成密钥/验证地址/解码交易/查询区块链等)。
 author: AbdelStark
 license: MIT
 homepage: https://github.com/AbdelStark/bitcoin-mcp
 repository: https://github.com/AbdelStark/bitcoin-mcp
-verified: true
+verified: false
 category: misc
 tags:
 - misc
@@ -40,6 +42,7 @@ tools:
   count: 7
   file: tools.json
 security:
-  scan_verdict: allow
+  scan_verdict: block
+  reason: "人工复核（2026-11-27）：bitcoin-mcp 全部 6 个版本被原维护者在 npm 标记弃用（Package no longer supported）。"
   osv: clean
   prompt_injection_findings: []

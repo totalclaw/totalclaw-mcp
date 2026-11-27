@@ -1,19 +1,21 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27 全量杀毒 / 实探复核：拒绝（详见 docs/removed-2026-11-27.md）
+# 审核意见：人工复核（2026-11-27）：npm 包的 bin（cal-mcp）缺 shebang，被当成 shell 脚本执行即报错，任何启动方式都起不来。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: cal
 display_name: cal-mcp
 display_name_en: cal-mcp
-version: 0.1.1
+version: 0.1.2
 description: A MCP server for evaluating mathematical expressions
 description_zh: 用于数学表达式计算的 MCP 服务器。
 author: pwh-pwh
 license: MIT
 homepage: https://github.com/pwh-pwh/cal-mcp
 repository: https://github.com/pwh-pwh/cal-mcp
-verified: true
+verified: false
 category: misc
 tags:
 - misc
@@ -35,5 +37,6 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: allow
+  scan_verdict: block
+  reason: "人工复核（2026-11-27）：npm 包的 bin（cal-mcp）缺 shebang，被当成 shell 脚本执行即报错，任何启动方式都起不来。"
   osv: clean

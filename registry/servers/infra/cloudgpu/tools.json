@@ -1,0 +1,2277 @@
+[
+  {
+    "name": "request_top_up",
+    "description": "Creates a short-lived link only. No checkout, card charge or transfer is made. Show the link to the human owner; never complete payment for them. Payment completion does not approve a GPU quote.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "amount_usd": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 10000
+        }
+      },
+      "required": [
+        "amount_usd"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "wait_for_funds",
+    "description": "Read-only polling of actual account balance and real-top-up signal for up to 60 seconds. No payment, job submission or authorization. If still pending, return to the owner; do not blindly repeat rentals.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "min_balance_usd": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 100000
+        },
+        "timeout": {
+          "default": 30,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60
+        }
+      },
+      "required": [
+        "min_balance_usd"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_agent_readiness",
+    "description": "No login or spending: capabilities, source-specific billing, task prerequisites, limitations, recent aggregate Job evidence and known issues. Unknown data is not a healthy or verified result.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "assess_task_fit",
+    "description": "Read-only task suitability before quoting a GPU. Returns blockers, unverified requirements and evidence status; does not benchmark, approve spending or guarantee availability.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "task_type": {
+          "type": "string",
+          "enum": [
+            "gpu_environment_check",
+            "python_batch",
+            "comfyui_video",
+            "causal_lm_lora"
+          ]
+        },
+        "needs_persistent_outputs": {
+          "default": true,
+          "type": "boolean"
+        },
+        "expected_output_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "requires_kernel_control": {
+          "default": false,
+          "type": "boolean"
+        },
+        "requires_nested_virtualization": {
+          "default": false,
+          "type": "boolean"
+        },
+        "requires_resale": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "task_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_rental_regions",
+    "description": "Read-only qualified continent catalog shared with the rental UI. Use enabled and inventory/capability/count constraints. Request estimate_cost with the same continent before renting. Countries and individual datacenters are not selectable. Empty inventory does not authorize renting in another continent.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "continent": {
+          "type": "string",
+          "enum": [
+            "asia",
+            "europe",
+            "north_america",
+            "oceania",
+            "south_america",
+            "africa"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_regional_offers",
+    "description": "Anonymous, read-only native regional stock observations, independent price evidence ages, billing references and known/unknown limits. Supply the human owner's country explicitly; the Agent server IP is not its owner's location. Counts are not reservations or verified single-host multi-GPU allocations. Published SKU references are not region-bound executable quotes; these observations are not executable quotes. Use list_rental_regions and estimate_cost for enabled continent-constrained rentals; exact countries/datacenters are unsupported. Unsupported, stale or failed observations do not prove global stockout. Follow has_more/next_after_id; pagination is a live view, not a frozen snapshot.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "user_country": {
+          "type": "string",
+          "pattern": "^[A-Za-z]{2}$"
+        },
+        "country_code": {
+          "type": "string",
+          "pattern": "^[A-Za-z]{2}$"
+        },
+        "gpu_model": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "gpu_count": {
+          "default": 1,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "include_unavailable": {
+          "default": false,
+          "type": "boolean"
+        },
+        "limit": {
+          "default": 100,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200
+        },
+        "after_id": {
+          "type": "string",
+          "pattern": "^offer_[a-f0-9]{32}$"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_task_templates",
+    "description": "Public, local and read-only. Inspect small task recipes and requirements before quoting. Does not call an API, rent a GPU, install dependencies or reserve capacity.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "prepare_task_template",
+    "description": "Local preparation only. Returns a command and optional Workspace/output fields; never submits or spends money. Quote, explicit GPU/budget/time approval and existing storage consent are still required by run_job. No guaranteed application compatibility or automatic retry.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "template_id": {
+          "type": "string",
+          "enum": [
+            "gpu-check",
+            "csv-summary",
+            "workspace-python",
+            "comfyui-workflow",
+            "causal-lm-lora"
+          ]
+        },
+        "workflow_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$"
+        },
+        "comfy_port": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 65535
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 30,
+          "maximum": 7200
+        },
+        "image_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        },
+        "model_reference": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,47}$"
+            },
+            "repo_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,95}\\/[A-Za-z0-9][A-Za-z0-9_.-]{0,95}$"
+            },
+            "revision": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{40}$"
+            },
+            "files": {
+              "minItems": 1,
+              "maxItems": 32,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 240,
+                    "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$"
+                  },
+                  "size_bytes": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "path",
+                  "size_bytes",
+                  "sha256"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "name",
+            "repo_id",
+            "revision",
+            "files"
+          ],
+          "additionalProperties": false
+        },
+        "dataset_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$"
+        },
+        "target_modules": {
+          "minItems": 1,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]{0,63}$"
+          }
+        },
+        "steps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200
+        },
+        "rank": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "sequence_length": {
+          "type": "integer",
+          "minimum": 32,
+          "maximum": 2048
+        },
+        "learning_rate": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 0.01
+        },
+        "workspace_version_id": {
+          "type": "string",
+          "pattern": "^wsv_[0-9a-f]{32}$"
+        },
+        "input_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$"
+        },
+        "entrypoint": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$"
+        },
+        "persist_results": {
+          "default": false,
+          "type": "boolean"
+        },
+        "output_files": {
+          "minItems": 1,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240,
+            "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$"
+          }
+        },
+        "accept_storage_charges": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "template_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "compare_compute_costs",
+    "description": "Read-only live quote comparison for up to eight explicit compatible GPU candidates. Accounts for minimum one-hour versus per-minute billing. No capacity reservation, GPU creation, benchmark, automatic selection or approval. Run estimate_cost for the selected rental afterward.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "gpu_models": {
+          "minItems": 1,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        },
+        "gpu_count": {
+          "default": 1,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "hours": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 168
+        },
+        "max_spend_usd": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "template": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "gpu_models",
+        "hours",
+        "max_spend_usd"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "prepare_task_pipeline",
+    "description": "Local read-only preparation of 1–8 reviewed commands for one bounded Job or an approved existing rental. Reuses GPU and disk across steps; stops on the first error. Does not create, retry, install dependencies, approve spending or change an instance lifecycle. Summary persistence is optional and never implies paid-storage consent.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "steps": {
+          "minItems": 1,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{0,39}$"
+              },
+              "command": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              }
+            },
+            "required": [
+              "id",
+              "command"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "workspace_version_id": {
+          "type": "string",
+          "pattern": "^wsv_[a-f0-9]{32}$"
+        },
+        "persist_summary": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "steps"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_job_batch_receipt",
+    "description": "Read only saved accepted Job IDs and uncertain submission intents for the original batch key, API key and endpoint. No API request or GPU creation. Local state is historical, not live release evidence; a missing entry does not prove non-creation. Commands, tokens and signed URLs are never stored.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "batch_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "batch_key"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "prepare_job_batch",
+    "description": "Local, read-only preparation for up to eight Jobs with fresh per-Job quotes and one aggregate cap. No API requests, reservations, installations or automatic execution retries. Retain the immutable plan hash and batch key.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "batch_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "total_budget_usd": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "jobs": {
+          "minItems": 1,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "command": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32768,
+                "description": "bash command or script to run on the GPU"
+              },
+              "gpu_model": {
+                "description": "GPU model exactly as list_gpus returns it",
+                "type": "string"
+              },
+              "template": {
+                "description": "Template id from list_templates",
+                "type": "string"
+              },
+              "gpu_count": {
+                "default": 1,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8
+              },
+              "disk_gb": {
+                "description": "Larger system disk: 100, 200 or 500; omit for the standard disk",
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "workspace_version_id": {
+                "description": "Immutable Workspace version to restore before the command; requires enabled persistent storage",
+                "type": "string"
+              },
+              "model_references": {
+                "description": "Pinned public model references from resolve_model_reference. Downloads into $CLOUDGPU_MODEL_DIR/<name> before the command; download time consumes the same GPU budget. No R2 cache or remote repository code execution.",
+                "maxItems": 4,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "repo_id": {
+                      "type": "string"
+                    },
+                    "revision": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{40}$"
+                    },
+                    "files": {
+                      "minItems": 1,
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "path": {
+                            "type": "string"
+                          },
+                          "size_bytes": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          }
+                        },
+                        "required": [
+                          "path",
+                          "size_bytes"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "repo_id",
+                    "revision",
+                    "files"
+                  ]
+                }
+              },
+              "outputs": {
+                "description": "Explicit relative output files under $CLOUDGPU_OUTPUT_DIR; no globs, symlinks, hidden or credential files. Default total limit 10 MiB, maximum 100 MiB. Only set accept_storage_charges=true after the user agrees to existing paid storage terms. Inspect output_collection after completion; the GPU is released even if saving fails.",
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "minItems": 1,
+                    "maxItems": 16,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    }
+                  },
+                  "max_bytes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 104857600
+                  },
+                  "accept_storage_charges": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "files"
+                ],
+                "additionalProperties": false
+              },
+              "quote_id": {
+                "type": "string",
+                "pattern": "^quote_[a-f0-9]{32}$"
+              },
+              "billing_quote_id": {
+                "description": "Accepted source-specific billing quote from estimate_cost; expires after five minutes. Required for whole-hour sources.",
+                "type": "string",
+                "pattern": "^[a-f0-9-]{36}$"
+              },
+              "billing_accepted": {
+                "description": "true only after the user accepts the quoted minimum and billing period; budget must cover that minimum",
+                "type": "boolean"
+              },
+              "max_spend_usd": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Budget for this job in USD (at most 50)"
+              },
+              "max_hours": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Hard time limit in hours (at most 24)"
+              }
+            },
+            "required": [
+              "command",
+              "quote_id",
+              "max_spend_usd",
+              "max_hours"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "batch_key",
+        "total_budget_usd",
+        "jobs"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_job_batch",
+    "description": "Read-only status and cost summary for explicit Job IDs. Does not retry, cancel, create or claim independent supplier release verification.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "job_ids": {
+          "minItems": 1,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^job_[a-f0-9]{32}$"
+          }
+        }
+      },
+      "required": [
+        "job_ids"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_server_job_batch",
+    "description": "Read persisted child Job states and costs after either client or server restarts. Does not create or retry resources.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "batch_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{32}$"
+        }
+      },
+      "required": [
+        "batch_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "run_server_job_batch",
+    "description": "Paid. Use the exact reviewed prepare_job_batch manifest/hash. Enqueue is atomic and persists on the server; each Job reserves its own budget and waits for account/key concurrency. No automatic command retries and no partial client-side fallback. Whole-hour Jobs require a separate accepted current billing quote per allocation.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "batch_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "total_budget_usd": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "jobs": {
+          "minItems": 1,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "command": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32768,
+                "description": "bash command or script to run on the GPU"
+              },
+              "gpu_model": {
+                "description": "GPU model exactly as list_gpus returns it",
+                "type": "string"
+              },
+              "template": {
+                "description": "Template id from list_templates",
+                "type": "string"
+              },
+              "gpu_count": {
+                "default": 1,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8
+              },
+              "disk_gb": {
+                "description": "Larger system disk: 100, 200 or 500; omit for the standard disk",
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "workspace_version_id": {
+                "description": "Immutable Workspace version to restore before the command; requires enabled persistent storage",
+                "type": "string"
+              },
+              "model_references": {
+                "description": "Pinned public model references from resolve_model_reference. Downloads into $CLOUDGPU_MODEL_DIR/<name> before the command; download time consumes the same GPU budget. No R2 cache or remote repository code execution.",
+                "maxItems": 4,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "repo_id": {
+                      "type": "string"
+                    },
+                    "revision": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{40}$"
+                    },
+                    "files": {
+                      "minItems": 1,
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "path": {
+                            "type": "string"
+                          },
+                          "size_bytes": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          }
+                        },
+                        "required": [
+                          "path",
+                          "size_bytes"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "repo_id",
+                    "revision",
+                    "files"
+                  ]
+                }
+              },
+              "outputs": {
+                "description": "Explicit relative output files under $CLOUDGPU_OUTPUT_DIR; no globs, symlinks, hidden or credential files. Default total limit 10 MiB, maximum 100 MiB. Only set accept_storage_charges=true after the user agrees to existing paid storage terms. Inspect output_collection after completion; the GPU is released even if saving fails.",
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "minItems": 1,
+                    "maxItems": 16,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    }
+                  },
+                  "max_bytes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 104857600
+                  },
+                  "accept_storage_charges": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "files"
+                ],
+                "additionalProperties": false
+              },
+              "quote_id": {
+                "type": "string",
+                "pattern": "^quote_[a-f0-9]{32}$"
+              },
+              "billing_quote_id": {
+                "description": "Accepted source-specific billing quote from estimate_cost; expires after five minutes. Required for whole-hour sources.",
+                "type": "string",
+                "pattern": "^[a-f0-9-]{36}$"
+              },
+              "billing_accepted": {
+                "description": "true only after the user accepts the quoted minimum and billing period; budget must cover that minimum",
+                "type": "boolean"
+              },
+              "max_spend_usd": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Budget for this job in USD (at most 50)"
+              },
+              "max_hours": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Hard time limit in hours (at most 24)"
+              }
+            },
+            "required": [
+              "command",
+              "quote_id",
+              "max_spend_usd",
+              "max_hours"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "approved_plan_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "user_confirmed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "batch_key",
+        "total_budget_usd",
+        "jobs",
+        "approved_plan_sha256",
+        "user_confirmed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "cancel_server_job_batch",
+    "description": "Cancel queued children without starting a GPU; request safe shutdown of active children. Preserve outputs first. Previously started whole-hour charges remain payable.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "batch_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{32}$"
+        },
+        "user_confirmed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "batch_id",
+        "user_confirmed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "run_job_batch",
+    "description": "Paid: submit an explicitly approved immutable manifest using existing durable Jobs, each with a quote, budget and deadline. Aggregate worst-case budget is capped. Partial success is possible. On lost responses replay the IDENTICAL manifest/key; never create replacement GPUs or retry failed execution automatically. Persist the returned receipt. No transaction rollback or independent batch scheduler.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "batch_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "total_budget_usd": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "jobs": {
+          "minItems": 1,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "command": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32768,
+                "description": "bash command or script to run on the GPU"
+              },
+              "gpu_model": {
+                "description": "GPU model exactly as list_gpus returns it",
+                "type": "string"
+              },
+              "template": {
+                "description": "Template id from list_templates",
+                "type": "string"
+              },
+              "gpu_count": {
+                "default": 1,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8
+              },
+              "disk_gb": {
+                "description": "Larger system disk: 100, 200 or 500; omit for the standard disk",
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "workspace_version_id": {
+                "description": "Immutable Workspace version to restore before the command; requires enabled persistent storage",
+                "type": "string"
+              },
+              "model_references": {
+                "description": "Pinned public model references from resolve_model_reference. Downloads into $CLOUDGPU_MODEL_DIR/<name> before the command; download time consumes the same GPU budget. No R2 cache or remote repository code execution.",
+                "maxItems": 4,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "repo_id": {
+                      "type": "string"
+                    },
+                    "revision": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{40}$"
+                    },
+                    "files": {
+                      "minItems": 1,
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "path": {
+                            "type": "string"
+                          },
+                          "size_bytes": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          }
+                        },
+                        "required": [
+                          "path",
+                          "size_bytes"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "repo_id",
+                    "revision",
+                    "files"
+                  ]
+                }
+              },
+              "outputs": {
+                "description": "Explicit relative output files under $CLOUDGPU_OUTPUT_DIR; no globs, symlinks, hidden or credential files. Default total limit 10 MiB, maximum 100 MiB. Only set accept_storage_charges=true after the user agrees to existing paid storage terms. Inspect output_collection after completion; the GPU is released even if saving fails.",
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "minItems": 1,
+                    "maxItems": 16,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    }
+                  },
+                  "max_bytes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 104857600
+                  },
+                  "accept_storage_charges": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "files"
+                ],
+                "additionalProperties": false
+              },
+              "quote_id": {
+                "type": "string",
+                "pattern": "^quote_[a-f0-9]{32}$"
+              },
+              "billing_quote_id": {
+                "description": "Accepted source-specific billing quote from estimate_cost; expires after five minutes. Required for whole-hour sources.",
+                "type": "string",
+                "pattern": "^[a-f0-9-]{36}$"
+              },
+              "billing_accepted": {
+                "description": "true only after the user accepts the quoted minimum and billing period; budget must cover that minimum",
+                "type": "boolean"
+              },
+              "max_spend_usd": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Budget for this job in USD (at most 50)"
+              },
+              "max_hours": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Hard time limit in hours (at most 24)"
+              }
+            },
+            "required": [
+              "command",
+              "quote_id",
+              "max_spend_usd",
+              "max_hours"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "approved_plan_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "user_confirmed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "batch_key",
+        "total_budget_usd",
+        "jobs",
+        "approved_plan_sha256",
+        "user_confirmed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_storage",
+    "description": "Storage availability, used bytes, reserved uploads and account quota. No money is spent.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_files",
+    "description": "Persistent artifacts, model/data files and Workspace files. Availability depends on storage being enabled.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_workspaces",
+    "description": "Saved project Workspaces; versions are immutable file manifests.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_workspace_versions",
+    "description": "List saved immutable versions of an owned Workspace.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "workspace_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_workspace_version",
+    "description": "Read the path-to-file manifest for an owned version.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "version_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "version_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_workspace_instances",
+    "description": "Lists your running GPUs that this key may access. Budgeted Agent keys only see instances created by the same key.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_workspace_application",
+    "description": "Check file restoration on an existing GPU. This does not create, stop or restart a GPU. An uncertain result must be checked, never automatically resubmitted.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "version_id": {
+          "type": "string"
+        },
+        "instance_id": {
+          "type": "string",
+          "pattern": "^[0-9]{1,32}$"
+        }
+      },
+      "required": [
+        "version_id",
+        "instance_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "quote_storage_budget",
+    "description": "Quote reserving GPU wallet funds for persistent storage, or returning unused surplus. No transfer yet. Shows USD rate, budget-based capacity and 30-day file expiry. Budget-limited keys cannot move funds; ask owner to use Web or unrestricted key.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "reserve",
+            "release"
+          ]
+        },
+        "amount_usd": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1000000
+        }
+      },
+      "required": [
+        "action",
+        "amount_usd"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "confirm_storage_budget",
+    "description": "Moves wallet funds only after the user approves the exact quote. Retrying the same quote cannot transfer twice. Reservation is not billed usage; daily actual peak consumes the budget. Never approve automatically.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "quote_id": {
+          "type": "string",
+          "pattern": "^sbq_[a-f0-9]{32}$"
+        },
+        "user_confirmed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "quote_id",
+        "user_confirmed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "resume_artifact_upload",
+    "description": "Resume the same unexpired multipart reservation. Requires the original SHA-256 reported when upload paused. Skips completed parts; renews expiring URLs. Never mixes changed files or creates another reservation.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "local_path": {
+          "type": "string"
+        },
+        "file_id": {
+          "type": "string",
+          "pattern": "^file_[a-f0-9]{32}$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "local_path",
+        "file_id",
+        "sha256"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "apply_workspace",
+    "description": "Restore project files to a new private directory on your existing running GPU. Does not install dependencies, execute code, overwrite existing files, rent, restart or stop a GPU. GPU rental billing continues; transfer consumes its network and disk. Ask the user before applying. Repeat requests for the same version and instance return the existing result; failures require inspection, not automatic retries.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "version_id": {
+          "type": "string"
+        },
+        "instance_id": {
+          "type": "string",
+          "pattern": "^[0-9]{1,32}$"
+        },
+        "user_confirmed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "version_id",
+        "instance_id",
+        "user_confirmed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "delete_workspace_version",
+    "description": "Deletes a saved version, releasing its file references. Refuses versions pinned by active Jobs. Ask the user first.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "version_id": {
+          "type": "string"
+        },
+        "user_confirmed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "version_id",
+        "user_confirmed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "upload_artifact",
+    "description": "Uploads a local regular file in resumable-sized parts. Consumes storage quota; retention and pricing depend on the account policy. Credential files are refused.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "local_path": {
+          "type": "string"
+        },
+        "purpose": {
+          "default": "artifact",
+          "type": "string",
+          "enum": [
+            "artifact",
+            "model",
+            "dataset"
+          ]
+        },
+        "accept_storage_charges": {
+          "default": false,
+          "description": "Read get_storage pricing first. Set true only after the user agrees to paid storage above the included allowance.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "local_path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "download_artifact",
+    "description": "Streams a persistent file to this computer. Never overwrites an existing local file.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "file_id": {
+          "type": "string"
+        },
+        "local_path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "file_id",
+        "local_path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "save_workspace",
+    "description": "Saves 1–100 regular project files as an immutable version. Refuses secrets and symlinks; skips .git, node_modules, __pycache__ and .venv. Save dependency manifests, not the operating system. Pass the returned workspace_version_id to run_job.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "local_dir": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "workspace_id": {
+          "type": "string"
+        },
+        "accept_storage_charges": {
+          "default": false,
+          "description": "Read get_storage pricing and obtain user agreement before enabling paid storage.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "local_dir",
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "delete_file",
+    "description": "Permanently deletes a persistent file or cancels an unfinished upload. Files pinned by a Workspace version cannot be deleted.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "file_id": {
+          "type": "string"
+        },
+        "user_confirmed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "file_id",
+        "user_confirmed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "diagnose_job",
+    "description": "Read-only Job diagnosis and observed platform instance state. Never creates, stops or retries a GPU. Does not claim supplier release verification or classify every command failure as user error.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "pattern": "^job_[a-f0-9]{32}$"
+        }
+      },
+      "required": [
+        "job_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "save_job_output",
+    "description": "With approval, persist the ended Job log tail as a small Artifact using existing storage quota and retention. This is not the full log or binary output collection. Refuses recognizable credentials, quoted/aliased fields and bounded escaped representations or queried URLs. This is not a guarantee that arbitrary logs contain no secrets; save only logs you know are sanitized. Never touches GPU resources. Reuses a matching verified snapshot when found; cross-client concurrent calls may create duplicates.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "pattern": "^job_[a-f0-9]{32}$"
+        },
+        "user_confirmed": {
+          "type": "boolean"
+        },
+        "accept_storage_charges": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "job_id",
+        "user_confirmed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_compute_catalog",
+    "description": "GPU catalog, templates and billing without an API key. Does not rent anything.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "quote_compute",
+    "description": "Compare minute and whole-hour Job estimates, minimum charges and starting balances. No GPU is started. Use job_billing_options to compare cost for your duration, then call quote_job_billing for the selected period. The legacy quote_id still supports minute-only Jobs.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "min_vram_gb": {
+          "default": 0,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "gpu_model": {
+          "type": "string"
+        },
+        "gpu_count": {
+          "default": 1,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "template": {
+          "type": "string"
+        },
+        "disk_gb": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "estimated_duration_seconds": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "max_budget_usd": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "estimated_duration_seconds",
+        "max_budget_usd"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "quote_job_billing",
+    "description": "Read-only. Use the exact Job configuration and selected billing period from quote_compute. Show the returned GPU subtotal, disk fee, hourly total, billing period and minimum charge. Obtain explicit approval before sending billingQuoteId as billing_quote_id with billing_accepted=true to run_job.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "gpu_model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gpu_count": {
+          "default": 1,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "template": {
+          "type": "string"
+        },
+        "disk_gb": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "billing_increment_seconds": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 60
+            },
+            {
+              "type": "number",
+              "const": 3600
+            }
+          ]
+        },
+        "workspace_restore_required": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "gpu_model",
+        "billing_increment_seconds"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_account",
+    "description": "Balance in USD, how many instances this account may run at once, and how many are running now.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_gpus",
+    "description": "GPU catalog with per-card VRAM, live starting price in USD, availability, and native configurations (GPU count, CPU, RAM, disks, region, interconnect and whole-instance price) when provided. Unavailable models remain discoverable. Request an exact quote before renting.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "min_vram_gb": {
+          "description": "Only GPUs with at least this much VRAM per card",
+          "type": "number"
+        },
+        "gpu_model": {
+          "description": "Filter by name, e.g. 4090, A100, H20",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_templates",
+    "description": "Ready-made instance images (e.g. JupyterLab, Ollama, ComfyUI, LLaMA-Factory) with the GPU each recommends. Templates with has_api_endpoint get a public HTTPS api_url.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "estimate_cost",
+    "description": "Live price and estimated cost for a GPU, plus your balance after it. Returns a quote_id that create_instance needs. Show the GPU subtotal, disk fee, hourly total and minimum charge before obtaining explicit approval.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "continent": {
+          "description": "Hard continent constraint, from list_rental_regions",
+          "type": "string",
+          "enum": [
+            "asia",
+            "europe",
+            "north_america",
+            "oceania",
+            "south_america",
+            "africa"
+          ]
+        },
+        "gpu_model": {
+          "type": "string",
+          "description": "GPU model exactly as list_gpus returns it"
+        },
+        "gpu_count": {
+          "default": 1,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "disk_gb": {
+          "description": "Selected disk capacity in GB. Omit or use 0 for the standard disk.",
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 0
+            },
+            {
+              "type": "number",
+              "const": 100
+            },
+            {
+              "type": "number",
+              "const": 200
+            },
+            {
+              "type": "number",
+              "const": 500
+            }
+          ]
+        },
+        "hours": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Expected run time in hours"
+        },
+        "workspace_restore_required": {
+          "description": "Reserve a rental for restoring a saved Workspace. Excludes suppliers with known impaired restore routes.",
+          "type": "boolean"
+        },
+        "template": {
+          "description": "Template id from list_templates; omit for a plain GPU with Python and CUDA",
+          "type": "string"
+        }
+      },
+      "required": [
+        "gpu_model",
+        "hours"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_models",
+    "description": "Models on CloudGPU's OpenAI-compatible API (same key, same balance). Use them from code with base_url https://cloudgpu.app/v1 instead of renting a GPU when you only need inference.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "connect_account",
+    "description": "Use when there is no API key. Starts an approval request and returns a link. The user opens it, signs in to cloudgpu.app and approves this assistant with a spending limit and a maximum number of GPUs at once; CloudGPU's servers enforce both. Then call finish_connect. No money is spent.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "agent_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "description": "How the user will recognise this assistant, e.g. 'Claude Code on Yang's laptop'"
+        },
+        "spend_limit_usd": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 10000,
+          "description": "Total this key may ever spend, in USD; ask the user"
+        },
+        "max_concurrent": {
+          "default": 1,
+          "description": "GPUs or jobs this key may run at once",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "expires_in_days": {
+          "default": 30,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 90
+        }
+      },
+      "required": [
+        "agent_name",
+        "spend_limit_usd"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "finish_connect",
+    "description": "After the user approved the link from connect_account: waits up to about a minute for the approval, then stores the new key on this computer (~/.config/cloudgpu/credentials.json, readable only by the user) and uses it from now on. The key itself is never shown.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_job",
+    "description": "Status of a job (queued / provisioning / running / stopping / succeeded / failed / cancelled / needs_attention), exit code, cost so far, the last ~4 KB of the command's output and the job's event history.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "job_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_jobs",
+    "description": "Recent jobs on this account with status and cost.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "default": 20,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_status",
+    "description": "Status (creating / running / stopped / failed), minutes run, cost so far, whether SSH is ready, the public api_url if the template has one, and the auto-shutdown limits.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "instance_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_instances",
+    "description": "Instances on this account: running, starting, and those stopped in the last 7 days, with cost.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "create_instance",
+    "description": "Rents the GPU from a quote. Costs money. Requires a quote_id from estimate_cost that the user has approved. max_spend_usd and max_hours are enforced by CloudGPU's servers: the instance is destroyed when either is reached, even if this assistant has disconnected. idle_minutes destroys it after the GPU sits idle that long (installing packages and downloading data count as idle, so allow for setup). setup_script (optional bash) runs once as root after the instance is handed over; its output is in /root/cloudgpu-setup.log.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "quote_id": {
+          "type": "string"
+        },
+        "user_confirmed": {
+          "type": "boolean",
+          "description": "true only if the user explicitly approved this quote in the conversation"
+        },
+        "max_spend_usd": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Budget for this instance in USD (at most 50)"
+        },
+        "max_hours": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Hard time limit in hours (at most 24)"
+        },
+        "idle_minutes": {
+          "default": 60,
+          "description": "Destroy after the GPU has been idle this long; 0 turns it off; otherwise at least 10",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1440
+        },
+        "setup_script": {
+          "description": "Optional bash script run once as root in the background after the instance is handed over; output in /root/cloudgpu-setup.log",
+          "type": "string",
+          "maxLength": 16384
+        }
+      },
+      "required": [
+        "quote_id",
+        "user_confirmed",
+        "max_spend_usd",
+        "max_hours"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "resolve_model_reference",
+    "description": "Read-only. Resolve a public Hugging Face model revision and explicit file list to immutable commit, sizes and available LFS SHA-256 checksums. Does not download weights, rent a GPU or authenticate to Hugging Face. Review model license and application compatibility separately.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repo_id": {
+          "type": "string"
+        },
+        "revision": {
+          "default": "main",
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "files": {
+          "minItems": 1,
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "repo_id",
+        "name",
+        "files"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "prepare_model_deployment",
+    "description": "Preparation only; no GPU is started. Create a reviewed setup script for the existing ComfyUI template. Downloads go from the public model host directly to the rented GPU, never through CloudGPU storage. Use model names as categories (checkpoints, loras, vae, diffusion_models, text_encoders, clip, controlnet, upscale_models). Does not install custom nodes, execute workflows, accept licenses for the user, or promise compatibility. Pass the setup_script only after explicit approval to the existing deployment flow.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "model_references": {
+          "minItems": 1,
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {}
+          }
+        },
+        "workflow": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "model_references"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "prepare_job_rerun",
+    "description": "Read-only. Retrieve the original command, pinned model references and Workspace without starting anything. Request a fresh quote, check Workspace expiry and obtain explicit budget approval before calling run_job with a NEW idempotency key. Never reuse the old quote or key.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "job_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "run_job",
+    "description": "Costs money. CloudGPU starts a GPU, runs one bash command on it, then destroys the GPU, all on its servers, so it finishes even if this assistant disconnects. max_spend_usd and max_hours are enforced by the servers. Retrying with the same idempotency_key never starts a second GPU; this tool generates one if you leave it out and returns it. The disk is erased when the job ends. When automatic_output_collection is available, declare outputs and write only those files under $CLOUDGPU_OUTPUT_DIR for persistent storage before release. Otherwise upload results yourself or print them. Storage retention and fees follow the account policy; collection consumes the same GPU budget and may fail. Requires the user's explicit yes on the GPU, budget and time limit.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32768,
+          "description": "bash command or script to run on the GPU"
+        },
+        "gpu_model": {
+          "description": "GPU model exactly as list_gpus returns it",
+          "type": "string"
+        },
+        "template": {
+          "description": "Template id from list_templates",
+          "type": "string"
+        },
+        "gpu_count": {
+          "default": 1,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "disk_gb": {
+          "description": "Larger system disk: 100, 200 or 500; omit for the standard disk",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "workspace_version_id": {
+          "description": "Immutable Workspace version to restore before the command; requires enabled persistent storage",
+          "type": "string"
+        },
+        "model_references": {
+          "description": "Pinned public model references from resolve_model_reference. Downloads into $CLOUDGPU_MODEL_DIR/<name> before the command; download time consumes the same GPU budget. No R2 cache or remote repository code execution.",
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "repo_id": {
+                "type": "string"
+              },
+              "revision": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "files": {
+                "minItems": 1,
+                "maxItems": 32,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "size_bytes": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "size_bytes"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "name",
+              "repo_id",
+              "revision",
+              "files"
+            ]
+          }
+        },
+        "outputs": {
+          "description": "Explicit relative output files under $CLOUDGPU_OUTPUT_DIR; no globs, symlinks, hidden or credential files. Default total limit 10 MiB, maximum 100 MiB. Only set accept_storage_charges=true after the user agrees to existing paid storage terms. Inspect output_collection after completion; the GPU is released even if saving fails.",
+          "type": "object",
+          "properties": {
+            "files": {
+              "minItems": 1,
+              "maxItems": 16,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              }
+            },
+            "max_bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 104857600
+            },
+            "accept_storage_charges": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "files"
+          ],
+          "additionalProperties": false
+        },
+        "quote_id": {
+          "description": "Server quote from quote_compute, starting quote_; binds configuration and checks price at submission",
+          "type": "string"
+        },
+        "billing_quote_id": {
+          "description": "Accepted source-specific billing quote from estimate_cost; expires after five minutes. Required for whole-hour sources.",
+          "type": "string",
+          "pattern": "^[a-f0-9-]{36}$"
+        },
+        "billing_accepted": {
+          "description": "true only after the user accepts the quoted minimum and billing period; budget must cover that minimum",
+          "type": "boolean"
+        },
+        "max_spend_usd": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Budget for this job in USD (at most 50)"
+        },
+        "max_hours": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Hard time limit in hours (at most 24)"
+        },
+        "user_confirmed": {
+          "type": "boolean",
+          "description": "true only if the user explicitly approved the GPU, budget and time limit"
+        },
+        "idempotency_key": {
+          "description": "Reuse the same value when retrying the same job",
+          "type": "string",
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "command",
+        "max_spend_usd",
+        "max_hours",
+        "user_confirmed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "cancel_job",
+    "description": "Stops a job: if a GPU was started it is destroyed and billing stops. Output not yet uploaded by the command is lost.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "job_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "run_command",
+    "description": "Runs a bash command on the instance as root, in an interactive-style shell so conda/venv from ~/.bashrc are active. Foreground returns the exit code and the last 20k characters of output. For anything longer than a few minutes (training, big downloads) use background=true, then tail_logs.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string"
+        },
+        "command": {
+          "type": "string",
+          "description": "bash command or script"
+        },
+        "background": {
+          "default": false,
+          "type": "boolean"
+        },
+        "timeout_sec": {
+          "default": 600,
+          "description": "Foreground only",
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 3600
+        },
+        "workdir": {
+          "default": "~",
+          "description": "Directory to run in",
+          "type": "string"
+        }
+      },
+      "required": [
+        "instance_id",
+        "command"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "upload",
+    "description": "Copies a local file or directory (this computer) to the instance over SFTP. node_modules, .git and __pycache__ are skipped. Credentials files (.ssh, .env, keys) are refused unless allow_sensitive is true and the user asked for it.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string"
+        },
+        "local_path": {
+          "type": "string"
+        },
+        "remote_path": {
+          "type": "string",
+          "description": "Destination on the instance, e.g. /root/project or /root/data/"
+        },
+        "allow_sensitive": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "instance_id",
+        "local_path",
+        "remote_path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "download",
+    "description": "Copies a file or directory from the instance to this computer. Do this for every result before stop_instance: destroying an instance erases its disk.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string"
+        },
+        "remote_path": {
+          "type": "string"
+        },
+        "local_path": {
+          "type": "string",
+          "description": "Local destination file or directory, e.g. ./outputs/"
+        }
+      },
+      "required": [
+        "instance_id",
+        "remote_path",
+        "local_path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "tail_logs",
+    "description": "Last lines of a background job's log (job_id) or any log file (path), whether the job is still running and its exit code, plus current GPU utilisation and memory.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string"
+        },
+        "job_id": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "lines": {
+          "default": 100,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2000
+        }
+      },
+      "required": [
+        "instance_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "stop_instance",
+    "description": "Destroys the instance and stops billing. Its disk is erased. If commands were run on it in this session and nothing was downloaded, this refuses unless force=true (only after the user confirms the results are not needed).",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string"
+        },
+        "force": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "instance_id"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

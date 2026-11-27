@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-27T10:23:19Z",
+  "generated_at": "2026-11-27T10:34:29Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -924,11 +924,11 @@
       "display_name_en": "friday",
       "description": "Official Python SDK and self-hosted persistent cognitive memory layer for AI coding agents",
       "description_zh": "面向 AI 编程代理（Claude Code、Codex、Cursor、Antigravity）的自托管认知记忆底座：基于知识图谱与向量混合检索，提供零失忆上下文层、多跳爆炸半径遍历（blast-radius traversal）、事实自动更替与可选 libSQL/Turso 无服务器存储。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "friday-memory",
       "license": "MIT",
       "homepage": "https://github.com/friday-memory/friday",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "ai",
       "icon": "",
@@ -961,7 +961,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：包里没有 stdio MCP 入口：唯一可执行 `friday` 不输出即退出，server extra 是 HTTP 服务。",
         "osv": "clean"
       },
       "path": "registry/servers/ai/friday_memory",
@@ -973,11 +974,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "bcbaacfc46ca709f167029d3bd66de837c9849aa6a57172a883e4154e6983928",
-          "size": 1215
+          "sha256": "2ca89924f953507eb4737d842b506e397564f98a96bd37f4997a28a2a34c4315",
+          "size": 1616
         }
       ],
-      "bundle_sha256": "58884ebf350a19adbd8f31e467af61a440c4f8575ef22d9ce07817b59afda9a8",
+      "bundle_sha256": "ed3e3bec058304755b56169a823e8e41a5f2cce5f01089862310e2c5cf7175cc",
       "popularity": {
         "score": 324,
         "downloads_weekly": 24,
@@ -1149,11 +1150,11 @@
       "display_name_en": "Awareness",
       "description": "Local-first memory for AI agents. Structured synthetic memory cards (decision / preference / risk), verifiable state history via ERC-8350, hybrid search. Runs offline, no account.",
       "description_zh": "面向编码 Agent 的本地优先持久记忆：SQLite FTS5 + 本地嵌入，BM25 与向量 RRF 混合检索且检索阶段零 LLM 调用，完全离线、无需账号；在 LongMemEval 基准上给出可复现成绩。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "everest-an",
       "license": "Apache-2.0",
       "homepage": "https://github.com/everest-an/Awareness-Market",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "ai",
       "icon": "",
@@ -1186,7 +1187,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：不是 stdio MCP 服务器——启动即派生脱离父进程的常驻守护进程（监听 127.0.0.1:37800），给当前目录建索引并写入 .awareness/ 与 ~/.awareness，还会尝试打开浏览器面板；stdio 连接随即关闭，守护进程残留。",
         "osv": "clean"
       },
       "path": "registry/servers/ai/local",
@@ -1198,11 +1200,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "720001b3a2ff9b13bfa1ba3f3c25dd92dfd4efc45325e19ebb8ce82928caa063",
-          "size": 1263
+          "sha256": "faf6e54dbf9e315eb0f37f36d6ebc5150db56cbcfa32e98eaad89e7423aeb9b4",
+          "size": 1972
         }
       ],
-      "bundle_sha256": "a8bc4d09af2649eb18d5deaea4f876fd1be163b380aef06ccd8eb9825130fab3",
+      "bundle_sha256": "feb7887f1d727ee65f3249c7a2c4aec4906d91a5ac6477a6eab26bc69ae8f5fa",
       "popularity": {
         "score": 398,
         "downloads_weekly": 733,
@@ -6625,11 +6627,11 @@
       "display_name_en": "mcp-scan",
       "description": "Open-source security scanner for Model Context Protocol (MCP) servers. Audits Claude Desktop, VS Code, Cursor, Windsurf, and 12 more AI tools for secrets, prompt injection, supply-chain risks, and 17 security checks.",
       "description_zh": "开源 MCP 服务器安全扫描器：审计 Claude Desktop、VS Code、Cursor、Windsurf 等 17 款 AI 客户端的 MCP 配置，检测硬编码密钥、提示注入、工具目录投毒（tool-catalog poisoning）、恶意/仿冒包、CVE 漏洞依赖、网络外联与数据流向分析；结果映射到 SOC 2 / GDPR / HIPAA / PCI-DSS / NIST 合规控制项，支持 SBOM（CycloneDX/SPDX）与 SARIF 输出接入 GitHub Code Scanning。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "Abanoub-Rodolf",
       "license": "MIT",
       "homepage": "https://github.com/Abanoub-Rodolf/mcp-scan",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "biz",
       "icon": "",
@@ -6662,7 +6664,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：不是 stdio MCP 服务器——mcp-scan 是安全扫描 CLI，启动即读取本机各 AI 客户端（Cursor、Claude 等）的 MCP 配置并打印报告后退出。",
         "osv": "clean"
       },
       "path": "registry/servers/biz/scan",
@@ -6674,11 +6677,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "cf40c96f824ff1ace9f148bd33cb6037bacf7a43227dc290a6fa15b8ec76b32a",
-          "size": 1495
+          "sha256": "a9a70cbc78cef7a5f191e76c763eb27d3c2309dbb8f1e56b345865b0931b75c8",
+          "size": 2010
         }
       ],
-      "bundle_sha256": "fc665ab0da72f1dc34c2d2b3e8d7285730a2737049cee43c45ed28b853c887f6",
+      "bundle_sha256": "0efe999174fbbb040627e16114cb652742d23b0654ca4d39e0be6969ba2c5a11",
       "popularity": {
         "score": 320,
         "downloads_weekly": 788,
@@ -7939,11 +7942,11 @@
       "display_name_en": "didlogic_mcp",
       "description": "DIDLogic MCP server",
       "description_zh": "DIDLogic MCP 服务器。增加管理 SIP 端点、号码和目的地的功能。",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "author": "UserAd",
       "license": "MIT",
       "homepage": "https://github.com/UserAd/didlogic_mcp",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "comm",
       "icon": "",
@@ -7999,7 +8002,8 @@
         "get_transactions"
       ],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：作者已撤回（yank）PyPI 上 didlogic_mcp 全部 4 个版本，撤回理由「deleting」。",
         "osv": "clean",
         "prompt_injection_findings": []
       },
@@ -8012,8 +8016,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "c169e746d306e48ace0fee93e36678f27b29096ce1c734a71ef25232b39aca05",
-          "size": 1261
+          "sha256": "197259666e12db2c7dc6242c49229287fe5fa5bb31194983baf107f98d470498",
+          "size": 1638
         },
         {
           "path": "tools.json",
@@ -8021,7 +8025,7 @@
           "size": 51696
         }
       ],
-      "bundle_sha256": "a6190c3592ab8c75c01f1ec43b505befcde54e2e6b15efdc611f03126a8f6f56",
+      "bundle_sha256": "a1fcda54c304d95f65e53320bb251a87c34e25e49db484483637605e7e60dd64",
       "popularity": {
         "score": 204,
         "downloads_weekly": 21,
@@ -10907,11 +10911,55 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 42,
+      "tools": [
+        "search_sites",
+        "get_site_details",
+        "compare_sites",
+        "create_design_brief",
+        "get_index_status",
+        "get_index_stats",
+        "get_site_elements",
+        "search_elements",
+        "get_element",
+        "list_categories",
+        "get_annual_categories",
+        "get_annual_nominees",
+        "get_annual_nominee",
+        "get_collections",
+        "search_directory",
+        "audit_url",
+        "analyze_accessibility",
+        "capture_live_site",
+        "analyze_page_structure",
+        "record_site_motion",
+        "get_motion_dna",
+        "analyze_scroll_map",
+        "analyze_hover_census",
+        "analyze_bundle",
+        "analyze_network_capture",
+        "verify_flow",
+        "build_project",
+        "verify_build",
+        "capture_component",
+        "export_design_tokens",
+        "analyze_images",
+        "capture_pose_3d",
+        "capture_scene_3d",
+        "build_pose_stub",
+        "analyze_stack",
+        "build_gsap_stub",
+        "build_motion_manifest",
+        "build_scene_stub",
+        "search_motion",
+        "new_winners",
+        "watch_site",
+        "shortlist_references"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/creative/awwwards",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/awwwards",
@@ -10922,11 +10970,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "e3e8c2c159b291720f90a4192aac1f7d5ab48055f2b91f52220cff502f4ab614",
-          "size": 1065
+          "sha256": "f736c64568f3ae830ae5a543178ccc4de28281967344a7bd309f5a9d02933d96",
+          "size": 1193
+        },
+        {
+          "path": "tools.json",
+          "sha256": "2d901f662747877e476ad3a933e00d9755738a5d4b35e3b577665c805ab3448d",
+          "size": 87744
         }
       ],
-      "bundle_sha256": "f7edef2c1290b4dcd10334e29dc60d5e451bbd9b93186ec9211c825de38bc3f6",
+      "bundle_sha256": "a09237b6c6c2e8453f1c7fa9696e22c1bb43c9dad60a9cb0905b30b9456483a4",
       "popularity": {
         "score": 0
       }
@@ -15280,11 +15333,11 @@
       "display_name_en": "data-check",
       "description": "Data quality inspection toolkit - automated validation, anomaly detection, and distribution analysis",
       "description_zh": "数据质检工具 — 自动化质量检查、异常检测、分布分析，保障数据集质量。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "liuxiaotong",
       "license": "MIT",
       "homepage": "https://github.com/liuxiaotong/data-check",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "data",
       "icon": "",
@@ -15317,7 +15370,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：包代码坏——MCP 模块（datacheck.mcp_server）用 mcp 1.x 低层装饰器，却按另一套签名调用 Server.run()（缺 initialization_options），mcp 1.x / 2.x 下都起不来；包登记的可执行只有 CLI。",
         "osv": "clean"
       },
       "path": "registry/servers/data/knowlyr_datacheck",
@@ -15329,11 +15383,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "66e24df158eb71ba61bcd109e81538897215a55a82e87ee2b7d6893aa9008be3",
-          "size": 1054
+          "sha256": "fe7e70573cab98fb88d05a4ca754037db84b01e7c4a702dbd6857c5ce68f8511",
+          "size": 1687
         }
       ],
-      "bundle_sha256": "560047ce80788adbce85088bd341c62d8a2fd9973654798a11685e7fc51eb1ba",
+      "bundle_sha256": "f0d23cbb077762df7c35bde77465f9beb5f2030c97196fe0a31fcefc70e98df3",
       "popularity": {
         "score": 78,
         "downloads_weekly": 5
@@ -15938,10 +15992,10 @@
       "display_name_en": "PostgreSQL",
       "description": "PostgreSQL MCP server.",
       "description_zh": "PostgreSQL 只读查询 — 暴露 query / schema / 表元信息工具。Connection string 在 args 末。已归档但仍可用。",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "upstream",
       "homepage": "https://github.com/modelcontextprotocol/servers-archived",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "data",
       "icon": "",
@@ -15984,7 +16038,8 @@
         "query"
       ],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：@modelcontextprotocol/server-postgres 已被官方归档，npm 弃用说明为「Archived and unmaintained; no security guarantees」。",
         "prompt_injection_findings": [],
         "osv": "unscanned"
       },
@@ -16002,8 +16057,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "e7a44384bca73d453a5b5f4635594821a34258b9cf4c3f306d2210e2c6fd1d98",
-          "size": 1151
+          "sha256": "df927366f3197364e26c62ef84f72a0b7f4acc60ddd8ba628fc5fb1b263ab09b",
+          "size": 1621
         },
         {
           "path": "tools.json",
@@ -16011,7 +16066,7 @@
           "size": 241
         }
       ],
-      "bundle_sha256": "ecfcc1cb14b1a798149680270bb7f60b455d64fd48b8d6b9ca9c740898852425",
+      "bundle_sha256": "3a49a76cd2798619e4ecfd8a53c3c8e9d6e3e38ff065430fb4b6b4eb226098a7",
       "popularity": {
         "score": 249,
         "stars": 305
@@ -20664,11 +20719,29 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 16,
+      "tools": [
+        "castov_timestamp",
+        "castov_detect_id",
+        "castov_cidr",
+        "castov_port",
+        "castov_cron",
+        "castov_timezone",
+        "castov_secret",
+        "castov_jwt_decode",
+        "castov_hash",
+        "castov_scan_secrets",
+        "castov_json_to_ts_pipeline",
+        "castov_cron_timezone_pipeline",
+        "castov_jwt_inspect_pipeline",
+        "castov_json_to_zod",
+        "castov_env_to_zod",
+        "castov_sql_to_prisma"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/castov",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/castov",
@@ -20679,11 +20752,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "e0695a24a741d1df0c637c683c43eee894c55a1ea073c4548adbb7f8393a9f8a",
-          "size": 1203
+          "sha256": "a004ca4dbb7692e922ba6d6c119b00fe296b9cfb0f0aa1a5e658310f2ce87459",
+          "size": 1331
+        },
+        {
+          "path": "tools.json",
+          "sha256": "17d90bb03b1b62f145c8973ef1feb2be3708e8cefb61dc8cce227b3aeadd11ee",
+          "size": 10480
         }
       ],
-      "bundle_sha256": "71950c76258668a7bd8dd00c0b48f50b7bb3e0f868230cc20241b3b2bd24f5c3",
+      "bundle_sha256": "55855890200745348d7102d4956078d88909efdc613b0be98ee5e6d5624af841",
       "popularity": {
         "score": 0
       }
@@ -23649,11 +23727,11 @@
       "display_name_en": "knowlyr-sandbox",
       "description": "Code Agent execution sandbox - reproducible Docker environments for isolated code task execution and trajectory replay",
       "description_zh": "Code Agent 执行沙箱 — Docker 隔离、文件捕获、超时控制，为 LLM 代码代理提供安全的运行环境。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "liuxiaotong",
       "license": "MIT",
       "homepage": "https://github.com/liuxiaotong/knowlyr-agent/tree/main/packages/sandbox",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "dev",
       "icon": "",
@@ -23686,7 +23764,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：包代码坏——MCP 模块（agentsandbox.mcp_server）用 mcp 1.x 低层装饰器，却按另一套签名调用 Server.run()（缺 initialization_options），mcp 1.x / 2.x 下都起不来；包登记的可执行只有 CLI。",
         "osv": "clean"
       },
       "path": "registry/servers/dev/knowlyr_sandbox",
@@ -23698,11 +23777,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "54b067f598fa2d52eace970e4b9d816ba4e9352fd73d7aceae2277d390f8c33a",
-          "size": 1161
+          "sha256": "2f39f620465246c09b5e0cc83e7bc3d14daf8909a2c031749e13e629dabfb917",
+          "size": 1800
         }
       ],
-      "bundle_sha256": "7892a536f6e399cfd6e2e2ea1fcaae952bab2355fececce3e4c4b78b32e640c6",
+      "bundle_sha256": "40bc9274aa4bef639b2dd64696da45c65566cd65ca3a68c550e80d641ed6a078",
       "popularity": {
         "score": 95,
         "downloads_weekly": 8
@@ -27496,11 +27575,11 @@
       "display_name_en": "AgentGate",
       "description": "Scan, lock, and gate your MCP servers — npm audit + lockfile + CI drift gate for the MCP era",
       "description_zh": "MCP 服务器供应链安全门禁：安全扫描（工具投毒/凭证泄露/SSRF/RCE）+ 工具面锁文件（防 rug-pull）+ CI 漂移门禁（GitHub Action/pre-commit）+ 公开安全通报库，[含中文文档](https://github.com/wookat/agentgate/blob/main/README.zh-CN.md)。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "wookat",
       "license": "Apache-2.0",
       "homepage": "https://github.com/wookat/agentgate",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "infra",
       "icon": "",
@@ -27533,7 +27612,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：不是 stdio MCP 服务器——`mcp-agentgate scan` 是扫描 CLI，读取本机各 AI 客户端的 MCP 配置、联网查其公告库并打印报告后退出。",
         "osv": "clean"
       },
       "path": "registry/servers/infra/agentgate",
@@ -27545,11 +27625,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "091a9a62a2f483769455c1cc1ac6bb48756e1771d0ad08f52aafa33c85b5335b",
-          "size": 1221
+          "sha256": "0e96da6cd8a9b2a16c225386555980a373862b90e5b5ecafe3ff73487d97b7b3",
+          "size": 1728
         }
       ],
-      "bundle_sha256": "9c63641774e78ea191c1aaab01dfc8ecf4f2e89ca2d816960b91f3022c923a03",
+      "bundle_sha256": "bf3b71047fda14a575f5df56bb541cb14d088739cb06ebb930ec873752e377e9",
       "popularity": {
         "score": 161,
         "downloads_weekly": 40
@@ -27562,11 +27642,11 @@
       "display_name_en": "AgentWarden",
       "description": "Zero-dependency static security gate, integrity lock and provenance SBOM for AI Agent Skills and MCP configurations",
       "description_zh": "AI Agent Skill、Tool 与 MCP 配置静态安全门禁，检测凭证泄露、危险命令、提示词注入与供应链风险，用 skills.lock 锁定完整性并验证 Ed25519 来源。输出脱敏 SARIF / CycloneDX 1.5 SBOM，支持 GitHub Actions CI 阻断。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "juangh123",
       "license": "MIT",
       "homepage": "https://github.com/juangh123/AgentWarden",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "infra",
       "icon": "",
@@ -27599,7 +27679,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：不是 stdio MCP 服务器——Agent Skills 安全扫描 / 包管理 CLI，不带子命令只打印用法即退出，包里没有 MCP 服务器入口。",
         "osv": "clean"
       },
       "path": "registry/servers/infra/agentwarden_cli",
@@ -27611,11 +27692,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "32c3dc17d020d62e745d7cb01fcbe3405d24b1e800c807a86b984092805753b4",
-          "size": 1231
+          "sha256": "91ca0b7795209977dfd8959bce46a44cf233dc68703abc1493f9ef3fffd48f19",
+          "size": 1720
         }
       ],
-      "bundle_sha256": "2a0a97084592b3a237d5d4e552c80945da79a5c71dd11687dd941cb83d2dcf3c",
+      "bundle_sha256": "a6bba3b07d5e9c00f7d2b7b8176c9d7c9a033561b0f991c170967ca986d7efd8",
       "popularity": {
         "score": 163,
         "downloads_weekly": 42
@@ -28288,11 +28369,73 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 60,
+      "tools": [
+        "request_top_up",
+        "wait_for_funds",
+        "get_agent_readiness",
+        "assess_task_fit",
+        "list_rental_regions",
+        "list_regional_offers",
+        "list_task_templates",
+        "prepare_task_template",
+        "compare_compute_costs",
+        "prepare_task_pipeline",
+        "get_job_batch_receipt",
+        "prepare_job_batch",
+        "get_job_batch",
+        "get_server_job_batch",
+        "run_server_job_batch",
+        "cancel_server_job_batch",
+        "run_job_batch",
+        "get_storage",
+        "list_files",
+        "list_workspaces",
+        "list_workspace_versions",
+        "get_workspace_version",
+        "list_workspace_instances",
+        "get_workspace_application",
+        "quote_storage_budget",
+        "confirm_storage_budget",
+        "resume_artifact_upload",
+        "apply_workspace",
+        "delete_workspace_version",
+        "upload_artifact",
+        "download_artifact",
+        "save_workspace",
+        "delete_file",
+        "diagnose_job",
+        "save_job_output",
+        "get_compute_catalog",
+        "quote_compute",
+        "quote_job_billing",
+        "get_account",
+        "list_gpus",
+        "list_templates",
+        "estimate_cost",
+        "list_models",
+        "connect_account",
+        "finish_connect",
+        "get_job",
+        "list_jobs",
+        "get_status",
+        "list_instances",
+        "create_instance",
+        "resolve_model_reference",
+        "prepare_model_deployment",
+        "prepare_job_rerun",
+        "run_job",
+        "cancel_job",
+        "run_command",
+        "upload",
+        "download",
+        "tail_logs",
+        "stop_instance"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/infra/cloudgpu",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/cloudgpu",
@@ -28303,11 +28446,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1b8975044cdc91960d367ce894717813b470b530789bf4fb75b0bfb295ac92e3",
-          "size": 1340
+          "sha256": "ebcc686285f62e7c46e5ea07afdd1cd5bf32df1529408c5ea1ce05576f9ee771",
+          "size": 1468
+        },
+        {
+          "path": "tools.json",
+          "sha256": "188eb7cc156ec8360b16705a3acc3b0ac632580d831a5923181d483002eb2a3a",
+          "size": 75827
         }
       ],
-      "bundle_sha256": "d9bc06e7b0eb07fa31ac46d1e617cb11ea7ebc0c985585d579d6ed4c8f200bb6",
+      "bundle_sha256": "646627f051938ad15632329aa33de442dd814ac7a766be184c73f51db529ee5e",
       "popularity": {
         "score": 0
       }
@@ -28803,11 +28951,11 @@
       "display_name_en": "fencescan",
       "description": "Find tool calls that could fire the same effect twice. Reports evidence, renders no verdict. Zero dependencies.",
       "description_zh": "扫描 MCP 服务器代码，找出重试后可能重复执行的工具调用（如重复扣款、重复发送）。只给出证据和候选项，不给判定——真正的判断需要读代码。零依赖，`npx fencescan` 直接运行。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "aurumflux20",
       "license": "MIT",
       "homepage": "https://github.com/aurumflux20/fencescan",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "infra",
       "icon": "",
@@ -28840,7 +28988,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：不是 stdio MCP 服务器——扫描 CLI，扫描当前目录源码里的 MCP 工具声明并打印报告后退出。",
         "osv": "clean"
       },
       "path": "registry/servers/infra/fencescan",
@@ -28852,11 +29001,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "6ff8cefb74c114db13efc5353e90755b896fe7885ab32eea9442219abe60bc5d",
-          "size": 1188
+          "sha256": "ce0af94703bfc2e5df554eadd641887d0e2b1fef972e98448395bcd3110fcb29",
+          "size": 1609
         }
       ],
-      "bundle_sha256": "671d260d6828b017cc2d0e1ee1fd09137619de0f166ff4f0805a81e5cf9a4a63",
+      "bundle_sha256": "46d80a757bd7a6a2fd2f8748707127086be4477dd1664fafcd0de5b49283d831",
       "popularity": {
         "score": 100,
         "downloads_weekly": 9
@@ -29414,11 +29563,11 @@
       "display_name_en": "model-audit",
       "description": "LLM distillation detection and model fingerprint audit tool - text source detection, model identity verification, and distillation analysis",
       "description_zh": "LLM 蒸馏检测与模型指纹审计 — 文本溯源、身份验证、蒸馏关系判定，守护模型知识产权。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "liuxiaotong",
       "license": "MIT",
       "homepage": "https://github.com/liuxiaotong/model-audit",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "infra",
       "icon": "",
@@ -29451,7 +29600,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：包代码坏——MCP 模块（modelaudit.mcp_server）用 mcp 1.x 低层装饰器，却按另一套签名调用 Server.run()（缺 initialization_options），mcp 1.x / 2.x 下都起不来；包登记的可执行只有 CLI。",
         "osv": "clean"
       },
       "path": "registry/servers/infra/knowlyr_modelaudit",
@@ -29463,11 +29613,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1dbe7e8df27f7a58af075f9fe4f23bcb8e1f60385f63ec1a5b9b633396990d08",
-          "size": 1122
+          "sha256": "2f42a5ea228c2e40d24f7412e4ece501975ac288bee54caedf2bb08c06188fa8",
+          "size": 1757
         }
       ],
-      "bundle_sha256": "f4af3649e1918a3cde8fbc1ec867f9f6cb0704a44f9d43815007d53e8918fde1",
+      "bundle_sha256": "6be130646256adf9b434bef446346ebda72c6ab525b0360431c749dc75655eae",
       "popularity": {
         "score": 138,
         "downloads_weekly": 7,
@@ -30317,11 +30467,11 @@
       "display_name_en": "Preloop",
       "description": "Preloop - Control plane & safety layer for your agentic AI workforce",
       "description_zh": "开源 AI 智能体控制平面与软件工厂：每一次工具调用和模型调用都会被允许、拒绝或交由人工审批，计入预算并记录；智能体可由工单、Webhook 和 CI 触发，在托管容器或自有 runner 中运行，以 Pull Request 交付成果。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "preloop",
       "license": "Apache-2.0",
       "homepage": "https://github.com/preloop/preloop",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "infra",
       "icon": "",
@@ -30354,7 +30504,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：包里没有 stdio MCP 入口：唯一可执行 `preloop-sync` 是同步工具，MCP 只在其 HTTP API 服务内。",
         "osv": "clean"
       },
       "path": "registry/servers/infra/preloop",
@@ -30366,11 +30517,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "113f05156685d35e698940a727bc0109434d8715defb0a2b73f1cc3a79708a36",
-          "size": 1129
+          "sha256": "ec5d45d21361eb8596fead3c267cee67439d44e62c15b8a7c4cb98f24b1f7e85",
+          "size": 1544
         }
       ],
-      "bundle_sha256": "7e59b10a11da07f71e01078658a6069fa892f7a692b792631f4cc05b78c00db6",
+      "bundle_sha256": "258621214b7035a1686d1c66e76ad0ed745f7c3e84857078ad3fb7f3f6af67bf",
       "popularity": {
         "score": 0
       }
@@ -32578,11 +32729,11 @@
       "display_name_en": "ffmpeg-skill",
       "description": "Agent Skill that gives coding agents (Claude Code, Cursor, Codex) a local video editor: 42 FFmpeg tools with a machine-readable contract, contract-derived MCP server, FFmpeg capability detection, probe-first / verify-last workflow. Cut, join, silence remo",
       "description_zh": "给编码 Agent 一个本地视频编辑器：42 个基于 FFmpeg 的工具（剪辑、拼接、字幕、调色、转码等），带机器可读的调用约定，Agent 编辑后会自行检查输出结果；无云端、无需 API Key。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "kajisho5",
       "license": "MIT",
       "homepage": "https://github.com/kajisho5/ffmpeg-skill",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "media",
       "icon": "",
@@ -32615,7 +32766,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：不是 stdio MCP 服务器——`npx ffmpeg-skill` 是安装器，启动即往用户的 ~/.claude/skills 写入 Claude Code 技能后退出；MCP 服务器是装好的技能目录里的 mcp/server.py。按清单启动只会改动用户的 AI 客户端配置。",
         "osv": "clean"
       },
       "path": "registry/servers/media/ffmpeg_skill",
@@ -32627,11 +32779,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "cbb603aeddda2ff8af4ab5ccf196b82235e35ed8241387fc6cbc2f3639719e95",
-          "size": 1303
+          "sha256": "8b56b18af15c359207ef56fb763423fbf803b8fbffda82af5839868fd396dab0",
+          "size": 2006
         }
       ],
-      "bundle_sha256": "fcf4be2f304fbf3d6ad56a2e1c94bf6f69fa93667fc0a8cbdf2128e994dc1c4e",
+      "bundle_sha256": "3403cfcbc8cf4ac39607147675b33166b66fafea949a91be038fad4319a6316a",
       "popularity": {
         "score": 0
       }
@@ -36256,11 +36408,11 @@
       "display_name_en": "bitcoin-mcp",
       "description": "A Model Context Protocol server for interacting with Bitcoin.",
       "description_zh": "使 AI 模型能与比特币交互的 MCP 服务器 (生成密钥/验证地址/解码交易/查询区块链等)。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "AbdelStark",
       "license": "MIT",
       "homepage": "https://github.com/AbdelStark/bitcoin-mcp",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "misc",
       "icon": "",
@@ -36301,7 +36453,8 @@
         "pay_invoice"
       ],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：bitcoin-mcp 全部 6 个版本被原维护者在 npm 标记弃用（Package no longer supported）。",
         "osv": "clean",
         "prompt_injection_findings": []
       },
@@ -36314,8 +36467,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "da3596d1ad7a37cf7d8ad21f4728da8322b25574dbbdbe407f2436c92840f5eb",
-          "size": 1142
+          "sha256": "a6fd8c7ba01e92ea39a202e86b82927b2fd2c19e6bbc3390a05c24438250b6a0",
+          "size": 1527
         },
         {
           "path": "tools.json",
@@ -36323,7 +36476,7 @@
           "size": 2141
         }
       ],
-      "bundle_sha256": "e76649ffccfc0a82897483be324b785e5726a39ffe15d5ae858f5464ae88c6da",
+      "bundle_sha256": "f99ae5225f0386ead39cb50bce7f0f24d90c2387ec6c7496675bbb6de7f751f8",
       "popularity": {
         "score": 345,
         "downloads_weekly": 35,
@@ -36529,11 +36682,11 @@
       "display_name_en": "cal-mcp",
       "description": "A MCP server for evaluating mathematical expressions",
       "description_zh": "用于数学表达式计算的 MCP 服务器。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "pwh-pwh",
       "license": "MIT",
       "homepage": "https://github.com/pwh-pwh/cal-mcp",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "misc",
       "icon": "",
@@ -36566,7 +36719,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：npm 包的 bin（cal-mcp）缺 shebang，被当成 shell 脚本执行即报错，任何启动方式都起不来。",
         "osv": "clean"
       },
       "path": "registry/servers/misc/cal",
@@ -36578,11 +36732,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "79b79428d10baf31103935d9f4641b4d05fc9e26ad939852c549b3a214feafc3",
-          "size": 906
+          "sha256": "b5cd6a084ac110e8d825795e1954ab1ba2f9230a36073476dd276c24c8effa87",
+          "size": 1317
         }
       ],
-      "bundle_sha256": "67e8ebcb079d9c12814ae802dfb1afc2f6ed2f71ad6c4ff4792c60ef388afa82",
+      "bundle_sha256": "dc643ec2edfcc662b6e4a704aad3a1977f657e60a9806173dd5b31124911c63e",
       "popularity": {
         "score": 253,
         "downloads_weekly": 23,
@@ -36739,11 +36893,11 @@
       "display_name_en": "mcp-cli",
       "description": "A CLI inspector for the Model Context Protocol",
       "description_zh": "用于测试 MCP 服务器的 CLI 工具 (另一版本)。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "wong2",
       "license": "AGPL-3.0",
       "homepage": "https://github.com/wong2/mcp-cli",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "misc",
       "icon": "",
@@ -36776,7 +36930,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：不是 MCP 服务器——@wong2/mcp-cli 是交互式 MCP 客户端，启动后等待键盘输入。",
         "osv": "clean"
       },
       "path": "registry/servers/misc/cli_wong2",
@@ -36788,11 +36943,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a329967ac620075193d3a711c8d9c407ecacce74eba3c956c82d8631feb0cac9",
-          "size": 925
+          "sha256": "385169bff27f6c73b97deebb3a8b540d81703122cd809db255d0141d788d0dc2",
+          "size": 1308
         }
       ],
-      "bundle_sha256": "d18a6e3b2587222c2967019d564af0df51966221618d4ae88cdcb58263230f12",
+      "bundle_sha256": "f6e34bd09ef0204262b0b9bef6b307ecb902b35d045e5aac4d8319123db0bde9",
       "popularity": {
         "score": 265,
         "stars": 447
@@ -39844,11 +39999,37 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 24,
+      "tools": [
+        "get-athlete-profile",
+        "get-athlete-stats",
+        "get-activity-details",
+        "get-recent-activities",
+        "list-athlete-clubs",
+        "list-starred-segments",
+        "get-segment",
+        "explore-segments",
+        "star-segment",
+        "get-segment-effort",
+        "list-segment-efforts",
+        "list-athlete-routes",
+        "get-route",
+        "export-route-gpx",
+        "export-route-tcx",
+        "get-activity-streams",
+        "get-activity-laps",
+        "get-athlete-zones",
+        "get-all-activities",
+        "get-activity-photos",
+        "get-server-version",
+        "connect-strava",
+        "disconnect-strava",
+        "check-strava-connection"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/misc/strava",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/misc/strava",
@@ -39859,11 +40040,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "5a9ce0de50ce101933ac88d7447cfb9e1b06a466aa409877430dcc6969064356",
-          "size": 962
+          "sha256": "804ef20f4215aaaeeaba8b6c6759b3c5615431eb1b0c3b4418bed0335984e649",
+          "size": 1090
+        },
+        {
+          "path": "tools.json",
+          "sha256": "9848d2e3d14a9edf5893a271cb6e4a0f455396317c53a7df7a892ee3d9221cd8",
+          "size": 22149
         }
       ],
-      "bundle_sha256": "ee6cb3cc9823d3504678d2c3e9c631318dce6523d2622a33c5c7c8563cb7c841",
+      "bundle_sha256": "f184f00154b67009e4fb757e116d3a45792b3229dcbd4b1ff08f966fbb6ab47a",
       "popularity": {
         "score": 270,
         "stars": 502
@@ -41123,10 +41309,10 @@
       "display_name_en": "ws-mcp",
       "description": "Wrap MCP servers with a WebSocket.",
       "description_zh": "用 WebSocket 包装 MCP 服务器 (用于 [kitbitz](https://github.com/nick1udwig/kibitz))。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "nick1udwig",
       "homepage": "https://github.com/nick1udwig/ws-mcp",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "misc",
       "icon": "",
@@ -41159,7 +41345,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：不是 stdio MCP 服务器——ws-mcp 把其他 stdio 服务器包装成 WebSocket 服务（ws://localhost:10125），默认配置会拉起 wcgw（可执行 shell）与 fetch。",
         "osv": "clean"
       },
       "path": "registry/servers/misc/ws",
@@ -41171,11 +41358,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "ef61da862603bbb8862b1647f826e165a3a0f6fe590cd5d40b07a62da3a72c8c",
-          "size": 938
+          "sha256": "a88e464545e349c0d3a8eb8bac0d03cee5fe142d2d1def327f2fe3cd2972b39c",
+          "size": 1477
         }
       ],
-      "bundle_sha256": "d1cad8a02c1b49f0533e5a2014d94dfae8270f5dbdf569bb6edf5982ddd3bd48",
+      "bundle_sha256": "8be2ca80d65906aeb9d19d47edc76130dc04e134e750971f96e7f46484c55cb1",
       "popularity": {
         "score": 134,
         "stars": 21
@@ -45195,11 +45382,47 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 34,
+      "tools": [
+        "open_app",
+        "get_app_html",
+        "get_app_guide",
+        "list_apps",
+        "get_app",
+        "get_app_skill",
+        "save_app",
+        "edit_app",
+        "call_function",
+        "data_list",
+        "apply_data_writes",
+        "data_changes",
+        "get_data_version",
+        "list_data_collections",
+        "data_add_item",
+        "data_update_item",
+        "data_move_item",
+        "data_delete_item",
+        "file_list",
+        "file_read",
+        "file_write",
+        "file_delete",
+        "list_app_checkpoints",
+        "restore_app",
+        "delete_app",
+        "purge_app",
+        "app_store_list",
+        "preview_app_store_entry",
+        "install_from_app_store",
+        "get_ui_preference_schema",
+        "security_set",
+        "screen_read",
+        "screen_act",
+        "screen_poll"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/office/open_apps",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/open_apps",
@@ -45210,11 +45433,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1dfc39a5fd520c643209213a4ac244401e7451aa5d81a9d91d5fd610d149eef6",
-          "size": 1267
+          "sha256": "8375cbeaa823050e4fb32d42725f51ee7ed6a889c920844e0c0a543fecdc19f5",
+          "size": 1395
+        },
+        {
+          "path": "tools.json",
+          "sha256": "320696ea5a20445bc6955c9ceaf06841bef3cbda639c6a5718489df046a192d2",
+          "size": 33574
         }
       ],
-      "bundle_sha256": "b31155d6af0f28e788f2c5f7a0e4d9b899d3c2e54d07801a3b020c382c00eaa6",
+      "bundle_sha256": "6e383c9ead63cfe0728317684976d202bacb41eb76074211cda86f9e20ba3daa",
       "popularity": {
         "score": 349,
         "downloads_weekly": 82,
@@ -49845,10 +50073,10 @@
       "display_name_en": "Brave Search",
       "description": "Brave Search MCP server.",
       "description_zh": "Brave 搜索 API — web_search / local_search。隐私友好的搜索后端,与 LLM 主搜索流互补。已归档但仍可用。",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "upstream",
       "homepage": "https://github.com/modelcontextprotocol/servers-archived",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "web",
       "icon": "",
@@ -49892,7 +50120,8 @@
         "brave_local_search"
       ],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：@modelcontextprotocol/server-brave-search 已被官方归档并在 npm 标记弃用；注册表 brave_search 条目可替代。",
         "prompt_injection_findings": [],
         "osv": "unscanned"
       },
@@ -49910,8 +50139,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "6923ad93b899ff12647d9f20319bf9d19c78e4d2aeaa8cdf4888d9fa6b3b62e4",
-          "size": 1193
+          "sha256": "fce8aac613e3f064c6ae6f7ff37d54297bfb3271ac905d0212a4facd1f0b27ad",
+          "size": 1645
         },
         {
           "path": "tools.json",
@@ -49919,7 +50148,7 @@
           "size": 1906
         }
       ],
-      "bundle_sha256": "15a165b65844721e75a236c13ee3b6cc2bc1e4d132794860321f2d570093a6f1",
+      "bundle_sha256": "b95f4d94f92af454afe04f28ec5e45b01c0d28e5b94fb50a6e1cd0cc5c8c6689",
       "popularity": {
         "score": 249,
         "stars": 305
@@ -52145,11 +52374,17 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 4,
+      "tools": [
+        "render-website-screenshot",
+        "render-website-screenshot-as-file",
+        "extract-website-markdown",
+        "get-usage"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/screenshotone",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/screenshotone",
@@ -52160,11 +52395,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "b969c6a2325acc4dfa1eb9f024c82f15a4d5b114e28fb5c0dedd0d96defd34ad",
-          "size": 965
+          "sha256": "05d17295de7d5b4520bb23bef8a5b5a2e1e9df0378b6c226af4fd9df9da3dde5",
+          "size": 1092
+        },
+        {
+          "path": "tools.json",
+          "sha256": "6458f83b61d44659e9362c57ef9c81dc213287c4f15dfa73c5403aeb3a7a2183",
+          "size": 4998
         }
       ],
-      "bundle_sha256": "f1e96f6abdac5589143522db72439824fc01b7144b24bc75c42672dd39476b77",
+      "bundle_sha256": "cd34c1a77ecc4d06e8f7ab20b74e35b1353042112b9a033521d8163128bc3c38",
       "popularity": {
         "score": 0
       }

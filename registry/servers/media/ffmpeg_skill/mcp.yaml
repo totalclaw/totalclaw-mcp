@@ -1,12 +1,14 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
 # 人工修改后请同步递增 version。
+# 2026-11-27 全量杀毒 / 实探复核：拒绝（详见 docs/removed-2026-11-27.md）
+# 审核意见：人工复核（2026-11-27）：不是 stdio MCP 服务器——`npx ffmpeg-skill` 是安装器，启动即往用户的 ~/.claude/skills 写入 Claude Code 技能后退出；MCP 服务器是装好的技能目录里的 mcp/server.py。按清单启动只会改动用户的 AI 客户端配置。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: ffmpeg_skill
 display_name: ffmpeg-skill
 display_name_en: ffmpeg-skill
-version: 0.1.1
+version: 0.1.2
 description: 'Agent Skill that gives coding agents (Claude Code, Cursor, Codex) a local video editor: 42 FFmpeg tools with
   a machine-readable contract, contract-derived MCP server, FFmpeg capability detection, probe-first / verify-last workflow.
   Cut, join, silence remo'
@@ -15,7 +17,7 @@ author: kajisho5
 license: MIT
 homepage: https://github.com/kajisho5/ffmpeg-skill
 repository: https://github.com/kajisho5/ffmpeg-skill
-verified: true
+verified: false
 category: media
 tags:
 - media
@@ -37,5 +39,6 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: allow
+  scan_verdict: block
+  reason: "人工复核（2026-11-27）：不是 stdio MCP 服务器——`npx ffmpeg-skill` 是安装器，启动即往用户的 ~/.claude/skills 写入 Claude Code 技能后退出；MCP 服务器是装好的技能目录里的 mcp/server.py。按清单启动只会改动用户的 AI 客户端配置。"
   osv: clean

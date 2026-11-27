@@ -1,0 +1,342 @@
+[
+  {
+    "name": "castov_timestamp",
+    "description": "Inspect and convert a Unix epoch timestamp (seconds or milliseconds) to UTC, ISO 8601, and localized human time.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "Unix epoch timestamp in seconds (10 digits) or milliseconds (13 digits), e.g. '1713456789'"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_detect_id",
+    "description": "Detect identifier format and decode embedded creation timestamp from MongoDB ObjectId, UUIDv7, ULID, or Twitter/Discord Snowflake ID.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identifier string (UUIDv7, ULID, 24-hex ObjectId, or numeric Snowflake ID)"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_cidr",
+    "description": "Calculate IPv4 CIDR subnet mask, wildcard mask, network address, broadcast address, usable IP range, and total host count.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "cidr": {
+          "type": "string",
+          "description": "IPv4 CIDR block such as '192.168.1.0/24', '10.0.0.0/16', or '/24'"
+        }
+      },
+      "required": [
+        "cidr"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_port",
+    "description": "Inspect network port number (1-65535) for standard IANA service assignment, transport protocol (TCP/UDP), and typical application purpose.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "port": {
+          "type": "number",
+          "description": "TCP/UDP port number between 1 and 65535 (e.g. 3000, 5432, 6379)"
+        }
+      },
+      "required": [
+        "port"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_cron",
+    "description": "Parse a 5-field cron expression into plain English and calculate the next 5 upcoming execution times in a specified IANA timezone.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "expression": {
+          "type": "string",
+          "description": "5-field cron expression (minute hour day-of-month month day-of-week), e.g. '*/15 * * * *' or '0 9 * * 1-5'"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "Optional IANA timezone name (defaults to 'UTC', e.g. 'America/New_York', 'Europe/London')"
+        }
+      },
+      "required": [
+        "expression"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_timezone",
+    "description": "Convert a date/time string between two IANA time zones with exact UTC offset, timezone abbreviation, and Daylight Saving Time (DST) transition warnings.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "dateTime": {
+          "type": "string",
+          "description": "Date/time string in 'YYYY-MM-DD HH:mm' or ISO 8601 format, e.g. '2026-03-29 14:30'"
+        },
+        "fromZone": {
+          "type": "string",
+          "description": "Source IANA timezone (e.g. 'America/New_York' or 'UTC')"
+        },
+        "toZone": {
+          "type": "string",
+          "description": "Target IANA timezone (e.g. 'Europe/Paris' or 'Asia/Tokyo')"
+        }
+      },
+      "required": [
+        "dateTime",
+        "fromZone",
+        "toZone"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_secret",
+    "description": "Generate cryptographically secure random secrets (CSPRNG) in Hex, Base64URL, API Key ('sk_live_...'), and sortable UUIDv7 formats for .env files and JWT signing.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "bytes": {
+          "type": "number",
+          "description": "Optional entropy length in bytes between 8 and 512 (default: 32 bytes / 256 bits)"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_jwt_decode",
+    "description": "Decode a JSON Web Token (JWT) header and payload locally offline without external network calls, inspecting claims (exp, iat, nbf, sub, iss) and expiration status.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "description": "Encoded JWT string (header.payload.signature)"
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_hash",
+    "description": "Compute deterministic cryptographic hashes (sha256, sha384, sha512, sha1, md5) and Base64 / Base64URL encodings of input text locally.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Input text string to hash and encode"
+        },
+        "algorithm": {
+          "type": "string",
+          "enum": [
+            "sha256",
+            "sha384",
+            "sha512",
+            "sha1",
+            "md5"
+          ],
+          "description": "Hash algorithm to use (default: 'sha256')"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_scan_secrets",
+    "description": "Scan a code snippet, git diff, or .env configuration text locally for leaked credentials (AWS Access Keys, Stripe Live Keys, OpenAI API Keys, GitHub PATs, Slack Tokens, and RSA/OpenSSH Private Keys).",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "Code snippet, configuration file text, or git diff to audit for hardcoded secrets"
+        }
+      },
+      "required": [
+        "content"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_json_to_ts_pipeline",
+    "description": "Full developer pipeline: validate JSON (raw or base64), format, analyze structure, and generate strongly-typed TypeScript interfaces.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "json": {
+          "type": "string",
+          "description": "JSON string or Base64-encoded JSON to convert"
+        },
+        "rootName": {
+          "type": "string",
+          "description": "Optional root interface name (default: 'RootObject')"
+        }
+      },
+      "required": [
+        "json"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_cron_timezone_pipeline",
+    "description": "Cron schedule & multi-timezone pipeline: explain cron expression and calculate next 5 upcoming executions simultaneously converted across UTC, Local, America/New_York (EST/EDT), Europe/Paris (CET/CEST), and Asia/Tokyo (JST).",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "expression": {
+          "type": "string",
+          "description": "5-field cron expression, e.g. '0 9 * * 1-5' or '*/15 * * * *'"
+        },
+        "baseTimezone": {
+          "type": "string",
+          "description": "Optional base timezone (defaults to 'UTC', e.g. 'America/New_York')"
+        }
+      },
+      "required": [
+        "expression"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_jwt_inspect_pipeline",
+    "description": "Comprehensive JWT inspection pipeline: decode header & payload, check signature algorithm, evaluate timestamp claims (iat, exp, nbf), calculate remaining TTL, and detect security vulnerabilities.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "description": "Encoded JWT string (header.payload.signature)"
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_json_to_zod",
+    "description": "Generate a deterministic Zod v4 or v3 validation schema from a JSON sample locally, inferring email, URL, ISO datetime, integer, and nested object types.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "json": {
+          "type": "string",
+          "description": "JSON string to convert into a Zod schema"
+        },
+        "zodVersion": {
+          "type": "string",
+          "enum": [
+            "v4",
+            "v3"
+          ],
+          "description": "Target Zod version ('v4' uses z.email()/z.url(), 'v3' uses z.string().email())"
+        },
+        "rootName": {
+          "type": "string",
+          "description": "Root schema variable name (default: 'schema')"
+        }
+      },
+      "required": [
+        "json"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_env_to_zod",
+    "description": "Convert a .env file content into a type-safe Zod v4/v3 schema or @t3-oss/env-nextjs env.ts configuration without exposing any secret values, and detect NEXT_PUBLIC_ secret leaks.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "envContent": {
+          "type": "string",
+          "description": "Raw .env file content (KEY=VALUE lines)"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "zod-v4",
+            "zod-v3",
+            "t3-env",
+            "env-example"
+          ],
+          "description": "Output mode (default: 'zod-v4')"
+        }
+      },
+      "required": [
+        "envContent"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "castov_sql_to_prisma",
+    "description": "Convert SQL CREATE TABLE DDL statements into Prisma ORM models with inferred relations and native @db types.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sql": {
+          "type": "string",
+          "description": "SQL CREATE TABLE DDL statements"
+        }
+      },
+      "required": [
+        "sql"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

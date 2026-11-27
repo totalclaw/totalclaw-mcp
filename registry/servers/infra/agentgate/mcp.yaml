@@ -1,19 +1,21 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27 全量杀毒 / 实探复核：拒绝（详见 docs/removed-2026-11-27.md）
+# 审核意见：人工复核（2026-11-27）：不是 stdio MCP 服务器——`mcp-agentgate scan` 是扫描 CLI，读取本机各 AI 客户端的 MCP 配置、联网查其公告库并打印报告后退出。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: agentgate
 display_name: AgentGate
 display_name_en: AgentGate
-version: 0.1.1
+version: 0.1.2
 description: Scan, lock, and gate your MCP servers — npm audit + lockfile + CI drift gate for the MCP era
 description_zh: MCP 服务器供应链安全门禁：安全扫描（工具投毒/凭证泄露/SSRF/RCE）+ 工具面锁文件（防 rug-pull）+ CI 漂移门禁（GitHub Action/pre-commit）+ 公开安全通报库，[含中文文档](https://github.com/wookat/agentgate/blob/main/README.zh-CN.md)。
 author: wookat
 license: Apache-2.0
 homepage: https://github.com/wookat/agentgate
 repository: https://github.com/wookat/agentgate
-verified: true
+verified: false
 category: infra
 tags:
 - infra
@@ -36,5 +38,6 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: allow
+  scan_verdict: block
+  reason: "人工复核（2026-11-27）：不是 stdio MCP 服务器——`mcp-agentgate scan` 是扫描 CLI，读取本机各 AI 客户端的 MCP 配置、联网查其公告库并打印报告后退出。"
   osv: clean

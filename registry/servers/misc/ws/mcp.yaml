@@ -1,18 +1,20 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27 全量杀毒 / 实探复核：拒绝（详见 docs/removed-2026-11-27.md）
+# 审核意见：人工复核（2026-11-27）：不是 stdio MCP 服务器——ws-mcp 把其他 stdio 服务器包装成 WebSocket 服务（ws://localhost:10125），默认配置会拉起 wcgw（可执行 shell）与 fetch。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: ws
 display_name: ws-mcp
 display_name_en: ws-mcp
-version: 0.1.2
+version: 0.1.3
 description: Wrap MCP servers with a WebSocket.
 description_zh: 用 WebSocket 包装 MCP 服务器 (用于 [kitbitz](https://github.com/nick1udwig/kibitz))。
 author: nick1udwig
 homepage: https://github.com/nick1udwig/ws-mcp
 repository: https://github.com/nick1udwig/ws-mcp
-verified: true
+verified: false
 category: misc
 tags:
 - misc
@@ -34,5 +36,6 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: allow
+  scan_verdict: block
+  reason: "人工复核（2026-11-27）：不是 stdio MCP 服务器——ws-mcp 把其他 stdio 服务器包装成 WebSocket 服务（ws://localhost:10125），默认配置会拉起 wcgw（可执行 shell）与 fetch。"
   osv: clean
