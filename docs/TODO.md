@@ -838,5 +838,7 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
   - 本机前提：apple（bin 是 .ts，要本机装 bun）、bear（要 Bear app）、starrocks（要数据库）、proxy（要本机 IDE）；office_word 往 stdout 打纯文本，同 minimax
 - [x] **probe_server 默认隔离**（本轮实探暴露）：上面那些包在实探时真的往本机写了东西（装技能、起守护进程、往仓库写 `.awareness/` `.mcp-observatory/`），其中仓库里的两份被 `git add -A` 带进了本地提交（未推送，已改写历史去掉）。现在每次运行给服务器临时 HOME + 临时工作目录（只软链接包缓存与镜像配置），探完报告新写入的路径（⚑ 副作用）并结束仍在沙箱里的后台进程；`--no-sandbox` 关。验证：ffmpeg_skill / local / observatory 的副作用都被关进沙箱并如实报出，真实目录不变
 - [ ] 本轮实探在本机留下的目录待用户确认后清理（都是今天 02:40–04:57 新建）：`~/.claude/skills/ffmpeg-skill`、`~/.awareness`、`~/.mcptoon`、`~/.bernstein`、`~/.serena`、`~/.mcp-scan`、`~/.mcp-observatory`、`~/EDA Agent` 等约 35 项，及仓库内未跟踪的 `.awareness/`、`.mcp-observatory/`（已加进 .git/info/exclude）
-- [ ] 修完逐条重探；凭据类并入 credentials-needed.md
+- [x] 超时 / 远程端点复查：scrapling_fetch、webresearch、simple_arxiv、exa 重探通过并写回工具清单；memgit 首次启动要现场建 Python venv（沙箱里超过 90s 超时，非清单问题）；marketnow 握手 200 但列工具超时；openchainbench、hack123_henryht 端点连不上（同 flow_horustek，先观察）；ima_mcp 要 access token（无 OAuth 质询，传法待查，并入需凭据清单）
+- **C2.2 小结**：108 条中已修复并写回工具清单 **64 条**（另 7 条只是本机 npm 镜像未同步）；声明已补、等真凭据 / 登录补探的约 12 条；包本身坏或不是 MCP 服务器、建议下架的 15 条（见上，并入 G1）；本机前提 / 待定的其余条目已逐条注明
+- [ ] 7 条镜像未同步的条目改用 npm 官方源重探（需用户放行该命令）；凭据类等真凭据后补探
 

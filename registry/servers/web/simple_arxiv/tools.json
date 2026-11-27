@@ -1,0 +1,93 @@
+[
+  {
+    "name": "search_papers",
+    "description": "Search for papers on arXiv.\n\nIMPORTANT - DEFAULT BEHAVIOR WARNING:\nArXiv treats space-separated words as OR by default, returning papers matching\nANY word. This often returns thousands of irrelevant results. Use field\nprefixes (especially ti:) for precise searches.\n\nSEARCH STRATEGY (in order of precision):\n1. Start with ti: (title) searches - fastest and most relevant results\n2. Add cat: (category) to filter by field - use list_categories tool first!\n3. Use au: (author) when you know specific researchers\n4. Combine multiple terms with AND for best results\n5. Avoid plain keyword searches without field prefixes\n\nQUERY OPERATORS:\n- ti:\"text\"   - Search in title only (RECOMMENDED FOR PRECISION)\n- abs:\"text\"  - Search in abstract\n- au:\"name\"   - Search by author\n- cat:CODE    - Filter by category (e.g., cat:cs.AI, cat:quant-ph)\n- Combine with: AND, OR, ANDNOT\n\nEXAMPLES (from most to least precise):\n- ti:\"neural networks\" AND cat:cs.AI     - Title phrase + category (BEST)\n- ti:\"deep learning\" AND au:bengio       - Title + author\n- cat:cs.AI AND ti:transformer           - Category + title keyword\n- ti:\"machine learning\"                  - Title phrase only\n- \"machine learning\"                     - All fields (broad, use sparingly)\n\nTROUBLESHOOTING - Too many irrelevant results?\n1. Use ti:\"exact phrase\" instead of bare keywords\n2. Add cat:CATEGORY to filter by field (run list_categories first)\n3. Use AND to combine multiple specific terms\n4. Avoid generic terms without ti: or cat: prefixes\n\nDATE FILTERING:\nFilter papers by submission date using date_from and/or date_to parameters.\n- Papers from 2024: date_from=\"2024-01-01\", date_to=\"2024-12-31\"\n- Recent papers (2025 onwards): date_from=\"2025-01-01\"\n- Historical papers (before 2020): date_to=\"2019-12-31\"\n\nArgs:\n    query: Search query string (use field prefixes for precision).\n    max_results: Maximum results to return (1-100, default 10).\n    sort_by: Sort field - \"submitted_date\", \"updated_date\", or \"relevance\".\n    sort_order: Sort direction - \"descending\" or \"ascending\".\n    date_from: Filter papers submitted on or after this date (YYYY-MM-DD format).\n    date_to: Filter papers submitted on or before this date (YYYY-MM-DD format).\n        ",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "max_results": {
+          "default": 10,
+          "type": "integer"
+        },
+        "sort_by": {
+          "default": "submitted_date",
+          "type": "string"
+        },
+        "sort_order": {
+          "default": "descending",
+          "type": "string"
+        },
+        "date_from": {
+          "default": null,
+          "type": "string"
+        },
+        "date_to": {
+          "default": null,
+          "type": "string"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_paper_data",
+    "description": "Get detailed information about a specific paper including abstract and available formats.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "paper_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "paper_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_full_paper_text",
+    "description": "Get the full paper text as Markdown\n\nDownloads and converts the paper PDF to Markdown format using Docling.\nThis operation takes 30-90 seconds depending on paper length.\n\nImportant considerations:\n- Papers can be very large (even 10k-50k+ tokens) and may overwhelm your context window\n- Complex equations and figures will most likely not convert correctly to Markdown\n- Use get_paper_data first to review abstract before fetching full text",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "paper_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "paper_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_categories",
+    "description": "List all available arXiv categories for use with cat: filter in search_papers.\n\nCALL THIS FIRST before using cat: in search queries to find valid category codes.\n\nCommon categories:\n- cs.AI (Artificial Intelligence)\n- cs.LG (Machine Learning)\n- cs.CL (Computation and Language / NLP)\n- stat.ML (Statistics - Machine Learning)\n- quant-ph (Quantum Physics)\n- q-bio.NC (Quantitative Biology - Neurons and Cognition)\n\nArgs:\n    primary_category: Optional filter to show only subcategories of a specific\n        primary category (e.g., \"cs\", \"physics\", \"q-bio\").",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "primary_category": {
+          "default": null,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "update_categories",
+    "description": "Update the stored category taxonomy by fetching the latest version from arxiv.org",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object"
+    }
+  }
+]

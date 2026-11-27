@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-27T10:16:46Z",
+  "generated_at": "2026-11-27T10:22:38Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -48758,11 +48758,15 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 2,
+      "tools": [
+        "web_search_exa",
+        "web_fetch_exa"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/exa",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/exa",
@@ -48773,11 +48777,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "fa9e7153397f4453b637f63679bf8938b910bd52fbab33ed9f1b59aa31aab786",
-          "size": 878
+          "sha256": "a3440c7d2652658fa07975f1969051148f29a88c25f3ade5dea27308711b1698",
+          "size": 1008
+        },
+        {
+          "path": "tools.json",
+          "sha256": "45d45212fe4a1d8bbc663892366d594c8f4e2a11488bd1c5914e2e6f75509b9d",
+          "size": 2631
         }
       ],
-      "bundle_sha256": "c80f77918437a93a0acf6360f23da98d67de5209bd5ce1ca9fd150877ed97220",
+      "bundle_sha256": "0cfedf16b2bcdf6dcddc163854f238fe9cddf1ab0b02a04d4858d64df392a0ee",
       "popularity": {
         "score": 372,
         "stars": 5189
@@ -52505,11 +52514,18 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 5,
+      "tools": [
+        "search_papers",
+        "get_paper_data",
+        "get_full_paper_text",
+        "list_categories",
+        "update_categories"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/simple_arxiv",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/simple_arxiv",
@@ -52520,11 +52536,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a09912d57ae4bd296cc5d8f26e7f36d313a01a222a1371709f28f7272d7d578b",
-          "size": 984
+          "sha256": "bb0ae9558271719630a13394c2ecf0dce42b074aa1f56325d796a32e7cfa3923",
+          "size": 1111
+        },
+        {
+          "path": "tools.json",
+          "sha256": "d8e6650128e006981e86f2160f17d69b2c14fe5a8e636e57e016a6d691a479a1",
+          "size": 5206
         }
       ],
-      "bundle_sha256": "1b3d8c446a87d6b7177bce18a8f2734be73378ff11c01909e7209f781ae9e04d",
+      "bundle_sha256": "4533c4f379c6f0000749e445cf30a2c0f3be7c6dd13ce69e3bbee7a4f222b3d7",
       "popularity": {
         "score": 312,
         "downloads_weekly": 1332
