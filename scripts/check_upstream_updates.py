@@ -10,7 +10,14 @@ import sys, json, glob, re, ssl, urllib.request, urllib.parse, concurrent.future
 from pathlib import Path
 import yaml
 ROOT = Path(__file__).resolve().parent.parent
-OUT = Path(sys.argv[1] if len(sys.argv) > 1 else "upstream-updates.json")
+# 只接受一个可选的输出路径；`-h` / `--help` 打印用法，其它以 - 开头的一律拒绝
+# （以前任何参数都被当成输出文件名，`--help` 会在当前目录写出一个名叫 --help 的文件）
+_args = sys.argv[1:]
+if any(a in ("-h", "--help") for a in _args):
+    print(__doc__.strip()); raise SystemExit(0)
+if len(_args) > 1 or any(a.startswith("-") for a in _args):
+    sys.exit(f"用法：python scripts/check_upstream_updates.py [输出.json]（不认识的参数：{' '.join(_args)}）")
+OUT = Path(_args[0] if _args else "upstream-updates.json")
 sys.path.insert(0, str(ROOT / "scripts"))
 from gen_registry import _package_arg  # noqa
 try:
