@@ -380,7 +380,7 @@
        site-packages 的，而 `setup:totalclaw-agent` 见 venv 已存在就整段跳过。
        坑记在 e2e 脚本头部。
   - 顺带修了一处误导文案：这种 404 此前落到「请稍后重试」，重试一万次也不会好。
-- [ ] **V3（剩余）** 登录态下的真实安装（填凭据 → 装 → 探测 → 热重载）仍需人工：
+- [x] **V3（剩余，2026-11-26 已自动化跑通）** 用 E2E 旁路模拟登录 + `TOTALCLAW_USER_DATA_DIR` 隔离，真 Electron → IPC → qiye-api → agent 全链路 13/13 通过：远程注册表 650 条、缺凭据 422 拦下、block 条目拦下、uvx（ancestry / mcp_time）与远程 Bearer（alphavantage）装上即启用并连上、热重载、卸载清干净、连接器配置里只有 `${…}` 占位。跑法见 memory「桌面端 MCP 端到端 V3」。过程中修出 3 个真 bug，见 F16–F18。原记录：
   脚本不持有账号，走不到那一步。目前目录取的是 `source=builtin`（26 条离线内置），
   C4.2 那个开关翻完会变成 `remote`（115 条），届时值得再人工走一遍完整安装。
 
@@ -730,11 +730,12 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
 
 - [x] **F1** 官方参考服务器：PyPI 三条（fetch / git / time）升 2026.11.18，实测探测通过
 - [ ] **F1.1** `@modelcontextprotocol/*` npm 4 条暂缓：2.x 要求 Node ≥24，桌面端内置 22.22.3；内置 Node 升级后再做
+  - 2026-11-26 评估：MCP 的 npx 用 `resources/vendor/node`（`scripts/prepare-vendor-cross.mjs` 默认 22.22.3），Electron 43 内嵌已是 Node 24.21.0；把打包 Node 改到 24.x LTS 技术风险低，但它被 hooks 运行时 / 连接器目录等共用，需要完整打包回归后再升，升完再做这 4 条
 - [x] **F2** agent `mcp_presets.py` 的 mcp-server-time 同步（agent 工作区已改，未提交；合 main / bump submodule 待定）
 - [x] **F3** `stripe` 改官方托管端点 `https://mcp.stripe.com`（OAuth），去掉密钥
 - [x] **F4–F6** 101 条按「满 7 天的最新稳定版」升级，静态审核 + 旧版差分复核全部 allow
 - [x] **F6.1** 冷却期 12 条复查（11-26 晚）：满 7 天的 2 条里 airtable_rashidazarang 4.0.1→5.1.0 已升；mailkite 维持 0.20.0 —— 上游 0.20.1/0.20.2 把依赖写成 `file:../node`，从 npm 装出来是悬空链接，启动即崩（dep_gate 告警发现，实装确认）
-- [ ] **F6.2** 其余 10 条最早 11-30 才满 7 天，下一轮再升（清单见明细文末）
+- [ ] **F6.2** 其余 10 条最早 11-30 才满 7 天，下一轮再升（清单见明细文末）。本会话设了每日定时复查（会话结束即失效）
 - [x] **F7** 门禁：gen_registry --check --strict、scan-registry、dep_gate --refresh；chrome_devtools / playwright 重新探测
 - [x] **F8** 老用户升级路径已查清：有「更新」按钮，但没有新版本提示（待办见明细 U3）
 - [x] **F9** desktop_commander 安装期遥测：加 `npm_config_ignore_scripts=true`（运行时 env + `security.enforced_env`，老用户同步）。对照实测开关生效时 postinstall 不跑；依赖 ripgrep / sharp 已改用平台预编译包，全新缓存安装 + 探测 25 个工具正常
@@ -757,4 +758,19 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
   - [x] `database`（已下架）：依赖链 legion-query-runner **所有版本**硬依赖 `mysqlclient==2.1.1`，该包只有 Windows 预编译包，mac / Linux 需本机 MySQL 开发库现场编译，清单层面无解
 - [x] **F12b** 9 条（alphavantage / x / adls2 / wolfram_alpha / home_assistant / tinybird / vikingdb / ancestry / adbpg）原先写 `requires_env: []`，装上即报缺变量退出 —— 已从包代码核出启动必需的变量补齐（含 `doc_url`），ancestry 的必填参数 `--gedcom-path` 用 `${ANCESTRY_GEDCOM_PATH}` 代入；adbpg 代码读 `ADBPG_DATABASE`（上游报错文案写成 ADBPG_NAME，以代码为准）。探测缺凭据时全部正确跳过，ancestry 填目录后实测 3 个工具。顺带：alphavantage 默认在 0.0.0.0:9464 起 Prometheus 指标服务，已用 `enforced_env` 关掉（`MCP_TELEMETRY_ENABLED=false`）
 - [x] **F13** `scripts/probe_server.py` 以前整份 `yaml.safe_dump` 重写清单：缩进注释全丢、中部顶格注释被挪到文件头。已改成只局部替换 `tools:` 块与 `security` 的三个键，写回前断言解析结果与整体重写一致；全部 650 份清单离线回归（语义 / 注释 / 前缀不变 / 幂等）0 失败，desktop_commander 实探只变 probed_at
+- [x] **F14（U3）** 桌面端「有新版本」提示 —— 已实现在两个仓库的功能分支 `feat/mcp-update-available`（本地提交，**未推送、未合并、未发版**）：
+  - agent `06a04361d`：`list_installed()` 对注册表条目在有新版本时带 `update_available: {version}`（形状按本仓 API.md 的 InstalledEntry），
+    `/v1/mcp/installed` 透传；纯数字点分比较、解析不了不提示；已下架不提示；注册表不可用 / 只有内置目录时不声称有新版本。MCP 相关 79 个用例通过
+  - qiye-app `58268b7e0`：已安装页版本列显示「有新版本 x.y.z」、该行「更新」按钮突出；旧 agent 不带字段时不显示；补 en/ar/ms/vi 译文。McpMarketView 31 个用例通过
+- [ ] **F15** U3 发版（5 个分支已推到远端待审阅，未合并）：agent 分支合进 core-kernel → main 并打版；qiye-app 分支合进 master 并 bump agent 子模块（`scripts/check-agent-pointer.mjs`）。
+  合并前在共用的 agent 目录先看 `git diff HEAD -- totalclaw_core/mcp_hub.py totalclaw_qiye_api/mcp_hub_api.py`（另一会话会有并行改动）
+- [ ] **F16** agent `url_safety`：fake-ip 代理回 `::ffff:0:198.18.x.x` 式 AAAA 时整个域名被判私网 —— gitee raw 跳转主机被拦，
+  桌面端 MCP 市场静默回落内置 26 条（开着 Clash 类 fake-ip 代理的用户都中）。修复在 agent 分支 `fix/url-safety-fake-ip-translated`（`79331c3e7`，
+  含指纹重生成），修复前新用例失败、后通过；E2E 里注册表从 builtin 26 → remote 650。**已推送分支，待审阅合并**
+- [ ] **F17** agent `mcp_hub`：请求里带齐凭据安装仍被存成 `enabled: false`（render 只看 os.environ），桌面端每个带凭据的连接器装完都是停用。
+  修复在 agent 分支 `fix/mcp-install-enabled-with-provided-env`（`762d22fc2`）；E2E 里 alphavantage / ancestry 装完即启用。**已推送分支，待审阅合并**
+- [ ] **F18** qiye-app 查毒代理 `mcpPackageGuard`：拉包体不带客户端 UA，Electron 默认浏览器 UA 被清华 PyPI 镜像 403（国内默认第一优先源）
+  → 桌面端所有要现场下载的 uvx 连接器都装不上。修复在 qiye-app 分支 `fix/mcp-package-guard-artifact-ua`（`d57a3c938`），
+  单测修复前失败、后通过（含真 npm / uv 装包），最小 Electron 脚本证实 net.fetch 带 uv UA 即 200。
+  **完整应用内未验证**（worktree 只 build:main 的应用起不来 qiye-api），合并后需在完整构建里跑一遍 V3。**已推送分支，待审阅合并**
 

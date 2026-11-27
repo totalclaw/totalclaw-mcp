@@ -48,7 +48,7 @@ SDK v2 的服务端收到旧式 `initialize` 会回落到旧协议，agent 的 M
 ### U3 · 老用户升级路径（F8 结论）
 
 - 桌面端「已安装」页有「更新」按钮（`POST /v1/mcp/servers/{name}/update`，按注册表重装），老用户点了就能换到新 pin；stripe 老用户点更新会从 npx 换到托管端点。
-- [ ] **U3.1** 没有「有新版本」提示：已安装页不比对注册表版本，用户不知道该点。建议桌面端按 `installed.json` 的 version 与注册表 version 比较，显示提示。
+- [x] **U3.1**（已实现于 feat/mcp-update-available，待发版，见 TODO F14/F15）没有「有新版本」提示：已安装页不比对注册表版本，用户不知道该点。建议桌面端按 `installed.json` 的 version 与注册表 version 比较，显示提示。
 - [ ] **U3.2** 内置 preset 装的（source ≠ registry）「更新」按钮置灰，拿不到注册表里的新版本。
 
 ### U4 · 顺带发现（不是这次升级引入的）
