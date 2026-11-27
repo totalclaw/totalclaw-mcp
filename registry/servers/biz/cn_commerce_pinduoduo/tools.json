@@ -1,0 +1,372 @@
+[
+  {
+    "name": "get_order_list",
+    "description": "[Capability: contract_status=partial; supported=false; live_verified=false]\nPDD read schema unavailable (official document HTTP 403); see docs/pinduoduo-contract.md.\n\nUnavailable until the official PDD read schema can be verified.\n\nExisting input names are retained for MCP discovery compatibility.\nSee docs/pinduoduo-contract.md for verified sources and missing fields.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "order_status": {
+          "default": "",
+          "title": "Order Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_order_listArguments"
+    }
+  },
+  {
+    "name": "get_order_detail",
+    "description": "[Capability: contract_status=partial; supported=false; live_verified=false]\nPDD read schema unavailable (official document HTTP 403); see docs/pinduoduo-contract.md.\n\nUnavailable until the official PDD read schema can be verified.\n\nExisting input names are retained for MCP discovery compatibility.\nSee docs/pinduoduo-contract.md for verified sources and missing fields.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "order_sn": {
+          "title": "Order Sn",
+          "type": "string"
+        }
+      },
+      "required": [
+        "order_sn"
+      ],
+      "type": "object",
+      "title": "get_order_detailArguments"
+    }
+  },
+  {
+    "name": "get_product_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet product (goods) list with basic info.\n\nArgs:\n    page: Page number, starting from 1.\n    page_size: Number of products per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "get_product_listArguments"
+    }
+  },
+  {
+    "name": "get_product_detail",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet full details of a single product by goods ID.\n\nArgs:\n    goods_id: The PDD goods ID (e.g. \"123456789\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "goods_id": {
+          "title": "Goods Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "goods_id"
+      ],
+      "type": "object",
+      "title": "get_product_detailArguments"
+    }
+  },
+  {
+    "name": "search_products",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nSearch products by keyword.\n\nArgs:\n    keyword: Search keyword for product name or description.\n    page: Page number, starting from 1.\n    page_size: Number of products per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "keyword": {
+          "title": "Keyword",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "keyword"
+      ],
+      "type": "object",
+      "title": "search_productsArguments"
+    }
+  },
+  {
+    "name": "get_refund_list",
+    "description": "[Capability: contract_status=partial; supported=false; live_verified=false]\nPDD read schema unavailable (official document HTTP 403); see docs/pinduoduo-contract.md.\n\nUnavailable until the official PDD read schema can be verified.\n\nExisting input names are retained for MCP discovery compatibility.\nSee docs/pinduoduo-contract.md for verified sources and missing fields.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_refund_listArguments"
+    }
+  },
+  {
+    "name": "get_refund_detail",
+    "description": "[Capability: contract_status=partial; supported=false; live_verified=false]\nPDD read schema unavailable (official document HTTP 403); see docs/pinduoduo-contract.md.\n\nUnavailable until the official PDD read schema can be verified.\n\nExisting input names are retained for MCP discovery compatibility.\nSee docs/pinduoduo-contract.md for verified sources and missing fields.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "refund_id": {
+          "title": "Refund Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "refund_id"
+      ],
+      "type": "object",
+      "title": "get_refund_detailArguments"
+    }
+  },
+  {
+    "name": "get_logistics_tracking",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet logistics tracking information for an order.\n\nArgs:\n    order_sn: The PDD order serial number (e.g. \"231215-1234567890123\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "order_sn": {
+          "title": "Order Sn",
+          "type": "string"
+        }
+      },
+      "required": [
+        "order_sn"
+      ],
+      "type": "object",
+      "title": "get_logistics_trackingArguments"
+    }
+  },
+  {
+    "name": "list_logistics_companies",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nList all available logistics companies on Pinduoduo platform.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "list_logistics_companiesArguments"
+    }
+  },
+  {
+    "name": "get_review_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nQuery product review (comment) list by goods ID.\n\nArgs:\n    goods_id: The PDD goods ID (e.g. \"123456789\").\n    page: Page number, starting from 1.\n    page_size: Number of reviews per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "goods_id": {
+          "title": "Goods Id",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "goods_id"
+      ],
+      "type": "object",
+      "title": "get_review_listArguments"
+    }
+  },
+  {
+    "name": "get_shop_info",
+    "description": "[Capability: contract_status=partial; supported=false; live_verified=false]\nPDD read schema unavailable (official document HTTP 403); see docs/pinduoduo-contract.md.\n\nUnavailable until the official PDD read schema can be verified.\n\nExisting input names are retained for MCP discovery compatibility.\nSee docs/pinduoduo-contract.md for verified sources and missing fields.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_shop_infoArguments"
+    }
+  },
+  {
+    "name": "list_promotions",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nList promotion activities for the authenticated shop.\n\nArgs:\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "list_promotionsArguments"
+    }
+  },
+  {
+    "name": "search_affiliate_goods",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nSearch affiliate (多多客) goods by keyword.\n\nArgs:\n    keyword: Search keyword for affiliate goods.\n    page: Page number, starting from 1.\n    page_size: Number of results per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "keyword": {
+          "title": "Keyword",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "keyword"
+      ],
+      "type": "object",
+      "title": "search_affiliate_goodsArguments"
+    }
+  },
+  {
+    "name": "get_metrics",
+    "description": "Return request metrics (per-endpoint latency, success/error counts).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_metricsArguments"
+    }
+  },
+  {
+    "name": "get_traces",
+    "description": "Return a summary of recent request traces (spans, durations, status).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_tracesArguments"
+    }
+  },
+  {
+    "name": "get_alerts",
+    "description": "Evaluate alert rules against current metrics; return firing alerts.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_alertsArguments"
+    }
+  },
+  {
+    "name": "export_data",
+    "description": "Export a JSON array of records to a CSV or JSON string.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "records_json": {
+          "title": "Records Json",
+          "type": "string"
+        },
+        "fmt": {
+          "default": "json",
+          "title": "Fmt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "records_json"
+      ],
+      "type": "object",
+      "title": "export_dataArguments"
+    }
+  },
+  {
+    "name": "build_daily_report",
+    "description": "Aggregate supplied shop order/refund rows into a reconciliable daily report.\n\nshops_json is an array of shops with platform, shop_id, orders,\nrefunds, input_format (raw or normalized), and per-date coverage\ndeclarations. Fetch every page first; missing coverage produces\npartial observed totals rather than pretending the day is complete.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "shops_json": {
+          "title": "Shops Json",
+          "type": "string"
+        },
+        "report_date": {
+          "title": "Report Date",
+          "type": "string"
+        },
+        "timezone": {
+          "default": "Asia/Shanghai",
+          "title": "Timezone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "shops_json",
+        "report_date"
+      ],
+      "type": "object",
+      "title": "build_daily_reportArguments"
+    }
+  }
+]

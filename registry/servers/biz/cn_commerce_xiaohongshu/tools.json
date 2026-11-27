@@ -1,0 +1,416 @@
+[
+  {
+    "name": "get_order_list",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nQuery one order page using native integer query times.\n\nQuery time units require platform confirmation; date strings are rejected.\nOfficial windows are 24 hours for creation and 30 minutes for update.\nFor update scans use maxPageNo and read from the last page to the first.\n\nArgs:\n    start_time: Platform-confirmed native integer start time, as a string.\n    end_time: Platform-confirmed native integer end time, as a string.\n    order_status: Status filter. Common values:\n        1 (待付款), 2 (处理中), 3 (清关中), 4 (待发货), 5 (部分发货),\n        6 (待收货), 7 (已完成), 8 (已关闭), 9 (已取消), 10 (换货申请中).\n        Empty string means all statuses.\n    page: Page number, starting from 1.\n    page_size: Number of orders per page (max 100).\n    time_type: 1 for creation time; 2 for update time.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "order_status": {
+          "default": "",
+          "title": "Order Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "time_type": {
+          "default": 1,
+          "title": "Time Type",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_order_listArguments"
+    }
+  },
+  {
+    "name": "get_order_detail",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nGet full details of a single order.\n\nArgs:\n    order_id: The XHS order ID (e.g. \"XHS20240115000001\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "order_id": {
+          "title": "Order Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "order_id"
+      ],
+      "type": "object",
+      "title": "get_order_detailArguments"
+    }
+  },
+  {
+    "name": "get_product_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet product (goods) list with basic info.\n\nArgs:\n    page: Page number, starting from 1.\n    page_size: Number of products per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "get_product_listArguments"
+    }
+  },
+  {
+    "name": "get_product_detail",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet full details of a single product by product ID.\n\nArgs:\n    product_id: The XHS product ID (e.g. \"5f8a9b2c3d4e5f6a7b8c9d0e\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "product_id": {
+          "title": "Product Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id"
+      ],
+      "type": "object",
+      "title": "get_product_detailArguments"
+    }
+  },
+  {
+    "name": "get_refund_list",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nQuery one after-sale page with inclusive millisecond time boundaries.\n\nMaximum window: 24 hours for creation, 30 minutes for update.\n\nArgs:\n    start_time: Native milliseconds or ISO time including a timezone.\n    end_time: Native milliseconds or ISO time including a timezone.\n    refund_status: Status filter. Common values:\n        1 (待审核), 2 (待寄回), 3 (待收货), 4 (已完成), 5 (已取消),\n        6 (已关闭), 9 (审核拒绝); comma-separated official status codes are accepted.\n        Empty string means all statuses.\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).\n    time_type: 1 for creation time; 2 for update time.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "refund_status": {
+          "default": "",
+          "title": "Refund Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "time_type": {
+          "default": 1,
+          "title": "Time Type",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_refund_listArguments"
+    }
+  },
+  {
+    "name": "get_refund_detail",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nGet full details of a single refund record.\n\nArgs:\n    refund_id: The refund/after-sale record ID (e.g. \"RF2024011500001\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "refund_id": {
+          "title": "Refund Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "refund_id"
+      ],
+      "type": "object",
+      "title": "get_refund_detailArguments"
+    }
+  },
+  {
+    "name": "get_logistics_tracking",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet logistics tracking information for an order.\n\nArgs:\n    order_id: The XHS order ID (e.g. \"XHS20240115000001\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "order_id": {
+          "title": "Order Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "order_id"
+      ],
+      "type": "object",
+      "title": "get_logistics_trackingArguments"
+    }
+  },
+  {
+    "name": "get_review_list",
+    "description": "[Capability: contract_status=unverified; supported=false; live_verified=false]\nNo verified official Xiaohongshu API mapping; no request is allowed.\n\nUnavailable: no verified official review API mapping; returns an explicit error.\n\nArgs:\n    product_id: The XHS product ID (e.g. \"5f8a9b2c3d4e5f6a7b8c9d0e\").\n    page: Page number, starting from 1.\n    page_size: Number of reviews per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "product_id": {
+          "title": "Product Id",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "product_id"
+      ],
+      "type": "object",
+      "title": "get_review_listArguments"
+    }
+  },
+  {
+    "name": "get_shop_info",
+    "description": "[Capability: contract_status=unverified; supported=false; live_verified=false]\nNo verified official shop-info mapping.\n\nUnavailable: no verified official shop-info API mapping; returns an explicit error.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_shop_infoArguments"
+    }
+  },
+  {
+    "name": "list_promotions",
+    "description": "[Capability: contract_status=unverified; supported=false; live_verified=false]\nNo verified official Xiaohongshu API mapping; no request is allowed.\n\nUnavailable: no verified official promotion API mapping; returns an explicit error.\n\nArgs:\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "list_promotionsArguments"
+    }
+  },
+  {
+    "name": "list_coupons",
+    "description": "[Capability: contract_status=unverified; supported=false; live_verified=false]\nNo verified official Xiaohongshu API mapping; no request is allowed.\n\nUnavailable: no verified official marketing-coupon API mapping; returns an explicit error.\n\nArgs:\n    status: Coupon status filter. Common values:\n        1 (进行中), 2 (已结束), 3 (未开始).\n        Empty string means all statuses.\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "list_couponsArguments"
+    }
+  },
+  {
+    "name": "get_inventory",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nQuery one SKU using the official inventory V2 API. sku_id is required.\n\nArgs:\n    product_id: Unsupported by the official SKU inventory endpoint; leave empty.\n    sku_id: Required official SKU ID.\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "product_id": {
+          "default": "",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "sku_id": {
+          "default": "",
+          "title": "Sku Id",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "get_inventoryArguments"
+    }
+  },
+  {
+    "name": "get_bill_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nQuery account transaction records by time range (Asia/Shanghai for naive dates).\n\nArgs:\n    start_time: Bill start time, e.g. \"2024-01-01 00:00:00\"\n    end_time: Bill end time, e.g. \"2024-01-31 23:59:59\"\n    bill_type: Bill type filter. Common values:\n        STATEMENT_IN (结算入账), STATEMENT_REFUND (退款), RECHARGE (充值).\n        Use comma-separated official tradeTypes names; legacy numeric codes are unsupported.\n        Empty string means all types.\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "bill_type": {
+          "default": "",
+          "title": "Bill Type",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_bill_listArguments"
+    }
+  },
+  {
+    "name": "get_metrics",
+    "description": "Return request metrics (per-endpoint latency, success/error counts).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_metricsArguments"
+    }
+  },
+  {
+    "name": "get_traces",
+    "description": "Return a summary of recent request traces (spans, durations, status).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_tracesArguments"
+    }
+  },
+  {
+    "name": "get_alerts",
+    "description": "Evaluate alert rules against current metrics; return firing alerts.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_alertsArguments"
+    }
+  },
+  {
+    "name": "export_data",
+    "description": "Export a JSON array of records to a CSV or JSON string.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "records_json": {
+          "title": "Records Json",
+          "type": "string"
+        },
+        "fmt": {
+          "default": "json",
+          "title": "Fmt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "records_json"
+      ],
+      "type": "object",
+      "title": "export_dataArguments"
+    }
+  },
+  {
+    "name": "build_daily_report",
+    "description": "Aggregate supplied shop order/refund rows into a reconciliable daily report.\n\nshops_json is an array of shops with platform, shop_id, orders,\nrefunds, input_format (raw or normalized), and per-date coverage\ndeclarations. Fetch every page first; missing coverage produces\npartial observed totals rather than pretending the day is complete.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "shops_json": {
+          "title": "Shops Json",
+          "type": "string"
+        },
+        "report_date": {
+          "title": "Report Date",
+          "type": "string"
+        },
+        "timezone": {
+          "default": "Asia/Shanghai",
+          "title": "Timezone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "shops_json",
+        "report_date"
+      ],
+      "type": "object",
+      "title": "build_daily_reportArguments"
+    }
+  }
+]

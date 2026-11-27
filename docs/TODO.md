@@ -842,7 +842,7 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
 - **C2.2 小结**：108 条中修好并**新写回工具清单 59 条**（octocrawl 已有清单，修参数后重探刷新；minimax 能用但关连接报错写不了清单；另 7 条只是本机 npm 镜像未同步）；声明已补、等真凭据 / 登录补探的约 12 条；包本身坏或不是 MCP 服务器、建议下架的 15 条（见上，并入 G1）；本机前提 / 待定的其余条目已逐条注明
 - [x] 7 条镜像未同步的条目用 npm 官方源重探（用户确认）：awwwards、castov、cloudgpu、open_apps、screenshotone、strava 写回工具清单；octeract_context 仍起不来（待查）。顺带修 probe_server：包管理器设置（npm_config_* / UV_* / PIP_*）以前不透传给服务器，换源重探实际仍走 ~/.npmrc 镜像
 - [ ] 凭据类等真凭据后补探
-- [x] octeract_context 查明：包在 node_modules 里发布 .ts 源码直接给 node 跑，Node 不对 node_modules 做类型剥离（ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING），任何 Node 版本都起不来 → **新增下架候选，待拍板**
+- [x] octeract_context 查明：包在 node_modules 里发布 .ts 源码直接给 node 跑，Node 不对 node_modules 做类型剥离（ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING），任何 Node 版本都起不来 → 已下架（用户确认）
 - [x] marketnow 查明：握手 200，但 tools/list 稳定超时（服务端问题），并入「端点不可达、观察」组
-- [ ] **cn_commerce 待拍板**：一个条目打包 8 个电商平台（巨量引擎 / 抖店 / 京东 / 淘宝 / 拼多多 / 快手 / 小红书 / 微信小店），`start` 要求每个连接只起一个平台，包里另有按平台的可执行（mcp-cn-taobao 等），各平台凭据不同（如 TAOBAO_APP_KEY / TAOBAO_APP_SECRET / TAOBAO_ACCESS_TOKEN）→ 建议拆成 8 个条目各自声明凭据
+- [x] **cn_commerce 已拆分**（2026-11-27 用户确认）：8 个 `cn_commerce_<平台>` 条目，静态审核 allow、假凭据实探 8 条可启动、写回工具清单；原条目下架。原记录：一个条目打包 8 个电商平台（巨量引擎 / 抖店 / 京东 / 淘宝 / 拼多多 / 快手 / 小红书 / 微信小店），`start` 要求每个连接只起一个平台，包里另有按平台的可执行（mcp-cn-taobao 等），各平台凭据不同（如 TAOBAO_APP_KEY / TAOBAO_APP_SECRET / TAOBAO_ACCESS_TOKEN）→ 建议拆成 8 个条目各自声明凭据
 

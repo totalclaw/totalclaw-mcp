@@ -1,12 +1,14 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
 # 人工修改后请同步递增 version。
+# 2026-11-27 全量杀毒 / 实探复核：拒绝（详见 docs/removed-2026-11-27.md）
+# 审核意见：人工复核（2026-11-27）：包本身坏：npm 包在 node_modules 里发布 .ts 源码直接交给 node 运行，Node 不对 node_modules 内文件做类型剥离（ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING），任何 Node 版本都起不来。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: octeract_context
 display_name: octeract-context
 display_name_en: octeract-context
-version: 0.1.1
+version: 0.1.2
 description: 'Octeract v4.9.0: 5 Master Apertures Facade with Raup 1966 Conchological Morphospace & Nautilus Chambers, Non-Blocking
   MCP Stdio, Slash Skills, Sieve, and 4D Hypercube Shield'
 description_zh: 面向编码 Agent 的上下文工具，提供 AST 代码结构摘要、符号与依赖分析，以及修改前检查。
@@ -14,7 +16,7 @@ author: miguelguerra200022-sudo
 license: BSL-1.1
 homepage: https://github.com/miguelguerra200022-sudo/octeract-context
 repository: https://github.com/miguelguerra200022-sudo/octeract-context
-verified: true
+verified: false
 category: dev
 tags:
 - dev
@@ -37,5 +39,6 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: allow
+  scan_verdict: block
+  reason: "人工复核（2026-11-27）：包本身坏：npm 包在 node_modules 里发布 .ts 源码直接交给 node 运行，Node 不对 node_modules 内文件做类型剥离（ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING），任何 Node 版本都起不来。"
   osv: clean

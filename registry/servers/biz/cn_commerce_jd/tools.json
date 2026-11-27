@@ -1,0 +1,445 @@
+[
+  {
+    "name": "get_order_list",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nRead POP orders in a fixed window, at most one calendar month.\n\nsource_id must explicitly select the caller origin (official default: JOS).\noptional_fields is a comma-separated list of current orderInfo field names.\ndate_type=1 selects creation; other integers select modification. sort_type=1\nis descending, other integers ascending. Page is one-based, size at most100.\nEmpty order_status selects the documented ALL state.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "order_status": {
+          "default": "",
+          "title": "Order Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "source_id": {
+          "default": "",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "optional_fields": {
+          "default": "",
+          "title": "Optional Fields",
+          "type": "string"
+        },
+        "date_type": {
+          "default": 0,
+          "title": "Date Type",
+          "type": "integer"
+        },
+        "sort_type": {
+          "default": 2,
+          "title": "Sort Type",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_order_listArguments"
+    }
+  },
+  {
+    "name": "get_order_detail",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nRead one POP order, requiring explicit caller origin and selected fields.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "order_id": {
+          "title": "Order Id",
+          "type": "string"
+        },
+        "source_id": {
+          "default": "",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "optional_fields": {
+          "default": "",
+          "title": "Optional Fields",
+          "type": "string"
+        }
+      },
+      "required": [
+        "order_id"
+      ],
+      "type": "object",
+      "title": "get_order_detailArguments"
+    }
+  },
+  {
+    "name": "get_product_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet product (ware) list with stock and price info.\n\nArgs:\n    page: Page number, starting from 1.\n    page_size: Number of products per page (max 100).\n    ware_status: Product status filter. Empty for all.\n        Common values: \"0\" (draft), \"1\" (never-on-sale),\n        \"2\" (on-sale), \"3\" (off-shelf).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "ware_status": {
+          "default": "",
+          "title": "Ware Status",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_product_listArguments"
+    }
+  },
+  {
+    "name": "get_shop_info",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nRead the token's POP shop; optional shop_id verifies the returned identity.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "shop_id": {
+          "default": "",
+          "title": "Shop Id",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_shop_infoArguments"
+    }
+  },
+  {
+    "name": "get_after_sale_list",
+    "description": "[Capability: contract_status=partial; supported=false; live_verified=false]\nJD POP after-sale service is not a verified completed-refund contract; see docs/jd-contract.md.\n\nQuery after-sale (return/refund/exchange) list by time range and optional status.\n\nArgs:\n    start_time: Query start time, e.g. \"2024-01-01 00:00:00\"\n    end_time: Query end time, e.g. \"2024-01-31 23:59:59\"\n    status: After-sale status filter. Common values:\n        WAIT_SELLER_AGREE (waiting for seller approval),\n        WAIT_BUYER_RETURN_GOODS (waiting for buyer to return goods),\n        WAIT_SELLER_RECEIVE_GOODS (waiting for seller to receive goods),\n        COMPLETE (completed),\n        CLOSED (closed).\n        Empty string means all statuses.\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_after_sale_listArguments"
+    }
+  },
+  {
+    "name": "get_after_sale_detail",
+    "description": "[Capability: contract_status=partial; supported=false; live_verified=false]\nJD POP after-sale service is not a verified completed-refund contract; see docs/jd-contract.md.\n\nGet full details of a single after-sale (return/refund/exchange) record.\n\nArgs:\n    after_sale_id: The after-sale record ID (e.g. \"AS00000001\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "after_sale_id": {
+          "title": "After Sale Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "after_sale_id"
+      ],
+      "type": "object",
+      "title": "get_after_sale_detailArguments"
+    }
+  },
+  {
+    "name": "get_logistics_tracking",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet logistics tracking information for an order.\n\nArgs:\n    order_id: The JD order ID (e.g. \"3000000000001\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "order_id": {
+          "title": "Order Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "order_id"
+      ],
+      "type": "object",
+      "title": "get_logistics_trackingArguments"
+    }
+  },
+  {
+    "name": "get_review_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nQuery product review (comment) list.\n\nArgs:\n    product_id: The product/ware ID (e.g. \"20000001\").\n    page: Page number, starting from 1.\n    page_size: Number of reviews per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "product_id": {
+          "title": "Product Id",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "product_id"
+      ],
+      "type": "object",
+      "title": "get_review_listArguments"
+    }
+  },
+  {
+    "name": "get_review_detail",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet full details of a single review.\n\nArgs:\n    review_id: The review/comment ID (e.g. \"C00000001\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "review_id": {
+          "title": "Review Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "review_id"
+      ],
+      "type": "object",
+      "title": "get_review_detailArguments"
+    }
+  },
+  {
+    "name": "get_price_info",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet real-time price information for given SKUs, including promotion overlay.\n\nArgs:\n    sku_ids: Comma-separated SKU IDs, e.g. \"10000001,10000002,10000003\".\n        Maximum 100 SKUs per request.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "sku_ids": {
+          "title": "Sku Ids",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sku_ids"
+      ],
+      "type": "object",
+      "title": "get_price_infoArguments"
+    }
+  },
+  {
+    "name": "get_inventory",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nQuery current inventory/stock levels for given ware IDs.\n\nArgs:\n    ware_ids: Comma-separated ware IDs, e.g. \"20000001,20000002\".\n        Maximum 100 ware IDs per request.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "ware_ids": {
+          "title": "Ware Ids",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ware_ids"
+      ],
+      "type": "object",
+      "title": "get_inventoryArguments"
+    }
+  },
+  {
+    "name": "list_promotions",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nList promotion activities.\n\nArgs:\n    status: Promotion status filter. Common values:\n        \"1\" (ongoing), \"2\" (ended), \"3\" (not started).\n        Empty string means all statuses.\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "list_promotionsArguments"
+    }
+  },
+  {
+    "name": "list_coupons",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nList coupon templates.\n\nArgs:\n    status: Coupon status filter. Common values:\n        \"1\" (active), \"2\" (expired), \"3\" (not started).\n        Empty string means all statuses.\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "list_couponsArguments"
+    }
+  },
+  {
+    "name": "list_categories",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nList product categories under a given parent category.\n\nArgs:\n    parent_id: Parent category ID. Use \"0\" (default) to list top-level categories.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "parent_id": {
+          "default": "0",
+          "title": "Parent Id",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "list_categoriesArguments"
+    }
+  },
+  {
+    "name": "get_shop_score",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet shop DSR (Detail Seller Rating) scores including product description,\nservice attitude, and delivery speed ratings.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_shop_scoreArguments"
+    }
+  },
+  {
+    "name": "get_metrics",
+    "description": "Return request metrics (per-endpoint latency, success/error counts).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_metricsArguments"
+    }
+  },
+  {
+    "name": "get_traces",
+    "description": "Return a summary of recent request traces (spans, durations, status).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_tracesArguments"
+    }
+  },
+  {
+    "name": "get_alerts",
+    "description": "Evaluate alert rules against current metrics; return firing alerts.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_alertsArguments"
+    }
+  },
+  {
+    "name": "export_data",
+    "description": "Export a JSON array of records to a CSV or JSON string.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "records_json": {
+          "title": "Records Json",
+          "type": "string"
+        },
+        "fmt": {
+          "default": "json",
+          "title": "Fmt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "records_json"
+      ],
+      "type": "object",
+      "title": "export_dataArguments"
+    }
+  },
+  {
+    "name": "build_daily_report",
+    "description": "Aggregate supplied shop order/refund rows into a reconciliable daily report.\n\nshops_json is an array of shops with platform, shop_id, orders,\nrefunds, input_format (raw or normalized), and per-date coverage\ndeclarations. Fetch every page first; missing coverage produces\npartial observed totals rather than pretending the day is complete.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "shops_json": {
+          "title": "Shops Json",
+          "type": "string"
+        },
+        "report_date": {
+          "title": "Report Date",
+          "type": "string"
+        },
+        "timezone": {
+          "default": "Asia/Shanghai",
+          "title": "Timezone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "shops_json",
+        "report_date"
+      ],
+      "type": "object",
+      "title": "build_daily_reportArguments"
+    }
+  }
+]

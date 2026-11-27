@@ -1,0 +1,78 @@
+# 2026-11-27：由 cn_commerce 按平台拆出（经负责人确认）——原条目一个连接只能起一个平台、各平台凭据不同；
+# 可执行 mcp-cn-weixin-store 与凭据字段取自 mcp-cn-commerce 0.1.6 的 entry_points / shared/cli.py。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cn_commerce_weixin_store
+display_name: 微信小店商家数据
+display_name_en: Weixin Store merchant data
+version: 0.1.1
+description: Read-only Weixin Store merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.
+description_zh: 微信小店商家经营数据（订单、商品、售后、库存），只读。本地运行，来自 mcp-cn-commerce 套件。
+author: TonyWang-hub
+license: MIT
+homepage: https://github.com/TonyWang-hub/mcp-cn-commerce
+repository: https://github.com/TonyWang-hub/mcp-cn-commerce
+verified: true
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --from
+  - mcp-cn-commerce==0.1.6
+  - mcp-cn-weixin-store
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: WX_APP_ID
+  env_key: WX_APP_ID
+  description: 微信小店的 AppID（默认 managed 模式：由服务器用 AppID / AppSecret 自行换取并刷新 access_token）。未设置时服务器无法调用平台接口。
+  prompt: 请输入 WX_APP_ID
+  secret: false
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+- name: WX_APP_SECRET
+  env_key: WX_APP_SECRET
+  description: 微信小店的 AppSecret。未设置时服务器无法调用平台接口。
+  prompt: 请输入 WX_APP_SECRET
+  secret: true
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+optional_env:
+- name: WX_ACCESS_TOKEN
+  env_key: WX_ACCESS_TOKEN
+  description: 直接提供 access_token（static 模式，设置后可不填 AppID / AppSecret）。
+  prompt: 请输入 WX_ACCESS_TOKEN（可留空）
+  secret: true
+  required: false
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+- name: WX_TOKEN_MODE
+  env_key: WX_TOKEN_MODE
+  description: 鉴权模式：managed（默认）或 static。
+  prompt: 请输入 WX_TOKEN_MODE（可留空）
+  secret: false
+  required: false
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+defaults:
+  enabled: true
+  timeout: 120
+tools:
+  probed_at: '2026-11-27T10:43:42Z'
+  probed_runtime: uvx
+  count: 16
+  file: tools.json
+security:
+  scan_verdict: allow
+  osv: clean
+  prompt_injection_findings: []

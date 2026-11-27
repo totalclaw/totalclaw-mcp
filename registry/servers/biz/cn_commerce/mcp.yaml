@@ -1,12 +1,14 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27 全量杀毒 / 实探复核：拒绝（详见 docs/removed-2026-11-27.md）
+# 审核意见：人工复核（2026-11-27）：已按平台拆成 8 个条目（cn_commerce_oceanengine / _doudian / _jd / _taobao / _pinduoduo / _kuaishou / _xiaohongshu / _weixin_store）。原条目的 `start` 要求每个连接只起一个平台、各平台凭据不同，单条目无法正确声明。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: cn_commerce
 display_name: mcp-cn-commerce
 display_name_en: mcp-cn-commerce
-version: 0.1.1
+version: 0.1.2
 description: Chinese e-commerce platform MCP servers — let AI agents read merchant business data (Ocean Engine, Douyin Shop,
   JD.com, Taobao, Pinduoduo)
 description_zh: 中国电商商家经营数据 MCP 套件，覆盖抖店/京东/淘宝/拼多多/快手/小红书/微信小店/巨量引擎 8 平台，147 个工具（订单、商品、售后、库存、广告报表），全部只读、本地运行。
@@ -14,7 +16,7 @@ author: TonyWang-hub
 license: MIT
 homepage: https://github.com/TonyWang-hub/mcp-cn-commerce
 repository: https://github.com/TonyWang-hub/mcp-cn-commerce
-verified: true
+verified: false
 category: biz
 tags:
 - biz
@@ -35,5 +37,6 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: allow
+  scan_verdict: block
+  reason: "人工复核（2026-11-27）：已按平台拆成 8 个条目（cn_commerce_oceanengine / _doudian / _jd / _taobao / _pinduoduo / _kuaishou / _xiaohongshu / _weixin_store）。原条目的 `start` 要求每个连接只起一个平台、各平台凭据不同，单条目无法正确声明。"
   osv: clean

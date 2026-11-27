@@ -1,0 +1,627 @@
+[
+  {
+    "name": "get_advertiser_info",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nGet basic advertiser account information including name, balance, and status.\n\nArgs:\n    advertiser_ids: Comma-separated string of advertiser IDs (e.g. \"123456,789012\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_ids": {
+          "title": "Advertiser Ids",
+          "type": "string"
+        }
+      },
+      "required": [
+        "advertiser_ids"
+      ],
+      "type": "object",
+      "title": "get_advertiser_infoArguments"
+    }
+  },
+  {
+    "name": "get_account_balance",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nGet the account balance for an advertiser.\n\nArgs:\n    advertiser_id: The advertiser account ID.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "advertiser_id"
+      ],
+      "type": "object",
+      "title": "get_account_balanceArguments"
+    }
+  },
+  {
+    "name": "get_campaign_report",
+    "description": "[Capability: contract_status=partial; supported=false; live_verified=false]\nOceanEngine report contract migration pending; see docs/remaining-platform-contracts.md.\n\nGet campaign-level advertising report with impressions, clicks, cost, conversions, CTR, CPC, etc.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    start_date: Start date in YYYY-MM-DD format.\n    end_date: End date in YYYY-MM-DD format.\n    page: Page number for pagination (default 1).\n    page_size: Number of records per page (default 20, max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "start_date": {
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "title": "End Date",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "advertiser_id",
+        "start_date",
+        "end_date"
+      ],
+      "type": "object",
+      "title": "get_campaign_reportArguments"
+    }
+  },
+  {
+    "name": "get_ad_detail_report",
+    "description": "[Capability: contract_status=partial; supported=false; live_verified=false]\nOceanEngine report contract migration pending; see docs/remaining-platform-contracts.md.\n\nGet ad-level detail report with per-ad performance metrics (impressions, clicks, cost, conversions).\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    start_date: Start date in YYYY-MM-DD format.\n    end_date: End date in YYYY-MM-DD format.\n    page: Page number for pagination (default 1).\n    page_size: Number of records per page (default 20, max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "start_date": {
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "title": "End Date",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "advertiser_id",
+        "start_date",
+        "end_date"
+      ],
+      "type": "object",
+      "title": "get_ad_detail_reportArguments"
+    }
+  },
+  {
+    "name": "list_campaigns",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nList campaigns under an advertiser account with optional status filtering.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    page: Page number for pagination (default 1).\n    page_size: Number of records per page (default 20, max 100).\n    filtering: Optional JSON string for filtering (e.g. '{\"status\": \"CAMPAIGN_STATUS_ENABLE\"}').",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "filtering": {
+          "default": "",
+          "title": "Filtering",
+          "type": "string"
+        }
+      },
+      "required": [
+        "advertiser_id"
+      ],
+      "type": "object",
+      "title": "list_campaignsArguments"
+    }
+  },
+  {
+    "name": "get_campaign_detail",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n广告计划详情 (Campaign detail).\n\nGet detailed information about a specific advertising campaign\nincluding budget, targeting, status, and creative settings.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    campaign_id: The campaign ID to query.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "campaign_id": {
+          "title": "Campaign Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "advertiser_id",
+        "campaign_id"
+      ],
+      "type": "object",
+      "title": "get_campaign_detailArguments"
+    }
+  },
+  {
+    "name": "list_ads",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n广告创意列表 (Ad creative list).\n\nList ad creatives under an advertiser account, optionally filtered by campaign.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    campaign_id: Optional campaign ID to filter ads by campaign.\n    page: Page number for pagination (default 1).\n    page_size: Number of records per page (default 20, max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "campaign_id": {
+          "default": "",
+          "title": "Campaign Id",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "advertiser_id"
+      ],
+      "type": "object",
+      "title": "list_adsArguments"
+    }
+  },
+  {
+    "name": "get_ad_detail",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n广告创意详情 (Ad creative detail).\n\nGet detailed information about a specific ad creative\nincluding creative content, delivery status, and performance settings.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    ad_id: The ad creative ID to query.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "ad_id": {
+          "title": "Ad Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "advertiser_id",
+        "ad_id"
+      ],
+      "type": "object",
+      "title": "get_ad_detailArguments"
+    }
+  },
+  {
+    "name": "get_qianchuan_report",
+    "description": "[Capability: contract_status=partial; supported=false; live_verified=false]\nOceanEngine report contract migration pending; see docs/remaining-platform-contracts.md.\n\n千川电商广告报表 (Qianchuan ecommerce ad report).\n\nGet advertising performance report for Qianchuan (千川) ecommerce ads\nincluding impressions, clicks, cost, conversions, GMV, ROI, etc.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    start_date: Start date in YYYY-MM-DD format.\n    end_date: End date in YYYY-MM-DD format.\n    page: Page number for pagination (default 1).\n    page_size: Number of records per page (default 20, max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "start_date": {
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "title": "End Date",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "advertiser_id",
+        "start_date",
+        "end_date"
+      ],
+      "type": "object",
+      "title": "get_qianchuan_reportArguments"
+    }
+  },
+  {
+    "name": "get_qianchuan_campaign_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n千川广告计划列表 (Qianchuan campaign list).\n\nList Qianchuan (千川) ecommerce ad campaigns under an advertiser account.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    page: Page number for pagination (default 1).\n    page_size: Number of records per page (default 20, max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "advertiser_id"
+      ],
+      "type": "object",
+      "title": "get_qianchuan_campaign_listArguments"
+    }
+  },
+  {
+    "name": "get_star_report",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n星图达人投放报表 (Star influencer marketing report).\n\nGet performance report for Star (星图) influencer marketing campaigns\nincluding reach, engagement, conversions, cost per engagement, and ROI.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    start_date: Start date in YYYY-MM-DD format.\n    end_date: End date in YYYY-MM-DD format.\n    page: Page number for pagination (default 1).\n    page_size: Number of records per page (default 20, max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "start_date": {
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "title": "End Date",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "advertiser_id",
+        "start_date",
+        "end_date"
+      ],
+      "type": "object",
+      "title": "get_star_reportArguments"
+    }
+  },
+  {
+    "name": "list_star_tasks",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n星图任务列表 (Star task list).\n\nList Star (星图) influencer marketing tasks under an advertiser account,\noptionally filtered by task status.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    status: Optional status filter (e.g. \"IN_PROGRESS\", \"COMPLETED\", \"CANCELLED\").\n    page: Page number for pagination (default 1).\n    page_size: Number of records per page (default 20, max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "advertiser_id"
+      ],
+      "type": "object",
+      "title": "list_star_tasksArguments"
+    }
+  },
+  {
+    "name": "get_creative_report",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n素材/创意报表 (Creative/materials report).\n\nGet creative-level performance report including impressions, clicks,\nCTR, conversions, and cost per creative.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    start_date: Start date in YYYY-MM-DD format.\n    end_date: End date in YYYY-MM-DD format.\n    page: Page number for pagination (default 1).\n    page_size: Number of records per page (default 20, max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "start_date": {
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "title": "End Date",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "advertiser_id",
+        "start_date",
+        "end_date"
+      ],
+      "type": "object",
+      "title": "get_creative_reportArguments"
+    }
+  },
+  {
+    "name": "list_materials",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n素材库列表 (Material library list).\n\nList materials in the creative library under an advertiser account,\noptionally filtered by material type.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    page: Page number for pagination (default 1).\n    page_size: Number of records per page (default 20, max 100).\n    material_type: Optional material type filter (e.g. \"IMAGE\", \"VIDEO\", \"TITLE\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "material_type": {
+          "default": "",
+          "title": "Material Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "advertiser_id"
+      ],
+      "type": "object",
+      "title": "list_materialsArguments"
+    }
+  },
+  {
+    "name": "list_audience_packages",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nDMP 人群包列表 (DMP audience package list).\n\nList DMP (Data Management Platform) audience packages under an advertiser\naccount, including audience size, type, and status.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    page: Page number for pagination (default 1).\n    page_size: Number of records per page (default 20, max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "advertiser_id"
+      ],
+      "type": "object",
+      "title": "list_audience_packagesArguments"
+    }
+  },
+  {
+    "name": "get_audience_report",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n人群分析报表 (Audience analysis report).\n\nGet audience analysis report including demographic breakdown, interest\ntags, device distribution, and geographic distribution.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    start_date: Start date in YYYY-MM-DD format.\n    end_date: End date in YYYY-MM-DD format.\n    page: Page number for pagination (default 1).\n    page_size: Number of records per page (default 20, max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "start_date": {
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "title": "End Date",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "advertiser_id",
+        "start_date",
+        "end_date"
+      ],
+      "type": "object",
+      "title": "get_audience_reportArguments"
+    }
+  },
+  {
+    "name": "get_bid_suggestion",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n出价建议 (Bid suggestion).\n\nGet bid optimization suggestions for a campaign, including recommended bid\nrange based on historical performance and competition analysis.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    campaign_id: The campaign ID to get bid suggestions for.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "campaign_id": {
+          "title": "Campaign Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "advertiser_id",
+        "campaign_id"
+      ],
+      "type": "object",
+      "title": "get_bid_suggestionArguments"
+    }
+  },
+  {
+    "name": "get_diagnosis",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n广告诊断 (Ad diagnosis).\n\nGet diagnostic analysis for a campaign, identifying delivery issues,\nbudget constraints, audience saturation, and optimization recommendations.\n\nArgs:\n    advertiser_id: The advertiser account ID.\n    campaign_id: The campaign ID to diagnose.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "advertiser_id": {
+          "title": "Advertiser Id",
+          "type": "string"
+        },
+        "campaign_id": {
+          "title": "Campaign Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "advertiser_id",
+        "campaign_id"
+      ],
+      "type": "object",
+      "title": "get_diagnosisArguments"
+    }
+  },
+  {
+    "name": "get_metrics",
+    "description": "Return request metrics (per-endpoint latency, success/error counts).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_metricsArguments"
+    }
+  },
+  {
+    "name": "get_traces",
+    "description": "Return a summary of recent request traces (spans, durations, status).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_tracesArguments"
+    }
+  },
+  {
+    "name": "get_alerts",
+    "description": "Evaluate alert rules against current metrics; return firing alerts.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_alertsArguments"
+    }
+  },
+  {
+    "name": "export_data",
+    "description": "Export a JSON array of records to a CSV or JSON string.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "records_json": {
+          "title": "Records Json",
+          "type": "string"
+        },
+        "fmt": {
+          "default": "json",
+          "title": "Fmt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "records_json"
+      ],
+      "type": "object",
+      "title": "export_dataArguments"
+    }
+  },
+  {
+    "name": "build_daily_report",
+    "description": "Aggregate supplied shop order/refund rows into a reconciliable daily report.\n\nshops_json is an array of shops with platform, shop_id, orders,\nrefunds, input_format (raw or normalized), and per-date coverage\ndeclarations. Fetch every page first; missing coverage produces\npartial observed totals rather than pretending the day is complete.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "shops_json": {
+          "title": "Shops Json",
+          "type": "string"
+        },
+        "report_date": {
+          "title": "Report Date",
+          "type": "string"
+        },
+        "timezone": {
+          "default": "Asia/Shanghai",
+          "title": "Timezone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "shops_json",
+        "report_date"
+      ],
+      "type": "object",
+      "title": "build_daily_reportArguments"
+    }
+  }
+]

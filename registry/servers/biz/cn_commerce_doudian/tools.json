@@ -1,0 +1,570 @@
+[
+  {
+    "name": "get_order_list",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\n按创建或更新时间查询近90天创建的店铺订单。\n\n日期使用北京时间或秒时间戳；page从0起、page_size为1至100。状态：1待支付、105已支付、\n2备货中、101部分发货、3已发货、4取消、5完成。amount为平台支付金额（分，含支付优惠），\nbuyer_paid_amount另行扣除支付优惠；缺少优惠字段时保持未知。单页不是完整日报。",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "default": "",
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "default": "",
+          "title": "End Time",
+          "type": "string"
+        },
+        "order_status": {
+          "default": "",
+          "title": "Order Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 0,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "time_type": {
+          "default": "create",
+          "title": "Time Type",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_order_listArguments"
+    }
+  },
+  {
+    "name": "get_order_detail",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\n查询抖店店铺父订单详情；order_id为shop_order_id的兼容别名，二者不能冲突。",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "order_id": {
+          "default": "",
+          "title": "Order Id",
+          "type": "string"
+        },
+        "shop_order_id": {
+          "default": "",
+          "title": "Shop Order Id",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_order_detailArguments"
+    }
+  },
+  {
+    "name": "get_product_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n获取抖店商品列表。\n\nArgs:\n    page: 页码，从 0 开始\n    page_size: 每页数量，默认10，最大100\n    status: 商品状态筛选 (on_sale: 在售, off_sale: 下架, 不填则返回全部)\n\nReturns:\n    包含商品列表的字典，每个商品含 product_id, name, price, stock, sales 等信息",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "page": {
+          "default": 0,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_product_listArguments"
+    }
+  },
+  {
+    "name": "get_refund_list",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\n按申请/更新时间查询售后列表，0页起，每页最多100条，最多翻页至page*size=50000。\n\nrefund_type为售后类型：0退货退款、1已发货退款、2未发货退款、3换货、6价保、7补寄、8维修。\n列表只返回申请金额；实际退款金额和成功时间必须通过SDK get_refund_detail查询，不能用更新时间替代。",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "default": "",
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "default": "",
+          "title": "End Time",
+          "type": "string"
+        },
+        "refund_type": {
+          "default": "",
+          "title": "Refund Type",
+          "type": "string"
+        },
+        "page": {
+          "default": 0,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "time_type": {
+          "default": "create",
+          "title": "Time Type",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_refund_listArguments"
+    }
+  },
+  {
+    "name": "get_shop_info",
+    "description": "[Capability: contract_status=unverified; supported=false; live_verified=false]\nNo verified general Doudian shop-info API.\n\n暂不支持：当前官方目录没有已核实的通用抖店基础信息接口。",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_shop_infoArguments"
+    }
+  },
+  {
+    "name": "get_logistics_tracking",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n物流轨迹追踪 — 查询订单的物流配送状态和轨迹。\n\nArgs:\n    order_id: 订单号 (必填)\n\nReturns:\n    包含物流轨迹的字典，含 tracking_id, status, company, steps 等",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "order_id": {
+          "default": "",
+          "title": "Order Id",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_logistics_trackingArguments"
+    }
+  },
+  {
+    "name": "list_logistics_companies",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n物流公司列表 — 获取抖店支持的物流/快递公司列表。\n\nReturns:\n    包含物流公司列表的字典，每项含 company_code, company_name",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "list_logistics_companiesArguments"
+    }
+  },
+  {
+    "name": "get_review_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n评价列表 — 获取抖店商品评价列表。\n\nArgs:\n    start_time: 评价开始时间，格式如 '2024-01-01 00:00:00'\n    end_time: 评价结束时间\n    page: 页码，从 0 开始\n    page_size: 每页数量，默认10，最大100\n\nReturns:\n    包含评价列表的字典，每项含 review_id, order_id, product_id, score, content 等",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "default": "",
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "default": "",
+          "title": "End Time",
+          "type": "string"
+        },
+        "page": {
+          "default": 0,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "get_review_listArguments"
+    }
+  },
+  {
+    "name": "get_review_detail",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n评价详情 — 获取抖店单个评价的详细信息。\n\nArgs:\n    review_id: 评价ID (必填)\n\nReturns:\n    包含评价完整信息的字典",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "review_id": {
+          "default": "",
+          "title": "Review Id",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_review_detailArguments"
+    }
+  },
+  {
+    "name": "get_feige_messages",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n飞鸽客服消息列表 — 获取与指定用户的飞鸽客服聊天记录。\n\nArgs:\n    user_id: 用户ID (必填)\n    start_time: 消息开始时间，格式如 '2024-01-01 00:00:00'\n    end_time: 消息结束时间\n    page: 页码，从 0 开始\n    page_size: 每页数量，默认20，最大100\n\nReturns:\n    包含消息列表的字典，每项含 message_id, content, from_role, time, msg_type 等",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "user_id": {
+          "default": "",
+          "title": "User Id",
+          "type": "string"
+        },
+        "start_time": {
+          "default": "",
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "default": "",
+          "title": "End Time",
+          "type": "string"
+        },
+        "page": {
+          "default": 0,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "get_feige_messagesArguments"
+    }
+  },
+  {
+    "name": "get_live_data",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n直播间数据 — 获取抖店单个直播间数据(观看/互动/成交)。\n\nArgs:\n    room_id: 直播间ID (必填)\n    start_time: 开始时间，格式如 '2024-01-01 00:00:00'\n    end_time: 结束时间\n\nReturns:\n    包含直播间数据的字典，含观看人数、互动、成交金额、商品点击等",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "room_id": {
+          "default": "",
+          "title": "Room Id",
+          "type": "string"
+        },
+        "start_time": {
+          "default": "",
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "default": "",
+          "title": "End Time",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_live_dataArguments"
+    }
+  },
+  {
+    "name": "list_live_rooms",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n直播间列表 — 获取抖店直播场次列表。\n\nArgs:\n    start_time: 开始时间，格式如 '2024-01-01 00:00:00'\n    end_time: 结束时间\n    page: 页码，从 0 开始\n    page_size: 每页数量，默认10，最大100\n\nReturns:\n    包含直播场次列表的字典，每项含 room_id, title, status, duration, viewers 等",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "default": "",
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "default": "",
+          "title": "End Time",
+          "type": "string"
+        },
+        "page": {
+          "default": 0,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "list_live_roomsArguments"
+    }
+  },
+  {
+    "name": "get_traffic_data",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n流量来源分析 — 获取抖店流量来源数据。\n\nArgs:\n    start_date: 开始日期，格式如 '2024-01-01'\n    end_date: 结束日期，格式如 '2024-01-31'\n\nReturns:\n    包含流量来源数据的字典，含总流量、各渠道来源数据",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_date": {
+          "default": "",
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "default": "",
+          "title": "End Date",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_traffic_dataArguments"
+    }
+  },
+  {
+    "name": "get_short_video_data",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n短视频数据 — 获取抖店短视频的流量和转化数据。\n\nArgs:\n    video_id: 短视频ID (必填)\n    start_date: 开始日期，格式如 '2024-01-01'\n    end_date: 结束日期\n\nReturns:\n    包含短视频数据的字典，含播放量、点赞、评论、分享、成交等",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "video_id": {
+          "default": "",
+          "title": "Video Id",
+          "type": "string"
+        },
+        "start_date": {
+          "default": "",
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "default": "",
+          "title": "End Date",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_short_video_dataArguments"
+    }
+  },
+  {
+    "name": "list_promotions",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n营销活动列表 — 获取抖店促销活动列表。\n\nArgs:\n    status: 活动状态筛选 (1:进行中, 2:未开始, 3:已结束, 4:已终止)\n    page: 页码，从 0 开始\n    page_size: 每页数量，默认10，最大100\n\nReturns:\n    包含营销活动列表的字典，每项含 promotion_id, name, type, status, time 等",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 0,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "list_promotionsArguments"
+    }
+  },
+  {
+    "name": "list_coupons",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n优惠券列表 — 获取抖店优惠券列表。\n\nArgs:\n    status: 优惠券状态筛选 (1:生效中, 2:已失效, 3:已过期)\n    page: 页码，从 0 开始\n    page_size: 每页数量，默认10，最大100\n\nReturns:\n    包含优惠券列表的字典，每项含 coupon_id, name, type, discount, status, usage 等",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 0,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "list_couponsArguments"
+    }
+  },
+  {
+    "name": "get_bill_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n账单/资金流水 — 获取抖店资金流水列表。\n\nArgs:\n    start_date: 开始日期，格式如 '2024-01-01'\n    end_date: 结束日期\n    page: 页码，从 0 开始\n    page_size: 每页数量，默认10，最大100\n\nReturns:\n    包含账单列表的字典，每项含 bill_id, type, amount, balance, time, description 等",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_date": {
+          "default": "",
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "default": "",
+          "title": "End Date",
+          "type": "string"
+        },
+        "page": {
+          "default": 0,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "get_bill_listArguments"
+    }
+  },
+  {
+    "name": "get_shop_score",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n店铺评分详情 — 获取抖店DSR评分、商品体验、服务体验、物流体验等详细评分。\n\nReturns:\n    包含店铺评分的字典，含 dsr_score, product_score, service_score, logistics_score 等",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_shop_scoreArguments"
+    }
+  },
+  {
+    "name": "list_categories",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n商品类目列表 — 获取抖店商品类目树。\n\nArgs:\n    parent_id: 父类目ID，默认 '0' 表示根类目\n\nReturns:\n    包含类目列表的字典，每项含 category_id, name, parent_id, has_child 等",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "parent_id": {
+          "default": "0",
+          "title": "Parent Id",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "list_categoriesArguments"
+    }
+  },
+  {
+    "name": "list_brands",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\n品牌列表 — 获取抖店已入驻的品牌列表。\n\nArgs:\n    category_id: 按类目筛选品牌\n    page: 页码，从 0 开始\n    page_size: 每页数量，默认10，最大100\n\nReturns:\n    包含品牌列表的字典，每项含 brand_id, name, logo, category 等",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "category_id": {
+          "default": "",
+          "title": "Category Id",
+          "type": "string"
+        },
+        "page": {
+          "default": 0,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "list_brandsArguments"
+    }
+  },
+  {
+    "name": "get_metrics",
+    "description": "Return request metrics (per-endpoint latency, success/error counts).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_metricsArguments"
+    }
+  },
+  {
+    "name": "get_traces",
+    "description": "Return a summary of recent request traces (spans, durations, status).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_tracesArguments"
+    }
+  },
+  {
+    "name": "get_alerts",
+    "description": "Evaluate alert rules against current metrics; return firing alerts.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_alertsArguments"
+    }
+  },
+  {
+    "name": "export_data",
+    "description": "Export a JSON array of records to a CSV or JSON string.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "records_json": {
+          "title": "Records Json",
+          "type": "string"
+        },
+        "fmt": {
+          "default": "json",
+          "title": "Fmt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "records_json"
+      ],
+      "type": "object",
+      "title": "export_dataArguments"
+    }
+  },
+  {
+    "name": "build_daily_report",
+    "description": "Aggregate supplied shop order/refund rows into a reconciliable daily report.\n\nshops_json is an array of shops with platform, shop_id, orders,\nrefunds, input_format (raw or normalized), and per-date coverage\ndeclarations. Fetch every page first; missing coverage produces\npartial observed totals rather than pretending the day is complete.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "shops_json": {
+          "title": "Shops Json",
+          "type": "string"
+        },
+        "report_date": {
+          "title": "Report Date",
+          "type": "string"
+        },
+        "timezone": {
+          "default": "Asia/Shanghai",
+          "title": "Timezone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "shops_json",
+        "report_date"
+      ],
+      "type": "object",
+      "title": "build_daily_reportArguments"
+    }
+  }
+]

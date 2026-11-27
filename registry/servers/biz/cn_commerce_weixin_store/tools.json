@@ -1,0 +1,362 @@
+[
+  {
+    "name": "get_order_list",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nQuery orders using a seconds-based time range and the returned cursor.\n\nArgs:\n    start_time: ISO date/time (naive values use Asia/Shanghai).\n    end_time: ISO date/time, no more than 7 days after start_time.\n    order_status: Optional official status: 10, 12, 13, 20, 21, 30, 100 or 250.\n    page: Compatibility parameter; only 1 is accepted. Use next_key for subsequent pages.\n    page_size: Number of orders per page, 1 through 100.\n    next_key: Cursor returned by the previous response; empty on the first request.\n    time_type: create or update. Neither is a payment-date completeness guarantee.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "order_status": {
+          "default": "",
+          "title": "Order Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "next_key": {
+          "default": "",
+          "title": "Next Key",
+          "type": "string"
+        },
+        "time_type": {
+          "default": "create",
+          "title": "Time Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_order_listArguments"
+    }
+  },
+  {
+    "name": "get_order_detail",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nGet full details of a single WeChat Store order.\n\nArgs:\n    order_id: The WeChat Store order ID (e.g. \"3705115058471207000\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "order_id": {
+          "title": "Order Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "order_id"
+      ],
+      "type": "object",
+      "title": "get_order_detailArguments"
+    }
+  },
+  {
+    "name": "get_product_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet product (商品) list with basic info.\n\nArgs:\n    status: Product status filter.\n        0 (全部), 1 (上架), 2 (下架), 3 (审核中), 4 (审核失败).\n        Default 0 = all.\n    page: Page number, starting from 1.\n    page_size: Number of products per page (max 200).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "status": {
+          "default": 0,
+          "title": "Status",
+          "type": "integer"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "get_product_listArguments"
+    }
+  },
+  {
+    "name": "get_product_detail",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet full details of a single product by product ID.\n\nArgs:\n    product_id: The WeChat Store product ID (e.g. \"10000000000001\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "product_id": {
+          "title": "Product Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id"
+      ],
+      "type": "object",
+      "title": "get_product_detailArguments"
+    }
+  },
+  {
+    "name": "get_refund_list",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nQuery after-sale IDs using a time window and the returned cursor.\n\nArgs:\n    start_time: ISO date/time; naive values use Asia/Shanghai.\n    end_time: End time, no more than 24 hours after start_time.\n    page: Compatibility argument; only 1 is accepted. Continue using next_key.\n    page_size: Deprecated compatibility argument; this API has no page size.\n    next_key: Exact cursor returned by the previous page, empty initially.\n    time_type: create or update; keep the same window across all pages.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "next_key": {
+          "default": "",
+          "title": "Next Key",
+          "type": "string"
+        },
+        "time_type": {
+          "default": "create",
+          "title": "Time Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_refund_listArguments"
+    }
+  },
+  {
+    "name": "get_refund_detail",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nGet full details of a single after-sale (refund) record.\n\nArgs:\n    after_sale_order_id: The after-sale order ID (e.g. \"3705115058471207000\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "after_sale_order_id": {
+          "title": "After Sale Order Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "after_sale_order_id"
+      ],
+      "type": "object",
+      "title": "get_refund_detailArguments"
+    }
+  },
+  {
+    "name": "get_logistics_tracking",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet logistics tracking information for a WeChat Store order.\n\nArgs:\n    order_id: The WeChat Store order ID (e.g. \"3705115058471207000\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "order_id": {
+          "title": "Order Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "order_id"
+      ],
+      "type": "object",
+      "title": "get_logistics_trackingArguments"
+    }
+  },
+  {
+    "name": "get_shop_info",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nGet basic shop (店铺) information for the authenticated merchant.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_shop_infoArguments"
+    }
+  },
+  {
+    "name": "list_coupons",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nList coupon (优惠券) activities for the WeChat Store.\n\nArgs:\n    status: Coupon status filter.\n        0 (全部), 1 (进行中), 2 (未开始), 3 (已结束), 4 (已停止).\n        Default 0 = all.\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "status": {
+          "default": 0,
+          "title": "Status",
+          "type": "integer"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "list_couponsArguments"
+    }
+  },
+  {
+    "name": "get_supply_order_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nQuery supply chain order (供货订单) list, unique to WeChat Store.\n\nArgs:\n    start_time: Start time, e.g. \"2024-01-01 00:00:00\"\n    end_time: End time, e.g. \"2024-01-31 23:59:59\"\n    status: Supply order status.\n        0 (全部), 1 (待发货), 2 (已发货), 3 (已完成), 4 (已取消).\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "status": {
+          "default": 0,
+          "title": "Status",
+          "type": "integer"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_supply_order_listArguments"
+    }
+  },
+  {
+    "name": "list_categories",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nList available product categories (类目) on WeChat Store.\n\nArgs:\n    parent_id: Parent category ID. Use 0 to get top-level categories.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "parent_id": {
+          "default": 0,
+          "title": "Parent Id",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "list_categoriesArguments"
+    }
+  },
+  {
+    "name": "get_metrics",
+    "description": "Return request metrics (per-endpoint latency, success/error counts).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_metricsArguments"
+    }
+  },
+  {
+    "name": "get_traces",
+    "description": "Return a summary of recent request traces (spans, durations, status).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_tracesArguments"
+    }
+  },
+  {
+    "name": "get_alerts",
+    "description": "Evaluate alert rules against current metrics; return firing alerts.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_alertsArguments"
+    }
+  },
+  {
+    "name": "export_data",
+    "description": "Export a JSON array of records to a CSV or JSON string.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "records_json": {
+          "title": "Records Json",
+          "type": "string"
+        },
+        "fmt": {
+          "default": "json",
+          "title": "Fmt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "records_json"
+      ],
+      "type": "object",
+      "title": "export_dataArguments"
+    }
+  },
+  {
+    "name": "build_daily_report",
+    "description": "Aggregate supplied shop order/refund rows into a reconciliable daily report.\n\nshops_json is an array of shops with platform, shop_id, orders,\nrefunds, input_format (raw or normalized), and per-date coverage\ndeclarations. Fetch every page first; missing coverage produces\npartial observed totals rather than pretending the day is complete.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "shops_json": {
+          "title": "Shops Json",
+          "type": "string"
+        },
+        "report_date": {
+          "title": "Report Date",
+          "type": "string"
+        },
+        "timezone": {
+          "default": "Asia/Shanghai",
+          "title": "Timezone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "shops_json",
+        "report_date"
+      ],
+      "type": "object",
+      "title": "build_daily_reportArguments"
+    }
+  }
+]

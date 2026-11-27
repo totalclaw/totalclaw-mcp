@@ -1,0 +1,78 @@
+# 2026-11-27：由 cn_commerce 按平台拆出（经负责人确认）——原条目一个连接只能起一个平台、各平台凭据不同；
+# 可执行 mcp-cn-kuaishou 与凭据字段取自 mcp-cn-commerce 0.1.6 的 entry_points / shared/cli.py。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cn_commerce_kuaishou
+display_name: 快手商家数据
+display_name_en: Kuaishou merchant data
+version: 0.1.1
+description: Read-only Kuaishou merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.
+description_zh: 快手小店商家经营数据（订单、商品、售后、库存），只读。本地运行，来自 mcp-cn-commerce 套件。
+author: TonyWang-hub
+license: MIT
+homepage: https://github.com/TonyWang-hub/mcp-cn-commerce
+repository: https://github.com/TonyWang-hub/mcp-cn-commerce
+verified: true
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --from
+  - mcp-cn-commerce==0.1.6
+  - mcp-cn-kuaishou
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: KUAISHOU_APP_KEY
+  env_key: KUAISHOU_APP_KEY
+  description: 快手开放平台应用的 App Key。未设置时服务器无法调用平台接口。
+  prompt: 请输入 KUAISHOU_APP_KEY
+  secret: false
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+- name: KUAISHOU_APP_SECRET
+  env_key: KUAISHOU_APP_SECRET
+  description: 应用的 App Secret。未设置时服务器无法调用平台接口。
+  prompt: 请输入 KUAISHOU_APP_SECRET
+  secret: true
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+- name: KUAISHOU_SIGN_SECRET
+  env_key: KUAISHOU_SIGN_SECRET
+  description: 应用的签名密钥（Sign Secret）。未设置时服务器无法调用平台接口。
+  prompt: 请输入 KUAISHOU_SIGN_SECRET
+  secret: true
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+- name: KUAISHOU_ACCESS_TOKEN
+  env_key: KUAISHOU_ACCESS_TOKEN
+  description: 店铺授权后的 Access Token。未设置时服务器无法调用平台接口。
+  prompt: 请输入 KUAISHOU_ACCESS_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+tools:
+  probed_at: '2026-11-27T10:43:40Z'
+  probed_runtime: uvx
+  count: 17
+  file: tools.json
+security:
+  scan_verdict: allow
+  osv: clean
+  prompt_injection_findings: []

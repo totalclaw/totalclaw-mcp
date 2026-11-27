@@ -1,0 +1,386 @@
+[
+  {
+    "name": "get_order_list",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nQuery orders created within the last three months; one page is not a complete report.\n\nArgs:\n    start_time: Order start time, e.g. \"2024-01-01 00:00:00\"\n    end_time: Order end time, e.g. \"2024-01-31 23:59:59\"\n    status: Order status filter. Common values:\n        WAIT_BUYER_PAY (waiting for payment),\n        WAIT_SELLER_SEND_GOODS (waiting for shipment),\n        WAIT_BUYER_CONFIRM_GOODS (shipped, waiting confirm),\n        TRADE_FINISHED (completed),\n        TRADE_CLOSED (closed).\n        Empty string means all statuses.\n    page: Page number, starting from 1.\n    page_size: Number of orders per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_order_listArguments"
+    }
+  },
+  {
+    "name": "get_order_detail",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nGet full details of a single order.\n\nArgs:\n    tid: The Taobao trade ID (e.g. \"123456789012345678\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "tid": {
+          "title": "Tid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tid"
+      ],
+      "type": "object",
+      "title": "get_order_detailArguments"
+    }
+  },
+  {
+    "name": "get_increment_orders",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nQuery incrementally modified orders by time range.\n\nOnly trades within three months are visible. Each window must be at most one\nday; the platform recommends 30 minutes. Results are modified-time descending;\ncollect from the last page backwards to reduce missed changes.\n\nArgs:\n    start_time: Modification start time, e.g. \"2024-01-01 00:00:00\"\n    end_time: Modification end time, e.g. \"2024-01-01 23:59:59\"\n    page: Page number, starting from 1.\n    page_size: Number of orders per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_increment_ordersArguments"
+    }
+  },
+  {
+    "name": "get_product_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet on-sale product (item) list with stock and price info.\n\nArgs:\n    page: Page number, starting from 1.\n    page_size: Number of products per page (max 200).\n    status: Product status filter. Empty for all.\n        Common values: \"onsale\" (on sale), \"instock\" (in stock/off shelf).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_product_listArguments"
+    }
+  },
+  {
+    "name": "get_product_detail",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet full details of a single product by item ID.\n\nArgs:\n    num_iid: The Taobao item ID (num_iid, e.g. \"12345678901\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "num_iid": {
+          "title": "Num Iid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "num_iid"
+      ],
+      "type": "object",
+      "title": "get_product_detailArguments"
+    }
+  },
+  {
+    "name": "get_refund_list",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nQuery refund/return list by time range and optional status.\n\nArgs:\n    start_time: Query start time, e.g. \"2024-01-01 00:00:00\"\n    end_time: Query end time, e.g. \"2024-01-31 23:59:59\"\n    status: Refund status filter. Common values:\n        WAIT_SELLER_AGREE (waiting for seller approval),\n        WAIT_BUYER_RETURN_GOODS (waiting for buyer to return goods),\n        WAIT_SELLER_CONFIRM_GOODS (waiting for seller to confirm receipt),\n        SUCCESS (completed),\n        CLOSED (closed).\n        Empty string means all statuses.\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "start_time": {
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "title": "End Time",
+          "type": "string"
+        },
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "get_refund_listArguments"
+    }
+  },
+  {
+    "name": "get_refund_detail",
+    "description": "[Capability: contract_status=documented; supported=true; live_verified=false]\nOfficial contract is documented; live merchant acceptance is incomplete.\n\nGet full details of a single refund/return record.\n\nArgs:\n    refund_id: The refund record ID (e.g. \"12345678901\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "refund_id": {
+          "title": "Refund Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "refund_id"
+      ],
+      "type": "object",
+      "title": "get_refund_detailArguments"
+    }
+  },
+  {
+    "name": "get_logistics_tracking",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet logistics tracking information for an order.\n\nArgs:\n    tid: The Taobao trade ID (e.g. \"123456789012345678\").",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "tid": {
+          "title": "Tid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tid"
+      ],
+      "type": "object",
+      "title": "get_logistics_trackingArguments"
+    }
+  },
+  {
+    "name": "get_review_list",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nQuery product review (rate/comment) list.\n\nArgs:\n    num_iid: The Taobao item ID (e.g. \"12345678901\").\n    page: Page number, starting from 1.\n    page_size: Number of reviews per page (max 200).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "num_iid": {
+          "title": "Num Iid",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "num_iid"
+      ],
+      "type": "object",
+      "title": "get_review_listArguments"
+    }
+  },
+  {
+    "name": "get_shop_info",
+    "description": "[Capability: contract_status=transport_only; supported=true; live_verified=false]\nTransport compatibility is retained; response-contract and live merchant verification are incomplete.\n\nGet shop basic information.\n\nArgs:\n    nick: Taobao seller nick (shop identifier). Leave empty to use the authenticated seller's shop.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "nick": {
+          "default": "",
+          "title": "Nick",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_shop_infoArguments"
+    }
+  },
+  {
+    "name": "get_seller_info",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nGet authenticated seller (user) information including seller credit and profile.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_seller_infoArguments"
+    }
+  },
+  {
+    "name": "list_promotions",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nList promotion activities.\n\nArgs:\n    status: Promotion status filter. Common values:\n        \"1\" (ongoing), \"2\" (ended), \"3\" (not started).\n        Empty string means all statuses.\n    page: Page number, starting from 1.\n    page_size: Number of records per page (max 100).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "list_promotionsArguments"
+    }
+  },
+  {
+    "name": "list_categories",
+    "description": "[Capability: contract_status=unverified; supported=true; live_verified=false]\nHistorical MCP transport compatibility only; official contract verification and live merchant acceptance are incomplete.\n\nList product categories under a given parent category.\n\nArgs:\n    parent_cid: Parent category ID. Use \"0\" (default) to list top-level categories.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "parent_cid": {
+          "default": "0",
+          "title": "Parent Cid",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "list_categoriesArguments"
+    }
+  },
+  {
+    "name": "get_metrics",
+    "description": "Return request metrics (per-endpoint latency, success/error counts).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_metricsArguments"
+    }
+  },
+  {
+    "name": "get_traces",
+    "description": "Return a summary of recent request traces (spans, durations, status).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_tracesArguments"
+    }
+  },
+  {
+    "name": "get_alerts",
+    "description": "Evaluate alert rules against current metrics; return firing alerts.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_alertsArguments"
+    }
+  },
+  {
+    "name": "export_data",
+    "description": "Export a JSON array of records to a CSV or JSON string.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "records_json": {
+          "title": "Records Json",
+          "type": "string"
+        },
+        "fmt": {
+          "default": "json",
+          "title": "Fmt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "records_json"
+      ],
+      "type": "object",
+      "title": "export_dataArguments"
+    }
+  },
+  {
+    "name": "build_daily_report",
+    "description": "Aggregate supplied shop order/refund rows into a reconciliable daily report.\n\nshops_json is an array of shops with platform, shop_id, orders,\nrefunds, input_format (raw or normalized), and per-date coverage\ndeclarations. Fetch every page first; missing coverage produces\npartial observed totals rather than pretending the day is complete.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "shops_json": {
+          "title": "Shops Json",
+          "type": "string"
+        },
+        "report_date": {
+          "title": "Report Date",
+          "type": "string"
+        },
+        "timezone": {
+          "default": "Asia/Shanghai",
+          "title": "Timezone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "shops_json",
+        "report_date"
+      ],
+      "type": "object",
+      "title": "build_daily_reportArguments"
+    }
+  }
+]

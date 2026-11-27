@@ -1,0 +1,54 @@
+# 2026-11-27：由 cn_commerce 按平台拆出（经负责人确认）——原条目一个连接只能起一个平台、各平台凭据不同；
+# 可执行 mcp-cn-oceanengine 与凭据字段取自 mcp-cn-commerce 0.1.6 的 entry_points / shared/cli.py。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cn_commerce_oceanengine
+display_name: 巨量引擎商家数据
+display_name_en: Ocean Engine merchant data
+version: 0.1.1
+description: Read-only Ocean Engine merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.
+description_zh: 巨量引擎广告投放数据（账户、计划、报表），只读。本地运行，来自 mcp-cn-commerce 套件。
+author: TonyWang-hub
+license: MIT
+homepage: https://github.com/TonyWang-hub/mcp-cn-commerce
+repository: https://github.com/TonyWang-hub/mcp-cn-commerce
+verified: true
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --from
+  - mcp-cn-commerce==0.1.6
+  - mcp-cn-oceanengine
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: OCEANENGINE_ACCESS_TOKEN
+  env_key: OCEANENGINE_ACCESS_TOKEN
+  description: 巨量引擎开放平台已授权的 Access Token。未设置时服务器无法调用平台接口。
+  prompt: 请输入 OCEANENGINE_ACCESS_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+tools:
+  probed_at: '2026-11-27T10:43:36Z'
+  probed_runtime: uvx
+  count: 23
+  file: tools.json
+security:
+  scan_verdict: allow
+  osv: clean
+  prompt_injection_findings: []

@@ -1,0 +1,70 @@
+# 2026-11-27：由 cn_commerce 按平台拆出（经负责人确认）——原条目一个连接只能起一个平台、各平台凭据不同；
+# 可执行 mcp-cn-taobao 与凭据字段取自 mcp-cn-commerce 0.1.6 的 entry_points / shared/cli.py。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cn_commerce_taobao
+display_name: 淘宝商家数据
+display_name_en: Taobao merchant data
+version: 0.1.1
+description: Read-only Taobao merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.
+description_zh: 淘宝商家经营数据（订单、商品、售后、库存），只读。本地运行，来自 mcp-cn-commerce 套件。
+author: TonyWang-hub
+license: MIT
+homepage: https://github.com/TonyWang-hub/mcp-cn-commerce
+repository: https://github.com/TonyWang-hub/mcp-cn-commerce
+verified: true
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --from
+  - mcp-cn-commerce==0.1.6
+  - mcp-cn-taobao
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: TAOBAO_APP_KEY
+  env_key: TAOBAO_APP_KEY
+  description: 淘宝开放平台应用的 App Key。未设置时服务器无法调用平台接口。
+  prompt: 请输入 TAOBAO_APP_KEY
+  secret: false
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+- name: TAOBAO_APP_SECRET
+  env_key: TAOBAO_APP_SECRET
+  description: 应用的 App Secret。未设置时服务器无法调用平台接口。
+  prompt: 请输入 TAOBAO_APP_SECRET
+  secret: true
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+- name: TAOBAO_ACCESS_TOKEN
+  env_key: TAOBAO_ACCESS_TOKEN
+  description: 店铺授权后的 Session / Access Token。未设置时服务器无法调用平台接口。
+  prompt: 请输入 TAOBAO_ACCESS_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+tools:
+  probed_at: '2026-11-27T10:43:38Z'
+  probed_runtime: uvx
+  count: 18
+  file: tools.json
+security:
+  scan_verdict: allow
+  osv: clean
+  prompt_injection_findings: []

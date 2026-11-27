@@ -1,0 +1,78 @@
+# 2026-11-27：由 cn_commerce 按平台拆出（经负责人确认）——原条目一个连接只能起一个平台、各平台凭据不同；
+# 可执行 mcp-cn-doudian 与凭据字段取自 mcp-cn-commerce 0.1.6 的 entry_points / shared/cli.py。人工修改后请同步递增 version。
+manifest_version: 1
+requires_protocol_version: '>=1'
+tested_with: '>=0.63.72'
+name: cn_commerce_doudian
+display_name: 抖店商家数据
+display_name_en: Douyin Shop merchant data
+version: 0.1.1
+description: Read-only Douyin Shop merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.
+description_zh: 抖店商家经营数据（订单、商品、售后、库存），只读。本地运行，来自 mcp-cn-commerce 套件。
+author: TonyWang-hub
+license: MIT
+homepage: https://github.com/TonyWang-hub/mcp-cn-commerce
+repository: https://github.com/TonyWang-hub/mcp-cn-commerce
+verified: true
+category: biz
+tags:
+- biz
+- community
+kind: mcp_server
+runtimes:
+- id: uvx
+  type: stdio
+  launcher: uvx
+  command: uvx
+  args:
+  - --from
+  - mcp-cn-commerce==0.1.6
+  - mcp-cn-doudian
+  requires:
+    python: '>=3.10'
+requires_env:
+- name: DOUDIAN_APP_KEY
+  env_key: DOUDIAN_APP_KEY
+  description: 抖店开放平台应用的 App Key。未设置时服务器无法调用平台接口。
+  prompt: 请输入 DOUDIAN_APP_KEY
+  secret: false
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+- name: DOUDIAN_APP_SECRET
+  env_key: DOUDIAN_APP_SECRET
+  description: 抖店开放平台应用的 App Secret。未设置时服务器无法调用平台接口。
+  prompt: 请输入 DOUDIAN_APP_SECRET
+  secret: true
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+- name: DOUDIAN_SHOP_ID
+  env_key: DOUDIAN_SHOP_ID
+  description: 店铺 ID。未设置时服务器无法调用平台接口。
+  prompt: 请输入 DOUDIAN_SHOP_ID
+  secret: false
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+- name: DOUDIAN_ACCESS_TOKEN
+  env_key: DOUDIAN_ACCESS_TOKEN
+  description: 店铺授权后的 Access Token。未设置时服务器无法调用平台接口。
+  prompt: 请输入 DOUDIAN_ACCESS_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/TonyWang-hub/mcp-cn-commerce
+  doc_label: 查看项目说明（如何获取）
+optional_env: []
+defaults:
+  enabled: true
+  timeout: 120
+tools:
+  probed_at: '2026-11-27T10:43:36Z'
+  probed_runtime: uvx
+  count: 25
+  file: tools.json
+security:
+  scan_verdict: allow
+  osv: clean
+  prompt_injection_findings: []

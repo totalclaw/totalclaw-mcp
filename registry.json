@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-27T10:34:29Z",
+  "generated_at": "2026-11-27T10:44:01Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -3234,11 +3234,11 @@
       "display_name_en": "mcp-cn-commerce",
       "description": "Chinese e-commerce platform MCP servers — let AI agents read merchant business data (Ocean Engine, Douyin Shop, JD.com, Taobao, Pinduoduo)",
       "description_zh": "中国电商商家经营数据 MCP 套件，覆盖抖店/京东/淘宝/拼多多/快手/小红书/微信小店/巨量引擎 8 平台，147 个工具（订单、商品、售后、库存、广告报表），全部只读、本地运行。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "TonyWang-hub",
       "license": "MIT",
       "homepage": "https://github.com/TonyWang-hub/mcp-cn-commerce",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "biz",
       "icon": "",
@@ -3271,7 +3271,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：已按平台拆成 8 个条目（cn_commerce_oceanengine / _doudian / _jd / _taobao / _pinduoduo / _kuaishou / _xiaohongshu / _weixin_store）。原条目的 `start` 要求每个连接只起一个平台、各平台凭据不同，单条目无法正确声明。",
         "osv": "clean"
       },
       "path": "registry/servers/biz/cn_commerce",
@@ -3283,15 +3284,964 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "e47ff1d09028c589d5ef06463558dfc2d5150b489c94ddbfa690501f69b139c6",
-          "size": 1243
+          "sha256": "e22ccbbfca8c67ca30034a24acf961f420429b8e38cc2cfd9645becfafd583ed",
+          "size": 1944
         }
       ],
-      "bundle_sha256": "348a7315d8cf96b068c2f4bdfa591cc6d250e9275074dea7cdd44aaabb558cc7",
+      "bundle_sha256": "ccfc46465087c2073ad8495c408c760afdbef6f0cc73181b56014b0931b51f04",
       "popularity": {
         "score": 396,
         "downloads_weekly": 99,
         "stars": 90
+      }
+    },
+    {
+      "name": "cn_commerce_doudian",
+      "id": "totalclaw-mcp/biz/cn_commerce_doudian",
+      "display_name": "抖店商家数据",
+      "display_name_en": "Douyin Shop merchant data",
+      "description": "Read-only Douyin Shop merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.",
+      "description_zh": "抖店商家经营数据（订单、商品、售后、库存），只读。本地运行，来自 mcp-cn-commerce 套件。",
+      "version": "0.1.1",
+      "author": "TonyWang-hub",
+      "license": "MIT",
+      "homepage": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "icon": "",
+      "tags": [
+        "biz",
+        "community"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "mcp-cn-commerce==0.1.6"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "DOUDIAN_APP_KEY",
+          "description": "抖店开放平台应用的 App Key。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 DOUDIAN_APP_KEY",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "DOUDIAN_APP_SECRET",
+          "description": "抖店开放平台应用的 App Secret。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 DOUDIAN_APP_SECRET",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "DOUDIAN_SHOP_ID",
+          "description": "店铺 ID。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 DOUDIAN_SHOP_ID",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "DOUDIAN_ACCESS_TOKEN",
+          "description": "店铺授权后的 Access Token。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 DOUDIAN_ACCESS_TOKEN",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 25,
+      "tools": [
+        "get_order_list",
+        "get_order_detail",
+        "get_product_list",
+        "get_refund_list",
+        "get_shop_info",
+        "get_logistics_tracking",
+        "list_logistics_companies",
+        "get_review_list",
+        "get_review_detail",
+        "get_feige_messages",
+        "get_live_data",
+        "list_live_rooms",
+        "get_traffic_data",
+        "get_short_video_data",
+        "list_promotions",
+        "list_coupons",
+        "get_bill_list",
+        "get_shop_score",
+        "list_categories",
+        "list_brands",
+        "get_metrics",
+        "get_traces",
+        "get_alerts",
+        "export_data",
+        "build_daily_report"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "osv": "clean",
+        "prompt_injection_findings": []
+      },
+      "path": "registry/servers/biz/cn_commerce_doudian",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/cn_commerce_doudian",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/cn_commerce_doudian"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "1c031a61e69ae14c14453cd927e1a4531f2bf0bda6815f194a51e11d77fe57eb",
+          "size": 2699
+        },
+        {
+          "path": "tools.json",
+          "sha256": "0a969cd075035022a15fdc1f0141e62002445aae1aedeba7f62a264ff3175c82",
+          "size": 22173
+        }
+      ],
+      "bundle_sha256": "f077e445413759994b5fe95a3b91d267b3980823492da3c6333b7eda0f48accc",
+      "popularity": {
+        "score": 0
+      }
+    },
+    {
+      "name": "cn_commerce_jd",
+      "id": "totalclaw-mcp/biz/cn_commerce_jd",
+      "display_name": "京东商家数据",
+      "display_name_en": "JD.com merchant data",
+      "description": "Read-only JD.com merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.",
+      "description_zh": "京东商家经营数据（订单、商品、售后、库存），只读。本地运行，来自 mcp-cn-commerce 套件。",
+      "version": "0.1.1",
+      "author": "TonyWang-hub",
+      "license": "MIT",
+      "homepage": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "icon": "",
+      "tags": [
+        "biz",
+        "community"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "mcp-cn-commerce==0.1.6"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "JD_APP_KEY",
+          "description": "京东宙斯开放平台应用的 App Key。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 JD_APP_KEY",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "JD_APP_SECRET",
+          "description": "应用的 App Secret。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 JD_APP_SECRET",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "JD_ACCESS_TOKEN",
+          "description": "店铺授权后的 Access Token。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 JD_ACCESS_TOKEN",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 20,
+      "tools": [
+        "get_order_list",
+        "get_order_detail",
+        "get_product_list",
+        "get_shop_info",
+        "get_after_sale_list",
+        "get_after_sale_detail",
+        "get_logistics_tracking",
+        "get_review_list",
+        "get_review_detail",
+        "get_price_info",
+        "get_inventory",
+        "list_promotions",
+        "list_coupons",
+        "list_categories",
+        "get_shop_score",
+        "get_metrics",
+        "get_traces",
+        "get_alerts",
+        "export_data",
+        "build_daily_report"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "osv": "clean",
+        "prompt_injection_findings": []
+      },
+      "path": "registry/servers/biz/cn_commerce_jd",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/cn_commerce_jd",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/cn_commerce_jd"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "938ca7bd4905df5e9a40a7d42120bc410c192dd21dee31d754b47b3329a0f654",
+          "size": 2312
+        },
+        {
+          "path": "tools.json",
+          "sha256": "3a2e719d1022b26fb9bd4228aa422ee0ce7b91805f21cdf26e23b26ca6ded772",
+          "size": 16051
+        }
+      ],
+      "bundle_sha256": "be200837d32f6df628b04919ca6a8d27c8b435a2c274092ca3c800a91ecbbe83",
+      "popularity": {
+        "score": 0
+      }
+    },
+    {
+      "name": "cn_commerce_kuaishou",
+      "id": "totalclaw-mcp/biz/cn_commerce_kuaishou",
+      "display_name": "快手商家数据",
+      "display_name_en": "Kuaishou merchant data",
+      "description": "Read-only Kuaishou merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.",
+      "description_zh": "快手小店商家经营数据（订单、商品、售后、库存），只读。本地运行，来自 mcp-cn-commerce 套件。",
+      "version": "0.1.1",
+      "author": "TonyWang-hub",
+      "license": "MIT",
+      "homepage": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "icon": "",
+      "tags": [
+        "biz",
+        "community"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "mcp-cn-commerce==0.1.6"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "KUAISHOU_APP_KEY",
+          "description": "快手开放平台应用的 App Key。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 KUAISHOU_APP_KEY",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "KUAISHOU_APP_SECRET",
+          "description": "应用的 App Secret。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 KUAISHOU_APP_SECRET",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "KUAISHOU_SIGN_SECRET",
+          "description": "应用的签名密钥（Sign Secret）。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 KUAISHOU_SIGN_SECRET",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "KUAISHOU_ACCESS_TOKEN",
+          "description": "店铺授权后的 Access Token。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 KUAISHOU_ACCESS_TOKEN",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 17,
+      "tools": [
+        "get_order_list",
+        "get_order_detail",
+        "get_product_list",
+        "get_product_detail",
+        "get_refund_list",
+        "get_refund_detail",
+        "get_logistics_tracking",
+        "list_logistics_companies",
+        "get_review_list",
+        "get_shop_info",
+        "list_promotions",
+        "list_coupons",
+        "get_metrics",
+        "get_traces",
+        "get_alerts",
+        "export_data",
+        "build_daily_report"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "osv": "clean",
+        "prompt_injection_findings": []
+      },
+      "path": "registry/servers/biz/cn_commerce_kuaishou",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/cn_commerce_kuaishou",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/cn_commerce_kuaishou"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "3a16dd724eb52e928b0534c6844d340de1753804674be9f31e995530f51c2b76",
+          "size": 2736
+        },
+        {
+          "path": "tools.json",
+          "sha256": "bcc240018bbf8214bf56826c7889913b248278a51fb2a77ecec25f1b9b0e7e4a",
+          "size": 12955
+        }
+      ],
+      "bundle_sha256": "bffcf414c730363cb668038a65976f514a6140acfb822b52ad4f422a5e740607",
+      "popularity": {
+        "score": 0
+      }
+    },
+    {
+      "name": "cn_commerce_oceanengine",
+      "id": "totalclaw-mcp/biz/cn_commerce_oceanengine",
+      "display_name": "巨量引擎商家数据",
+      "display_name_en": "Ocean Engine merchant data",
+      "description": "Read-only Ocean Engine merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.",
+      "description_zh": "巨量引擎广告投放数据（账户、计划、报表），只读。本地运行，来自 mcp-cn-commerce 套件。",
+      "version": "0.1.1",
+      "author": "TonyWang-hub",
+      "license": "MIT",
+      "homepage": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "icon": "",
+      "tags": [
+        "biz",
+        "community"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "mcp-cn-commerce==0.1.6"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "OCEANENGINE_ACCESS_TOKEN",
+          "description": "巨量引擎开放平台已授权的 Access Token。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 OCEANENGINE_ACCESS_TOKEN",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 23,
+      "tools": [
+        "get_advertiser_info",
+        "get_account_balance",
+        "get_campaign_report",
+        "get_ad_detail_report",
+        "list_campaigns",
+        "get_campaign_detail",
+        "list_ads",
+        "get_ad_detail",
+        "get_qianchuan_report",
+        "get_qianchuan_campaign_list",
+        "get_star_report",
+        "list_star_tasks",
+        "get_creative_report",
+        "list_materials",
+        "list_audience_packages",
+        "get_audience_report",
+        "get_bid_suggestion",
+        "get_diagnosis",
+        "get_metrics",
+        "get_traces",
+        "get_alerts",
+        "export_data",
+        "build_daily_report"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "osv": "clean",
+        "prompt_injection_findings": []
+      },
+      "path": "registry/servers/biz/cn_commerce_oceanengine",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/cn_commerce_oceanengine",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/cn_commerce_oceanengine"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "9bb2032b3cd45ddfcb5c1b1be03daeef7b6561104d3d62d9f2836f2c2926af67",
+          "size": 1768
+        },
+        {
+          "path": "tools.json",
+          "sha256": "ee6bbc98f51c1fbe19be0fe8188d71d9f4af00ef0d0725111e0ce60e7e100fa0",
+          "size": 23534
+        }
+      ],
+      "bundle_sha256": "dd2b14c33e0907ee3415d056c1e3224d6248dae39e9971f679d8db584d475555",
+      "popularity": {
+        "score": 0
+      }
+    },
+    {
+      "name": "cn_commerce_pinduoduo",
+      "id": "totalclaw-mcp/biz/cn_commerce_pinduoduo",
+      "display_name": "拼多多商家数据",
+      "display_name_en": "Pinduoduo merchant data",
+      "description": "Read-only Pinduoduo merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.",
+      "description_zh": "拼多多商家经营数据（订单、商品、售后、库存），只读。本地运行，来自 mcp-cn-commerce 套件。",
+      "version": "0.1.1",
+      "author": "TonyWang-hub",
+      "license": "MIT",
+      "homepage": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "icon": "",
+      "tags": [
+        "biz",
+        "community"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "mcp-cn-commerce==0.1.6"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "PINDUODUO_CLIENT_ID",
+          "description": "拼多多开放平台应用的 Client ID。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 PINDUODUO_CLIENT_ID",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "PINDUODUO_CLIENT_SECRET",
+          "description": "应用的 Client Secret。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 PINDUODUO_CLIENT_SECRET",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "PINDUODUO_ACCESS_TOKEN",
+          "description": "店铺授权后的 Access Token。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 PINDUODUO_ACCESS_TOKEN",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 18,
+      "tools": [
+        "get_order_list",
+        "get_order_detail",
+        "get_product_list",
+        "get_product_detail",
+        "search_products",
+        "get_refund_list",
+        "get_refund_detail",
+        "get_logistics_tracking",
+        "list_logistics_companies",
+        "get_review_list",
+        "get_shop_info",
+        "list_promotions",
+        "search_affiliate_goods",
+        "get_metrics",
+        "get_traces",
+        "get_alerts",
+        "export_data",
+        "build_daily_report"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "osv": "clean",
+        "prompt_injection_findings": []
+      },
+      "path": "registry/servers/biz/cn_commerce_pinduoduo",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/cn_commerce_pinduoduo",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/cn_commerce_pinduoduo"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "2cdae88b551a5d64ea7f45c7ef09ad2d796bd9d1a803b9894297100f79e600b5",
+          "size": 2425
+        },
+        {
+          "path": "tools.json",
+          "sha256": "b4e23e4ad775b72ca977b0dbc6cd088323eefb1470732fa5d3085cf0dae9654e",
+          "size": 12962
+        }
+      ],
+      "bundle_sha256": "e64bec8fa66949abf6ad99c1c1f078edc5ee0788c1a4306cad325604f5fb98ce",
+      "popularity": {
+        "score": 0
+      }
+    },
+    {
+      "name": "cn_commerce_taobao",
+      "id": "totalclaw-mcp/biz/cn_commerce_taobao",
+      "display_name": "淘宝商家数据",
+      "display_name_en": "Taobao merchant data",
+      "description": "Read-only Taobao merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.",
+      "description_zh": "淘宝商家经营数据（订单、商品、售后、库存），只读。本地运行，来自 mcp-cn-commerce 套件。",
+      "version": "0.1.1",
+      "author": "TonyWang-hub",
+      "license": "MIT",
+      "homepage": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "icon": "",
+      "tags": [
+        "biz",
+        "community"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "mcp-cn-commerce==0.1.6"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "TAOBAO_APP_KEY",
+          "description": "淘宝开放平台应用的 App Key。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 TAOBAO_APP_KEY",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "TAOBAO_APP_SECRET",
+          "description": "应用的 App Secret。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 TAOBAO_APP_SECRET",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "TAOBAO_ACCESS_TOKEN",
+          "description": "店铺授权后的 Session / Access Token。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 TAOBAO_ACCESS_TOKEN",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 18,
+      "tools": [
+        "get_order_list",
+        "get_order_detail",
+        "get_increment_orders",
+        "get_product_list",
+        "get_product_detail",
+        "get_refund_list",
+        "get_refund_detail",
+        "get_logistics_tracking",
+        "get_review_list",
+        "get_shop_info",
+        "get_seller_info",
+        "list_promotions",
+        "list_categories",
+        "get_metrics",
+        "get_traces",
+        "get_alerts",
+        "export_data",
+        "build_daily_report"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "osv": "clean",
+        "prompt_injection_findings": []
+      },
+      "path": "registry/servers/biz/cn_commerce_taobao",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/cn_commerce_taobao",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/cn_commerce_taobao"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "42e4cf25c3b880053f5d499452f2d09c8911dcccdb236ad068d7dbbe302bcd0c",
+          "size": 2364
+        },
+        {
+          "path": "tools.json",
+          "sha256": "fa2e6ffdad08d60b47b7bc8fb79e346b12a71ab2be1833a95be706f140a8b52f",
+          "size": 14298
+        }
+      ],
+      "bundle_sha256": "21c7f1b91676576de1bc5294fd31127a03366252642440325bcd95a49b9e8b48",
+      "popularity": {
+        "score": 0
+      }
+    },
+    {
+      "name": "cn_commerce_weixin_store",
+      "id": "totalclaw-mcp/biz/cn_commerce_weixin_store",
+      "display_name": "微信小店商家数据",
+      "display_name_en": "Weixin Store merchant data",
+      "description": "Read-only Weixin Store merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.",
+      "description_zh": "微信小店商家经营数据（订单、商品、售后、库存），只读。本地运行，来自 mcp-cn-commerce 套件。",
+      "version": "0.1.1",
+      "author": "TonyWang-hub",
+      "license": "MIT",
+      "homepage": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "icon": "",
+      "tags": [
+        "biz",
+        "community"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "mcp-cn-commerce==0.1.6"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "WX_APP_ID",
+          "description": "微信小店的 AppID（默认 managed 模式：由服务器用 AppID / AppSecret 自行换取并刷新 access_token）。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 WX_APP_ID",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "WX_APP_SECRET",
+          "description": "微信小店的 AppSecret。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 WX_APP_SECRET",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
+      "optional_env": [
+        "WX_ACCESS_TOKEN",
+        "WX_TOKEN_MODE"
+      ],
+      "tools_count": 16,
+      "tools": [
+        "get_order_list",
+        "get_order_detail",
+        "get_product_list",
+        "get_product_detail",
+        "get_refund_list",
+        "get_refund_detail",
+        "get_logistics_tracking",
+        "get_shop_info",
+        "list_coupons",
+        "get_supply_order_list",
+        "list_categories",
+        "get_metrics",
+        "get_traces",
+        "get_alerts",
+        "export_data",
+        "build_daily_report"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "osv": "clean",
+        "prompt_injection_findings": []
+      },
+      "path": "registry/servers/biz/cn_commerce_weixin_store",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/cn_commerce_weixin_store",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/cn_commerce_weixin_store"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "8180e2d0941045008e907924c51b803c1e2a6967ee6218f86712d508cd1d4b99",
+          "size": 2765
+        },
+        {
+          "path": "tools.json",
+          "sha256": "c6906bcd3bc7c21052f06afa72cb7b8582b6922c447a165f230baeee38ffa506",
+          "size": 13028
+        }
+      ],
+      "bundle_sha256": "23ea16f223e0cd67fe2b744a81c345e1fd33ee34842c5be8d90f18229daa48e4",
+      "popularity": {
+        "score": 0
+      }
+    },
+    {
+      "name": "cn_commerce_xiaohongshu",
+      "id": "totalclaw-mcp/biz/cn_commerce_xiaohongshu",
+      "display_name": "小红书商家数据",
+      "display_name_en": "Xiaohongshu merchant data",
+      "description": "Read-only Xiaohongshu merchant business data (orders, products, after-sales, inventory) via mcp-cn-commerce.",
+      "description_zh": "小红书商家经营数据（订单、商品、售后、库存），只读。本地运行，来自 mcp-cn-commerce 套件。",
+      "version": "0.1.1",
+      "author": "TonyWang-hub",
+      "license": "MIT",
+      "homepage": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+      "verified": true,
+      "tested_with": ">=0.63.72",
+      "category": "biz",
+      "icon": "",
+      "tags": [
+        "biz",
+        "community"
+      ],
+      "kind": "mcp_server",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "transports": [
+        "stdio"
+      ],
+      "launchers": [
+        "uvx"
+      ],
+      "runtimes": [
+        {
+          "id": "uvx",
+          "type": "stdio",
+          "launcher": "uvx",
+          "package": "mcp-cn-commerce==0.1.6"
+        }
+      ],
+      "requires_env": [
+        {
+          "name": "XHS_CLIENT_ID",
+          "description": "小红书开放平台应用的 Client ID。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 XHS_CLIENT_ID",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "XHS_CLIENT_SECRET",
+          "description": "应用的 Client Secret。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 XHS_CLIENT_SECRET",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "XHS_ACCESS_TOKEN",
+          "description": "店铺授权后的 Access Token。未设置时服务器无法调用平台接口。",
+          "prompt": "请输入 XHS_ACCESS_TOKEN",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/TonyWang-hub/mcp-cn-commerce",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
+      "optional_env": [],
+      "tools_count": 18,
+      "tools": [
+        "get_order_list",
+        "get_order_detail",
+        "get_product_list",
+        "get_product_detail",
+        "get_refund_list",
+        "get_refund_detail",
+        "get_logistics_tracking",
+        "get_review_list",
+        "get_shop_info",
+        "list_promotions",
+        "list_coupons",
+        "get_inventory",
+        "get_bill_list",
+        "get_metrics",
+        "get_traces",
+        "get_alerts",
+        "export_data",
+        "build_daily_report"
+      ],
+      "security": {
+        "scan_verdict": "allow",
+        "osv": "clean",
+        "prompt_injection_findings": []
+      },
+      "path": "registry/servers/biz/cn_commerce_xiaohongshu",
+      "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/cn_commerce_xiaohongshu",
+      "git_sparse": {
+        "repo": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
+        "subdir": "registry/servers/biz/cn_commerce_xiaohongshu"
+      },
+      "files": [
+        {
+          "path": "mcp.yaml",
+          "sha256": "139b59a6702c811d32746b1b47a63bd464aa85d108e5237ff77484722108e0c4",
+          "size": 2381
+        },
+        {
+          "path": "tools.json",
+          "sha256": "1e9e5fd802c6b6e4dba1e98a99caa917932ef0935de9f07ec4dd6af498071c88",
+          "size": 15393
+        }
+      ],
+      "bundle_sha256": "994aa478e1eeb08b39bc7708ef373e590a4c195e70a20bbf31913ffb40007978",
+      "popularity": {
+        "score": 0
       }
     },
     {
@@ -24709,11 +25659,11 @@
       "display_name_en": "octeract-context",
       "description": "Octeract v4.9.0: 5 Master Apertures Facade with Raup 1966 Conchological Morphospace & Nautilus Chambers, Non-Blocking MCP Stdio, Slash Skills, Sieve, and 4D Hypercube Shield",
       "description_zh": "面向编码 Agent 的上下文工具，提供 AST 代码结构摘要、符号与依赖分析，以及修改前检查。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "miguelguerra200022-sudo",
       "license": "BSL-1.1",
       "homepage": "https://github.com/miguelguerra200022-sudo/octeract-context",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "dev",
       "icon": "",
@@ -24746,7 +25696,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-27）：包本身坏：npm 包在 node_modules 里发布 .ts 源码直接交给 node 运行，Node 不对 node_modules 内文件做类型剥离（ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING），任何 Node 版本都起不来。",
         "osv": "clean"
       },
       "path": "registry/servers/dev/octeract_context",
@@ -24758,11 +25709,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "c6ac19f7fdeff87a79fb17a29254bb2331c5410841e0e1335726bb755d7749cb",
-          "size": 1180
+          "sha256": "8b5bd5965cdab737af0b1a6b86b5fe401b0a5bd8c2dc49d7a7969f8c6c92904e",
+          "size": 1803
         }
       ],
-      "bundle_sha256": "759e72237e0692d9af567b9bc824ed80c945b1e98d5582c3d16c2cd253e03264",
+      "bundle_sha256": "97abada4b3889a8798b38c3765d99c57cb9a60044bd5f116794597c23952ca61",
       "popularity": {
         "score": 0
       }
