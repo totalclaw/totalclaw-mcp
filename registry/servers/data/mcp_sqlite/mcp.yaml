@@ -3,13 +3,14 @@
 # interpolate_env_vars 不认 :- 默认值（正则 \$\{([^}]+)\}，会把 "SQLITE_DB_PATH:-${HOME"
 # 整个当变量名）—— 服务器拿到一串字面量当路径，起不来。导入脚本也被这个语法截断，
 # 在 optional_env 里留下过一个残缺的 `default: ${HOME`。改成显式变量、装的时候填。
+# 2026-11-26：`--with mcp==1.19.0` 改为 `mcp==1.30.0` —— 1.19 的 FastMCP 引用了 pydantic 私有函数 eval_type_backport，pydantic 2.14 起删除，启动即崩；1.30 仍保留 v1 API（FastMCP / 低层装饰器 / McpError）且不依赖该函数。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_sqlite
 display_name: SQLite
 display_name_en: SQLite
-version: 0.2.0
+version: 0.2.1
 description: SQLite MCP server.
 description_zh: SQLite 本地数据库读写 — list_tables / describe_table / read_query / write_query / create_table。轻量本地存储工作流。已归档但仍可用。
 author: upstream
@@ -26,7 +27,7 @@ runtimes:
   command: uvx
   args:
   - --with
-  - mcp==1.19.0
+  - mcp==1.30.0
   - mcp-server-sqlite==2025.4.25
   - --db-path
   - ${SQLITE_DB_PATH}
@@ -44,7 +45,7 @@ defaults:
   enabled: true
   timeout: 60
 tools:
-  probed_at: '2026-08-23T08:06:28Z'
+  probed_at: '2026-11-27T03:08:28Z'
   probed_runtime: uvx
   count: 6
   file: tools.json

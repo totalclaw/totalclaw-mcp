@@ -1,12 +1,14 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-26：上游最新 0.1.7 装上即崩，逐项修正：① 依赖 mcp 未设上界 → `--with mcp<2`；② 注册的 mysql_mcp_server 入口指向不存在的 xiyan_mcp_server:main →
+# 改 `python -m xiyan_mcp_server`（走包内 __main__.py）；③ 代码导入 pandas 却未声明 → `--with pandas`；④ 必须由 YML 指向配置文件，原清单写 requires_env: []。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: xiyan
 display_name: xiyan_mcp_server
 display_name_en: xiyan_mcp_server
-version: 0.1.1
+version: 0.1.2
 description: A Model Context Protocol (MCP) server that utilizes XiyanSQL with databases. This server enables AI assistants
   to list tables, read data, and execute natural language queries
 description_zh: 支持使用自然语言查询从数据库获取数据的 MCP 服务器，由 XiyanSQL 作为 text-to-SQL LLM 驱动。
@@ -26,14 +28,36 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp<2
+  - --with
+  - pandas
+  - --from
   - xiyan_mcp_server==0.1.7
+  - python
+  - -m
+  - xiyan_mcp_server
   requires:
     python: '>=3.10'
-requires_env: []
+requires_env:
+- name: YML
+  description: 本机 YAML 配置文件的路径。文件里写两段：model（name / key / url，即 SQL 生成所用模型的名称、API Key、OpenAI 兼容接口地址）与 database（host / port / user / password / database，要查询的 MySQL）。不要写 mcp.transport —— 该字段会被传给 FastMCP 构造函数导致启动报错，留空时默认走
+    stdio。
+  prompt: 请输入 XiYan 配置文件（YAML）的完整路径
+  secret: false
+  required: true
+  doc_url: https://github.com/XGenerationLab/xiyan_mcp_server
+  doc_label: 查看项目说明（配置文件格式）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T03:39:55Z'
+  probed_runtime: uvx
+  count: 1
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

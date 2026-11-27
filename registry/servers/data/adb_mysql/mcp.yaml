@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-26：uvx 前置 `--with mcp<2` —— 包按 mcp 1.x 写（FastMCP / 低层装饰器 / McpError），依赖未声明上界，裸 uvx 解析到 mcp 2.x 后启动即崩。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: adb_mysql
 display_name: Alibaba Cloud AnalyticDB for MySQL
 display_name_en: Alibaba Cloud AnalyticDB for MySQL
-version: 0.1.1
+version: 0.1.2
 description: MCP server for AnalyticDB MySQL via OpenAPI and direct SQL connection
 description_zh: 阿里云 AnalyticDB for MySQL 官方集成，连接 AnalyticDB for MySQL 集群进行数据库元数据查询和数据分析。
 author: aliyun
@@ -25,6 +26,8 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp<2
   - adb-mysql-mcp-server==2.0.0
   requires:
     python: '>=3.10'
@@ -36,3 +39,9 @@ defaults:
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []
+tools:
+  probed_at: '2026-11-27T02:40:58Z'
+  probed_runtime: uvx
+  count: 3
+  file: tools.json

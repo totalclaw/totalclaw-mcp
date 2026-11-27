@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-27T02:15:51Z",
+  "generated_at": "2026-11-27T03:43:37Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -1514,7 +1514,7 @@
       "display_name_en": "Rememberizer AI",
       "description": "A Model Context Protocol server for interacting with Rememberizer's document and knowledge management API. This server enables Large Language Models to search, retrieve, and manage documents and integrations through Rememberizer.",
       "description_zh": "与 Rememberizer 数据源交互，促进增强的知识检索。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "skydeckai",
       "license": "Apache-2.0",
       "homepage": "https://github.com/skydeckai/mcp-server-rememberizer",
@@ -1573,11 +1573,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "9687c7be843d72827216035f5ccb13bfb79d822559a7a41d3d27902cff79c453",
-          "size": 1508
+          "sha256": "a9a21be5f8b17c19c1c19d4766cac28020da6c0fd38d912ecaec7e975076c656",
+          "size": 1709
         }
       ],
-      "bundle_sha256": "cf6c491d8f9cf7162a7bc35ba31ff01f79eb5cefbaf29ba82bca182f7111b569",
+      "bundle_sha256": "dfc6d7bd671b32b4bf77a267dddd517be7ae52c8aac3215dca0a212994f67559",
       "popularity": {
         "score": 302,
         "downloads_weekly": 27,
@@ -2199,7 +2199,7 @@
       "display_name_en": "AlphaVantage",
       "description": "AlphaVantage MCP server - Financial data tools for Model Context Protocol",
       "description_zh": "AlphaVantage 股票市场数据 API 服务器。",
-      "version": "0.1.1",
+      "version": "0.1.3",
       "author": "calvernaz",
       "license": "MIT",
       "homepage": "https://github.com/calvernaz/alphavantage",
@@ -2218,26 +2218,169 @@
         "win32"
       ],
       "transports": [
-        "stdio"
+        "http"
       ],
-      "launchers": [
-        "uvx"
-      ],
+      "launchers": [],
       "runtimes": [
         {
-          "id": "uvx",
-          "type": "stdio",
-          "launcher": "uvx",
-          "package": "alphavantage-mcp==0.3.24"
+          "id": "remote",
+          "type": "http",
+          "auth": "header",
+          "url": "https://mcp.alphavantage.co/mcp"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "ALPHAVANTAGE_API_KEY",
+          "description": "Alpha Vantage 的 API Key：在 alphavantage.co 的 Get Free API Key 页面免费申请。",
+          "prompt": "请输入 Alpha Vantage API Key",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/calvernaz/alphavantage",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 133,
+      "tools": [
+        "TIME_SERIES_INTRADAY",
+        "TIME_SERIES_DAILY",
+        "TIME_SERIES_DAILY_ADJUSTED",
+        "TIME_SERIES_WEEKLY",
+        "TIME_SERIES_WEEKLY_ADJUSTED",
+        "TIME_SERIES_MONTHLY",
+        "TIME_SERIES_MONTHLY_ADJUSTED",
+        "GLOBAL_QUOTE",
+        "REALTIME_BULK_QUOTES",
+        "REALTIME_BULK_BID_ASK_PRICES",
+        "SYMBOL_SEARCH",
+        "MARKET_STATUS",
+        "REALTIME_OPTIONS",
+        "REALTIME_OPTIONS_FMV",
+        "REALTIME_PUT_CALL_RATIO",
+        "REALTIME_VOLUME_OPEN_INTEREST_RATIO",
+        "HISTORICAL_OPTIONS",
+        "HISTORICAL_PUT_CALL_RATIO",
+        "HISTORICAL_VOLUME_OPEN_INTEREST_RATIO",
+        "NEWS_SENTIMENT",
+        "EARNINGS_CALL_TRANSCRIPT",
+        "TOP_GAINERS_LOSERS",
+        "INSIDER_TRANSACTIONS",
+        "INSTITUTIONAL_HOLDINGS",
+        "ANALYTICS_FIXED_WINDOW",
+        "ANALYTICS_SLIDING_WINDOW",
+        "WTI",
+        "BRENT",
+        "NATURAL_GAS",
+        "COPPER",
+        "ALUMINUM",
+        "WHEAT",
+        "CORN",
+        "COTTON",
+        "SUGAR",
+        "COFFEE",
+        "ALL_COMMODITIES",
+        "GOLD_SILVER_SPOT",
+        "GOLD_SILVER_HISTORY",
+        "CURRENCY_EXCHANGE_RATE",
+        "CRYPTO_INTRADAY",
+        "DIGITAL_CURRENCY_DAILY",
+        "DIGITAL_CURRENCY_WEEKLY",
+        "DIGITAL_CURRENCY_MONTHLY",
+        "REAL_GDP",
+        "REAL_GDP_PER_CAPITA",
+        "TREASURY_YIELD",
+        "FEDERAL_FUNDS_RATE",
+        "CPI",
+        "INFLATION",
+        "RETAIL_SALES",
+        "DURABLES",
+        "UNEMPLOYMENT",
+        "NONFARM_PAYROLL",
+        "FX_INTRADAY",
+        "FX_DAILY",
+        "FX_WEEKLY",
+        "FX_MONTHLY",
+        "COMPANY_OVERVIEW",
+        "COMPANY_LOGO",
+        "ETF_PROFILE",
+        "DIVIDENDS",
+        "SPLITS",
+        "INCOME_STATEMENT",
+        "BALANCE_SHEET",
+        "CASH_FLOW",
+        "EARNINGS",
+        "EARNINGS_ESTIMATES",
+        "LISTING_STATUS",
+        "EARNINGS_CALENDAR",
+        "IPO_CALENDAR",
+        "SMA",
+        "EMA",
+        "WMA",
+        "DEMA",
+        "TEMA",
+        "TRIMA",
+        "KAMA",
+        "MAMA",
+        "VWAP",
+        "T3",
+        "MACD",
+        "MACDEXT",
+        "STOCH",
+        "STOCHF",
+        "RSI",
+        "STOCHRSI",
+        "WILLR",
+        "ADX",
+        "ADXR",
+        "APO",
+        "PPO",
+        "MOM",
+        "BOP",
+        "CCI",
+        "CMO",
+        "ROC",
+        "ROCR",
+        "AROON",
+        "AROONOSC",
+        "MFI",
+        "TRIX",
+        "ULTOSC",
+        "DX",
+        "MINUS_DI",
+        "PLUS_DI",
+        "MINUS_DM",
+        "PLUS_DM",
+        "BBANDS",
+        "MIDPOINT",
+        "MIDPRICE",
+        "SAR",
+        "TRANGE",
+        "ATR",
+        "NATR",
+        "AD",
+        "ADOSC",
+        "OBV",
+        "HT_TRENDLINE",
+        "HT_SINE",
+        "HT_TRENDMODE",
+        "HT_DCPERIOD",
+        "HT_DCPHASE",
+        "HT_PHASOR",
+        "PING",
+        "ADD_TWO_NUMBERS",
+        "INDEX_DATA",
+        "INDEX_CATALOG",
+        "CONGRESS_TRADES",
+        "POLITICIAN_METADATA",
+        "TOOL_LIST",
+        "TOOL_GET",
+        "TOOL_CALL"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/biz/alphavantage",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/alphavantage",
@@ -2248,11 +2391,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "9b93639a6805324825c9bf92f6ba525fa6135a713e32abcda96b42390c04a5fd",
-          "size": 969
+          "sha256": "6fef808a1ede85014090dc91607759b4db6e67bd70d2ab618194e9d1b3d2fc71",
+          "size": 1736
+        },
+        {
+          "path": "tools.json",
+          "sha256": "2aa92da98673784b801cb771b77dc1c9fba79cde590afb6921664624fe48651c",
+          "size": 160360
         }
       ],
-      "bundle_sha256": "90633b3bbb4e153955922939d4755432c11b2438680808a57ac416ade58f3b5c",
+      "bundle_sha256": "13463f30d62669a646eb4271f8b65278d90c11b919e61f136a10eac5339b6c99",
       "popularity": {
         "score": 371,
         "downloads_weekly": 67,
@@ -6879,7 +7027,7 @@
       "display_name_en": "didlogic_mcp",
       "description": "DIDLogic MCP server",
       "description_zh": "DIDLogic MCP 服务器。增加管理 SIP 端点、号码和目的地的功能。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "UserAd",
       "license": "MIT",
       "homepage": "https://github.com/UserAd/didlogic_mcp",
@@ -6913,11 +7061,35 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 22,
+      "tools": [
+        "get_balance",
+        "list_sip_accounts",
+        "get_sip_account",
+        "create_sip_account",
+        "update_sip_account",
+        "delete_sip_account",
+        "get_allowed_ips",
+        "add_allowed_ip",
+        "delete_allowed_ip",
+        "list_purchases",
+        "list_destinations",
+        "add_destination",
+        "delete_destination",
+        "list_countries",
+        "list_country_regions",
+        "list_country_cities",
+        "list_country_cities_in_region",
+        "list_dids_in_country_city",
+        "purchase_did",
+        "remove_purchased_did",
+        "get_call_history",
+        "get_transactions"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/comm/didlogic",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/comm/didlogic",
@@ -6928,11 +7100,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "66fe779b5735845365a1e6c04ba820694b0063b069d539683db5cd7ee6f159e1",
-          "size": 932
+          "sha256": "c169e746d306e48ace0fee93e36678f27b29096ce1c734a71ef25232b39aca05",
+          "size": 1261
+        },
+        {
+          "path": "tools.json",
+          "sha256": "a7dc726c3890c615310bf197fa45f60aa06499664fc21d71e201080da2c733da",
+          "size": 51696
         }
       ],
-      "bundle_sha256": "9f1534bed7922369d65689ae6a0a3abc1685b585ba391fe683db94e135f62200",
+      "bundle_sha256": "a6190c3592ab8c75c01f1ec43b505befcde54e2e6b15efdc611f03126a8f6f56",
       "popularity": {
         "score": 204,
         "downloads_weekly": 21,
@@ -7830,7 +8007,7 @@
       "display_name_en": "mcp-gsuite",
       "description": "MCP Server to connect to Google G-Suite",
       "description_zh": "Gmail 和 Google Calendar 集成。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "MarkusPfundstein",
       "license": "MIT",
       "homepage": "https://github.com/MarkusPfundstein/mcp-gsuite",
@@ -7898,11 +8075,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "19a3f3487d7ca042c6ba1551186affd7a4443e9847ff4602561936393566f8d4",
-          "size": 1709
+          "sha256": "83745c551c45799a7ee4134be0893bb1e4d8327b3208370e753c4a999e87b465",
+          "size": 1910
         }
       ],
-      "bundle_sha256": "c9ea7a8c6151f19b9a257ce81a415708830b0dc7bf912f1f45a14ea3db72d2f8",
+      "bundle_sha256": "c3e49d4caf251b005311860f8cd9a1f0063cd350e10efa0069fc5aa3ef99823a",
       "popularity": {
         "score": 560,
         "downloads_weekly": 815,
@@ -9206,7 +9383,7 @@
       "display_name_en": "X (Twitter) (by vidhupv)",
       "description": "A server to create drafts of X(twitter) posts, threads using LLMs and post directly from the chat.",
       "description_zh": "直接通过 Claude 创建、管理和发布 X/Twitter 推文。",
-      "version": "0.1.2",
+      "version": "0.1.4",
       "author": "vidhupv",
       "license": "MIT",
       "homepage": "https://github.com/vidhupv/x-mcp",
@@ -9238,7 +9415,44 @@
           "package": "x-mcp==0.1.0"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "TWITTER_API_KEY",
+          "description": "X 开发者平台应用的 API Key（Consumer Key）：developer.x.com → Projects & Apps → Keys and tokens。",
+          "prompt": "请输入 X API Key",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/vidhupv/x-mcp",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "TWITTER_API_SECRET",
+          "description": "同一应用的 API Key Secret（Consumer Secret）。",
+          "prompt": "请输入 X API Key Secret",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/vidhupv/x-mcp",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "TWITTER_ACCESS_TOKEN",
+          "description": "同一页面生成的 Access Token（需读写权限才能发帖）。",
+          "prompt": "请输入 X Access Token",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/vidhupv/x-mcp",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "TWITTER_ACCESS_TOKEN_SECRET",
+          "description": "与 Access Token 配套的 Access Token Secret。",
+          "prompt": "请输入 X Access Token Secret",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/vidhupv/x-mcp",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
       "optional_env": [],
       "tools_count": 0,
       "tools": [],
@@ -9255,11 +9469,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "790ab3d3221c63e8b4ce09d0c817630dee992ee4e47995b2a29adf7ff258858c",
-          "size": 993
+          "sha256": "64cca19072a7457afbb829fe3cf3d162beab9b3f7df9deaa401a81d5141a6546",
+          "size": 2428
         }
       ],
-      "bundle_sha256": "36b47c77a80553b026600f4d3cc791714dfcd24f2b6260f0957292b8b0064d1d",
+      "bundle_sha256": "7187045d67061414f4b719ec17aea57234c9e8eaa8dbc9e9e160b422a42c87dc",
       "popularity": {
         "score": 179,
         "stars": 61
@@ -10610,7 +10824,7 @@
       "verified": true,
       "tested_with": ">=0.63.72",
       "category": "creative",
-      "icon": "",
+      "icon": "icon.png",
       "tags": [
         "creative",
         "preset"
@@ -10652,12 +10866,17 @@
           "size": 630
         },
         {
+          "path": "icon.png",
+          "sha256": "ad2b9f458e09de5f1429d41a7faf9defb4971bf30c0e435460a1fec6f9c752e9",
+          "size": 2466
+        },
+        {
           "path": "mcp.yaml",
           "sha256": "680928422e40cad53a9d728f853cf9040f58c687ed9d29ba16c2621455ec931e",
           "size": 795
         }
       ],
-      "bundle_sha256": "09e6cf1e3b1ce72b25e5db8b9fd8b0677bf4cec2566e7242f458d8be32014b54",
+      "bundle_sha256": "28117f4604db2f50d4133f32924ff1c31e8761d06f04268a6ff179a14559f90e",
       "popularity": {
         "score": 0
       }
@@ -10669,7 +10888,7 @@
       "display_name_en": "Alibaba Cloud AnalyticDB for MySQL",
       "description": "MCP server for AnalyticDB MySQL via OpenAPI and direct SQL connection",
       "description_zh": "阿里云 AnalyticDB for MySQL 官方集成，连接 AnalyticDB for MySQL 集群进行数据库元数据查询和数据分析。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "aliyun",
       "license": "Apache-2.0",
       "homepage": "https://github.com/aliyun/alibabacloud-adb-mysql-mcp-server",
@@ -10703,11 +10922,16 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 3,
+      "tools": [
+        "execute_sql",
+        "get_query_plan",
+        "get_execution_plan"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/adb_mysql",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/adb_mysql",
@@ -10718,11 +10942,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "0842ea49dd135ac0158bf3826ea806e3270e6e607a4a247ef03a9b9a50245986",
-          "size": 1131
+          "sha256": "a2ed5c9ce2437609a200f7599c19af7604570349efa0d8241241eff15fc05a80",
+          "size": 1459
+        },
+        {
+          "path": "tools.json",
+          "sha256": "8ea9f6067813c1f773c97b29f5089a50f9321cc6570fd0526cd37cc30f774ad1",
+          "size": 4349
         }
       ],
-      "bundle_sha256": "d280fed1ee6d5bf13a5097d0eabca98104937047ed786e5838083c90a3710efb",
+      "bundle_sha256": "490a0d1c4c8ab0e12e9fc8d63f31f1f12f7ee6bba53ce6e86dadc3484fe69330",
       "popularity": {
         "score": 324,
         "downloads_weekly": 52,
@@ -10736,7 +10965,7 @@
       "display_name_en": "Alibaba Cloud AnalyticDB for PostgreSQL",
       "description": "AnalyticDB PostgreSQL MCP Server serves as a universal interface between AI Agents and AnalyticDB PostgreSQL databases. It enables seamless communication between AI Agents and AnalyticDB PostgreSQL, helping AI Agents retrieve database metadata and execute SQL operations.",
       "description_zh": "阿里云 AnalyticDB for PostgreSQL 官方集成，连接 AnalyticDB for PostgreSQL 实例，查询和分析数据。",
-      "version": "0.1.1",
+      "version": "0.1.3",
       "author": "aliyun",
       "license": "Apache-2.0",
       "homepage": "https://github.com/aliyun/alibabacloud-adbpg-mcp-server",
@@ -10768,7 +10997,53 @@
           "package": "adbpg-mcp-server==2.0.3"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "ADBPG_HOST",
+          "description": "AnalyticDB PostgreSQL 实例的连接地址（控制台 → 数据库连接）。",
+          "prompt": "请输入 ADBPG 连接地址",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/aliyun/alibabacloud-adbpg-mcp-server",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "ADBPG_PORT",
+          "description": "连接端口，默认 5432。",
+          "prompt": "请输入 ADBPG 端口",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/aliyun/alibabacloud-adbpg-mcp-server",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "ADBPG_USER",
+          "description": "数据库账号。",
+          "prompt": "请输入 ADBPG 数据库账号",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/aliyun/alibabacloud-adbpg-mcp-server",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "ADBPG_PASSWORD",
+          "description": "数据库账号的密码。",
+          "prompt": "请输入 ADBPG 数据库密码",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/aliyun/alibabacloud-adbpg-mcp-server",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "ADBPG_DATABASE",
+          "description": "要连接的数据库名。",
+          "prompt": "请输入 ADBPG 数据库名",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/aliyun/alibabacloud-adbpg-mcp-server",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
       "optional_env": [],
       "tools_count": 0,
       "tools": [],
@@ -10785,11 +11060,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "fdf2169cd0e97cabb2e5eae186de4ddf1b848b9563b11d5b1ce0fa280dbc3f48",
-          "size": 1320
+          "sha256": "67b572b18c18249a7966949de33486045817ee70672bbc3b9cdc6f58adf0b65f",
+          "size": 2950
         }
       ],
-      "bundle_sha256": "d2c99197acb17f37cb7e17e738b903aadc53e0cdc88e7766ae3ec0f199987f29",
+      "bundle_sha256": "179a3f44ea66c4fe59195c1068028fb1f0cd2b71cb91e405f0e3d5da2416d614",
       "popularity": {
         "score": 318,
         "downloads_weekly": 88,
@@ -11003,7 +11278,7 @@
       "display_name_en": "airtable-mcp",
       "description": "Advanced AI-powered Airtable MCP server with TypeScript support, intelligent analytics, predictive modeling, and enterprise automation capabilities",
       "description_zh": "将 AI 工具直接连接到 Airtable。使用自然语言查询、创建、更新和删除记录。功能包括库管理、表操作等。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "rashidazarang",
       "license": "MIT",
       "homepage": "https://github.com/rashidazarang/airtable-mcp",
@@ -11032,7 +11307,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@rashidazarang/airtable-mcp@4.0.1"
+          "package": "@rashidazarang/airtable-mcp@5.1.0"
         }
       ],
       "requires_env": [
@@ -11071,11 +11346,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1078cb42510be4e4f8db2d847fc7200863c380b1ac7ab58b771bd1970e9b1434",
-          "size": 1766
+          "sha256": "ddc2db15c4591ea3ce1df5cc0ae60cba0727957f78a58c4c82ae313796e81a6c",
+          "size": 1777
         }
       ],
-      "bundle_sha256": "a77f431dcac27bbc4e6a9dfab509ab578bc5842f277dbc386355bd93045e21cc",
+      "bundle_sha256": "5cd53ed2a61eba5a71c132f13e012a02da24c3f6640010e463732c72c44b5335",
       "popularity": {
         "score": 194,
         "stars": 87
@@ -11682,7 +11957,7 @@
       "display_name_en": "chronulus-mcp",
       "description": "An MCP Server for Chronulus AI Forecasting and Prediction Agents",
       "description_zh": "使用 Chronulus AI 预测和预测代理预测任何事物。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "ChronulusAI",
       "license": "MIT",
       "homepage": "https://github.com/ChronulusAI/chronulus-mcp",
@@ -11716,11 +11991,22 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 9,
+      "tools": [
+        "create_chronulus_session",
+        "create_forecasting_agent_and_get_forecast",
+        "reuse_forecasting_agent_and_get_forecast",
+        "rescale_forecast",
+        "save_forecast",
+        "create_prediction_agent_and_get_predictions",
+        "reuse_prediction_agent_and_get_prediction",
+        "save_prediction_analysis_html",
+        "get_risk_assessment_scorecard"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/chronulus",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/chronulus",
@@ -11731,11 +12017,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "01e508df81e0bc482eddc3f72878ff8c3c89b4a497e45a1fdee821bc7b47e8ed",
-          "size": 979
+          "sha256": "bc0520e50b5fe697c8d434ea068098b9e246b326e2537cce3410d1110c30241c",
+          "size": 1307
+        },
+        {
+          "path": "tools.json",
+          "sha256": "18494cb964cd6c6e7e4ef56f8df185d352d0e32317c81f48fe2192dc9210b215",
+          "size": 30692
         }
       ],
-      "bundle_sha256": "1544624db58b3ca68a308b798e0a4c88766b581ca94b86210ce3d212754720be",
+      "bundle_sha256": "7e5f6b4a0d311ec3e2ef597b6bac29840b9844540f7488824263915a1f49f7a9",
       "popularity": {
         "score": 143,
         "downloads_weekly": 26
@@ -11946,11 +12237,11 @@
       "display_name_en": "legion-mcp",
       "description": "A MCP server that helps access and query data in various popular databases",
       "description_zh": "通用数据库 MCP 服务器，支持 PG, Redshift, CockroachDB, MySQL, RDS MySQL, MS SQL Server, BigQuery, Oracle DB, SQLite。",
-      "version": "0.1.1",
+      "version": "0.1.3",
       "author": "TheRaLabs",
       "license": "GPL-3.0-or-later",
       "homepage": "https://github.com/TheRaLabs/legion-mcp",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "data",
       "icon": "",
@@ -11985,7 +12276,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-26）：装上必挂且无法在清单层面修复——依赖链 legion-query-runner 所有版本硬依赖 mysqlclient==2.1.1，该包只发布 Windows 预编译包，macOS / Linux 必须本机装 MySQL 开发库（mysql_config）现场编译，普通用户装不上",
         "osv": "clean"
       },
       "path": "registry/servers/data/database",
@@ -11997,11 +12289,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "7d69da7e5110b242373d52aaa1403c4eb221861942cbbed80b4a771b85295963",
-          "size": 1750
+          "sha256": "f52babb262914f9bd9df3cef7575e85c1e60ee493fb5b8debf62106ce53a662d",
+          "size": 2631
         }
       ],
-      "bundle_sha256": "b43368ddbedac8fd63e746c62f3a6cd485439f631a62ae28bd8a1be1c202bf86",
+      "bundle_sha256": "29ee8702405a10ef73ccfbb0fa783a13824f0684e49b7a95ecedc5304b84cd74",
       "popularity": {
         "score": 355,
         "downloads_weekly": 36,
@@ -12221,7 +12513,7 @@
       "display_name_en": "Data Exploration",
       "description": "A MCP server project",
       "description_zh": "对 .csv 数据集进行自主数据探索，轻松获得智能见解（**注意：会执行代码**）。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "reading-plus-ai",
       "license": "MIT",
       "homepage": "https://github.com/reading-plus-ai/mcp-server-data-exploration",
@@ -12255,11 +12547,15 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 2,
+      "tools": [
+        "load_csv",
+        "run_script"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/ds",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/ds",
@@ -12270,11 +12566,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "59d07fb2223039c4932b51ea62cc5d3af6e701d3ee84887e80c5087f046d9c3c",
-          "size": 1018
+          "sha256": "bfedc1e969bf564d06913e05d97a5af8609d38e710d9ba763176365bd27b0f52",
+          "size": 1376
+        },
+        {
+          "path": "tools.json",
+          "sha256": "8aada7b193fa2f3a9f694c2db599850f48d07a308875cea62b7d39545a924079",
+          "size": 1938
         }
       ],
-      "bundle_sha256": "e3151b220d7a74cbc6f520be249230232dd931d184c15174fa279e34e35ec5d6",
+      "bundle_sha256": "173db1ce2369935bd35c22e61c6ea11571f1e99486120df6e39b23df57d79757",
       "popularity": {
         "score": 493,
         "downloads_weekly": 154,
@@ -12288,7 +12589,7 @@
       "display_name_en": "mcp-server-duckdb",
       "description": "A DuckDB MCP server",
       "description_zh": "DuckDB 数据库集成，具有模式检查和查询能力。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "ktanaka101",
       "license": "MIT",
       "homepage": "https://github.com/ktanaka101/mcp-server-duckdb",
@@ -12347,11 +12648,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "45f93055a343c97a8426a9957be82e360893c7824dda34431f60176f0eb5431a",
-          "size": 1308
+          "sha256": "f172ad7b37d436dcf53757931db6746c5f50ed14c7962f7dcb99282ed87a320f",
+          "size": 1509
         }
       ],
-      "bundle_sha256": "8e4fdc918684735a515168a5267379b528a4b91ab258cf67980d0de8a731dd9f",
+      "bundle_sha256": "ba9934b2920da46079c8dec485496a5fbf4f3023b8066de2c2ef8e03c366774b",
       "popularity": {
         "score": 226,
         "stars": 179
@@ -12509,7 +12810,7 @@
       "display_name_en": "mcp-excel-server",
       "description": "MCP Excel Server for Excel operations through the Model Context Protocol",
       "description_zh": "通过自然语言与 Excel 交互的 MCP 服务器。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "yzfly",
       "license": "MIT",
       "homepage": "https://github.com/yzfly/mcp-excel-server",
@@ -12543,11 +12844,21 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 8,
+      "tools": [
+        "read_excel",
+        "write_excel",
+        "update_excel",
+        "analyze_excel",
+        "filter_excel",
+        "pivot_table",
+        "export_chart",
+        "data_summary"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/excel",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/excel",
@@ -12558,11 +12869,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "3b91336517489ad05fdfa2e324a29cdc9b8fa4cc01fd4e6da29fff7682d0e3b9",
-          "size": 972
+          "sha256": "06c70e312857fd4124bb3603ba2e63730760cfe378cabe306aed6bd61230be14",
+          "size": 1300
+        },
+        {
+          "path": "tools.json",
+          "sha256": "f1ab08b9787e5f37e00ba0de393be42bcdf6e83eee6a8a445a3995647052c01b",
+          "size": 9667
         }
       ],
-      "bundle_sha256": "3d0c11db4ac86410875ef090f898c47d85706335eb10ac65971df04a372a5bf1",
+      "bundle_sha256": "e51fad7a0de6015e910e0277c156d5c7e1e8852060848202910272a35c5e403f",
       "popularity": {
         "score": 375,
         "downloads_weekly": 58,
@@ -13044,7 +13360,7 @@
       "display_name_en": "mcp-google-sheets",
       "description": "This MCP server integrates with your Google Drive and Google Sheets, to enable creating and modifying spreadsheets.",
       "description_zh": "用于与 Google Sheets 交互的模型上下文协议服务器。提供创建、读取、更新和管理电子表格的工具。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "xing5",
       "license": "MIT",
       "homepage": "https://github.com/xing5/mcp-google-sheets",
@@ -13103,11 +13419,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "5a4d7d6b45d3f9e191fc58172b13e95dcf76e76fb8ec6eb076f9a877a82c1b03",
-          "size": 1491
+          "sha256": "7f8333576a553c178c34c308261a0b2a11b08996305726d5c7cec15824ac7573",
+          "size": 1692
         }
       ],
-      "bundle_sha256": "fae78859039daaf87c568122ffa9d6d84002fe142866da974c182fe4b0dce352",
+      "bundle_sha256": "5b964ea917184d7a406aac65e0810b99654da814daef270ce767c1a0bc47f3bc",
       "popularity": {
         "score": 740,
         "downloads_weekly": 24725,
@@ -14138,7 +14454,7 @@
       "display_name_en": "SQLite",
       "description": "SQLite MCP server.",
       "description_zh": "SQLite 本地数据库读写 — list_tables / describe_table / read_query / write_query / create_table。轻量本地存储工作流。已归档但仍可用。",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "author": "upstream",
       "homepage": "https://github.com/modelcontextprotocol/servers-archived",
       "verified": true,
@@ -14207,8 +14523,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "9cb0ed9f3a1dc8ab2fb0397cf644d8d4c0014aeefb9e2f0a1280a0b1c0dc56f7",
-          "size": 1683
+          "sha256": "002255149f6ac0a3160e5674adbea271551e5791fa31e01ae2946e84f2bf4f02",
+          "size": 1946
         },
         {
           "path": "tools.json",
@@ -14216,7 +14532,7 @@
           "size": 2074
         }
       ],
-      "bundle_sha256": "a1b9cd110e534e7a660456edb358fe461f55a7986386bf3dd68ccf8434f65be8",
+      "bundle_sha256": "2d22c46784280436c5ba4dac82640c384d926216091ab80fc41565cdde9f2b6f",
       "popularity": {
         "score": 249,
         "stars": 305
@@ -14362,7 +14678,7 @@
       "display_name_en": "Mindmap",
       "description": "MCP server for converting Markdown to mindmaps",
       "description_zh": "从包含 Markdown 代码的输入生成美观的交互式思维导图。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "YuChenSSR",
       "license": "MIT",
       "homepage": "https://github.com/YuChenSSR/mindmap-mcp-server",
@@ -14396,11 +14712,14 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 1,
+      "tools": [
+        "convert_markdown_to_mindmap"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/mindmap",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/mindmap",
@@ -14411,11 +14730,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "41e04388bed388c8e1c3e3fb50d8f1c877a1cee3efa1208e97d1e37230938d4d",
-          "size": 994
+          "sha256": "d24c899c844e287fd4d3a3232ab741e551e3d555f8540c2396e5a4db784441ef",
+          "size": 1322
+        },
+        {
+          "path": "tools.json",
+          "sha256": "b0332ae1bc29cb5bd987e37996092e7c5f7e1056c374cf24d07954c927c31e2b",
+          "size": 648
         }
       ],
-      "bundle_sha256": "2a6c015c829d976759b8dbbc8d11ffbedeb7201d3bc8428f1559ca0ad93b9a15",
+      "bundle_sha256": "207242819de35acfda3cd8c3cd5247cd15994b1efb4553d738235e56227679ae",
       "popularity": {
         "score": 569,
         "downloads_weekly": 2037,
@@ -15354,7 +15678,7 @@
       "display_name_en": "mcp-server-opendal",
       "description": "A Model Context Protocol server providing tools to access storage services for usage by LLMs",
       "description_zh": "使用 Apache OpenDAL™ 访问任何存储。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "Xuanwo",
       "license": "Apache-2.0",
       "homepage": "https://github.com/Xuanwo/mcp-server-opendal",
@@ -15413,11 +15737,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "6d0088ffd9edbd9b0d71353b29f892f0a3cf3e5e2df81fa47f01c147058a6e0a",
-          "size": 1294
+          "sha256": "b42cb4998ad6743d0f806067c389412da90a892d905322f01ea1ab61963724d4",
+          "size": 1495
         }
       ],
-      "bundle_sha256": "6d071c75513de3900a1b55159a3dae62674494a59946c93d72c6bc6ef0672393",
+      "bundle_sha256": "6cd8128854088e04d1a70130ceb28aa47ddffbcb63b89cd5b50ee1d209ad9e13",
       "popularity": {
         "score": 310,
         "downloads_weekly": 34,
@@ -16285,7 +16609,7 @@
       "display_name_en": "SingleStore",
       "description": "SingleStore MCP server",
       "description_zh": "SingleStore 官方集成，与 SingleStore 数据库平台交互。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "singlestore-labs",
       "license": "MIT",
       "homepage": "https://github.com/singlestore-labs/mcp-server-singlestore",
@@ -16334,11 +16658,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "72d3be4118e6222ae9937174697119a8410e5bd3bab1ff6ee836c654a62414b4",
-          "size": 993
+          "sha256": "16da8a442188786be9acbc387b95942de64dd6c0f469291f8e7a76010daddb18",
+          "size": 1194
         }
       ],
-      "bundle_sha256": "afa91926e423e4ebb205fa710506b76347dc14118f42de0a0d73d7bbc083cb3e",
+      "bundle_sha256": "d31ab4ae17901315dcb5e85b087f77aeb7c659c8c5d29edb14957dbb69e127be",
       "popularity": {
         "score": 198,
         "downloads_weekly": 94
@@ -16351,7 +16675,7 @@
       "display_name_en": "mcp-snowflake-server",
       "description": "A simple Snowflake MCP server",
       "description_zh": "Snowflake 集成，实现读和（可选）写操作以及洞察跟踪。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "isaacwasserman",
       "license": "AGPL-3.0",
       "homepage": "https://github.com/isaacwasserman/mcp-snowflake-server",
@@ -16464,11 +16788,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "86963d948d4a7eeb8ed3057ea2175d0884e2c60fdfcade229bccdccd9dc0d2d8",
-          "size": 3517
+          "sha256": "6cb39c679da1fa0d98f2cb04df77f5ec68a6393f9b6e241ba14dd33e27bea55c",
+          "size": 3718
         }
       ],
-      "bundle_sha256": "cce48e17654a4240ef35c2779a7d82fdf66ec8075cc5707bcf095f48fded5656",
+      "bundle_sha256": "e9c3bdab2ece2c9bf4e744c2d351274af12a1a017140a553ccd2f9ed4b0b381c",
       "popularity": {
         "score": 518,
         "downloads_weekly": 814,
@@ -16762,7 +17086,7 @@
       "display_name_en": "supabase-mcp-server",
       "description": "Community Supabase MCP server that enables Cursor and Windsurf to end-to-end manage your Supabase project, execute SQL queries, and more.",
       "description_zh": "Supabase MCP 服务器，支持 SQL 查询执行和数据库探索工具。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "alexander-zuev",
       "license": "Apache-2.0",
       "homepage": "https://github.com/alexander-zuev/supabase-mcp-server",
@@ -16796,11 +17120,25 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 12,
+      "tools": [
+        "get_schemas",
+        "get_tables",
+        "get_table_schema",
+        "execute_postgresql",
+        "retrieve_migrations",
+        "send_management_api_request",
+        "get_management_api_spec",
+        "get_auth_admin_methods_spec",
+        "call_auth_admin_method",
+        "live_dangerously",
+        "confirm_destructive_operation",
+        "retrieve_logs"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/supabase_alexander_zuev",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/supabase_alexander_zuev",
@@ -16811,11 +17149,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "4271ac34941f4ed30fed662e1ce57734cdd41a932714c611eb0e9f5c69dcd8a7",
-          "size": 1125
+          "sha256": "aa4ddbe50e25bcc155d88d95cf9047e4a36861b2a140a5561f72cdb9faac35c9",
+          "size": 1454
+        },
+        {
+          "path": "tools.json",
+          "sha256": "e737e0d51ef149fb0d43fce5c0146cc9f461a6b8de12af5c3dfca65e2abe76f8",
+          "size": 25585
         }
       ],
-      "bundle_sha256": "b9c7a1f486054ab230695ec217cc3369907035685861569e31267ef1102042a9",
+      "bundle_sha256": "829c353e99e34cd56efef3c3ee07ed90ad88379ecac9fef681a365136ef13594",
       "popularity": {
         "score": 292,
         "stars": 834
@@ -17066,7 +17409,7 @@
       "display_name_en": "mcp-timeplus",
       "description": "An MCP server for Timeplus.",
       "description_zh": "Apache Kafka 和 Timeplus 的 MCP 服务器。能列出 Kafka 主题、轮询消息、本地保存数据并通过 Timeplus 用 SQL 查询流数据。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "jovezhong",
       "license": "Apache-2.0",
       "homepage": "https://github.com/jovezhong/mcp-timeplus",
@@ -17152,11 +17495,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "2155b8ec9ceaace6d75deb46ea37838e36a29d214ba7c2e0c2c2c1fb034cb152",
-          "size": 2591
+          "sha256": "0c32d3cfb5290feb5dfa7a81be007b627e60d3bd0c29dcafc088d0ff89de9f2e",
+          "size": 2792
         }
       ],
-      "bundle_sha256": "7bb4ab9ff4b568eb100289ae80f2ff001fbe7ba7ae903bca558d5212282641e4",
+      "bundle_sha256": "c89efe6703378542eb72c86f54b85424c635e8a5d2dfea6b2c84503e9efed31f",
       "popularity": {
         "score": 0
       }
@@ -17168,7 +17511,7 @@
       "display_name_en": "Tinybird",
       "description": "An MCP server to interact with a Tinybird Workspace from any MCP client.",
       "description_zh": "Tinybird 官方集成，与 Tinybird 无服务器 ClickHouse 平台交互 (查询和 API 能力)。",
-      "version": "0.1.1",
+      "version": "0.1.3",
       "author": "tinybirdco",
       "license": "Apache-2.0",
       "homepage": "https://github.com/tinybirdco/mcp-tinybird",
@@ -17200,7 +17543,26 @@
           "package": "mcp-tinybird==1.0.3"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "TB_API_URL",
+          "description": "Tinybird 工作区所在区域的 API 地址，如 https://api.tinybird.co（在工作区设置里查看）。",
+          "prompt": "请输入 Tinybird API 地址",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/tinybirdco/mcp-tinybird",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "TB_ADMIN_TOKEN",
+          "description": "Tinybird 工作区的 admin token：工作区 → Tokens 里复制。",
+          "prompt": "请输入 Tinybird admin token",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/tinybirdco/mcp-tinybird",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
       "optional_env": [],
       "tools_count": 0,
       "tools": [],
@@ -17217,11 +17579,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "27e9d34f26ccce081de448832a59d57e9dbbbcf0f392e05960c13093155eae7a",
-          "size": 1014
+          "sha256": "161042a31cfa72f18ee872dcf636c1e3f82037ec02ca0749062304040458bad1",
+          "size": 1942
         }
       ],
-      "bundle_sha256": "25506374c914c117b70503f08a722ddce1e0c5ddff1bad937f5ca3d58b7a8493",
+      "bundle_sha256": "bbd26bed55d01b632542a6b3bf1de9a7c45d66dfc3aea6e9bd857aab8cf84b20",
       "popularity": {
         "score": 361,
         "downloads_weekly": 50,
@@ -17368,7 +17730,7 @@
       "display_name_en": "vikingdb-mcp-server",
       "description": "a mcp server for vikingdb store and search",
       "description_zh": "VikingDB 集成，具有集合和索引介绍、向量存储和搜索能力。",
-      "version": "0.1.2",
+      "version": "0.1.4",
       "author": "KashiwaByte",
       "homepage": "https://github.com/KashiwaByte/vikingdb-mcp-server",
       "verified": true,
@@ -17399,7 +17761,62 @@
           "package": "mcp-server-vikingdb==0.1.2"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "VIKINGDB_HOST",
+          "description": "火山引擎 VikingDB 的服务地址（控制台实例详情里查看）。",
+          "prompt": "请输入 VikingDB 服务地址",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/KashiwaByte/vikingdb-mcp-server",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "VIKINGDB_REGION",
+          "description": "VikingDB 实例所在区域，如 cn-beijing。",
+          "prompt": "请输入 VikingDB 区域",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/KashiwaByte/vikingdb-mcp-server",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "VIKINGDB_AK",
+          "description": "火山引擎访问密钥 Access Key ID：控制台 → 访问控制 → 密钥管理。",
+          "prompt": "请输入火山引擎 Access Key ID",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/KashiwaByte/vikingdb-mcp-server",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "VIKINGDB_SK",
+          "description": "与 Access Key ID 配套的 Secret Access Key。",
+          "prompt": "请输入火山引擎 Secret Access Key",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/KashiwaByte/vikingdb-mcp-server",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "COLLECTION_NAME",
+          "description": "要访问的 VikingDB 数据集（Collection）名称。",
+          "prompt": "请输入 VikingDB 数据集名称",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/KashiwaByte/vikingdb-mcp-server",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "INDEX_NAME",
+          "description": "该数据集上的索引（Index）名称。",
+          "prompt": "请输入 VikingDB 索引名称",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/KashiwaByte/vikingdb-mcp-server",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
       "optional_env": [],
       "tools_count": 0,
       "tools": [],
@@ -17416,11 +17833,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "232e726004b1a1ecdccd4aaabc240f2bc270f4a0daf6f2661fce652df490f175",
-          "size": 989
+          "sha256": "2f187dd003c547b7f671e4870a3179487aff9fd02fcb5f0c96d4e386b4f53f7f",
+          "size": 3022
         }
       ],
-      "bundle_sha256": "1cc748fc4a97f8ff8a50837f263146d70e86c71972dcd351f00a17aee502bd6e",
+      "bundle_sha256": "86a5bcde560d0dc723ca981b95e46ff73afa0ba48d84fcb66bcff1ad1ce3fa31",
       "popularity": {
         "score": 234,
         "downloads_weekly": 30,
@@ -17502,7 +17919,7 @@
       "display_name_en": "xiyan_mcp_server",
       "description": "A Model Context Protocol (MCP) server that utilizes XiyanSQL with databases. This server enables AI assistants to list tables, read data, and execute natural language queries",
       "description_zh": "支持使用自然语言查询从数据库获取数据的 MCP 服务器，由 XiyanSQL 作为 text-to-SQL LLM 驱动。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "XGenerationLab",
       "license": "Apache-2.0",
       "homepage": "https://github.com/XGenerationLab/xiyan_mcp_server",
@@ -17534,13 +17951,26 @@
           "package": "xiyan_mcp_server==0.1.7"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "YML",
+          "description": "本机 YAML 配置文件的路径。文件里写两段：model（name / key / url，即 SQL 生成所用模型的名称、API Key、OpenAI 兼容接口地址）与 database（host / port / user / password / database，要查询的 MySQL）。不要写 mcp.transport —— 该字段会被传给 FastMCP 构造函数导致启动报错，留空时默认走 stdio。",
+          "prompt": "请输入 XiYan 配置文件（YAML）的完整路径",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/XGenerationLab/xiyan_mcp_server",
+          "doc_label": "查看项目说明（配置文件格式）"
+        }
+      ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 1,
+      "tools": [
+        "get_data"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/xiyan",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/xiyan",
@@ -17551,11 +17981,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "4aa6699e17ce400c9f8871c0174826f4e8b55b336bf093e709b37ef6a5984c10",
-          "size": 1175
+          "sha256": "164e06984d1d887e1deb5518b19b3c0bcff1eaf20b6599450af85124c2198d1f",
+          "size": 2392
+        },
+        {
+          "path": "tools.json",
+          "sha256": "b5b3543c1d5a69ab1de9cf972781ae1aaf980b18f82d059b7245f94e0f6fb8a0",
+          "size": 444
         }
       ],
-      "bundle_sha256": "0085e886bcf1debac3d1977a8c92a5930c83b54cd1a01369e42bc8200e9e8493",
+      "bundle_sha256": "9cdf8d95271b399d56f0b3d8e948abff91705c45b526359a0a30fb72a5c97b66",
       "popularity": {
         "score": 238,
         "stars": 238
@@ -18481,7 +18916,7 @@
       "display_name_en": "cli-mcp-server",
       "description": "Command line interface for MCP clients with secure execution and customizable security policies",
       "description_zh": "具有安全执行和可自定义安全策略的命令行接口。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "MladenSU",
       "license": "MIT",
       "homepage": "https://github.com/MladenSU/cli-mcp-server",
@@ -18540,11 +18975,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "e3b97cbce6026de97c5688cc785731e2a171502498002a986165166a21dc1165",
-          "size": 1457
+          "sha256": "0a9ee6859b55bdaad2fe5f211d8569af46758b29cc7ad19f7f5b54bd24d09392",
+          "size": 1658
         }
       ],
-      "bundle_sha256": "674186c024698dbb1b12d2f616088be731b793ccd6293fb7239732b610c8cbdf",
+      "bundle_sha256": "a1db9e552ab4dd0d47a6cd538338fe82f01a080e7bf84fa3d3bb640074d26d02",
       "popularity": {
         "score": 624,
         "downloads_weekly": 9721,
@@ -18812,7 +19247,7 @@
       "display_name_en": "codemcp",
       "description": "MCP server for file operations",
       "description_zh": "具有基本读、写和命令行工具的编码代理。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "ezyang",
       "license": "MIT",
       "homepage": "https://github.com/ezyang/codemcp",
@@ -18846,11 +19281,14 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 1,
+      "tools": [
+        "codemcp"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/codemcp",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/codemcp",
@@ -18861,11 +19299,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "ffc835c4c7fc533161d7fc88529904604abfb887efc355955eb2403c3d0b8ea7",
-          "size": 891
+          "sha256": "3461634efb8db3c73a848ac0403e958ea211a5fb24aef706c409f00764fdce79",
+          "size": 1219
+        },
+        {
+          "path": "tools.json",
+          "sha256": "69ef6e4abf8c3cce8e70d73d8b467b8fe412687d141afb976d6e70f35dd2b4f0",
+          "size": 6519
         }
       ],
-      "bundle_sha256": "de806c51b97a291f9204c7adc11529a57ff8932019edfa4da55b3989d97319fc",
+      "bundle_sha256": "88dd6243c2635eb06f6239fb2f9b99bc64f91ddc4cef7e9a3592d854c5c0bf94",
       "popularity": {
         "score": 497,
         "downloads_weekly": 57,
@@ -19087,7 +19530,7 @@
       "display_name_en": "DesktopCommanderMCP",
       "description": "MCP server for terminal operations and file editing",
       "description_zh": "增强的文件系统和搜索工具，以及特定于编码的命令和提示。(也含命令行功能)",
-      "version": "0.1.5",
+      "version": "0.1.6",
       "author": "wonderwhy-er",
       "license": "MIT",
       "homepage": "https://github.com/wonderwhy-er/DesktopCommanderMCP",
@@ -19121,14 +19564,42 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 25,
+      "tools": [
+        "get_config",
+        "set_config_value",
+        "read_file",
+        "read_multiple_files",
+        "write_file",
+        "write_pdf",
+        "create_directory",
+        "list_directory",
+        "move_file",
+        "start_search",
+        "get_more_search_results",
+        "stop_search",
+        "list_searches",
+        "get_file_info",
+        "edit_block",
+        "start_process",
+        "read_process_output",
+        "interact_with_process",
+        "force_terminate",
+        "list_sessions",
+        "list_processes",
+        "kill_process",
+        "get_usage_stats",
+        "get_recent_tool_calls",
+        "give_feedback_to_desktop_commander"
+      ],
       "security": {
         "scan_verdict": "allow",
         "osv": "clean",
         "enforced_env": {
-          "DESKTOP_COMMANDER_DISABLE_TELEMETRY": "1"
-        }
+          "DESKTOP_COMMANDER_DISABLE_TELEMETRY": "1",
+          "npm_config_ignore_scripts": "true"
+        },
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/desktop_commander",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/desktop_commander",
@@ -19139,11 +19610,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "6f7a474a653b10e01cea415e852232f6a238907bea6b446be60478d3981b8dc4",
-          "size": 1306
+          "sha256": "b7c4bd75f4e3cffdd4df622c158c98d826713c925d81d7db0857942153c044ce",
+          "size": 1819
+        },
+        {
+          "path": "tools.json",
+          "sha256": "d02014c3b663f823a0ff059647bcd31488c2266b62d2e37868c43f47008b08d7",
+          "size": 57156
         }
       ],
-      "bundle_sha256": "55df9f84447b1d66a2540bcf8b475320928f92cbf2328a136468a41c70507def",
+      "bundle_sha256": "7fe0bb4cea17eb0de986556ef96110b9b1e3d9e67a740c94952546205a88fc5c",
       "popularity": {
         "score": 401,
         "stars": 10144
@@ -20688,7 +21164,7 @@
       "display_name_en": "jvm-mcp-server",
       "description": "A JVM monitoring and control server",
       "description_zh": "基于 JVM 的 MCP 服务器实现项目。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "xzq-xu",
       "license": "MIT",
       "homepage": "https://github.com/xzq-xu/jvm-mcp-server",
@@ -20722,11 +21198,29 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 16,
+      "tools": [
+        "list_java_processes",
+        "get_thread_info",
+        "get_jvm_info",
+        "get_memory_info",
+        "get_stack_trace",
+        "get_class_info",
+        "get_jvm_status",
+        "get_stack_trace_by_method",
+        "decompile_class",
+        "search_method",
+        "watch_method",
+        "get_logger_info",
+        "set_logger_level",
+        "get_dashboard",
+        "get_jcmd_output",
+        "get_jstat_output"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/jvm",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/jvm",
@@ -20737,11 +21231,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "6fac14f5517b942188e91c560821241740b1ccdfff0910c191a527411124f066",
-          "size": 913
+          "sha256": "d7dd0a9f14bbb0860c627ef10ef01eccabf8d186763702e31e14f48e4ee27f97",
+          "size": 1242
+        },
+        {
+          "path": "tools.json",
+          "sha256": "572bd0cad465f0569f082717b8660788766e03d9f5b2fe592b8b8a4e0c11d3e7",
+          "size": 18780
         }
       ],
-      "bundle_sha256": "a756016fbed850b082a97f99765dd0c6b3e0f7faa408592b7f1792d40e938b2a",
+      "bundle_sha256": "64d7ef824e65710d20b7e2d59e41da82ab8972297545c72fac498e646837eb04",
       "popularity": {
         "score": 130,
         "downloads_weekly": 19
@@ -21500,7 +21999,7 @@
       "display_name_en": "mem0-mcp",
       "description": "Model Context Protocol server that exposes the Mem0 long-term memory API as tools",
       "description_zh": "管理代码偏好和模式，支持语义搜索，方便在 IDE 中存取技术文档。 (Mem0 官方)",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "mem0ai",
       "license": "Apache-2.0",
       "homepage": "https://github.com/mem0ai/mem0-mcp",
@@ -21568,11 +22067,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1c21b9c70c6e0eecdf9c53988b98d0d87fc5b1e95aee7c4b7112b62a7a351920",
-          "size": 1560
+          "sha256": "a9404bf61b1be46a5a5d920752673ce4e3f61623c471319b1bab3ce00619fe71",
+          "size": 1761
         }
       ],
-      "bundle_sha256": "a7e53229cfd8a945ff7f14e1553ec11d4ce3d3850cddc205fb4e693a31bcdcb0",
+      "bundle_sha256": "fbfbc1292deead668cc4b70f659d0c0ebf26453f11f9a0eeb19b925d83babb69",
       "popularity": {
         "score": 556,
         "downloads_weekly": 549,
@@ -24189,7 +24688,7 @@
       "display_name_en": "adls-mcp-server",
       "description": "Azure Data Lake Storage Gen2 Model Context Protocol (MCP) service",
       "description_zh": "用于 Azure Data Lake Storage 的 MCP 服务器。可管理容器、读/写/上传/下载文件及管理元数据。",
-      "version": "0.1.1",
+      "version": "0.1.3",
       "author": "erikhoward",
       "license": "MIT",
       "homepage": "https://github.com/erikhoward/adls-mcp-server",
@@ -24221,8 +24720,20 @@
           "package": "adls2-mcp-server==0.1.4"
         }
       ],
-      "requires_env": [],
-      "optional_env": [],
+      "requires_env": [
+        {
+          "name": "AZURE_STORAGE_ACCOUNT_NAME",
+          "description": "Azure 存储账户名（启用了分层命名空间的 Data Lake Storage Gen2 账户）。",
+          "prompt": "请输入 Azure 存储账户名",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/erikhoward/adls-mcp-server",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
+      "optional_env": [
+        "AZURE_STORAGE_ACCOUNT_KEY"
+      ],
       "tools_count": 0,
       "tools": [],
       "security": {
@@ -24238,11 +24749,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "96e1910fb73d360a9369d929433fb561d9c9eef2c814e7a910ea090f92ae6203",
-          "size": 1041
+          "sha256": "c72893413ba09662479cea5aa97787b71e02639dc7bd88d247e8ff2530e6f479",
+          "size": 2014
         }
       ],
-      "bundle_sha256": "6706a05186016ac80ff6b16d7dd3b2b344d3a3ad8424faf157c590cde9f711b6",
+      "bundle_sha256": "0a18ae254b4cd4c95c752d9891fbf7940c0cefb59d2177bd099d9099a0a895ee",
       "popularity": {
         "score": 236,
         "downloads_weekly": 32,
@@ -25364,7 +25875,7 @@
       "display_name_en": "Docker",
       "description": "Docker MCP server.",
       "description_zh": "Docker 容器管理 — ps / images / run / stop / logs / exec / inspect / network / volume。LLM 直接调度本地或远端 Docker daemon。",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "author": "upstream",
       "homepage": "https://github.com/QuantGeekDev/docker-mcp",
       "verified": true,
@@ -25425,8 +25936,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "c5b6fb175249f4d559402bab172225e9137b739d00459b4243f630e1578cb21a",
-          "size": 1210
+          "sha256": "12bcb18855f8deac43e625833bf65e3dd974a6eeeaeebdce494898cc94800b44",
+          "size": 1473
         },
         {
           "path": "tools.json",
@@ -25434,7 +25945,7 @@
           "size": 1572
         }
       ],
-      "bundle_sha256": "750625aeddf62a8e909fe53ddf36cd7bad91e1a1ddc2edd3e6d51a9c3bdda7c5",
+      "bundle_sha256": "e2a80732ceb6f185913065c547910ae812b7922e09f4134cd68034b5cbbb1f02",
       "popularity": {
         "score": 271,
         "downloads_weekly": 506
@@ -25792,7 +26303,7 @@
       "display_name_en": "ida-pro-mcp",
       "description": "Vibe reversing with IDA Pro",
       "description_zh": "IDA Pro 的 MCP 服务器，允许使用 AI 助手执行二进制分析。此插件实现反编译、反汇编，并允许自动生成恶意软件分析报告。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "mrexodia",
       "license": "MIT",
       "homepage": "https://github.com/mrexodia/ida-pro-mcp",
@@ -25826,11 +26337,61 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 48,
+      "tools": [
+        "check_connection",
+        "get_metadata",
+        "get_function_by_name",
+        "get_function_by_address",
+        "get_current_address",
+        "get_current_function",
+        "convert_number",
+        "list_functions",
+        "list_globals_filter",
+        "list_globals",
+        "list_imports",
+        "list_strings_filter",
+        "list_strings",
+        "list_local_types",
+        "decompile_function",
+        "disassemble_function",
+        "get_xrefs_to",
+        "get_xrefs_to_field",
+        "get_callees",
+        "get_callers",
+        "get_entry_points",
+        "set_comment",
+        "rename_local_variable",
+        "rename_global_variable",
+        "set_global_variable_type",
+        "patch_address_assembles",
+        "get_global_variable_value_by_name",
+        "get_global_variable_value_at_address",
+        "rename_function",
+        "set_function_prototype",
+        "declare_c_type",
+        "set_local_variable_type",
+        "get_stack_frame_variables",
+        "get_defined_structures",
+        "analyze_struct_detailed",
+        "get_struct_at_address",
+        "get_struct_info_simple",
+        "search_structures",
+        "rename_stack_frame_variable",
+        "create_stack_frame_variable",
+        "set_stack_frame_variable_type",
+        "delete_stack_frame_variable",
+        "read_memory_bytes",
+        "data_read_byte",
+        "data_read_word",
+        "data_read_dword",
+        "data_read_qword",
+        "data_read_string"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/infra/ida_pro",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/ida_pro",
@@ -25841,11 +26402,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "4e8f87e26535916fc74d0590e624ed8b93f5fedaf5f16fefb28d14076d4d5e86",
-          "size": 1022
+          "sha256": "db52ed008f3858f684200e6361af3b167823407d1dbf95b20b91a44e0f516269",
+          "size": 1351
+        },
+        {
+          "path": "tools.json",
+          "sha256": "5f9b4a739909fbf5c7d1416965cdbdce1069ea4a08e37c6001131c42cc6bb8aa",
+          "size": 27774
         }
       ],
-      "bundle_sha256": "991c7277192a5f740c818e6409de0012923e683e1a953d690ea50d067d3087d8",
+      "bundle_sha256": "c7026d69a1f2082085f102b7125da9257adf52aae47cba0306df9cc33c1c8bb4",
       "popularity": {
         "score": 759,
         "downloads_weekly": 2969,
@@ -30757,7 +31323,7 @@
       "display_name_en": "video-editing-mcp",
       "description": "Video Jungle MCP Server for Adding, Analysing, Searching, and Editing Videos",
       "description_zh": "视频编辑神器，支持添加、分析、搜索和生成视频剪辑。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "burningion",
       "homepage": "https://github.com/burningion/video-editing-mcp",
       "verified": true,
@@ -30815,11 +31381,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "87baeb018e58776e4977b59257ce17be65ce342d7adda695cbf5e60071aebb1f",
-          "size": 1327
+          "sha256": "b902b4c4c938ec876463a7039eb2250850ad5b18bfd26ef91ab36bb098158639",
+          "size": 1528
         }
       ],
-      "bundle_sha256": "9bd4433fad7f3d0937dd0e652012fc6ea7a4cdeb5421a7489da63c04c3369246",
+      "bundle_sha256": "07724e4e559404f23a613b6ffdae2cab7dd2286ff0d8946768db09b1ba1579da",
       "popularity": {
         "score": 450,
         "downloads_weekly": 107,
@@ -31683,7 +32249,7 @@
       "display_name_en": "ancestry-mcp",
       "description": "A Model Context Protocol server providing functionality to GEDCOM files via LLM usage",
       "description_zh": "允许 AI 读取 .ged 文件和遗传数据。",
-      "version": "0.1.2",
+      "version": "0.1.4",
       "author": "reeeeemo",
       "license": "MIT",
       "homepage": "https://github.com/reeeeemo/ancestry-mcp",
@@ -31715,13 +32281,28 @@
           "package": "mcp-server-ancestry==0.1.1"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "ANCESTRY_GEDCOM_PATH",
+          "description": "存放 GEDCOM 家谱文件（.ged）的本机目录，需可读写。",
+          "prompt": "请输入 GEDCOM 文件所在目录",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/reeeeemo/ancestry-mcp",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 3,
+      "tools": [
+        "list_files",
+        "rename_file",
+        "view_file"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/misc/ancestry",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/misc/ancestry",
@@ -31732,11 +32313,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "4d526f4bf3e0d0160b842298b0769eb45934565632bfad62fcb57971f18932e8",
-          "size": 976
+          "sha256": "28bbac7fd51dfbe14033f878d295009e915c3a46b4ed3d70e08e67405287babc",
+          "size": 1797
+        },
+        {
+          "path": "tools.json",
+          "sha256": "15e2666f70d35adf9144495de3032a70088f12c066ea33201123ae6721db3d23",
+          "size": 1160
         }
       ],
-      "bundle_sha256": "c95cfe7316ede414bf60b9a40e1eb62605e5e831c9b6c94b39c7e58f23f36da5",
+      "bundle_sha256": "1ed64c1aa782f3e9df27371f9138fcfbb037897414d9ae9f520041280da96206",
       "popularity": {
         "score": 136,
         "downloads_weekly": 22
@@ -34600,7 +35186,7 @@
       "display_name_en": "open-streetmap-mcp",
       "description": "An OpenStreetMap MCP server",
       "description_zh": "具有基于位置服务和地理空间数据的 OpenStreetMap MCP 服务器。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "jagan-shanmugam",
       "license": "MIT",
       "homepage": "https://github.com/jagan-shanmugam/open-streetmap-mcp",
@@ -34634,11 +35220,25 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 12,
+      "tools": [
+        "geocode_address",
+        "reverse_geocode",
+        "find_nearby_places",
+        "get_route_directions",
+        "search_category",
+        "suggest_meeting_point",
+        "explore_area",
+        "find_schools_nearby",
+        "analyze_commute",
+        "find_ev_charging_stations",
+        "analyze_neighborhood",
+        "find_parking_facilities"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/misc/osm",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/misc/osm",
@@ -34649,11 +35249,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "7c86c519e93dd990e6cac8d14ca731697a9f5e3b71abce07d9c7080c306b8e85",
-          "size": 986
+          "sha256": "7e88d4800a6f26f288b43f825f897d995f8dc5341a18046185c2e941d7e6597f",
+          "size": 1315
+        },
+        {
+          "path": "tools.json",
+          "sha256": "c6b7f58e6ffba74863a47b23b2d87d3291e99b52f3bf4ff399ba887b8b4d32bb",
+          "size": 20653
         }
       ],
-      "bundle_sha256": "5c013e2bde546b79405617a5810d708cbd7aee1b1b7ab72e527f488c0c04e73f",
+      "bundle_sha256": "0f2cb1020413b81ed0a700068e1ad4a4cc9d1e628a9c8d4c7c4677a4ec82b7b2",
       "popularity": {
         "score": 236,
         "stars": 230
@@ -34666,7 +35271,7 @@
       "display_name_en": "oura-mcp-server",
       "description": "MCP server for Oura API integration",
       "description_zh": "用于 Oura (睡眠追踪应用) 的 MCP 服务器。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "tomekkorbak",
       "license": "MIT",
       "homepage": "https://github.com/tomekkorbak/oura-mcp-server",
@@ -34725,11 +35330,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f4b94e5633313e238f0d161594216f8cfa95ef7abe7e1d3708e9fb7ab72f959c",
-          "size": 1241
+          "sha256": "72bd55a7557f0db7c0efd4b4636ca3753d669390682c6e224fb02db2b3a442d5",
+          "size": 1442
         }
       ],
-      "bundle_sha256": "a8fa77e24abf37fee487f48e863cd4e99b368c9415edcf198732117a0a8b74de",
+      "bundle_sha256": "6223d6cd561db02b24f8d4ae97e7656219a9226821551a81fbbfc165ed5113b1",
       "popularity": {
         "score": 160,
         "stars": 39
@@ -35859,7 +36464,7 @@
       "display_name_en": "MCP-timeserver",
       "description": "An MCP server for providing the current date/time to LLMs",
       "description_zh": "访问任何时区的本地时间和获取当前本地时间。 (已在“其他”部分列出Time)",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "SecretiveShell",
       "license": "MIT",
       "homepage": "https://github.com/SecretiveShell/MCP-timeserver",
@@ -35893,11 +36498,14 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 1,
+      "tools": [
+        "get-current-time"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/misc/timeserver",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/misc/timeserver",
@@ -35908,11 +36516,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "d7c6478fca3c0c4e5b97072faa1127cf9dfec2015b66ebba0ceb7299a810bcde",
-          "size": 1025
+          "sha256": "7ae0e43fea7a0d0469be9cd93d72634e7fa4c4f1f0cdba17a13a3b3292ef0ea2",
+          "size": 1550
+        },
+        {
+          "path": "tools.json",
+          "sha256": "4fb4605368c17c7f9be2bdd821b826f222f739652e773517214760341ecef5b1",
+          "size": 195
         }
       ],
-      "bundle_sha256": "8b2e87cc769f3259034a3adb95e3289c5892c521ac04cf5166b2248527632cbc",
+      "bundle_sha256": "70519f8d3b36d18e881a5965fa9f00a0fb4384f2e668861ecb44ae50e5ab2018",
       "popularity": {
         "score": 314,
         "downloads_weekly": 31,
@@ -36058,7 +36671,7 @@
       "display_name_en": "unichat-mcp-server",
       "description": "Unichat MCP Server",
       "description_zh": "通过工具或预定义提示使用 MCP 协议向 OpenAI, MistralAI, Anthropic, xAI, Google AI 或 DeepSeek 发送请求。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "amidabuddha",
       "license": "MIT",
       "homepage": "https://github.com/amidabuddha/unichat-mcp-server",
@@ -36117,11 +36730,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "91aab006cd9a754e131a19b1cf0a149e02cdcb34b06fa7cba5cd726903a1acaa",
-          "size": 1370
+          "sha256": "e2f3bff352ddb570dcef434dfda54c4fb0b290c8133ea96a1a19bc0fcdaafd34",
+          "size": 1571
         }
       ],
-      "bundle_sha256": "8e3b2b589a17ee6c92274922d0931c234f8ab846745f0950331dbb3097fadf4f",
+      "bundle_sha256": "9d32d090ad23ac680d748927af284cbaa027ed1e8751f6299e582ba988196dce",
       "popularity": {
         "score": 301,
         "downloads_weekly": 24,
@@ -36267,7 +36880,7 @@
       "display_name_en": "MCP-wolfram-alpha",
       "description": "A MCP server to connect to wolfram alpha API.",
       "description_zh": "用于查询 Wolfram Alpha API 的 MCP 服务器。",
-      "version": "0.1.1",
+      "version": "0.1.3",
       "author": "SecretiveShell",
       "license": "MIT",
       "homepage": "https://github.com/SecretiveShell/MCP-wolfram-alpha",
@@ -36299,7 +36912,17 @@
           "package": "mcp-wolfram-alpha==0.2.1"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "WOLFRAM_API_KEY",
+          "description": "Wolfram|Alpha 的 AppID：在 developer.wolframalpha.com 登录后 Get an AppID。",
+          "prompt": "请输入 Wolfram|Alpha AppID",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/SecretiveShell/MCP-wolfram-alpha",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
       "optional_env": [],
       "tools_count": 0,
       "tools": [],
@@ -36316,11 +36939,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "5464cc2ebc93f20aa3bb7feffefdce9620753f4cc5f05ed0b0cc40200c2de08f",
-          "size": 982
+          "sha256": "887500af561de49904676d42c557960db39033ea64c8f3050d94593d8618124c",
+          "size": 1610
         }
       ],
-      "bundle_sha256": "0277b2764c4278a7186fe702c9c5f7facda732f368c661bc2e6fd6b5bac49b6b",
+      "bundle_sha256": "442e51a78c2006c25efbd1bb3192e8ca60d815270f5fafe48c987b5762debcea",
       "popularity": {
         "score": 339,
         "downloads_weekly": 31,
@@ -37891,7 +38514,7 @@
       "display_name_en": "mcp-server-home-assistant",
       "description": "A Model Context Protocol Server for Home Assistant",
       "description_zh": "通过 MCP 服务器暴露所有 Home Assistant 语音意图，实现家庭控制。",
-      "version": "0.1.1",
+      "version": "0.1.3",
       "author": "allenporter",
       "license": "Apache-2.0",
       "homepage": "https://github.com/allenporter/mcp-server-home-assistant",
@@ -37923,7 +38546,26 @@
           "package": "mcp-server-home-assistant==0.1.0"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "HOME_ASSISTANT_WEB_SOCKET_URL",
+          "description": "Home Assistant 的 WebSocket 地址，如 ws://homeassistant.local:8123/api/websocket。",
+          "prompt": "请输入 Home Assistant WebSocket 地址",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/allenporter/mcp-server-home-assistant",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "HOME_ASSISTANT_API_TOKEN",
+          "description": "Home Assistant 长期访问令牌：个人资料 → 安全 → 长期访问令牌 → 创建令牌。",
+          "prompt": "请输入 Home Assistant 长期访问令牌",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/allenporter/mcp-server-home-assistant",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
       "optional_env": [],
       "tools_count": 0,
       "tools": [],
@@ -37940,11 +38582,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f884bc492e16e33169646d1a7ba1becaeb5634c812fde01404655c2aebccb088",
-          "size": 1063
+          "sha256": "880d5a185be66bde478c22c2a9b5869310a5f1daa1a25c5ea68295627f1acfac",
+          "size": 2084
         }
       ],
-      "bundle_sha256": "7f2a27576d621d70428fea238989e365ddc51b74572e139d7d93ffedf6ab7325",
+      "bundle_sha256": "27edb470a4f11c93467fd311df0673f78160de2580065c0f31d26095ec98c59e",
       "popularity": {
         "score": 184,
         "stars": 68
@@ -39795,7 +40437,7 @@
       "display_name_en": "Office-PowerPoint-MCP-Server",
       "description": "MCP Server for PowerPoint manipulation using python-pptx - Consolidated Edition",
       "description_zh": "基于 python-pptx 的 PowerPoint MCP：让 AI 创建与修改 .pptx，操作幻灯片、文本框、图表与图片。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "GongRzhe",
       "license": "MIT",
       "homepage": "https://github.com/GongRzhe/Office-PowerPoint-MCP-Server",
@@ -39829,11 +40471,50 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 37,
+      "tools": [
+        "create_presentation",
+        "create_presentation_from_template",
+        "open_presentation",
+        "save_presentation",
+        "get_presentation_info",
+        "get_template_file_info",
+        "set_core_properties",
+        "add_slide",
+        "get_slide_info",
+        "extract_slide_text",
+        "extract_presentation_text",
+        "populate_placeholder",
+        "add_bullet_points",
+        "manage_text",
+        "manage_image",
+        "add_table",
+        "format_table_cell",
+        "add_shape",
+        "add_chart",
+        "apply_professional_design",
+        "apply_picture_effects",
+        "manage_fonts",
+        "list_slide_templates",
+        "apply_slide_template",
+        "create_slide_from_template",
+        "create_presentation_from_templates",
+        "get_template_info",
+        "auto_generate_presentation",
+        "optimize_slide_text",
+        "manage_hyperlinks",
+        "update_chart_data",
+        "add_connector",
+        "manage_slide_masters",
+        "manage_slide_transitions",
+        "list_presentations",
+        "switch_presentation",
+        "get_server_info"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/office/office_powerpoint",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/office_powerpoint",
@@ -39844,11 +40525,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "cda28d8a626fc83c2de348c1552db3b89f17f1256221aab8bbfb0966974c8815",
-          "size": 1159
+          "sha256": "c853e2fa38d145de153639b8122241f6fa4914cb6f4a2566739a3f71e419395b",
+          "size": 1488
+        },
+        {
+          "path": "tools.json",
+          "sha256": "d4fc7506a85c9e3a2db3572b8d4bc9b93f5eaf5d438386b3655dfa0b42d9d926",
+          "size": 54494
         }
       ],
-      "bundle_sha256": "08e34ccc3cd785d6051a1603b93a385d97e02bfa44d76bcaa93220dcd888288b",
+      "bundle_sha256": "f561f808356e0dea8ac5f5ebafbc91e0f833e180276e85702ed5c5658bc60369",
       "popularity": {
         "score": 737,
         "downloads_weekly": 12614,
@@ -40740,7 +41426,7 @@
       "display_name_en": "Douyin / Xiaohongshu",
       "description": "抖音 / 小红书 MCP server.",
       "description_zh": "抖音+小红书内容提取/去水印/语音转文字:get_douyin_download_link / extract_douyin_text / parse_douyin_video_info / get_xiaohongshu_content / extract_xiaohongshu_text / extract_xiaohongshu_video_text / get_xiaohongshu_images / remove_xiaohongshu_video_watermark(8 工具)。",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "author": "upstream",
       "homepage": "https://github.com/AshinH/dy-xhs-mcp-server",
       "verified": true,
@@ -40802,8 +41488,8 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "17009c1184515a1049a77edd64a1f707f069eef6ef0257e4101f48f1409d4d2c",
-          "size": 1431
+          "sha256": "f21ca3391c877cc9df9963fa2290b4e927648ad225ce51842b70e52d7997de09",
+          "size": 1694
         },
         {
           "path": "tools.json",
@@ -40811,7 +41497,7 @@
           "size": 5461
         }
       ],
-      "bundle_sha256": "13437db51256cd5a324892b524b9b69f9603d2cb0de2a8e3457cd4b88dcb6914",
+      "bundle_sha256": "ec0daee9e8c53dec393139b7d7b0f49337c9c20e02fe63ae4e2567904450dae3",
       "popularity": {
         "score": 323,
         "downloads_weekly": 340,
@@ -40825,7 +41511,7 @@
       "display_name_en": "xhs-mcp",
       "description": "小红书MCP服务器 - 提供小红书API功能的MCP工具",
       "description_zh": "提供小红书 MCP 服务，包含 x-s / x-t 参数获取及 JS 逆向能力。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "jobsonlook",
       "license": "MIT",
       "homepage": "https://github.com/jobsonlook/xhs-mcp",
@@ -40884,11 +41570,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "eaf168dd1e6df321fb70fc6cf3e5e880300f05c8dedbf92a691fd32be0c8b275",
-          "size": 1255
+          "sha256": "25ca31bb4104c888c283610a52e84791cd7b68a24f5eece7d9262c2ff43f342c",
+          "size": 1456
         }
       ],
-      "bundle_sha256": "8e5c98c97d41e18ba8c4a90e997d92e8f100c790119ef8290098fb683108f883",
+      "bundle_sha256": "2b0be7487db46116e1f92eb8dd5800125ef487f23087b654887e6fd9a76bf3ea",
       "popularity": {
         "score": 272,
         "stars": 519
@@ -41193,7 +41879,7 @@
       "display_name_en": "AdMapix",
       "description": "AdMapix MCP Server — AI-powered ad creative search",
       "description_zh": "广告创意检索 MCP：按关键词、平台、国家、语言和日期搜索全球广告素材并返回结构化数据，适合竞品广告研究与市场分析（工具 `search_creatives`）。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "fly0pants",
       "license": "MIT",
       "homepage": "https://github.com/fly0pants/admapix",
@@ -41227,11 +41913,14 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 1,
+      "tools": [
+        "search_creatives"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/admapix",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/admapix",
@@ -41242,11 +41931,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a644979be755fbecf5fa9d364191fddd9c091fb7801980b9110729b24b30c48b",
-          "size": 1066
+          "sha256": "fd51bc7a072d438a59b46622cf5eefea40379cc3e8ac22b7ec1c2ba2c8cafa66",
+          "size": 1394
+        },
+        {
+          "path": "tools.json",
+          "sha256": "d74ffb0fb67eb070bb4b6522c81a7083d79721988e03dcfb5922b64e3fd4ce8d",
+          "size": 3751
         }
       ],
-      "bundle_sha256": "34ad01f94dba6fadfd4ad066d5b174cb40c8d498f0e9482ebec5759cca833688",
+      "bundle_sha256": "7cff855e0f3fed95b55638a23adab8f9c1fc48b178766fef3ab86e6a1a212e09",
       "popularity": {
         "score": 223,
         "downloads_weekly": 23,
@@ -42067,11 +42761,11 @@
       "display_name_en": "browser-use-mcp-server",
       "description": "MCP browser-use server library",
       "description_zh": "将 browser-use 打包为带 SSE 传输的 MCP 服务器，含 Dockerfile。",
-      "version": "0.1.2",
+      "version": "0.1.4",
       "author": "co-browser",
       "license": "MIT",
       "homepage": "https://github.com/co-browser/browser-use-mcp-server",
-      "verified": true,
+      "verified": false,
       "tested_with": ">=0.63.72",
       "category": "web",
       "icon": "",
@@ -42104,7 +42798,8 @@
       "tools_count": 0,
       "tools": [],
       "security": {
-        "scan_verdict": "allow",
+        "scan_verdict": "block",
+        "reason": "人工复核（2026-11-26）：装上必挂且无法在清单层面修复——browser-use-mcp-server 1.0.3 没有真正的 stdio 模式（--stdio 是起 8000 端口 SSE 服务再拉起外部 mcp-proxy，后者不在依赖里），并写死 OpenAI gpt-4o（需 OPENAI_API_KEY）、需本机 Playwright 浏览器；依赖 browser-use 未设上界，在 mcp<2 约束下解析到 0.11.x 已删 browser_use.browser.browser，钉回 0.1.40 能过导入仍起不来",
         "osv": "clean"
       },
       "path": "registry/servers/web/browser_use",
@@ -42116,11 +42811,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "05af72c335b98e9e159e19041b487f8ee131223ed1da8785ffa657c388d18886",
-          "size": 1001
+          "sha256": "5d3bedc0162166d959dd3434fcc512e34c87e90fdfb232e17fc6633b0f35d0d6",
+          "size": 2220
         }
       ],
-      "bundle_sha256": "efa2905257e2c403f75d4312dc96674aee945a149abce4ab77f3db9ca502d52e",
+      "bundle_sha256": "db874ab9b728ce1a98e09a16fa870c7b640be0cf2fb35d7987a6f3f73c990956",
       "popularity": {
         "score": 165,
         "downloads_weekly": 44
@@ -43681,7 +44376,7 @@
       "display_name_en": "mcp-hn",
       "description": "MCP Server for Hacker News",
       "description_zh": "用于搜索 Hacker News、获取头条等的 MCP 服务器。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "erithwik",
       "license": "MIT",
       "homepage": "https://github.com/erithwik/mcp-hn",
@@ -43715,11 +44410,17 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 4,
+      "tools": [
+        "get_stories",
+        "get_user_info",
+        "search_stories",
+        "get_story_info"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/hn",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/hn",
@@ -43730,11 +44431,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "1d7e16811c81974dc3c80beda7ae7a91bc3c55d7d872e082459f683e63af713c",
-          "size": 888
+          "sha256": "d731c2c73c4dedf547a023550d1e1a7cc1225fd37545fde15cf616b7c626a1f5",
+          "size": 1216
+        },
+        {
+          "path": "tools.json",
+          "sha256": "6846f9e5b2abd36a176fd3a778a7d9f6bb8e61bb804e673af169bafdfbd42ff2",
+          "size": 2321
         }
       ],
-      "bundle_sha256": "82996ba9ccbd61750813b0f6cc8c587c067e1e30d60ef36765c0c169e0d3b1d0",
+      "bundle_sha256": "af1e728f7b1b223322e845761428271d4848ec646ce8c011e682b39d1e00b385",
       "popularity": {
         "score": 189,
         "stars": 76
@@ -45404,7 +46110,7 @@
       "display_name_en": "playwright-plus-python-mcp",
       "description": "\\A MCP server with playwright tools\\",
       "description_zh": "使用 Playwright 的 Python MCP 服务器，更适合 LLM。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "blackwhite084",
       "license": "Apache-2.0",
       "homepage": "https://github.com/blackwhite084/playwright-plus-python-mcp",
@@ -45438,11 +46144,21 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 8,
+      "tools": [
+        "playwright_navigate",
+        "playwright_screenshot",
+        "playwright_click",
+        "playwright_fill",
+        "playwright_evaluate",
+        "playwright_click_text",
+        "playwright_get_text_content",
+        "playwright_get_html_content"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/playwright_blackwhite084",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/playwright_blackwhite084",
@@ -45453,11 +46169,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "29c227389357ff926912fa0d03745876530fedfd0023da2e222f9348f0a17e20",
-          "size": 1032
+          "sha256": "c665887cfb8ac6450ad8190a64953108ee324adfde9e596b5f196b253f53150b",
+          "size": 1360
+        },
+        {
+          "path": "tools.json",
+          "sha256": "3b827402336b19d5a34731e236898ca0363baf826c6fdf1eb02a4c6d6c51e012",
+          "size": 3007
         }
       ],
-      "bundle_sha256": "d208dea11cb295df6d3afd60eff309386e9dcb4b3aad92a89abbc960548dc9b1",
+      "bundle_sha256": "bd12b6406529cc6a5df50b0777b29b335951ffe8316d1ef097edbd70d8b03ac7",
       "popularity": {
         "score": 431,
         "downloads_weekly": 107,
@@ -46168,7 +46889,7 @@
       "display_name_en": "MCP-searxng",
       "description": "MCP server for connecting agentic systems to search systems via searXNG",
       "description_zh": "连接到 searXNG 实例的 MCP 服务器 (社区实现版本)。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "SecretiveShell",
       "license": "MIT",
       "homepage": "https://github.com/SecretiveShell/MCP-searxng",
@@ -46202,11 +46923,14 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 1,
+      "tools": [
+        "search"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/searxng_secretiveshell",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/searxng_secretiveshell",
@@ -46217,11 +46941,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "6a97a1e02ef0cf6ee8faaac97871dbb1fa1399c50e7413a462280f3754a7b149",
-          "size": 999
+          "sha256": "dd1f90f5c45b241a66046c684fe4e02345edacdc1d6f6d2c08c043e9abe18412",
+          "size": 1327
+        },
+        {
+          "path": "tools.json",
+          "sha256": "e73dd4bfc7963202314a25ca74fc58d12f480174112f21808efddba63279fc2f",
+          "size": 515
         }
       ],
-      "bundle_sha256": "59697a02357f34036d5f8b5e2c45c972533359ae701dfa33a73dddb0a41020f1",
+      "bundle_sha256": "366242b724b197496c17e59d47cdb93c88c1ed6fb420d570c27ca5a878de72ed",
       "popularity": {
         "score": 434,
         "downloads_weekly": 163,

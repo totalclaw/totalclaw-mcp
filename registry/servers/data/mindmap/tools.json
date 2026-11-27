@@ -1,0 +1,20 @@
+[
+  {
+    "name": "convert_markdown_to_mindmap",
+    "description": "Convert Markdown content to a mindmap mind map.\n\nArgs:\n    markdown_content: The Markdown content to convert\n\nReturns:\n    Either the HTML content or the file path to the generated HTML, \n    depending on the --return-type server argument\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "markdown_content": {
+          "title": "Markdown Content",
+          "type": "string"
+        }
+      },
+      "required": [
+        "markdown_content"
+      ],
+      "title": "convert_markdown_to_mindmapArguments",
+      "type": "object"
+    }
+  }
+]

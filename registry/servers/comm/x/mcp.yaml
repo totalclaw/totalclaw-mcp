@@ -1,12 +1,14 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
+# 2026-11-26：uvx 前置 `--with mcp<2` —— 包按 mcp 1.x 写（FastMCP / 低层装饰器 / McpError），依赖未声明上界，裸 uvx 解析到 mcp 2.x 后启动即崩。
+# 2026-11-26：补齐启动必需的凭据 / 参数声明（以前写 requires_env: []，装上即报缺变量退出）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: x
 display_name: X (Twitter) (by vidhupv)
 display_name_en: X (Twitter) (by vidhupv)
-version: 0.1.2
+version: 0.1.4
 description: A server to create drafts of X(twitter) posts, threads using LLMs and post directly from the chat.
 description_zh: 直接通过 Claude 创建、管理和发布 X/Twitter 推文。
 author: vidhupv
@@ -25,10 +27,40 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp<2
   - x-mcp==0.1.0
   requires:
     python: '>=3.10'
-requires_env: []
+requires_env:
+- name: TWITTER_API_KEY
+  description: X 开发者平台应用的 API Key（Consumer Key）：developer.x.com → Projects & Apps → Keys and tokens。
+  prompt: 请输入 X API Key
+  secret: true
+  required: true
+  doc_url: https://github.com/vidhupv/x-mcp
+  doc_label: 查看项目说明（如何获取）
+- name: TWITTER_API_SECRET
+  description: 同一应用的 API Key Secret（Consumer Secret）。
+  prompt: 请输入 X API Key Secret
+  secret: true
+  required: true
+  doc_url: https://github.com/vidhupv/x-mcp
+  doc_label: 查看项目说明（如何获取）
+- name: TWITTER_ACCESS_TOKEN
+  description: 同一页面生成的 Access Token（需读写权限才能发帖）。
+  prompt: 请输入 X Access Token
+  secret: true
+  required: true
+  doc_url: https://github.com/vidhupv/x-mcp
+  doc_label: 查看项目说明（如何获取）
+- name: TWITTER_ACCESS_TOKEN_SECRET
+  description: 与 Access Token 配套的 Access Token Secret。
+  prompt: 请输入 X Access Token Secret
+  secret: true
+  required: true
+  doc_url: https://github.com/vidhupv/x-mcp
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true

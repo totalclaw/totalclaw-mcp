@@ -1,19 +1,22 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
+# 2026-11-26：uvx 前置 `--with mcp<2` —— 包按 mcp 1.x 写（FastMCP / 低层装饰器 / McpError），依赖未声明上界，裸 uvx 解析到 mcp 2.x 后启动即崩。
+# 2026-11-26 复扫：拒绝（详见 docs/removed-2026-11-26.md）
+# 审核意见：人工复核（2026-11-26）：装上必挂且无法在清单层面修复——browser-use-mcp-server 1.0.3 没有真正的 stdio 模式（--stdio 是起 8000 端口 SSE 服务再拉起外部 mcp-proxy，后者不在依赖里），并写死 OpenAI gpt-4o（需 OPENAI_API_KEY）、需本机 Playwright 浏览器；依赖 browser-use 未设上界，在 mcp<2 约束下解析到 0.11.x 已删 browser_use.browser.browser，钉回 0.1.40 能过导入仍起不来
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: browser_use
 display_name: browser-use-mcp-server
 display_name_en: browser-use-mcp-server
-version: 0.1.2
+version: 0.1.4
 description: MCP browser-use server library
 description_zh: 将 browser-use 打包为带 SSE 传输的 MCP 服务器，含 Dockerfile。
 author: co-browser
 license: MIT
 homepage: https://github.com/co-browser/browser-use-mcp-server
 repository: https://github.com/co-browser/browser-use-mcp-server
-verified: true
+verified: false
 category: web
 tags:
 - web
@@ -25,6 +28,8 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp<2
   - browser-use-mcp-server==1.0.3
   requires:
     python: '>=3.10'
@@ -34,5 +39,6 @@ defaults:
   enabled: true
   timeout: 120
 security:
-  scan_verdict: allow
+  scan_verdict: block
+  reason: "人工复核（2026-11-26）：装上必挂且无法在清单层面修复——browser-use-mcp-server 1.0.3 没有真正的 stdio 模式（--stdio 是起 8000 端口 SSE 服务再拉起外部 mcp-proxy，后者不在依赖里），并写死 OpenAI gpt-4o（需 OPENAI_API_KEY）、需本机 Playwright 浏览器；依赖 browser-use 未设上界，在 mcp<2 约束下解析到 0.11.x 已删 browser_use.browser.browser，钉回 0.1.40 能过导入仍起不来"
   osv: clean

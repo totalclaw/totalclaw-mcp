@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-26：uvx 前置 `--with mcp<2` —— 包按 mcp 1.x 写（FastMCP / 低层装饰器 / McpError），依赖未声明上界，裸 uvx 解析到 mcp 2.x 后启动即崩。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: office_powerpoint
 display_name: Office-PowerPoint-MCP-Server
 display_name_en: Office-PowerPoint-MCP-Server
-version: 0.1.1
+version: 0.1.2
 description: MCP Server for PowerPoint manipulation using python-pptx - Consolidated Edition
 description_zh: 基于 python-pptx 的 PowerPoint MCP：让 AI 创建与修改 .pptx，操作幻灯片、文本框、图表与图片。
 author: GongRzhe
@@ -25,6 +26,8 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp<2
   - --from
   - office-powerpoint-mcp-server==2.0.7
   - ppt_mcp_server
@@ -38,3 +41,9 @@ defaults:
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []
+tools:
+  probed_at: '2026-11-27T02:47:47Z'
+  probed_runtime: uvx
+  count: 37
+  file: tools.json

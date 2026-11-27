@@ -53,7 +53,7 @@ SDK v2 的服务端收到旧式 `initialize` 会回落到旧协议，agent 的 M
 
 ### U4 · 顺带发现（不是这次升级引入的）
 
-- [ ] **U4.1** desktop_commander 的 `postinstall`（`dist/track-installation.js`）会向 `telemetry.desktopcommander.app` 上报一次安装事件，**不检查** `DESKTOP_COMMANDER_DISABLE_TELEMETRY`。我们强制的关遥测只管运行期，管不到安装期。可选修法：给该条目加 `npm_config_ignore_scripts=true`（postinstall 里另一步 verify-ripgrep 失败本来就会被忽略），需实测后再定。
+- [x] **U4.1**（已修，TODO F9）desktop_commander 的 `postinstall`（`dist/track-installation.js`）会向 `telemetry.desktopcommander.app` 上报一次安装事件，**不检查** `DESKTOP_COMMANDER_DISABLE_TELEMETRY`。我们强制的关遥测只管运行期，管不到安装期。可选修法：给该条目加 `npm_config_ignore_scripts=true`（postinstall 里另一步 verify-ripgrep 失败本来就会被忽略），需实测后再定。
 - [x] **U4.2** `review_static.py --apply` 以前会丢 `security.enforced_env`（见上文第 5 步）。已修：只换 `scan_verdict` / `osv` / `reason`，其余键原样保留，写回前断言没被改动。
 
 ### 已升级（102 个包 / 101 个条目）

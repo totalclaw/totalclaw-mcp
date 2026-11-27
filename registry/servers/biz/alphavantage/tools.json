@@ -1,0 +1,4669 @@
+[
+  {
+    "name": "TIME_SERIES_INTRADAY",
+    "description": "Returns current and 20+ years of historical intraday OHLCV time series of the equity specified.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between consecutive data points. Supported: 1min, 5min, 15min, 30min, 60min"
+        },
+        "adjusted": {
+          "type": "boolean",
+          "description": "By default True. Set False to query raw (as-traded) intraday values"
+        },
+        "extended_hours": {
+          "type": "boolean",
+          "description": "By default True. Set False for regular trading hours only"
+        },
+        "month": {
+          "type": "string",
+          "description": "Query specific month in YYYY-MM format. Example: 2009-01"
+        },
+        "outputsize": {
+          "type": "string",
+          "description": "\"compact\" (100 data points) or \"full\" (30 days or full month)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TIME_SERIES_DAILY",
+    "description": "Returns raw daily time series (OHLCV) of the global equity specified, covering 20+ years of historical data.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity. For example: symbol=IBM"
+        },
+        "outputsize": {
+          "type": "string",
+          "description": "\"compact\" (100 data points) or \"full\" (20+ years of historical data)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TIME_SERIES_DAILY_ADJUSTED",
+    "description": "Returns raw daily OHLCV values, adjusted close values, and historical split/dividend events.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity. For example: symbol=IBM"
+        },
+        "outputsize": {
+          "type": "string",
+          "description": "\"compact\" (100 data points) or \"full\" (20+ years of historical data)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TIME_SERIES_WEEKLY",
+    "description": "Returns weekly time series (last trading day of each week, OHLCV) covering 20+ years of historical data.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity. For example: symbol=IBM"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TIME_SERIES_WEEKLY_ADJUSTED",
+    "description": "Returns weekly adjusted time series (OHLCV, adjusted close, volume, dividend) covering 20+ years.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity. For example: symbol=IBM"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TIME_SERIES_MONTHLY",
+    "description": "Returns monthly time series (last trading day of each month, OHLCV) covering 20+ years.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity. For example: symbol=IBM"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TIME_SERIES_MONTHLY_ADJUSTED",
+    "description": "Returns monthly adjusted time series (OHLCV, adjusted close, volume, dividend) covering 20+ years.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity. For example: symbol=IBM"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "GLOBAL_QUOTE",
+    "description": "Returns the latest price and volume information for a ticker.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the global ticker. For example: symbol=IBM"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "REALTIME_BULK_QUOTES",
+    "description": "Returns realtime quotes for US-traded symbols in bulk, accepting up to 100 symbols per request.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Up to 100 symbols separated by comma. Example: MSFT,AAPL,IBM"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "REALTIME_BULK_BID_ASK_PRICES",
+    "description": "Returns realtime bid and ask prices for US-traded symbols in bulk, covering regular and extended trading hours.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Up to 100 symbols separated by comma. Alpha Vantage honors only the first 100 symbols provided. Example: MSFT,AAPL,IBM"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=json. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "SYMBOL_SEARCH",
+    "description": "Returns best-matching symbols and market information based on keywords.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "keywords": {
+          "type": "string",
+          "description": "A text string of your choice. Example: microsoft"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "keywords"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "MARKET_STATUS",
+    "description": "Returns the current market status (open vs. closed) of major trading venues worldwide.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "REALTIME_OPTIONS",
+    "description": "Returns realtime US options data with full market coverage. Option chains are sorted by expiration dates in chronological order. Within the same expiration date, contracts are sorted by strike prices from low to high.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity of your choice. For example: symbol=IBM"
+        },
+        "require_greeks": {
+          "type": "boolean",
+          "description": "Enable greeks & implied volatility (IV) fields. By default, require_greeks=false."
+        },
+        "contract": {
+          "type": "string",
+          "description": "The US options contract ID you would like to specify. By default, the contract parameter"
+        },
+        "expiration": {
+          "type": "string",
+          "description": "The expiration date in YYYY-MM-DD format. The expiration date must be on or after today's date."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "REALTIME_OPTIONS_FMV",
+    "description": "Returns realtime FMV (fair market value) mark prices for US options. Option chains are sorted by expiration dates in chronological order. Within the same expiration date, contracts are sorted by strike prices from low to high.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity of your choice. For example: symbol=IBM"
+        },
+        "require_greeks": {
+          "type": "boolean",
+          "description": "Enable greeks & implied volatility (IV) fields alongside the FMV mark."
+        },
+        "contract": {
+          "type": "string",
+          "description": "The US options contract ID you would like to specify. By default, the contract parameter"
+        },
+        "expiration": {
+          "type": "string",
+          "description": "The expiration date in YYYY-MM-DD format. The expiration date must be on or after today's date."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "REALTIME_PUT_CALL_RATIO",
+    "description": "Returns the realtime put-call ratio for US-traded equities and ETFs. The put-call ratio is calculated for the entire option chain as well as for each specific expiration date. A put-call ratio equal to or less than 0.6 typically signals a bullish market sentiment, while a ratio equal to or greater than 1.0 signals a bearish sentiment.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity of your choice. For example: symbol=IBM"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "REALTIME_VOLUME_OPEN_INTEREST_RATIO",
+    "description": "Returns the realtime volume-to-open-interest ratio within an option chain. A high ratio (volume much larger than open interest) often suggests heavy trading activity relative to existing positions, which can indicate short-term speculation, increased liquidity, or possible trend changes. A low ratio (volume small compared to open interest) implies that most positions are being held rather than actively traded, signaling more stable or less volatile conditions.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity of your choice. For example: symbol=NVDA"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "HISTORICAL_OPTIONS",
+    "description": "Returns the full historical options chain for a specific symbol on a specific date. Covers 15+ years of history. Implied volatility (IV) and common Greeks (e.g., delta, gamma, theta, vega, rho) are also returned. Option chains are sorted by expiration dates in chronological order. Within the same expiration date, contracts are sorted by strike prices from low to high.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity of your choice. For example: symbol=IBM"
+        },
+        "date": {
+          "type": "string",
+          "description": "By default, the date parameter is not set and the API will return data for the previous trading session."
+        },
+        "contract": {
+          "type": "string",
+          "description": "The US options contract ID you would like to specify. By default, the contract parameter"
+        },
+        "expiration": {
+          "type": "string",
+          "description": "The contract expiration date in YYYY-MM-DD format. By default, expiration is not set and"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "HISTORICAL_PUT_CALL_RATIO",
+    "description": "Returns the historical put-call ratio for US-traded equities and ETFs. The put-call ratio is calculated for the entire option chain as well as for each specific expiration date. Covers data from 2008-01-01 to the previous trading session.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity of your choice. For example: symbol=IBM"
+        },
+        "date": {
+          "type": "string",
+          "description": "The date in YYYY-MM-DD format. Any date later than 2008-01-01 is accepted."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "HISTORICAL_VOLUME_OPEN_INTEREST_RATIO",
+    "description": "Returns the historical volume-to-open-interest ratio within an option chain. A high ratio (volume much larger than open interest) often suggests heavy trading activity relative to existing positions, which can indicate short-term speculation, increased liquidity, or possible trend changes. A low ratio (volume small compared to open interest) implies that most positions are being held rather than actively traded, signaling more stable or less volatile conditions.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the equity of your choice. For example: symbol=NVDA"
+        },
+        "date": {
+          "type": "string",
+          "description": "The date in YYYY-MM-DD format. Any date later than 2008-01-01 is accepted."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "NEWS_SENTIMENT",
+    "description": "Returns live and historical market news & sentiment data from premier news outlets worldwide. Covers stocks, cryptocurrencies, forex, and topics like fiscal policy, mergers & acquisitions, IPOs.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tickers": {
+          "type": "string",
+          "description": "Stock/crypto/forex symbols to filter articles. Example: \"IBM\" or \"COIN,CRYPTO:BTC,FOREX:USD\"."
+        },
+        "topics": {
+          "type": "string",
+          "description": "News topics to filter by. Example: \"technology\" or \"technology,ipo\"."
+        },
+        "time_from": {
+          "type": "string",
+          "description": "Start time range in YYYYMMDDTHHMM format. Example: \"20220410T0130\"."
+        },
+        "time_to": {
+          "type": "string",
+          "description": "End time range in YYYYMMDDTHHMM format. Defaults to current time if time_from specified."
+        },
+        "sort": {
+          "type": "string",
+          "description": "Sort order - \"LATEST\" (default), \"EARLIEST\", or \"RELEVANCE\"."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Number of results to return. Default 50, max 1000."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "EARNINGS_CALL_TRANSCRIPT",
+    "description": "Returns earnings call transcript for a company in a specific quarter. Covers 15+ years of history enriched with LLM-based sentiment signals.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Ticker symbol. Example: \"IBM\"."
+        },
+        "quarter": {
+          "type": "string",
+          "description": "Fiscal quarter in YYYYQM format. Example: \"2024Q1\". Supports quarters since 2010Q1."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "quarter"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TOP_GAINERS_LOSERS",
+    "description": "Returns top 20 gainers, losers, and most active traded tickers in the US market.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "INSIDER_TRANSACTIONS",
+    "description": "Returns latest and historical insider transactions by key stakeholders. Covers transactions by founders, executives, board members, etc.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Ticker symbol. Example: \"IBM\"."
+        },
+        "from_date": {
+          "type": "string",
+          "description": "Optional start date in YYYY-MM-DD format. Only return transactions on or after this date. Example: \"2026-03-01\"."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "INSTITUTIONAL_HOLDINGS",
+    "description": "Returns institutional ownership and holdings information for an equity.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Ticker symbol. Example: \"IBM\"."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ANALYTICS_FIXED_WINDOW",
+    "description": "Returns advanced analytics metrics for time series over a fixed temporal window. Calculates metrics like total return, variance, auto-correlation, etc.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbols": {
+          "type": "string",
+          "description": "Comma-separated list of symbols. Free keys: up to 5, Premium keys: up to 50."
+        },
+        "range_param": {
+          "type": "string",
+          "description": "Date range for the series. Defaults to full equity history."
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval - 1min, 5min, 15min, 30min, 60min, DAILY, WEEKLY, MONTHLY."
+        },
+        "calculations": {
+          "type": "string",
+          "description": "Comma-separated list of analytics metrics to calculate."
+        },
+        "ohlc": {
+          "type": "string",
+          "description": "OHLC field for calculation - open, high, low, close. Default \"close\"."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbols",
+        "range_param",
+        "interval",
+        "calculations"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ANALYTICS_SLIDING_WINDOW",
+    "description": "Returns advanced analytics metrics for time series over sliding time windows. Calculates moving metrics like variance over time periods. Example: moving variance over 5 years with 100-point window.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbols": {
+          "type": "string",
+          "description": "Comma-separated list of symbols. Free keys: up to 5, Premium keys: up to 50."
+        },
+        "range_param": {
+          "type": "string",
+          "description": "Date range for the series. Defaults to full equity history."
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval - 1min, 5min, 15min, 30min, 60min, DAILY, WEEKLY, MONTHLY."
+        },
+        "window_size": {
+          "type": "integer",
+          "description": "Size of moving window. Minimum 10, larger recommended for statistical significance."
+        },
+        "calculations": {
+          "type": "string",
+          "description": "Comma-separated analytics metrics. Free keys: 1 metric, Premium keys: multiple."
+        },
+        "ohlc": {
+          "type": "string",
+          "description": "OHLC field for calculation - open, high, low, close. Default \"close\"."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbols",
+        "range_param",
+        "interval",
+        "window_size",
+        "calculations"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "WTI",
+    "description": "Returns the West Texas Intermediate (WTI) crude oil prices in daily, weekly, and monthly horizons.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, monthly. Strings daily, weekly, and monthly are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "BRENT",
+    "description": "Returns the Brent (Europe) crude oil prices in daily, weekly, and monthly horizons.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, monthly. Strings daily, weekly, and monthly are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "NATURAL_GAS",
+    "description": "Returns the Henry Hub natural gas spot prices in daily, weekly, and monthly horizons.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, monthly. Strings daily, weekly, and monthly are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "COPPER",
+    "description": "Returns the global price of copper in monthly, quarterly, and annual horizons.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, monthly. Strings monthly, quarterly, and annual are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ALUMINUM",
+    "description": "Returns the global price of aluminum in monthly, quarterly, and annual horizons.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, monthly. Strings monthly, quarterly, and annual are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "WHEAT",
+    "description": "Returns the global price of wheat in monthly, quarterly, and annual horizons.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, monthly. Strings monthly, quarterly, and annual are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "CORN",
+    "description": "Returns the global price of corn in monthly, quarterly, and annual horizons.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, monthly. Strings monthly, quarterly, and annual are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "COTTON",
+    "description": "Returns the global price of cotton in monthly, quarterly, and annual horizons.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, monthly. Strings monthly, quarterly, and annual are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "SUGAR",
+    "description": "Returns the global price of sugar in monthly, quarterly, and annual horizons.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, monthly. Strings monthly, quarterly, and annual are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "COFFEE",
+    "description": "Returns the global price of coffee in monthly, quarterly, and annual horizons.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, monthly. Strings monthly, quarterly, and annual are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ALL_COMMODITIES",
+    "description": "Returns the global price index of all commodities in monthly, quarterly, and annual temporal dimensions.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, monthly. Strings monthly, quarterly, and annual are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "GOLD_SILVER_SPOT",
+    "description": "Returns the live spot prices of gold and silver metals.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "For gold, strings GOLD and XAU are accepted. For silver, strings SILVER and XAG are accepted."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "GOLD_SILVER_HISTORY",
+    "description": "Returns the historical gold and silver prices in daily, weekly, and monthly horizons.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "For gold, strings GOLD and XAU are accepted. For silver, strings SILVER and XAG are accepted."
+        },
+        "interval": {
+          "type": "string",
+          "description": "By default, monthly. Strings daily, weekly, and monthly are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "CURRENCY_EXCHANGE_RATE",
+    "description": "Returns the realtime exchange rate for any pair of digital currency (e.g., Bitcoin) or physical currency (e.g., USD).",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "from_currency": {
+          "type": "string",
+          "description": "The currency you would like to get the exchange rate for. It can either be a physical currency or digital/crypto currency. For example: from_currency=USD or from_currency=BTC."
+        },
+        "to_currency": {
+          "type": "string",
+          "description": "The destination currency for the exchange rate. It can either be a physical currency or digital/crypto currency. For example: to_currency=USD or to_currency=BTC."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications: json returns the exchange rate in JSON format; csv returns the data as a CSV (comma separated value) file."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "from_currency",
+        "to_currency"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "CRYPTO_INTRADAY",
+    "description": "Returns intraday time series (timestamp, open, high, low, close, volume) of the cryptocurrency specified, updated realtime.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The digital/crypto currency of your choice. It can be any of the currencies in the digital currency list. For example: symbol=ETH."
+        },
+        "market": {
+          "type": "string",
+          "description": "The exchange market of your choice. It can be any of the market in the market list. For example: market=USD."
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series. The following values are supported: 1min, 5min, 15min, 30min, 60min"
+        },
+        "outputsize": {
+          "type": "string",
+          "description": "By default, outputsize=compact. Strings compact and full are accepted with the following specifications: compact returns only the latest 100 data points in the intraday time series; full returns the full-length intraday time series. The \"compact\" option is recommended if you would like to reduce the data size of each API call."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications: json returns the intraday time series in JSON format; csv returns the time series as a CSV (comma separated value) file."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "market",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "DIGITAL_CURRENCY_DAILY",
+    "description": "Returns the daily historical time series for a digital currency (e.g., BTC) traded on a specific market (e.g., EUR/Euro), refreshed daily at midnight (UTC). Prices and volumes are quoted in both the market-specific currency and USD.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The digital/crypto currency of your choice. It can be any of the currencies in the digital currency list. For example: symbol=BTC."
+        },
+        "market": {
+          "type": "string",
+          "description": "The exchange market of your choice. It can be any of the market in the market list. For example: market=EUR."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications: json returns the daily time series in JSON format; csv returns the data as a CSV (comma separated value) file."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "market"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "DIGITAL_CURRENCY_WEEKLY",
+    "description": "Returns the weekly historical time series for a digital currency (e.g., BTC) traded on a specific market (e.g., EUR/Euro), refreshed daily at midnight (UTC). Prices and volumes are quoted in both the market-specific currency and USD.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The digital/crypto currency of your choice. It can be any of the currencies in the digital currency list. For example: symbol=BTC."
+        },
+        "market": {
+          "type": "string",
+          "description": "The exchange market of your choice. It can be any of the market in the market list. For example: market=EUR."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications: json returns the weekly time series in JSON format; csv returns the data as a CSV (comma separated value) file."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "market"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "DIGITAL_CURRENCY_MONTHLY",
+    "description": "Returns the monthly historical time series for a digital currency (e.g., BTC) traded on a specific market (e.g., EUR/Euro), refreshed daily at midnight (UTC). Prices and volumes are quoted in both the market-specific currency and USD.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The digital/crypto currency of your choice. It can be any of the currencies in the digital currency list. For example: symbol=BTC."
+        },
+        "market": {
+          "type": "string",
+          "description": "The exchange market of your choice. It can be any of the market in the market list. For example: market=EUR."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications: json returns the monthly time series in JSON format; csv returns the data as a CSV (comma separated value) file."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "market"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "REAL_GDP",
+    "description": "Returns the annual and quarterly Real GDP of the United States.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, interval=annual. Strings quarterly and annual are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "REAL_GDP_PER_CAPITA",
+    "description": "Returns the quarterly Real GDP per Capita data of the United States.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TREASURY_YIELD",
+    "description": "Returns the daily, weekly, and monthly US treasury yield of a given maturity timeline (e.g., 5 year, 30 year, etc).",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, interval=monthly. Strings daily, weekly, and monthly are accepted."
+        },
+        "maturity": {
+          "type": "string",
+          "description": "By default, maturity=10year. Strings 3month, 2year, 5year, 7year, 10year, and 30year are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "FEDERAL_FUNDS_RATE",
+    "description": "Returns the daily, weekly, and monthly federal funds rate (interest rate) of the United States.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, interval=monthly. Strings daily, weekly, and monthly are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "CPI",
+    "description": "Returns the monthly and semiannual consumer price index (CPI) of the United States. CPI is widely regarded as the barometer of inflation levels in the broader economy.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "By default, interval=monthly. Strings monthly and semiannual are accepted."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "INFLATION",
+    "description": "Returns the annual inflation rates (consumer prices) of the United States.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "RETAIL_SALES",
+    "description": "Returns the monthly Advance Retail Sales: Retail Trade data of the United States.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "DURABLES",
+    "description": "Returns the monthly manufacturers' new orders of durable goods in the United States.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "UNEMPLOYMENT",
+    "description": "Returns the monthly unemployment data of the United States. The unemployment rate represents the number of unemployed as a percentage of the labor force. Labor force data are restricted to people 16 years of age and older, who currently reside in 1 of the 50 states or the District of Columbia, who do not reside in institutions (e.g., penal and mental facilities, homes for the aged), and who are not on active duty in the Armed Forces.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "NONFARM_PAYROLL",
+    "description": "Returns the monthly US All Employees: Total Nonfarm (commonly known as Total Nonfarm Payroll), a measure of the number of U.S. workers in the economy that excludes proprietors, private household employees, unpaid volunteers, farm employees, and the unincorporated self-employed.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "FX_INTRADAY",
+    "description": "Returns intraday time series (timestamp, open, high, low, close) of the FX currency pair specified, updated realtime.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "from_symbol": {
+          "type": "string",
+          "description": "A three-letter symbol from the forex currency list. For example: from_symbol=EUR"
+        },
+        "to_symbol": {
+          "type": "string",
+          "description": "A three-letter symbol from the forex currency list. For example: to_symbol=USD"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series. The following values are supported: 1min, 5min, 15min, 30min, 60min"
+        },
+        "outputsize": {
+          "type": "string",
+          "description": "By default, outputsize=compact. Strings compact and full are accepted with the following specifications:"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "from_symbol",
+        "to_symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "FX_DAILY",
+    "description": "Returns the daily time series (timestamp, open, high, low, close) of the FX currency pair specified, updated realtime.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "from_symbol": {
+          "type": "string",
+          "description": "A three-letter symbol from the forex currency list. For example: from_symbol=EUR"
+        },
+        "to_symbol": {
+          "type": "string",
+          "description": "A three-letter symbol from the forex currency list. For example: to_symbol=USD"
+        },
+        "outputsize": {
+          "type": "string",
+          "description": "By default, outputsize=compact. Strings compact and full are accepted with the following specifications:"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "from_symbol",
+        "to_symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "FX_WEEKLY",
+    "description": "Returns the weekly time series (timestamp, open, high, low, close) of the FX currency pair specified, updated realtime. The latest data point is the price information for the week (or partial week) containing the current trading day, updated realtime.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "from_symbol": {
+          "type": "string",
+          "description": "A three-letter symbol from the forex currency list. For example: from_symbol=EUR"
+        },
+        "to_symbol": {
+          "type": "string",
+          "description": "A three-letter symbol from the forex currency list. For example: to_symbol=USD"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "from_symbol",
+        "to_symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "FX_MONTHLY",
+    "description": "Returns the monthly time series (timestamp, open, high, low, close) of the FX currency pair specified, updated realtime. The latest data point is the prices information for the month (or partial month) containing the current trading day, updated realtime.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "from_symbol": {
+          "type": "string",
+          "description": "A three-letter symbol from the forex currency list. For example: from_symbol=EUR"
+        },
+        "to_symbol": {
+          "type": "string",
+          "description": "A three-letter symbol from the forex currency list. For example: to_symbol=USD"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "from_symbol",
+        "to_symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "COMPANY_OVERVIEW",
+    "description": "Returns company information, financial ratios, and key metrics for the specified equity. Data is generally refreshed on the same day a company reports its latest earnings and financials.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the ticker of your choice. For example: symbol=IBM."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "COMPANY_LOGO",
+    "description": "Returns a company's logo URLs in PNG and SVG formats.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the ticker of your choice. For example: symbol=IBM."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ETF_PROFILE",
+    "description": "Returns key ETF metrics and holdings with allocation by asset types and sectors. Includes net assets, expense ratio, turnover, and corresponding ETF holdings/constituents.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the ticker of your choice. For example: symbol=QQQ."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "DIVIDENDS",
+    "description": "Returns historical and future (declared) dividend distributions.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the ticker of your choice. For example: symbol=IBM."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "SPLITS",
+    "description": "Returns historical split events.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the ticker of your choice. For example: symbol=IBM."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "INCOME_STATEMENT",
+    "description": "Returns annual and quarterly income statements with normalized fields. Fields are mapped to GAAP and IFRS taxonomies of the SEC. Data is generally refreshed on the same day a company reports its latest earnings and financials.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the ticker of your choice. For example: symbol=IBM."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "BALANCE_SHEET",
+    "description": "Returns annual and quarterly balance sheets with normalized fields. Fields are mapped to GAAP and IFRS taxonomies of the SEC. Data is generally refreshed on the same day a company reports its latest earnings and financials.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the ticker of your choice. For example: symbol=IBM."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "CASH_FLOW",
+    "description": "Returns annual and quarterly cash flow with normalized fields. Fields are mapped to GAAP and IFRS taxonomies of the SEC. Data is generally refreshed on the same day a company reports its latest earnings and financials.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the ticker of your choice. For example: symbol=IBM."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "EARNINGS",
+    "description": "Returns annual and quarterly earnings (EPS) for the company. Quarterly data also includes analyst estimates and surprise metrics.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the ticker of your choice. For example: symbol=IBM."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "EARNINGS_ESTIMATES",
+    "description": "Returns annual and quarterly EPS and revenue estimates with analyst data. Includes analyst count and revision history.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the ticker of your choice. For example: symbol=IBM."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "LISTING_STATUS",
+    "description": "Returns a list of active or delisted US stocks and ETFs. Can return data as of the latest trading day or at a specific time in history. Facilitates equity research on asset lifecycle and survivorship.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "description": "If no date is set, returns symbols as of the latest trading day."
+        },
+        "state": {
+          "type": "string",
+          "description": "By default, state=active returns actively traded stocks and ETFs."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "EARNINGS_CALENDAR",
+    "description": "Returns a list of company earnings expected in the next 3, 6, or 12 months.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "By default, no symbol is set and returns full list of scheduled earnings."
+        },
+        "horizon": {
+          "type": "string",
+          "description": "By default, horizon=3month returns earnings in the next 3 months."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "IPO_CALENDAR",
+    "description": "Returns a list of IPOs expected in the next 3 months.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "SMA",
+    "description": "Returns the simple moving average (SMA) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each moving average value."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "EMA",
+    "description": "Returns the exponential moving average (EMA) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each moving average value."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "WMA",
+    "description": "Returns the weighted moving average (WMA) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each moving average value."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "DEMA",
+    "description": "Returns the double exponential moving average (DEMA) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each moving average value."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TEMA",
+    "description": "Returns the triple exponential moving average (TEMA) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each moving average value."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TRIMA",
+    "description": "Returns the triangular moving average (TRIMA) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each moving average value."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "KAMA",
+    "description": "Returns the Kaufman adaptive moving average (KAMA) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each moving average value."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "MAMA",
+    "description": "Returns the MESA adaptive moving average (MAMA) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "fastlimit": {
+          "type": "number",
+          "description": "Positive floats are accepted. By default, fastlimit=0.01."
+        },
+        "slowlimit": {
+          "type": "number",
+          "description": "Positive floats are accepted. By default, slowlimit=0.01."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "VWAP",
+    "description": "Returns the volume weighted average price (VWAP) for intraday time series.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "month": {
+          "type": "string",
+          "description": "By default, this parameter is not set and the technical indicator values will"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "T3",
+    "description": "Returns the triple exponential moving average (T3) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each moving average value."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "MACD",
+    "description": "Returns the moving average convergence / divergence (MACD) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "fastperiod": {
+          "type": "integer",
+          "description": "Positive integers are accepted. By default, fastperiod=12."
+        },
+        "slowperiod": {
+          "type": "integer",
+          "description": "Positive integers are accepted. By default, slowperiod=26."
+        },
+        "signalperiod": {
+          "type": "integer",
+          "description": "Positive integers are accepted. By default, signalperiod=9."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "MACDEXT",
+    "description": "Returns the moving average convergence / divergence values with controllable moving average type.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "fastperiod": {
+          "type": "integer",
+          "description": "Positive integers are accepted. By default, fastperiod=12."
+        },
+        "slowperiod": {
+          "type": "integer",
+          "description": "Positive integers are accepted. By default, slowperiod=26."
+        },
+        "signalperiod": {
+          "type": "integer",
+          "description": "Positive integers are accepted. By default, signalperiod=9."
+        },
+        "fastmatype": {
+          "type": "integer",
+          "description": "Moving average type for the faster moving average. By default, fastmatype=0."
+        },
+        "slowmatype": {
+          "type": "integer",
+          "description": "Moving average type for the slower moving average. By default, slowmatype=0."
+        },
+        "signalmatype": {
+          "type": "integer",
+          "description": "Moving average type for the signal moving average. By default, signalmatype=0."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "STOCH",
+    "description": "Returns the stochastic oscillator (STOCH) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "fastkperiod": {
+          "type": "integer",
+          "description": "The time period of the fastk moving average. Positive integers are accepted. By default, fastkperiod=5."
+        },
+        "slowkperiod": {
+          "type": "integer",
+          "description": "The time period of the slowk moving average. Positive integers are accepted. By default, slowkperiod=3."
+        },
+        "slowdperiod": {
+          "type": "integer",
+          "description": "The time period of the slowd moving average. Positive integers are accepted. By default, slowdperiod=3."
+        },
+        "slowkmatype": {
+          "type": "integer",
+          "description": "Moving average type for the slowk moving average. By default, slowkmatype=0."
+        },
+        "slowdmatype": {
+          "type": "integer",
+          "description": "Moving average type for the slowd moving average. By default, slowdmatype=0."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "STOCHF",
+    "description": "Returns the stochastic fast (STOCHF) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "fastkperiod": {
+          "type": "integer",
+          "description": "The time period of the fastk moving average. Positive integers are accepted. By default, fastkperiod=5."
+        },
+        "fastdperiod": {
+          "type": "integer",
+          "description": "The time period of the fastd moving average. Positive integers are accepted. By default, fastdperiod=3."
+        },
+        "fastdmatype": {
+          "type": "integer",
+          "description": "Moving average type for the fastd moving average. By default, fastdmatype=0."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "RSI",
+    "description": "Returns the relative strength index (RSI) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each RSI value. Positive integers are accepted (e.g., time_period=60, time_period=200)"
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "STOCHRSI",
+    "description": "Returns the stochastic relative strength index (STOCHRSI) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each STOCHRSI value. Positive integers are accepted (e.g., time_period=60, time_period=200)"
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "fastkperiod": {
+          "type": "integer",
+          "description": "The time period of the fastk moving average. Positive integers are accepted. By default, fastkperiod=5."
+        },
+        "fastdperiod": {
+          "type": "integer",
+          "description": "The time period of the fastd moving average. Positive integers are accepted. By default, fastdperiod=3."
+        },
+        "fastdmatype": {
+          "type": "integer",
+          "description": "Moving average type for the fastd moving average. By default, fastdmatype=0."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "WILLR",
+    "description": "Returns the Williams' %R (WILLR) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each WILLR value. Positive integers are accepted (e.g., time_period=60, time_period=200)"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ADX",
+    "description": "Returns the average directional movement index (ADX) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each ADX value. Positive integers are accepted (e.g., time_period=60, time_period=200)"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ADXR",
+    "description": "Returns the average directional movement index rating (ADXR) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each ADXR value. Positive integers are accepted (e.g., time_period=60, time_period=200)"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "APO",
+    "description": "Returns the absolute price oscillator (APO) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "fastperiod": {
+          "type": "integer",
+          "description": "Positive integers are accepted. By default, fastperiod=12."
+        },
+        "slowperiod": {
+          "type": "integer",
+          "description": "Positive integers are accepted. By default, slowperiod=26."
+        },
+        "matype": {
+          "type": "integer",
+          "description": "Moving average type. By default, matype=0. Integers 0 - 8 are accepted with the following mappings."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "PPO",
+    "description": "Returns the percentage price oscillator (PPO) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "fastperiod": {
+          "type": "integer",
+          "description": "Positive integers are accepted. By default, fastperiod=12."
+        },
+        "slowperiod": {
+          "type": "integer",
+          "description": "Positive integers are accepted. By default, slowperiod=26."
+        },
+        "matype": {
+          "type": "integer",
+          "description": "Moving average type. By default, matype=0. Integers 0 - 8 are accepted with the following mappings."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "MOM",
+    "description": "Returns the momentum (MOM) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each MOM value. Positive integers are accepted (e.g., time_period=60, time_period=200)"
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "BOP",
+    "description": "Returns the balance of power (BOP) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "CCI",
+    "description": "Returns the commodity channel index (CCI) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each CCI value. Positive integers are accepted (e.g., time_period=60, time_period=200)"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "CMO",
+    "description": "Returns the Chande momentum oscillator (CMO) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each CMO value. Positive integers are accepted (e.g., time_period=60, time_period=200)"
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ROC",
+    "description": "Returns the rate of change (ROC) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each ROC value. Positive integers are accepted (e.g., time_period=60, time_period=200)"
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ROCR",
+    "description": "Returns the rate of change ratio (ROCR) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each ROCR value. Positive integers are accepted (e.g., time_period=60, time_period=200)"
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "AROON",
+    "description": "Returns the Aroon (AROON) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each AROON value. Positive integers are accepted (e.g., time_period=60, time_period=200)"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "AROONOSC",
+    "description": "Returns the Aroon oscillator (AROONOSC) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each AROONOSC value. Positive integers are accepted (e.g., time_period=60, time_period=200)"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min) for the equity markets."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "MFI",
+    "description": "Returns the money flow index (MFI) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each MFI value. Positive integers are accepted."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TRIX",
+    "description": "Returns the 1-day rate of change of a triple smooth exponential moving average (TRIX) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each TRIX value. Positive integers are accepted."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ULTOSC",
+    "description": "Returns the ultimate oscillator (ULTOSC) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "timeperiod1": {
+          "type": "integer",
+          "description": "The first time period for the indicator. Positive integers are accepted. By default, timeperiod1=7."
+        },
+        "timeperiod2": {
+          "type": "integer",
+          "description": "The second time period for the indicator. Positive integers are accepted. By default, timeperiod2=14."
+        },
+        "timeperiod3": {
+          "type": "integer",
+          "description": "The third time period for the indicator. Positive integers are accepted. By default, timeperiod3=28."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "DX",
+    "description": "Returns the directional movement index (DX) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each DX value. Positive integers are accepted."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "MINUS_DI",
+    "description": "Returns the minus directional indicator (MINUS_DI) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each MINUS_DI value. Positive integers are accepted."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "PLUS_DI",
+    "description": "Returns the plus directional indicator (PLUS_DI) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each PLUS_DI value. Positive integers are accepted."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "MINUS_DM",
+    "description": "Returns the minus directional movement (MINUS_DM) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each MINUS_DM value. Positive integers are accepted."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "PLUS_DM",
+    "description": "Returns the plus directional movement (PLUS_DM) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each PLUS_DM value. Positive integers are accepted."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "BBANDS",
+    "description": "Returns the Bollinger bands (BBANDS) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each BBANDS value. Positive integers are accepted."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "nbdevup": {
+          "type": "integer",
+          "description": "The standard deviation multiplier of the upper band. Positive integers are accepted. By default, nbdevup=2."
+        },
+        "nbdevdn": {
+          "type": "integer",
+          "description": "The standard deviation multiplier of the lower band. Positive integers are accepted. By default, nbdevdn=2."
+        },
+        "matype": {
+          "type": "integer",
+          "description": "Moving average type of the time series. By default, matype=0. Integers 0-8 are accepted with the following mappings:"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "MIDPOINT",
+    "description": "Returns the midpoint (MIDPOINT) values. MIDPOINT = (highest value + lowest value)/2.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each MIDPOINT value. Positive integers are accepted."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "MIDPRICE",
+    "description": "Returns the midpoint price (MIDPRICE) values. MIDPRICE = (highest high + lowest low)/2.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each MIDPRICE value. Positive integers are accepted."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "SAR",
+    "description": "Returns the parabolic SAR (SAR) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "acceleration": {
+          "type": "number",
+          "description": "The acceleration factor. Positive floats are accepted. By default, acceleration=0.01."
+        },
+        "maximum": {
+          "type": "number",
+          "description": "The acceleration factor maximum value. Positive floats are accepted. By default, maximum=0.20."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TRANGE",
+    "description": "Returns the true range (TRANGE) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ATR",
+    "description": "Returns the average true range (ATR) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each ATR value. Positive integers are accepted."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "NATR",
+    "description": "Returns the normalized average true range (NATR) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "time_period": {
+          "type": "integer",
+          "description": "Number of data points used to calculate each NATR value. Positive integers are accepted."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "time_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "AD",
+    "description": "Returns the Chaikin A/D line (AD) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ADOSC",
+    "description": "Returns the Chaikin A/D oscillator (ADOSC) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "fastperiod": {
+          "type": "integer",
+          "description": "The time period of the fast EMA. Positive integers are accepted. By default, fastperiod=3."
+        },
+        "slowperiod": {
+          "type": "integer",
+          "description": "The time period of the slow EMA. Positive integers are accepted. By default, slowperiod=10."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "OBV",
+    "description": "Returns the on balance volume (OBV) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "HT_TRENDLINE",
+    "description": "Returns the Hilbert transform, instantaneous trendline (HT_TRENDLINE) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "HT_SINE",
+    "description": "Returns the Hilbert transform, sine wave (HT_SINE) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "HT_TRENDMODE",
+    "description": "Returns the Hilbert transform, trend vs cycle mode (HT_TRENDMODE) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "HT_DCPERIOD",
+    "description": "Returns the Hilbert transform, dominant cycle period (HT_DCPERIOD) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "HT_DCPHASE",
+    "description": "Returns the Hilbert transform, dominant cycle phase (HT_DCPHASE) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "HT_PHASOR",
+    "description": "Returns the Hilbert transform, phasor components (HT_PHASOR) values.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The name of the ticker of your choice. For example: symbol=IBM"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two consecutive data points in the time series."
+        },
+        "series_type": {
+          "type": "string",
+          "description": "The desired price type in the time series. Four types are supported: close, open, high, low"
+        },
+        "month": {
+          "type": "string",
+          "description": "Note: this parameter is ONLY applicable to intraday intervals (1min, 5min, 15min, 30min, and 60min)"
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, datatype=csv. Strings json and csv are accepted with the following specifications:"
+        },
+        "entitlement": {
+          "type": "string",
+          "description": "\"delayed\" for 15-minute delayed data, \"realtime\" for realtime data"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval",
+        "series_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "PING",
+    "description": "Check if the service is healthy.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ADD_TWO_NUMBERS",
+    "description": "Add two numbers together.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "integer",
+          "description": "Parameter a"
+        },
+        "b": {
+          "type": "integer",
+          "description": "Parameter b"
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "INDEX_DATA",
+    "description": "Returns daily, weekly, or monthly OHLC time series data for 200+ major market indices (e.g., DJI, SPX, COMP, NDX, VIX, RUT). For the full list of supported indices, use INDEX_CATALOG.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "The index symbol (e.g., DJI for Dow Jones, SPX for S&P 500, COMP for NASDAQ Composite, NDX for NASDAQ 100, VIX for Cboe Volatility Index, RUT for Russell 2000)."
+        },
+        "interval": {
+          "type": "string",
+          "description": "Time interval between two data points. Supported values: daily, weekly, monthly."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, json. Strings json and csv are accepted."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [
+        "symbol",
+        "interval"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "INDEX_CATALOG",
+    "description": "Returns the full list of supported index symbols with their long-form names.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "datatype": {
+          "type": "string",
+          "description": "By default, json. Strings json and csv are accepted."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "CONGRESS_TRADES",
+    "description": "Returns the latest and historical stock trades disclosed by US congressional representatives.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Stock ticker symbol to filter trades. Example: \"AAPL\". Required unless the politician's BioGuide ID is given."
+        },
+        "bioguide_id": {
+          "type": "string",
+          "description": "BioGuide ID of the politician to filter trades. Example: \"S000510\". Use POLITICIAN_METADATA for the complete mapping. Required unless a stock symbol is given."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "By default, json. Strings json and csv are accepted."
+        },
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "POLITICIAN_METADATA",
+    "description": "Returns key metadata for US congressional representatives, such as bioguide_id, district, and time in service.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "return_full_data": {
+          "type": "boolean",
+          "description": "Parameter return_full_data"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TOOL_LIST",
+    "description": "Lists the available Alpha Vantage API tools, returning each tool's name and short description without parameter schemas.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TOOL_GET",
+    "description": "Returns the full schema for one or more named tools, including each tool's name, description, and parameter definitions (JSON schema). Accepts a single tool name or a list of tool names.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tool_name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "description": "The name of the tool to get schema for (e.g., \"TIME_SERIES_DAILY\"),"
+        }
+      },
+      "required": [
+        "tool_name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "TOOL_CALL",
+    "description": "Executes a named Alpha Vantage API tool with the provided arguments and returns its result.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tool_name": {
+          "type": "string",
+          "description": "The name of the tool to call (e.g., \"TIME_SERIES_DAILY\")"
+        },
+        "arguments": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": true
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Dictionary of arguments matching the tool's parameter schema"
+        }
+      },
+      "required": [
+        "tool_name",
+        "arguments"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

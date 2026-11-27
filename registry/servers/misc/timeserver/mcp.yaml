@@ -1,12 +1,14 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-26：uvx 前置 `--with mcp<2` —— 包按 mcp 1.x 写（FastMCP / 低层装饰器 / McpError），依赖未声明上界，裸 uvx 解析到 mcp 2.x 后启动即崩。
+# 2026-11-26：包提供的可执行名与包名不同，uvx 按包名找命令会直接报「executable not provided」，改用 `--from 包==版本 可执行名`。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: timeserver
 display_name: MCP-timeserver
 display_name_en: MCP-timeserver
-version: 0.1.1
+version: 0.1.2
 description: An MCP server for providing the current date/time to LLMs
 description_zh: 访问任何时区的本地时间和获取当前本地时间。 (已在“其他”部分列出Time)
 author: SecretiveShell
@@ -25,7 +27,11 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp<2
+  - --from
   - MCP-timeserver==0.1.0
+  - mcp-timeserver
   requires:
     python: '>=3.10'
 requires_env: []
@@ -36,3 +42,9 @@ defaults:
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []
+tools:
+  probed_at: '2026-11-27T03:08:58Z'
+  probed_runtime: uvx
+  count: 1
+  file: tools.json

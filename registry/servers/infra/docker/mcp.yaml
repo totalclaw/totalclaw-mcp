@@ -1,11 +1,12 @@
 # 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+# 2026-11-26：`--with mcp==1.19.0` 改为 `mcp==1.30.0` —— 1.19 的 FastMCP 引用了 pydantic 私有函数 eval_type_backport，pydantic 2.14 起删除，启动即崩；1.30 仍保留 v1 API（FastMCP / 低层装饰器 / McpError）且不依赖该函数。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: docker
 display_name: Docker
 display_name_en: Docker
-version: 0.2.0
+version: 0.2.1
 description: Docker MCP server.
 description_zh: Docker 容器管理 — ps / images / run / stop / logs / exec / inspect / network / volume。LLM
   直接调度本地或远端 Docker daemon。
@@ -23,7 +24,7 @@ runtimes:
   command: uvx
   args:
   - --with
-  - mcp==1.19.0
+  - mcp==1.30.0
   - docker-mcp==0.2.0
   env:
     DOCKER_HOST: ${DOCKER_HOST:-unix:///var/run/docker.sock}

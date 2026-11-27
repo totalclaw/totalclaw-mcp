@@ -1,0 +1,61 @@
+[
+  {
+    "name": "list_files",
+    "description": "List GEDCOM files",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ListFiles",
+      "type": "object"
+    }
+  },
+  {
+    "name": "rename_file",
+    "description": "Rename a GEDCOM file",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file_name": {
+          "title": "File Name",
+          "type": "string"
+        },
+        "new_name": {
+          "title": "New Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file_name",
+        "new_name"
+      ],
+      "title": "RenameFiles",
+      "type": "object"
+    }
+  },
+  {
+    "name": "view_file",
+    "description": "View a GEDCOM file in plaintext format",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ViewFiles",
+      "type": "object"
+    }
+  }
+]

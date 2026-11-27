@@ -1,0 +1,164 @@
+[
+  {
+    "name": "execute_sql",
+    "description": "Execute a SQL query on an ADB MySQL cluster.\n\nConnection modes:\n  - Direct mode (ADB_MYSQL_USER/PASSWORD configured): region_id/db_cluster_id optional.\n  - Temporary account mode (AK/SK only): region_id/db_cluster_id required.\n\nArgs:\n    query: The SQL statement to execute.\n    region_id: Alibaba Cloud region ID, optional in direct mode.\n    db_cluster_id: Cluster ID, optional in direct mode.\n    database: Target database name (optional).\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "region_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Region Id"
+        },
+        "db_cluster_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Db Cluster Id"
+        },
+        "database": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Database"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "execute_sqlArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_query_plan",
+    "description": "Get the EXPLAIN logical execution plan of a SQL query.\n\nConnection modes are the same as execute_sql.\n\nArgs:\n    query: The SQL statement to analyze.\n    region_id: Alibaba Cloud region ID, optional in direct mode.\n    db_cluster_id: Cluster ID, optional in direct mode.\n    database: Target database name (optional).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "region_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Region Id"
+        },
+        "db_cluster_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Db Cluster Id"
+        },
+        "database": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Database"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "get_query_planArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_execution_plan",
+    "description": "Get the EXPLAIN ANALYZE actual execution plan with runtime statistics.\n\nConnection modes are the same as execute_sql.\n\nArgs:\n    query: The SQL statement to analyze.\n    region_id: Alibaba Cloud region ID, optional in direct mode.\n    db_cluster_id: Cluster ID, optional in direct mode.\n    database: Target database name (optional).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "region_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Region Id"
+        },
+        "db_cluster_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Db Cluster Id"
+        },
+        "database": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Database"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "get_execution_planArguments",
+      "type": "object"
+    }
+  }
+]

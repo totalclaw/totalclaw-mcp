@@ -1,12 +1,14 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-26：PyPI 包 alphavantage-mcp（最新 0.3.24）启动时无条件从当前目录读 pyproject.toml，装上即崩；
+# 改接 Alpha Vantage 官方托管端点 https://mcp.alphavantage.co/mcp，API Key 走 Bearer 头（已用官方公开演示 key 实测握手）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: alphavantage
 display_name: AlphaVantage
 display_name_en: AlphaVantage
-version: 0.1.1
+version: 0.1.3
 description: AlphaVantage MCP server - Financial data tools for Model Context Protocol
 description_zh: AlphaVantage 股票市场数据 API 服务器。
 author: calvernaz
@@ -20,19 +22,31 @@ tags:
 - community
 kind: mcp_server
 runtimes:
-- id: uvx
-  type: stdio
-  launcher: uvx
-  command: uvx
-  args:
-  - alphavantage-mcp==0.3.24
-  requires:
-    python: '>=3.10'
-requires_env: []
+- id: remote
+  type: http
+  url: https://mcp.alphavantage.co/mcp
+  headers:
+    Authorization: Bearer ${ALPHAVANTAGE_API_KEY}
+  auth: header
+requires_env:
+- name: ALPHAVANTAGE_API_KEY
+  env_key: ALPHAVANTAGE_API_KEY
+  description: Alpha Vantage 的 API Key：在 alphavantage.co 的 Get Free API Key 页面免费申请。
+  prompt: 请输入 Alpha Vantage API Key
+  secret: true
+  required: true
+  doc_url: https://github.com/calvernaz/alphavantage
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T03:33:38Z'
+  probed_runtime: remote
+  count: 133
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

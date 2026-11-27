@@ -1,12 +1,14 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
+# 2026-11-26：uvx 前置 `--with mcp<2` —— 包按 mcp 1.x 写（FastMCP / 低层装饰器 / McpError），依赖未声明上界，裸 uvx 解析到 mcp 2.x 后启动即崩。
+# 2026-11-26：补齐启动必需的凭据 / 参数声明（以前写 requires_env: []，装上即报缺变量退出）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: vikingdb
 display_name: vikingdb-mcp-server
 display_name_en: vikingdb-mcp-server
-version: 0.1.2
+version: 0.1.4
 description: a mcp server for vikingdb store and search
 description_zh: VikingDB 集成，具有集合和索引介绍、向量存储和搜索能力。
 author: KashiwaByte
@@ -24,10 +26,54 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp<2
   - mcp-server-vikingdb==0.1.2
   requires:
     python: '>=3.10'
-requires_env: []
+requires_env:
+- name: VIKINGDB_HOST
+  description: 火山引擎 VikingDB 的服务地址（控制台实例详情里查看）。
+  prompt: 请输入 VikingDB 服务地址
+  secret: false
+  required: true
+  doc_url: https://github.com/KashiwaByte/vikingdb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: VIKINGDB_REGION
+  description: VikingDB 实例所在区域，如 cn-beijing。
+  prompt: 请输入 VikingDB 区域
+  secret: false
+  required: true
+  doc_url: https://github.com/KashiwaByte/vikingdb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: VIKINGDB_AK
+  description: 火山引擎访问密钥 Access Key ID：控制台 → 访问控制 → 密钥管理。
+  prompt: 请输入火山引擎 Access Key ID
+  secret: true
+  required: true
+  doc_url: https://github.com/KashiwaByte/vikingdb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: VIKINGDB_SK
+  description: 与 Access Key ID 配套的 Secret Access Key。
+  prompt: 请输入火山引擎 Secret Access Key
+  secret: true
+  required: true
+  doc_url: https://github.com/KashiwaByte/vikingdb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: COLLECTION_NAME
+  description: 要访问的 VikingDB 数据集（Collection）名称。
+  prompt: 请输入 VikingDB 数据集名称
+  secret: false
+  required: true
+  doc_url: https://github.com/KashiwaByte/vikingdb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: INDEX_NAME
+  description: 该数据集上的索引（Index）名称。
+  prompt: 请输入 VikingDB 索引名称
+  secret: false
+  required: true
+  doc_url: https://github.com/KashiwaByte/vikingdb-mcp-server
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true

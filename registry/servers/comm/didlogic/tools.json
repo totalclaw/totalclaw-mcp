@@ -1,0 +1,1137 @@
+[
+  {
+    "name": "get_balance",
+    "description": "\nGet the current DIDLogic account balance\n\nReturns a JSON object with balance in USD\nExample output: `{\"balance\": 35.22}`\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "get_balanceArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_sip_accounts",
+    "description": "\nList all SIP accounts\n\nReturns a JSON object with all SIP accounts where:\n    id: ID of SIP account\n    name: SIP account name (login)\n    callerid: CallerID associated with this SIP account\n    label: label fot this SIP account\n    charge: charge for calls on this month\n    talk_time: total talk time for this month\n    rewrite_enabled: do SIP account have calling number rewriting rule\n    rewrite_cond: prefix to be rewrited (ex: 00)\n    rewrite_prefix: prefix to what should be rewritten (ex: 44)\n    didinfo_enabled: do DIDLogic will attempt send DID number as TO when receiving calls to this account\n    ip_restrict: do we need to allowlist IP addresses for this account\n    allowed_ips: IP addresses allowed for this SIP account\n    call_restrict: flag indicates what SIP account should have maximum call time\n    call_limit: maximum call duration in seconds\n    channels_restrict: flag indicates what SIP account should have maximum channels limit\n    max_channels: maximum sip channels\n    cost_limit: flag indicates what SIP account should have maximum call cost\n    max_call_cost: maximum call cost for this SIP account\n    created_at: date of creation this SIP account\n\nExample:\n```\n{\n    \"sipaccounts\": [\n        {\n            \"id\": 61,\n            \"name\": \"12345\",\n            \"callerid\": \"17254999999\",\n            \"label\": \"TEST DEVICE\",\n            \"host\": \"dynamic\",\n            \"charge\": \"0.0\",\n            \"talk_time\": 0,\n            \"rewrite_enabled\": false,\n            \"rewrite_cond\": \"8\",\n            \"rewrite_prefix\": \"7\",\n            \"didinfo_enabled\": false,\n            \"ip_restrict\": false,\n            \"call_restrict\": true,\n            \"call_limit\": 2800,\n            \"channels_restrict\": false,\n            \"max_channels\": 1,\n            \"cost_limit\": false,\n            \"max_call_cost\": \"5.0\",\n            \"created_at\": \"2024-06-03 06:06:47 UTC\",\n            \"allowed_ips\": [\"1.2.3.4\", \"3.4.5.6\"]\n        }\n    ]\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "list_sip_accountsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_sip_account",
+    "description": "\nGet details about SIP account\n\nArgs:\n    name: SIP account name\n\nReturns a JSON object with SIP account details where:\n    id: ID of SIP account\n    name: SIP account name (login)\n    callerid: CallerID associated with this SIP account\n    label: label fot this SIP account\n    charge: charge for calls on this month\n    talk_time: total talk time for this month\n    rewrite_enabled: do SIP account have calling number rewriting rule\n    rewrite_cond: prefix to be rewrited (ex: 00)\n    rewrite_prefix: prefix to what should be rewritten (ex: 44)\n    didinfo_enabled: do DIDLogic will attempt send DID number as TO when receiving calls to this account\n    ip_restrict: do we need to allowlist IP addresses for this account\n    allowed_ips: IP addresses allowed for this SIP account\n    call_restrict: flag indicates what SIP account should have maximum call time\n    call_limit: maximum call duration in seconds\n    channels_restrict: flag indicates what SIP account should have maximum channels limit\n    max_channels: maximum sip channels\n    cost_limit: flag indicates what SIP account should have maximum call cost\n    max_call_cost: maximum call cost for this SIP account\n    created_at: date of creation this SIP account\n\nExample:\n```\n{\n    \"sipaccount\": {\n        \"id\": 61,\n        \"name\": \"12345\",\n        \"callerid\": \"17254999999\",\n        \"label\": \"TEST DEVICE\",\n        \"host\": \"dynamic\",\n        \"charge\": \"0.0\",\n        \"talk_time\": 0,\n        \"rewrite_enabled\": false,\n        \"rewrite_cond\": \"8\",\n        \"rewrite_prefix\": \"7\",\n        \"didinfo_enabled\": false,\n        \"ip_restrict\": false,\n        \"call_restrict\": true,\n        \"call_limit\": 2800,\n        \"channels_restrict\": false,\n        \"max_channels\": 1,\n        \"cost_limit\": false,\n        \"max_call_cost\": \"5.0\",\n        \"created_at\": \"2024-06-03 06:06:47 UTC\",\n        \"allowed_ips\": [\"1.2.3.4\", \"3.4.5.6\"]\n    }\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "Name of SIP account",
+          "title": "Name"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "get_sip_accountArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "create_sip_account",
+    "description": "\nCreates a new SIP account\n\nArgs:\n    password: Password to be used for this SIP account\n    callerid: CallerID associated with this SIP account\n    label: label fot this SIP account\n    rewrite_enabled: do SIP account have calling number rewriting rule\n    rewrite_cond: prefix to be rewrited (ex: 00)\n    rewrite_prefix: prefix to what should be rewritten (ex: 44)\n    didinfo_enabled: do DIDLogic will attempt send DID number as TO when receiving calls to this account\n    ip_restrict: do we need to allowlist IP addresses for this account\n    call_restrict: flag indicates what SIP account should have maximum call time\n    call_limit: maximum call duration in seconds\n    channels_restrict: flag indicates what SIP account should have maximum channels limit\n    max_channels: maximum sip channels\n    cost_limit: flag indicates what SIP account should have maximum call cost\n    max_call_cost: maximum call cost for this SIP account\n\n\nReturns a JSON object with SIP account details where:\n    id: ID of SIP account\n    name: SIP account name (login)\n    callerid: CallerID associated with this SIP account\n    label: label fot this SIP account\n    charge: charge for calls on this month\n    talk_time: total talk time for this month\n    rewrite_enabled: do SIP account have calling number rewriting rule\n    rewrite_cond: prefix to be rewrited (ex: 00)\n    rewrite_prefix: prefix to what should be rewritten (ex: 44)\n    didinfo_enabled: do DIDLogic will attempt send DID number as TO when receiving calls to this account\n    ip_restrict: do we need to allowlist IP addresses for this account\n    allowed_ips: IP addresses allowed for this SIP account\n    call_restrict: flag indicates what SIP account should have maximum call time\n    call_limit: maximum call duration in seconds\n    channels_restrict: flag indicates what SIP account should have maximum channels limit\n    max_channels: maximum sip channels\n    cost_limit: flag indicates what SIP account should have maximum call cost\n    max_call_cost: maximum call cost for this SIP account\n    created_at: date of creation this SIP account\n\nExample:\n```\n{\n    \"sipaccount\": {\n        \"id\": 61,\n        \"name\": \"12345\",\n        \"callerid\": \"17254999999\",\n        \"label\": \"TEST DEVICE\",\n        \"host\": \"dynamic\",\n        \"charge\": \"0.0\",\n        \"talk_time\": 0,\n        \"rewrite_enabled\": false,\n        \"rewrite_cond\": \"8\",\n        \"rewrite_prefix\": \"7\",\n        \"didinfo_enabled\": false,\n        \"ip_restrict\": false,\n        \"call_restrict\": true,\n        \"call_limit\": 2800,\n        \"channels_restrict\": false,\n        \"max_channels\": 1,\n        \"cost_limit\": false,\n        \"max_call_cost\": \"5.0\",\n        \"created_at\": \"2024-06-03 06:06:47 UTC\",\n        \"allowed_ips\": [\"1.2.3.4\", \"3.4.5.6\"]\n    }\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "password": {
+          "description": "Password for new SIP account",
+          "title": "Password",
+          "type": "string"
+        },
+        "callerid": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "default": "",
+          "description": "Callerid for use with this SIP account",
+          "title": "Callerid"
+        },
+        "label": {
+          "default": "",
+          "description": "Label for SIP account",
+          "title": "Label",
+          "type": "string"
+        },
+        "rewrite_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enable number rewriting for calls",
+          "title": "Rewrite Enabled"
+        },
+        "rewrite_cond": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "",
+          "description": "Prefix to remove from number",
+          "title": "Rewrite Cond"
+        },
+        "rewrite_prefix": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "",
+          "description": "Prefix to add to number",
+          "title": "Rewrite Prefix"
+        },
+        "didinfo_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enable DID number in inbound calls",
+          "title": "Didinfo Enabled"
+        },
+        "ip_restrict": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enable IP restriction for SIP account",
+          "title": "Ip Restrict"
+        },
+        "call_restrict": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enable call duration limit for SIP account",
+          "title": "Call Restrict"
+        },
+        "call_limit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Maximum call duration for SIP account in seconds",
+          "title": "Call Limit"
+        },
+        "channels_restrict": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enable concurrent calls limit",
+          "title": "Channels Restrict"
+        },
+        "max_channels": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 1,
+          "description": "Count of concurrent calls limit",
+          "title": "Max Channels"
+        },
+        "cost_limit": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "description": "Enable maximum call cost for SIP account",
+          "title": "Cost Limit"
+        },
+        "max_call_cost": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Maximum call cost for SIP account",
+          "title": "Max Call Cost"
+        }
+      },
+      "required": [
+        "password"
+      ],
+      "title": "create_sip_accountArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "update_sip_account",
+    "description": "\nCreates a SIP account\n\nArgs:\n    name: SIP account name\n    password: Password to be used for this SIP account\n    callerid: CallerID associated with this SIP account\n    label: label fot this SIP account\n    rewrite_enabled: do SIP account have calling number rewriting rule\n    rewrite_cond: prefix to be rewrited (ex: 00)\n    rewrite_prefix: prefix to what should be rewritten (ex: 44)\n    didinfo_enabled: do DIDLogic will attempt send DID number as TO when receiving calls to this account\n    ip_restrict: do we need to allowlist IP addresses for this account\n    call_restrict: flag indicates what SIP account should have maximum call time\n    call_limit: maximum call duration in seconds\n    channels_restrict: flag indicates what SIP account should have maximum channels limit\n    max_channels: maximum sip channels\n    cost_limit: flag indicates what SIP account should have maximum call cost\n    max_call_cost: maximum call cost for this SIP account\n\n\nReturns a JSON object with SIP account details where:\n    id: ID of SIP account\n    name: SIP account name (login)\n    callerid: CallerID associated with this SIP account\n    label: label fot this SIP account\n    charge: charge for calls on this month\n    talk_time: total talk time for this month\n    rewrite_enabled: do SIP account have calling number rewriting rule\n    rewrite_cond: prefix to be rewrited (ex: 00)\n    rewrite_prefix: prefix to what should be rewritten (ex: 44)\n    didinfo_enabled: do DIDLogic will attempt send DID number as TO when receiving calls to this account\n    ip_restrict: do we need to allowlist IP addresses for this account\n    allowed_ips: IP addresses allowed for this SIP account\n    call_restrict: flag indicates what SIP account should have maximum call time\n    call_limit: maximum call duration in seconds\n    channels_restrict: flag indicates what SIP account should have maximum channels limit\n    max_channels: maximum sip channels\n    cost_limit: flag indicates what SIP account should have maximum call cost\n    max_call_cost: maximum call cost for this SIP account\n    created_at: date of creation this SIP account\n\nExample:\n```\n{\n    \"sipaccount\": {\n        \"id\": 61,\n        \"name\": \"12345\",\n        \"callerid\": \"17254999999\",\n        \"label\": \"TEST DEVICE\",\n        \"host\": \"dynamic\",\n        \"charge\": \"0.0\",\n        \"talk_time\": 0,\n        \"rewrite_enabled\": false,\n        \"rewrite_cond\": \"8\",\n        \"rewrite_prefix\": \"7\",\n        \"didinfo_enabled\": false,\n        \"ip_restrict\": false,\n        \"call_restrict\": true,\n        \"call_limit\": 2800,\n        \"channels_restrict\": false,\n        \"max_channels\": 1,\n        \"cost_limit\": false,\n        \"max_call_cost\": \"5.0\",\n        \"created_at\": \"2024-06-03 06:06:47 UTC\",\n        \"allowed_ips\": [\"1.2.3.4\", \"3.4.5.6\"]\n    }\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "SIP Account name",
+          "title": "Name"
+        },
+        "password": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Password for SIP account",
+          "title": "Password"
+        },
+        "callerid": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Callerid for use with this SIP account",
+          "title": "Callerid"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Label for SIP account",
+          "title": "Label"
+        },
+        "rewrite_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Enable number rewriting for calls",
+          "title": "Rewrite Enabled"
+        },
+        "rewrite_cond": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Prefix to remove from number",
+          "title": "Rewrite Cond"
+        },
+        "rewrite_prefix": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Prefix to add to number",
+          "title": "Rewrite Prefix"
+        },
+        "didinfo_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Enable DID number in inbound calls",
+          "title": "Didinfo Enabled"
+        },
+        "ip_restrict": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Enable IP restriction for SIP account",
+          "title": "Ip Restrict"
+        },
+        "call_restrict": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Enable call duration limit for SIP account",
+          "title": "Call Restrict"
+        },
+        "call_limit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Maximum call duration for SIP account in seconds",
+          "title": "Call Limit"
+        },
+        "channels_restrict": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Enable concurrent calls limit",
+          "title": "Channels Restrict"
+        },
+        "max_channels": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Count of concurrent calls limit",
+          "title": "Max Channels"
+        },
+        "cost_limit": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Enable maximum call cost for SIP account",
+          "title": "Cost Limit"
+        },
+        "max_call_cost": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Maximum call cost for SIP account",
+          "title": "Max Call Cost"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "update_sip_accountArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "delete_sip_account",
+    "description": "\nDelete a SIP account\n\nArgs:\n    name: SIP account name\n\nReturns a `SIP Account deleted` message on success\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "Name of SIP account",
+          "title": "Name"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "delete_sip_accountArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_allowed_ips",
+    "description": "\nGet list of whitelisted IPs for a SIP account\n\nArgs:\n    sipaccount_name: Name of SIP account\n\nReturns a JSON object with array of whitelisted IP for SIP Account\nExample output: { \"allowed_ips\": [ \"88.99.12.33\" ] }\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "sipaccount_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "title": "Sipaccount Name"
+        }
+      },
+      "required": [
+        "sipaccount_name"
+      ],
+      "title": "get_allowed_ipsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "add_allowed_ip",
+    "description": "\nWhitelist an IP to a SIP account\n\nArgs:\n    sipaccount_name: Name of SIP account\n    ip: IP address to allow\n\nReturns a JSON object with all whitelisted IP addresses for account\nExample output: { \"allowed_ips\": [ \"88.99.12.33\", \"99.33.55.11\" ] }\n\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "sipaccount_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "Name of sip account",
+          "title": "Sipaccount Name"
+        },
+        "ip": {
+          "description": "IP address to allow",
+          "title": "Ip",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sipaccount_name",
+        "ip"
+      ],
+      "title": "add_allowed_ipArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "delete_allowed_ip",
+    "description": "\nDelete an whitelisted IP from a SIP account\n\nArgs:\n    sipaccount_name: Name of SIP account\n    ip: IP address to remove from whitelist\n\nReturns \"IP removed successfully\" when IP removed from whitelisted\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "sipaccount_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "Name of sip account",
+          "title": "Sipaccount Name"
+        },
+        "ip": {
+          "description": "IP address to remove from whitelist",
+          "title": "Ip",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sipaccount_name",
+        "ip"
+      ],
+      "title": "delete_allowed_ipArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_purchases",
+    "description": "\nList purchased DIDs in DIDLogic\n\nArgs:\n    page: page of result starting with 1\n    per_page: how many results should be on per page\n\nReturns a JSON object with a call history results where:\n    purchases: List of purchased DIDs\n        number: Number of DID\n        channels: How many parallel channels DID have\n        country: Country name\n        area: City name\n        free_minutes: How many free minutes per month DID have\n        activation: Activation cost for DID in USD\n        monthly_fee: Monthly fee for DID\n        per_minute: Per minute cost for DID\n        codec: what SIP codec is preferred for this number\n        check_state: DID state\n\n    pagination: Pagination details for results\n        page: current page of results\n        per_page: results per page\n        total_pages: total pages results\n        total_records: total query records (maximum 5000)\n\nExample response:\n```\n{\n    \"purchases\": [\n        {\n            \"number\": \"441172999999\",\n            \"channels\": 2,\n            \"country\": \"United Kingdom\",\n            \"area\": \"Bristol\",\n            \"codec\": \"G711\",\n            \"activation\": 0.0,\n            \"monthly_fee\": 0.99,\n            \"per_minute\": 0.001,\n            \"check_state\": \"checked\",\n            \"free_minutes\": 0\n        }\n    ],\n    \"pagination\": {\n        \"pages\": 1,\n        \"page\": 1,\n        \"per_page\": 100,\n        \"total_records\": 50\n    }\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Page for purchases",
+          "title": "Page"
+        },
+        "per_page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Results per page",
+          "title": "Per Page"
+        }
+      },
+      "title": "list_purchasesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_destinations",
+    "description": "\nList DID destination.\n\nArgs:\n    number: DID number in DIDLogic\n\nReturns a JSON object with all did destinations where:\n    id: ID of destination\n    destination: destination\n    priority: priority of selection\n    callhunt: flag indicates do destination is part of ring all group\n    active: flag indicates is destination enabled or not\n    transport: transport of destination where:\n        1 = SIP address destination (ex: 123@example.com)\n        4 = PSTN (phone number) destination (ex: 15551231233)\n        5 = SIP account destination (ex: 12345)\n\nExample:\n```\n{\n    \"destination\": [\n        {\n            \"id\": 1234455,\n            \"destination\": \"12345\",\n            \"priority\": 1,\n            \"callhunt\": false,\n            \"active\": true,\n            \"transport\": 5\n        }\n    ]\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "DID Number",
+          "title": "Number"
+        }
+      },
+      "required": [
+        "number"
+      ],
+      "title": "list_destinationsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "add_destination",
+    "description": "\nAdd a DID destination.\n\nArgs:\n    number: DID number in DIDLogic\n    callhunt: flag indicates do destination is part of ring all group\n    active: flag indicates is destination enabled or not\n    transport: transport of destination where:\n        1 = SIP address destination (ex: 123@example.com)\n        4 = PSTN (phone number) destination (ex: 15551231233)\n        5 = SIP account destination (ex: 12345)\n    destination: destination\n\nReturns a JSON object with did destination where:\n    id: ID of destination\n    destination: destination\n    priority: priority of selection\n    callhunt: flag indicates do destination is part of ring all group\n    active: flag indicates is destination enabled or not\n    transport: transport of destination where:\n        1 = SIP address destination (ex: 123@example.com)\n        4 = PSTN (phone number) destination (ex: 15551231233)\n        5 = SIP account destination (ex: 12345)\n\nExample:\n```\n{\n    \"did_destination\": {\n        \"id\": 1234455,\n        \"destination\": \"12345\",\n        \"priority\": 1,\n        \"callhunt\": false,\n        \"active\": true,\n        \"transport\": 5\n    }\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "DID Number",
+          "title": "Number"
+        },
+        "callhunt": {
+          "default": false,
+          "description": "Is it ring all group number",
+          "title": "Callhunt",
+          "type": "boolean"
+        },
+        "active": {
+          "default": false,
+          "description": "Is this destination active",
+          "title": "Active",
+          "type": "boolean"
+        },
+        "transport": {
+          "default": 1,
+          "description": "Transport for destination",
+          "title": "Transport",
+          "type": "integer"
+        },
+        "destination": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "Destination for DID",
+          "title": "Destination"
+        }
+      },
+      "required": [
+        "number",
+        "destination"
+      ],
+      "title": "add_destinationArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "delete_destination",
+    "description": "\nRemove destination from DID.\n\nArgs:\n    number: DID number in DIDLogic\n    id: destination ID to remove\n\nReturns a `Destination deleted` on success\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "DID Number",
+          "title": "Number"
+        },
+        "id": {
+          "description": "Destination ID from list_destinations",
+          "title": "Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "number",
+        "id"
+      ],
+      "title": "delete_destinationArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_countries",
+    "description": "\nList available countries with DID for purchase on DIDLogic\n\nArgs:\n    sms_enabled: search for DID with SMS functionality\n\nReturns a JSON object with available countries for purchase.\nReturned countries list have following fields:\n    id: ID of country\n    name: Name of country in DIDLogic\n    short_name: ISO code of country\n    has_provinces_or_states: do country have provinces or states\n        which can be queried by list_country_regions tool.\n\n403 error indicates disabled API calls for purchase.\n\nExample:\n```\n    {\n        \"countries\": [\n            {\n                \"id\": 8669,\n                \"name\": \"Argentina\",\n                \"short_name\": \"AR\",\n                \"has_provinces_or_states\": false\n            }\n        ]\n    }\n```\n\n\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "sms_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter for sms enabled numbers",
+          "title": "Sms Enabled"
+        }
+      },
+      "title": "list_countriesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_country_regions",
+    "description": "\nList country regions with available DIDs for purchase\n\nArgs:\n    country_id: ID of country for search\n    sms_enabled: search for DID with SMS functionality\n\nReturns a JSON object with available regions for purchase.\nReturned countries list have following fields:\n    id: ID of region\n    name: Name of region in DIDLogic\n    short_name: short code for region\n\n403 error indicates disabled API calls for purchase.\n\nExample:\n```\n{\n    \"regions\": [\n        {\n            \"id\": 1,\n            \"name\": \"Alberta\",\n            \"short_name\": \"AB\"\n        }\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "country_id": {
+          "description": "Country ID",
+          "title": "Country Id",
+          "type": "integer"
+        },
+        "sms_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter for sms enabled numbers",
+          "title": "Sms Enabled"
+        }
+      },
+      "required": [
+        "country_id"
+      ],
+      "title": "list_country_regionsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_country_cities",
+    "description": "\nList of Cities with available DID for purchase in a country\n\nArgs:\n    country_id: ID of country for search\n    sms_enabled: search for DID with SMS functionality\n\nReturns a JSON object with available cities for purchase DIDs.\nReturned cities list have following fields:\n    id: ID of city\n    name: Name of city in DIDLogic\n    area_code: Area code within country\n    count: count of available DIDs for purchasing\n\n403 error indicates disabled API calls for purchase.\n\nExample:\n```\n{\n    \"cities\": [\n        {\n            \"id\": 118557,\n            \"name\": \"Ottawa-Hull, ON\",\n            \"area_code\": \"613800\",\n            \"count\": 81\n        }\n    ]\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "country_id": {
+          "description": "Country ID",
+          "title": "Country Id",
+          "type": "integer"
+        },
+        "sms_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter for sms enabled numbers",
+          "title": "Sms Enabled"
+        }
+      },
+      "required": [
+        "country_id"
+      ],
+      "title": "list_country_citiesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_country_cities_in_region",
+    "description": "\nList of Cities with available DID in a region of a country\n\nArgs:\n    country_id: ID of country for search\n    region_id: ID of region in a country\n    sms_enabled: search for DID with SMS functionality\n\nReturns a JSON object with available cities for purchase DIDs.\nReturned cities list have following fields:\n    id: ID of city\n    name: Name of city in DIDLogic\n    area_code: Area code within country\n    count: count of available DIDs for purchasing\n\n403 error indicates disabled API calls for purchase.\n\nExample:\n```\n{\n    \"cities\": [\n        {\n            \"id\": 118557,\n            \"name\": \"Ottawa-Hull, ON\",\n            \"area_code\": \"613800\",\n            \"count\": 81\n        }\n    ]\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "country_id": {
+          "description": "Country ID",
+          "title": "Country Id",
+          "type": "integer"
+        },
+        "region_id": {
+          "description": "Region ID",
+          "title": "Region Id",
+          "type": "integer"
+        },
+        "sms_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter for sms enabled numbers",
+          "title": "Sms Enabled"
+        }
+      },
+      "required": [
+        "country_id",
+        "region_id"
+      ],
+      "title": "list_country_cities_in_regionArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_dids_in_country_city",
+    "description": "\nList of available DID in a city of a country\n\nArgs:\n    country_id: ID of country for search\n    city_id: ID of city in a country\n    sms_enabled: search for DID with SMS functionality\n    page: page of result starting with 1\n    per_page: how many results should be on per page\n\nReturns a JSON object with available DIDs where:\n    dids: Array of DID available for purchasing where:\n        id: ID of DID\n        country: Country name\n        city: City name\n        sms_enabled: Is number capable of receiving SMS\n        channels: How many parallel channels have DID\n        free_min: How many free minutes per month DID have\n        activation: Activation cost for DID in USD\n        monthly: Monthly fee for DID\n        per_minute: Per minute cost for DID\n        origination_per_min: per minute cost if origin based rate applied\n        required_documents: required documents for activating number, where:\n            1 = Any form of ID\n            2 = Proof of address\n            3 = Proof of local address\n        number: DID Number in E164 format\n    pagination: Pagination details for results\n        page: current page of results\n        total_pages: total pages results\n        total: total query records\n\n403 error indicates disabled API calls for purchase.\n\nExample:\n```\n{\n    \"dids\": {\n        \"pagination\": {\n            \"total\": 52,\n            \"total_pages\": 1,\n            \"current_page\": 1\n        },\n        \"dids\": [\n            {\n                \"id\": 112370,\n                \"country\": \"Canada\",\n                \"city\": \"Edmonton, AB\",\n                \"sms_enabled\": false,\n                \"no_local_cli\": false,\n                \"channels\": 4,\n                \"free_min\": 0,\n                \"cnam\": null,\n                \"activation\": 1.0,\n                \"monthly\": 1.0,\n                \"per_minute\": 0.01,\n                \"origination_per_min\": null,\n                \"required_documents\": [],\n                \"state\": \"Alberta\",\n                \"country_short_name\": \"CA\",\n                \"number\": \"17806999999\"\n            }\n        ]\n    }\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "country_id": {
+          "description": "Country ID",
+          "title": "Country Id",
+          "type": "integer"
+        },
+        "city_id": {
+          "description": "City ID",
+          "title": "City Id",
+          "type": "integer"
+        },
+        "sms_enabled": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter for sms enabled numbers",
+          "title": "Sms Enabled"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search page",
+          "title": "Page"
+        },
+        "per_page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search per page",
+          "title": "Per Page"
+        }
+      },
+      "required": [
+        "country_id",
+        "city_id"
+      ],
+      "title": "list_dids_in_country_cityArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "purchase_did",
+    "description": "\nPurchase DID from DIDLogic\n\nArgs:\n    number: DID number for purchase in E164 format\n\nReturns a JSON object with purchased DID details where:\n    errors: Errors what happened in purchase process\n    purchases: Array of purchased dids where:\n        id: ID of purchased DID\n        number: number of DID\n        country: Country name\n        area: City name\n        sms_enabled: Is number capable of receiving SMS\n        channels: How many parallel channels have DID\n        free_minutes: How many free minutes per month DID have\n        activation: Activation cost for DID in USD\n        monthly_fee: Monthly fee for DID\n        per_minute: Per minute cost for DID\n        origination_per_min: per minute cost if origin based rate applied\n        requir_docs: required documents for activating number, where:\n            1 = Any form of ID\n            2 = Proof of address\n            3 = Proof of local address\n        codec: what SIP codec is preferred for this number\n\nExample:\n```\n{\n    \"purchase\": {\n        \"errors\": {},\n        \"purchases\": [\n            {\n                \"id\": 728070,\n                \"number\": \"17806999999\",\n                \"sms_enabled\": false,\n                \"no_local_cli\": false,\n                \"channels\": 4,\n                \"country\": \"Canada\",\n                \"area\": \"Edmonton, AB\",\n                \"free_minutes\": 0,\n                \"codec\": \"G711\",\n                \"require_docs\": \"\",\n                \"activation\": 1.0,\n                \"monthly_fee\": 1.0,\n                \"per_minute\": 0.01,\n                \"origination_per_min\": 0.0\n            }\n        ]\n    }\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "DID number for purchase",
+          "title": "Number"
+        }
+      },
+      "required": [
+        "number"
+      ],
+      "title": "purchase_didArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "remove_purchased_did",
+    "description": "\nRemove DID from DIDLogic account\n\nArgs:\n    number: DID number for removing in E164 format\n\nReturns a JSON object with removed DID details where:\n    dids: Array of removed dids where:\n        id: ID of purchased DID\n        number: number of DID\n        country: Country name\n        area: City name\n        sms_enabled: Is number capable of receiving SMS\n        channels: How many parallel channels have DID\n        free_minutes: How many free minutes per month DID have\n        activation: Activation cost for DID in USD\n        monthly_fee: Monthly fee for DID\n        per_minute: Per minute cost for DID\n        origination_per_min: per minute cost if origin based rate applied\n        requir_docs: required documents for activating number, where:\n            1 = Any form of ID\n            2 = Proof of address\n            3 = Proof of local address\n        codec: what SIP codec is preferred for this number\n\nExample:\n```\n{\n    \"dids\": [\n        {\n            \"id\": 728070,\n            \"number\": \"17806999999\",\n            \"sms_enabled\": false,\n            \"no_local_cli\": false,\n            \"channels\": 4,\n            \"country\": \"Canada\",\n            \"area\": \"Edmonton, AB\",\n            \"free_minutes\": 0,\n            \"codec\": \"G711\",\n            \"require_docs\": \"\",\n            \"activation\": 1.0,\n            \"monthly_fee\": 1.0,\n            \"per_minute\": 0.01,\n            \"origination_per_min\": 0.0\n        }\n    ]\n}\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "description": "Number for remove from DIDLogic account",
+          "title": "Number"
+        }
+      },
+      "required": [
+        "number"
+      ],
+      "title": "remove_purchased_didArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_call_history",
+    "description": "\nQuery Call history in DIDlogic\n\nArgs:\n    call_type: Type of call history items where:\n        sip = outbound sip calls\n        incoming = inbound calls to DID\n    from_date: Date to search from, should be in YYYY-MM-DD format\n    to_date: Date to search to, should be in YYYY-MM-DD format\n    number: Number to search for incoming calls\n    sip_account: SIP account name to search for outbound calls\n    from_search: Number from whom was the call\n    to_search: Number to what was the call\n    page: page of result starting with 1\n    per_page: how many results should be on per page\n\nReturns a JSON object with a call history results where:\n    calls: array of call history objects where:\n        timestamp: date of the call\n        type: call type where:\n            sip = outbound sip call\n            incoming = inbound call to DID\n        amount: charge for this call in USD\n        duration: duration of call in seconds\n        from: from number for this call\n        to: to number which this call was made\n        destination_name: destination network name for this call\n        sip_account: SIP account name for outbound SIP calls\n    pagination: Pagination details for results\n        page: current page of results\n        per_page: results per page\n        total_pages: total pages results\n        total_records: total query records (maximum 5000)\n\nExample response:\n```\n    {\n        \"calls\": [\n            {\n                \"timestamp\": \"2024-11-20T13:29:19Z\",\n                \"type\": \"sip\",\n                \"amount\": 0.02,\n                \"duration\": 0,\n                \"from\": \"\"\" <1212123123>\",\n                \"to\": \"1555123123\",\n                \"destination_name\": \"United States - NOT EXISTED\",\n                \"sip_account\": \"12345\"\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"per_page\": 100,\n            \"total_pages\": 50,\n            \"total_records\": 5000\n        }\n    }\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "call_type": {
+          "anyOf": [
+            {
+              "enum": [
+                "sip",
+                "incoming"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Type of call, can be sip or incoming",
+          "title": "Call Type"
+        },
+        "from_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "From date in format YYYY-MM-DD",
+          "title": "From Date"
+        },
+        "to_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "To date in format YYYY-MM-DD",
+          "title": "To Date"
+        },
+        "number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Number for search, E164 format",
+          "title": "Number"
+        },
+        "sip_account": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SIP Account name for search",
+          "title": "Sip Account"
+        },
+        "from_search": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "From number search, E164 format",
+          "title": "From Search"
+        },
+        "to_search": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "To number search, E164 format",
+          "title": "To Search"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "results page",
+          "title": "Page"
+        },
+        "per_page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "results per page",
+          "title": "Per Page"
+        }
+      },
+      "title": "get_call_historyArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_transactions",
+    "description": "\nLoad transaction history from DIDLogic\n\nArgs:\n    transaction_type: Type of transaction to search where:\n        adjustment = Adjustments made by DIDLogic finances\n        activation = Activation payments for DID\n        month = Monthly payments for DID\n        paypal_in = Paypal TopUps\n        call = Per minute charges for inbound calls\n        call_fix_fee = Per minute charges for PSTN DID destinations\n        sms = SMS charges\n        inbound_sms = Inbound SMS charges\n        cc_in = Credit card TopUps\n        stripe_in = Stripe express payments TopUps\n        porting = Porting Fees\n    start_date: Search start date in format YYYY-MM-DD\n    end_date: Search end date in format YYYY-MM-DD\n\nReturns a CSV table of transactions where:\n    Date: Date of transaction\n    Time: Time of transaction\n    Transaction type: Type of transaction\n    Comment: Comment for transaction\n    Amount: Transaction Amount\n    Balance: Balance after transaction creation\n    Status: Transaction status where:\n        Confirmed = transaction confirmed but not commited yet\n        Committed = transaction settled\n        Rejected = transaction reverted back\n\nExample:\n```\nDate,Time,Transaction type,Comment,Amount,Balance,Status\n01/05/25,06:00 am,Monthly fees,Monthly fee for 18565999999,$-0.9900,$16.1273,Committed\n```\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "transaction_type": {
+          "default": "month",
+          "description": "Transaction type for search",
+          "enum": [
+            "adjustment",
+            "activation",
+            "month",
+            "paypal_in",
+            "call",
+            "call_fix_fee",
+            "sms",
+            "cc_in",
+            "stripe_in",
+            "porting",
+            "inbound_sms"
+          ],
+          "title": "Transaction Type",
+          "type": "string"
+        },
+        "start_date": {
+          "description": "Search start date in format YYYY-MM-DD",
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "description": "Search end date in format YYYY-MM-DD",
+          "title": "End Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start_date",
+        "end_date"
+      ],
+      "title": "get_transactionsArguments",
+      "type": "object"
+    }
+  }
+]

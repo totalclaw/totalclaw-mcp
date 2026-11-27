@@ -335,7 +335,7 @@
     `/logo.jpg`（165 KB），jpg→png **撑成 1.3 MB**。`MAX_BYTES` 卡的是下载的字节，
     卡不住转换后的。转换统一缩到 256px 边长并复查体积后，51 个图标合计 367 KB、
     最大 59 KB。加了用例守住这条（`test_icons_stay_small`）。
-- [ ] **C5.1（剩余，9 个）** 确实抓不到：站点与 www 都不通的
+- [ ] **C5.1（剩余）** 2026-11-26 换网络重跑：`unreal_engine` 补到（epicgames.com 自家图标），图标 51 → 52；`tec_do` / `fyopen_lawsearch` / `mzl_trademark` / `shanglv_mcp_gateway` / `lexiang` / `gildata` 站点现在都能连上，但站上确实没有图标。原记录：确实抓不到：站点与 www 都不通的
   （`cjbdi.com` / `lexiang-app.com` / `tec-do.cn` / `epicgames.com` / `yql.net` —— 
   **换个能连通的网络重跑 `scripts/fetch_icons.py` 可能还能补**），
   以及 `gildata.com` / `mozlen.com` 等站上确实没有任何图标来源的。
@@ -539,7 +539,7 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [x] **fanruan-growth-advisor** 帆软增长谋士（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/fanruan_growth_advisor`
 - [x] **fazhi-law** 同花顺法律AI助手（上游 auth_mode=token） —— 同上，`law_agent/mcp` 去掉 source 参数后直通，已探到 6 个工具（注入扫描 allow），收录为 `biz/fazhi_law`
 - [x] **fbs-connector** 福帮手 —— 厂商自有端点，收录为 `biz/fbs_connector`
-- [ ] **fenbi-baokao-decision** 报考决策 —— 阻塞：`market-api.fenbi.com` 上 `/mcp`、`/mcp/`、`/open/mcp`、`/.well-known/mcp`、`/.well-known/oauth-protected-resource` 全 404，**无通用入口，需向厂商申请**
+- [ ] **fenbi-baokao-decision** 报考决策 —— 阻塞：`market-api.fenbi.com` 上 `/mcp`、`/mcp/`、`/open/mcp`、`/.well-known/mcp`、`/.well-known/oauth-protected-resource` 全 404，**无通用入口，需向厂商申请** （2026-11-26 复查：各路径仍 404）
 - [x] **finenter** 进门投研 —— 上游写 sse，实测 `/sse`→`/mcp` 端点存在（401，需凭据），已按 http 收录为 `data/finenter`
 - [x] **flova** Flova（上游 auth_mode=oauth） —— 厂商自有端点，收录为 `creative/flova`
 - [x] **fyopen-lawsearch** 法研·法律法规检索 —— 厂商自有端点，收录为 `biz/fyopen_lawsearch`
@@ -580,7 +580,7 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [x] **tdx-connector** 通达信 —— 实测 401 返回的是标准 MCP OAuth 受保护资源发现，按 `auth: oauth` 收录为 `data/tdx_connector`；装后 `totalclaw mcp login tdx_connector`
 - [x] **teacher-assistant** 企鹅教师助手 —— 厂商自有端点，收录为 `hr/teacher_assistant`
 - [x] **tec-do** Tec-Do 2.0 广告与增长情报 —— 厂商自有端点，收录为 `biz/tec_do`
-- [ ] **tencent-health-nges** 腾讯健康NGES —— 阻塞：只有测试主机 `test.nges.qq.com`。生产写法 `nges.qq.com` 连不上（连接失败，非 DNS 问题，见下方说明）
+- [ ] **tencent-health-nges** 腾讯健康NGES —— 阻塞：只有测试主机 `test.nges.qq.com`。生产写法 `nges.qq.com` 连不上（连接失败，非 DNS 问题，见下方说明） （2026-11-26 复查：`nges.qq.com` 直连与走代理均 TLS 握手失败，测试主机仍在）
 - [x] **tencent-qidian-cs** 腾讯企点客服（上游 auth_mode=mcp） —— 厂商自有端点，收录为 `comm/tencent_qidian_cs`
 - [x] **tencent-survey** 腾讯问卷 — 已实现 `tencent_survey`（问卷详情 + 游标翻页取答卷；上游为尊享版付费功能）
 - [x] **tencent-tchouse-c** 腾讯云数据仓库 TCHouse-C —— `tencent_tchouse_c` pack，9 工具（端点取自官方 SDK）
@@ -589,15 +589,15 @@ MCP 服务器**——`apim-gateway.pkulaw.com`、`openapi.gangtise.com`、`openm
 - [x] **tplus-api** 畅捷通T+ —— 厂商自有端点，收录为 `infra/tplus_api`
 - [x] **weisheng-scrm** 微盛企微管家SCRM（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/weisheng_scrm`
 - [x] **westock-mcp** 腾讯自选股 —— 厂商自有端点，收录为 `data/westock_mcp`
-- [ ] **wind-finance** Wind 金融数据（上游 auth_mode=token） —— 阻塞：厂商按集成方单开路径（`vserver_<方名>`）。已查其 `.well-known/oauth-protected-resource`：resource 写的是主机根、授权服务器指向 `aifinmarket.wind.com.cn`，但根路径 301、`/mcp`、`/mcp/`、`/vserver/mcp/`、`/mcp-server/mcp` 全 404 —— **没有通用入口，必须向 Wind 申请自己的 vserver 路径**
-- [ ] **wisenote** 百智WiseNote —— 阻塞：厂商 `.well-known/oauth-protected-resource` **把带他方产品名的那条路径声明为其规范资源**，连 OAuth 的 revocation_endpoint 也在同一段下；不存在不带该段的入口（`/mcp` 405、`/wisenote/meeting/mcp` 404）。虽然是标准 OAuth、凭据按用户各自授权，但把一条以别家产品命名的集成入口摆进我们的目录不合适 —— **需向厂商申请自己的入口**
+- [ ] **wind-finance** Wind 金融数据（上游 auth_mode=token） —— 阻塞：厂商按集成方单开路径（`vserver_<方名>`）。已查其 `.well-known/oauth-protected-resource`：resource 写的是主机根、授权服务器指向 `aifinmarket.wind.com.cn`，但根路径 301、`/mcp`、`/mcp/`、`/vserver/mcp/`、`/mcp-server/mcp` 全 404 —— **没有通用入口，必须向 Wind 申请自己的 vserver 路径** （2026-11-26 复查：根路径现为 nginx 默认页，各 mcp 路径仍 404）
+- [ ] **wisenote** 百智WiseNote —— 阻塞：厂商 `.well-known/oauth-protected-resource` **把带他方产品名的那条路径声明为其规范资源**，连 OAuth 的 revocation_endpoint 也在同一段下；不存在不带该段的入口（`/mcp` 405、`/wisenote/meeting/mcp` 404）。虽然是标准 OAuth、凭据按用户各自授权，但把一条以别家产品命名的集成入口摆进我们的目录不合适 —— **需向厂商申请自己的入口** （2026-11-26 复查：资源元数据仍指向 `/workbuddy/wisenote/meeting/mcp`）
 - [x] **wk-workbuddy** 威科先行 —— 厂商自有端点，收录为 `biz/wkinfo`
 - [x] **xingtu-claw-risk** 天创信用星图MCP —— 上游写 sse，实测 `/mcp` 端点存在（401，需凭据），已按 http 收录为 `biz/xingtu_claw_risk`
 - [x] **yingmi-mcp** 盈米MCP（上游 auth_mode=token） —— 厂商自有端点，收录为 `data/yingmi_mcp`
 - [x] **youshu-bd-mate** 智客AI · 对公(To B)营销助手（上游 auth_mode=token） —— 厂商自有端点，收录为 `biz/youshu_bd_mate`
 - [x] **yuandian-mcp** 华宇元典法律数据 —— 厂商自有端点，收录为 `biz/yuandian_mcp`
 - [x] **yzf-invoice-mcp-server** 云帐房AI开票 —— 厂商自有端点，收录为 `data/yzf_invoice_mcp_server`
-- [ ] **zfs-fssc-ai** 中兴新云AI智报（上游 auth_mode=token） —— 阻塞：只有演示主机 `mcpdemo.ztccloud.com.cn`（根路径 404，主机确实在）；`mcp.ztccloud.com.cn` 连不上。且上游传输是 sse
+- [ ] **zfs-fssc-ai** 中兴新云AI智报（上游 auth_mode=token） —— 阻塞：只有演示主机 `mcpdemo.ztccloud.com.cn`（根路径 404，主机确实在）；`mcp.ztccloud.com.cn` 连不上。且上游传输是 sse （2026-11-26 复查：`mcp.ztccloud.com.cn` 仍 TLS 握手失败，演示主机仍 404）
 
 
 #### C · 已核查受阻（8）
@@ -733,8 +733,28 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
 - [x] **F2** agent `mcp_presets.py` 的 mcp-server-time 同步（agent 工作区已改，未提交；合 main / bump submodule 待定）
 - [x] **F3** `stripe` 改官方托管端点 `https://mcp.stripe.com`（OAuth），去掉密钥
 - [x] **F4–F6** 101 条按「满 7 天的最新稳定版」升级，静态审核 + 旧版差分复核全部 allow
-- [ ] **F6.1** 冷却期内的 12 条下一轮再升
+- [x] **F6.1** 冷却期 12 条复查（11-26 晚）：满 7 天的 2 条里 airtable_rashidazarang 4.0.1→5.1.0 已升；mailkite 维持 0.20.0 —— 上游 0.20.1/0.20.2 把依赖写成 `file:../node`，从 npm 装出来是悬空链接，启动即崩（dep_gate 告警发现，实装确认）
+- [ ] **F6.2** 其余 10 条最早 11-30 才满 7 天，下一轮再升（清单见明细文末）
 - [x] **F7** 门禁：gen_registry --check --strict、scan-registry、dep_gate --refresh；chrome_devtools / playwright 重新探测
 - [x] **F8** 老用户升级路径已查清：有「更新」按钮，但没有新版本提示（待办见明细 U3）
-- [ ] **F9** desktop_commander 安装期遥测不认关闭开关（明细 U4.1）
+- [x] **F9** desktop_commander 安装期遥测：加 `npm_config_ignore_scripts=true`（运行时 env + `security.enforced_env`，老用户同步）。对照实测开关生效时 postinstall 不跑；依赖 ripgrep / sharp 已改用平台预编译包，全新缓存安装 + 探测 25 个工具正常
 - [x] **F10** `review_static.py --apply` 以前会丢 `security.enforced_env`，已修：只换 scan_verdict / osv / reason，其余键原样保留并断言
+- [x] **F11** **mcp 2.x 兼容（2026-11-26 发现）**：MCP Python SDK 2.0（7-28 发布）删了 v1 的 FastMCP、低层 `Server` 装饰器与 `McpError`，
+  且 `mcp.server.fastmcp` 一导入就报错。153 条 uvx 条目里 50 条钉住的版本依赖 `mcp` 不设上界，全新安装会解析到 2.x；
+  内存里扫代码确认 46 条用了被删的 API，启动即崩（hn 实测复现）。已统一前置 `--with mcp<2`（解析到 1.30.0，仍是 v1 API）。
+  批量探测：免凭据的全部越过导入阶段；同时修出几处旧毛病：
+  - mcp_sqlite / docker / dy_xhs 原先钉 `mcp==1.19.0`，1.19 用了 pydantic 私有函数 `eval_type_backport`，pydantic 2.14（10 月）删掉后也启动即崩 → 改钉 `mcp==1.30.0`，三条实测通过
+  - timeserver：包提供的可执行名是 `mcp-timeserver`，与包名不同，uvx 找不到命令 → 改 `--from`，实测通过
+  - 老用户：已装的参数不会自动变，需要点「更新」重装（同 U3）
+- [x] **F12a** 修了 mcp 2.x 仍起不来的 5 条：另修 3 条，2 条经负责人确认下架（见 [removed-2026-11-26.md](removed-2026-11-26.md)）
+  - [x] `alphavantage`：PyPI 包（最新 0.3.24，仅两个版本）启动时无条件从当前目录读 `pyproject.toml` 即崩 →
+    改接 Alpha Vantage 官方托管端点 `https://mcp.alphavantage.co/mcp`（API Key 走 Bearer 头），用官方公开演示 key 实探 133 个工具，静态审核 allow
+  - [x] `ds`：`from mcp.server import McpError` 只有 mcp 1.0–1.1.x 这样导出 → 钉 `--with mcp==1.1.3`（与包同期、无 pydantic 私有函数问题），实探 2 个工具
+  - [x] `xiyan`：上游最新 0.1.7 入口指向不存在的函数 → 改 `python -m xiyan_mcp_server`；补未声明的 `--with pandas`；
+    声明必填 `YML`（配置文件路径，说明里写明不要写 `mcp.transport`，否则传给 FastMCP 报错）。假配置实探 1 个工具
+  - [x] `browser_use`（已下架）：没有真正的 stdio 模式 —— `--stdio` 是起 8000 端口 SSE 服务再拉外部 `mcp-proxy`（不在依赖里）；
+    还写死 OpenAI gpt-4o（要 `OPENAI_API_KEY`）、要本机装 Playwright 浏览器；钉 browser-use==0.1.40 能过导入但仍起不来
+  - [x] `database`（已下架）：依赖链 legion-query-runner **所有版本**硬依赖 `mysqlclient==2.1.1`，该包只有 Windows 预编译包，mac / Linux 需本机 MySQL 开发库现场编译，清单层面无解
+- [x] **F12b** 9 条（alphavantage / x / adls2 / wolfram_alpha / home_assistant / tinybird / vikingdb / ancestry / adbpg）原先写 `requires_env: []`，装上即报缺变量退出 —— 已从包代码核出启动必需的变量补齐（含 `doc_url`），ancestry 的必填参数 `--gedcom-path` 用 `${ANCESTRY_GEDCOM_PATH}` 代入；adbpg 代码读 `ADBPG_DATABASE`（上游报错文案写成 ADBPG_NAME，以代码为准）。探测缺凭据时全部正确跳过，ancestry 填目录后实测 3 个工具。顺带：alphavantage 默认在 0.0.0.0:9464 起 Prometheus 指标服务，已用 `enforced_env` 关掉（`MCP_TELEMETRY_ENABLED=false`）
+- [x] **F13** `scripts/probe_server.py` 以前整份 `yaml.safe_dump` 重写清单：缩进注释全丢、中部顶格注释被挪到文件头。已改成只局部替换 `tools:` 块与 `security` 的三个键，写回前断言解析结果与整体重写一致；全部 650 份清单离线回归（语义 / 注释 / 前缀不变 / 幂等）0 失败，desktop_commander 实探只变 probed_at
+

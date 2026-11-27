@@ -1,0 +1,131 @@
+[
+  {
+    "name": "search_creatives",
+    "description": "Search advertising creatives from AdMapix.\n\nAlways generates an H5 result page and returns its URL in the page_url field.\n\nArgs:\n    keyword: Search keyword (supports app name, ad copy, advertiser, etc.)\n    creative_team: Creative group type filter (e.g. [\"100\"] for image, [\"010\"] for video, [\"001\"] for playable)\n    start_date: Start date in YYYY-MM-DD format (defaults to 30 days ago)\n    end_date: End date in YYYY-MM-DD format (defaults to today)\n    page: Page number (default 1)\n    page_size: Results per page (default 20, max 60)\n    sort_field: Sort field - \"3\" first seen, \"4\" days found, \"11\" relevance, \"15\" impression\n    sort_rule: Sort direction - \"desc\" or \"asc\"\n    country_ids: Filter by country IDs (e.g. [\"US\", \"JP\"])\n    trade_level1: Filter by industry category IDs\n    delivery_channel: Delivery channel for H5 page (e.g. \"wechat_kf\", \"feishu\")\n    delivery_user_id: External user ID for H5 page delivery actions\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "keyword": {
+          "default": "",
+          "title": "Keyword",
+          "type": "string"
+        },
+        "creative_team": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Creative Team"
+        },
+        "start_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Date"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Date"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 20,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "sort_field": {
+          "default": "3",
+          "title": "Sort Field",
+          "type": "string"
+        },
+        "sort_rule": {
+          "default": "desc",
+          "title": "Sort Rule",
+          "type": "string"
+        },
+        "country_ids": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Country Ids"
+        },
+        "trade_level1": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Trade Level1"
+        },
+        "delivery_channel": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delivery Channel"
+        },
+        "delivery_user_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delivery User Id"
+        }
+      },
+      "title": "search_creativesArguments",
+      "type": "object"
+    }
+  }
+]

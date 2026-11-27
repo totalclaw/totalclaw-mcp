@@ -224,6 +224,11 @@
     "file": "icon.png",
     "source": "https://cms.static.chanjet.com/90004719560/market/platform/image/2021/03/13/45d0b5ace8d846858fc272b3e94327b0.ico"
   },
+  "unreal_engine": {
+    "fetched_at": "2026-11-26",
+    "file": "icon.png",
+    "source": "https://www.epicgames.com/favicon.ico"
+  },
   "westock_mcp": {
     "fetched_at": "2026-08-23",
     "file": "icon.png",

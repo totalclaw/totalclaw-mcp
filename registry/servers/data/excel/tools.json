@@ -1,0 +1,359 @@
+[
+  {
+    "name": "read_excel",
+    "description": "\nRead an Excel file and return its contents as a string.\n\nArgs:\n    file_path: Path to the Excel file\n    sheet_name: Name of the sheet to read (only for .xlsx, .xls)\n    nrows: Maximum number of rows to read\n    header: Row to use as header (0-indexed)\n    \nReturns:\n    String representation of the Excel data\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file_path": {
+          "title": "File Path",
+          "type": "string"
+        },
+        "sheet_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sheet Name"
+        },
+        "nrows": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nrows"
+        },
+        "header": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "title": "Header"
+        }
+      },
+      "required": [
+        "file_path"
+      ],
+      "title": "read_excelArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "write_excel",
+    "description": "\nWrite data to an Excel file.\n\nArgs:\n    file_path: Path to save the Excel file\n    data: Data in CSV or JSON format\n    sheet_name: Name of the sheet (for Excel files)\n    format: Format of the input data ('csv' or 'json')\n    \nReturns:\n    Confirmation message\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file_path": {
+          "title": "File Path",
+          "type": "string"
+        },
+        "data": {
+          "title": "Data",
+          "type": "string"
+        },
+        "sheet_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "Sheet1",
+          "title": "Sheet Name"
+        },
+        "format": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "csv",
+          "title": "Format"
+        }
+      },
+      "required": [
+        "file_path",
+        "data"
+      ],
+      "title": "write_excelArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "update_excel",
+    "description": "\nUpdate an existing Excel file with new data.\n\nArgs:\n    file_path: Path to the Excel file to update\n    data: New data in CSV or JSON format\n    sheet_name: Name of the sheet to update (for Excel files)\n    format: Format of the input data ('csv' or 'json')\n    \nReturns:\n    Confirmation message\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file_path": {
+          "title": "File Path",
+          "type": "string"
+        },
+        "data": {
+          "title": "Data",
+          "type": "string"
+        },
+        "sheet_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "Sheet1",
+          "title": "Sheet Name"
+        },
+        "format": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "csv",
+          "title": "Format"
+        }
+      },
+      "required": [
+        "file_path",
+        "data"
+      ],
+      "title": "update_excelArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "analyze_excel",
+    "description": "\nPerform statistical analysis on Excel data.\n\nArgs:\n    file_path: Path to the Excel file\n    columns: Comma-separated list of columns to analyze (analyzes all numeric columns if None)\n    sheet_name: Name of the sheet to analyze (for Excel files)\n    \nReturns:\n    JSON string with statistical analysis\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file_path": {
+          "title": "File Path",
+          "type": "string"
+        },
+        "columns": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Columns"
+        },
+        "sheet_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sheet Name"
+        }
+      },
+      "required": [
+        "file_path"
+      ],
+      "title": "analyze_excelArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "filter_excel",
+    "description": "\nFilter Excel data using a pandas query string.\n\nArgs:\n    file_path: Path to the Excel file\n    query: Pandas query string (e.g., \"Age > 30 and Department == 'Sales'\")\n    sheet_name: Name of the sheet to filter (for Excel files)\n    \nReturns:\n    Filtered data as string\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file_path": {
+          "title": "File Path",
+          "type": "string"
+        },
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "sheet_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sheet Name"
+        }
+      },
+      "required": [
+        "file_path",
+        "query"
+      ],
+      "title": "filter_excelArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "pivot_table",
+    "description": "\nCreate a pivot table from Excel data.\n\nArgs:\n    file_path: Path to the Excel file\n    index: Column to use as the pivot table index\n    columns: Optional column to use as the pivot table columns\n    values: Column to use as the pivot table values\n    aggfunc: Aggregation function ('mean', 'sum', 'count', etc.)\n    sheet_name: Name of the sheet to pivot (for Excel files)\n    \nReturns:\n    Pivot table as string\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file_path": {
+          "title": "File Path",
+          "type": "string"
+        },
+        "index": {
+          "title": "Index",
+          "type": "string"
+        },
+        "columns": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Columns"
+        },
+        "values": {
+          "default": null,
+          "title": "Values",
+          "type": "string"
+        },
+        "aggfunc": {
+          "default": "mean",
+          "title": "Aggfunc",
+          "type": "string"
+        },
+        "sheet_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sheet Name"
+        }
+      },
+      "required": [
+        "file_path",
+        "index"
+      ],
+      "title": "pivot_tableArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "export_chart",
+    "description": "\nCreate a chart from Excel data and return as an image.\n\nArgs:\n    file_path: Path to the Excel file\n    x_column: Column to use for x-axis\n    y_column: Column to use for y-axis\n    chart_type: Type of chart ('line', 'bar', 'scatter', 'hist')\n    sheet_name: Name of the sheet to chart (for Excel files)\n    \nReturns:\n    Chart as image\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file_path": {
+          "title": "File Path",
+          "type": "string"
+        },
+        "x_column": {
+          "title": "X Column",
+          "type": "string"
+        },
+        "y_column": {
+          "title": "Y Column",
+          "type": "string"
+        },
+        "chart_type": {
+          "default": "line",
+          "title": "Chart Type",
+          "type": "string"
+        },
+        "sheet_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sheet Name"
+        }
+      },
+      "required": [
+        "file_path",
+        "x_column",
+        "y_column"
+      ],
+      "title": "export_chartArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "data_summary",
+    "description": "\nGenerate a comprehensive summary of the data in an Excel file.\n\nArgs:\n    file_path: Path to the Excel file\n    sheet_name: Name of the sheet to summarize (for Excel files)\n    \nReturns:\n    Comprehensive data summary as string\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file_path": {
+          "title": "File Path",
+          "type": "string"
+        },
+        "sheet_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sheet Name"
+        }
+      },
+      "required": [
+        "file_path"
+      ],
+      "title": "data_summaryArguments",
+      "type": "object"
+    }
+  }
+]

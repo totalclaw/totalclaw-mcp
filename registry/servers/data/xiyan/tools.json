@@ -1,0 +1,20 @@
+[
+  {
+    "name": "get_data",
+    "description": "Fetch the data from database through a natural language query\n\nArgs:\n    query: The query in natural language\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "get_dataArguments",
+      "type": "object"
+    }
+  }
+]

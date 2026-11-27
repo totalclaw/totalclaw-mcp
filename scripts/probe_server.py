@@ -241,14 +241,83 @@ def probe(name: str, *, runtime_id: str | None, dry_run: bool, skip_auth: bool) 
         "osv": sec.get("osv", "unscanned"),
     })
     manifest["security"] = sec
-    head = "".join(l for l in path.read_text(encoding="utf-8").splitlines(keepends=True)
-                   if l.startswith("#"))
-    path.write_text(head + yaml.safe_dump(manifest, allow_unicode=True,
-                                          sort_keys=False, width=100), encoding="utf-8")
+    old_text = path.read_text(encoding="utf-8")
+    new_text = _rewrite_probe_keys(old_text, manifest["tools"],
+                                   {k: sec[k] for k in ("scan_verdict", "prompt_injection_findings", "osv")})
+    # 局部改写只动 tools 块与 security 的三个键；解析结果必须与「整体重写」完全一致
+    if yaml.safe_load(new_text) != manifest:
+        raise RuntimeError(f"{name}: 局部改写清单后内容不一致，未写回")
+    path.write_text(new_text, encoding="utf-8")
 
     flag = f"  ⚠ 注入嫌疑 {len(findings)} 处" if findings else ""
     ro = sum(1 for t in tools if t["read_only"])
     return f"✓ {name}: {len(tools)} 个工具（只读 {ro}）via {used_runtime}{flag}"
+
+
+def _block_span(lines: list[str], key: str) -> tuple[int, int] | None:
+    """顶层 `key:` 块在行列表里的 [起, 止)；块体是其后所有缩进行 / 空行 / 缩进注释。"""
+    for i, ln in enumerate(lines):
+        if re.match(rf"{re.escape(key)}:\s*(#.*)?$", ln.rstrip("\n")):
+            j = i + 1
+            while j < len(lines) and (lines[j].startswith((" ", "\t")) or not lines[j].strip()):
+                j += 1
+            while j > i + 1 and not lines[j - 1].strip():   # 尾部空行留给块外
+                j -= 1
+            return i, j
+    return None
+
+
+def _rewrite_probe_keys(text: str, tools: dict, sec_updates: dict) -> str:
+    """只改写顶层 `tools:` 块与 `security:` 里探测负责的键，其余文本（含注释）原样保留。
+
+    以前是整份 yaml.safe_dump 重写：缩进注释全丢、文件中部的顶格注释被挪到文件头。
+    """
+    yaml = _yaml()
+
+    def dump(obj: dict, indent: str = "") -> list[str]:
+        out = yaml.safe_dump(obj, allow_unicode=True, sort_keys=False, width=100)
+        return [indent + ln + "\n" for ln in out.splitlines()]
+
+    lines = text.splitlines(keepends=True)
+    if lines and not lines[-1].endswith("\n"):
+        lines[-1] += "\n"
+
+    # security：按两格缩进的键切段，只替换（或追加）探测负责的键；注释与其它键原样保留
+    span = _block_span(lines, "security")
+    if span is None:
+        lines += dump({"security": sec_updates})
+    else:
+        i, j = span
+        body = lines[i + 1:j]
+        segs: list[tuple[str | None, list[str]]] = []
+        for ln in body:
+            m = re.match(r"  ([A-Za-z_][\w-]*):", ln)
+            if m:
+                segs.append((m.group(1), [ln]))
+            elif segs and segs[-1][0] is not None and (ln.startswith("   ") or ln.startswith("  - ")):
+                segs[-1][1].append(ln)          # 上一个键的续行（嵌套映射 / 列表）
+            else:
+                segs.append((None, [ln]))       # 注释、空行
+        done = set()
+        for k, (key, _) in enumerate(segs):
+            if key in sec_updates:
+                segs[k] = (key, dump({key: sec_updates[key]}, "  "))
+                done.add(key)
+        for key, val in sec_updates.items():
+            if key not in done:
+                segs.append((key, dump({key: val}, "  ")))
+        lines[i + 1:j] = [ln for _, seg in segs for ln in seg]
+
+    # tools：整块替换；没有就放在 security 之前（与旧版整体重写的键顺序一致）
+    new_tools = dump({"tools": tools})
+    span = _block_span(lines, "tools")
+    if span is not None:
+        lines[span[0]:span[1]] = new_tools
+    else:
+        sec = _block_span(lines, "security")
+        at = sec[0] if sec else len(lines)
+        lines[at:at] = new_tools
+    return "".join(lines)
 
 
 def _now() -> str:

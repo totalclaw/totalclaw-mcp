@@ -1,12 +1,14 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
+# 2026-11-26：uvx 前置 `--with mcp<2` —— 包按 mcp 1.x 写（FastMCP / 低层装饰器 / McpError），依赖未声明上界，裸 uvx 解析到 mcp 2.x 后启动即崩。
+# 2026-11-26：补齐启动必需的凭据 / 参数声明（以前写 requires_env: []，装上即报缺变量退出）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: ancestry
 display_name: ancestry-mcp
 display_name_en: ancestry-mcp
-version: 0.1.2
+version: 0.1.4
 description: A Model Context Protocol server providing functionality to GEDCOM files via LLM usage
 description_zh: 允许 AI 读取 .ged 文件和遗传数据。
 author: reeeeemo
@@ -25,14 +27,32 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp<2
   - mcp-server-ancestry==0.1.1
+  - --gedcom-path
+  - ${ANCESTRY_GEDCOM_PATH}
   requires:
     python: '>=3.10'
-requires_env: []
+requires_env:
+- name: ANCESTRY_GEDCOM_PATH
+  env_key: ANCESTRY_GEDCOM_PATH
+  description: 存放 GEDCOM 家谱文件（.ged）的本机目录，需可读写。
+  prompt: 请输入 GEDCOM 文件所在目录
+  secret: false
+  required: true
+  doc_url: https://github.com/reeeeemo/ancestry-mcp
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T03:22:30Z'
+  probed_runtime: uvx
+  count: 3
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

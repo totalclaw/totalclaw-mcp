@@ -10,7 +10,7 @@
 商标归各自厂商所有，本仓库不主张任何权利、也不转授权。
 如需下架某个图标，删掉对应条目目录下的 `icon.svg`/`icon.png`，再跑 `scripts/fetch_icons.py`（会同步剔掉记录）与 `scripts/gen_registry.py`。
 
-最后更新：2026-08-23
+最后更新：2026-11-26
 
 | 条目 | 文件 | 来源 URL | 抓取日期 |
 |---|---|---|---|
@@ -59,6 +59,7 @@
 | `tencent_weiyun` | `icon.png` | https://img.weiyun.com/vipstyle/nr/box/img/favicon.ico?max_age=31536000 | 2026-08-23 |
 | `tongzhou_fin_research` | `icon.png` | https://mcp-gateway.textmind-gz.com/logo.png | 2026-08-23 |
 | `tplus_api` | `icon.png` | https://cms.static.chanjet.com/90004719560/market/platform/image/2021/03/13/45d0b5ace8d846858fc272b3e94327b0.ico | 2026-08-23 |
+| `unreal_engine` | `icon.png` | https://www.epicgames.com/favicon.ico | 2026-11-26 |
 | `westock_mcp` | `icon.png` | https://stockbuddy.qq.com/logo.jpg | 2026-08-23 |
 | `wkinfo` | `icon.svg` | https://mcp.wkinfo.com.cn/assets/logo-DsQzxDGb.svg | 2026-08-23 |
 | `yingmi_mcp` | `icon.png` | https://yingmi.com/assets/img/favicon.ico | 2026-08-23 |
