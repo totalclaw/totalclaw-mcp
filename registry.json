@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-27T03:43:37Z",
+  "generated_at": "2026-11-27T06:53:52Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -4739,7 +4739,7 @@
       "display_name_en": "Memory",
       "description": "Memory MCP server.",
       "description_zh": "知识图谱式持久记忆 — 实体 / 关系 / 观察三元组,跨会话保留。与 totalclaw_core.memory.long_term_memory 互补:本 server 走图谱模型,核内 LTM 走衰减表模型。",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": "upstream",
       "homepage": "https://github.com/modelcontextprotocol/servers",
       "verified": true,
@@ -4767,13 +4767,19 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@modelcontextprotocol/server-memory@2026.7.4"
+          "package": "@modelcontextprotocol/server-memory@2.2.1"
         }
       ],
-      "requires_env": [],
-      "optional_env": [
-        "MEMORY_FILE_PATH"
+      "requires_env": [
+        {
+          "name": "MEMORY_FILE_PATH",
+          "description": "知识图谱记忆的存放文件（JSONL）的绝对路径，如 /Users/你/.totalclaw/mcp_memory.jsonl。必须给持久路径：不给时 2.x 默认写进 npx 缓存里的包目录，清缓存即丢失。",
+          "prompt": "请输入记忆文件的绝对路径",
+          "secret": false,
+          "required": true
+        }
       ],
+      "optional_env": [],
       "tools_count": 9,
       "tools": [
         "create_entities",
@@ -4788,8 +4794,8 @@
       ],
       "security": {
         "scan_verdict": "allow",
-        "prompt_injection_findings": [],
-        "osv": "unscanned"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/biz/mcp_memory",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/mcp_memory",
@@ -4805,16 +4811,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "9e1eeb58162818834f7dbda1fd0ec2e7061a65037519939ac75511deb38e1b89",
-          "size": 1290
+          "sha256": "fa4f0ae70487b25fbf8fb419f74e85cbe54b94943183fa47bb89244858c2cfe1",
+          "size": 1916
         },
         {
           "path": "tools.json",
-          "sha256": "24028121892df3dee474d4f44c1b93d92fabf4517d9aa6fcad653aa33759df18",
-          "size": 7165
+          "sha256": "7f2e0f3549d3428a525ed2bd4c65f2c0e60f0f6ae59b6476f36fe4f0d0b453c5",
+          "size": 11480
         }
       ],
-      "bundle_sha256": "06b7d4c6e08d0cd1485f062ae00cc22d0b362b57df7e6f39882fa2ac257b8b2d",
+      "bundle_sha256": "5adf78cc28e09dac86dd5d57921436e88483c13e5ee44945ac018be51829845b",
       "popularity": {
         "score": 496,
         "stars": 91615
@@ -4827,7 +4833,7 @@
       "display_name_en": "Sequential Thinking",
       "description": "Sequential Thinking MCP server.",
       "description_zh": "动态反思式问题分解 — 把复杂任务拆成有序思考序列,支持回溯 / 修正 / 分支。适合长 horizon planning。",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": "upstream",
       "homepage": "https://github.com/modelcontextprotocol/servers",
       "verified": true,
@@ -4855,7 +4861,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@modelcontextprotocol/server-sequential-thinking@2026.7.4"
+          "package": "@modelcontextprotocol/server-sequential-thinking@2.2.0"
         }
       ],
       "requires_env": [],
@@ -4866,8 +4872,8 @@
       ],
       "security": {
         "scan_verdict": "allow",
-        "prompt_injection_findings": [],
-        "osv": "unscanned"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/biz/mcp_sequential_thinking",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/mcp_sequential_thinking",
@@ -4883,16 +4889,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "aa8981f28dd4b4e1ed48b6c1e47d21daa3892bfe4930fd070b7d9b2b0b100bbe",
-          "size": 1023
+          "sha256": "b5022c98a199185ea362df5a68327679651bcc5a180fa4d92c6f37df8d0a4572",
+          "size": 1315
         },
         {
           "path": "tools.json",
-          "sha256": "4d7be52ecc4996e6ac7b06266f7d61438d6225ee1d0938ead3050c6457889a2c",
-          "size": 4594
+          "sha256": "a644d357d1454e5d905765f10445809f8bbe12d0aa8fdd3bbc846909d6894bef",
+          "size": 2962
         }
       ],
-      "bundle_sha256": "2f7140491c292ba8fb41953fa136cbd81acb8df4b7018e08af92bc1f3f36bb95",
+      "bundle_sha256": "55a00c797037412790bb0f25ad15f2856027cf34610932950b03548eb25bbaa6",
       "popularity": {
         "score": 496,
         "stars": 91615
@@ -21748,7 +21754,7 @@
       "display_name_en": "Everything (reference)",
       "description": "Everything (reference) MCP server.",
       "description_zh": "官方参考实现 + 测试服 — 提供 prompts / resources / tools 三类 MCP capability 完整示例,用于 MCP client 兼容性验证 + 学习。",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": "upstream",
       "homepage": "https://github.com/modelcontextprotocol/servers",
       "verified": true,
@@ -21776,31 +21782,34 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@modelcontextprotocol/server-everything@2026.8.18"
+          "package": "@modelcontextprotocol/server-everything@2.3.1"
         }
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 13,
+      "tools_count": 16,
       "tools": [
         "echo",
         "get-annotated-message",
         "get-env",
+        "get-header-params",
         "get-resource-links",
         "get-resource-reference",
         "get-structured-content",
         "get-sum",
         "get-tiny-image",
         "gzip-file-as-resource",
-        "toggle-simulated-logging",
-        "toggle-subscriber-updates",
+        "trigger-list-changed",
+        "trigger-log-messages",
         "trigger-long-running-operation",
-        "simulate-research-query"
+        "trigger-resource-update",
+        "toggle-simulated-logging",
+        "toggle-subscriber-updates"
       ],
       "security": {
         "scan_verdict": "allow",
-        "prompt_injection_findings": [],
-        "osv": "unscanned"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/mcp_everything",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/mcp_everything",
@@ -21816,16 +21825,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "2cfc345026aded418729aefb02134e12e241918a59b0596ad721bdbac4014937",
-          "size": 1034
+          "sha256": "17f5cf2072492fe63358943e013566c7355e5466c2a59f843177e3acd4f40d92",
+          "size": 1325
         },
         {
           "path": "tools.json",
-          "sha256": "478490e58ba9db0827f985ee0d2a32b9d4d58dfdb23f1194e6330ad99874864e",
-          "size": 7194
+          "sha256": "4ae2775c6c5c367949310bc1809b63cc615b977f157e5978bf9b9bdafe79dd0d",
+          "size": 10208
         }
       ],
-      "bundle_sha256": "9abdc2b826cea4293363dea11e3719de93471496f0aff4076e0273d87375af01",
+      "bundle_sha256": "3640ecd0805e43e3b21f3e9b59846d07c78b82b0ebfbfdb763d117a2d14ea917",
       "popularity": {
         "score": 496,
         "stars": 91615
@@ -29906,7 +29915,7 @@
       "display_name_en": "Filesystem",
       "description": "Filesystem MCP server.",
       "description_zh": "受控文件系统读写 — 强制根目录沙箱,支持 list / read / write / edit / search / move。args 末 path 是允许根(可多个)。",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "author": "upstream",
       "homepage": "https://github.com/modelcontextprotocol/servers",
       "verified": true,
@@ -29934,7 +29943,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@modelcontextprotocol/server-filesystem@2026.7.10"
+          "package": "@modelcontextprotocol/server-filesystem@2.4.0"
         }
       ],
       "requires_env": [
@@ -29947,27 +29956,29 @@
         }
       ],
       "optional_env": [],
-      "tools_count": 14,
+      "tools_count": 16,
       "tools": [
         "read_file",
         "read_text_file",
         "read_media_file",
         "read_multiple_files",
         "write_file",
+        "append_file",
         "edit_file",
         "create_directory",
         "list_directory",
         "list_directory_with_sizes",
         "directory_tree",
         "move_file",
+        "copy_file",
         "search_files",
         "get_file_info",
         "list_allowed_directories"
       ],
       "security": {
         "scan_verdict": "allow",
-        "prompt_injection_findings": [],
-        "osv": "unscanned"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/media/mcp_filesystem",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/media/mcp_filesystem",
@@ -29983,16 +29994,16 @@
         },
         {
           "path": "mcp.yaml",
-          "sha256": "4ceb5a95bec963ccb936da8cbf176f5aa066fe545f2b499a020e0cfecbf2f0d3",
-          "size": 1637
+          "sha256": "98a628f027bc3dba1e9619cae052f974652ee61cf2759cb45622d27ed3599f6d",
+          "size": 1928
         },
         {
           "path": "tools.json",
-          "sha256": "897bbc3b65eecb70a4b8d5787100b6284e7874315c2e6c88e9e4adba18bcccd5",
-          "size": 10844
+          "sha256": "412dbbe22c10ddcd3859ad972e5c0fa74cde9cc956f8d7886274845f38d4acbc",
+          "size": 17434
         }
       ],
-      "bundle_sha256": "2b477ad4a10f1e07af7698a559fab111b90c5eb12b7f6da22a89085606979bf6",
+      "bundle_sha256": "47227cbe5cc117af74e12d1838cff4e01e59eda9c41d6ea1831d127dc3f0939a",
       "popularity": {
         "score": 496,
         "stars": 91615

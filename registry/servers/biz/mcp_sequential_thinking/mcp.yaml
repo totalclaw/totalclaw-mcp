@@ -1,15 +1,18 @@
 # 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+# 2026-11-27：上游 @modelcontextprotocol/* 已于 2026-11-18 弃用日期版、改回 semver 2.x。2.x 的 engines 声明 node>=24，
+# 但实测 Node 22.22 下 initialize / list_tools / 典型工具调用均正常（桌面端内置 Node 22.22.3），故 requires.node 写 >=22。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_sequential_thinking
 display_name: Sequential Thinking
 display_name_en: Sequential Thinking
-version: 0.1.0
+version: 0.2.0
 description: Sequential Thinking MCP server.
 description_zh: 动态反思式问题分解 — 把复杂任务拆成有序思考序列,支持回溯 / 修正 / 分支。适合长 horizon planning。
 author: upstream
 homepage: https://github.com/modelcontextprotocol/servers
+verified: true
 category: biz
 tags:
 - biz
@@ -22,20 +25,20 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@modelcontextprotocol/server-sequential-thinking@2026.7.4'
+  - '@modelcontextprotocol/server-sequential-thinking@2.2.0'
   requires:
-    node: '>=18'
+    node: '>=22'
 requires_env: []
 optional_env: []
 defaults:
   enabled: true
   timeout: 60
 tools:
-  probed_at: '2026-08-22T11:52:22Z'
+  probed_at: '2026-11-27T06:53:39Z'
   probed_runtime: npx
   count: 1
   file: tools.json
 security:
   scan_verdict: allow
+  osv: clean
   prompt_injection_findings: []
-  osv: unscanned

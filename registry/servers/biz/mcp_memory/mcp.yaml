@@ -1,16 +1,20 @@
 # 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+# 2026-11-27：上游 @modelcontextprotocol/* 已于 2026-11-18 弃用日期版、改回 semver 2.x。2.x 的 engines 声明 node>=24，
+# 但实测 Node 22.22 下 initialize / list_tools / 典型工具调用均正常（桌面端内置 Node 22.22.3），故 requires.node 写 >=22。
+# 2026-11-27：顺带修掉两处旧问题 —— env 用了 agent 不支持的 ${VAR:-默认值}（会原样传字面量），可选变量的 default 被截成 "${HOME"；改为必填的绝对路径。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_memory
 display_name: Memory
 display_name_en: Memory
-version: 0.1.0
+version: 0.2.0
 description: Memory MCP server.
 description_zh: 知识图谱式持久记忆 — 实体 / 关系 / 观察三元组,跨会话保留。与 totalclaw_core.memory.long_term_memory 互补:本 server
   走图谱模型,核内 LTM 走衰减表模型。
 author: upstream
 homepage: https://github.com/modelcontextprotocol/servers
+verified: true
 category: biz
 tags:
 - biz
@@ -23,29 +27,28 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@modelcontextprotocol/server-memory@2026.7.4'
+  - '@modelcontextprotocol/server-memory@2.2.1'
   env:
-    MEMORY_FILE_PATH: ${MEMORY_FILE_PATH:-${HOME}/.totalclaw/mcp_memory.json}
+    MEMORY_FILE_PATH: ${MEMORY_FILE_PATH}
   requires:
-    node: '>=18'
-requires_env: []
-optional_env:
+    node: '>=22'
+requires_env:
 - name: MEMORY_FILE_PATH
   env_key: MEMORY_FILE_PATH
-  description: MEMORY_FILE_PATH for mcp_memory
-  prompt: 请输入 MEMORY_FILE_PATH
+  description: 知识图谱记忆的存放文件（JSONL）的绝对路径，如 /Users/你/.totalclaw/mcp_memory.jsonl。必须给持久路径：不给时 2.x 默认写进 npx 缓存里的包目录，清缓存即丢失。
+  prompt: 请输入记忆文件的绝对路径
   secret: false
-  default: ${HOME
-  required: false
+  required: true
+optional_env: []
 defaults:
   enabled: true
   timeout: 60
 tools:
-  probed_at: '2026-08-22T11:52:24Z'
+  probed_at: '2026-11-27T06:53:38Z'
   probed_runtime: npx
   count: 9
   file: tools.json
 security:
   scan_verdict: allow
+  osv: clean
   prompt_injection_findings: []
-  osv: unscanned

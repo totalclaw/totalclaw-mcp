@@ -1,16 +1,19 @@
 # 由 scripts/import_presets.py 生成；人工维护时请同步递增 version。
+# 2026-11-27：上游 @modelcontextprotocol/* 已于 2026-11-18 弃用日期版、改回 semver 2.x。2.x 的 engines 声明 node>=24，
+# 但实测 Node 22.22 下 initialize / list_tools / 典型工具调用均正常（桌面端内置 Node 22.22.3），故 requires.node 写 >=22。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_everything
 display_name: Everything (reference)
 display_name_en: Everything (reference)
-version: 0.1.0
+version: 0.2.0
 description: Everything (reference) MCP server.
 description_zh: 官方参考实现 + 测试服 — 提供 prompts / resources / tools 三类 MCP capability 完整示例,用于 MCP client 兼容性验证
   + 学习。
 author: upstream
 homepage: https://github.com/modelcontextprotocol/servers
+verified: true
 category: dev
 tags:
 - dev
@@ -23,20 +26,20 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@modelcontextprotocol/server-everything@2026.8.18'
+  - '@modelcontextprotocol/server-everything@2.3.1'
   requires:
-    node: '>=18'
+    node: '>=22'
 requires_env: []
 optional_env: []
 defaults:
   enabled: true
   timeout: 60
 tools:
-  probed_at: '2026-08-22T11:52:27Z'
+  probed_at: '2026-11-27T06:53:42Z'
   probed_runtime: npx
-  count: 13
+  count: 16
   file: tools.json
 security:
   scan_verdict: allow
+  osv: clean
   prompt_injection_findings: []
-  osv: unscanned

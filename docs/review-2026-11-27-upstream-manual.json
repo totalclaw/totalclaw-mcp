@@ -1,0 +1,30 @@
+{
+ "mcp_filesystem": {
+  "dismiss": [
+   "许可证不是开源许可证",
+   "仓库 modelcontextprotocol/servers 的清单文件和 README 里都找不到包名"
+  ],
+  "reason": "人工复核（2026-11-27）：npm 构建溯源证明（provenance）显示 4 个 2.x 包均由 github.com/modelcontextprotocol/servers 的 .github/workflows/release.yml 在 tag v2.5.0（commit c799c855）构建发布，发布者 / 维护者 / 仓库与已上架的日期版完全一致；包内无 LICENSE 文件，仓库根 LICENSE 为 MIT → Apache-2.0 迁移中，均为开源许可。"
+ },
+ "mcp_memory": {
+  "dismiss": [
+   "许可证不是开源许可证",
+   "仓库 modelcontextprotocol/servers 的清单文件和 README 里都找不到包名"
+  ],
+  "reason": "人工复核（2026-11-27）：npm 构建溯源证明（provenance）显示 4 个 2.x 包均由 github.com/modelcontextprotocol/servers 的 .github/workflows/release.yml 在 tag v2.5.0（commit c799c855）构建发布，发布者 / 维护者 / 仓库与已上架的日期版完全一致；包内无 LICENSE 文件，仓库根 LICENSE 为 MIT → Apache-2.0 迁移中，均为开源许可。"
+ },
+ "mcp_sequential_thinking": {
+  "dismiss": [
+   "许可证不是开源许可证",
+   "仓库 modelcontextprotocol/servers 的清单文件和 README 里都找不到包名"
+  ],
+  "reason": "人工复核（2026-11-27）：npm 构建溯源证明（provenance）显示 4 个 2.x 包均由 github.com/modelcontextprotocol/servers 的 .github/workflows/release.yml 在 tag v2.5.0（commit c799c855）构建发布，发布者 / 维护者 / 仓库与已上架的日期版完全一致；包内无 LICENSE 文件，仓库根 LICENSE 为 MIT → Apache-2.0 迁移中，均为开源许可。"
+ },
+ "mcp_everything": {
+  "dismiss": [
+   "许可证不是开源许可证",
+   "仓库 modelcontextprotocol/servers 的清单文件和 README 里都找不到包名"
+  ],
+  "reason": "人工复核（2026-11-27）：npm 构建溯源证明（provenance）显示 4 个 2.x 包均由 github.com/modelcontextprotocol/servers 的 .github/workflows/release.yml 在 tag v2.5.0（commit c799c855）构建发布，发布者 / 维护者 / 仓库与已上架的日期版完全一致；包内无 LICENSE 文件，仓库根 LICENSE 为 MIT → Apache-2.0 迁移中，均为开源许可。"
+ }
+}

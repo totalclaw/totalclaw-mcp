@@ -3,17 +3,20 @@
 # （正则 \$\{([^}]+)\}，把 "MCP_FS_ROOT:-/tmp" 整个当变量名去查）—— 服务器拿到一串
 # 字面量当目录名，起不来。改成必填：沙箱根目录本来就该让用户自己选，
 # 静默默认 /tmp 等于替用户决定了「哪些文件可以被模型读写」。
+# 2026-11-27：上游 @modelcontextprotocol/* 已于 2026-11-18 弃用日期版、改回 semver 2.x。2.x 的 engines 声明 node>=24，
+# 但实测 Node 22.22 下 initialize / list_tools / 典型工具调用均正常（桌面端内置 Node 22.22.3），故 requires.node 写 >=22。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcp_filesystem
 display_name: Filesystem
 display_name_en: Filesystem
-version: 0.2.0
+version: 0.3.0
 description: Filesystem MCP server.
 description_zh: 受控文件系统读写 — 强制根目录沙箱,支持 list / read / write / edit / search / move。args 末 path 是允许根(可多个)。
 author: upstream
 homepage: https://github.com/modelcontextprotocol/servers
+verified: true
 category: media
 tags:
 - media
@@ -26,10 +29,10 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@modelcontextprotocol/server-filesystem@2026.7.10'
+  - '@modelcontextprotocol/server-filesystem@2.4.0'
   - ${MCP_FS_ROOT}
   requires:
-    node: '>=18'
+    node: '>=22'
 requires_env:
 - name: MCP_FS_ROOT
   env_key: MCP_FS_ROOT
@@ -42,11 +45,11 @@ defaults:
   enabled: true
   timeout: 60
 tools:
-  probed_at: '2026-08-23T08:07:00Z'
+  probed_at: '2026-11-27T06:53:36Z'
   probed_runtime: npx
-  count: 14
+  count: 16
   file: tools.json
 security:
   scan_verdict: allow
+  osv: clean
   prompt_injection_findings: []
-  osv: unscanned

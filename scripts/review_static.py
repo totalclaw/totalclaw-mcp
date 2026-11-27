@@ -784,7 +784,15 @@ def apply(json_path: Path):
             kept = "".join(ln for ln in sec.group(1).splitlines(keepends=True)
                            if not re.match(r"  (scan_verdict|osv|reason):", ln))
             body = body[:sec.start()] + body[sec.end():]
-        body = re.sub(r"(?m)^verified: \w+$", f"verified: {'true' if r['verdict'] == 'allow' else 'false'}", body)
+        verified_line = f"verified: {'true' if r['verdict'] == 'allow' else 'false'}"
+        if re.search(r"(?m)^verified: \w+$", body):
+            body = re.sub(r"(?m)^verified: \w+$", verified_line, body)
+        else:
+            # 从 agent 预设导入的种子条目没有 verified 字段（索引按缺省 true 处理）。不补上的话，
+            # 判 warn 时这里替换落空，条目会静默保持「已审核」。补在 category 之前（没有就放末尾）。
+            m_cat = re.search(r"(?m)^category:", body)
+            at = m_cat.start() if m_cat else len(body.rstrip("\n")) + 1
+            body = body[:at] + verified_line + "\n" + body[at:]
         lic = r.get("license_found", "")
         if lic and not r["manifest_license"] and not re.search(r"(?m)^license:", body) and not NON_OPEN.search(lic):
             val = lic if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9.+\- ]*", lic) else json.dumps(lic, ensure_ascii=False)

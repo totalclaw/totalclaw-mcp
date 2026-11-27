@@ -1,0 +1,35 @@
+# 未审核条目静态审核结果（2026-11-27）
+
+由 `scripts/review_static.py` 生成，逐条明细 `.json` 只留在审核机本地（不入库），人工复核结论见 `-manual.json`。
+
+## 怎么审的
+
+只做静态审核：**没有安装、没有运行任何一个第三方包**。
+
+- **包与版本**：npm / PyPI 上包存在、钉的版本存在、未弃用 / 未撤回（yanked）；压缩包按注册中心记录的 sha512 / sha256 校验。
+- **来源**：GitHub 仓库能打开（改名的按跳转后的地址算）；条目写的仓库与包元数据里的仓库一致（同一 owner 下改名不算不一致）；仓库的 package.json / pyproject.toml 声明了同名包，或 README 提到这个包名（防冒名）。
+- **许可证**：包元数据 → 包内 LICENSE 文件 → 仓库 LICENSE；商业许可、`SEE LICENSE IN` 指向非开源文本的算警告。条目没写的从元数据补上。
+- **代码**：发布的压缩包下载到内存里逐文件扫（不落盘、不解压、不执行）：安装期脚本（pre/post/install、setup.py、自定义构建后端、启动即执行的 .pth）、下载即执行（curl | sh、iwr | iex、base64 解码进 shell）、读 SSH 私钥 / 浏览器 Cookie / 钱包、可疑外传端点与匿名隧道、整体外传环境变量、解码后执行、硬编码公网 IP、混淆器特征、预编译二进制、已知投毒特征（ClawHavoc 假前置安装与投放地址）、工具描述里的提示注入话术。README / PKG-INFO / METADATA / Dockerfile / CI 配置不扫（npx / uvx 不会执行它们）。命中的每一条都人工读过代码，确认无害的记在 `-manual.json` 里。
+- **漏洞**：osv.dev 查钉的版本，HIGH / CRITICAL 拒绝，其余警告。
+- **热度**：最近一次发布超过 2 年、或周下载量低于 20（每天不到 3 次，基本只剩镜像 / 爬虫流量）的，警告。
+- **远程端点**：必须 HTTPS；端点域名与条目主页 / 仓库组织对得上，或条目引用的仓库 README 写明了这个域名；不带凭据 GET 能连上（401 / 405 也算），走代理失败时直连再试。
+
+判定：全部无问题 → 通过（清单置 `verified: true`、`scan_verdict: allow`）；有疑点 → 警告（`warn`，保持未审核）；包 / 版本不存在、装错包、越界的下载执行行为、高危漏洞、端点不是 MCP 服务 → 拒绝（`block`，安装器永不安装）。拿不准的一律归警告。
+
+**没覆盖到的**：运行时动态生成的工具描述与实际出网域名（要真跑起来才查得到，所以 `prompt_injection_findings` / `egress` 没写）；间接依赖（只审了包本身）；预编译二进制的行为；远程端点背后的服务端代码。
+
+## 统计
+
+| 运行方式 | 通过 | 警告 | 拒绝 | 合计 |
+|---|---|---|---|---|
+| npx | 4 | 0 | 0 | 4 |
+| 合计 | 4 | 0 | 0 | 4 |
+
+## 逐条结果
+
+| 条目 | 方式 | 包 / 端点 | 结论 | 理由 |
+|---|---|---|---|---|
+| mcp_everything | npx | `@modelcontextprotocol/server-everything@2.3.1` | 通过 | 人工复核（2026-11-27）：npm 构建溯源证明（provenance）显示 4 个 2.x 包均由 github.com/modelcontextprotocol/servers 的 .github/workflows/release.yml 在 tag v2.5.0（commit c799c855）构建发布，发布者 / 维护者 / 仓库与已上架的日期版完全一致；包内无 LICENSE 文件，仓库根 LICENSE 为 MIT → Apache-2.0 迁移中，均为开源许可。 |
+| mcp_filesystem | npx | `@modelcontextprotocol/server-filesystem@2.4.0` | 通过 | 人工复核（2026-11-27）：npm 构建溯源证明（provenance）显示 4 个 2.x 包均由 github.com/modelcontextprotocol/servers 的 .github/workflows/release.yml 在 tag v2.5.0（commit c799c855）构建发布，发布者 / 维护者 / 仓库与已上架的日期版完全一致；包内无 LICENSE 文件，仓库根 LICENSE 为 MIT → Apache-2.0 迁移中，均为开源许可。 |
+| mcp_memory | npx | `@modelcontextprotocol/server-memory@2.2.1` | 通过 | 人工复核（2026-11-27）：npm 构建溯源证明（provenance）显示 4 个 2.x 包均由 github.com/modelcontextprotocol/servers 的 .github/workflows/release.yml 在 tag v2.5.0（commit c799c855）构建发布，发布者 / 维护者 / 仓库与已上架的日期版完全一致；包内无 LICENSE 文件，仓库根 LICENSE 为 MIT → Apache-2.0 迁移中，均为开源许可。 |
+| mcp_sequential_thinking | npx | `@modelcontextprotocol/server-sequential-thinking@2.2.0` | 通过 | 人工复核（2026-11-27）：npm 构建溯源证明（provenance）显示 4 个 2.x 包均由 github.com/modelcontextprotocol/servers 的 .github/workflows/release.yml 在 tag v2.5.0（commit c799c855）构建发布，发布者 / 维护者 / 仓库与已上架的日期版完全一致；包内无 LICENSE 文件，仓库根 LICENSE 为 MIT → Apache-2.0 迁移中，均为开源许可。 |

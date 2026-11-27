@@ -4,8 +4,8 @@
     "description": "Echoes back the input string",
     "read_only": true,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "properties": {
         "message": {
           "type": "string",
@@ -22,8 +22,8 @@
     "description": "Demonstrates how annotations can be used to provide metadata about content.",
     "read_only": true,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "properties": {
         "messageType": {
           "type": "string",
@@ -47,12 +47,39 @@
   },
   {
     "name": "get-env",
-    "description": "Returns all environment variables, helpful for debugging MCP server configuration",
+    "description": "Returns all environment variables, helpful for debugging MCP server configuration. Values of credential-like names (a KEY, TOKEN, SECRET, PASSWORD, PASSWD, CREDENTIAL, AUTH or COOKIE name segment) are masked as \"<redacted>\" unless GET_ENV_INCLUDE_SECRETS is set to 1 or true in the server's environment.",
     "read_only": true,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "properties": {}
+    }
+  },
+  {
+    "name": "get-header-params",
+    "description": "Returns its region argument and the Mcp-Param-Region HTTP header it arrived in. Demonstrates x-mcp-header (a 2026-07-28 Streamable HTTP client mirrors the argument into the header) and JSON Schema 2020-12 input and output schemas.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "region": {
+          "type": "string",
+          "description": "A region name, e.g. eu-west. Mirrored into the Mcp-Param-Region HTTP header.",
+          "x-mcp-header": "Region"
+        },
+        "repeat": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3,
+          "default": 1,
+          "description": "How many times to repeat the region in the result (1-3)"
+        }
+      },
+      "required": [
+        "region"
+      ],
+      "additionalProperties": false
     }
   },
   {
@@ -60,8 +87,8 @@
     "description": "Returns up to ten resource links that reference different types of resources",
     "read_only": true,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "properties": {
         "count": {
           "default": 3,
@@ -78,11 +105,12 @@
     "description": "Returns a resource reference that can be used by MCP clients",
     "read_only": true,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "properties": {
         "resourceType": {
           "default": "Text",
+          "description": "Whether to reference a text resource or a blob resource",
           "type": "string",
           "enum": [
             "Text",
@@ -91,7 +119,7 @@
         },
         "resourceId": {
           "default": 1,
-          "description": "ID of the text resource to fetch",
+          "description": "ID of the text or blob resource to fetch, a positive integer",
           "type": "number"
         }
       }
@@ -102,8 +130,8 @@
     "description": "Returns structured content along with an output schema for client data validation",
     "read_only": true,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "properties": {
         "location": {
           "type": "string",
@@ -125,8 +153,8 @@
     "description": "Returns the sum of two numbers",
     "read_only": true,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "properties": {
         "a": {
           "type": "number",
@@ -148,23 +176,24 @@
     "description": "Returns a tiny MCP logo image.",
     "read_only": true,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "properties": {}
     }
   },
   {
     "name": "gzip-file-as-resource",
-    "description": "Compresses a single file using gzip compression. Depending upon the selected output type, returns either the compressed data as a gzipped resource or a resource link, allowing it to be downloaded in a subsequent request during the current session.",
+    "description": "Compresses a single file using gzip compression. Depending upon the selected output type, returns either the compressed data as a gzipped resource or a resource link, allowing it to be downloaded in a subsequent request: during the current session for a 2025-era client, or for ten minutes at a minted URI on protocol version 2026-07-28.",
     "read_only": false,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "properties": {
         "name": {
           "default": "README.md.gz",
           "type": "string",
-          "description": "Name of the output file"
+          "maxLength": 255,
+          "description": "Name of the output file (at most 255 characters)"
         },
         "data": {
           "default": "https://raw.githubusercontent.com/modelcontextprotocol/servers/refs/heads/main/README.md",
@@ -185,22 +214,35 @@
     }
   },
   {
-    "name": "toggle-simulated-logging",
-    "description": "Toggles simulated, random-leveled logging on or off.",
-    "read_only": false,
+    "name": "trigger-list-changed",
+    "description": "Sends a notifications/<list>/list_changed for the tool, prompt or resource list. On protocol version 2026-07-28 it is delivered on each subscriptions/listen stream that asked for that list; a 2025-era client receives it unsolicited.",
+    "read_only": true,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
-      "properties": {}
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "list": {
+          "type": "string",
+          "enum": [
+            "tools",
+            "prompts",
+            "resources"
+          ],
+          "description": "Which list to announce as changed"
+        }
+      },
+      "required": [
+        "list"
+      ]
     }
   },
   {
-    "name": "toggle-subscriber-updates",
-    "description": "Toggles simulated resource subscription updates on or off.",
-    "read_only": false,
+    "name": "trigger-log-messages",
+    "description": "Sends one log message at each logging level during the call. On protocol version 2026-07-28 only the messages at or above the level the request names in _meta (io.modelcontextprotocol/logLevel) are sent, and none if it names no level; a 2025-era client gets those at or above the level it set with logging/setLevel. Deprecated: logging is deprecated as of protocol version 2026-07-28.",
+    "read_only": true,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "properties": {}
     }
   },
@@ -209,8 +251,8 @@
     "description": "Demonstrates a long running operation with progress updates.",
     "read_only": true,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "properties": {
         "duration": {
           "default": 10,
@@ -226,26 +268,41 @@
     }
   },
   {
-    "name": "simulate-research-query",
-    "description": "Simulates a deep research operation that gathers, analyzes, and synthesizes information. Demonstrates MCP task-based operations with progress through multiple stages. If 'ambiguous' is true and client supports elicitation, sends an elicitation request for clarification.",
-    "read_only": false,
+    "name": "trigger-resource-update",
+    "description": "Sends a notifications/resources/updated for a resource URI. On protocol version 2026-07-28 it is delivered on each subscriptions/listen stream whose resourceSubscriptions name the URI; a 2025-era client receives it once it has called resources/subscribe for the URI.",
+    "read_only": true,
     "input_schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "properties": {
-        "topic": {
+        "uri": {
           "type": "string",
-          "description": "The research topic to investigate"
-        },
-        "ambiguous": {
-          "default": false,
-          "description": "Simulate an ambiguous query that requires clarification (triggers input_required status)",
-          "type": "boolean"
+          "description": "The URI of the resource to announce as updated, e.g. demo://resource/dynamic/text/1"
         }
       },
       "required": [
-        "topic"
+        "uri"
       ]
+    }
+  },
+  {
+    "name": "toggle-simulated-logging",
+    "description": "Toggles simulated, random-leveled logging on or off. Deprecated: 2025-era clients only, since protocol version 2026-07-28 removes logging/setLevel; use trigger-log-messages with a per-request log level instead.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {}
+    }
+  },
+  {
+    "name": "toggle-subscriber-updates",
+    "description": "Toggles simulated resource subscription updates on or off. Deprecated: 2025-era clients only, since protocol version 2026-07-28 removes resources/subscribe; use trigger-resource-update with a subscriptions/listen stream instead.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {}
     }
   }
 ]

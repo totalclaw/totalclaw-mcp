@@ -30,16 +30,16 @@
 | [x] | mcp_fetch | uvx | `mcp-server-fetch` | 2026.8.18 | 2026.11.18 | 新版改依赖 MCP SDK v2（`mcp>=2.3`），去掉了清单里的 `--with mcp<2`（否则装不上）；Python 下限升到 3.11.5。实测探测通过 |
 | [x] | mcp_git | uvx | `mcp-server-git` | 2026.8.18 | 2026.11.18 | 实测探测通过（12 → 14 个工具） |
 | [x] | mcp_time | uvx | `mcp-server-time` | 2026.8.18 | 2026.11.18 | 实测探测通过（2 → 3 个工具） |
-| [ ] | mcp_filesystem | npx | `@modelcontextprotocol/server-filesystem` | 2026.7.10（已弃用） | 2.4.0 | 暂缓：要求 Node ≥24 |
-| [ ] | mcp_memory | npx | `@modelcontextprotocol/server-memory` | 2026.7.4（已弃用） | 2.2.1 | 暂缓：要求 Node ≥24 |
-| [ ] | mcp_sequential_thinking | npx | `@modelcontextprotocol/server-sequential-thinking` | 2026.7.4（已弃用） | 2.2.0 | 暂缓：要求 Node ≥24 |
-| [ ] | mcp_everything | npx | `@modelcontextprotocol/server-everything` | 2026.8.18（已弃用） | 2.3.1 | 暂缓：要求 Node ≥24 |
+| [x] | mcp_filesystem | npx | `@modelcontextprotocol/server-filesystem` | 2026.7.10（已弃用） | 2.4.0 | 2026-11-27 已升 2.x（实测 Node 22 可用，requires.node >=22） |
+| [x] | mcp_memory | npx | `@modelcontextprotocol/server-memory` | 2026.7.4（已弃用） | 2.2.1 | 2026-11-27 已升 2.x（实测 Node 22 可用，requires.node >=22） |
+| [x] | mcp_sequential_thinking | npx | `@modelcontextprotocol/server-sequential-thinking` | 2026.7.4（已弃用） | 2.2.0 | 2026-11-27 已升 2.x（实测 Node 22 可用，requires.node >=22） |
+| [x] | mcp_everything | npx | `@modelcontextprotocol/server-everything` | 2026.8.18（已弃用） | 2.3.1 | 2026-11-27 已升 2.x（实测 Node 22 可用，requires.node >=22） |
 
 SDK v2 的服务端收到旧式 `initialize` 会回落到旧协议，agent 的 MCP 客户端（SDK 1.27.2，最高协议 2025-11-25）实测能连上。
 日期版虽已弃用，npm 上仍可安装，暂缓的 4 条继续可用。
 
 - [x] **U1.8** agent `totalclaw_core/tools/mcp_presets.py` 的 `mcp-server-time` 同步到 2026.11.18（工作区已改、未提交；sequential-thinking 随 Node 24 暂缓）。
-- [ ] **U1.9** 桌面端内置 Node 升到 24 后，再升上面 4 条 npm 包（跨仓：qiye-app 的 `NODE_VERSION`）。
+- [x] **U1.9** 已升（不必等内置 Node 24，见 TODO F1.1）。
 
 ### U2 · 上游停止维护
 

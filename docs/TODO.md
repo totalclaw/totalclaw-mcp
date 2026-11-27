@@ -729,9 +729,14 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
 数据用 `scripts/check_upstream_updates.py` 重新生成。473 条 npx / uvx 条目中 122 条落后上游，本轮处理 106 条。
 
 - [x] **F1** 官方参考服务器：PyPI 三条（fetch / git / time）升 2026.11.18，实测探测通过
-- [ ] **F1.1** `@modelcontextprotocol/*` npm 4 条暂缓：2.x 要求 Node ≥24，桌面端内置 22.22.3；内置 Node 升级后再做
-  - 2026-11-26 评估：MCP 的 npx 用 `resources/vendor/node`（`scripts/prepare-vendor-cross.mjs` 默认 22.22.3），Electron 43 内嵌已是 Node 24.21.0；打包 Node 改到 24.x 只是 `prepare-vendor-cross.mjs` 一行默认值，**但 `vendor/zerotoken/node_modules` 里的 sharp / canvas / pty 等原生扩展按 Node 22 ABI 编译，换 24 会加载失败**，必须连同原生依赖各平台重编、打包回归，是一次正式发版工作
-  - 2026-11-27 前置已做：agent 分支 `feat/mcp-render-requires-node`（`90422bdbf`，已推送）—— 安装时按清单 `requires.node` 核对本机 Node，不满足的运行方式判不可用并写明原因（以前 `requires` 只是摆设）。**顺序必须是**：① 该 agent 改动发版 → ② 桌面端内置 Node 升 24 → ③ 注册表这 4 条升 2.x 并写 `requires.node: '>=24'`。反过来先改注册表，没有这个检查的旧 agent 会在 Node 22 上装上起不来的 2.x
+- [x] **F1.1** `@modelcontextprotocol/*` npm 4 条已升 2.x（2026-11-27）：filesystem 2.4.0 / memory 2.2.1 / sequential-thinking 2.2.0 / everything 2.3.1
+  - **不必等内置 Node 24**：2.x 的 engines 声明 node>=24，但实测 Node 22.22 下 initialize / list_tools / 典型工具调用（文件读写列目录、建实体读图、思考步骤、echo / 求和）全部正常，清单 `requires.node` 写 `>=22`；同样的调用在打包脚本下载的独立 Node 24.22.3 上也全过
+  - 静态审核：许可证 / 出处两类告警经人工复核排除 —— npm 构建溯源证明显示 4 个包均由 modelcontextprotocol/servers 的 release.yml 在 tag v2.5.0（c799c855）构建，发布者 / 维护者 / 仓库与日期版一致；仓库 LICENSE 为 MIT→Apache-2.0 迁移中（见 review-2026-11-27-upstream-manual.json）
+  - 顺带修 mcp_memory 两处旧问题：env 用了 agent 不支持的 `${VAR:-默认值}`、可选变量 default 被截成 `${HOME`；改为必填绝对路径（不给时 2.x 写进 npx 缓存，清缓存即丢）
+  - 修 `review_static.py --apply`：种子条目没有 `verified` 字段时补上（以前判 warn 会替换落空，条目静默保持已审核）
+  - 实探刷新 tools.json（16 / 9 / 1 / 16 个工具）；dep_gate --refresh 0 命中
+  - agent 侧（已推送分支）：`fix/env-interpolation-defaults`（`3f21836bc` utils 支持 `${VAR:-默认值}` 与嵌套 —— 内置 filesystem / memory 预设以前设了变量也起不来；`121a353d5` sequential-thinking 预设钉 2.2.0）；`feat/mcp-render-requires-node`（`90422bdbf`，安装时核对 requires.node）
+  - 更正此前判断：zerotoken 的原生扩展（sharp / node-pty / @napi-rs/canvas / clipboard / davey / @discordjs/opus）**全是 N-API**，跨 Node 版本二进制兼容，实测在 Node 24.22.3 下全部加载正常；内置 Node 升 24 的 qiye-app 改动（`prepare-vendor-cross.mjs` 默认 24.22.3）在本地分支 `chore/vendor-node-24`，属可选的对齐上游；另顺带发现当前钉的 22.22.3 已落后安全版 22.23.5
 - [x] **F2** agent `mcp_presets.py` 的 mcp-server-time 同步（agent 工作区已改，未提交；合 main / bump submodule 待定）
 - [x] **F3** `stripe` 改官方托管端点 `https://mcp.stripe.com`（OAuth），去掉密钥
 - [x] **F4–F6** 101 条按「满 7 天的最新稳定版」升级，静态审核 + 旧版差分复核全部 allow
