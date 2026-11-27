@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：实探报缺凭据即退出，原先 requires_env 为空 —— 补必填 VOYP_API_KEY（变量名取自包报错 / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: voyp
 display_name: voyp-mcp
 display_name_en: voyp-mcp
-version: 0.1.1
+version: 0.1.2
 description: Voyp Model Context Protocol server
 description_zh: VOYP - Voice Over Your Phone MCP 服务器，用于拨打电话。
 author: paulotaylor
@@ -29,11 +30,25 @@ runtimes:
   - voyp-mcp@0.1.0
   requires:
     node: '>=18'
-requires_env: []
+requires_env:
+- name: VOYP_API_KEY
+  env_key: VOYP_API_KEY
+  description: VOYP API Key。未设置时服务器启动即退出。
+  prompt: 请输入 VOYP_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/paulotaylor/voyp-mcp
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:44:08Z'
+  probed_runtime: npx
+  count: 7
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：实探报缺凭据即退出，原先 requires_env 为空 —— 补必填 API_KEY（变量名取自包报错 / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: magic
 display_name: 21st.dev Magic
 display_name_en: 21st.dev Magic
-version: 0.1.1
+version: 0.1.2
 description: 'Magic MCP is now the 21st MCP. This package is a compatibility proxy kept for old configs - new setups should
   use `npx @21st-dev/cli@latest init`. Setup: https://21st.dev/mcp'
 description_zh: 21st.dev 官方集成，创建受顶级设计工程师启发的精美 UI 组件。
@@ -30,7 +31,15 @@ runtimes:
   - '@21st-dev/magic@0.2.3'
   requires:
     node: '>=18'
-requires_env: []
+requires_env:
+- name: API_KEY
+  env_key: API_KEY
+  description: 21st.dev Magic 的 API Key（https://21st.dev/mcp，旧 key 已被重置需重新获取）。未设置时服务器启动即退出。
+  prompt: 请输入 API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/21st-dev/magic-mcp
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true

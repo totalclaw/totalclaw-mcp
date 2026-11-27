@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：edinet-mcp 是带子命令的 CLI，不带子命令只打印用法就退出，补 `serve`。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: edinet
 display_name: edinet-mcp
 display_name_en: edinet-mcp
-version: 0.1.1
+version: 0.1.2
 description: EDINET XBRL parsing library and MCP server for Japanese financial data
 description_zh: EDINET API 集成，解析日本企业 XBRL 财务报告，提供 161 个标签、26 个财务指标和多公司筛选功能。
 author: ajtgjmdjp
@@ -26,6 +27,7 @@ runtimes:
   command: uvx
   args:
   - edinet-mcp==0.9.0
+  - serve
   requires:
     python: '>=3.10'
 requires_env: []
@@ -33,6 +35,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:44:21Z'
+  probed_runtime: uvx
+  count: 11
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

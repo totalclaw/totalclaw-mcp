@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：实探报缺凭据即退出，原先 requires_env 为空 —— 补必填 AGENTQL_API_KEY（变量名取自包报错 / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: agentql
 display_name: AgentQL
 display_name_en: AgentQL
-version: 0.1.1
+version: 0.1.2
 description: Model Context Protocol (MCP) server that integrates AgentQL data extraction capabilities.
 description_zh: 让 AI 代理从非结构化网页中获取结构化数据。
 author: tinyfish-io
@@ -29,11 +30,25 @@ runtimes:
   - agentql-mcp@1.0.1
   requires:
     node: '>=18'
-requires_env: []
+requires_env:
+- name: AGENTQL_API_KEY
+  env_key: AGENTQL_API_KEY
+  description: AgentQL API Key。未设置时服务器启动即退出。
+  prompt: 请输入 AGENTQL_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/tinyfish-io/agentql-mcp
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:44:03Z'
+  probed_runtime: npx
+  count: 1
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

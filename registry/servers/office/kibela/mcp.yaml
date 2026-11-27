@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：实探报缺凭据即退出，原先 requires_env 为空 —— 补必填 KIBELA_TEAM / KIBELA_TOKEN（变量名取自包报错 / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: kibela
 display_name: mcp-kibela
 display_name_en: mcp-kibela
-version: 0.1.1
+version: 0.1.2
 description: MCP server implementation that integrates with Kibela API
 description_zh: 允许 AI 模型与 Kibela 交互。
 author: kj455
@@ -29,11 +30,33 @@ runtimes:
   - '@kj455/mcp-kibela@0.3.1'
   requires:
     node: '>=18'
-requires_env: []
+requires_env:
+- name: KIBELA_TEAM
+  env_key: KIBELA_TEAM
+  description: Kibela 团队名（xxx.kibe.la 的 xxx）。未设置时服务器启动即退出。
+  prompt: 请输入 KIBELA_TEAM
+  secret: false
+  required: true
+  doc_url: https://github.com/kj455/mcp-kibela
+  doc_label: 查看项目说明（如何获取）
+- name: KIBELA_TOKEN
+  env_key: KIBELA_TOKEN
+  description: Kibela 访问令牌。未设置时服务器启动即退出。
+  prompt: 请输入 KIBELA_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/kj455/mcp-kibela
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:44:12Z'
+  probed_runtime: npx
+  count: 6
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

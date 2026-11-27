@@ -804,6 +804,13 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
 - 实际要凭据、清单却没声明 ≈30：actors(APIFY_TOKEN)、agentql、agentset、airtable、dart、exchangerate、linear_tacticlaunch、lystbot、magic(API_KEY)、makehq、
   miro、naver_search、ns、posteverywhere、replicate、simple_openai_assistant、tiktok、voyp、zotero_kaliaboi、brightdata(API_TOKEN)、gmail_autoauth(OAuth 文件)、
   maigret(MAIGRET_REPORTS_DIR)、mongo(连接串)、nocodb、toolbox_sdk；浏览器 OAuth：finlight、palisadeemail、singlestore → 补 requires_env / auth
+  - [x] 已补声明 27 条（变量名取自包报错原文或包源码），假凭据实探 21 条起得来并写回工具清单：actors、agentql、agentset（另需 AGENTSET_NAMESPACE_ID）、airtable、dart、linear_tacticlaunch、miro、ns、replicate、simple_openai_assistant、tiktok、voyp、zotero_kaliaboi、brightdata、kibela、naver_search、nocodb、maigret、exchangerate（包支持匿名免费档：运行时设 ALLOW_ANONYMOUS=true，key 改选填，开箱可用）、edinet（缺 `serve` 子命令）、minimax（见下）
+  - 声明已对、但启动时就校验凭据 / 连库，假值起不来，等真凭据补探：magic、makehq（工具按账号场景动态生成）、posteverywhere（key 须 pe_live_ 开头）、mongo、toolbox_sdk
+  - 未处理：lystbot（要先跑 `lystbot login`）、gmail_autoauth（要 GCP OAuth 密钥文件）、finlight / palisadeemail / singlestore（启动即拉浏览器 OAuth）
+- [x] 顺带发现并修的清单错误（全注册表扫过同类）：
+  - airtable：选填 MCP_TRANSPORT 默认值 `http`，桌面端会预填 → 服务器改起 HTTP、stdio 连不上；已去掉（连同只在 HTTP 模式用的 PORT）
+  - minimax：MINIMAX_API_HOST 包里必填却标选填、默认值是一句说明文字；运行时 env 把 MINIMAX_API_RESOURCE_MODE 写死成说明文字（包静默改本地落盘）；MINIMAX_MCP_BASE_PATH 占位默认值 → 都已改。另：包启动时往 stdout 打一行纯文本，客户端记一条解析错误后照常工作（9 个工具），但关连接时报 BrokenResourceError，probe_server 因此写不了工具清单
+  - **timeplus：运行时 env 写死了包 README 示例里作者自己的 Kafka 主机与账号（且关证书校验）**，每个用户的 Kafka 相关操作都会连到第三方主机 → 已去掉，改选填无默认。已装的老用户本地配置里仍有这串值，enforced_env 只能强制赋值、不能删除，需要 agent 侧支持「清单删除的 env 同步删掉」或在 MCP 医生里提示（待定）
 - 启动命令写错（可执行名不对）6：cal、fidelis_memory、friday_memory、preloop、prometheus、zoom_search → 改 `--from 包 命令`
   - [x] 已修并实探写回工具清单 5 条：fidelis_memory（`--from … fidelis-mcp`，4 工具）、prometheus（`--from … prometheus-mcp-server` + 补必填 PROMETHEUS_URL，6 工具）、zoom_search（`zoom-search[mcp]` + `--with mcp<2`，1 工具）、python_interpreter / roundtable_ai（`--with mcp<2`，10 / 9 工具）
   - 未修：friday_memory（`friday` 可执行无输出，不是 MCP 入口）、preloop（只有 preloop-sync）、cal（npm 包 bin 缺 shebang，包本身坏）

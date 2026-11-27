@@ -1,0 +1,76 @@
+[
+  {
+    "name": "search_username",
+    "description": "Search for a username across social networks and sites",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "Username to search for"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "txt",
+            "html",
+            "pdf",
+            "json",
+            "csv",
+            "xmind"
+          ],
+          "description": "Output format",
+          "default": "txt"
+        },
+        "use_all_sites": {
+          "type": "boolean",
+          "description": "Use all available sites instead of top 500",
+          "default": false
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Filter sites by tags (e.g. photo, dating, us)",
+          "default": []
+        }
+      },
+      "required": [
+        "username"
+      ]
+    }
+  },
+  {
+    "name": "parse_url",
+    "description": "Parse a URL to extract information and search for associated usernames",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to parse and analyze"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "txt",
+            "html",
+            "pdf",
+            "json",
+            "csv",
+            "xmind"
+          ],
+          "description": "Output format",
+          "default": "txt"
+        }
+      },
+      "required": [
+        "url"
+      ]
+    }
+  }
+]

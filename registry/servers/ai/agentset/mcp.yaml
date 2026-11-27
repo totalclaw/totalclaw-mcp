@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：实探报缺凭据即退出，原先 requires_env 为空 —— 补必填 AGENTSET_API_KEY / AGENTSET_NAMESPACE_ID（变量名取自包报错 / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: agentset
 display_name: Agentset
 display_name_en: Agentset
-version: 0.1.1
+version: 0.1.2
 description: MCP server for Agentset, an open-source platform for Retrieval-Augmented Generation (RAG). Designed for developers
   who want to build intelligent, document-based applications quickly and efficiently.
 description_zh: Agentset 官方集成，连接到 Agentset 的知识库 RAG 系统。
@@ -30,11 +31,33 @@ runtimes:
   - '@agentset/mcp@1.3.0'
   requires:
     node: '>=18'
-requires_env: []
+requires_env:
+- name: AGENTSET_API_KEY
+  env_key: AGENTSET_API_KEY
+  description: Agentset API Key。未设置时服务器启动即退出。
+  prompt: 请输入 AGENTSET_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/agentset-ai/mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: AGENTSET_NAMESPACE_ID
+  env_key: AGENTSET_NAMESPACE_ID
+  description: Agentset 命名空间 ID（在 Agentset 控制台的命名空间页面）。未设置时服务器启动即退出。
+  prompt: 请输入 AGENTSET_NAMESPACE_ID
+  secret: false
+  required: true
+  doc_url: https://github.com/agentset-ai/mcp-server
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:44:03Z'
+  probed_runtime: npx
+  count: 1
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

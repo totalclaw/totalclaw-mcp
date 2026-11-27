@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：不设 key 时包启动即退出；包本身支持匿名免费档，运行时设 ALLOW_ANONYMOUS=true 开箱可用，EXCHANGERATE_API_KEY 改为选填。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: exchangerate
 display_name: exchangerate.dev
 display_name_en: exchangerate.dev
-version: 0.1.1
+version: 0.1.2
 description: Stdio bridge for the exchangerate.dev Model Context Protocol server. Drops Claude Desktop, Cursor, or any MCP
   client into live FX rates in 30 seconds.
 description_zh: 免密钥外汇汇率：31 种货币 465 个货币对，响应带数据来源与市场时段标签，日线历史回溯至 1999 年。
@@ -28,13 +29,29 @@ runtimes:
   args:
   - -y
   - '@nusantara-ventures/exchangerate-mcp@0.2.2'
+  env:
+    ALLOW_ANONYMOUS: 'true'
   requires:
     node: '>=18'
 requires_env: []
-optional_env: []
+optional_env:
+- name: EXCHANGERATE_API_KEY
+  env_key: EXCHANGERATE_API_KEY
+  description: exchangerate.dev 的 API Key。不填走匿名免费档（有频率限制）。
+  prompt: 请输入 EXCHANGERATE_API_KEY（可留空）
+  secret: true
+  required: false
+  doc_url: https://exchangerate.dev/pricing
+  doc_label: 查看项目说明（如何获取）
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:44:17Z'
+  probed_runtime: npx
+  count: 9
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：实探报缺凭据即退出，原先 requires_env 为空 —— 补必填 OPENAI_API_KEY（变量名取自包报错 / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: simple_openai_assistant
 display_name: mcp-simple-openai-assistant
 display_name_en: mcp-simple-openai-assistant
-version: 0.1.1
+version: 0.1.2
 description: A simple MCP server for interacting with OpenAI assistants
 description_zh: 与 OpenAI Assistants 对话的 MCP (Claude 可以使用任何 GPT 模型作为其助手)。
 author: andybrandt
@@ -28,11 +29,25 @@ runtimes:
   - mcp-simple-openai-assistant==0.4.1
   requires:
     python: '>=3.10'
-requires_env: []
+requires_env:
+- name: OPENAI_API_KEY
+  env_key: OPENAI_API_KEY
+  description: OpenAI API Key。未设置时服务器启动即退出。
+  prompt: 请输入 OPENAI_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/andybrandt/mcp-simple-openai-assistant
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:44:07Z'
+  probed_runtime: uvx
+  count: 9
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

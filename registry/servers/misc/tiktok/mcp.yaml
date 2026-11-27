@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：实探报缺凭据即退出，原先 requires_env 为空 —— 补必填 TIKNEURON_MCP_API_KEY（变量名取自包报错 / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: tiktok
 display_name: tiktok-mcp
 display_name_en: tiktok-mcp
-version: 0.1.2
+version: 0.1.3
 description: MCP server for TikTok
 description_zh: 与 TikTok 视频交互。
 author: Seym0n
@@ -29,11 +30,25 @@ runtimes:
   - tiktok-mcp@0.0.1
   requires:
     node: '>=18'
-requires_env: []
+requires_env:
+- name: TIKNEURON_MCP_API_KEY
+  env_key: TIKNEURON_MCP_API_KEY
+  description: TikNeuron MCP API Key。未设置时服务器启动即退出。
+  prompt: 请输入 TIKNEURON_MCP_API_KEY
+  secret: true
+  required: true
+  doc_url: https://github.com/Seym0n/tiktok-mcp
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:44:08Z'
+  probed_runtime: npx
+  count: 3
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

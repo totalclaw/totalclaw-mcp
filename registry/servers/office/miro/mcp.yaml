@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：实探报缺凭据即退出，原先 requires_env 为空 —— 补必填 MIRO_OAUTH_TOKEN（变量名取自包报错 / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: miro
 display_name: mcp-miro
 display_name_en: mcp-miro
-version: 0.1.1
+version: 0.1.2
 description: A Model Context Protocol server to connect to the MIRO Whiteboard Application
 description_zh: 访问 MIRO 白板，批量创建和读取项目。需要 REST API 的 OAUTH 密钥。
 author: evalstate
@@ -29,11 +30,25 @@ runtimes:
   - '@llmindset/mcp-miro@0.1.1'
   requires:
     node: '>=18'
-requires_env: []
+requires_env:
+- name: MIRO_OAUTH_TOKEN
+  env_key: MIRO_OAUTH_TOKEN
+  description: Miro OAuth 访问令牌。未设置时服务器启动即退出。
+  prompt: 请输入 MIRO_OAUTH_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/evalstate/mcp-miro
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:44:05Z'
+  probed_runtime: npx
+  count: 6
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

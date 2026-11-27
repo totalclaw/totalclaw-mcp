@@ -1,0 +1,138 @@
+[
+  {
+    "name": "kibela_search_notes",
+    "description": "Search Kibela notes by query",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Search query"
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "kibela_get_my_notes",
+    "description": "Get my latest notes from Kibela",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "number",
+          "description": "Maximum number of notes to fetch",
+          "default": 10
+        }
+      }
+    }
+  },
+  {
+    "name": "kibela_get_note_content",
+    "description": "Get note content by note ID",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Note ID"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "kibela_get_note_from_path",
+    "description": "Get note content by note path",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Note path (e.g. /notes/123)"
+        }
+      },
+      "required": [
+        "path"
+      ]
+    }
+  },
+  {
+    "name": "kibela_update_note_content",
+    "description": "Update note content by note id. This tool allows you to modify the content of an existing Kibela note. Before updating, it fetches the current content of the note to ensure proper version control. Note that you need the note ID (not the note path) to use this tool.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Note id - not note path (e.g. /notes/123). If you want to update note content by note path, please use kibela_get_note_from_path tool first and get note id from the response"
+        },
+        "content": {
+          "type": "string",
+          "description": "New content of the note in markdown format. The content will completely replace the existing note content. Make sure to include all necessary formatting, headers, and sections you want to preserve."
+        }
+      },
+      "required": [
+        "id",
+        "content"
+      ]
+    }
+  },
+  {
+    "name": "kibela_create_note",
+    "description": "Create a new note in Kibela.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "required: Title of the note"
+        },
+        "content": {
+          "type": "string",
+          "description": "required: Content of the note in markdown format"
+        },
+        "groupIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "required: IDs of the groups to create the note in."
+        },
+        "folders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "IDs of the folders to add the note to."
+        },
+        "authorId": {
+          "type": "string",
+          "description": "ID of the author of the note. If not specified, the note will be created by the authenticated user."
+        },
+        "coediting": {
+          "type": "boolean",
+          "description": "required: Whether to enable co-editing for the note"
+        },
+        "draft": {
+          "type": "boolean",
+          "description": "Whether to create the note as a draft"
+        }
+      },
+      "required": [
+        "title",
+        "content"
+      ]
+    }
+  }
+]

@@ -1,0 +1,242 @@
+[
+  {
+    "name": "start_checkout",
+    "description": "Open a billing URL for an explicitly selected eligible plan. After human confirmation, a Free account without a subscription receives a one-hour Stripe Checkout URL; an existing subscriber receives Stripe billing management instead. Plans not offered to the account are refused. Cancellation creates nothing and account identifiers are never accepted from the model.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "plan": {
+          "enum": [
+            "basic",
+            "plus",
+            "pro"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "plan"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_currencies",
+    "description": "List all supported currencies with name, decimal precision, minor units, and whether the pair is derived (triangulated). Use this before other tools to discover valid currency codes.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_usd_index",
+    "description": "Get the latest independently calculated USD index. dxy-reconstructed uses the published six-currency basket formula but is not the official index. usd-strength is the versioned exchangerate.dev equal-weight 13-currency index, with 2026-01-02 = 100. Both require a complete, time-aligned basket.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "enum": [
+            "dxy-reconstructed",
+            "usd-strength"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "index"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_rate",
+    "description": "Get the current (or, with date, historical) exchange rate from one currency to another. Indicative developer-grade reference rates (live market data + public reference rates), not for settlement or trading. Rates update ~60s for real-time currencies through the trading week when the live feed is active; the source field on every response is the authoritative freshness indicator (live | ecb_daily | market_daily); rates fall back to official daily reference data during market closures or data-source unavailability. market_session on every response indicates open, weekend, or interbank_closed.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "type": "string"
+        },
+        "quote": {
+          "type": "string"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "base",
+        "quote"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "convert",
+    "description": "Convert an amount from one currency to another at the current rate. Indicative developer-grade reference rates (live market data + public reference rates), not for settlement or trading.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "amount"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_range",
+    "description": "Get a daily time-series of exchange rates over a date range (business days). Capped at 366 rows per call; when has_more is true, pass next_cursor as the cursor parameter to fetch the next page. Indicative developer-grade reference rates (live market data + public reference rates), not for settlement or trading.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "type": "string"
+        },
+        "symbols": {
+          "type": "string"
+        },
+        "start_date": {
+          "type": "string"
+        },
+        "end_date": {
+          "type": "string"
+        },
+        "cursor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "base",
+        "symbols",
+        "start_date",
+        "end_date"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "search_docs",
+    "description": "Search the exchangerate.dev FAQ corpus via BM25. Returns the top-K matching questions and answers with relevance scores. Use before answering how-to / pricing / data-sourcing questions so you cite the canonical text instead of guessing from training data.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "limit": {
+          "default": 5,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_official_rate_tables",
+    "description": "List the countries and rate types with government-published exchange rates (for example IDN tax, GBR customs, USA government-reporting). Country codes are ISO 3166-1 alpha-3; use them with get_official_rate.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_official_rate",
+    "description": "Get the exchange rate a government authority published for a date (tax, customs, central bank), with the period it is valid for. These are the published values, not market rates. Every plan gets the rate valid today; a past date needs a paid plan. Pairs the authority does not publish are refused.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "rate_type": {
+          "type": "string"
+        },
+        "base": {
+          "type": "string"
+        },
+        "quote": {
+          "type": "string"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "direction": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "country",
+        "rate_type",
+        "base",
+        "quote"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

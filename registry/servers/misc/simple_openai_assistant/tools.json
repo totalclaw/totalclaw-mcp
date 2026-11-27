@@ -1,0 +1,207 @@
+[
+  {
+    "name": "create_assistant",
+    "description": "Create a new OpenAI assistant to talk to about your desired topic.\n\nYou can provide instructions that this assistant will follow and specify which of OpenAI's models it will use.\nNOTE: It is recommended to check existing assistants with list_assistants before creating a new one.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "instructions": {
+          "type": "string"
+        },
+        "model": {
+          "default": "gpt-4o",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "instructions"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "create_new_assistant_thread",
+    "description": "Creates a new, persistent conversation thread with a user-defined name and\ndescription for easy identification and reuse. These threads are stored in OpenAI's servers \nand are not deleted unless the user deletes them, which means you can re-use them for future conversations.\nAdditionally, the thread name and description are stored in the local database, which means you can list them\nand update them later.\n\nThink how you can utilize threads in your particular use case.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_threads",
+    "description": "Lists all locally saved conversation threads from the database.\nReturns a list of threads with their ID, name, description, and last used time.\nThe thread ID can be used in the ask_assistant_in_thread tool to specify this thread to be continued.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "update_thread",
+    "description": "Updates the name and/or description of a locally saved conversation thread.\nBoth the local database and the OpenAI thread object will be updated.\n\nThe thread ID can be retrieved from the list_threads tool.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "thread_id": {
+          "type": "string"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "thread_id"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "delete_thread",
+    "description": "Deletes a conversation thread from both OpenAI's servers and the local database.\nThis action is irreversible.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "thread_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "thread_id"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ask_assistant_in_thread",
+    "description": "Sends a message to an assistant within a specific thread and streams the response.\nThis provides progress updates and the final message in a single call.\n\nUse this to continue a conversation with an assistant in a specific thread.\nThe thread ID can be retrieved from the list_threads tool.\nThe assistant ID can be retrieved from the list_assistants tool.\nThreads are not inherently linked to a particular assistant, so you can use this tool to talk to any assistant in any thread.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "thread_id": {
+          "type": "string"
+        },
+        "assistant_id": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "thread_id",
+        "assistant_id",
+        "message"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_assistants",
+    "description": "List all available OpenAI assistants associated with the API key configured by the user.\n\nReturns a list of assistants with their IDs, names, and configurations. This can be used to select \nan assistant to use in the ask_assistant_in_thread tool instead of creating a new one.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "limit": {
+          "default": 20,
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "retrieve_assistant",
+    "description": "Get detailed information about a specific assistant. \nThe ID required can be retrieved from the list_assistants tool.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "assistant_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "assistant_id"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "update_assistant",
+    "description": "Modify an existing assistant's name, instructions, or model used.\n\nAt least one optional parameter - what to change - must be provided, otherwise the tool will return an error.\nThe ID required can be retrieved from the list_assistants tool.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "assistant_id": {
+          "type": "string"
+        },
+        "name": {
+          "default": null,
+          "type": "string"
+        },
+        "instructions": {
+          "default": null,
+          "type": "string"
+        },
+        "model": {
+          "default": null,
+          "type": "string"
+        }
+      },
+      "required": [
+        "assistant_id"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  }
+]

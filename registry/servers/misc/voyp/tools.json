@@ -1,0 +1,128 @@
+[
+  {
+    "name": "start_call",
+    "description": "Start a new phone call via Voyp API. The API returns the call id and a URL where users can track the progress of the call",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string",
+          "description": "Phone number to call in E.164 format"
+        },
+        "language": {
+          "type": "string",
+          "description": "Language of the call. Ex: en-US, pt-PT, fr-FR"
+        },
+        "context": {
+          "type": "string",
+          "description": "Context of the call. Ex: Order a pizza"
+        }
+      },
+      "required": [
+        "number",
+        "context"
+      ]
+    }
+  },
+  {
+    "name": "hangup_call",
+    "description": "Hangup an existing call",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID of the call"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "search_places",
+    "description": "Search places in a given location",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "search": {
+          "type": "string",
+          "description": "Places to search. Ex: italian restaurants in New York City, US"
+        }
+      },
+      "required": [
+        "search"
+      ]
+    }
+  },
+  {
+    "name": "search_place",
+    "description": "Search place details in a given location",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "place": {
+          "type": "string",
+          "description": "Name of place to search. Ex: The Lane Salon"
+        },
+        "location": {
+          "type": "string",
+          "description": "Place location. Ex: San Francisco, CA"
+        }
+      },
+      "required": [
+        "place",
+        "location"
+      ]
+    }
+  },
+  {
+    "name": "search_place_by_number",
+    "description": "Find place name and address by phone number",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string",
+          "description": "Phone number in E.164 format. Ex: +1234567890"
+        }
+      },
+      "required": [
+        "number"
+      ]
+    }
+  },
+  {
+    "name": "get_call",
+    "description": "Retrieve call details",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Call Id"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "get_user",
+    "description": "Retrieve user profile",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  }
+]

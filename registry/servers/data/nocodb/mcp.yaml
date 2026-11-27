@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：实探报缺凭据即退出，原先 requires_env 为空 —— 补必填 NOCODB_URL / NOCODB_BASE_ID / NOCODB_API_TOKEN（变量名取自包报错 / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: nocodb
 display_name: nocodb-mcp-server
 display_name_en: nocodb-mcp-server
-version: 0.1.1
+version: 0.1.2
 description: Model Context Protocol server for nocodb
 description_zh: Nocodb 数据库集成，读写能力。
 author: edwinbernadus
@@ -29,11 +30,41 @@ runtimes:
   - nocodb-mcp-server@1.0.24
   requires:
     node: '>=18'
-requires_env: []
+requires_env:
+- name: NOCODB_URL
+  env_key: NOCODB_URL
+  description: NocoDB 服务地址，如 https://app.nocodb.com。未设置时服务器启动即退出。
+  prompt: 请输入 NOCODB_URL
+  secret: false
+  required: true
+  doc_url: https://github.com/edwinbernadus/nocodb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: NOCODB_BASE_ID
+  env_key: NOCODB_BASE_ID
+  description: NocoDB Base ID。未设置时服务器启动即退出。
+  prompt: 请输入 NOCODB_BASE_ID
+  secret: false
+  required: true
+  doc_url: https://github.com/edwinbernadus/nocodb-mcp-server
+  doc_label: 查看项目说明（如何获取）
+- name: NOCODB_API_TOKEN
+  env_key: NOCODB_API_TOKEN
+  description: NocoDB API Token。未设置时服务器启动即退出。
+  prompt: 请输入 NOCODB_API_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/edwinbernadus/nocodb-mcp-server
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:44:13Z'
+  probed_runtime: npx
+  count: 11
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

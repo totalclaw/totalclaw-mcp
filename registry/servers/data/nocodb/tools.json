@@ -1,0 +1,296 @@
+[
+  {
+    "name": "nocodb-get-records",
+    "description": "Nocodb - Get Recordshint:\n    1. Get all records from a table (limited to 10):\n       retrieve_records(table_name=\"customers\")\n       \n    3. Filter records with conditions:\n       retrieve_records(\n           table_name=\"customers\", \n           filters=\"(age,gt,30)~and(status,eq,active)\"\n       )\n       \n    4. Paginate results:\n       retrieve_records(table_name=\"customers\", limit=20, offset=40)\n       \n    5. Sort results:\n       retrieve_records(table_name=\"customers\", sort=\"-created_at\")\n       \n    6. Select specific fields:\n       retrieve_records(table_name=\"customers\", fields=\"id,name,email\")\n",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string"
+        },
+        "filters": {
+          "type": "string",
+          "description": "Example: where=(field1,eq,value1)~and(field2,eq,value2) will filter records where 'field1' is equal to 'value1' AND 'field2' is equal to 'value2'.\nYou can also use other comparison operators like 'ne' (not equal), 'gt' (greater than), 'lt' (less than), and more, to create complex filtering rules.\n \nComparison Operators\nOperation Meaning Example\neq  equal (colName,eq,colValue)\nneq not equal (colName,neq,colValue)\nnot not equal (alias of neq)  (colName,not,colValue)\ngt  greater than  (colName,gt,colValue)\nge  greater or equal  (colName,ge,colValue)\nlt  less than (colName,lt,colValue)\nle  less or equal (colName,le,colValue)\nis  is  (colName,is,true/false/null)\nisnot is not  (colName,isnot,true/false/null)\nin  in  (colName,in,val1,val2,val3,val4)\nbtw between (colName,btw,val1,val2)\nnbtw  not between (colName,nbtw,val1,val2)\nlike  like  (colName,like,%name)\nisWithin  is Within (Available in Date and DateTime only) (colName,isWithin,sub_op)\nallof includes all of (colName,allof,val1,val2,...)\nanyof includes any of (colName,anyof,val1,val2,...)\nnallof  does not include all of (includes none or some, but not all of) (colName,nallof,val1,val2,...)\nnanyof  does not include any of (includes none of)  (colName,nanyof,val1,val2,...)\n\n\nComparison Sub-Operators\nThe following sub-operators are available in Date and DateTime columns.\n\nOperation Meaning Example\ntoday today (colName,eq,today)\ntomorrow  tomorrow  (colName,eq,tomorrow)\nyesterday yesterday (colName,eq,yesterday)\noneWeekAgo  one week ago  (colName,eq,oneWeekAgo)\noneWeekFromNow  one week from now (colName,eq,oneWeekFromNow)\noneMonthAgo one month ago (colName,eq,oneMonthAgo)\noneMonthFromNow one month from now  (colName,eq,oneMonthFromNow)\ndaysAgo number of days ago  (colName,eq,daysAgo,10)\ndaysFromNow number of days from now (colName,eq,daysFromNow,10)\nexactDate exact date  (colName,eq,exactDate,2022-02-02)\n\nFor isWithin in Date and DateTime columns, the different set of sub-operators are used.\n\nOperation Meaning Example\npastWeek  the past week (colName,isWithin,pastWeek)\npastMonth the past month  (colName,isWithin,pastMonth)\npastYear  the past year (colName,isWithin,pastYear)\nnextWeek  the next week (colName,isWithin,nextWeek)\nnextMonth the next month  (colName,isWithin,nextMonth)\nnextYear  the next year (colName,isWithin,nextYear)\nnextNumberOfDays  the next number of days (colName,isWithin,nextNumberOfDays,10)\npastNumberOfDays  the past number of days (colName,isWithin,pastNumberOfDays,10)\nLogical Operators\n\nOperation Example\n~or (checkNumber,eq,JM555205)~or((amount, gt, 200)~and(amount, lt, 2000))\n~and  (checkNumber,eq,JM555205)~and((amount, gt, 200)~and(amount, lt, 2000))\n~not  ~not(checkNumber,eq,JM555205)\n\n\nFor date null rule\n(date,isnot,null) -> (date,notblank).\n(date,is,null) -> (date,blank).\n"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "offset": {
+          "type": "number"
+        },
+        "sort": {
+          "type": "string",
+          "description": "Example: sort=field1,-field2 will sort the records first by 'field1' in ascending order and then by 'field2' in descending order."
+        },
+        "fields": {
+          "type": "string",
+          "description": "Example: fields=field1,field2 will include only 'field1' and 'field2' in the API response."
+        }
+      },
+      "required": [
+        "tableName"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "nocodb-get-list-tables",
+    "description": "Nocodb - Get List Tables\nnotes: only show result from output to user\n",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "nocodb-post-records",
+    "description": "Nocodb - Post Records",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string",
+          "description": "table name"
+        },
+        "data": {
+          "description": "The data to be inserted into the table. \n[WARNING] The structure of this object should match the columns of the table.\nexample:\nconst response = await postRecords(\"Shinobi\", {\n        Title: \"sasuke\"\n})"
+        }
+      },
+      "required": [
+        "tableName"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "nocodb-post-records-bulk",
+    "description": "Nocodb - Post Records Multiple Records",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string",
+          "description": "table name"
+        },
+        "uploadItems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "description": "The data to be inserted into the table. \n[WARNING] The structure of this object should match the columns of the table.\nexample:\nconst response = await postRecords(\"Shinobi\", {\n        Title: \"sasuke\"\n})"
+              }
+            },
+            "additionalProperties": false
+          },
+          "description": "array of data to be inserted into the table"
+        }
+      },
+      "required": [
+        "tableName",
+        "uploadItems"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "nocodb-patch-records",
+    "description": "Nocodb - Patch Records",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string"
+        },
+        "rowId": {
+          "type": "number"
+        },
+        "data": {
+          "description": "The data to be updated in the table.\n[WARNING] The structure of this object should match the columns of the table.\n[WARNING] Do not use JavaScript-style Object with Stringified Data\nexample:\nconst response = await patchRecords(\"Shinobi\", 2, {\n            Title: \"sasuke-updated\"\n})"
+        }
+      },
+      "required": [
+        "tableName",
+        "rowId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "nocodb-delete-records",
+    "description": "Nocodb - Delete Records",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string"
+        },
+        "rowId": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "tableName",
+        "rowId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "nocodb-delete-records-bulk",
+    "description": "Nocodb - Delete Records Multiple Records",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string",
+          "description": "table name"
+        },
+        "deleteRowsId": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rowId": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "rowId"
+            ],
+            "additionalProperties": false
+          },
+          "description": "array of data to be deleted from the table"
+        }
+      },
+      "required": [
+        "tableName",
+        "deleteRowsId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "nocodb-get-table-metadata",
+    "description": "Nocodb - Get Table Metadata",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tableName"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "nocodb-alter-table-add-column",
+    "description": "Nocodb - Alter Table Add Column",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string"
+        },
+        "columnName": {
+          "type": "string"
+        },
+        "columnType": {
+          "type": "string",
+          "description": "SingleLineText, Number, Decimals, DateTime, Checkbox"
+        }
+      },
+      "required": [
+        "tableName",
+        "columnName",
+        "columnType"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "nocodb-alter-table-remove-column",
+    "description": "Nocodb - Alter Table Remove Column get columnId from getTableMetadata notes: remove column by columnId example: c7uo2ruwc053a3a [WARNING] this action is irreversible [RECOMMENDATION] give warning to user",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "columnId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "columnId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "nocodb-create-table",
+    "description": "Nocodb - Create Table",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "uidt": {
+                "type": "string",
+                "enum": [
+                  "SingleLineText",
+                  "Number",
+                  "Checkbox",
+                  "DateTime"
+                ],
+                "description": "SingleLineText, Number, Checkbox, DateTime"
+              }
+            },
+            "required": [
+              "title",
+              "uidt"
+            ],
+            "additionalProperties": false,
+            "description": "The data to be inserted into the table.\n[WARNING] The structure of this object should match the columns of the table.\nexample:\nconst response = await createTable(\"Shinobi\", [\n        {\n            title: \"Name\",\n            uidt: \"SingleLineText\"\n        },\n        {\n            title: \"Age\",\n            uidt: \"Number\"\n        },\n        {\n            title: \"isHokage\",\n            uidt: \"Checkbox\"\n        },\n        {\n            title: \"Birthday\",\n            uidt: \"DateTime\"\n        }\n    ]\n)"
+          }
+        }
+      },
+      "required": [
+        "tableName",
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  }
+]

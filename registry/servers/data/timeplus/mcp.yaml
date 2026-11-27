@@ -1,13 +1,14 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
 # 2026-11-26：uvx 前置 `--with mcp<2` —— 包按 mcp 1.x 写（FastMCP / 低层装饰器 / McpError），依赖未声明上界，裸 uvx 解析到 mcp 2.x 后启动即崩。
+# 2026-11-27：去掉 runtimes[].env 里写死的 TIMEPLUS_KAFKA_CONFIG —— 那是包 README 示例里作者自己的 Kafka 主机与账号，且关了证书校验；写死会让每个用户的 Kafka 相关操作连到第三方主机。改为选填、无默认值。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: timeplus
 display_name: mcp-timeplus
 display_name_en: mcp-timeplus
-version: 0.1.2
+version: 0.1.3
 description: An MCP server for Timeplus.
 description_zh: Apache Kafka 和 Timeplus 的 MCP 服务器。能列出 Kafka 主题、轮询消息、本地保存数据并通过 Timeplus 用 SQL 查询流数据。
 author: jovezhong
@@ -35,8 +36,6 @@ runtimes:
     TIMEPLUS_CONNECT_TIMEOUT: '30'
     TIMEPLUS_SEND_RECEIVE_TIMEOUT: '30'
     TIMEPLUS_READ_ONLY: 'false'
-    TIMEPLUS_KAFKA_CONFIG: '{"bootstrap.servers":"a.aivencloud.com:28864", "sasl.mechanism":"SCRAM-SHA-256","sasl.username":"avnadmin",
-      "sasl.password":"thePassword","security.protocol":"SASL_SSL","enable.ssl.certificate.verification":"false"}'
   requires:
     python: '>=3.10'
 requires_env:
@@ -68,7 +67,15 @@ requires_env:
   required: true
   doc_url: https://github.com/jovezhong/mcp-timeplus
   doc_label: 查看项目说明（如何获取）
-optional_env: []
+optional_env:
+- name: TIMEPLUS_KAFKA_CONFIG
+  env_key: TIMEPLUS_KAFKA_CONFIG
+  description: 只在用 Kafka 外部流相关工具时需要：Kafka 连接配置（JSON，如 bootstrap.servers / sasl.* / security.protocol）。不用可留空。
+  prompt: 请输入 Kafka 连接配置 JSON（可留空）
+  secret: true
+  required: false
+  doc_url: https://github.com/jovezhong/mcp-timeplus
+  doc_label: 查看项目说明（如何获取）
 defaults:
   enabled: true
   timeout: 120
