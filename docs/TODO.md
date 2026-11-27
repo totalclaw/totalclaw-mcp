@@ -771,15 +771,45 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
   - agent `06a04361d`：`list_installed()` 对注册表条目在有新版本时带 `update_available: {version}`（形状按本仓 API.md 的 InstalledEntry），
     `/v1/mcp/installed` 透传；纯数字点分比较、解析不了不提示；已下架不提示；注册表不可用 / 只有内置目录时不声称有新版本。MCP 相关 79 个用例通过
   - qiye-app `58268b7e0`：已安装页版本列显示「有新版本 x.y.z」、该行「更新」按钮突出；旧 agent 不带字段时不显示；补 en/ar/ms/vi 译文。McpMarketView 31 个用例通过
-- [ ] **F15** U3 发版（qiye-app 部分已合入 master：`58268b7e0` + F18 `99e8c6e42`，2026-11-27 用户确认后快进推送；agent 侧 feat/mcp-update-available、fix/url-safety-fake-ip-translated、fix/mcp-install-enabled-with-provided-env、fix/env-interpolation-defaults、feat/mcp-render-requires-node 等 totalclaw-agent-29 一轮落到 origin 后由本会话合进 core-kernel，再打版并 bump qiye-app 子模块）：agent 分支合进 core-kernel → main 并打版；qiye-app 分支合进 master 并 bump agent 子模块（`scripts/check-agent-pointer.mjs`）。
+- [x] **F15** U3 发版（2026-11-27 完成：agent v0.68.53 = core-kernel `4c6da05f3`、main 合并 `b5300ca8a`；qiye-app 子模块指针 `b4b787dab`，check-agent-pointer 通过。另一会话在 core-kernel 补了措辞修复，随下次发版进 main）。原记录：（qiye-app 部分已合入 master：`58268b7e0` + F18 `99e8c6e42`，2026-11-27 用户确认后快进推送；agent 侧 feat/mcp-update-available、fix/url-safety-fake-ip-translated、fix/mcp-install-enabled-with-provided-env、fix/env-interpolation-defaults、feat/mcp-render-requires-node 等 totalclaw-agent-29 一轮落到 origin 后由本会话合进 core-kernel，再打版并 bump qiye-app 子模块）：agent 分支合进 core-kernel → main 并打版；qiye-app 分支合进 master 并 bump agent 子模块（`scripts/check-agent-pointer.mjs`）。
   合并前在共用的 agent 目录先看 `git diff HEAD -- totalclaw_core/mcp_hub.py totalclaw_qiye_api/mcp_hub_api.py`（另一会话会有并行改动）
-- [ ] **F16** agent `url_safety`：fake-ip 代理回 `::ffff:0:198.18.x.x` 式 AAAA 时整个域名被判私网 —— gitee raw 跳转主机被拦，
+- [x] **F16**（已随 v0.68.53 发版）agent `url_safety`：fake-ip 代理回 `::ffff:0:198.18.x.x` 式 AAAA 时整个域名被判私网 —— gitee raw 跳转主机被拦，
   桌面端 MCP 市场静默回落内置 26 条（开着 Clash 类 fake-ip 代理的用户都中）。修复在 agent 分支 `fix/url-safety-fake-ip-translated`（`79331c3e7`，
   含指纹重生成），修复前新用例失败、后通过；E2E 里注册表从 builtin 26 → remote 650。**已推送分支，待审阅合并**
-- [ ] **F17** agent `mcp_hub`：请求里带齐凭据安装仍被存成 `enabled: false`（render 只看 os.environ），桌面端每个带凭据的连接器装完都是停用。
+- [x] **F17**（已随 v0.68.53 发版）agent `mcp_hub`：请求里带齐凭据安装仍被存成 `enabled: false`（render 只看 os.environ），桌面端每个带凭据的连接器装完都是停用。
   修复在 agent 分支 `fix/mcp-install-enabled-with-provided-env`（`762d22fc2`）；E2E 里 alphavantage / ancestry 装完即启用。**已推送分支，待审阅合并**
-- [ ] **F18** qiye-app 查毒代理 `mcpPackageGuard`：拉包体不带客户端 UA，Electron 默认浏览器 UA 被清华 PyPI 镜像 403（国内默认第一优先源）
+- [x] **F18** qiye-app 查毒代理 `mcpPackageGuard`：拉包体不带客户端 UA，Electron 默认浏览器 UA 被清华 PyPI 镜像 403（国内默认第一优先源）
   → 桌面端所有要现场下载的 uvx 连接器都装不上。修复在 qiye-app 分支 `fix/mcp-package-guard-artifact-ua`（`d57a3c938`），
   单测修复前失败、后通过（含真 npm / uv 装包），最小 Electron 脚本证实 net.fetch 带 uv UA 即 200。
   **已合入 qiye-app master（99e8c6e42）**；完整应用内已验证（2026-11-27）：空 uv 缓存、默认走清华镜像，修复后的构建 V3 13/13 通过；同条件下未修复的构建 uvx 连接器全部失败。（上次起不来 qiye-api 是 worktree 里 `resources/vendor` 是入库目录，`.venv` 没链接过去。）**已推送分支，待审阅合并**
+
+## G 组 · 2026-11-27 全量杀毒查询
+
+报告：[review-2026-11-27-full.md](review-2026-11-27-full.md)（623 条未下架条目逐个下载包体静态审核 + 依赖查毒 + 注册表文本查毒）。
+
+- 结果：allow 464 / warn 153 / block 6；`--scan-registry` 0 命中；`dep_gate` 黑名单刷新后 0 命中。**未发现投毒或恶意代码。**
+- warn 里的代码规则命中（下载即执行、外传端点、读浏览器凭据、预编译二进制、安装期脚本等）共 60 条，57 条有历次人工复核结论且本次命中与复核时一致；
+  其余 3 条是作者弃用：bitcoin（bitcoin-mcp 全部版本被原维护者弃用）、mcp_brave_search、mcp_postgres（官方归档包，弃用说明写明「不再有安全保证」）。
+- block 6 条，均非恶意：
+  - didlogic：PyPI 上 4 个版本全部被作者撤回，理由「deleting」—— 作者在下线该包
+  - flow_horustek、maxstat：端点 TLS 握手被断开（直连、走代理都一样），服务挂了或屏蔽本网络
+  - morningstar：只有走本机代理时证书链自签（代理中间人）；直连 TLS 校验通过、返回标准 OAuth 质询 → 误报，维持现状
+  - unreal_engine、xiaohongshu：端点是 localhost（用户本机自起的服务），「不是 HTTPS」不适用 → 维持现状
+- [ ] **G1 待拍板下架**：didlogic、bitcoin、mcp_brave_search（注册表已有 brave_search 可替代）、mcp_postgres；flow_horustek、maxstat 先观察还是下架
+
+## C2.2 · 免凭据但实探起不来的 108 条（2026-11-27 逐条重跑并留存 stderr 归因）
+
+- 重试即通过 2：scrapling_fetch、webresearch（首次只是启动超时）
+- 本机 npm 镜像（npmmirror）未同步、npm 官方源上存在 7：awwwards、castov、cloudgpu、octeract_context、open_apps、screenshotone、strava —— 清单没问题
+- 实际要凭据、清单却没声明 ≈30：actors(APIFY_TOKEN)、agentql、agentset、airtable、dart、exchangerate、linear_tacticlaunch、lystbot、magic(API_KEY)、makehq、
+  miro、naver_search、ns、posteverywhere、replicate、simple_openai_assistant、tiktok、voyp、zotero_kaliaboi、brightdata(API_TOKEN)、gmail_autoauth(OAuth 文件)、
+  maigret(MAIGRET_REPORTS_DIR)、mongo(连接串)、nocodb、toolbox_sdk；浏览器 OAuth：finlight、palisadeemail、singlestore → 补 requires_env / auth
+- 启动命令写错（可执行名不对）6：cal、fidelis_memory、friday_memory、preloop、prometheus、zoom_search → 改 `--from 包 命令`
+  - [x] 已修并实探写回工具清单 5 条：fidelis_memory（`--from … fidelis-mcp`，4 工具）、prometheus（`--from … prometheus-mcp-server` + 补必填 PROMETHEUS_URL，6 工具）、zoom_search（`zoom-search[mcp]` + `--with mcp<2`，1 工具）、python_interpreter / roundtable_ai（`--with mcp<2`，10 / 9 工具）
+  - 未修：friday_memory（`friday` 可执行无输出，不是 MCP 入口）、preloop（只有 preloop-sync）、cal（npm 包 bin 缺 shebang，包本身坏）
+- 缺子命令 / 必填参数 17：backlink_guard、forge、keystash、knowlyr_datacheck/modelaudit/sandbox、kordoc、kubernetes_containers、local_gpu_imagegen、minas_webdav、
+  mobilebuildmcp、new_term_radar、omx_hyperliquid、phonedriver、serena_agent、xcodebuildmcp 等 → 从包文档查 MCP 启动子命令
+- 依赖问题 7：python_interpreter、roundtable_ai（mcp 2.x，补 `--with mcp<2`）；chroma、davinci_resolve、markitdown、simple_pubmed、md_to_word_docx（缺依赖 / 版本冲突）
+- 其余 ~30 条 stderr 没有明确原因（静默退出、需本机 bun / IDE / 平台限制等），逐条看
+- [ ] 修完逐条重探；凭据类并入 credentials-needed.md
 

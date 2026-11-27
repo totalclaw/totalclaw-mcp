@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-27T08:49:12Z",
+  "generated_at": "2026-11-27T09:30:48Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -788,7 +788,7 @@
       "display_name_en": "Fidelis Memory",
       "description": "Fidelis Memory: faithful agent memory with zero-LLM retrieval by default. By Hermes Labs.",
       "description_zh": "面向 Claude Code、Codex 等 AI Agent 的本地优先记忆服务：默认 MCP 召回为本地向量检索，可显式启用关键词 + 向量混合检索（BM25 + RRF，需 hybrid 扩展），均不调用生成式模型改写记忆，返回原始存储的笔记片段而非改写摘要；MCP 提供 `fidelis_recall`、`fidelis_query`、`fidelis_health`、`fidelis_orient` 4 个工具。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "hermes-labs-ai",
       "license": "MIT",
       "homepage": "https://github.com/hermes-labs-ai/fidelis",
@@ -822,11 +822,17 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 4,
+      "tools": [
+        "fidelis_recall",
+        "fidelis_query",
+        "fidelis_health",
+        "fidelis_orient"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/ai/fidelis_memory",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/ai/fidelis_memory",
@@ -837,11 +843,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "e696b0baffb5498d76d705331008d72e1b4a1c15fa7f814723f490bb1cbb3772",
-          "size": 1336
+          "sha256": "a4c43c645a419e787848bc841fcab02fc22a7439a442b6c49fa8d91013e0257b",
+          "size": 1657
+        },
+        {
+          "path": "tools.json",
+          "sha256": "6615aa5d130641ec08a8c1a912633e88cb20b3296c756cd52772a7330193ce01",
+          "size": 2267
         }
       ],
-      "bundle_sha256": "7e396ccd5426b5b96f6661731a5d1879210bcd3e329e6889184f1bef7edc3567",
+      "bundle_sha256": "71850e72f0b19afa1f1a4c2e83715406d19d177e104615a0d292e5712e5c1f33",
       "popularity": {
         "score": 310,
         "downloads_weekly": 49,
@@ -17481,7 +17492,7 @@
       "display_name_en": "prometheus-mcp-server",
       "description": "MCP server for Prometheus integration",
       "description_zh": "查询和分析 Prometheus 开源监控系统。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "pab1it0",
       "license": "MIT",
       "homepage": "https://github.com/pab1it0/prometheus-mcp-server",
@@ -17513,13 +17524,31 @@
           "package": "prometheus_mcp_server==1.6.2"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "PROMETHEUS_URL",
+          "description": "Prometheus 服务器地址，如 http://localhost:9090。未设置时服务器启动即退出。",
+          "prompt": "请输入 Prometheus 服务器地址",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/pab1it0/prometheus-mcp-server",
+          "doc_label": "查看项目说明（可选的用户名 / 密码 / Token 等）"
+        }
+      ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 6,
+      "tools": [
+        "health_check",
+        "execute_query",
+        "execute_range_query",
+        "list_metrics",
+        "get_metric_metadata",
+        "get_targets"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/prometheus",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/prometheus",
@@ -17530,11 +17559,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "840b9b6df5f6645312f7af1c0cd87c5e0321ed98e456ae480945d366a15cd291",
-          "size": 967
+          "sha256": "86f97eaf7f0299ed3de31782a4c7f7d617ad76745bcd1b9a6a09a717add51560",
+          "size": 1736
+        },
+        {
+          "path": "tools.json",
+          "sha256": "f5a898ea990698de842d26bf240c68176ce98dda76b671606999c6d1446adc87",
+          "size": 5781
         }
       ],
-      "bundle_sha256": "be61b954d794e0d8298b458b4b5996645fd163b332afc15a61ae7f1aa40256bc",
+      "bundle_sha256": "84eede062b98e1c19e4465d3be48587374dadaa5a84763052a2b1a223e87dff9",
       "popularity": {
         "score": 272,
         "stars": 520
@@ -24403,7 +24437,7 @@
       "display_name_en": "mcp-python-interpreter",
       "description": "MCP server for Python code execution and environment management",
       "description_zh": "安全、标准化的 Python 环境，支持代码执行、环境和包管理。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "yzfly",
       "license": "MIT",
       "homepage": "https://github.com/yzfly/mcp-python-interpreter",
@@ -24437,11 +24471,23 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 10,
+      "tools": [
+        "list_python_environments",
+        "list_installed_packages",
+        "run_python_code",
+        "run_python_file",
+        "install_package",
+        "read_file",
+        "write_file",
+        "list_directory",
+        "clear_session",
+        "list_sessions"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/python_interpreter",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/python_interpreter",
@@ -24452,11 +24498,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "e126009a9bc85e86eb1b4e1c903ea4f56899028a0ef3dd77c8d7dcd5d873c737",
-          "size": 1030
+          "sha256": "29ff18429216a21e4d3d473fe85cd519bb59aa1a1b199ee1b411d2dca3ac3b0c",
+          "size": 1343
+        },
+        {
+          "path": "tools.json",
+          "sha256": "3e306cf3632b0d49088c9432616423b55786972dba4e860828059ae7b94c2e07",
+          "size": 7404
         }
       ],
-      "bundle_sha256": "5d1ef4bc5b46657dac190ec8d5327f3cbd47993db7c229ee601fb0520318f597",
+      "bundle_sha256": "c16429b6290fce05c921fc87676820535d36c4d51fc97239136b007b377fea71",
       "popularity": {
         "score": 532,
         "downloads_weekly": 1982,
@@ -25024,7 +25075,7 @@
       "display_name_en": "Roundtable",
       "description": "Zero-configuration MCP server that unifies multiple AI coding assistants (Codex, Claude Code, Cursor, Gemini) through intelligent auto-discovery and standardized interface",
       "description_zh": "统一AI编程助手的零配置MCP服务器，专为自主代理开发设计，简化多AI工具集成工作流程。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "askbudi",
       "license": "AGPL-3.0",
       "homepage": "https://github.com/askbudi/roundtable",
@@ -25058,11 +25109,22 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 9,
+      "tools": [
+        "check_codex_availability",
+        "check_claude_availability",
+        "check_cursor_availability",
+        "check_gemini_availability",
+        "codex_subagent",
+        "claude_subagent",
+        "cursor_subagent",
+        "gemini_subagent",
+        "test_tool"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/roundtable_ai",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/roundtable_ai",
@@ -25073,11 +25135,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "42c046b7e9e642d48141a5a8925a5fc25ae2814de7c8a90f203896a44d3024e9",
-          "size": 1171
+          "sha256": "192591e322cdb585b50ecc560a90b7edabb73fe108119d682bc07e0d0893a8c4",
+          "size": 1483
+        },
+        {
+          "path": "tools.json",
+          "sha256": "5a59ea9d89f9db4f267559535ceee1602b25b84f9104201ab3c1e7ab4a31f1a3",
+          "size": 10502
         }
       ],
-      "bundle_sha256": "8a79d8d1210040e29d70db8531a9caf3532847bd85d9fec3216c4a70206ed1c1",
+      "bundle_sha256": "697efc6df85a3f54053dbd445e1e9361d1d98758b095dce5d347a32aa9d2781e",
       "popularity": {
         "score": 153,
         "downloads_weekly": 33
@@ -51917,7 +51984,7 @@
       "display_name_en": "Zoom Search",
       "description": "Two-phase AI-assisted search library with zoom-out and zoom-in workflows",
       "description_zh": "面向 AI Agent 的搜索与证据 MCP 服务器，通过查询改写、多来源搜索和高价值域名聚焦，返回带来源、告警和运行指标的回答。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "goofrey",
       "license": "MIT",
       "homepage": "https://github.com/goofrey/zoom-search",
@@ -51946,16 +52013,19 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "zoom-search==0.1.6"
+          "package": "zoom-search[mcp]==0.1.6"
         }
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 1,
+      "tools": [
+        "zoom_search"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/zoom_search",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/zoom_search",
@@ -51966,11 +52036,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "464c183fffb8a9d7d67308e83fd6e002acb42feafb09efa3084a155d4c61d675",
-          "size": 1068
+          "sha256": "02936a26dbc01493daf93579d569094c587ed552bf1760351539afe6fdd69694",
+          "size": 1565
+        },
+        {
+          "path": "tools.json",
+          "sha256": "bb864bc3e1604cd0c96850d1467ce3b93448ccabddb25a036627baae59f8f243",
+          "size": 5064
         }
       ],
-      "bundle_sha256": "d03d6086c756cd3488533121b2cf8e9e245500076d5d11cfbd7e3b2239e02271",
+      "bundle_sha256": "27d5b87c908d2bde8178bded0ba5dab673f086963a865d24451240b6a7ee8de6",
       "popularity": {
         "score": 70,
         "stars": 4

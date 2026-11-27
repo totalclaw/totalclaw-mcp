@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：uvx 前置 `--with mcp<2` —— 包按 mcp 1.x 写（`mcp.server.fastmcp`），依赖未声明上界，裸 uvx 解析到 mcp 2.x 后启动即崩。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: roundtable_ai
 display_name: Roundtable
 display_name_en: Roundtable
-version: 0.1.1
+version: 0.1.2
 description: Zero-configuration MCP server that unifies multiple AI coding assistants (Codex, Claude Code, Cursor, Gemini)
   through intelligent auto-discovery and standardized interface
 description_zh: 统一AI编程助手的零配置MCP服务器，专为自主代理开发设计，简化多AI工具集成工作流程。
@@ -26,6 +27,8 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp<2
   - roundtable-ai==0.8.0
   - --agents
   - gemini,claude,codex,cursor
@@ -36,6 +39,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:30:37Z'
+  probed_runtime: uvx
+  count: 9
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

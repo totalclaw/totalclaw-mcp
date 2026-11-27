@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：包提供的可执行名与包名不同，uvx 按包名找命令会直接报「executable not provided」，改用 `--from 包==版本 可执行名`；MCP 依赖在 `[mcp]` extra 里，不带会报「Install MCP support」；且代码用 mcp 1.x 的 `mcp.server.fastmcp`，前置 `--with mcp<2`。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: zoom_search
 display_name: Zoom Search
 display_name_en: Zoom Search
-version: 0.1.2
+version: 0.1.3
 description: Two-phase AI-assisted search library with zoom-out and zoom-in workflows
 description_zh: 面向 AI Agent 的搜索与证据 MCP 服务器，通过查询改写、多来源搜索和高价值域名聚焦，返回带来源、告警和运行指标的回答。
 author: goofrey
@@ -25,7 +26,11 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - zoom-search==0.1.6
+  - --with
+  - mcp<2
+  - --from
+  - zoom-search[mcp]==0.1.6
+  - zoom-search-mcp
   requires:
     python: '>=3.10'
 requires_env: []
@@ -33,6 +38,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:30:36Z'
+  probed_runtime: uvx
+  count: 1
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

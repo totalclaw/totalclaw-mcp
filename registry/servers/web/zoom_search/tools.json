@@ -1,0 +1,105 @@
+[
+  {
+    "name": "zoom_search",
+    "description": "Research current or evidence-sensitive questions and synthesize a traceable answer.\n\nRewrites the question, searches broadly, and zooms into selected source domains.\n\nUSE WHEN:\n- The answer requires current web information, multiple independent sources, comparisons, or citations.\n- The agent needs evidence URLs, warnings, and runtime metrics.\n\nOUTPUT MODES:\n- answer_with_sources: Recommended for final grounded answers.\n- answer: Synthesized answer without source details.\n- results_simple: Compact search results for another processing step.\n- results_detailed: Full traceable result objects and evidence.\n\nPARAMETER GUIDANCE:\n- question should contain one concrete research task with key entities and constraints.\n- previous_conversation resolves references or ambiguity from earlier messages.\n- demo_mode produces deterministic sample data; seed controls repeatability.\n- Result-count and domain parameters trade broader coverage for latency, provider requests, and cost.\n- include_raw_diagnostics is intended for debugging and may include provider details.\n\nBEHAVIOR:\nCalls configured search and LLM providers. Provider credentials, network availability,\nrate limits, and usage charges apply. The operation is read-only and does not modify\nlocal or remote data. Returns the response selected by output_mode, including available\nanswers, sources, evidence, warnings, and metrics.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "question": {
+          "description": "Natural-language research question to answer using Zoom Search. Ask one concrete question; include key entities, constraints, or comparison targets.",
+          "title": "Question",
+          "type": "string"
+        },
+        "previous_conversation": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional earlier user/assistant context as plain text messages. Use only when prior conversation changes how the question should be interpreted.",
+          "title": "Previous Conversation"
+        },
+        "output_mode": {
+          "default": "answer_with_sources",
+          "description": "Response shape. Use 'answer_with_sources' for grounded answers with evidence, 'answer' for only the synthesized answer, 'results_simple' for compact search results, or 'results_detailed' for full traceable result objects.",
+          "enum": [
+            "answer",
+            "answer_with_sources",
+            "results_simple",
+            "results_detailed"
+          ],
+          "title": "Output Mode",
+          "type": "string"
+        },
+        "demo_mode": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional override for deterministic demo data. Set true for tests or demos without provider keys; leave null to use ZOOM_SEARCH_DEMO_MODE or configured live providers.",
+          "title": "Demo Mode"
+        },
+        "seed": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional deterministic seed, mainly useful with demo_mode for repeatable examples and tests.",
+          "title": "Seed"
+        },
+        "zoomout_num_results": {
+          "default": 5,
+          "description": "Number of broad web results to request for each rewritten query during the zoom-out phase.",
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Zoomout Num Results",
+          "type": "integer"
+        },
+        "zoomin_num_results": {
+          "default": 5,
+          "description": "Number of focused results to request from each selected source domain during the zoom-in phase.",
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Zoomin Num Results",
+          "type": "integer"
+        },
+        "top_k_domains_per_query": {
+          "default": 1,
+          "description": "Maximum number of high-value source domains selected per rewritten query for zoom-in searches.",
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Top K Domains Per Query",
+          "type": "integer"
+        },
+        "include_raw_diagnostics": {
+          "default": false,
+          "description": "Include raw LLM diagnostics for debugging query rewriting and answer synthesis. Keep false for normal agent use because diagnostics may contain provider payload details.",
+          "title": "Include Raw Diagnostics",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "question"
+      ],
+      "title": "zoom_searchArguments",
+      "type": "object"
+    }
+  }
+]

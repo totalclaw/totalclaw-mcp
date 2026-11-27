@@ -1,0 +1,247 @@
+[
+  {
+    "name": "list_python_environments",
+    "description": "List all available Python environments (system Python and conda environments).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "list_python_environmentsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_installed_packages",
+    "description": "\nList installed packages for a specific Python environment.\n\nArgs:\n    environment: Name of the Python environment\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "environment": {
+          "default": "default",
+          "title": "Environment",
+          "type": "string"
+        }
+      },
+      "title": "list_installed_packagesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "run_python_code",
+    "description": "\nExecute Python code with flexible execution modes.\n\nArgs:\n    code: Python code to execute\n    execution_mode: Execution mode - \"inline\" (default, fast, in-process) or \"subprocess\" (isolated)\n    session_id: Session ID for inline mode to maintain state across executions\n    environment: Python environment name (only for subprocess mode)\n    save_as: Optional filename to save the code before execution\n    timeout: Maximum execution time in seconds (only enforced for subprocess mode)\n\nReturns:\n    Execution result with output\n\nExecution modes:\n- \"inline\" (default): Executes code in the current process. Fast and reliable,\n  maintains session state. Use for most code execution tasks.\n- \"subprocess\": Executes code in a separate Python process. Use when you need\n  environment isolation or a different Python environment.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "execution_mode": {
+          "default": "inline",
+          "title": "Execution Mode",
+          "type": "string"
+        },
+        "session_id": {
+          "default": "default",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "environment": {
+          "default": "system",
+          "title": "Environment",
+          "type": "string"
+        },
+        "save_as": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Save As"
+        },
+        "timeout": {
+          "default": 300,
+          "title": "Timeout",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "title": "run_python_codeArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "run_python_file",
+    "description": "\nExecute a Python file (always uses subprocess for file execution).\n\nArgs:\n    file_path: Path to the Python file to execute\n    environment: Name of the Python environment to use\n    arguments: List of command-line arguments to pass to the script\n    timeout: Maximum execution time in seconds (default: 300)\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file_path": {
+          "title": "File Path",
+          "type": "string"
+        },
+        "environment": {
+          "default": "default",
+          "title": "Environment",
+          "type": "string"
+        },
+        "arguments": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Arguments"
+        },
+        "timeout": {
+          "default": 300,
+          "title": "Timeout",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "file_path"
+      ],
+      "title": "run_python_fileArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "install_package",
+    "description": "\nInstall a Python package in the specified environment.\n\nArgs:\n    package_name: Name of the package to install\n    environment: Name of the Python environment\n    upgrade: Whether to upgrade if already installed\n    timeout: Maximum execution time in seconds\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "package_name": {
+          "title": "Package Name",
+          "type": "string"
+        },
+        "environment": {
+          "default": "default",
+          "title": "Environment",
+          "type": "string"
+        },
+        "upgrade": {
+          "default": false,
+          "title": "Upgrade",
+          "type": "boolean"
+        },
+        "timeout": {
+          "default": 300,
+          "title": "Timeout",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "package_name"
+      ],
+      "title": "install_packageArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "read_file",
+    "description": "\nRead the content of any file, with size limits for safety.\n\nArgs:\n    file_path: Path to the file\n    max_size_kb: Maximum file size to read in KB\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file_path": {
+          "title": "File Path",
+          "type": "string"
+        },
+        "max_size_kb": {
+          "default": 1024,
+          "title": "Max Size Kb",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "file_path"
+      ],
+      "title": "read_fileArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "write_file",
+    "description": "\nWrite content to a file.\n\nArgs:\n    file_path: Path to the file to write\n    content: Content to write\n    overwrite: Whether to overwrite if exists\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file_path": {
+          "title": "File Path",
+          "type": "string"
+        },
+        "content": {
+          "title": "Content",
+          "type": "string"
+        },
+        "overwrite": {
+          "default": false,
+          "title": "Overwrite",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "file_path",
+        "content"
+      ],
+      "title": "write_fileArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_directory",
+    "description": "\nList all Python files in a directory.\n\nArgs:\n    directory_path: Path to directory (empty for working directory)\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "directory_path": {
+          "default": "",
+          "title": "Directory Path",
+          "type": "string"
+        }
+      },
+      "title": "list_directoryArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "clear_session",
+    "description": "\nClear a REPL session's state and history.\n\nArgs:\n    session_id: Session ID to clear\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "session_id": {
+          "default": "default",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "title": "clear_sessionArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_sessions",
+    "description": "List all active REPL sessions.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "list_sessionsArguments",
+      "type": "object"
+    }
+  }
+]

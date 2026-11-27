@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：包提供的可执行名与包名不同，uvx 按包名找命令会直接报「executable not provided」，改用 `--from 包==版本 可执行名`。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: fidelis_memory
 display_name: Fidelis Memory
 display_name_en: Fidelis Memory
-version: 0.1.1
+version: 0.1.2
 description: 'Fidelis Memory: faithful agent memory with zero-LLM retrieval by default. By Hermes Labs.'
 description_zh: 面向 Claude Code、Codex 等 AI Agent 的本地优先记忆服务：默认 MCP 召回为本地向量检索，可显式启用关键词 + 向量混合检索（BM25 + RRF，需 hybrid 扩展），均不调用生成式模型改写记忆，返回原始存储的笔记片段而非改写摘要；MCP
   提供 `fidelis_recall`、`fidelis_query`、`fidelis_health`、`fidelis_orient` 4 个工具。
@@ -26,7 +27,9 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --from
   - fidelis-memory==0.2.0
+  - fidelis-mcp
   requires:
     python: '>=3.10'
 requires_env: []
@@ -34,6 +37,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:30:35Z'
+  probed_runtime: uvx
+  count: 4
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

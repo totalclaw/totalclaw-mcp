@@ -1,0 +1,294 @@
+[
+  {
+    "name": "check_codex_availability",
+    "description": "\nCheck if Codex CLI is available and configured properly.\n\nReturns:\n    Status message about Codex availability\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "check_codex_availabilityArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "check_claude_availability",
+    "description": "\nCheck if Claude Code CLI is available and configured properly.\n\nReturns:\n    Status message about Claude Code availability\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "check_claude_availabilityArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "check_cursor_availability",
+    "description": "\nCheck if Cursor Agent CLI is available and configured properly.\n\nReturns:\n    Status message about Cursor Agent availability\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "check_cursor_availabilityArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "check_gemini_availability",
+    "description": "\nCheck if Gemini CLI is available and configured properly.\n\nReturns:\n    Status message about Gemini availability\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "check_gemini_availabilityArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "codex_subagent",
+    "description": "\nExecute a coding task using Codex CLI agent.\n\nCodex has access to file operations, shell commands, web search,\nand can make code changes directly. It's ideal for implementing features,\nfixing bugs, refactoring code, and other development tasks.\n\nIMPORTANT: Always provide an absolute path for project_path to ensure proper execution.\nIf you don't provide project_path, the current working directory will be used.\n\nArgs:\n    instruction: The coding task or instruction to execute\n    project_path: ABSOLUTE path to the project directory (e.g., '/home/user/myproject'). If not provided, uses current working directory.\n    session_id: Optional session ID for conversation continuity\n    model: Optional model to use ( 'gpt-5' is the only supported model)\n    is_initial_prompt: Whether this is the first prompt in a new session\n\nReturns:\n    Summary of what the Codex agent accomplished\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "instruction": {
+          "title": "Instruction",
+          "type": "string"
+        },
+        "project_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Project Path"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "gpt-5",
+          "title": "Model"
+        },
+        "is_initial_prompt": {
+          "default": false,
+          "title": "Is Initial Prompt",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "instruction"
+      ],
+      "title": "codex_subagentArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "claude_subagent",
+    "description": "\nExecute a coding task using Claude Code CLI agent.\n\nClaude Code has access to file operations, shell commands, web search,\nand can make code changes directly. It's ideal for implementing features,\nfixing bugs, refactoring code, and other development tasks.\n\nIMPORTANT: Always provide an absolute path for project_path to ensure proper execution.\nIf you don't provide project_path, the current working directory will be used.\nuse sonnet-4 model by default unless the task is very complex and need more powerful model. opus-4.1 costs 10X more than sonnet-4. And sonnet-4 is smart enough to handle most tasks.\n\n\nArgs:\n    instruction: The coding task or instruction to execute\n    project_path: ABSOLUTE path to the project directory (e.g., '/home/user/myproject'). If not provided, uses current working directory.\n    session_id: Optional session ID for conversation continuity\n    model: Optional model to use (e.g., 'sonnet-4', 'opus-4.1')\n    is_initial_prompt: Whether this is the first prompt in a new session\n\nReturns:\n    Summary of what the Claude Code agent accomplished\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "instruction": {
+          "title": "Instruction",
+          "type": "string"
+        },
+        "project_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Project Path"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "is_initial_prompt": {
+          "default": false,
+          "title": "Is Initial Prompt",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "instruction"
+      ],
+      "title": "claude_subagentArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "cursor_subagent",
+    "description": "\nExecute a coding task using Cursor Agent CLI.\n\nCursor Agent has access to file operations, shell commands, web search,\nand can make code changes directly. It's ideal for implementing features,\nfixing bugs, refactoring code, and other development tasks.\n\nIMPORTANT: Always provide an absolute path for project_path to ensure proper execution.\nIf you don't provide project_path, the current working directory will be used.\n\nArgs:\n    instruction: The coding task or instruction to execute\n    project_path: ABSOLUTE path to the project directory (e.g., '/home/user/myproject'). If not provided, uses current working directory.\n    session_id: Optional session ID for conversation continuity\n    model: Optional model to use (e.g., 'gpt-5', 'sonnet-4', 'sonnet-4-thinking')\n    is_initial_prompt: Whether this is the first prompt in a new session\n\nReturns:\n    Summary of what the Cursor Agent accomplished\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "instruction": {
+          "title": "Instruction",
+          "type": "string"
+        },
+        "project_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Project Path"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "is_initial_prompt": {
+          "default": false,
+          "title": "Is Initial Prompt",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "instruction"
+      ],
+      "title": "cursor_subagentArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "gemini_subagent",
+    "description": "\nExecute a coding task using Gemini CLI agent.\n\nGemini has access to file operations, shell commands, web search,\nand can make code changes directly. It's ideal for implementing features,\nfixing bugs, refactoring code, and other development tasks.\n\nIMPORTANT: Always provide an absolute path for project_path to ensure proper execution.\nIf you don't provide project_path, the current working directory will be used.\n\nArgs:\n    instruction: The coding task or instruction to execute\n    project_path: ABSOLUTE path to the project directory (e.g., '/home/user/myproject'). If not provided, uses current working directory.\n    session_id: Optional session ID for conversation continuity\n    model: Optional model to use ( 'gemini-2.5-pro', 'gemini-2.5-flash' are the only supported models)\n    is_initial_prompt: Whether this is the first prompt in a new session\n\nReturns:\n    Summary of what the Gemini agent accomplished\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "instruction": {
+          "title": "Instruction",
+          "type": "string"
+        },
+        "project_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Project Path"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "is_initial_prompt": {
+          "default": false,
+          "title": "Is Initial Prompt",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "instruction"
+      ],
+      "title": "gemini_subagentArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "test_tool",
+    "description": "\nTest the tool.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "signal": {
+          "default": true,
+          "title": "Signal",
+          "type": "boolean"
+        }
+      },
+      "title": "test_toolArguments",
+      "type": "object"
+    }
+  }
+]
