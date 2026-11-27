@@ -744,7 +744,8 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
 - [x] **F3** `stripe` 改官方托管端点 `https://mcp.stripe.com`（OAuth），去掉密钥
 - [x] **F4–F6** 101 条按「满 7 天的最新稳定版」升级，静态审核 + 旧版差分复核全部 allow
 - [x] **F6.1** 冷却期 12 条复查（11-26 晚）：满 7 天的 2 条里 airtable_rashidazarang 4.0.1→5.1.0 已升；mailkite 维持 0.20.0 —— 上游 0.20.1/0.20.2 把依赖写成 `file:../node`，从 npm 装出来是悬空链接，启动即崩（dep_gate 告警发现，实装确认）
-- [ ] **F6.2** 其余 10 条最早 11-30 才满 7 天，下一轮再升（清单见明细文末）。本会话设了每日定时复查（会话结束即失效）
+- [ ] **F6.2** 冷却期内的条目到期即升：2026-11-27 第二轮重查后共 45 条在冷却期（含原 10 条），逐条到期日见 [upstream-updates-2026-11-27.md](upstream-updates-2026-11-27.md) 文末。本会话设了每日定时复查（会话结束即失效）
+- [x] **F19** 2026-11-27 第二轮追上游：74 条有新版本，按 7 天冷却升 **29 条**（含大版本 bernstein 4.0.0、dsh_novel_writer 8.0.0，实探均可启动）；静态审核 29 条 allow（7 条 warn 与旧 pin 逐项比对无新增、发布者 / 仓库未变）；沙箱实探刷新 14 条工具清单。见 [upstream-updates-2026-11-27.md](upstream-updates-2026-11-27.md)
 - [x] **F7** 门禁：gen_registry --check --strict、scan-registry、dep_gate --refresh；chrome_devtools / playwright 重新探测
 - [x] **F8** 老用户升级路径已查清：有「更新」按钮，但没有新版本提示（待办见明细 U3）
 - [x] **F9** desktop_commander 安装期遥测：加 `npm_config_ignore_scripts=true`（运行时 env + `security.enforced_env`，老用户同步）。对照实测开关生效时 postinstall 不跑；依赖 ripgrep / sharp 已改用平台预编译包，全新缓存安装 + 探测 25 个工具正常

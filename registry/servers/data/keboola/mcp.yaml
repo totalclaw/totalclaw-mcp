@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-27 静态审核：通过（详见 docs/review-2026-11-27-upstream2.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: keboola
 display_name: Keboola
 display_name_en: Keboola
-version: 0.1.2
+version: 0.1.3
 description: MCP server for interacting with Keboola Connection
 description_zh: Keboola 官方集成，在单一平台上构建数据工作流、集成和分析。
 author: keboola
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - keboola-mcp-server==1.120.0
+  - keboola-mcp-server==1.120.1
   requires:
     python: '>=3.10'
 requires_env: []
@@ -34,7 +34,7 @@ defaults:
   enabled: true
   timeout: 120
 tools:
-  probed_at: '2026-11-27T07:59:15Z'
+  probed_at: '2026-11-27T10:57:01Z'
   probed_runtime: uvx
   count: 57
   file: tools.json

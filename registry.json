@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-27T10:44:01Z",
+  "generated_at": "2026-11-27T11:01:19Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -434,7 +434,7 @@
       "display_name_en": "ContextStream",
       "description": "Verified npm launcher for the open-source ContextStream Rust MCP server",
       "description_zh": "面向编码 Agent 的共享持久记忆与语义代码搜索，多个 Agent（Cursor、Claude Code、Codex、Windsurf 等）之间共用同一份上下文。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "contextstream",
       "license": "MIT",
       "homepage": "https://github.com/contextstream/mcp-server",
@@ -463,7 +463,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@contextstream/mcp-server@1.0.83"
+          "package": "@contextstream/mcp-server@1.0.88"
         }
       ],
       "requires_env": [],
@@ -487,8 +487,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "5b6b37968020c04dc48ed9f817bb19cbe09f9fa3f73920873469223209ea4af8",
-          "size": 1226
+          "sha256": "3fc3ac8fce08f22e0b15a75cccae63632bcb58b3196b991b7c5d10f3c71b01bb",
+          "size": 1236
         },
         {
           "path": "tools.json",
@@ -496,7 +496,7 @@
           "size": 3374
         }
       ],
-      "bundle_sha256": "2cde2695702f8611a9a2c371c669922bd33f654e6a20c133846c3d6e202feefb",
+      "bundle_sha256": "309a01f853e1c917539c62bf838344ffccb817db27e83f5d2a2e863a09d1928f",
       "popularity": {
         "score": 321,
         "downloads_weekly": 1632
@@ -2201,7 +2201,7 @@
       "display_name_en": "zotero-mcp",
       "description": "Zotero MCP server and CLI: chat with your Zotero research library in Claude, ChatGPT, Cursor, Codex and other AI agents",
       "description_zh": "连接 Zotero 文献库与 Claude 等 AI 助手，支持讨论论文、生成摘要、分析引文与检索笔记，兼容本地 Zotero 与云端 API。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "54yyyu",
       "license": "MIT AND AGPL-3.0-or-later",
       "homepage": "https://github.com/54yyyu/zotero-mcp",
@@ -2230,7 +2230,7 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "zotero-mcp-server==0.17.2"
+          "package": "zotero-mcp-server==0.17.3"
         }
       ],
       "requires_env": [],
@@ -2287,16 +2287,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a55cb6518d9a360d696974a073da58a61cd14714bececbd1ebd9d0b8a0244aa3",
-          "size": 1249
+          "sha256": "67f86caeb42d793e9952acc04a7655617f4cd1709f58320afe92bd17d6a449d1",
+          "size": 1259
         },
         {
           "path": "tools.json",
-          "sha256": "c24d2045a5b9f03f12aac5b69020c3a76500ce136933622c46e8945a9baee9fd",
-          "size": 39292
+          "sha256": "c1c3d32bdbda05148c847dcc2d2697b5bf5c76ecfa65a8ca1ecb140f89018f2b",
+          "size": 37866
         }
       ],
-      "bundle_sha256": "2f64cf5833214286ac94807eb4d006b062ab99fa425cd5f555c5f762f134c18f",
+      "bundle_sha256": "2807f028de7af4b732291b996a7eb9210d25e38e60b23ece4d2c3ddbfbecd083",
       "popularity": {
         "score": 751,
         "downloads_weekly": 5723,
@@ -10406,7 +10406,7 @@
       "display_name_en": "MailKite",
       "description": "Model Context Protocol server for MailKite — exposes the MailKite API to LLM agents as tools. A thin layer over the MailKite Node SDK and the shared sdks/spec contract.",
       "description_zh": "让 AI Agent 拥有一个属于自己的真实邮箱：入站邮件以结构化工具调用的形式送达，Agent 从你验证过的域名（SPF/DKIM）发信，而不是代理你已有的 Gmail/IMAP 邮箱。60+ 个工具，覆盖单封与批量发信、附件、入站路由、Webhook 设置与测试、域名注册与 DNS 验证、模板、联系人列表、群发和邮件检索。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "mailkite",
       "license": "MIT",
       "homepage": "https://github.com/mailkite/mailkite-mcp",
@@ -10435,7 +10435,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@mailkite/mcp@0.20.0"
+          "package": "@mailkite/mcp@0.20.2"
         }
       ],
       "requires_env": [
@@ -10465,11 +10465,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "65d4e3b5d8501e0499d198abd5aee6795bd4a26c55f961ad86d9f5a20ada68af",
-          "size": 1682
+          "sha256": "687b2f970216bd29eee42a7b83cc2361fe9de2fd51c90b6f80d8b569334dbe0d",
+          "size": 1692
         }
       ],
-      "bundle_sha256": "45e1d1d3ffbd109ab63e38b14a3982945a9c0c30b07c021e6e722eaee6394bc4",
+      "bundle_sha256": "eeb2ceef9496165afb00b2e4aa16e101121197bf3202aa4cd341cb37dbace9c3",
       "popularity": {
         "score": 0
       }
@@ -10561,7 +10561,7 @@
       "display_name_en": "ms-365-mcp-server",
       "description": " A Model Context Protocol (MCP) server for interacting with Microsoft 365 and Office services through the Graph API",
       "description_zh": "连接整个 Microsoft 365 套件 (Graph API)，包括邮件、文件、Excel、日历等的 MCP 服务器。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "softeria",
       "license": "MIT",
       "homepage": "https://github.com/softeria/ms-365-mcp-server",
@@ -10590,7 +10590,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@softeria/ms-365-mcp-server@0.187.0"
+          "package": "@softeria/ms-365-mcp-server@0.190.2"
         }
       ],
       "requires_env": [],
@@ -10815,16 +10815,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "7833f679450f1185a1215e0ca4141273a080a858b82604bfbebc00b35691914e",
-          "size": 1245
+          "sha256": "dfe6764752fc05f69c65790034dffce2ccc0e4cc6e712bc3e43ea44bcdb6ac84",
+          "size": 1255
         },
         {
           "path": "tools.json",
-          "sha256": "2a282306709d755a10fda30be0272ea54c4a09c06bd8e630143bb003fdc8b9e0",
-          "size": 1721936
+          "sha256": "147d265a6c9ebd8c0c93da4088454b67a327a5088342014bacd545a4a52c858a",
+          "size": 1720871
         }
       ],
-      "bundle_sha256": "0bf5769d795d676e8ba11a652e9ff7f04a6264a99b9b92684b25cd54864edf84",
+      "bundle_sha256": "eb618f300ad180f6a3b67b85bd047140227e31f11c3b80862568d3697d172edf",
       "popularity": {
         "score": 304,
         "stars": 1090
@@ -12615,8 +12615,9 @@
       "display_name_en": "MasterGo",
       "description": "Read MasterGo design files as DSL and turn selected layers into code.",
       "description_zh": "读取 MasterGo 设计稿的 DSL，把选中图层还原成代码；vibe runtime 还支持反向把本地代码同步回画布。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "upstream",
+      "license": "ISC",
       "homepage": "https://github.com/mastergo-design/mastergo-magic-mcp",
       "verified": true,
       "tested_with": ">=0.63.72",
@@ -12643,7 +12644,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@mastergo/magic-mcp@0.2.20"
+          "package": "@mastergo/magic-mcp@0.2.22"
         },
         {
           "id": "npx-vibe",
@@ -12682,8 +12683,8 @@
       ],
       "security": {
         "scan_verdict": "allow",
-        "prompt_injection_findings": [],
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/creative/mastergo",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/creative/mastergo",
@@ -12694,8 +12695,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "4633d04063fd7522d00393d6235f89e485c1d2d5b495b6555691dd534a2a3163",
-          "size": 2044
+          "sha256": "ee03dc8bda992e74a90ee7306506f1cb2f628f69c50164d24660af61eeb90682",
+          "size": 2072
         },
         {
           "path": "tools.json",
@@ -12703,7 +12704,7 @@
           "size": 28670
         }
       ],
-      "bundle_sha256": "4fffe23358b11a45f1ca183f97f6ef76a2ad251555fc7c52cc59251122d89d24",
+      "bundle_sha256": "85fa907f6376452e682751bd97ace59ac9970481466e582ffdf1482612b0ccf4",
       "popularity": {
         "score": 0
       }
@@ -13672,7 +13673,7 @@
       "display_name_en": "Aiven",
       "description": "MCP server for Aiven cloud data platform - manage PostgreSQL, Kafka, and other services",
       "description_zh": "Aiven 官方集成，导航 Aiven 项目，与 PostgreSQL®, Kafka®, ClickHouse®, OpenSearch® 服务交互。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "Aiven-Open",
       "license": "Apache-2.0",
       "homepage": "https://github.com/Aiven-Open/mcp-aiven",
@@ -13701,7 +13702,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "mcp-aiven@1.20.0"
+          "package": "mcp-aiven@1.21.0"
         }
       ],
       "requires_env": [
@@ -13731,11 +13732,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "09f5000df5f1f04c6e46cca6f9a75451837eb699bf118afb4e02ccfc2c8d24c5",
-          "size": 1296
+          "sha256": "4154e338fc887d36c0553b868aeec527a9237b786ccd2fa393cd51cb867072c5",
+          "size": 1306
         }
       ],
-      "bundle_sha256": "90b823da7900a3e257c8edeea721a0001c88aab53644ff015ade31dc1890c424",
+      "bundle_sha256": "5a90c91a0247e2000193e0d6d994a1c45cc02c08b8d2a714a64e2a1f5a778f65",
       "popularity": {
         "score": 365,
         "downloads_weekly": 152,
@@ -13826,7 +13827,7 @@
       "display_name_en": "anymd",
       "description": "Any file → clean Markdown for AI agents: PDF, Word, PowerPoint, Excel, EPUB, HTML and web pages, images (OCR), audio and video (metadata, subtitles, transcripts). A fast Rust MCP server and CLI that runs on your machine. No API key.",
       "description_zh": "把任意文件转成干净的 Markdown 供 AI 使用：PDF、Word、PowerPoint、Excel/CSV、EPUB、HTML/网页 URL、图片（可选 OCR）与音视频元数据/字幕；提供 read、search、inspect 三个工具，PDF 表格与双栏阅读顺序可还原，并带页码引用锚点。原名 pdf-reader-mcp。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "SylphxAI",
       "license": "MIT",
       "homepage": "https://github.com/SylphxAI/anymd",
@@ -13855,7 +13856,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@sylphx/anymd@8.5.13"
+          "package": "@sylphx/anymd@8.5.14"
         }
       ],
       "requires_env": [],
@@ -13881,16 +13882,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "61b7a91200839ee1964eb879dca942955307ae4cb561d9dca20b9848c0ae41d6",
-          "size": 1492
+          "sha256": "21ceea069a4d4500137f5fe97cad644341f0ee23e430a93de1528a03cb700753",
+          "size": 1502
         },
         {
           "path": "tools.json",
-          "sha256": "6393a33673da536721b106d5f0078f7069ffd25fca889496a1049af1d14cbdee",
-          "size": 23892
+          "sha256": "da6503165c985ee17e3f98a905bb947d6e6b8cc0194e70ba4dc192dedfa11677",
+          "size": 24225
         }
       ],
-      "bundle_sha256": "2a33beb394b38729d8e36c9966c937971527c7b1323014f004c4edd85462c0fb",
+      "bundle_sha256": "61326f62c289c9c6463ed77ecfbcd0a15acd1e247d9eaec9a32e63b3f3a87bb4",
       "popularity": {
         "score": 302,
         "stars": 1055
@@ -15269,7 +15270,7 @@
       "display_name_en": "Excel (by haris-musa)",
       "description": "MCP server for creating, reading and editing Excel workbooks without Microsoft Excel",
       "description_zh": "Excel 操作，包括读写、工作表管理、格式化、图表和数据透视表 (提供更高级的功能)。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "haris-musa",
       "license": "MIT",
       "homepage": "https://github.com/haris-musa/excel-mcp-server",
@@ -15298,7 +15299,7 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "excel-mcp-server==2.3.2"
+          "package": "excel-mcp-server==2.3.3"
         }
       ],
       "requires_env": [
@@ -15313,11 +15314,59 @@
         }
       ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 46,
+      "tools": [
+        "create_workbook",
+        "describe_workbook",
+        "set_workbook_settings",
+        "list_workbooks",
+        "export_workbook",
+        "import_workbook",
+        "import_csv",
+        "export_csv",
+        "describe_sheet",
+        "create_sheet",
+        "rename_sheet",
+        "copy_sheet",
+        "delete_sheet",
+        "insert_rows_or_columns",
+        "delete_rows_or_columns",
+        "read_range",
+        "write_range",
+        "clear_range",
+        "copy_range",
+        "sort_range",
+        "transform_range",
+        "find_cells",
+        "replace_cells",
+        "trace_formula",
+        "goal_seek",
+        "format_range",
+        "merge_cells",
+        "set_sheet_layout",
+        "add_conditional_format",
+        "add_data_validation",
+        "set_table",
+        "create_chart",
+        "delete_chart",
+        "add_sparklines",
+        "delete_sparklines",
+        "create_pivot_table",
+        "delete_pivot_table",
+        "add_slicer",
+        "delete_slicer",
+        "set_defined_name",
+        "delete_defined_name",
+        "set_note",
+        "delete_note",
+        "insert_image",
+        "delete_image",
+        "read_vba"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/excel_haris_musa",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/excel_haris_musa",
@@ -15328,11 +15377,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "e2bee672d90fb728790834b789b79d15cb1939e7b4fb59bc2cc20497fdf2e628",
-          "size": 1472
+          "sha256": "c877cc18c8ba9bfe20b9d27f77ff0a5cf791892999a9bd561b914b3a6f9364cc",
+          "size": 1610
+        },
+        {
+          "path": "tools.json",
+          "sha256": "3a3823ef35b5bec3fea339a5fc8e8ece31d94cd64250e70184bc6398acfcce8f",
+          "size": 98985
         }
       ],
-      "bundle_sha256": "b43b9df61f0370306adc3efb7e54a3027154833c3a01fdff7ee8315d5c9c4c73",
+      "bundle_sha256": "81ba262ad58772d05eb58673bc43a071fff45ed07317e91b52f42ce6705e8a0c",
       "popularity": {
         "score": 829,
         "downloads_weekly": 45325,
@@ -16153,7 +16207,7 @@
       "display_name_en": "Keboola",
       "description": "MCP server for interacting with Keboola Connection",
       "description_zh": "Keboola 官方集成，在单一平台上构建数据工作流、集成和分析。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "keboola",
       "license": "MIT",
       "homepage": "https://github.com/keboola/keboola-mcp-server",
@@ -16182,7 +16236,7 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "keboola-mcp-server==1.120.0"
+          "package": "keboola-mcp-server==1.120.1"
         }
       ],
       "requires_env": [],
@@ -16261,16 +16315,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a0f1099f19c1b5b805891159004cc0feee6b42e497220689aacfd4ad1fd685d5",
-          "size": 1105
+          "sha256": "377b3ec06a7077f54d21c3cd75da7a450453299db09460a2fb68706acfda6505",
+          "size": 1115
         },
         {
           "path": "tools.json",
-          "sha256": "8fb021c713d1335ab9e05249ec6da2a5d285c059650ccad2a9dcc0687d14fb4f",
-          "size": 221354
+          "sha256": "2cff3ab12c581482ca391570d42c52c8d468627d29669e64b0f523641e74dd9a",
+          "size": 221459
         }
       ],
-      "bundle_sha256": "adc8095273016f98432e048e033eb3c01fa7edb3f4b56f2dd23f3eb679b6e0c0",
+      "bundle_sha256": "f8495f0c33236e2a50ef87646909813976271d6ab9739fe2f325e54d16d79412",
       "popularity": {
         "score": 294,
         "downloads_weekly": 879
@@ -16350,7 +16404,7 @@
       "display_name_en": "kordoc",
       "description": "Parse Korean documents (HWP3-5, HWPX, HWPML, PDF, XLS(X), DOCX) to Markdown — CLI + MCP server with lossless patch/roundtrip, form-filler, document diff, print & layout-preserving SVG renderer",
       "description_zh": "韩国文档解析库、CLI 与 MCP 服务器：将 HWP 3.x/5.x、HWPX、HWPML 以及 PDF、DOCX、XLSX、PPTX 和图片转换为 Markdown 与结构化数据，并支持表单填写、保留格式的文档修改、文档对比和公文样式 HWPX 生成。",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "author": "chrisryugj",
       "license": "MIT",
       "homepage": "https://github.com/chrisryugj/kordoc",
@@ -16379,7 +16433,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "kordoc@4.25.1"
+          "package": "kordoc@4.25.2"
         }
       ],
       "requires_env": [],
@@ -16423,8 +16477,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "569160cd2cd044e8a96fefa55322e6d61b7d149a34b611fa20ab0f09b89bcd6e",
-          "size": 1569
+          "sha256": "f84778cfc221b58da8ff4196c24c04bf60e4fc163acc4b94349a57b1a32762c0",
+          "size": 1579
         },
         {
           "path": "tools.json",
@@ -16432,7 +16486,7 @@
           "size": 70475
         }
       ],
-      "bundle_sha256": "57047f73a6bbc95827649eac2b8887cbd347b5ef09d2032a8877b51bd07c75ae",
+      "bundle_sha256": "3227e66882f9863a8f6e59e9d9119794be2dfd37dfc890b718e09acba8238e61",
       "popularity": {
         "score": 799,
         "downloads_weekly": 34729,
@@ -17597,7 +17651,7 @@
       "display_name_en": "mongodb-lens",
       "description": "MongoDB Lens: Full Featured MCP Server for MongoDB Databases",
       "description_zh": "功能齐全的 MongoDB 数据库 MCP 服务器。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "furey",
       "license": "MIT",
       "homepage": "https://github.com/furey/mongodb-lens",
@@ -17626,7 +17680,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "mongodb-lens@9.1.5"
+          "package": "mongodb-lens@9.2.0"
         }
       ],
       "requires_env": [
@@ -17656,11 +17710,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "b3ecd4595dc64abfe41beb76bb610551dd02b5a79ac5a0d4d8442a07c0a0166f",
-          "size": 1301
+          "sha256": "05a9dbb121a490c6e35937b7171bdd6306d0c20a0f9c617de3d53b45a57bb446",
+          "size": 1311
         }
       ],
-      "bundle_sha256": "facd9a70e14698e1b634b213b61ab4e22797dc033be4cac45393caf40346d734",
+      "bundle_sha256": "ddbbd115a440b466b776e231ed79f986d38788ad84971a2cf25cd0bc2509136a",
       "popularity": {
         "score": 390,
         "downloads_weekly": 37,
@@ -18534,7 +18588,7 @@
       "display_name_en": "Comet Opik",
       "description": "Model Context Protocol server for Opik (Comet's LLM observability platform).",
       "description_zh": "Comet 官方集成，用自然语言查询和分析 Opik 日志、追踪、提示等 LLM 遥测数据。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "comet-ml",
       "license": "Apache-2.0",
       "homepage": "https://github.com/comet-ml/opik-mcp",
@@ -18563,7 +18617,7 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "opik-mcp==3.0.11"
+          "package": "opik-mcp==3.0.12"
         }
       ],
       "requires_env": [],
@@ -18593,8 +18647,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "d6dd6de0c55b7fdd76c90a2284971bead2c573752c2bdd888eaab2c2d2f36cec",
-          "size": 1451
+          "sha256": "1df33a17099c157a238acf61a143eb75dc9d7c2dfea6ac90f1445e9a715db6c6",
+          "size": 1461
         },
         {
           "path": "tools.json",
@@ -18602,7 +18656,7 @@
           "size": 32220
         }
       ],
-      "bundle_sha256": "c667068aa88315c0363320ca70fac28acbb355d301229198ee4823a50092aa9c",
+      "bundle_sha256": "1e9929030574a2e4f4223eb3e1151a599a4595eae78ee14b88c4761307eedf5d",
       "popularity": {
         "score": 0
       }
@@ -19747,7 +19801,7 @@
       "display_name_en": "Supabase",
       "description": "MCP server for interacting with Supabase",
       "description_zh": "连接Supabase数据库的MCP服务器，支持数据管理和查询",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "upstream",
       "license": "Apache-2.0",
       "homepage": "https://www.npmjs.com/package/@supabase/mcp-server-supabase",
@@ -19776,7 +19830,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@supabase/mcp-server-supabase@0.18.0"
+          "package": "@supabase/mcp-server-supabase@0.19.0"
         }
       ],
       "requires_env": [
@@ -19804,11 +19858,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "bb62b31b2a323e0becb7688f713ca5c193e573a8dc20f5c7e3a8a938f47f1f16",
-          "size": 1128
+          "sha256": "7db5dc4f2e97f2b7f4178c4e5d20d5e88865b5acc89dbf6277754f3931348998",
+          "size": 1138
         }
       ],
-      "bundle_sha256": "6190f70d1e11e93f8ef276516e7f360c36c10d1442e841283e859d79ec5afb1f",
+      "bundle_sha256": "c1197118a797af09c44f2469e5e19e947b9768c85ff234422d7c235b3377f1e4",
       "popularity": {
         "score": 0
       }
@@ -20401,7 +20455,7 @@
       "display_name_en": "genai-toolbox",
       "description": "A CLI tool for running a toolbox server.",
       "description_zh": "Google 官方开源 MCP 服务器，专注于为数据库提供简单、快速、安全的工具。",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "author": "googleapis",
       "license": "Apache-2.0",
       "homepage": "https://github.com/googleapis/genai-toolbox",
@@ -20430,7 +20484,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@toolbox-sdk/server@1.17.0"
+          "package": "@toolbox-sdk/server@1.18.0"
         }
       ],
       "requires_env": [
@@ -20481,11 +20535,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a20c2a81c4dfe81fcbfdff1559265f5146d13beb92fc9d9093afc29e6156e288",
-          "size": 2704
+          "sha256": "aad45e6d9e75c5611848dcbfaecb6ba6065b8df3f272075401c391eddb1159b6",
+          "size": 2714
         }
       ],
-      "bundle_sha256": "70ebd261dd9a85d072fa8b60d62376e354082121e417bc4c73180ea532d69dc4",
+      "bundle_sha256": "c3d2f163dbc5f87bd23c12c5ddd4aa9ec529b4dbc6cf6e5f05196b88ed4d6f71",
       "popularity": {
         "score": 0
       }
@@ -21326,7 +21380,7 @@
       "display_name_en": "Bernstein",
       "description": "The open-source governance layer for AI agents. No model in the coordination loop, so replaying a plan reproduces its task graph byte-identically, and run receipts are byte-identical across independent builds. Signed lineage plus an opt-in HMAC audit chain a reviewer checks offline, without rerunnin",
       "description_zh": "多智能体编排器，协调 37 个 CLI 编码代理（Claude Code、Codex、Gemini CLI、Cursor、Aider 等）在并行 Git worktree 中运行。内置 MCP 服务器模式（stdio + HTTP/SSE）。",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "author": "sipyourdrink-ltd",
       "license": "Apache-2.0",
       "homepage": "https://github.com/sipyourdrink-ltd/bernstein",
@@ -21355,7 +21409,7 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "bernstein==3.24.1"
+          "package": "bernstein==4.0.0"
         }
       ],
       "requires_env": [],
@@ -21391,16 +21445,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "31501e03c7c5df478eec13037936af3c44cb6f1c5e6d32a9093486f829bbfdad",
-          "size": 1677
+          "sha256": "d940fe79de6b44f10897d6b88ad7250ca75f24cae89e2c68f40770f1a9423105",
+          "size": 1686
         },
         {
           "path": "tools.json",
-          "sha256": "0fd1c88795581b3a67695a86914251fe684bca8f9ca0d956b74956c085291414",
+          "sha256": "232955c64852cbc0cccbd54c0b4496841a41d26a568989e09ef4bf5716201bef",
           "size": 23354
         }
       ],
-      "bundle_sha256": "40aa9f188f39417f99afb61d73d90b7908a9b52f792ef917270f42e05ab56a87",
+      "bundle_sha256": "7f2dddb57fc299c33dcd36ebc64bd7ae3a0a688d18db9f23aef757e2e7cd9f4a",
       "popularity": {
         "score": 448,
         "downloads_weekly": 29923
@@ -21413,7 +21467,7 @@
       "display_name_en": "Bestax",
       "description": "MCP server for @allxsmith/bestax-bulma — component props, examples, CSS variables and agent skills, served offline from a version-pinned index",
       "description_zh": "为编码 Agent 提供 Bestax（基于 Bulma v1 的 React 组件库）的组件 props、示例、CSS 变量和 Agent Skills，离线运行。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "allxsmith",
       "license": "MIT",
       "homepage": "https://github.com/allxsmith/bestax/tree/main/bestax-mcp",
@@ -21442,7 +21496,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "bestax-mcp@1.18.79"
+          "package": "bestax-mcp@1.18.88"
         }
       ],
       "requires_env": [],
@@ -21474,16 +21528,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "62d488e3ee1d727e6b5e8609284b03c7839c9fcb890ef469bde93697149fa469",
-          "size": 1272
+          "sha256": "113e92d023415476d5e485d60da0d8a841b98ad6d606606514428ab84b9dea3d",
+          "size": 1282
         },
         {
           "path": "tools.json",
-          "sha256": "cdd05d621af7282f0bea3ceb067012dfcdadec486222f7224eb0fe3a10620e62",
-          "size": 7366
+          "sha256": "8bd09b52ea29387fca5698ea13e4ebd906f9b2f64ba7c24dc4f0db62980a6fd7",
+          "size": 7434
         }
       ],
-      "bundle_sha256": "d525586b6e5d6d481e7544824c91e769a3501145cfbe7d5d9034c6553a436bc4",
+      "bundle_sha256": "9a8ecf9ff03150f88dc56ebf849283628019d6126c3587a215fccdbe5e67d397",
       "popularity": {
         "score": 444,
         "downloads_weekly": 1976,
@@ -24120,7 +24174,7 @@
       "display_name_en": "GitLab",
       "description": "GitLab MCP server for projects, merge requests, issues, pipelines, wiki, releases, and more",
       "description_zh": "GitLab的MCP服务器，支持GitLab的读取和写入",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "upstream",
       "license": "MIT",
       "homepage": "https://www.npmjs.com/package/@zereight/mcp-gitlab",
@@ -24149,7 +24203,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@zereight/mcp-gitlab@2.3.29"
+          "package": "@zereight/mcp-gitlab@2.3.30"
         }
       ],
       "requires_env": [
@@ -24184,11 +24238,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "3c37898315596ad8e7c2955ffc4a680cac55c3650f9d90a1af91f367c835de6a",
-          "size": 1455
+          "sha256": "fa4f7dd229aad4aa2e8f8d55f75f9d0eb870868e360248719e84f37f7d496567",
+          "size": 1465
         }
       ],
-      "bundle_sha256": "c909bb55258f16cae14b57174cfd22de6725e30748c3ce32cf87dd88c80ed57a",
+      "bundle_sha256": "d44376b3a3a7d1db8c9fa935075ae767fb515fb3e509c9ccb21f092af03170f7",
       "popularity": {
         "score": 0
       }
@@ -33204,7 +33258,7 @@
       "display_name_en": "davinci-resolve-mcp",
       "description": "NPM bootstrapper for the DaVinci Resolve MCP Server.",
       "description_zh": "DaVinci Resolve 的 MCP 服务器集成，提供视频编辑、调色、媒体管理和项目控制的强大工具。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "samuelgursky",
       "license": "MIT",
       "homepage": "https://github.com/samuelgursky/davinci-resolve-mcp",
@@ -33233,7 +33287,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "davinci-resolve-mcp@5.3.4"
+          "package": "davinci-resolve-mcp@5.4.0"
         }
       ],
       "requires_env": [],
@@ -33253,11 +33307,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "4efb5d23df374c03310a5d259ff2b75c3828a4653ad3a30919e63b9f844b85bc",
-          "size": 1065
+          "sha256": "31ee36635201ec3df87a819c3a85cfd23339993d8d229a2d42b48b652e1ca3f9",
+          "size": 1075
         }
       ],
-      "bundle_sha256": "8cf8588c830b75b5ffa16656cc22218b9e0273b816a90e327dbf65985e6c42a2",
+      "bundle_sha256": "881d9893892bd03e4d65592298f47565d562f15b21940ae32fc78acfb2dd2ab2",
       "popularity": {
         "score": 730,
         "downloads_weekly": 5213,
@@ -35268,7 +35322,7 @@
       "display_name_en": "Speak AI",
       "description": "Official Speak AI MCP Server — capture meetings, search thousands of recordings, run async voice and video surveys, create clips, and automate workflows from your AI assistant.",
       "description_zh": "语音与视频转录（支持 100+ 种语言）、AI 分析与基于自定义评分标准的通话评分；官方 MCP 服务器，npm 包 @speakai/mcp-server。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "speakai",
       "license": "MIT",
       "homepage": "https://github.com/speakai/speakai-mcp",
@@ -35297,7 +35351,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@speakai/mcp-server@2.1.1"
+          "package": "@speakai/mcp-server@2.3.0"
         }
       ],
       "requires_env": [
@@ -35327,11 +35381,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "d2f24f1b4bb56859e104241709357052ae1ea64dc477e58fd1e01cebc3a9a4b4",
-          "size": 1453
+          "sha256": "85197d7da607a315f45a2141e0418c74b8d1d64aef1ca4595d78cabf0e309e2d",
+          "size": 1463
         }
       ],
-      "bundle_sha256": "6d8c24e26580b0a507ecfe097fe45c21f8dad5c4bd918cbd72098b3ddd7cfb6a",
+      "bundle_sha256": "eabfddc60436c6554c063e1fe24f8a9d72b7e0784b9d0423b13fef957af76eeb",
       "popularity": {
         "score": 0
       }
@@ -42706,7 +42760,7 @@
       "display_name_en": "mcp-atlassian",
       "description": "The Model Context Protocol (MCP) Atlassian integration is an open-source implementation that bridges Atlassian products (Jira and Confluence) with AI language models following Anthropic's MCP specification. This project enables secure, contextual AI interactions with Atlassian tools while maintainin",
       "description_zh": "Atlassian 产品 (Confluence 和 Jira) 的 MCP 服务器。支持 Cloud/Server/DC。提供全面的工具用于搜索、读取、创建和管理内容。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "sooperset",
       "license": "MIT",
       "homepage": "https://github.com/sooperset/mcp-atlassian",
@@ -42735,7 +42789,7 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "mcp-atlassian==0.24.6"
+          "package": "mcp-atlassian==0.24.7"
         }
       ],
       "requires_env": [
@@ -42810,11 +42864,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "31e92419a917d95a71ad1e89239412de5226a57e0d9ca8123b37791dc3502e92",
-          "size": 3068
+          "sha256": "c90307f540398316cd903a6f9d08762e2c3027ce4617a25242142ed177bbcbbf",
+          "size": 3078
         }
       ],
-      "bundle_sha256": "8c2f786f3acd94333f788ebd2198d2b44723b705eb1f37fd87ca0136ff0d2ad3",
+      "bundle_sha256": "97163f07996d0294086124a8b40d42e28900d9c263c82709eeb4e8013b3677ca",
       "popularity": {
         "score": 913,
         "downloads_weekly": 221324,
@@ -43378,7 +43432,7 @@
       "display_name_en": "dsh-novel-writer",
       "description": "[](https://glama.ai/mcp/servers/siweina/dsh-novel-writer)      - Offline novel-writing toolkit for Chinese web-novel authors: chapter stats, style checks, plot-thread tracking, continuity audits and semantic search.",
       "description_zh": "网文作者的本地章节体检工具集：16 个工具覆盖章节统计、风格基线自检、伏笔与剧情线登记、连贯性/OOC 审计、关键词与句式分析、本地语义检索；全离线运行，无需 API Key。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "siweina",
       "license": "MIT",
       "homepage": "https://github.com/siweina/dsh-novel-writer",
@@ -43407,7 +43461,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "dsh-novel-writer@7.4.0"
+          "package": "dsh-novel-writer@8.0.0"
         }
       ],
       "requires_env": [
@@ -43422,11 +43476,35 @@
         }
       ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 22,
+      "tools": [
+        "novel_books",
+        "novel_chapters",
+        "novel_read",
+        "novel_keywords",
+        "novel_new_chapter",
+        "novel_chapter_brief",
+        "novel_lexicon",
+        "novel_import",
+        "novel_sentence_analysis",
+        "novel_sentence_config",
+        "novel_style_check",
+        "novel_fix_plan",
+        "novel_plot",
+        "novel_settings",
+        "novel_style_report",
+        "novel_summary",
+        "novel_continuity_check",
+        "novel_semantic_search",
+        "novel_outline",
+        "novel_diagnose",
+        "novel_delete_book",
+        "novel_draft"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/office/dsh_novel_writer",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/dsh_novel_writer",
@@ -43437,11 +43515,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "c9d829adee36120c3739a715909b31182af5a84b97f563f03edf64d3758df4ad",
-          "size": 1700
+          "sha256": "a3166ccd3e387f99fa8d5ac3b91873f261cc5572fe2b6744da2a93c2d983c08c",
+          "size": 1838
+        },
+        {
+          "path": "tools.json",
+          "sha256": "3bca4194ac8f5722f53f7552bf5225b7f7d0be70192899e78ccf2e23039015c2",
+          "size": 30092
         }
       ],
-      "bundle_sha256": "25e2aab52c5ef1257e7d1e2a57675a69c091eda136d9c79eb25a96425d85a60a",
+      "bundle_sha256": "e5746cfe724c471b2efd0f359e52198f36e35419249f515eb79c08f59136a743",
       "popularity": {
         "score": 459,
         "downloads_weekly": 1567,
@@ -45627,7 +45710,7 @@
       "display_name_en": "n8n-mcp",
       "description": "Integration between n8n workflow automation and Model Context Protocol (MCP)",
       "description_zh": "让 Claude Code / Cursor / Windsurf 直接构建 n8n 工作流：提供 n8n 全部节点的文档、参数与校验能力，AI 生成的工作流可先校验再部署。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "czlonkowski",
       "license": "MIT",
       "homepage": "https://github.com/czlonkowski/n8n-mcp",
@@ -45656,7 +45739,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "n8n-mcp@2.103.1"
+          "package": "n8n-mcp@2.103.2"
         }
       ],
       "requires_env": [],
@@ -45685,8 +45768,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a018dd2bf38eb06ee233fe52012d227ced6eb3c0d7a9a5bfb23a598ff1994acc",
-          "size": 1197
+          "sha256": "8d96b674be845192bdb226b2e310b751e094b039cc0f3c2325bee845bc351eaa",
+          "size": 1207
         },
         {
           "path": "tools.json",
@@ -45694,7 +45777,7 @@
           "size": 13355
         }
       ],
-      "bundle_sha256": "606ce198c1352c2b7d9141726b51c75df7ce717282b0ceb78249e90fc4c810cd",
+      "bundle_sha256": "d8551902f9ea2d1c4eb5566bf8c14d9dd3ab0704f604dd1521661d83af6c9ab1",
       "popularity": {
         "score": 500,
         "downloads_weekly": 100472
@@ -46954,7 +47037,7 @@
       "display_name_en": "",
       "description": "MCP server for Yuque (语雀) — expose Yuque knowledge base to AI assistants via Model Context Protocol",
       "description_zh": "语雀官方 MCP：搜索与读写知识库文档，管理目录。需要语雀个人访问令牌。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "yuque",
       "license": "MIT",
       "homepage": "https://github.com/yuque/yuque-mcp-server",
@@ -46983,7 +47066,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "yuque-mcp@1.0.0"
+          "package": "yuque-mcp@1.1.0"
         }
       ],
       "requires_env": [
@@ -47013,11 +47096,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a4d5c984bc14e4425ff20456736805d1f7866f62dcd7c278f1d9c5ebb6b788c7",
-          "size": 1347
+          "sha256": "5e8137a20e908f1b36fe310aa0fb0aae004d3e5d266a19e710dac0b554437f07",
+          "size": 1357
         }
       ],
-      "bundle_sha256": "37d52422e432207d726bebc3f8e5ff3b304aeab2110bdb9ae6861f18d58616ac",
+      "bundle_sha256": "a3f1930bb37c9eef6ead07ac4f6c974b8973da2f78be0d828e69212d7d71dd37",
       "popularity": {
         "score": 252,
         "downloads_weekly": 332
@@ -47579,7 +47662,7 @@
       "display_name_en": "actors-mcp-server",
       "description": "Apify MCP Server",
       "description_zh": "集成 Apify 平台 3000+ 云工具，用于网站、电商、社交媒体等数据提取。",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "author": "apify",
       "license": "MIT",
       "homepage": "https://github.com/apify/actors-mcp-server",
@@ -47608,7 +47691,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@apify/actors-mcp-server@0.21.12"
+          "package": "@apify/actors-mcp-server@0.22.0"
         }
       ],
       "requires_env": [
@@ -47653,8 +47736,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "6b5c5c07f26d2d17c00799de49018650ccbc521bf6177260a337136838e56458",
-          "size": 1580
+          "sha256": "0df982263ed0ef20c04293643ce45dd63521f6a0406a90fbec4e5da8a740da64",
+          "size": 1589
         },
         {
           "path": "tools.json",
@@ -47662,7 +47745,7 @@
           "size": 32894
         }
       ],
-      "bundle_sha256": "4060676a1b36afce1d7d2497f6e3c1a188a5f283693caa198517e8ea8c83d7c8",
+      "bundle_sha256": "ce901c01cac9d2bb24d016e4f639f5df9b04afeae84be83afb2f7585d539c9d6",
       "popularity": {
         "score": 406,
         "downloads_weekly": 11448
@@ -48417,7 +48500,7 @@
       "display_name_en": "",
       "description": "Brave Search MCP Server: web results, images, videos, rich results, AI summaries, and more.",
       "description_zh": "Brave 官方出品的搜索 MCP 服务器，支持网页、本地、图片、新闻、视频搜索。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "brave",
       "license": "MIT",
       "homepage": "https://github.com/brave/brave-search-mcp-server",
@@ -48446,7 +48529,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "@brave/brave-search-mcp-server@2.1.5"
+          "package": "@brave/brave-search-mcp-server@2.2.0"
         }
       ],
       "requires_env": [
@@ -48476,11 +48559,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "e8d4abc0013e0f2d9722af392ea6eaa010055359919c03699585ff670ccde19e",
-          "size": 1391
+          "sha256": "d76c134118e8b0ff44704eae2e84ec279465d6e8ec0c66a13d3988336954b132",
+          "size": 1401
         }
       ],
-      "bundle_sha256": "2f719989eb4dbab4f8ede27d60703d5e50ea40492acf3bf83710e1486e95f0a0",
+      "bundle_sha256": "372d2ca694ebb2f2a6be9d1e0ea7d2924e9685cf30ab860371247ca19e753a77",
       "popularity": {
         "score": 751,
         "downloads_weekly": 20893,
@@ -49978,7 +50061,7 @@
       "display_name_en": "",
       "description": "Connect AI agents to Exa for web search, content fetching, and multi-step research.",
       "description_zh": "基于Exa的高质量网络搜索MCP服务器",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "upstream",
       "license": "MIT",
       "homepage": "https://www.npmjs.com/package/exa-mcp-server",
@@ -50007,7 +50090,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "exa-mcp-server@3.4.3"
+          "package": "exa-mcp-server@3.5.1"
         }
       ],
       "requires_env": [
@@ -50035,11 +50118,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "9a840c0ff1e9cb14ae290652f4a44905df48ef7eb4cfb817315cd28af35c20ab",
-          "size": 1065
+          "sha256": "cf74f46d8fe7cf525f76a43eda2e0333c7005eba9b7e83de3e599576b8bc4b7d",
+          "size": 1075
         }
       ],
-      "bundle_sha256": "28032b2dbdb8d3466d569d0f6fd2aab0f336ab826ea32189c06406b78b4573d4",
+      "bundle_sha256": "2c31aec03e27f4ef9b074a5587bfa44a87846dc3c18cf91ff3bcec1e88b6448c",
       "popularity": {
         "score": 412,
         "downloads_weekly": 13200
@@ -50205,7 +50288,7 @@
       "display_name_en": "Firecrawl",
       "description": "Firecrawl MCP server, the context API for AI agents: search, scrape, parse, crawl, map, and interact with the web, run Agent and Monitor jobs, and search scientific papers (PubMed, bioRxiv, medRxiv, arXiv). Works with Firecrawl cloud or a self-hosted inst",
       "description_zh": "使用 Firecrawl 提取网页数据，支持 JavaScript 渲染。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "mendableai",
       "license": "MIT",
       "homepage": "https://github.com/mendableai/firecrawl-mcp-server",
@@ -50234,7 +50317,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "firecrawl-mcp@3.40.0"
+          "package": "firecrawl-mcp@3.41.0"
         }
       ],
       "requires_env": [],
@@ -50244,7 +50327,6 @@
         "firecrawl_scrape",
         "firecrawl_map",
         "firecrawl_search",
-        "firecrawl_find_tools",
         "alexandria_library_search",
         "alexandria_library_read",
         "firecrawl_crawl",
@@ -50266,6 +50348,7 @@
         "firecrawl_research_inspect_paper",
         "firecrawl_research_related_papers",
         "firecrawl_research_read_paper",
+        "firecrawl_research_lookup_protein",
         "firecrawl_developer_search",
         "firecrawl_gov_search",
         "firecrawl_credit_usage"
@@ -50284,16 +50367,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f968b4cc1e2e077b6e6389a7f39915056a870738e1f3cd80f8af6e35a8305d72",
-          "size": 1311
+          "sha256": "6ce5fd334af77e157c68c7df18ea1f5884e7c14915565c7f1897b0c396c1f59b",
+          "size": 1321
         },
         {
           "path": "tools.json",
-          "sha256": "1a94001fba6d97819ad27ca6e42ac055ddf7be7b14a4416fe3238eb975d35a18",
-          "size": 91174
+          "sha256": "ada426e07e81b9879af196c920aa11c70d09aba23d72949c771a2ce7c3a25c34",
+          "size": 85773
         }
       ],
-      "bundle_sha256": "6682534b340c43248a91f1c86e9cc9f93f11c7ca6677134ee4e0420c7e65bb6d",
+      "bundle_sha256": "d5bec52fd531fad0961dc9769cc0120a91d33e35b16e178f2383c5912e686c7f",
       "popularity": {
         "score": 505,
         "downloads_weekly": 111561
@@ -51967,7 +52050,7 @@
       "display_name_en": "openhire",
       "description": "MCP server + CLI: job postings with the employer's real posting date, pulled from Greenhouse / Lever / Ashby / Workable / SmartRecruiters / Workday / Beisen / Moka ATS APIs and first-party career sites. Employers in AI infra, autonomous driving and embodied AI; HR and recruiting roles have their own",
       "description_zh": "直连雇主自己招聘系统（Greenhouse、Lever、Ashby、北森、Moka）的公开接口搜索在架岗位，每条带雇主原始发布日期、在架天数、ghost_score 与直达投递链接；139 家雇主，覆盖 AI 基础设施、智驾与具身智能，含小鹏、宇树、优必选等国内公司。简历不经过服务器，匹配在本机完成。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "gzchenhao",
       "license": "MIT",
       "homepage": "https://github.com/gzchenhao/openhire",
@@ -51996,7 +52079,7 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "openhire==0.8.73"
+          "package": "openhire==0.8.75"
         }
       ],
       "requires_env": [],
@@ -52016,11 +52099,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "73c36842603304749214720896f2ddea438979c4433f7ca61034400cef71a3ad",
-          "size": 1502
+          "sha256": "2e396609a79beb8dda3f2b873632a75ee12e401fe1752dd1f57f4199ec8d2133",
+          "size": 1512
         }
       ],
-      "bundle_sha256": "823f4da4bf4798fd8cfc26ce92a0cd458621588026e3f798712a25dbbf90e236",
+      "bundle_sha256": "8a7989e3983df4c7b6b2f349f3a9497cd434c06904a7dc25d8dea33f16834b06",
       "popularity": {
         "score": 118,
         "stars": 14
@@ -53367,7 +53450,7 @@
       "display_name_en": "Search1API",
       "description": "A Model Context Protocol (MCP) server that provides search and crawl functionality using Search1API",
       "description_zh": "Search1API 官方集成，一个 API 实现搜索、抓取和站点地图功能 (需付费 API Key)。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "fatwang2",
       "license": "MIT",
       "homepage": "https://github.com/fatwang2/search1api-mcp",
@@ -53396,7 +53479,7 @@
           "id": "npx",
           "type": "stdio",
           "launcher": "npx",
-          "package": "search1api-mcp@0.12.0"
+          "package": "search1api-mcp@0.13.0"
         }
       ],
       "requires_env": [
@@ -53426,11 +53509,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "0286cebfed1bdc0cb4f462d4e11243d2d5fcadf998570e50af02803a4c033c06",
-          "size": 1328
+          "sha256": "3cbdbdd92f1c81cf576618cdec587dedef99f6b8e05cc5a26a16609e687a416e",
+          "size": 1338
         }
       ],
-      "bundle_sha256": "096292bea3db0fa89c1b277726a28282c4206d60cb538e8339ebc249fe98efaf",
+      "bundle_sha256": "164d55ba33b0e4f3df3bbbcee69dfbcec466042b32c57812c703159602fb20fe",
       "popularity": {
         "score": 276,
         "downloads_weekly": 581

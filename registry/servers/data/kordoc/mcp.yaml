@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-27 静态审核：通过（详见 docs/review-2026-11-27-upstream2.md）
 # 人工修改后请同步递增 version。
 # 2026-11-27：包名同名 bin 是文档转换 CLI（要 files 参数），MCP 服务器是另一个 bin kordoc-mcp，改 `npx -p 包 kordoc-mcp`。
 manifest_version: 1
@@ -7,7 +7,7 @@ tested_with: '>=0.63.72'
 name: kordoc
 display_name: kordoc
 display_name_en: kordoc
-version: 0.1.3
+version: 0.1.4
 description: Parse Korean documents (HWP3-5, HWPX, HWPML, PDF, XLS(X), DOCX) to Markdown — CLI + MCP server with lossless
   patch/roundtrip, form-filler, document diff, print & layout-preserving SVG renderer
 description_zh: 韩国文档解析库、CLI 与 MCP 服务器：将 HWP 3.x/5.x、HWPX、HWPML 以及 PDF、DOCX、XLSX、PPTX 和图片转换为 Markdown 与结构化数据，并支持表单填写、保留格式的文档修改、文档对比和公文样式
@@ -30,7 +30,7 @@ runtimes:
   args:
   - -y
   - -p
-  - kordoc@4.25.1
+  - kordoc@4.25.2
   - kordoc-mcp
   requires:
     node: '>=18'
@@ -40,7 +40,7 @@ defaults:
   enabled: true
   timeout: 120
 tools:
-  probed_at: '2026-11-27T09:50:34Z'
+  probed_at: '2026-11-27T10:57:06Z'
   probed_runtime: npx
   count: 22
   file: tools.json

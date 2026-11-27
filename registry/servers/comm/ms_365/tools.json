@@ -512,7 +512,7 @@
               "description": "URL that either displays the resource in the browser (for Office file formats), or is a direct link to the file (for other formats). Read-only."
             },
             "createdByUser": {
-              "description": "[Note: Simplified from 138 properties to 25 most common ones]",
+              "description": "[Note: Simplified from 139 properties to 25 most common ones]",
               "type": "object",
               "properties": {
                 "id": {
@@ -787,7 +787,7 @@
               "additionalProperties": true
             },
             "lastModifiedByUser": {
-              "description": "[Note: Simplified from 138 properties to 25 most common ones]",
+              "description": "[Note: Simplified from 139 properties to 25 most common ones]",
               "type": "object",
               "properties": {
                 "id": {
@@ -1996,7 +1996,7 @@
               "description": "URL that either displays the resource in the browser (for Office file formats), or is a direct link to the file (for other formats). Read-only."
             },
             "createdByUser": {
-              "description": "[Note: Simplified from 138 properties to 25 most common ones]",
+              "description": "[Note: Simplified from 139 properties to 25 most common ones]",
               "type": "object",
               "properties": {
                 "id": {
@@ -2271,7 +2271,7 @@
               "additionalProperties": true
             },
             "lastModifiedByUser": {
-              "description": "[Note: Simplified from 138 properties to 25 most common ones]",
+              "description": "[Note: Simplified from 139 properties to 25 most common ones]",
               "type": "object",
               "properties": {
                 "id": {
@@ -3229,7 +3229,7 @@
   },
   {
     "name": "create-drive-item-share-link",
-    "description": "Create a link to share a driveItem driveItem. The createLink action creates a new sharing link if the specified link type doesn't already exist for the calling application.\nIf a sharing link of the specified type already exists for the app, the existing sharing link is returned. DriveItem resources inherit sharing permissions from their ancestors.\n\n💡 TIP: Create a shareable link for a file or folder WITHOUT sending an email invitation. Body: { type: 'view' | 'edit' | 'embed', scope: 'anonymous' | 'organization' | 'users', password?: string, expirationDateTime?: ISO-8601, retainInheritedPermissions?: boolean }. Returns a permission with link.webUrl. Pair with share-drive-item when you want to grant explicit access; use this when you only need a URL to paste into a doc/email/chat without triggering OneDrive notifications.",
+    "description": "Create a link to share a driveItem driveItem. The createLink action creates a new sharing link if the specified link type doesn't already exist for the calling application.\nIf a sharing link of the specified type already exists for the app, the existing sharing link is returned. DriveItem resources inherit sharing permissions from their ancestors.\n\n💡 TIP: Create a shareable link for a file or folder WITHOUT sending an email invitation. Body: { type: 'view' | 'edit' | 'embed', scope: 'anonymous' | 'organization' | 'users', password?: string, expirationDateTime?: ISO-8601, retainInheritedPermissions?: boolean }. 'embed' works only in OneDrive personal, 'organization' only in OneDrive for Business and SharePoint. Returns a permission with link.webUrl. Pair with share-drive-item when you want to grant explicit access; use this when you only need a URL to paste into a doc/email/chat without triggering OneDrive notifications.",
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
@@ -3352,7 +3352,7 @@
   },
   {
     "name": "create-upload-session",
-    "description": "Create an upload session.\n\n💡 TIP: For large file uploads (no size limit, and no minimum unlike the Outlook attachment session). Returns a pre-authenticated uploadUrl; the caller PUTs the bytes there itself. This server does not perform the PUT. For new files use path: /items/{parentId}:/{fileName}:/createUploadSession. Body (optional): { item: { '@microsoft.graph.conflictBehavior': 'rename' } }.",
+    "description": "Create an upload session.\n\n💡 TIP: For large file uploads (up to 250 GB; no minimum, unlike the Outlook attachment session). Returns a pre-authenticated uploadUrl; the caller PUTs the bytes there itself, without an Authorization header, in ranges under 60 MiB that are multiples of 320 KiB (except the last). This server does not perform the PUT. For new files use path: /items/{parentId}:/{fileName}:/createUploadSession. Body (optional): { item: { '@microsoft.graph.conflictBehavior': 'rename' } }.",
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
@@ -3526,7 +3526,7 @@
   },
   {
     "name": "get-drive-delta",
-    "description": "Track changes in a driveItem and its children over time. Your app begins by calling delta without any parameters.\nThe service starts enumerating the drive's hierarchy, returning pages of items and either an @odata.nextLink or an @odata.deltaLink, as described below.\nYour app should continue calling with the @odata.nextLink until you no longer see an @odata.nextLink returned, or you see a response with an empty set of changes. After you have finished receiving all the changes, you may apply them to your local state.\nTo check for changes in the future, call delta again with the @odata.deltaLink from the previous response. Deleted items are returned with the deleted facet.\nItems with this property set should be removed from your local state.\n\n💡 TIP: Tracks changes to a driveItem and its children over time. Returns a collection of driveItems that have been created, modified, or deleted. Use get-drive-root-item first to get the root driveItem-id, then pass it here. Supports $select. For incremental sync, pass the @odata.deltaLink from the last page as token on the next call.",
+    "description": "Track changes in a driveItem and its children over time. Your app begins by calling delta without any parameters.\nThe service starts enumerating the drive's hierarchy, returning pages of items and either an @odata.nextLink or an @odata.deltaLink, as described below.\nYour app should continue calling with the @odata.nextLink until you no longer see an @odata.nextLink returned, or you see a response with an empty set of changes. After you have finished receiving all the changes, you may apply them to your local state.\nTo check for changes in the future, call delta again with the @odata.deltaLink from the previous response. Deleted items are returned with the deleted facet.\nItems with this property set should be removed from your local state.\n\n💡 TIP: Tracks changes to a driveItem and its children. An item can appear more than once; use its last occurrence. Deleted items have a deleted facet. Use get-drive-root-item first to get the root driveItem-id, then pass it here. Supports $select.",
     "read_only": true,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
@@ -3634,7 +3634,7 @@
   },
   {
     "name": "share-drive-item",
-    "description": "Send a sharing invitation for a driveItem. A sharing invitation provides permissions to the recipients and, optionally, sends them an email to notify them that the item was shared.\n\n💡 TIP: Shares a file or folder with specific users. Body: { recipients: [{ email: 'user@example.com' }], roles: ['read'], sendInvitation: true, message: 'Please review this file.' }. Roles: 'read', 'write', 'owner'. Set requireSignIn to true to require authentication.",
+    "description": "Send a sharing invitation for a driveItem. A sharing invitation provides permissions to the recipients and, optionally, sends them an email to notify them that the item was shared.\n\n💡 TIP: Shares a file or folder with specific users. Body: { recipients: [{ email: 'user@example.com' }], roles: ['read'], sendInvitation: true, message: 'Please review this file.' }. Roles: 'read', 'write'. Set requireSignIn to true to require authentication.",
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
@@ -3755,7 +3755,7 @@
   },
   {
     "name": "list-drive-item-permissions",
-    "description": "The set of permissions for the item. Read-only. Nullable.\n\n💡 TIP: Lists all permissions (sharing links, direct access, inherited) on a file or folder. Each permission has roles, grantedTo (user), link (sharing URL), and inheritedFrom.",
+    "description": "The set of permissions for the item. Read-only. Nullable.\n\n💡 TIP: Lists sharing permissions (sharing links, direct access, inherited) on a file or folder. A non-owner only sees the permissions that apply to them. Use grantedToV2; grantedTo is deprecated.",
     "read_only": true,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
@@ -4075,7 +4075,7 @@
   },
   {
     "name": "list-drive-item-versions",
-    "description": "The list of previous versions of the item. For more info, see getting previous versions. Read-only. Nullable.\n\n💡 TIP: Lists version history of a file. Each version has id, lastModifiedDateTime, lastModifiedBy, and size. Use the version id with /versions/{id}/content to download a specific version.",
+    "description": "The list of previous versions of the item. For more info, see getting previous versions. Read-only. Nullable.\n\n💡 TIP: Lists versions of a file, newest first; the first is the current version. $orderby is not supported. Download an older version with /versions/{version-id}/content; for the current one use /content.",
     "read_only": true,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
@@ -12185,27 +12185,15 @@
         },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def14"
-            }
-          ]
+          "type": "boolean"
         },
         "excludeResponse": {
           "description": "Exclude the full response body and only return success or failure indication",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def13"
-            }
-          ]
+          "type": "boolean"
         },
         "confirm": {
           "description": "For destructive operations when the confirm gate is enabled (MS365_MCP_REQUIRE_CONFIRM=true; off by default). Set to true only after the user has explicitly approved this action. When the gate is on, calls without confirm: true return { error: \"confirmation_required\" } without touching user data.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def12"
-            }
-          ]
+          "type": "boolean"
         }
       },
       "required": [
@@ -12583,15 +12571,6 @@
             }
           },
           "additionalProperties": true
-        },
-        "def12": {
-          "type": "boolean"
-        },
-        "def13": {
-          "type": "boolean"
-        },
-        "def14": {
-          "type": "boolean"
         }
       }
     }
@@ -12662,27 +12641,15 @@
         },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def14"
-            }
-          ]
+          "type": "boolean"
         },
         "excludeResponse": {
           "description": "Exclude the full response body and only return success or failure indication",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def13"
-            }
-          ]
+          "type": "boolean"
         },
         "confirm": {
           "description": "For destructive operations when the confirm gate is enabled (MS365_MCP_REQUIRE_CONFIRM=true; off by default). Set to true only after the user has explicitly approved this action. When the gate is on, calls without confirm: true return { error: \"confirmation_required\" } without touching user data.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def12"
-            }
-          ]
+          "type": "boolean"
         }
       },
       "required": [
@@ -13061,15 +13028,6 @@
             }
           },
           "additionalProperties": true
-        },
-        "def12": {
-          "type": "boolean"
-        },
-        "def13": {
-          "type": "boolean"
-        },
-        "def14": {
-          "type": "boolean"
         }
       }
     }
@@ -13274,27 +13232,15 @@
         },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def14"
-            }
-          ]
+          "type": "boolean"
         },
         "excludeResponse": {
           "description": "Exclude the full response body and only return success or failure indication",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def13"
-            }
-          ]
+          "type": "boolean"
         },
         "confirm": {
           "description": "For destructive operations when the confirm gate is enabled (MS365_MCP_REQUIRE_CONFIRM=true; off by default). Set to true only after the user has explicitly approved this action. When the gate is on, calls without confirm: true return { error: \"confirmation_required\" } without touching user data.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def12"
-            }
-          ]
+          "type": "boolean"
         }
       },
       "required": [
@@ -13673,15 +13619,6 @@
             }
           },
           "additionalProperties": true
-        },
-        "def12": {
-          "type": "boolean"
-        },
-        "def13": {
-          "type": "boolean"
-        },
-        "def14": {
-          "type": "boolean"
         }
       }
     }
@@ -14146,7 +14083,7 @@
   },
   {
     "name": "list-outlook-contacts",
-    "description": "Get a contact collection from the default contacts folder of the signed-in user. There are two scenarios where an app can get contacts in another user's contact folder:\n\n💡 TIP: $filter only supports startswith() — contains() and eq on emailAddresses do not work. Use $search as alternative for broader matching.",
+    "description": "Get a contact collection from the default contacts folder of the signed-in user. There are two scenarios where an app can get contacts in another user's contact folder:\n\n💡 TIP: To match an exact email address, use $filter=emailAddresses/any(a:a/address eq 'name@example.com'). For emailAddresses, only eq on the address sub-property is supported; contains(), startswith(), and other operators are not.",
     "read_only": true,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
@@ -17384,7 +17321,7 @@
   },
   {
     "name": "list-calendar-events-delta",
-    "description": "Get a set of event resources that have been added, deleted, or updated in a calendarView (a range of events defined by start and end dates) of the user's primary calendar. Typically, synchronizing events in a calendarView in a local store entails a round of multiple delta function calls. The initial call is a full synchronization, and every subsequent delta call in the same round gets the incremental changes (additions, deletions, or updates). This allows you to maintain and synchronize a local store of events in the specified calendarView, without having to fetch all the events of that calendar from the server every time.\n\n💡 TIP: Incremental sync of events across the default calendar. First call returns all events plus @odata.deltaLink. Subsequent calls with that link return only additions/updates/removals. Deltas expire after ~30 days — start over if the server returns 410 Gone. For a time-bounded view with delta semantics, use list-calendar-view-delta instead.",
+    "description": "Incremental sync of events in the signed-in user's mailbox, not a calendarView. startDateTime sets the earliest event start to include. Each event has only id, type, start and end; use get-calendar-event for the rest. For a time-bounded view with expanded recurring instances, use list-calendar-view-delta instead.",
     "read_only": true,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
@@ -18238,27 +18175,15 @@
         },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def48"
-            }
-          ]
+          "type": "boolean"
         },
         "excludeResponse": {
           "description": "Exclude the full response body and only return success or failure indication",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def47"
-            }
-          ]
+          "type": "boolean"
         },
         "confirm": {
           "description": "For destructive operations when the confirm gate is enabled (MS365_MCP_REQUIRE_CONFIRM=true; off by default). Set to true only after the user has explicitly approved this action. When the gate is on, calls without confirm: true return { error: \"confirmation_required\" } without touching user data.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def46"
-            }
-          ]
+          "type": "boolean"
         }
       },
       "required": [
@@ -18424,7 +18349,12 @@
                   "description": "Indicates whether a message should be marked as read."
                 },
                 "markImportance": {
-                  "$ref": "#/$defs/def34"
+                  "type": "string",
+                  "enum": [
+                    "low",
+                    "normal",
+                    "high"
+                  ]
                 },
                 "moveToFolder": {
                   "type": [
@@ -18646,22 +18576,6 @@
           ],
           "description": "Indicates whether an incoming message must be a voice mail in order for the condition or exception to apply."
         },
-        "def21": {
-          "type": "string",
-          "enum": [
-            "any",
-            "call",
-            "doNotForward",
-            "followUp",
-            "fyi",
-            "forward",
-            "noResponseNecessary",
-            "read",
-            "reply",
-            "replyToAll",
-            "review"
-          ]
-        },
         "def22": {
           "type": [
             "boolean",
@@ -18740,7 +18654,13 @@
           "type": "object",
           "properties": {
             "sensitivity": {
-              "$ref": "#/$defs/def41"
+              "type": "string",
+              "enum": [
+                "normal",
+                "personal",
+                "private",
+                "confidential"
+              ]
             },
             "importance": {
               "$ref": "#/$defs/def42"
@@ -18797,7 +18717,20 @@
               "$ref": "#/$defs/def20"
             },
             "messageActionFlag": {
-              "$ref": "#/$defs/def21"
+              "type": "string",
+              "enum": [
+                "any",
+                "call",
+                "doNotForward",
+                "followUp",
+                "fyi",
+                "forward",
+                "noResponseNecessary",
+                "read",
+                "reply",
+                "replyToAll",
+                "review"
+              ]
             },
             "notSentToMe": {
               "$ref": "#/$defs/def22"
@@ -18901,7 +18834,12 @@
               "description": "The collection of multi-value extended properties defined for the message. Nullable."
             },
             "importance": {
-              "$ref": "#/$defs/def34"
+              "type": "string",
+              "enum": [
+                "low",
+                "normal",
+                "high"
+              ]
             },
             "from": {
               "$ref": "#/$defs/def23"
@@ -19077,14 +19015,6 @@
           },
           "additionalProperties": true
         },
-        "def34": {
-          "type": "string",
-          "enum": [
-            "low",
-            "normal",
-            "high"
-          ]
-        },
         "def35": {
           "type": "object",
           "properties": {
@@ -19168,17 +19098,13 @@
           },
           "additionalProperties": true
         },
-        "def41": {
+        "def42": {
           "type": "string",
           "enum": [
+            "low",
             "normal",
-            "personal",
-            "private",
-            "confidential"
+            "high"
           ]
-        },
-        "def42": {
-          "$ref": "#/$defs/def34"
         },
         "def43": {
           "type": "array",
@@ -19199,15 +19125,6 @@
             "$ref": "#/$defs/def2"
           },
           "description": "Represents the strings that should appear in the body or subject of an incoming message in order for the condition or exception to apply."
-        },
-        "def46": {
-          "type": "boolean"
-        },
-        "def47": {
-          "type": "boolean"
-        },
-        "def48": {
-          "type": "boolean"
         }
       }
     }
@@ -19331,27 +19248,15 @@
         },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def48"
-            }
-          ]
+          "type": "boolean"
         },
         "excludeResponse": {
           "description": "Exclude the full response body and only return success or failure indication",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def47"
-            }
-          ]
+          "type": "boolean"
         },
         "confirm": {
           "description": "For destructive operations when the confirm gate is enabled (MS365_MCP_REQUIRE_CONFIRM=true; off by default). Set to true only after the user has explicitly approved this action. When the gate is on, calls without confirm: true return { error: \"confirmation_required\" } without touching user data.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def46"
-            }
-          ]
+          "type": "boolean"
         }
       },
       "required": [
@@ -19518,7 +19423,12 @@
                   "description": "Indicates whether a message should be marked as read."
                 },
                 "markImportance": {
-                  "$ref": "#/$defs/def34"
+                  "type": "string",
+                  "enum": [
+                    "low",
+                    "normal",
+                    "high"
+                  ]
                 },
                 "moveToFolder": {
                   "type": [
@@ -19740,22 +19650,6 @@
           ],
           "description": "Indicates whether an incoming message must be a voice mail in order for the condition or exception to apply."
         },
-        "def21": {
-          "type": "string",
-          "enum": [
-            "any",
-            "call",
-            "doNotForward",
-            "followUp",
-            "fyi",
-            "forward",
-            "noResponseNecessary",
-            "read",
-            "reply",
-            "replyToAll",
-            "review"
-          ]
-        },
         "def22": {
           "type": [
             "boolean",
@@ -19834,7 +19728,13 @@
           "type": "object",
           "properties": {
             "sensitivity": {
-              "$ref": "#/$defs/def41"
+              "type": "string",
+              "enum": [
+                "normal",
+                "personal",
+                "private",
+                "confidential"
+              ]
             },
             "importance": {
               "$ref": "#/$defs/def42"
@@ -19891,7 +19791,20 @@
               "$ref": "#/$defs/def20"
             },
             "messageActionFlag": {
-              "$ref": "#/$defs/def21"
+              "type": "string",
+              "enum": [
+                "any",
+                "call",
+                "doNotForward",
+                "followUp",
+                "fyi",
+                "forward",
+                "noResponseNecessary",
+                "read",
+                "reply",
+                "replyToAll",
+                "review"
+              ]
             },
             "notSentToMe": {
               "$ref": "#/$defs/def22"
@@ -19995,7 +19908,12 @@
               "description": "The collection of multi-value extended properties defined for the message. Nullable."
             },
             "importance": {
-              "$ref": "#/$defs/def34"
+              "type": "string",
+              "enum": [
+                "low",
+                "normal",
+                "high"
+              ]
             },
             "from": {
               "$ref": "#/$defs/def23"
@@ -20171,14 +20089,6 @@
           },
           "additionalProperties": true
         },
-        "def34": {
-          "type": "string",
-          "enum": [
-            "low",
-            "normal",
-            "high"
-          ]
-        },
         "def35": {
           "type": "object",
           "properties": {
@@ -20262,17 +20172,13 @@
           },
           "additionalProperties": true
         },
-        "def41": {
+        "def42": {
           "type": "string",
           "enum": [
+            "low",
             "normal",
-            "personal",
-            "private",
-            "confidential"
+            "high"
           ]
-        },
-        "def42": {
-          "$ref": "#/$defs/def34"
         },
         "def43": {
           "type": "array",
@@ -20293,22 +20199,13 @@
             "$ref": "#/$defs/def2"
           },
           "description": "Represents the strings that should appear in the body or subject of an incoming message in order for the condition or exception to apply."
-        },
-        "def46": {
-          "type": "boolean"
-        },
-        "def47": {
-          "type": "boolean"
-        },
-        "def48": {
-          "type": "boolean"
         }
       }
     }
   },
   {
     "name": "delete-mail-folder",
-    "description": "Delete the specified mailFolder. The folder can be a mailSearchFolder. You can specify a mail folder by its folder ID, or by its well-known folder name, if one exists.\n\n💡 TIP: Deletes a mail folder and all its contents. This action is irreversible. Use list-mail-folders to find the folder ID.",
+    "description": "Delete the specified mailFolder. The folder can be a mailSearchFolder. You can specify a mail folder by its folder ID, or by its well-known folder name, if one exists.\n\n💡 TIP: Deletes a mail folder and its contents. Not a permanent delete: the folder goes to Deleted Items and can be restored from there until it is purged. Use list-mail-folders to find the folder ID.",
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
@@ -20563,27 +20460,15 @@
         },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def48"
-            }
-          ]
+          "type": "boolean"
         },
         "excludeResponse": {
           "description": "Exclude the full response body and only return success or failure indication",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def47"
-            }
-          ]
+          "type": "boolean"
         },
         "confirm": {
           "description": "For destructive operations when the confirm gate is enabled (MS365_MCP_REQUIRE_CONFIRM=true; off by default). Set to true only after the user has explicitly approved this action. When the gate is on, calls without confirm: true return { error: \"confirmation_required\" } without touching user data.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def46"
-            }
-          ]
+          "type": "boolean"
         }
       },
       "required": [
@@ -20750,7 +20635,12 @@
                   "description": "Indicates whether a message should be marked as read."
                 },
                 "markImportance": {
-                  "$ref": "#/$defs/def34"
+                  "type": "string",
+                  "enum": [
+                    "low",
+                    "normal",
+                    "high"
+                  ]
                 },
                 "moveToFolder": {
                   "type": [
@@ -20972,22 +20862,6 @@
           ],
           "description": "Indicates whether an incoming message must be a voice mail in order for the condition or exception to apply."
         },
-        "def21": {
-          "type": "string",
-          "enum": [
-            "any",
-            "call",
-            "doNotForward",
-            "followUp",
-            "fyi",
-            "forward",
-            "noResponseNecessary",
-            "read",
-            "reply",
-            "replyToAll",
-            "review"
-          ]
-        },
         "def22": {
           "type": [
             "boolean",
@@ -21066,7 +20940,13 @@
           "type": "object",
           "properties": {
             "sensitivity": {
-              "$ref": "#/$defs/def41"
+              "type": "string",
+              "enum": [
+                "normal",
+                "personal",
+                "private",
+                "confidential"
+              ]
             },
             "importance": {
               "$ref": "#/$defs/def42"
@@ -21123,7 +21003,20 @@
               "$ref": "#/$defs/def20"
             },
             "messageActionFlag": {
-              "$ref": "#/$defs/def21"
+              "type": "string",
+              "enum": [
+                "any",
+                "call",
+                "doNotForward",
+                "followUp",
+                "fyi",
+                "forward",
+                "noResponseNecessary",
+                "read",
+                "reply",
+                "replyToAll",
+                "review"
+              ]
             },
             "notSentToMe": {
               "$ref": "#/$defs/def22"
@@ -21227,7 +21120,12 @@
               "description": "The collection of multi-value extended properties defined for the message. Nullable."
             },
             "importance": {
-              "$ref": "#/$defs/def34"
+              "type": "string",
+              "enum": [
+                "low",
+                "normal",
+                "high"
+              ]
             },
             "from": {
               "$ref": "#/$defs/def23"
@@ -21403,14 +21301,6 @@
           },
           "additionalProperties": true
         },
-        "def34": {
-          "type": "string",
-          "enum": [
-            "low",
-            "normal",
-            "high"
-          ]
-        },
         "def35": {
           "type": "object",
           "properties": {
@@ -21494,17 +21384,13 @@
           },
           "additionalProperties": true
         },
-        "def41": {
+        "def42": {
           "type": "string",
           "enum": [
+            "low",
             "normal",
-            "personal",
-            "private",
-            "confidential"
+            "high"
           ]
-        },
-        "def42": {
-          "$ref": "#/$defs/def34"
         },
         "def43": {
           "type": "array",
@@ -21525,15 +21411,6 @@
             "$ref": "#/$defs/def2"
           },
           "description": "Represents the strings that should appear in the body or subject of an incoming message in order for the condition or exception to apply."
-        },
-        "def46": {
-          "type": "boolean"
-        },
-        "def47": {
-          "type": "boolean"
-        },
-        "def48": {
-          "type": "boolean"
         }
       }
     }
@@ -28175,7 +28052,13 @@
               "description": "The URL for the sections navigation property, which returns all the sections in the notebook. Read-only."
             },
             "userRole": {
-              "$ref": "#/$defs/def4"
+              "type": "string",
+              "enum": [
+                "None",
+                "Owner",
+                "Contributor",
+                "Reader"
+              ]
             },
             "sectionGroups": {
               "type": "array",
@@ -28196,27 +28079,15 @@
         },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def11"
-            }
-          ]
+          "type": "boolean"
         },
         "excludeResponse": {
           "description": "Exclude the full response body and only return success or failure indication",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def10"
-            }
-          ]
+          "type": "boolean"
         },
         "confirm": {
           "description": "For destructive operations when the confirm gate is enabled (MS365_MCP_REQUIRE_CONFIRM=true; off by default). Set to true only after the user has explicitly approved this action. When the gate is on, calls without confirm: true return { error: \"confirmation_required\" } without touching user data.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def9"
-            }
-          ]
+          "type": "boolean"
         }
       },
       "required": [
@@ -28224,75 +28095,6 @@
       ],
       "additionalProperties": true,
       "$defs": {
-        "def0": {
-          "type": "object",
-          "properties": {
-            "application": {
-              "$ref": "#/$defs/def1"
-            },
-            "device": {
-              "$ref": "#/$defs/def1"
-            },
-            "user": {
-              "$ref": "#/$defs/def1"
-            }
-          },
-          "additionalProperties": true
-        },
-        "def1": {
-          "type": "object",
-          "properties": {
-            "displayName": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "The display name of the identity.For drive items, the display name might not always be available or up to date. For example, if a user changes their display name the API might show the new value in a future response, but the items associated with the user don't show up as changed when using delta."
-            },
-            "id": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "Unique identifier for the identity or actor. For example, in the access reviews decisions API, this property might record the id of the principal, that is, the group, user, or application that's subject to review."
-            }
-          },
-          "additionalProperties": true
-        },
-        "def2": {
-          "type": "object",
-          "properties": {
-            "oneNoteClientUrl": {
-              "$ref": "#/$defs/def3"
-            },
-            "oneNoteWebUrl": {
-              "$ref": "#/$defs/def3"
-            }
-          },
-          "additionalProperties": true
-        },
-        "def3": {
-          "type": "object",
-          "properties": {
-            "href": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "The URL of the link."
-            }
-          },
-          "additionalProperties": true
-        },
-        "def4": {
-          "type": "string",
-          "enum": [
-            "None",
-            "Owner",
-            "Contributor",
-            "Reader"
-          ]
-        },
         "def5": {
           "type": "object",
           "properties": {
@@ -28468,7 +28270,13 @@
               "description": "The URL for the sections navigation property, which returns all the sections in the notebook. Read-only."
             },
             "userRole": {
-              "$ref": "#/$defs/def4"
+              "type": "string",
+              "enum": [
+                "None",
+                "Owner",
+                "Contributor",
+                "Reader"
+              ]
             },
             "sectionGroups": {
               "type": "array",
@@ -28706,14 +28514,65 @@
           },
           "additionalProperties": true
         },
-        "def9": {
-          "type": "boolean"
+        "def0": {
+          "type": "object",
+          "properties": {
+            "application": {
+              "$ref": "#/$defs/def1"
+            },
+            "device": {
+              "$ref": "#/$defs/def1"
+            },
+            "user": {
+              "$ref": "#/$defs/def1"
+            }
+          },
+          "additionalProperties": true
         },
-        "def10": {
-          "type": "boolean"
+        "def1": {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The display name of the identity.For drive items, the display name might not always be available or up to date. For example, if a user changes their display name the API might show the new value in a future response, but the items associated with the user don't show up as changed when using delta."
+            },
+            "id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Unique identifier for the identity or actor. For example, in the access reviews decisions API, this property might record the id of the principal, that is, the group, user, or application that's subject to review."
+            }
+          },
+          "additionalProperties": true
         },
-        "def11": {
-          "type": "boolean"
+        "def2": {
+          "type": "object",
+          "properties": {
+            "oneNoteClientUrl": {
+              "$ref": "#/$defs/def3"
+            },
+            "oneNoteWebUrl": {
+              "$ref": "#/$defs/def3"
+            }
+          },
+          "additionalProperties": true
+        },
+        "def3": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The URL of the link."
+            }
+          },
+          "additionalProperties": true
         }
       }
     }
@@ -28917,27 +28776,15 @@
         },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def10"
-            }
-          ]
+          "type": "boolean"
         },
         "excludeResponse": {
           "description": "Exclude the full response body and only return success or failure indication",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def9"
-            }
-          ]
+          "type": "boolean"
         },
         "confirm": {
           "description": "For destructive operations when the confirm gate is enabled (MS365_MCP_REQUIRE_CONFIRM=true; off by default). Set to true only after the user has explicitly approved this action. When the gate is on, calls without confirm: true return { error: \"confirmation_required\" } without touching user data.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def8"
-            }
-          ]
+          "type": "boolean"
         }
       },
       "required": [
@@ -28946,66 +28793,6 @@
       ],
       "additionalProperties": true,
       "$defs": {
-        "def0": {
-          "type": "object",
-          "properties": {
-            "application": {
-              "$ref": "#/$defs/def1"
-            },
-            "device": {
-              "$ref": "#/$defs/def1"
-            },
-            "user": {
-              "$ref": "#/$defs/def1"
-            }
-          },
-          "additionalProperties": true
-        },
-        "def1": {
-          "type": "object",
-          "properties": {
-            "displayName": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "The display name of the identity.For drive items, the display name might not always be available or up to date. For example, if a user changes their display name the API might show the new value in a future response, but the items associated with the user don't show up as changed when using delta."
-            },
-            "id": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "Unique identifier for the identity or actor. For example, in the access reviews decisions API, this property might record the id of the principal, that is, the group, user, or application that's subject to review."
-            }
-          },
-          "additionalProperties": true
-        },
-        "def2": {
-          "type": "object",
-          "properties": {
-            "oneNoteClientUrl": {
-              "$ref": "#/$defs/def3"
-            },
-            "oneNoteWebUrl": {
-              "$ref": "#/$defs/def3"
-            }
-          },
-          "additionalProperties": true
-        },
-        "def3": {
-          "type": "object",
-          "properties": {
-            "href": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "The URL of the link."
-            }
-          },
-          "additionalProperties": true
-        },
         "def4": {
           "type": "object",
           "properties": {
@@ -29425,14 +29212,65 @@
           },
           "additionalProperties": true
         },
-        "def8": {
-          "type": "boolean"
+        "def0": {
+          "type": "object",
+          "properties": {
+            "application": {
+              "$ref": "#/$defs/def1"
+            },
+            "device": {
+              "$ref": "#/$defs/def1"
+            },
+            "user": {
+              "$ref": "#/$defs/def1"
+            }
+          },
+          "additionalProperties": true
         },
-        "def9": {
-          "type": "boolean"
+        "def1": {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The display name of the identity.For drive items, the display name might not always be available or up to date. For example, if a user changes their display name the API might show the new value in a future response, but the items associated with the user don't show up as changed when using delta."
+            },
+            "id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Unique identifier for the identity or actor. For example, in the access reviews decisions API, this property might record the id of the principal, that is, the group, user, or application that's subject to review."
+            }
+          },
+          "additionalProperties": true
         },
-        "def10": {
-          "type": "boolean"
+        "def2": {
+          "type": "object",
+          "properties": {
+            "oneNoteClientUrl": {
+              "$ref": "#/$defs/def3"
+            },
+            "oneNoteWebUrl": {
+              "$ref": "#/$defs/def3"
+            }
+          },
+          "additionalProperties": true
+        },
+        "def3": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The URL of the link."
+            }
+          },
+          "additionalProperties": true
         }
       }
     }
@@ -29654,27 +29492,15 @@
         },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def10"
-            }
-          ]
+          "type": "boolean"
         },
         "excludeResponse": {
           "description": "Exclude the full response body and only return success or failure indication",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def9"
-            }
-          ]
+          "type": "boolean"
         },
         "confirm": {
           "description": "For destructive operations when the confirm gate is enabled (MS365_MCP_REQUIRE_CONFIRM=true; off by default). Set to true only after the user has explicitly approved this action. When the gate is on, calls without confirm: true return { error: \"confirmation_required\" } without touching user data.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def8"
-            }
-          ]
+          "type": "boolean"
         }
       },
       "required": [
@@ -29682,31 +29508,6 @@
       ],
       "additionalProperties": true,
       "$defs": {
-        "def0": {
-          "type": "object",
-          "properties": {
-            "oneNoteClientUrl": {
-              "$ref": "#/$defs/def1"
-            },
-            "oneNoteWebUrl": {
-              "$ref": "#/$defs/def1"
-            }
-          },
-          "additionalProperties": true
-        },
-        "def1": {
-          "type": "object",
-          "properties": {
-            "href": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "The URL of the link."
-            }
-          },
-          "additionalProperties": true
-        },
         "def2": {
           "type": "object",
           "properties": {
@@ -29822,41 +29623,6 @@
                 "$ref": "#/$defs/def6"
               },
               "description": "The sections in the notebook. Read-only. Nullable."
-            }
-          },
-          "additionalProperties": true
-        },
-        "def3": {
-          "type": "object",
-          "properties": {
-            "application": {
-              "$ref": "#/$defs/def4"
-            },
-            "device": {
-              "$ref": "#/$defs/def4"
-            },
-            "user": {
-              "$ref": "#/$defs/def4"
-            }
-          },
-          "additionalProperties": true
-        },
-        "def4": {
-          "type": "object",
-          "properties": {
-            "displayName": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "The display name of the identity.For drive items, the display name might not always be available or up to date. For example, if a user changes their display name the API might show the new value in a future response, but the items associated with the user don't show up as changed when using delta."
-            },
-            "id": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "Unique identifier for the identity or actor. For example, in the access reviews decisions API, this property might record the id of the principal, that is, the group, user, or application that's subject to review."
             }
           },
           "additionalProperties": true
@@ -30161,14 +29927,65 @@
           },
           "additionalProperties": true
         },
-        "def8": {
-          "type": "boolean"
+        "def0": {
+          "type": "object",
+          "properties": {
+            "oneNoteClientUrl": {
+              "$ref": "#/$defs/def1"
+            },
+            "oneNoteWebUrl": {
+              "$ref": "#/$defs/def1"
+            }
+          },
+          "additionalProperties": true
         },
-        "def9": {
-          "type": "boolean"
+        "def1": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The URL of the link."
+            }
+          },
+          "additionalProperties": true
         },
-        "def10": {
-          "type": "boolean"
+        "def3": {
+          "type": "object",
+          "properties": {
+            "application": {
+              "$ref": "#/$defs/def4"
+            },
+            "device": {
+              "$ref": "#/$defs/def4"
+            },
+            "user": {
+              "$ref": "#/$defs/def4"
+            }
+          },
+          "additionalProperties": true
+        },
+        "def4": {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The display name of the identity.For drive items, the display name might not always be available or up to date. For example, if a user changes their display name the API might show the new value in a future response, but the items associated with the user don't show up as changed when using delta."
+            },
+            "id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Unique identifier for the identity or actor. For example, in the access reviews decisions API, this property might record the id of the principal, that is, the group, user, or application that's subject to review."
+            }
+          },
+          "additionalProperties": true
         }
       }
     }
@@ -30727,27 +30544,15 @@
         },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def10"
-            }
-          ]
+          "type": "boolean"
         },
         "excludeResponse": {
           "description": "Exclude the full response body and only return success or failure indication",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def9"
-            }
-          ]
+          "type": "boolean"
         },
         "confirm": {
           "description": "For destructive operations when the confirm gate is enabled (MS365_MCP_REQUIRE_CONFIRM=true; off by default). Set to true only after the user has explicitly approved this action. When the gate is on, calls without confirm: true return { error: \"confirmation_required\" } without touching user data.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def8"
-            }
-          ]
+          "type": "boolean"
         }
       },
       "required": [
@@ -30756,31 +30561,6 @@
       ],
       "additionalProperties": true,
       "$defs": {
-        "def0": {
-          "type": "object",
-          "properties": {
-            "oneNoteClientUrl": {
-              "$ref": "#/$defs/def1"
-            },
-            "oneNoteWebUrl": {
-              "$ref": "#/$defs/def1"
-            }
-          },
-          "additionalProperties": true
-        },
-        "def1": {
-          "type": "object",
-          "properties": {
-            "href": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "The URL of the link."
-            }
-          },
-          "additionalProperties": true
-        },
         "def2": {
           "type": "object",
           "properties": {
@@ -30896,41 +30676,6 @@
                 "$ref": "#/$defs/def6"
               },
               "description": "The sections in the notebook. Read-only. Nullable."
-            }
-          },
-          "additionalProperties": true
-        },
-        "def3": {
-          "type": "object",
-          "properties": {
-            "application": {
-              "$ref": "#/$defs/def4"
-            },
-            "device": {
-              "$ref": "#/$defs/def4"
-            },
-            "user": {
-              "$ref": "#/$defs/def4"
-            }
-          },
-          "additionalProperties": true
-        },
-        "def4": {
-          "type": "object",
-          "properties": {
-            "displayName": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "The display name of the identity.For drive items, the display name might not always be available or up to date. For example, if a user changes their display name the API might show the new value in a future response, but the items associated with the user don't show up as changed when using delta."
-            },
-            "id": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "Unique identifier for the identity or actor. For example, in the access reviews decisions API, this property might record the id of the principal, that is, the group, user, or application that's subject to review."
             }
           },
           "additionalProperties": true
@@ -31235,14 +30980,65 @@
           },
           "additionalProperties": true
         },
-        "def8": {
-          "type": "boolean"
+        "def0": {
+          "type": "object",
+          "properties": {
+            "oneNoteClientUrl": {
+              "$ref": "#/$defs/def1"
+            },
+            "oneNoteWebUrl": {
+              "$ref": "#/$defs/def1"
+            }
+          },
+          "additionalProperties": true
         },
-        "def9": {
-          "type": "boolean"
+        "def1": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The URL of the link."
+            }
+          },
+          "additionalProperties": true
         },
-        "def10": {
-          "type": "boolean"
+        "def3": {
+          "type": "object",
+          "properties": {
+            "application": {
+              "$ref": "#/$defs/def4"
+            },
+            "device": {
+              "$ref": "#/$defs/def4"
+            },
+            "user": {
+              "$ref": "#/$defs/def4"
+            }
+          },
+          "additionalProperties": true
+        },
+        "def4": {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The display name of the identity.For drive items, the display name might not always be available or up to date. For example, if a user changes their display name the API might show the new value in a future response, but the items associated with the user don't show up as changed when using delta."
+            },
+            "id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Unique identifier for the identity or actor. For example, in the access reviews decisions API, this property might record the id of the principal, that is, the group, user, or application that's subject to review."
+            }
+          },
+          "additionalProperties": true
         }
       }
     }
@@ -35172,6 +34968,10 @@
           "description": "Next page: the @odata.nextLink from the previous response. Keep the other arguments the same.",
           "type": "string"
         },
+        "token": {
+          "description": "Delta state to resume from: the @odata.deltaLink from the last sync to get only the changes since then, the @odata.nextLink for the next page, or latest to skip existing items and get a deltaLink for changes from now. Omit to enumerate everything.",
+          "type": "string"
+        },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
           "type": "boolean"
@@ -36493,27 +36293,15 @@
         },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def7"
-            }
-          ]
+          "type": "boolean"
         },
         "excludeResponse": {
           "description": "Exclude the full response body and only return success or failure indication",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def6"
-            }
-          ]
+          "type": "boolean"
         },
         "confirm": {
           "description": "For destructive operations when the confirm gate is enabled (MS365_MCP_REQUIRE_CONFIRM=true; off by default). Set to true only after the user has explicitly approved this action. When the gate is on, calls without confirm: true return { error: \"confirmation_required\" } without touching user data.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def5"
-            }
-          ]
+          "type": "boolean"
         }
       },
       "required": [
@@ -36635,7 +36423,14 @@
                   "description": "Description of the task."
                 },
                 "previewType": {
-                  "$ref": "#/$defs/def4"
+                  "type": "string",
+                  "enum": [
+                    "automatic",
+                    "noPreview",
+                    "checklist",
+                    "description",
+                    "reference"
+                  ]
                 },
                 "references": {
                   "type": "object",
@@ -36769,7 +36564,14 @@
               "description": "Plan ID to which the task belongs."
             },
             "previewType": {
-              "$ref": "#/$defs/def4"
+              "type": "string",
+              "enum": [
+                "automatic",
+                "noPreview",
+                "checklist",
+                "description",
+                "reference"
+              ]
             },
             "priority": {
               "anyOf": [
@@ -36851,25 +36653,6 @@
             }
           },
           "additionalProperties": true
-        },
-        "def4": {
-          "type": "string",
-          "enum": [
-            "automatic",
-            "noPreview",
-            "checklist",
-            "description",
-            "reference"
-          ]
-        },
-        "def5": {
-          "type": "boolean"
-        },
-        "def6": {
-          "type": "boolean"
-        },
-        "def7": {
-          "type": "boolean"
         }
       }
     }
@@ -37222,27 +37005,15 @@
         },
         "includeHeaders": {
           "description": "Include response headers (including ETag) in the response metadata",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def7"
-            }
-          ]
+          "type": "boolean"
         },
         "excludeResponse": {
           "description": "Exclude the full response body and only return success or failure indication",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def6"
-            }
-          ]
+          "type": "boolean"
         },
         "confirm": {
           "description": "For destructive operations when the confirm gate is enabled (MS365_MCP_REQUIRE_CONFIRM=true; off by default). Set to true only after the user has explicitly approved this action. When the gate is on, calls without confirm: true return { error: \"confirmation_required\" } without touching user data.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/def5"
-            }
-          ]
+          "type": "boolean"
         }
       },
       "required": [
@@ -37365,7 +37136,14 @@
                   "description": "Description of the task."
                 },
                 "previewType": {
-                  "$ref": "#/$defs/def4"
+                  "type": "string",
+                  "enum": [
+                    "automatic",
+                    "noPreview",
+                    "checklist",
+                    "description",
+                    "reference"
+                  ]
                 },
                 "references": {
                   "type": "object",
@@ -37499,7 +37277,14 @@
               "description": "Plan ID to which the task belongs."
             },
             "previewType": {
-              "$ref": "#/$defs/def4"
+              "type": "string",
+              "enum": [
+                "automatic",
+                "noPreview",
+                "checklist",
+                "description",
+                "reference"
+              ]
             },
             "priority": {
               "anyOf": [
@@ -37581,25 +37366,6 @@
             }
           },
           "additionalProperties": true
-        },
-        "def4": {
-          "type": "string",
-          "enum": [
-            "automatic",
-            "noPreview",
-            "checklist",
-            "description",
-            "reference"
-          ]
-        },
-        "def5": {
-          "type": "boolean"
-        },
-        "def6": {
-          "type": "boolean"
-        },
-        "def7": {
-          "type": "boolean"
         }
       }
     }
@@ -39513,7 +39279,7 @@
   },
   {
     "name": "create-planner-task-message",
-    "description": "[beta] Create a new plannerTaskChatMessage on a plannerTask.\n\n💡 TIP: Posts a message to a Planner task's chat (the modern 'task chat', not the legacy conversationThreadId comment). Microsoft is retiring the classic task comments experience and hiding it from the task (Planner 2026 update), so task chat is the current supported way to post per-task updates teammates will see, with @mentions. Body: { content: 'plain text or sanitized HTML', mentions?: [{ mentioned: 'user-id', position: 0, mentionType: 'user' }] } (mentions optional). No ETag/If-Match required. BETA Graph API: subject to change; delegated work/school accounts only — no application permissions, no personal Microsoft accounts, global cloud only (not GCC/DoD/21Vianet).",
+    "description": "[beta] Create a new plannerTaskChatMessage on a plannerTask.\n\n💡 TIP: Posts a message to a Planner task's chat (the modern 'task chat', not the legacy conversationThreadId comment). Task chat is currently available for basic plans; Premium plans use Teams conversations for task discussions. Only explicitly mentioned users receive notifications. Body: { content: 'plain text or sanitized HTML', mentions?: [{ mentioned: 'user-id', position: 0, mentionType: 'user' }] } (mentions optional). No ETag/If-Match required. BETA Graph API: subject to change; delegated work/school accounts only — no application permissions, no personal Microsoft accounts, global cloud only (not GCC/DoD/21Vianet).",
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
@@ -39873,7 +39639,7 @@
   },
   {
     "name": "get-upload-url",
-    "description": "Mint a short-lived, single-use URL that this server serves for uploading a file as an attachment to a draft message or an event, or as a file in a OneDrive/SharePoint folder, so the bytes go straight from the caller to Microsoft Graph instead of passing as base64 through the agent context. target is the attachments collection of the item: /me/messages/{message-id}/attachments (a draft; create it first) or /me/events/{event-id}/attachments; or a drive folder: /me/drive/root, /me/drive/items/{folder-id}, /drives/{drive-id}/items/{folder-id}, /sites/{site-id}/drive/items/{folder-id}. PUT the raw file bytes to the returned uploadUrl with a Content-Length (e.g. curl -T file \"<uploadUrl>\"); the response confirms the upload. Up to 150 MB. Pass contentId to attach inline, e.g. a signature picture the HTML body shows with <img src=\"cid:<contentId>\">. For a drive folder, conflictBehavior says what happens when the name is taken (default fail; contentId does not apply). Requires --enable-attachment-urls. Returns { uploadUrl, method, expiresAt, singleUse, maxBytes, conflictBehavior? }.",
+    "description": "Mint a short-lived, single-use URL that this server serves for uploading a file as an attachment to a draft message or an event, or as a file in a OneDrive/SharePoint folder, so the bytes go straight from the caller to Microsoft Graph instead of passing as base64 through the agent context. target is the attachments collection of the item: /me/messages/{message-id}/attachments (a draft; create it first) or /me/events/{event-id}/attachments; or a drive folder: /me/drive/root, /me/drive/items/{folder-id}, /drives/{drive-id}/items/{folder-id}, /sites/{site-id}/drive/items/{folder-id}. PUT the raw file bytes to the returned uploadUrl with a Content-Length (e.g. curl -T file \"<uploadUrl>\"); the response confirms the upload. Up to 150 MB. Pass contentId to attach inline, e.g. a signature picture the HTML body shows with <img src=\"cid:<contentId>\">. For a drive folder, conflictBehavior says what happens when the name is taken (default fail; contentId does not apply). Requires --enable-attachment-urls. Returns { uploadUrl, method, expiresAt, singleUse, maxBytes, name, conflictBehavior? }. For several files, pass files (up to 20 entries of target, name and the optional fields) instead: one call returns { results: [...] }, one item per entry with its uploadUrl or its error. The links expire minutes after minting, so start every upload right away, in parallel or in one command.",
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
@@ -39903,12 +39669,49 @@
             "replace",
             "rename"
           ]
+        },
+        "files": {
+          "description": "Several files at once, instead of target and name: up to 20 entries, each with the fields of a single upload.",
+          "minItems": 1,
+          "maxItems": 20,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target": {
+                "type": "string",
+                "description": "Attachments collection of a draft message or an event, e.g. /me/messages/{message-id}/attachments, /me/events/{event-id}/attachments, or /users/{user-id}/messages/{message-id}/attachments for another mailbox. Or a OneDrive/SharePoint folder: /me/drive/root, /me/drive/items/{folder-id}, /drives/{drive-id}/items/{folder-id}, /sites/{site-id}/drive/items/{folder-id}."
+              },
+              "name": {
+                "type": "string",
+                "description": "File name as it will be stored, e.g. report.pdf: the attachment name, or the file name in the drive folder."
+              },
+              "contentType": {
+                "description": "MIME type of the file, e.g. application/pdf. Defaults to application/octet-stream.",
+                "type": "string"
+              },
+              "contentId": {
+                "description": "Attach inline under this Content-ID instead of as a regular attachment, so the HTML body can show the file with <img src=\"cid:<contentId>\">, e.g. a picture in an email signature. Letters, digits, \".\", \"_\", \"@\", \"-\".",
+                "type": "string"
+              },
+              "conflictBehavior": {
+                "description": "Drive folder targets only: what happens when the folder already has a file with this name. fail (default), replace, or rename.",
+                "type": "string",
+                "enum": [
+                  "fail",
+                  "replace",
+                  "rename"
+                ]
+              }
+            },
+            "required": [
+              "target",
+              "name"
+            ],
+            "additionalProperties": false
+          }
         }
       },
-      "required": [
-        "target",
-        "name"
-      ],
       "additionalProperties": false
     }
   },
@@ -40036,20 +39839,26 @@
   },
   {
     "name": "get-download-url",
-    "description": "Resolve a short-lived, pre-authenticated download URL for Microsoft Graph binary content that exposes one (drive/SharePoint file content). The returned URL streams the bytes with NO Authorization header, so the client can fetch it straight to disk (e.g. curl) without round-tripping base64 through the agent context. Prefer this over download-bytes for any file above a few KB or any bulk download. Returns { downloadUrl, name?, size?, contentType? }. Mail file attachments (/messages/{id}/attachments/{id}/$value), meeting recordings and other $value byte endpoints have no pre-authenticated URL from Graph itself, but call this tool for them anyway: a server running with --enable-attachment-urls mints its own single-use URL for them, and one without it answers with the reason and points at download-bytes. With --enable-attachment-urls, drive files get a short single-use URL from this server as well, instead of the long one from Graph.",
+    "description": "Resolve a short-lived, pre-authenticated download URL for Microsoft Graph binary content that exposes one (drive/SharePoint file content). The returned URL streams the bytes with NO Authorization header, so the client can fetch it straight to disk (e.g. curl) without round-tripping base64 through the agent context. Prefer this over download-bytes for any file above a few KB or any bulk download. Returns { downloadUrl, name?, size?, contentType? }. Mail file attachments (/messages/{id}/attachments/{id}/$value), meeting recordings and other $value byte endpoints have no pre-authenticated URL from Graph itself, but call this tool for them anyway: a server running with --enable-attachment-urls mints its own single-use URL for them, and one without it answers with the reason and points at download-bytes. With --enable-attachment-urls, drive files get a short single-use URL from this server as well, instead of the long one from Graph. For several files, pass targets (up to 20) instead of target: one call returns { results: [...] }, one item per target with its downloadUrl or its error. Server-minted links expire minutes after minting, so start every download right away, in parallel or in one command.",
     "read_only": true,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
       "properties": {
         "target": {
-          "type": "string",
-          "description": "Relative Microsoft Graph path starting with \"/\". Either a driveItem content path or the item path itself, e.g. /drives/{drive-id}/items/{driveItem-id}/content, /me/drive/items/{driveItem-id}/content, or /sites/{site-id}/drive/items/{driveItem-id}. A trailing /content is optional and is stripped automatically for drive items. Mail attachment $value paths and meeting recordings are accepted on a server running with --enable-attachment-urls."
+          "description": "Relative Microsoft Graph path starting with \"/\". Either a driveItem content path or the item path itself, e.g. /drives/{drive-id}/items/{driveItem-id}/content, /me/drive/items/{driveItem-id}/content, or /sites/{site-id}/drive/items/{driveItem-id}. A trailing /content is optional and is stripped automatically for drive items. Mail attachment $value paths and meeting recordings are accepted on a server running with --enable-attachment-urls.",
+          "type": "string"
+        },
+        "targets": {
+          "description": "Several files at once, instead of target: up to 20 paths, each of the form target takes.",
+          "minItems": 1,
+          "maxItems": 20,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
-      "required": [
-        "target"
-      ],
       "additionalProperties": false
     }
   }

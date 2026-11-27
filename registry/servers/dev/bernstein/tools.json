@@ -5,10 +5,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_run",
-      "description": "Start an orchestration run. A run does real work and takes minutes to hours; the call returns once the run is queued, not when it finishes. Do not re-issue it while waiting, that starts a second run. Follow the run with bernstein_run_status, passing either the returned task_id or the returned run_id, after waiting the returned poll_after_ms. Pass parent_task_id to create the run as a subtask of an existing task. The queued orchestration writes project state and starts agent work. Host effects: writes files; spawns agent processes; makes network requests. Set template=administrative to create an empty audited manual container without a planner or agent processes; goal may be omitted for this template.",
-      "type": "object",
-      "additionalProperties": false,
       "properties": {
         "goal": {
           "type": "string",
@@ -64,6 +60,10 @@
           "default": "orchestration"
         }
       },
+      "type": "object",
+      "title": "bernstein_run",
+      "description": "Start an orchestration run. A run does real work and takes minutes to hours; the call returns once the run is queued, not when it finishes. Do not re-issue it while waiting, that starts a second run. Follow the run with bernstein_run_status, passing either the returned task_id or the returned run_id, after waiting the returned poll_after_ms. Pass parent_task_id to create the run as a subtask of an existing task. The queued orchestration writes project state and starts agent work. Host effects: writes files; spawns agent processes; makes network requests. Set template=administrative to create an empty audited manual container without a planner or agent processes; goal may be omitted for this template.",
+      "additionalProperties": false,
       "anyOf": [
         {
           "required": [
@@ -89,14 +89,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_subscribe",
-      "description": "Wait for one future role task notification over authenticated SSE, then unsubscribe. Host effects: makes network requests.",
-      "timeoutSeconds": 65,
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "role"
-      ],
       "properties": {
         "role": {
           "type": "string",
@@ -110,7 +102,15 @@
           "maximum": 60,
           "default": 30
         }
-      }
+      },
+      "required": [
+        "role"
+      ],
+      "type": "object",
+      "title": "bernstein_subscribe",
+      "description": "Wait for one future role task notification over authenticated SSE, then unsubscribe. Host effects: makes network requests.",
+      "timeoutSeconds": 65,
+      "additionalProperties": false
     }
   },
   {
@@ -119,10 +119,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_status",
-      "description": "Liveness, task counts, and cost in one read. Pass status to include the matching tasks; pass detail=true for full per-role and per-task rows. Retrieves data from the Bernstein server without changing it. Host effects: makes network requests.",
-      "type": "object",
-      "additionalProperties": false,
       "properties": {
         "status": {
           "type": [
@@ -146,7 +142,11 @@
             "null"
           ]
         }
-      }
+      },
+      "type": "object",
+      "title": "bernstein_status",
+      "description": "Liveness, task counts, and cost in one read. Pass status to include the matching tasks; pass detail=true for full per-role and per-task rows. Retrieves data from the Bernstein server without changing it. Host effects: makes network requests.",
+      "additionalProperties": false
     }
   },
   {
@@ -155,13 +155,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_claim",
-      "description": "Claim the next eligible task for an agent. This changes task assignment state on the Bernstein server. Host effects: makes network requests.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "claimer_id"
-      ],
       "properties": {
         "claimer_id": {
           "type": "string",
@@ -215,7 +208,14 @@
           ],
           "maxLength": 256
         }
-      }
+      },
+      "required": [
+        "claimer_id"
+      ],
+      "type": "object",
+      "title": "bernstein_claim",
+      "description": "Claim the next eligible task for an agent. This changes task assignment state on the Bernstein server. Host effects: makes network requests.",
+      "additionalProperties": false
     }
   },
   {
@@ -224,15 +224,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_create_task",
-      "description": "Create a bare task without triggering orchestration or spawning agents. The task enters the backlog and is immediately claimable via bernstein_claim by any session matching its role. Host effects: writes files; makes network requests.",
-      "timeoutSeconds": 30.0,
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "title",
-        "description"
-      ],
       "properties": {
         "title": {
           "type": "string",
@@ -309,7 +300,16 @@
             }
           ]
         }
-      }
+      },
+      "required": [
+        "title",
+        "description"
+      ],
+      "type": "object",
+      "title": "bernstein_create_task",
+      "description": "Create a bare task without triggering orchestration or spawning agents. The task enters the backlog and is immediately claimable via bernstein_claim by any session matching its role. Host effects: writes files; makes network requests.",
+      "timeoutSeconds": 30.0,
+      "additionalProperties": false
     }
   },
   {
@@ -318,15 +318,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_post_message",
-      "description": "Post a progress message to a task mailbox on the Bernstein server. Host effects: makes network requests.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "task_id",
-        "body",
-        "sender"
-      ],
       "properties": {
         "task_id": {
           "type": "string",
@@ -359,7 +350,16 @@
           ],
           "maxLength": 256
         }
-      }
+      },
+      "required": [
+        "task_id",
+        "body",
+        "sender"
+      ],
+      "type": "object",
+      "title": "bernstein_post_message",
+      "description": "Post a progress message to a task mailbox on the Bernstein server. Host effects: makes network requests.",
+      "additionalProperties": false
     }
   },
   {
@@ -368,17 +368,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_post_artifact",
-      "description": "Post a versioned artifact to a task on the Bernstein server. Host effects: makes network requests.",
-      "timeoutSeconds": 30.0,
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "task_id",
-        "key",
-        "artifact_type",
-        "poster"
-      ],
       "properties": {
         "task_id": {
           "type": "string",
@@ -471,6 +460,17 @@
           "maxLength": 4096
         }
       },
+      "required": [
+        "task_id",
+        "key",
+        "artifact_type",
+        "poster"
+      ],
+      "type": "object",
+      "title": "bernstein_post_artifact",
+      "description": "Post a versioned artifact to a task on the Bernstein server. Host effects: makes network requests.",
+      "timeoutSeconds": 30.0,
+      "additionalProperties": false,
       "allOf": [
         {
           "if": {
@@ -551,13 +551,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_cancel",
-      "description": "Cancel one task and its subtask tree; the orchestrator keeps running. Cancellable statuses: open, claimed, in_progress, blocked, waiting_for_subtasks, planned. An already-terminal task is reported, not treated as an error. This changes task state on the Bernstein server. Host effects: makes network requests.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "task_id"
-      ],
       "properties": {
         "task_id": {
           "type": "string",
@@ -569,7 +562,14 @@
           "type": "string",
           "maxLength": 4096
         }
-      }
+      },
+      "required": [
+        "task_id"
+      ],
+      "type": "object",
+      "title": "bernstein_cancel",
+      "description": "Cancel one task and its subtask tree; the orchestrator keeps running. Cancellable statuses: open, claimed, in_progress, blocked, waiting_for_subtasks, planned. An already-terminal task is reported, not treated as an error. This changes task state on the Bernstein server. Host effects: makes network requests.",
+      "additionalProperties": false
     }
   },
   {
@@ -578,17 +578,17 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_shutdown_orchestrator",
-      "description": "Shut down the ENTIRE Bernstein orchestrator for this project, including every run and worker; use bernstein_cancel to stop one task while the orchestrator keeps running. Writes the local SHUTDOWN signal file. Host effects: writes files.",
-      "type": "object",
-      "additionalProperties": false,
       "properties": {
         "workdir": {
           "type": "string",
           "minLength": 1,
           "maxLength": 4096
         }
-      }
+      },
+      "type": "object",
+      "title": "bernstein_shutdown_orchestrator",
+      "description": "Shut down the ENTIRE Bernstein orchestrator for this project, including every run and worker; use bernstein_cancel to stop one task while the orchestrator keeps running. Writes the local SHUTDOWN signal file. Host effects: writes files.",
+      "additionalProperties": false
     }
   },
   {
@@ -597,13 +597,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_approve",
-      "description": "Sign off a finished result only when the task is in pending_approval; every other status is refused. This completes the task on the Bernstein server. Host effects: makes network requests.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "task_id"
-      ],
       "properties": {
         "task_id": {
           "type": "string",
@@ -615,7 +608,14 @@
           "type": "string",
           "maxLength": 8192
         }
-      }
+      },
+      "required": [
+        "task_id"
+      ],
+      "type": "object",
+      "title": "bernstein_approve",
+      "description": "Sign off a finished result only when the task is in pending_approval; every other status is refused. This completes the task on the Bernstein server. Host effects: makes network requests.",
+      "additionalProperties": false
     }
   },
   {
@@ -624,14 +624,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_complete",
-      "description": "Report a task result only from a worker-held state: open, claimed, or in_progress; every other status is refused. This completes the task on the Bernstein server. Host effects: makes network requests.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "task_id",
-        "result_summary"
-      ],
       "properties": {
         "task_id": {
           "type": "string",
@@ -644,7 +636,15 @@
           "minLength": 1,
           "maxLength": 8192
         }
-      }
+      },
+      "required": [
+        "task_id",
+        "result_summary"
+      ],
+      "type": "object",
+      "title": "bernstein_complete",
+      "description": "Report a task result only from a worker-held state: open, claimed, or in_progress; every other status is refused. This completes the task on the Bernstein server. Host effects: makes network requests.",
+      "additionalProperties": false
     }
   },
   {
@@ -653,13 +653,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_run_status",
-      "description": "Poll a verifiable handle for a run started with bernstein_run. Accepts either identifier that call returned: the task_id or the run_id. Reads the local run journal and audit evidence without changing them. Host effects: reads files.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "run_id"
-      ],
       "properties": {
         "run_id": {
           "type": "string",
@@ -672,7 +665,14 @@
           "minLength": 1,
           "maxLength": 4096
         }
-      }
+      },
+      "required": [
+        "run_id"
+      ],
+      "type": "object",
+      "title": "bernstein_run_status",
+      "description": "Poll a verifiable handle for a run started with bernstein_run. Accepts either identifier that call returned: the task_id or the run_id. Reads the local run journal and audit evidence without changing them. Host effects: reads files.",
+      "additionalProperties": false
     }
   },
   {
@@ -681,13 +681,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "bernstein_task_capsule",
-      "description": "Read a task capsule together with its local journal and audit evidence. With verify=true, verification may create the install audit key if it is absent. Host effects: reads files; writes files.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "task_id"
-      ],
       "properties": {
         "task_id": {
           "type": "string",
@@ -708,7 +701,14 @@
             "null"
           ]
         }
-      }
+      },
+      "required": [
+        "task_id"
+      ],
+      "type": "object",
+      "title": "bernstein_task_capsule",
+      "description": "Read a task capsule together with its local journal and audit evidence. With verify=true, verification may create the install audit key if it is absent. Host effects: reads files; writes files.",
+      "additionalProperties": false
     }
   },
   {
@@ -717,19 +717,6 @@
     "read_only": false,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "load_skill",
-      "description": "List available skills when name is omitted, or load a named skill body, reference, or script file contents. Returns file contents as text; executes nothing. Host effects: reads files.",
-      "timeoutSeconds": 30.0,
-      "type": "object",
-      "additionalProperties": false,
-      "dependencies": {
-        "reference": [
-          "name"
-        ],
-        "script": [
-          "name"
-        ]
-      },
       "properties": {
         "name": {
           "type": "string",
@@ -754,6 +741,19 @@
           "maxLength": 256,
           "pattern": "^[A-Za-z0-9_./-]+$"
         }
+      },
+      "type": "object",
+      "title": "load_skill",
+      "description": "List available skills when name is omitted, or load a named skill body, reference, or script file contents. Returns file contents as text; executes nothing. Host effects: reads files.",
+      "timeoutSeconds": 30.0,
+      "additionalProperties": false,
+      "dependencies": {
+        "reference": [
+          "name"
+        ],
+        "script": [
+          "name"
+        ]
       }
     }
   }

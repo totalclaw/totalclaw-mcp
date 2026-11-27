@@ -158,7 +158,7 @@
   },
   {
     "name": "get_helper_props",
-    "description": "The helper props every bestax component accepts — spacing, colour, typography, flexbox, visibility — and their valid values. Call this BEFORE writing an inline style or a utility class by hand; this library expects those to be props.",
+    "description": "The helper props bestax components accept (spacing, colour, typography, flexbox, visibility) and their valid values. Most components take them, so check one with get_props before passing a helper. Call this BEFORE writing an inline style or a utility class by hand; this library expects those to be props.",
     "read_only": true,
     "input_schema": {
       "$schema": "http://json-schema.org/draft-07/schema#",

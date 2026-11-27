@@ -6,7 +6,6 @@
     "input_schema": {
       "properties": {
         "item_key": {
-          "default": null,
           "type": "string"
         },
         "use_pdf_extraction": {
@@ -14,7 +13,6 @@
           "type": "boolean"
         },
         "limit": {
-          "default": null,
           "type": "integer"
         },
         "format": {
@@ -37,11 +35,9 @@
     "input_schema": {
       "properties": {
         "item_key": {
-          "default": null,
           "type": "string"
         },
         "query": {
-          "default": null,
           "type": "string"
         },
         "limit": {
@@ -79,15 +75,12 @@
           "type": "string"
         },
         "note_text": {
-          "default": null,
           "type": "string"
         },
         "note_title": {
-          "default": null,
           "type": "string"
         },
         "tags": {
-          "default": null,
           "items": {
             "type": "string"
           },
@@ -119,7 +112,6 @@
           "type": "integer"
         },
         "text": {
-          "default": null,
           "type": "string"
         },
         "rect": {
@@ -133,11 +125,9 @@
             {
               "type": "string"
             }
-          ],
-          "default": null
+          ]
         },
         "comment": {
-          "default": null,
           "type": "string"
         },
         "color": {
@@ -145,7 +135,6 @@
           "type": "string"
         },
         "tags": {
-          "default": null,
           "items": {
             "type": "string"
           },
@@ -162,8 +151,7 @@
             {
               "type": "string"
             }
-          ],
-          "default": null
+          ]
         },
         "underline": {
           "default": false,
@@ -209,33 +197,27 @@
           "type": "string"
         },
         "text": {
-          "default": null,
           "type": "string"
         },
         "comment": {
-          "default": null,
           "type": "string"
         },
         "color": {
-          "default": null,
           "type": "string"
         },
         "tags": {
-          "default": null,
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "add_tags": {
-          "default": null,
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "remove_tags": {
-          "default": null,
           "items": {
             "type": "string"
           },
@@ -268,7 +250,7 @@
   },
   {
     "name": "zotero_get_item_metadata",
-    "description": "Metadata for ONE item by its 8-character key (not a DOI or title): title, creators, date, DOI, tags, abstract, URL, collections (as keys). format: 'markdown' (default), 'json' (the raw Zotero record) or 'bibtex'. include_abstract=False shortens markdown output. Trashed items are returned too, marked In Trash. To read the paper use zotero_get_item_fulltext; to find items, the search tools.",
+    "description": "Metadata for ONE item by its 8-character key (not a DOI or title): title, creators, date, DOI, tags, abstract, URL, collections (as keys). format: 'markdown' (default), 'json' (the Zotero record) or 'bibtex'. Signed attachment URLs are omitted. include_abstract=False shortens markdown output. Trashed items are returned too, marked In Trash. To read the paper use zotero_get_item_fulltext; to find items, the search tools.",
     "read_only": false,
     "input_schema": {
       "properties": {
@@ -337,7 +319,6 @@
     "input_schema": {
       "properties": {
         "limit": {
-          "default": null,
           "type": "integer"
         },
         "include_trashed": {
@@ -421,7 +402,6 @@
     "input_schema": {
       "properties": {
         "limit": {
-          "default": null,
           "type": "integer"
         }
       },
@@ -471,7 +451,6 @@
           "type": "integer"
         },
         "collection_key": {
-          "default": null,
           "type": "string"
         }
       },
@@ -549,7 +528,6 @@
           "type": "integer"
         },
         "end_page": {
-          "default": null,
           "type": "integer"
         },
         "format": {
@@ -571,8 +549,7 @@
             {
               "type": "string"
             }
-          ],
-          "default": null
+          ]
         }
       },
       "required": [
@@ -610,14 +587,12 @@
           "type": "integer"
         },
         "tag": {
-          "default": null,
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "collection_key": {
-          "default": null,
           "type": "string"
         },
         "include_subcollections": {
@@ -687,7 +662,6 @@
           "type": "string"
         },
         "sort_by": {
-          "default": null,
           "type": "string"
         },
         "sort_direction": {
@@ -725,11 +699,9 @@
     "input_schema": {
       "properties": {
         "collection_key": {
-          "default": null,
           "type": "string"
         },
         "tag": {
-          "default": null,
           "items": {
             "type": "string"
           },
@@ -759,14 +731,12 @@
     "input_schema": {
       "properties": {
         "item_keys": {
-          "default": null,
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "collection_key": {
-          "default": null,
           "type": "string"
         },
         "style": {
@@ -794,7 +764,6 @@
     "input_schema": {
       "properties": {
         "item_keys": {
-          "default": null,
           "items": {
             "type": "string"
           },
@@ -805,21 +774,18 @@
           "type": "string"
         },
         "tag": {
-          "default": null,
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "add_tags": {
-          "default": null,
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "remove_tags": {
-          "default": null,
           "items": {
             "type": "string"
           },
@@ -836,11 +802,9 @@
             {
               "type": "string"
             }
-          ],
-          "default": null
+          ]
         },
         "remove_keys": {
-          "default": null,
           "items": {
             "type": "string"
           },
@@ -870,15 +834,12 @@
           "type": "string"
         },
         "collection_key": {
-          "default": null,
           "type": "string"
         },
         "name": {
-          "default": null,
           "type": "string"
         },
         "parent_collection": {
-          "default": null,
           "type": "string"
         },
         "to_top_level": {
@@ -927,14 +888,12 @@
           "type": "array"
         },
         "add_to": {
-          "default": null,
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "remove_from": {
-          "default": null,
           "items": {
             "type": "string"
           },
@@ -965,8 +924,7 @@
             {
               "type": "string"
             }
-          ],
-          "default": null
+          ]
         },
         "creators": {
           "anyOf": [
@@ -979,39 +937,33 @@
             {
               "type": "string"
             }
-          ],
-          "default": null
+          ]
         },
         "tags": {
-          "default": null,
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "add_tags": {
-          "default": null,
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "remove_tags": {
-          "default": null,
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "collections": {
-          "default": null,
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "collection_names": {
-          "default": null,
           "items": {
             "type": "string"
           },
@@ -1073,15 +1025,12 @@
           "type": "string"
         },
         "file_path": {
-          "default": null,
           "type": "string"
         },
         "url": {
-          "default": null,
           "type": "string"
         },
         "filename": {
-          "default": null,
           "type": "string"
         },
         "link_mode": {
@@ -1120,14 +1069,12 @@
           "type": "string"
         },
         "collections": {
-          "default": null,
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "tags": {
-          "default": null,
           "items": {
             "type": "string"
           },
@@ -1151,7 +1098,6 @@
           "type": "boolean"
         },
         "title": {
-          "default": null,
           "type": "string"
         }
       },

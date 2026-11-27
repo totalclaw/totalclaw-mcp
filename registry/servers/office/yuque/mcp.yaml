@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 厂商官方说明（人工核实） 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 厂商官方说明（人工核实） 导入（2026-10-27）；2026-11-27 静态审核：通过（详见 docs/review-2026-11-27-upstream2.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: yuque
 display_name: 语雀
 display_name_en: ''
-version: 0.1.1
+version: 0.1.2
 description: MCP server for Yuque (语雀) — expose Yuque knowledge base to AI assistants via Model Context Protocol
 description_zh: 语雀官方 MCP：搜索与读写知识库文档，管理目录。需要语雀个人访问令牌。
 author: yuque
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - yuque-mcp@1.0.0
+  - yuque-mcp@1.1.0
   requires:
     node: '>=18'
 requires_env:

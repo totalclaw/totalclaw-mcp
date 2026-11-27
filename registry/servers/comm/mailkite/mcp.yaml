@@ -1,4 +1,4 @@
-# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
+# 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-27 静态审核：通过（详见 docs/review-2026-11-27-upstream2.md）
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: mailkite
 display_name: MailKite
 display_name_en: MailKite
-version: 0.1.1
+version: 0.1.2
 description: Model Context Protocol server for MailKite — exposes the MailKite API to LLM agents as tools. A thin layer over
   the MailKite Node SDK and the shared sdks/spec contract.
 description_zh: 让 AI Agent 拥有一个属于自己的真实邮箱：入站邮件以结构化工具调用的形式送达，Agent 从你验证过的域名（SPF/DKIM）发信，而不是代理你已有的 Gmail/IMAP 邮箱。60+ 个工具，覆盖单封与批量发信、附件、入站路由、Webhook
@@ -28,7 +28,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@mailkite/mcp@0.20.0'
+  - '@mailkite/mcp@0.20.2'
   requires:
     node: '>=18'
 requires_env:
