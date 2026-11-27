@@ -1,4 +1,5 @@
 # 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
+# 2026-11-26：本地 npm 包 @stripe/mcp 已停止维护（不再有安全修复），改接官方托管端点 https://mcp.stripe.com（OAuth）。
 # 人工修改后请同步递增 version。
 manifest_version: 1
 requires_protocol_version: '>=1'
@@ -6,12 +7,13 @@ tested_with: '>=0.63.72'
 name: stripe
 display_name: Stripe
 display_name_en: Stripe
-version: 0.1.1
-description: A command line tool for setting up Stripe MCP server
-description_zh: Stripe的MCP服务器，支持Stripe的读取和写入
-author: upstream
+version: 0.2.0
+description: Stripe's official hosted MCP server (OAuth).
+description_zh: Stripe 官方托管的 MCP 服务器，支持 Stripe 的读取和写入；装后用 Stripe 账号 OAuth 授权，不需要填密钥。
+author: Stripe
 license: MIT
-homepage: https://www.npmjs.com/package/@stripe/mcp
+homepage: https://docs.stripe.com/mcp
+repository: https://github.com/stripe/ai
 verified: true
 category: biz
 tags:
@@ -19,21 +21,11 @@ tags:
 - community
 kind: mcp_server
 runtimes:
-- id: npx
-  type: stdio
-  launcher: npx
-  command: npx
-  args:
-  - -y
-  - '@stripe/mcp@0.3.3'
-  requires:
-    node: '>=18'
-requires_env:
-- name: STRIPE_SECRET_KEY
-  description: Stripe 的密钥（STRIPE_SECRET_KEY），获取方式见项目说明。
-  prompt: 请输入 STRIPE_SECRET_KEY
-  secret: true
-  required: true
+- id: remote
+  type: http
+  url: https://mcp.stripe.com
+  auth: oauth
+requires_env: []
 optional_env: []
 defaults:
   enabled: true

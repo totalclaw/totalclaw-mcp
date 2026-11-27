@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: ipinfo
 display_name: mcp-server-ipinfo
 display_name_en: mcp-server-ipinfo
-version: 0.1.1
+version: 0.1.2
 description: IP Geolocation Server for MCP
 description_zh: 使用 IPInfo API 获取 IP 地址地理位置和网络信息。
 author: briandconnelly
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - mcp-server-ipinfo==0.7.0
+  - mcp-server-ipinfo==0.7.1
   requires:
     python: '>=3.10'
 requires_env: []

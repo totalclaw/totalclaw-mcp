@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: datetime
 display_name: mcp-datetime
 display_name_en: mcp-datetime
-version: 0.1.1
+version: 0.1.2
 description: A MCP server for datetime formatting and file name generation.
 description_zh: 提供各种格式的日期和时间功能的 MCP 服务器。
 author: ZeparHyfar
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - mcp-datetime==0.1.4
+  - mcp-datetime==0.3.0
   requires:
     python: '>=3.10'
 requires_env: []

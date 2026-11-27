@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: threatcluster
 display_name: Threat-Intelligence-MCP
 display_name_en: Threat-Intelligence-MCP
-version: 0.1.1
+version: 0.1.2
 description: 'MCP server for the ThreatCluster threat-intelligence API: incident clusters, entity profiles, CVEs and ransomware
   leak-site victims as tools for Claude, Cursor, VS Code and any MCP client'
 description_zh: ThreatCluster 威胁情报：事件聚类、已验证 IOC、CVE/KEV/EPSS 查询、勒索软件泄露站受害者、实体画像。托管端点 `https://threatcluster.io/mcp`，或 `npx
@@ -28,7 +28,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - threatcluster-mcp@0.2.5
+  - threatcluster-mcp@0.2.7
   requires:
     node: '>=18'
 requires_env:

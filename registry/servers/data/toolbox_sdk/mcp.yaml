@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: toolbox_sdk
 display_name: genai-toolbox
 display_name_en: genai-toolbox
-version: 0.1.1
+version: 0.1.2
 description: A CLI tool for running a toolbox server.
 description_zh: Google 官方开源 MCP 服务器，专注于为数据库提供简单、快速、安全的工具。
 author: googleapis
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@toolbox-sdk/server@1.15.0'
+  - '@toolbox-sdk/server@1.17.0'
   - --prebuilt=postgres
   - --stdio
   requires:

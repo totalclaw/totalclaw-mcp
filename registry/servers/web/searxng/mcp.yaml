@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: searxng
 display_name: MCP-SearXNG
 display_name_en: MCP-SearXNG
-version: 0.1.1
+version: 0.1.2
 description: MCP server for SearXNG integration
 description_zh: 连接到 SearXNG 元搜索引擎实例。
 author: ihor-sokoliuk
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - mcp-searxng@2.9.0
+  - mcp-searxng@2.11.0
   requires:
     node: '>=18'
 requires_env:

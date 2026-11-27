@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: ms_365
 display_name: ms-365-mcp-server
 display_name_en: ms-365-mcp-server
-version: 0.1.1
+version: 0.1.2
 description: ' A Model Context Protocol (MCP) server for interacting with Microsoft 365 and Office services through the Graph
   API'
 description_zh: 连接整个 Microsoft 365 套件 (Graph API)，包括邮件、文件、Excel、日历等的 MCP 服务器。
@@ -27,7 +27,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@softeria/ms-365-mcp-server@0.175.0'
+  - '@softeria/ms-365-mcp-server@0.187.0'
   - --toon
   requires:
     node: '>=18'

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: exa_2
 display_name: Exa搜索
 display_name_en: ''
-version: 0.1.1
+version: 0.1.2
 description: Connect AI agents to Exa for web search, content fetching, and multi-step research.
 description_zh: 基于Exa的高质量网络搜索MCP服务器
 author: upstream
@@ -25,7 +25,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - exa-mcp-server@3.4.2
+  - exa-mcp-server@3.4.3
   requires:
     node: '>=18'
 requires_env:

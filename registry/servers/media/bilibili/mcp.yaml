@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: bilibili
 display_name: Bilibili MCP
 display_name_en: Bilibili MCP
-version: 0.1.1
+version: 0.1.2
 description: Bilibili MCP tool for video metadata, transcripts, subtitles, and comment summarization
 description_zh: 面向中文用户的 Bilibili MCP 服务器，可提取视频元数据、字幕与结构化转录、章节和热门评论，并在无字幕时支持本地 ASR 回退。
 author: XZXZZX-Ai
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@xzxzzx/bilibili-mcp@1.14.5'
+  - '@xzxzzx/bilibili-mcp@1.14.6'
   - check
   requires:
     node: '>=18'

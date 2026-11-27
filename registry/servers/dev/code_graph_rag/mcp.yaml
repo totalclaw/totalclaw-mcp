@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: code_graph_rag
 display_name: code-graph-rag
 display_name_en: code-graph-rag
-version: 0.1.1
+version: 0.1.2
 description: The ultimate RAG for your monorepo. Query, understand, and edit multi-language codebases with the power of AI
   and knowledge graphs
 description_zh: 面向 monorepo 的代码图谱 RAG：把多语言代码库解析成图结构，支持跨语言查询、理解与编辑。
@@ -26,7 +26,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - code-graph-rag==0.3.13
+  - code-graph-rag==0.7.1
   requires:
     python: '>=3.10'
 requires_env: []

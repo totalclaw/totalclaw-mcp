@@ -9,7 +9,7 @@ tested_with: '>=0.63.72'
 name: sentry
 display_name: Sentry
 display_name_en: Sentry
-version: 0.2.0
+version: 0.2.1
 description: Sentry MCP server.
 description_zh: Sentry 错误监控集成 — issue 查询 / event 详情 / release / project / team / 性能 / AI Codegen 错误分析。Sentry
   官方维护。
@@ -27,7 +27,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@sentry/mcp-server@0.37.0'
+  - '@sentry/mcp-server@0.50.0'
   env:
     SENTRY_AUTH_TOKEN: ${SENTRY_AUTH_TOKEN}
     SENTRY_ORG: ${SENTRY_ORG}
@@ -54,4 +54,4 @@ tools:
 security:
   scan_verdict: allow
   prompt_injection_findings: []
-  osv: unscanned
+  osv: clean

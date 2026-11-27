@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: canli_validation
 display_name: canli-validation-mcp
 display_name_en: canli-validation-mcp
-version: 0.1.1
+version: 0.1.2
 description: 'Check whether a backtest is real: deflated Sharpe, CSCV probability of backtest overfitting, minimum track record
   and backtest length, haircut Sharpe and luck-equivalent trials, as an MCP server. Local mode, hosted endpoint, signed receipts.'
 description_zh: 检验回测结果是否可信：Deflated Sharpe Ratio（缩减夏普比率）、CSCV 回测过拟合概率（PBO）、数据窥探检验（Hansen SPA、White Reality Check、Romano-Wolf
@@ -28,7 +28,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - canli-validation-mcp@0.14.1
+  - canli-validation-mcp@0.16.0
   requires:
     node: '>=18'
 requires_env: []

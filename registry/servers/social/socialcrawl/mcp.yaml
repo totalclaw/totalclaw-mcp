@@ -5,7 +5,7 @@ tested_with: '>=0.63.72'
 name: socialcrawl
 display_name: SocialCrawl
 display_name_en: SocialCrawl
-version: 0.1.0
+version: 0.1.1
 description: SocialCrawl MCP server.
 description_zh: 27 社交平台公开数据爬取:账号资料、帖子、搜索、分析。5 工具:list_platforms / list_endpoints / request / check_balance
   / get_docs。前 3 个无 key 可用,request + balance 需 key。
@@ -23,7 +23,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - socialcrawl-mcp@1.9.0
+  - socialcrawl-mcp@2.2.0
   env:
     SOCIALCRAWL_API_KEY: ${SOCIALCRAWL_API_KEY}
   requires:
@@ -47,4 +47,4 @@ tools:
 security:
   scan_verdict: allow
   prompt_injection_findings: []
-  osv: unscanned
+  osv: clean

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: openosint
 display_name: OpenOSINT
 display_name_en: OpenOSINT
-version: 0.1.1
+version: 0.1.2
 description: AI-powered OSINT agent, MCP server, and CLI. Interactive REPL + 21 tools. Anthropic Claude or local Ollama. For
   authorized security research use only.
 description_zh: AI 驱动的 OSINT 情报 Agent，19 个工具，提供交互式 REPL、MCP server 与 CLI 三种用法，兼容 Claude、GPT 等。
@@ -27,7 +27,7 @@ runtimes:
   command: uvx
   args:
   - --from
-  - openosint==2.36.1
+  - openosint==2.38.2
   - openosint-mcp
   requires:
     python: '>=3.10'

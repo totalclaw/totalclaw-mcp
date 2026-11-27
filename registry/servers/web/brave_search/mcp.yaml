@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: brave_search
 display_name: Brave Search (官方)
 display_name_en: ''
-version: 0.1.1
+version: 0.1.2
 description: 'Brave Search MCP Server: web results, images, videos, rich results, AI summaries, and more.'
 description_zh: Brave 官方出品的搜索 MCP 服务器，支持网页、本地、图片、新闻、视频搜索。
 author: brave
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@brave/brave-search-mcp-server@2.1.4'
+  - '@brave/brave-search-mcp-server@2.1.5'
   - --transport
   - http
   requires:

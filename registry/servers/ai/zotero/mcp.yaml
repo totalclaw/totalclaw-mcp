@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: zotero
 display_name: zotero-mcp
 display_name_en: zotero-mcp
-version: 0.1.1
+version: 0.1.2
 description: 'Zotero MCP server and CLI: chat with your Zotero research library in Claude, ChatGPT, Cursor, Codex and other
   AI agents'
 description_zh: 连接 Zotero 文献库与 Claude 等 AI 助手，支持讨论论文、生成摘要、分析引文与检索笔记，兼容本地 Zotero 与云端 API。
@@ -26,7 +26,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - zotero-mcp-server==0.15.1
+  - zotero-mcp-server==0.17.2
   requires:
     python: '>=3.10'
 requires_env: []

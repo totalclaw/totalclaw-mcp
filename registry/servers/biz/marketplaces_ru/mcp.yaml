@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: marketplaces_ru
 display_name: marketplaces-mcp-ru
 display_name_en: marketplaces-mcp-ru
-version: 0.1.1
+version: 0.1.2
 description: MCP servers for Wildberries, Ozon, Yandex Market and Avito seller APIs (schema-driven, safety-gated)
 description_zh: 俄罗斯四大电商平台卖家 API 的统一 MCP 服务器：Wildberries、Ozon、Yandex Market、Avito，共 1022 个方法，覆盖销售、订单、库存、价格、财务与评价。方法目录由各平台官方
   OpenAPI 规范生成，可用自然语言检索方法；写操作分为 read / write / destructive 三级，改价改库存必须先确认，删除还需额外确认参数，CI 里有测试防止 PUT/PATCH/DELETE 被误标成只读。支持多店铺，密钥存在本地
@@ -27,7 +27,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - marketplaces-mcp-ru==0.6.1
+  - marketplaces-mcp-ru==0.7.0
   requires:
     python: '>=3.10'
 requires_env: []

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: webclaw
 display_name: webclaw
 display_name_en: webclaw
-version: 0.1.1
+version: 0.1.2
 description: 'Zero-install launcher for the webclaw MCP server: web extraction and anti-bot access for AI agents. Runs `npx
   @webclaw/mcp`.'
 description_zh: 快速本地优先的网页内容提取工具，专为 LLM 设计。支持将网页转换为 Markdown/JSON/纯文本，内置 TLS 指纹伪装绕过反爬，无需浏览器。提供 MCP 服务器（10 个工具）和 CLI。
@@ -27,7 +27,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@webclaw/mcp@0.7.0'
+  - '@webclaw/mcp@0.7.4'
   requires:
     node: '>=18'
 requires_env: []

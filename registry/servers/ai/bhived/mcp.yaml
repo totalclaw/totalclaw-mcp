@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: bhived
 display_name: Bhived MCP
 display_name_en: Bhived MCP
-version: 0.1.1
+version: 0.1.2
 description: Bhived MCP Server — shared knowledge graph for AI agents. Query, write, and inspect collective AI knowledge through
   the Model Context Protocol.
 description_zh: 面向 AI Agent 的共享记忆与知识图谱，支持跨 Agent 查询、写入和复用已验证经验。
@@ -27,7 +27,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - bhived-mcp@1.4.0
+  - bhived-mcp@1.4.2
   requires:
     node: '>=18'
 requires_env: []

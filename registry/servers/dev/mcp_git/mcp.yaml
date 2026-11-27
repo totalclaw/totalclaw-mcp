@@ -5,7 +5,7 @@ tested_with: '>=0.63.72'
 name: mcp_git
 display_name: Git
 display_name_en: Git
-version: 0.1.0
+version: 0.2.0
 description: Git MCP server.
 description_zh: git 仓库读取 / 搜索 / 操作 — log / diff / blame / branch / show / stage / commit / status。对 LLM
   暴露完整 git 工作流。
@@ -22,7 +22,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - mcp-server-git==2026.8.18
+  - mcp-server-git==2026.11.18
   env:
     MCP_GIT_REPO: ${MCP_GIT_REPO:-${PWD}}
   requires:
@@ -40,11 +40,11 @@ defaults:
   enabled: true
   timeout: 120
 tools:
-  probed_at: '2026-08-23T07:57:38Z'
+  probed_at: '2026-11-27T01:55:09Z'
   probed_runtime: uvx
-  count: 12
+  count: 14
   file: tools.json
 security:
   scan_verdict: allow
   prompt_injection_findings: []
-  osv: unscanned
+  osv: clean

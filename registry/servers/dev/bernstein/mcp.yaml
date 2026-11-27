@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: bernstein
 display_name: Bernstein
 display_name_en: Bernstein
-version: 0.1.1
+version: 0.1.2
 description: The open-source governance layer for AI agents. No model in the coordination loop, so replaying a plan reproduces
   its task graph byte-identically, and run receipts are byte-identical across independent builds. Signed lineage plus an opt-in
   HMAC audit chain a reviewer checks offline, without rerunnin
@@ -28,7 +28,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - bernstein==3.23.0
+  - bernstein==3.24.1
   requires:
     python: '>=3.10'
 requires_env: []

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: piia_engram
 display_name: piia-engram
 display_name_en: piia-engram
-version: 0.1.1
+version: 0.1.2
 description: Local-first personal AI identity and memory for MCP-compatible coding tools — lessons, decisions, playbooks,
   and project context you can see, edit, and override.
 description_zh: 跨工具持久化 AI 记忆——你的身份、偏好、经验教训跟随你在 Claude Code、Cursor、Codex 等工具间流转。本地存储，无需云端。
@@ -26,7 +26,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - piia-engram==4.26.0
+  - piia-engram==4.27.0
   requires:
     python: '>=3.10'
 requires_env: []

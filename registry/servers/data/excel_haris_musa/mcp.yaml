@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: excel_haris_musa
 display_name: Excel (by haris-musa)
 display_name_en: Excel (by haris-musa)
-version: 0.1.1
+version: 0.1.2
 description: MCP server for creating, reading and editing Excel workbooks without Microsoft Excel
 description_zh: Excel 操作，包括读写、工作表管理、格式化、图表和数据透视表 (提供更高级的功能)。
 author: haris-musa
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - excel-mcp-server==2.2.2
+  - excel-mcp-server==2.3.2
   - stdio
   - --allow-dir
   - ${MCP_EXCEL_HARIS_MUSA_ALLOW_DIR}

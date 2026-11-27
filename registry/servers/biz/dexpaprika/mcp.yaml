@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: dexpaprika
 display_name: dexpaprika-mcp
 display_name_en: dexpaprika-mcp
-version: 0.1.1
+version: 0.1.2
 description: A Model Context Protocol server for DexPaprika cryptocurrency data with network-specific pool queries
 description_zh: Coinpaprika 的 DexPaprika MCP 服务器，暴露高性能 DexPaprika API (20+ 链/5M+ 代币/实时价格/流动性/历史数据)。
 author: coinpaprika
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - dexpaprika-mcp@2.9.2
+  - dexpaprika-mcp@2.9.5
   requires:
     node: '>=18'
 requires_env: []

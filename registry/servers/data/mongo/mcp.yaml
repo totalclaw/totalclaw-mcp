@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: mongo
 display_name: mcp-mongo-server
 display_name_en: mcp-mongo-server
-version: 0.1.1
+version: 0.1.2
 description: A Model Context Protocol server for MongoDB connections
 description_zh: 用于 MongoDB 的模型上下文协议服务器。
 author: kiliczsh
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - mcp-mongo-server@3.0.1
+  - mcp-mongo-server@3.2.1
   requires:
     node: '>=18'
 requires_env: []

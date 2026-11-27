@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: rad_security
 display_name: mcp-server
 display_name_en: mcp-server
-version: 0.1.1
+version: 0.1.2
 description: RAD Security MCP Server for AI-powered security insights
 description_zh: RAD Security 的 MCP 服务器，为 Kubernetes 和云环境提供 AI 驱动的安全洞察。提供查询 Rad Security API 等工具。
 author: rad-security
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@rad-security/mcp-server@0.0.47'
+  - '@rad-security/mcp-server@0.0.49'
   requires:
     node: '>=18'
 requires_env: []

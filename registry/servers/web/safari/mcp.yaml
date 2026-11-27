@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: safari
 display_name: safari-mcp
 display_name_en: safari-mcp
-version: 0.1.2
+version: 0.1.3
 description: Safari browser automation for AI agents — native macOS, zero Chrome overhead. 98 tools via AppleScript + JavaScript.
 description_zh: 原生 Safari 浏览器自动化，专为 macOS 设计。通过 AppleScript + JavaScript 提供 80 个工具，零 Chrome 开销，保留登录状态，后台静默运行。
 author: achiya-automation
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - safari-mcp@2.22.19
+  - safari-mcp@2.24.1
   requires:
     node: '>=18'
 requires_env: []

@@ -1,7 +1,7 @@
 [
   {
     "name": "browser_close",
-    "description": "Close the page",
+    "description": "Close the browser and all open tabs.",
     "read_only": false,
     "input_schema": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -58,7 +58,7 @@
           "type": "boolean"
         },
         "filename": {
-          "description": "Filename to save the console messages to. If not provided, messages are returned as text.",
+          "description": "File name to save the console messages to. Relative file names are resolved against the workspace root. If not provided, messages are returned as text.",
           "type": "string"
         }
       },
@@ -92,6 +92,93 @@
     }
   },
   {
+    "name": "browser_emulate_media",
+    "description": "Emulate CSS media features for the page, for example switch between the light and dark color scheme. Omitted parameters are left unchanged; null clears an override.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "colorScheme": {
+          "description": "Emulates the prefers-color-scheme media feature",
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "light",
+                "dark"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reducedMotion": {
+          "description": "Emulates the prefers-reduced-motion media feature",
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "reduce",
+                "no-preference"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "forcedColors": {
+          "description": "Emulates the forced-colors media feature",
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "active",
+                "none"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contrast": {
+          "description": "Emulates the prefers-contrast media feature",
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "more",
+                "no-preference"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "media": {
+          "description": "Changes the CSS media type of the page",
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "screen",
+                "print"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
     "name": "browser_evaluate",
     "description": "Evaluate JavaScript expression on page or element",
     "read_only": false,
@@ -112,7 +199,7 @@
           "description": "() => { /* code */ } or (element) => { /* code */ } when element is provided"
         },
         "filename": {
-          "description": "Filename to save the result to. If not provided, result is returned as text.",
+          "description": "File name to save the result to. Relative file names are resolved against the workspace root. If not provided, result is returned as text.",
           "type": "string"
         }
       },
@@ -195,6 +282,14 @@
         },
         "regex": {
           "description": "Regular expression to search for in the page snapshot. Matching is case-sensitive by default; wrap the pattern in slashes to add flags, e.g. \"/error/i\" for case-insensitive. Provide either text or regex, not both.",
+          "type": "string"
+        },
+        "maxResults": {
+          "description": "Maximum number of matching items to return. Defaults to returning all matches.",
+          "type": "number"
+        },
+        "filename": {
+          "description": "Save results to a file instead of returning them in the response. Relative file names are resolved against the workspace root.",
           "type": "string"
         }
       },
@@ -361,8 +456,12 @@
           "description": "Only return requests whose URL matches this regexp (e.g. \"/api/.*user\").",
           "type": "string"
         },
+        "all": {
+          "description": "Return all network requests since the beginning of the session, not just since the last navigation. Defaults to false.",
+          "type": "boolean"
+        },
         "filename": {
-          "description": "Filename to save the network requests to. If not provided, requests are returned as text.",
+          "description": "File name to save the network requests to. Relative file names are resolved against the workspace root. If not provided, requests are returned as text.",
           "type": "string"
         }
       },
@@ -397,7 +496,7 @@
           ]
         },
         "filename": {
-          "description": "Filename to save the result to. If not provided, output is returned as text.",
+          "description": "File name to save the result to. Relative file names are resolved against the workspace root. If not provided, output is returned as text.",
           "type": "string"
         }
       },
@@ -420,7 +519,7 @@
           "type": "string"
         },
         "filename": {
-          "description": "Load code from the specified file. If both code and filename are provided, code will be ignored.",
+          "description": "Load code from the specified file. Relative file names are resolved against the workspace root. If both code and filename are provided, code will be ignored.",
           "type": "string"
         }
       },
@@ -429,7 +528,7 @@
   },
   {
     "name": "browser_take_screenshot",
-    "description": "Take a screenshot of the current page. You can't perform actions based on the screenshot, use browser_snapshot for actions.",
+    "description": "Take a screenshot of the current page. Use browser_snapshot for actions by default. With the vision capability enabled, use screenshot coordinates with the coordinate-based mouse tools for elements not exposed in the accessibility snapshot.",
     "read_only": true,
     "input_schema": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -453,7 +552,7 @@
           ]
         },
         "filename": {
-          "description": "File name to save the screenshot to. Defaults to `page-{timestamp}.{png|jpeg|webp}` if not specified. Prefer relative file names to stay within the output directory.",
+          "description": "File name to save the screenshot to. Relative file names are resolved against the workspace root. If not specified, the screenshot is saved into the output directory as `page-{timestamp}.{png|jpeg|webp}`.",
           "type": "string"
         },
         "fullPage": {
@@ -489,7 +588,7 @@
           "type": "string"
         },
         "filename": {
-          "description": "Save snapshot to markdown file instead of returning it in the response.",
+          "description": "Save snapshot to a file instead of returning it in the response. Relative file names are resolved against the workspace root.",
           "type": "string"
         },
         "depth": {
@@ -665,6 +764,10 @@
         "url": {
           "description": "URL to navigate to in the new tab, used for new.",
           "type": "string"
+        },
+        "isolatedContext": {
+          "description": "Name of an isolated browser context to create the new tab in, used for new. Tabs in the same isolated context share cookies and storage, tabs in different contexts are fully isolated. If omitted or \"default\", the tab is created in the default context.",
+          "type": "string"
         }
       },
       "required": [
@@ -675,14 +778,14 @@
   },
   {
     "name": "browser_wait_for",
-    "description": "Wait for text to appear or disappear or a specified time to pass",
+    "description": "Wait for text to appear or disappear or a specified time to pass. When both text and textGone are provided, waits for the first one to happen",
     "read_only": true,
     "input_schema": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "object",
       "properties": {
         "time": {
-          "description": "The time to wait in seconds",
+          "description": "The time to wait in seconds, at most 30. When combined with text or textGone, serves as a timeout for them instead of the default action timeout",
           "type": "number"
         },
         "text": {

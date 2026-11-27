@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: mongodb_lens
 display_name: mongodb-lens
 display_name_en: mongodb-lens
-version: 0.1.1
+version: 0.1.2
 description: 'MongoDB Lens: Full Featured MCP Server for MongoDB Databases'
 description_zh: 功能齐全的 MongoDB 数据库 MCP 服务器。
 author: furey
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - mongodb-lens@9.1.4
+  - mongodb-lens@9.1.5
   - ${MCP_MONGODB_LENS_PATH}
   env:
     CONFIG_LOG_LEVEL: verbose

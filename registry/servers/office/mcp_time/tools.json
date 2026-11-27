@@ -4,16 +4,16 @@
     "description": "Get current time in a specific timezone",
     "read_only": true,
     "input_schema": {
-      "type": "object",
       "properties": {
         "timezone": {
-          "type": "string",
-          "description": "IANA timezone name (e.g., 'America/New_York', 'Europe/London'). Use 'America/New_York' as local timezone if no timezone provided by the user."
+          "default": "America/New_York",
+          "description": "IANA timezone name (e.g., 'America/New_York', 'Europe/London'). Optional: defaults to the server's local timezone, 'America/New_York', when omitted.",
+          "title": "Timezone",
+          "type": "string"
         }
       },
-      "required": [
-        "timezone"
-      ]
+      "type": "object",
+      "title": "get_current_timeArguments"
     }
   },
   {
@@ -21,26 +21,75 @@
     "description": "Convert time between timezones",
     "read_only": true,
     "input_schema": {
-      "type": "object",
       "properties": {
         "source_timezone": {
-          "type": "string",
-          "description": "Source IANA timezone name (e.g., 'America/New_York', 'Europe/London'). Use 'America/New_York' as local timezone if no source timezone provided by the user."
+          "default": "America/New_York",
+          "description": "Source IANA timezone name (e.g., 'America/New_York', 'Europe/London'). Optional: defaults to the server's local timezone, 'America/New_York', when omitted.",
+          "title": "Source Timezone",
+          "type": "string"
         },
         "time": {
-          "type": "string",
-          "description": "Time to convert in 24-hour format (HH:MM)"
+          "description": "Time to convert in 24-hour format (HH:MM)",
+          "title": "Time",
+          "type": "string"
         },
         "target_timezone": {
-          "type": "string",
-          "description": "Target IANA timezone name (e.g., 'Asia/Tokyo', 'America/San_Francisco'). Use 'America/New_York' as local timezone if no target timezone provided by the user."
+          "default": "America/New_York",
+          "description": "Target IANA timezone name (e.g., 'Asia/Tokyo', 'America/San_Francisco'). Optional: defaults to the server's local timezone, 'America/New_York', when omitted.",
+          "title": "Target Timezone",
+          "type": "string"
         }
       },
       "required": [
-        "source_timezone",
-        "time",
-        "target_timezone"
-      ]
+        "time"
+      ],
+      "type": "object",
+      "title": "convert_timeArguments"
+    }
+  },
+  {
+    "name": "get_time_ago",
+    "description": "Get the time a given number of days, hours, minutes and seconds ago in a specific timezone",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "timezone": {
+          "default": "America/New_York",
+          "description": "IANA timezone name (e.g., 'America/New_York', 'Europe/London'). Optional: defaults to the server's local timezone, 'America/New_York', when omitted.",
+          "title": "Timezone",
+          "type": "string"
+        },
+        "days_ago": {
+          "default": 0,
+          "description": "Whole days before now",
+          "minimum": 0,
+          "title": "Days Ago",
+          "type": "integer"
+        },
+        "hours_ago": {
+          "default": 0,
+          "description": "Whole hours before now",
+          "minimum": 0,
+          "title": "Hours Ago",
+          "type": "integer"
+        },
+        "minutes_ago": {
+          "default": 0,
+          "description": "Whole minutes before now",
+          "minimum": 0,
+          "title": "Minutes Ago",
+          "type": "integer"
+        },
+        "seconds_ago": {
+          "default": 0,
+          "description": "Whole seconds before now",
+          "minimum": 0,
+          "title": "Seconds Ago",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "get_time_agoArguments"
     }
   }
 ]

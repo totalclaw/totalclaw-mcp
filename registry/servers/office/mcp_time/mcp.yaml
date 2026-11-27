@@ -5,7 +5,7 @@ tested_with: '>=0.63.72'
 name: mcp_time
 display_name: Time
 display_name_en: Time
-version: 0.1.0
+version: 0.2.0
 description: Time MCP server.
 description_zh: 时间 + 时区转换 — get_current_time(timezone) / convert_time(time, from_tz, to_tz)。补 LLM 时间盲区。
 author: upstream
@@ -21,7 +21,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - mcp-server-time==2026.8.18
+  - mcp-server-time==2026.11.18
   requires:
     python: '>=3.10'
 requires_env: []
@@ -30,11 +30,11 @@ defaults:
   enabled: true
   timeout: 30
 tools:
-  probed_at: '2026-08-22T11:51:50Z'
+  probed_at: '2026-11-27T01:54:56Z'
   probed_runtime: uvx
-  count: 2
+  count: 3
   file: tools.json
 security:
   scan_verdict: allow
   prompt_injection_findings: []
-  osv: unscanned
+  osv: clean

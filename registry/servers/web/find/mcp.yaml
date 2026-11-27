@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: find
 display_name: Find MCP
 display_name_en: Find MCP
-version: 0.1.1
+version: 0.1.2
 description: 'Find MCP - the npm client for the agentage MCP directory: thin stdio MCP proxy bridging stdio-only clients (Claude
   Desktop, Cursor, VS Code) to catalog.agentage.io/mcp - search 17,000+ MCP servers from any MCP client.'
 description_zh: 搜索 17,000+ 个 MCP 服务器 (与官方 MCP Registry 实时同步)，支持云端 Streamable HTTP 与本地 stdio 两种接入方式。
@@ -27,7 +27,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@agentage/find-mcp@1.13.2'
+  - '@agentage/find-mcp@1.13.5'
   requires:
     node: '>=18'
 requires_env: []

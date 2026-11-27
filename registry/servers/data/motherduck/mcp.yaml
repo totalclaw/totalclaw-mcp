@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: motherduck
 display_name: MotherDuck
 display_name_en: MotherDuck
-version: 0.1.1
+version: 0.1.2
 description: A MCP server for MotherDuck and local DuckDB
 description_zh: MotherDuck 官方集成，使用 MotherDuck 和本地 DuckDB 查询和分析数据。
 author: motherduckdb
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - mcp-server-motherduck==1.1.0
+  - mcp-server-motherduck==1.1.1
   - --db-path
   - ':memory:'
   - --read-write

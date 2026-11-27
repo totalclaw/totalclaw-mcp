@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: gitlab
 display_name: GitLab
 display_name_en: GitLab
-version: 0.1.1
+version: 0.1.2
 description: GitLab MCP server for projects, merge requests, issues, pipelines, wiki, releases, and more
 description_zh: GitLab的MCP服务器，支持GitLab的读取和写入
 author: upstream
@@ -25,7 +25,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@zereight/mcp-gitlab@2.3.13'
+  - '@zereight/mcp-gitlab@2.3.29'
   env:
     GITLAB_READ_ONLY_MODE: 'false'
     USE_GITLAB_WIKI: 'false'

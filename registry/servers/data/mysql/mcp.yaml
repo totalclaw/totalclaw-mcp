@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: mysql
 display_name: mysql_mcp_server
 display_name_en: mysql_mcp_server
-version: 0.1.1
+version: 0.1.2
 description: A Model Context Protocol (MCP) server that enables secure interaction with MySQL databases. This server allows
   AI assistants to list tables, read data, and execute SQL queries through a controlled interface, making database exploration
   and analysis safer and more structured.
@@ -28,7 +28,7 @@ runtimes:
   command: uvx
   args:
   - --from
-  - mysql-mcp-server==0.4.4
+  - mysql-mcp-server==0.4.5
   - mysql_mcp_server
   requires:
     python: '>=3.10'

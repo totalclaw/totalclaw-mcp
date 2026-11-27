@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: google_news
 display_name: google-news-mcp-server
 display_name_en: google-news-mcp-server
-version: 0.1.1
+version: 0.1.2
 description: MCP server for Google News search via SerpAPI
 description_zh: Google News 集成，自动主题分类，多语言支持，全面搜索能力 (SerpAPI)。
 author: ChanMeng666
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@chanmeng666/google-news-server@1.0.1'
+  - '@chanmeng666/google-news-server@1.0.2'
   requires:
     node: '>=18'
 requires_env:

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: opik
 display_name: Comet Opik
 display_name_en: Comet Opik
-version: 0.1.1
+version: 0.1.2
 description: Model Context Protocol server for Opik (Comet's LLM observability platform).
 description_zh: Comet 官方集成，用自然语言查询和分析 Opik 日志、追踪、提示等 LLM 遥测数据。
 author: comet-ml
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - opik-mcp==3.0.7
+  - opik-mcp==3.0.11
   requires:
     python: '>=3.10'
 requires_env: []

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: yfmcp
 display_name: yfinance-mcp
 display_name_en: yfinance-mcp
-version: 0.1.1
+version: 0.1.2
 description: Get Yahoo Finance data using yfinance.
 description_zh: 使用 Yahoo Finance API 获取金融数据，方便进行股票分析。
 author: narumiruna
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - yfmcp==0.14.0
+  - yfmcp==0.14.1
   requires:
     python: '>=3.10'
 requires_env: []

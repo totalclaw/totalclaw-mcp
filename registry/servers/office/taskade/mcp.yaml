@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: taskade
 display_name: Taskade MCP
 display_name_en: Taskade MCP
-version: 0.1.1
+version: 0.1.2
 description: The **Workspace MCP** server connects any MCP-compatible AI client (Claude, Cursor, Claude Code, …) to your Taskade
   workspace, exposing **62 tools** to read and write your projects, tasks, agents, and custom fields.
 description_zh: Taskade 官方 MCP 集成，连接任务、项目、自动化流程和 AI Agent，实现团队协作与工作流自动化。
@@ -27,7 +27,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@taskade/mcp-server@0.1.4'
+  - '@taskade/mcp-server@0.2.1'
   requires:
     node: '>=18'
 requires_env:

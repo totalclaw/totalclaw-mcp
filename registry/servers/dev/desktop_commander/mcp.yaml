@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: desktop_commander
 display_name: DesktopCommanderMCP
 display_name_en: DesktopCommanderMCP
-version: 0.1.4
+version: 0.1.5
 description: MCP server for terminal operations and file editing
 description_zh: 增强的文件系统和搜索工具，以及特定于编码的命令和提示。(也含命令行功能)
 author: wonderwhy-er
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@wonderwhy-er/desktop-commander@0.3.1'
+  - '@wonderwhy-er/desktop-commander@0.3.4'
   env:
     DESKTOP_COMMANDER_DISABLE_TELEMETRY: '1'
   requires:

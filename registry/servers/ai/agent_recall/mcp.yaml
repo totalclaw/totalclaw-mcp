@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: agent_recall
 display_name: AgentRecall
 display_name_en: AgentRecall
-version: 0.1.1
+version: 0.1.2
 description: Memory Palace MCP server for AI agents
 description_zh: 跨会话的持久化累积记忆系统，使用智能距离协议召回最相关历史记忆。提供 5 个工具：`session_start`、`remember`、`recall`、`check`、`session_end`。`npx agent-recall-mcp`
 author: Goldentrii
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - agent-recall-mcp@3.5.2
+  - agent-recall-mcp@3.5.3
   requires:
     node: '>=18'
 requires_env: []

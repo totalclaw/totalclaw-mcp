@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: atlassian
 display_name: mcp-atlassian
 display_name_en: mcp-atlassian
-version: 0.1.1
+version: 0.1.2
 description: The Model Context Protocol (MCP) Atlassian integration is an open-source implementation that bridges Atlassian
   products (Jira and Confluence) with AI language models following Anthropic's MCP specification. This project enables secure,
   contextual AI interactions with Atlassian tools while maintainin
@@ -27,7 +27,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - mcp-atlassian==0.23.1
+  - mcp-atlassian==0.24.6
   requires:
     python: '>=3.10'
 requires_env:

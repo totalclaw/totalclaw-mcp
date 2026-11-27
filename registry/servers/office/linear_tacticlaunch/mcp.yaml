@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: linear_tacticlaunch
 display_name: mcp-linear
 display_name_en: mcp-linear
-version: 0.1.1
+version: 0.1.2
 description: A Model Context Protocol (MCP) server implementation for the Linear GraphQL API that enables AI assistants to
   manage Linear projects and search issues by text, state, and date.
 description_zh: 与 Linear 项目管理系统集成。
@@ -27,7 +27,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@tacticlaunch/mcp-linear@1.4.5'
+  - '@tacticlaunch/mcp-linear@1.4.6'
   requires:
     node: '>=18'
 requires_env: []

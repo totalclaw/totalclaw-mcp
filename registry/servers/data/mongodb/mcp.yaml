@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: mongodb
 display_name: mongodb-mcp-server
 display_name_en: mongodb-mcp-server
-version: 0.1.1
+version: 0.1.2
 description: MongoDB Model Context Protocol Server
 description_zh: MongoDB 官方 MCP 服务器，连接 MongoDB 数据库与 Atlas 集群，支持查询、聚合、索引管理与集群运维。
 author: mongodb-js
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - mongodb-mcp-server@3.1.0
+  - mongodb-mcp-server@3.3.0
   - --readOnly
   requires:
     node: '>=18'

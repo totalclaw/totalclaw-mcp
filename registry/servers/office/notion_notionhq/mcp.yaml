@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: notion_notionhq
 display_name: Notion
 display_name_en: Notion
-version: 0.1.1
+version: 0.1.2
 description: Official MCP server for Notion API
 description_zh: 连接Notion的MCP服务器，支持页面管理和数据操作
 author: upstream
@@ -25,7 +25,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@notionhq/notion-mcp-server@2.5.2'
+  - '@notionhq/notion-mcp-server@2.6.1'
   requires:
     node: '>=18'
 requires_env:

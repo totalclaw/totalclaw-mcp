@@ -776,7 +776,14 @@ def apply(json_path: Path):
         head = re.sub(r"# 审核意见：[^\n]*\n", "", head)
         if r["verdict"] != "allow":
             head += f"# 审核意见：{r['reason']}\n"
-        body = re.sub(r"(?ms)^security:\n(?:[ \t]+[^\n]*\n)*", "", body)
+        # 只换本脚本负责的三个键；security 里其余的键（enforced_env、prompt_injection_findings 等）原样保留 ——
+        # 以前整段删掉重写，会把强制关遥测的 enforced_env 一起丢掉，老用户那边的开关就静默失效了。
+        sec = re.search(r"(?ms)^security:\n((?:[ \t]+[^\n]*\n?)*)", body)
+        kept = ""
+        if sec:
+            kept = "".join(ln for ln in sec.group(1).splitlines(keepends=True)
+                           if not re.match(r"  (scan_verdict|osv|reason):", ln))
+            body = body[:sec.start()] + body[sec.end():]
         body = re.sub(r"(?m)^verified: \w+$", f"verified: {'true' if r['verdict'] == 'allow' else 'false'}", body)
         lic = r.get("license_found", "")
         if lic and not r["manifest_license"] and not re.search(r"(?m)^license:", body) and not NON_OPEN.search(lic):
@@ -785,6 +792,7 @@ def apply(json_path: Path):
         body = body.rstrip("\n") + f"\nsecurity:\n  scan_verdict: {r['verdict']}\n  osv: {r['osv_field']}\n"
         if r["verdict"] == "block":  # 下架理由随索引下发（桌面端按 block 隐藏并停用已装的同名连接器）
             body += f"  reason: {json.dumps(r['reason'], ensure_ascii=False)}\n"
+        body += kept.rstrip("\n") + "\n" if kept.strip() else ""
         new = head + body
         if new == old:
             continue
@@ -794,6 +802,9 @@ def apply(json_path: Path):
             new = re.sub(r"(?m)^version: \S+$", f"version: {_bump(ver)}", new, count=1)
         m = yaml.safe_load(new)
         assert m["security"]["scan_verdict"] == r["verdict"] and m["verified"] == (r["verdict"] == "allow"), r["name"]
+        own = ("scan_verdict", "osv", "reason")
+        before = {k: v for k, v in ((yaml.safe_load(old) or {}).get("security") or {}).items() if k not in own}
+        assert before == {k: v for k, v in m["security"].items() if k not in own}, f"{r['name']}: security 其余键被改动"
         p.write_text(new, encoding="utf-8")
         changed += 1
     print(f"✓ 改写 {changed} 份清单；接着跑 python3 scripts/gen_registry.py", file=sys.stderr)

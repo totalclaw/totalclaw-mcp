@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: anymd
 display_name: anymd
 display_name_en: anymd
-version: 0.1.1
+version: 0.1.2
 description: 'Any file → clean Markdown for AI agents: PDF, Word, PowerPoint, Excel, EPUB, HTML and web pages, images (OCR),
   audio and video (metadata, subtitles, transcripts). A fast Rust MCP server and CLI that runs on your machine. No API key.'
 description_zh: 把任意文件转成干净的 Markdown 供 AI 使用：PDF、Word、PowerPoint、Excel/CSV、EPUB、HTML/网页 URL、图片（可选 OCR）与音视频元数据/字幕；提供 read、search、inspect
@@ -28,7 +28,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@sylphx/anymd@8.5.5'
+  - '@sylphx/anymd@8.5.13'
   requires:
     node: '>=18'
 requires_env: []

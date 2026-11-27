@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: evc_team_relay
 display_name: evc-team-relay-mcp
 display_name_en: evc-team-relay-mcp
-version: 0.1.1
+version: 0.1.2
 description: MCP server for reading and writing Obsidian vault documents via EVC Team Relay
 description_zh: 通过 MCP 协议给 AI 代理提供对 Obsidian vault 的读写访问，支持团队协作和多用户共享。
 author: entire-vc
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - evc-team-relay-mcp==1.0.9
+  - evc-team-relay-mcp==1.0.10
   requires:
     python: '>=3.10'
 requires_env:

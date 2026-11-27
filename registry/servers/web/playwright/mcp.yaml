@@ -5,7 +5,7 @@ tested_with: '>=0.63.72'
 name: playwright
 display_name: Playwright
 display_name_en: Playwright
-version: 0.1.0
+version: 0.1.1
 description: Playwright MCP server.
 description_zh: 微软 Playwright MCP — 跨浏览器(Chromium/Firefox/WebKit)自动化 + 截图 + 网络拦截 + accessibility tree。比
   chrome_devtools 跨浏览器、accessibility 信息更丰富。由微软官方维护。
@@ -23,7 +23,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@playwright/mcp@0.0.79'
+  - '@playwright/mcp@0.0.86'
   requires:
     node: '>=18'
 requires_env: []
@@ -32,11 +32,11 @@ defaults:
   enabled: true
   timeout: 180
 tools:
-  probed_at: '2026-08-23T07:58:04Z'
+  probed_at: '2026-11-27T02:15:43Z'
   probed_runtime: npx
-  count: 24
+  count: 25
   file: tools.json
 security:
   scan_verdict: allow
   prompt_injection_findings: []
-  osv: unscanned
+  osv: clean

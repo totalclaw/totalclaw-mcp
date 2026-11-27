@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: infimind_video
 display_name: 极睿视频
 display_name_en: Infimind Video
-version: 0.1.0
+version: 0.1.1
 description: Create professional videos from prompts and reference media, track generation progress, and
   analyze videos into reusable creative insights.
 description_zh: 通过自然语言使用极睿视频的专业视频生成和视频分析能力，支持多素材参考、任务进度查询与结构化分析结果。
@@ -23,7 +23,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@infimind/video-mcp-cli@1.0.11'
+  - '@infimind/video-mcp-cli@1.0.15'
   env:
     SORA_API_URL: https://aigc-next.iclip.cn/api
     SORA_MCP_TOKEN: ${SORA_MCP_TOKEN}
@@ -45,7 +45,7 @@ defaults:
 security:
   scan_verdict: allow
   prompt_injection_findings: []
-  osv: unscanned
+  osv: clean
 examples:
 - 用这张商品图生成一段 10 秒的竖屏展示视频
 - 用首尾两张图片生成一段自然过渡的视频

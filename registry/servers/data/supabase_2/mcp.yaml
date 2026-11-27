@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: supabase_2
 display_name: Supabase
 display_name_en: Supabase
-version: 0.1.1
+version: 0.1.2
 description: MCP server for interacting with Supabase
 description_zh: 连接Supabase数据库的MCP服务器，支持数据管理和查询
 author: upstream
@@ -25,7 +25,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@supabase/mcp-server-supabase@0.14.0'
+  - '@supabase/mcp-server-supabase@0.18.0'
   requires:
     node: '>=18'
 requires_env:

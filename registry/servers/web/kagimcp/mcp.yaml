@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: kagimcp
 display_name: Kagi Search
 display_name_en: Kagi Search
-version: 0.1.1
+version: 0.1.2
 description: Kagi MCP server
 description_zh: Kagi 官方集成，使用 Kagi 的搜索 API 进行网页搜索。
 author: kagisearch
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - kagimcp==1.0.2
+  - kagimcp==1.1.0
   requires:
     python: '>=3.10'
 requires_env: []

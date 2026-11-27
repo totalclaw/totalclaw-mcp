@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: bestax
 display_name: Bestax
 display_name_en: Bestax
-version: 0.1.1
+version: 0.1.2
 description: MCP server for @allxsmith/bestax-bulma — component props, examples, CSS variables and agent skills, served offline
   from a version-pinned index
 description_zh: 为编码 Agent 提供 Bestax（基于 Bulma v1 的 React 组件库）的组件 props、示例、CSS 变量和 Agent Skills，离线运行。
@@ -27,7 +27,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - bestax-mcp@1.18.13
+  - bestax-mcp@1.18.79
   requires:
     node: '>=18'
 requires_env: []

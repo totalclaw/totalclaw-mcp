@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: dnstwist
 display_name: mcp-dnstwist
 display_name_en: mcp-dnstwist
-version: 0.1.1
+version: 0.1.2
 description: 'MCP server for dnstwist: find typosquatting, homoglyph and lookalike domains used for phishing and brand impersonation'
 description_zh: dnstwist MCP 服务器，强大的 DNS 模糊测试工具，帮助检测域名抢注、钓鱼和企业间谍活动。
 author: BurtTheCoder
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@burtthecoder/mcp-dnstwist@1.1.1'
+  - '@burtthecoder/mcp-dnstwist@1.1.4'
   requires:
     node: '>=18'
 requires_env: []

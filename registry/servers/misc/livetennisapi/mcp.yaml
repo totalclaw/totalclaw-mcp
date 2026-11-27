@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: livetennisapi
 display_name: livetennisapi-mcp
 display_name_en: livetennisapi-mcp
-version: 0.1.1
+version: 0.1.2
 description: MCP server for the Live Tennis API — give Claude, Cursor and other LLM agents real-time tennis scores, players
   and fixtures for ATP, WTA, Challenger, ITF and juniors. Odds, rankings, match statistics, charting and model win-probability
   tools require the P
@@ -28,7 +28,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - livetennisapi-mcp@1.6.4
+  - livetennisapi-mcp@1.6.5
   requires:
     node: '>=18'
 requires_env:

@@ -13,8 +13,8 @@
       "required": [
         "repo_path"
       ],
-      "title": "GitStatus",
-      "type": "object"
+      "type": "object",
+      "title": "statusArguments"
     }
   },
   {
@@ -36,8 +36,8 @@
       "required": [
         "repo_path"
       ],
-      "title": "GitDiffUnstaged",
-      "type": "object"
+      "type": "object",
+      "title": "diff_unstagedArguments"
     }
   },
   {
@@ -59,13 +59,13 @@
       "required": [
         "repo_path"
       ],
-      "title": "GitDiffStaged",
-      "type": "object"
+      "type": "object",
+      "title": "diff_stagedArguments"
     }
   },
   {
     "name": "git_diff",
-    "description": "Shows differences between branches or commits",
+    "description": "Shows differences between branches or commits, or across a revision range (main..feature, main...feature)",
     "read_only": true,
     "input_schema": {
       "properties": {
@@ -87,8 +87,8 @@
         "repo_path",
         "target"
       ],
-      "title": "GitDiff",
-      "type": "object"
+      "type": "object",
+      "title": "diffArguments"
     }
   },
   {
@@ -110,8 +110,8 @@
         "repo_path",
         "message"
       ],
-      "title": "GitCommit",
-      "type": "object"
+      "type": "object",
+      "title": "commitArguments"
     }
   },
   {
@@ -128,6 +128,7 @@
           "items": {
             "type": "string"
           },
+          "minItems": 1,
           "title": "Files",
           "type": "array"
         }
@@ -136,8 +137,8 @@
         "repo_path",
         "files"
       ],
-      "title": "GitAdd",
-      "type": "object"
+      "type": "object",
+      "title": "addArguments"
     }
   },
   {
@@ -154,8 +155,8 @@
       "required": [
         "repo_path"
       ],
-      "title": "GitReset",
-      "type": "object"
+      "type": "object",
+      "title": "resetArguments"
     }
   },
   {
@@ -170,6 +171,8 @@
         },
         "max_count": {
           "default": 10,
+          "description": "Maximum number of commits to show. Must be at least 1.",
+          "minimum": 1,
           "title": "Max Count",
           "type": "integer"
         },
@@ -203,13 +206,13 @@
       "required": [
         "repo_path"
       ],
-      "title": "GitLog",
-      "type": "object"
+      "type": "object",
+      "title": "logArguments"
     }
   },
   {
     "name": "git_create_branch",
-    "description": "Creates a new branch from an optional base branch",
+    "description": "Creates a new branch from an optional base branch or commit",
     "read_only": false,
     "input_schema": {
       "properties": {
@@ -231,6 +234,7 @@
             }
           ],
           "default": null,
+          "description": "Branch, tag or commit SHA to create the branch from. Defaults to the current branch, or to the current commit when HEAD is detached",
           "title": "Base Branch"
         }
       },
@@ -238,8 +242,8 @@
         "repo_path",
         "branch_name"
       ],
-      "title": "GitCreateBranch",
-      "type": "object"
+      "type": "object",
+      "title": "create_branchArguments"
     }
   },
   {
@@ -261,13 +265,43 @@
         "repo_path",
         "branch_name"
       ],
-      "title": "GitCheckout",
-      "type": "object"
+      "type": "object",
+      "title": "checkoutArguments"
+    }
+  },
+  {
+    "name": "git_merge",
+    "description": "Merges a branch into the current branch. Fast-forward only unless fast_forward_only is false; refuses a dirty working tree, and aborts a merge that conflicts, leaving the repository unchanged",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "repo_path": {
+          "title": "Repo Path",
+          "type": "string"
+        },
+        "source_branch": {
+          "description": "Branch, tag or commit to merge into the current branch",
+          "title": "Source Branch",
+          "type": "string"
+        },
+        "fast_forward_only": {
+          "default": true,
+          "description": "Only fast-forward, failing if the branches have diverged. False allows a merge commit",
+          "title": "Fast Forward Only",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "repo_path",
+        "source_branch"
+      ],
+      "type": "object",
+      "title": "mergeArguments"
     }
   },
   {
     "name": "git_show",
-    "description": "Shows the contents of a commit",
+    "description": "Shows the contents of a commit, or of a file or directory given as <revision>:<path>",
     "read_only": true,
     "input_schema": {
       "properties": {
@@ -284,8 +318,8 @@
         "repo_path",
         "revision"
       ],
-      "title": "GitShow",
-      "type": "object"
+      "type": "object",
+      "title": "showArguments"
     }
   },
   {
@@ -335,8 +369,27 @@
         "repo_path",
         "branch_type"
       ],
-      "title": "GitBranch",
-      "type": "object"
+      "type": "object",
+      "title": "branchArguments"
+    }
+  },
+  {
+    "name": "git_remote",
+    "description": "Lists the repository's remotes with their fetch and push URLs, like `git remote -v`. Credentials embedded in a URL's userinfo, query values or fragment are shown as <redacted>; path segments are shown as configured",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "repo_path": {
+          "description": "The path to the Git repository.",
+          "title": "Repo Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repo_path"
+      ],
+      "type": "object",
+      "title": "remoteArguments"
     }
   }
 ]

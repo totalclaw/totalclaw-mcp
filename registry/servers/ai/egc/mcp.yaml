@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: egc
 display_name: EGC
 display_name_en: EGC
-version: 0.1.1
+version: 0.1.2
 description: 'EGC is a local-first MCP runtime that gives every AI agent the same brain: persistent shared memory, security
   guardrails, and up to 90% token savings across 29 AI coding tools.'
 description_zh: 跨会话持久记忆 MCP 服务，支持 Claude Code、Cursor、Gemini CLI、Codex、Windsurf 等多种 AI 编程工具，SQLite 本地存储，上下文重置后状态保持。提供 egc-memory（14
@@ -28,7 +28,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@egchq/egc@1.1.23'
+  - '@egchq/egc@1.1.25'
   requires:
     node: '>=18'
 requires_env: []

@@ -9,7 +9,7 @@ tested_with: '>=0.63.72'
 name: weisheng_scrm
 display_name: 微盛企微管家SCRM
 display_name_en: Weisheng SCRM
-version: 0.1.0
+version: 0.1.1
 description: 'Query or manage WeCom (WeChat Work) business capabilities: customer info, tags, groups,
   marketing assets, QR codes, campaigns, follow-ups, contacts, opportunities, reports, lucky draws, schedules,
   chat records and more.'
@@ -27,7 +27,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - mcp-server-weisheng-scrm@0.0.6
+  - mcp-server-weisheng-scrm@0.0.7
   env:
     SCRM_APP_KEY: ''
     SCRM_BASE_URL: https://open.wshoto.com
@@ -50,7 +50,7 @@ defaults:
 security:
   scan_verdict: allow
   prompt_injection_findings: []
-  osv: unscanned
+  osv: clean
 examples:
 - 帮我查询一下我上周新增了几个客户
 - 创建我的员工活码，欢迎语设置为：您好👋，很高兴为您服务！有任何需求随时和我说～

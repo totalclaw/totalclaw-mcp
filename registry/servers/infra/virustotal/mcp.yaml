@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: virustotal
 display_name: mcp-virustotal
 display_name_en: mcp-virustotal
-version: 0.1.1
+version: 0.1.2
 description: MCP server for VirusTotal API integration
 description_zh: 用于查询 VirusTotal API 的 MCP 服务器。提供扫描 URL、分析文件哈希和检索 IP 地址报告的工具。
 author: BurtTheCoder
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@burtthecoder/mcp-virustotal@1.0.35'
+  - '@burtthecoder/mcp-virustotal@1.0.40'
   requires:
     node: '>=18'
 requires_env:

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: transcriptfetch
 display_name: mcp-server
 display_name_en: mcp-server
-version: 0.1.1
+version: 0.1.2
 description: 'Model Context Protocol (MCP) server for TranscriptFetch, a production transcript API: give Claude, Cursor, or
   any MCP client transcripts from YouTube, TikTok, Instagram and media URLs, with automatic AI transcription when captions
   don''t exist - plus video'
@@ -29,7 +29,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - transcriptfetch-mcp@0.2.8
+  - transcriptfetch-mcp@0.3.1
   requires:
     node: '>=18'
 requires_env:

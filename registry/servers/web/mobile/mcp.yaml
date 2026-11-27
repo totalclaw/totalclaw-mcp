@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: mobile
 display_name: mobile-mcp
 display_name_en: mobile-mcp
-version: 0.1.1
+version: 0.1.2
 description: Mobile MCP
 description_zh: 面向移动端自动化与抓取的 MCP 服务器，统一驱动 iOS、Android、模拟器与真机，让 AI 代理通过无障碍树或坐标操作 App、抓取屏幕内容并执行 E2E 测试。
 author: mobile-next
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@mobilenext/mobile-mcp@1.0.14'
+  - '@mobilenext/mobile-mcp@1.0.18'
   requires:
     node: '>=18'
 requires_env: []

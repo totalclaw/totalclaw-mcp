@@ -720,3 +720,21 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
 
 **刻意没做打包**：`catalog.py` 的 `REPO_ROOT` 指向 `api/` 的上一级，装成 wheel 挪到
 别处就读不到条目数据。能装但装完读不到，比装不了更糟——所以只给 `api/requirements.txt`。
+
+---
+
+## F 组 · 追上游版本（2026-11-26 起）
+
+明细与逐条清单见 [`upstream-updates-2026-11-26.md`](upstream-updates-2026-11-26.md)，
+数据用 `scripts/check_upstream_updates.py` 重新生成。473 条 npx / uvx 条目中 122 条落后上游，本轮处理 106 条。
+
+- [x] **F1** 官方参考服务器：PyPI 三条（fetch / git / time）升 2026.11.18，实测探测通过
+- [ ] **F1.1** `@modelcontextprotocol/*` npm 4 条暂缓：2.x 要求 Node ≥24，桌面端内置 22.22.3；内置 Node 升级后再做
+- [x] **F2** agent `mcp_presets.py` 的 mcp-server-time 同步（agent 工作区已改，未提交；合 main / bump submodule 待定）
+- [x] **F3** `stripe` 改官方托管端点 `https://mcp.stripe.com`（OAuth），去掉密钥
+- [x] **F4–F6** 101 条按「满 7 天的最新稳定版」升级，静态审核 + 旧版差分复核全部 allow
+- [ ] **F6.1** 冷却期内的 12 条下一轮再升
+- [x] **F7** 门禁：gen_registry --check --strict、scan-registry、dep_gate --refresh；chrome_devtools / playwright 重新探测
+- [x] **F8** 老用户升级路径已查清：有「更新」按钮，但没有新版本提示（待办见明细 U3）
+- [ ] **F9** desktop_commander 安装期遥测不认关闭开关（明细 U4.1）
+- [x] **F10** `review_static.py --apply` 以前会丢 `security.enforced_env`，已修：只换 scan_verdict / osv / reason，其余键原样保留并断言

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: dchub
 display_name: DC Hub
 display_name_en: DC Hub
-version: 0.1.1
+version: 0.1.2
 description: 'DC Hub MCP launcher: DCPI (Data Center Power Index) scores where data centers can get grid power across 300+
   markets, plus live grid, fiber and site-selection data for AI agents (94 tools). Connects stdio MCP clients to dchub.cloud/mcp.'
 description_zh: 数据中心选址的实时数据层。其 DCPI（DC Hub 电力指数）每日评估 300+ 市场中数据中心可获得电网供电的程度。94 个工具覆盖电网、能源价格、并网排队、光纤与选址分析，远程 MCP：`https://dchub.cloud/mcp`。
@@ -27,7 +27,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - dchub-mcp-server@2.12.44
+  - dchub-mcp-server@2.12.59
   requires:
     node: '>=18'
 requires_env:

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: clawtouch
 display_name: ClawTouch MCP
 display_name_en: ClawTouch MCP
-version: 0.1.1
+version: 0.1.2
 description: MCP stdio server exposing HID mouse/keyboard tools backed by ClawTouch Pico hardware.
 description_zh: 通过外接 USB HID 硬件（树莓派 Pico 2，固件开源）驱动真实鼠标键盘：移动、点击、拖拽、输入、组合键、滚动；另有窗口枚举与按窗口裁剪的截图。被控机不需要安装任何软件；`--mock` 模式可无硬件试用。
 author: tinqiao-oss
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - clawtouch-mcp==0.5.2
+  - clawtouch-mcp==0.6.1
   requires:
     python: '>=3.10'
 requires_env: []

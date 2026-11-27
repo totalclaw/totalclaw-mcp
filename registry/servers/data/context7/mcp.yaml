@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: context7
 display_name: Context7
 display_name_en: Context7
-version: 0.1.1
+version: 0.1.2
 description: MCP server for Context7
 description_zh: 基于Upstash的向量搜索和上下文管理MCP服务
 author: upstream
@@ -25,7 +25,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@upstash/context7-mcp@4.4.4'
+  - '@upstash/context7-mcp@4.7.3'
   requires:
     node: '>=18'
 requires_env: []

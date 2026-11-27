@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: screenpipe
 display_name: screenpipe
 display_name_en: screenpipe
-version: 0.1.2
+version: 0.1.3
 description: MCP server for screenpipe - search your screen recordings and audio transcriptions
 description_zh: 通过 MCP 检索带时间戳的屏幕文字和音频转录，为回忆、会议笔记和工作总结提供上下文。采集记录默认保存在本地；启用云端转录、AI、同步或外部集成时，相关数据可能离开设备。
 author: screenpipe
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - screenpipe-mcp@0.20.3
+  - screenpipe-mcp@0.20.4
   requires:
     node: '>=18'
 requires_env: []

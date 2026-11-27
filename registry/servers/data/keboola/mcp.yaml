@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: keboola
 display_name: Keboola
 display_name_en: Keboola
-version: 0.1.1
+version: 0.1.2
 description: MCP server for interacting with Keboola Connection
 description_zh: Keboola 官方集成，在单一平台上构建数据工作流、集成和分析。
 author: keboola
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - keboola-mcp-server==1.110.0
+  - keboola-mcp-server==1.120.0
   requires:
     python: '>=3.10'
 requires_env: []

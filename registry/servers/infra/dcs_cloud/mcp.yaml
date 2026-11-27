@@ -9,7 +9,7 @@ tested_with: '>=0.63.72'
 name: dcs_cloud
 display_name: DCS Cloud
 display_name_en: DCS Cloud
-version: 0.1.0
+version: 0.1.1
 description: 'Bootstrap the dcs CLI (download, auto-update, PAT login), then run the CLI directly to operate
   DCS Cloud: projects, tasks, workflows, billing, and data files. Create a Personal Access Token (PAT)
   in the cloud platform profile page and paste it into the connector.'
@@ -27,7 +27,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - dcs-cloud-mcp-server@2.0.0
+  - dcs-cloud-mcp-server@2.0.3
   env:
     DCS_PAT: ${DCS_PAT}
   requires:
@@ -48,7 +48,7 @@ defaults:
 security:
   scan_verdict: allow
   prompt_injection_findings: []
-  osv: unscanned
+  osv: clean
 examples:
 - 列出我所有的项目
 - 查看当前项目和任务列表

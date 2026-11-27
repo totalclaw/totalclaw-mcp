@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: actors
 display_name: actors-mcp-server
 display_name_en: actors-mcp-server
-version: 0.1.1
+version: 0.1.2
 description: Apify MCP Server
 description_zh: 集成 Apify 平台 3000+ 云工具，用于网站、电商、社交媒体等数据提取。
 author: apify
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@apify/actors-mcp-server@0.19.5'
+  - '@apify/actors-mcp-server@0.21.12'
   requires:
     node: '>=18'
 requires_env: []

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: basic_memory
 display_name: Basic Memory
 display_name_en: Basic Memory
-version: 0.1.1
+version: 0.1.2
 description: Local-first knowledge management combining Zettelkasten with knowledge graphs
 description_zh: 本地优先的知识管理系统，从 Markdown 文件构建语义图，实现跨对话持久记忆。
 author: basicmachines-co
@@ -26,7 +26,7 @@ runtimes:
   command: uvx
   args:
   - --prerelease=allow
-  - basic-memory==0.24.1
+  - basic-memory==1.0.0
   - mcp
   requires:
     python: '>=3.10'

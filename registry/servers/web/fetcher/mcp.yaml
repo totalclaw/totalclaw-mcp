@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: fetcher
 display_name: fetcher-mcp
 display_name_en: fetcher-mcp
-version: 0.1.1
+version: 0.1.2
 description: MCP server for fetching web content using Playwright browser
 description_zh: 使用 Playwright 无头浏览器获取网页内容，支持 JS 渲染和智能提取 (Markdown/HTML)。
 author: jae-jae
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - fetcher-mcp@0.3.9
+  - fetcher-mcp@0.4.1
   requires:
     node: '>=18'
 requires_env: []

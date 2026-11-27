@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: contextstream
 display_name: ContextStream
 display_name_en: ContextStream
-version: 0.1.1
+version: 0.1.2
 description: Verified npm launcher for the open-source ContextStream Rust MCP server
 description_zh: 面向编码 Agent 的共享持久记忆与语义代码搜索，多个 Agent（Cursor、Claude Code、Codex、Windsurf 等）之间共用同一份上下文。
 author: contextstream
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@contextstream/mcp-server@1.0.36'
+  - '@contextstream/mcp-server@1.0.83'
   requires:
     node: '>=18'
 requires_env: []

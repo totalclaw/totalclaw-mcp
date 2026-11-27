@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: local
 display_name: Awareness
 display_name_en: Awareness
-version: 0.1.1
+version: 0.1.2
 description: Local-first memory for AI agents. Structured synthetic memory cards (decision / preference / risk), verifiable
   state history via ERC-8350, hybrid search. Runs offline, no account.
 description_zh: 面向编码 Agent 的本地优先持久记忆：SQLite FTS5 + 本地嵌入，BM25 与向量 RRF 混合检索且检索阶段零 LLM 调用，完全离线、无需账号；在 LongMemEval 基准上给出可复现成绩。
@@ -27,7 +27,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@awareness.market/local@0.21.1'
+  - '@awareness.market/local@0.22.1'
   requires:
     node: '>=18'
 requires_env: []

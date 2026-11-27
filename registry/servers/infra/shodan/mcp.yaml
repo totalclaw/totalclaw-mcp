@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: shodan
 display_name: mcp-shodan
 display_name_en: mcp-shodan
-version: 0.1.1
+version: 0.1.2
 description: A Model Context Protocol server for Shodan API queries.
 description_zh: 用于查询 Shodan API 和 Shodan CVEDB 的 MCP 服务器。提供 IP 查找、设备搜索、DNS 查找、漏洞查询等工具。
 author: BurtTheCoder
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@burtthecoder/mcp-shodan@1.0.34'
+  - '@burtthecoder/mcp-shodan@1.0.41'
   requires:
     node: '>=18'
 requires_env:

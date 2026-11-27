@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: shell
 display_name: mcp-shell-server
 display_name_en: mcp-shell-server
-version: 0.1.1
+version: 0.1.2
 description: MCP Shell Server - Execute shell commands via MCP protocol
 description_zh: 实现模型上下文协议 (MCP) 的安全 Shell 命令执行服务器。
 author: tumf
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - mcp-shell-server==1.1.14
+  - mcp-shell-server==1.1.15
   requires:
     python: '>=3.10'
 requires_env: []

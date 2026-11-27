@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: screenshotone
 display_name: ScreenshotOne
 display_name_en: ScreenshotOne
-version: 0.1.1
+version: 0.1.2
 description: Render website screenshots of any website and get them as images.
 description_zh: 使用 ScreenshotOne 服务渲染网站截图。
 author: screenshotone
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@screenshotone/mcp@1.1.1'
+  - '@screenshotone/mcp@1.3.0'
   requires:
     node: '>=18'
 requires_env: []

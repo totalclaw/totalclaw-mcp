@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: minimax
 display_name: MiniMax (官方)
 display_name_en: ''
-version: 0.1.1
+version: 0.1.2
 description: Minimax MCP Server
 description_zh: MiniMax 官方 MCP 服务器，调用其文本转语音、图像生成与视频生成 API。
 author: MiniMax-AI
@@ -25,7 +25,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - minimax-mcp==0.0.19
+  - minimax-mcp==0.0.20
   - -y
   env:
     MINIMAX_API_RESOURCE_MODE: optional, [url|local], url is default, audio/image/video are downloaded locally or provided

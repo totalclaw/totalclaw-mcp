@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: lrvx
 display_name: flox
 display_name_en: flox
-version: 0.1.1
+version: 0.1.2
 description: Model Context Protocol server for lrvx — gives AI agents grounded access to indicators, error codes, and the
   C API.
 description_zh: FLOX 交易系统框架的 MCP 服务器，约 30 个工具：运行回测、生成策略模板、检测前瞻偏差、下单、查询盈亏，通过 Claude/Cursor 调用。同一份策略代码从回测到模拟到实盘运行（CcxtBroker
@@ -27,7 +27,7 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - lrvx-mcp==0.11.0
+  - lrvx-mcp==0.12.1
   requires:
     python: '>=3.10'
 requires_env: []

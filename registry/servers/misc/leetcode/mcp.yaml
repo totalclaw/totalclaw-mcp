@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: leetcode
 display_name: LeetCode
 display_name_en: LeetCode
-version: 0.1.1
+version: 0.1.2
 description: MCP Server for LeetCode API (supports leetcode.com and leetcode.cn)
 description_zh: LeetCode的MCP服务器，支持LeetCode的读取和写入
 author: upstream
@@ -25,7 +25,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@jinzcdev/leetcode-mcp-server@1.4.0'
+  - '@jinzcdev/leetcode-mcp-server@1.5.1'
   env:
     LEETCODE_SITE: global
   requires:

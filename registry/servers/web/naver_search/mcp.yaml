@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: naver_search
 display_name: naver-search-mcp
 display_name_en: naver-search-mcp
-version: 0.1.1
+version: 0.1.2
 description: Naver Search MCP Server
 description_zh: Naver 搜索 API 集成 MCP 服务器，支持博客、新闻、购物搜索和 DataLab 分析功能。
 author: isnow890
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@isnow890/naver-search-mcp@1.0.54'
+  - '@isnow890/naver-search-mcp@1.0.55'
   requires:
     node: '>=18'
 requires_env: []

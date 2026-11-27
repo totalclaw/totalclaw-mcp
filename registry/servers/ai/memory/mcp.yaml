@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: memory
 display_name: mcp-memory-server
 display_name_en: mcp-memory-server
-version: 0.1.1
+version: 0.1.2
 description: Hosted long-term memory for AI agents over MCP. Write and read memories from Claude Code, Cursor, VS Code and
   ChatGPT; rating a recalled memory as helpful or misleading re-ranks what comes back next. OAuth sign-in or API key, free
   plan.
@@ -29,7 +29,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@mnemoverse/mcp-memory-server@0.16.0'
+  - '@mnemoverse/mcp-memory-server@0.18.1'
   requires:
     node: '>=18'
 requires_env:

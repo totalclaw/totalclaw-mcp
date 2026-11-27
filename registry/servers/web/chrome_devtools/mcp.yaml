@@ -5,7 +5,7 @@ tested_with: '>=0.63.72'
 name: chrome_devtools
 display_name: Chrome DevTools
 display_name_en: Chrome DevTools
-version: 0.1.0
+version: 0.1.1
 description: Chrome DevTools MCP server.
 description_zh: 谷歌浏览器(Chrome)DevTools 控制 — 自动化导航/点击/填表、性能 trace + Lighthouse 审计、网络请求观察、控制台日志读取、JS 执行、heap
   snapshot、屏幕截图、扩展安装。支持 --headless / --isolated / --browser-url 接已有 Chrome。
@@ -23,7 +23,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - chrome-devtools-mcp@1.7.0
+  - chrome-devtools-mcp@1.13.0
   env:
     CHROME_DEVTOOLS_MCP_NO_USAGE_STATISTICS: '1'
     CHROME_DEVTOOLS_MCP_NO_UPDATE_CHECKS: '1'
@@ -35,11 +35,11 @@ defaults:
   enabled: true
   timeout: 180
 tools:
-  probed_at: '2026-08-23T07:58:02Z'
+  probed_at: '2026-11-27T02:15:42Z'
   probed_runtime: npx
-  count: 29
+  count: 33
   file: tools.json
 security:
   scan_verdict: allow
   prompt_injection_findings: []
-  osv: unscanned
+  osv: clean

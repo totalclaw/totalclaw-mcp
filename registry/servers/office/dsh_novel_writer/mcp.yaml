@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: dsh_novel_writer
 display_name: dsh-novel-writer
 display_name_en: dsh-novel-writer
-version: 0.1.1
+version: 0.1.2
 description: '[](https://glama.ai/mcp/servers/siweina/dsh-novel-writer)      - Offline novel-writing toolkit for Chinese web-novel
   authors: chapter stats, style checks, plot-thread tracking, continuity audits and semantic search.'
 description_zh: 网文作者的本地章节体检工具集：16 个工具覆盖章节统计、风格基线自检、伏笔与剧情线登记、连贯性/OOC 审计、关键词与句式分析、本地语义检索；全离线运行，无需 API Key。
@@ -28,7 +28,7 @@ runtimes:
   args:
   - -y
   - -p
-  - dsh-novel-writer@6.9.0
+  - dsh-novel-writer@7.4.0
   - dsh-novel-writer-mcp
   - --root
   - ${MCP_DSH_NOVEL_WRITER_ROOT}

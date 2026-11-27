@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: frontrun
 display_name: frontrun-mcp-server
 display_name_en: frontrun-mcp-server
-version: 0.1.1
+version: 0.1.2
 description: Frontrun MCP Server - VC follow signal intelligence, company research, and deal discovery for AI agents. 35 tools.
 description_zh: Frontrun (frontrun.vc) 官方 MCP 服务器，追踪 AI、科技与加密领域 2,000+ 顶级投资人在 X 上的关注动态，在融资公布前发现被关注的初创公司，覆盖 60,000+ 公司及融资数据。
 author: jongall45
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - frontrun-mcp-server@2.7.0
+  - frontrun-mcp-server@2.8.3
   requires:
     node: '>=18'
 requires_env: []

@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: azure_devops
 display_name: mcp-server-azure-devops
 display_name_en: mcp-server-azure-devops
-version: 0.1.1
+version: 0.1.2
 description: Azure DevOps reference server for the Model Context Protocol (MCP)
 description_zh: 用于仓库管理、工作项和流水线的 Azure DevOps 集成。
 author: Tiberriver256
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@tiberriver256/mcp-server-azure-devops@0.1.53'
+  - '@tiberriver256/mcp-server-azure-devops@0.1.54'
   env:
     AZURE_DEVOPS_AUTH_METHOD: azure-identity
   requires:

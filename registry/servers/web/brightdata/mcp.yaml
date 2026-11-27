@@ -6,7 +6,7 @@ tested_with: '>=0.63.72'
 name: brightdata
 display_name: brightdata-mcp
 display_name_en: brightdata-mcp
-version: 0.1.1
+version: 0.1.2
 description: An MCP interface into the Bright Data toolset
 description_zh: Bright Data 官方出品，为 AI 代理提供一体化公网访问能力：实时网页搜索、抓取、绕过反爬与地理限制，获取干净结构化的网页数据。
 author: brightdata
@@ -26,7 +26,7 @@ runtimes:
   command: npx
   args:
   - -y
-  - '@brightdata/mcp@4.1.0'
+  - '@brightdata/mcp@4.8.0'
   requires:
     node: '>=18'
 requires_env: []
