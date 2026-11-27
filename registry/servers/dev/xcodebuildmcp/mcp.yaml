@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 mcp-cn 导入（2026-10-27）；2026-11-02 静态审核：通过（详见 docs/review-2026-11-02.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：可执行是带子命令的 CLI；MCP 服务器在 `mcp` 子命令。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: xcodebuildmcp
 display_name: Xcode构建
 display_name_en: ''
-version: 0.1.2
+version: 0.1.3
 description: XcodeBuildMCP is a Model Context Protocol server that provides tools for Xcode project management, simulator
   management, and app utilities.
 description_zh: Xcode项目构建和管理的MCP工具
@@ -27,6 +28,7 @@ runtimes:
   args:
   - -y
   - xcodebuildmcp@2.7.0
+  - mcp
   requires:
     node: '>=18'
 requires_env: []
@@ -34,6 +36,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:50:33Z'
+  probed_runtime: npx
+  count: 24
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

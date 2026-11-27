@@ -1,0 +1,85 @@
+[
+  {
+    "name": "recent_leads",
+    "description": "Leads the radar kept in the last `days` days (newest first), each with its signals, name\nscore and, once reviewed, whether it rose in DataForSEO Trends; plus the hit rate per signal.\nReads the local database only: free and instant. Empty until `sources` or `daily` has run.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "days": {
+          "default": 7,
+          "title": "Days",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "recent_leadsArguments"
+    }
+  },
+  {
+    "name": "keyword_table",
+    "description": "The keyword table for new names (models, products, repositories), read now: each name and\nthe generic search terms behind it, with estimated searches a day, when it started rising,\nwhat it is doing now, and prioritize / watch / skip.\n\nnames: one or two is best, eight at most. repos: optional {\"name\": \"owner/repo\"} so the\nREADME is read as evidence. Paid: about $0.05 a name plus $0.09 a call. Slow: 40 to 90\nseconds a name. `incomplete` is true when a data source failed and the table holds less\nthan it should; the lines under the table say which.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "names": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Names",
+          "type": "array"
+        },
+        "repos": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repos"
+        }
+      },
+      "required": [
+        "names"
+      ],
+      "type": "object",
+      "title": "keyword_tableArguments"
+    }
+  },
+  {
+    "name": "run_radar",
+    "description": "Run the radar once and return its report. command: \"sources\" (X and Hugging Face only;\nno report when nothing is new) or \"daily\" (every signal, the keyword table, the 14-day\nreview). skip: any of x, hf, breakout, sitemaps, newsites, gsc, review, judge, usecases.\n\nPaid and slow: `sources` reads every X account in config.json (about 10 seconds and $0.003\neach); `daily` takes 5 to 15 minutes. It updates the same state the scheduled runs use, so\ndo not call it as a substitute for the schedule.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "command": {
+          "default": "sources",
+          "title": "Command",
+          "type": "string"
+        },
+        "skip": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Skip"
+        }
+      },
+      "type": "object",
+      "title": "run_radarArguments"
+    }
+  }
+]

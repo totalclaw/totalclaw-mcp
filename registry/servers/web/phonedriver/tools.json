@@ -1,0 +1,384 @@
+[
+  {
+    "name": "apps",
+    "description": "List apps (`name  id`), or `action` install (file in `app`), stop, clear (data), uninstall, or grant / revoke `permissions` (`camera`, `location`), or notify (push `payload`; iOS Simulator).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "app": {
+          "type": "string"
+        },
+        "payload": {
+          "description": "For `notify`: JSON, such as `{\"aps\":{\"alert\":\"Hi\"}}`.",
+          "type": "string"
+        },
+        "permissions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "batch",
+    "description": "Run steps in order, one diff back; stops at the first failure. A step is {\"tool\":\"tap\",\"target\":\"@e3\"}: tap, type, swipe, scroll, press, launch or wait.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "steps": {
+          "type": "array"
+        }
+      },
+      "required": [
+        "steps"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "clipboard",
+    "description": "Read the clipboard, or `set` it.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "set": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "devices",
+    "description": "List devices (id, model, OS, holder). With several, `use` an id to send later calls to it; `device` on one call overrides. `release` gives up this session's hold. `boot` starts a simulator or emulator that is off.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "boot": {
+          "type": "string"
+        },
+        "release": {
+          "type": "boolean"
+        },
+        "use": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "launch",
+    "description": "Open an app (any part of its name, or its id) or a `url` (with `app`, opened in that app); returns the screen it shows, which is where the app was left unless `restart`. `grant` pre-allows permissions (`camera`, `notifications`).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "app": {
+          "type": "string"
+        },
+        "grant": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "restart": {
+          "type": "boolean"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "logs",
+    "description": "An app's last log lines and its last crash (Android). `app` defaults to the one in front; `grep` keeps lines with these words (`a|b`).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "app": {
+          "type": "string"
+        },
+        "grep": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "network",
+    "description": "The networks: Wi-Fi, cellular, VPN (its app and user ids), the default, DNS, always-on VPN, lockdown. Android.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object"
+    }
+  },
+  {
+    "name": "press",
+    "description": "Press home, back, recents, notifications, lock, volume-up, volume-down, enter or hide-keyboard. `landscape` and `portrait` turn the screen. On an emulator or Simulator, fingerprint or wrong-fingerprint answers a fingerprint or Face ID prompt.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "key": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "replay",
+    "description": "Run a saved steps file again in one call; it stops at the first step that fails and shows the screen. `vars` fills `{{name}}` in it. `save: true` writes the file from this session's actions.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "from": {
+          "description": "Start at this step.",
+          "type": "integer"
+        },
+        "save": {
+          "type": "boolean"
+        },
+        "vars": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Not for secrets.",
+          "type": "object"
+        }
+      },
+      "required": [
+        "file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "screenshot",
+    "description": "Image of the screen, for what the snapshot lacks (canvas, map, photo). `marks` boxes tappable elements with their @ref. `compare`: what changed since your last screenshot, as text. `record` `start`, later `stop`: a video, with the actions done meanwhile (Android, Simulator).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "compare": {
+          "type": "boolean"
+        },
+        "marks": {
+          "type": "boolean"
+        },
+        "record": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "scroll",
+    "description": "Scroll toward more content, or until the text or @ref in `until` shows.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "direction": {
+          "description": "up, down, left or right.",
+          "type": "string"
+        },
+        "until": {
+          "description": "A text, `A|B` for either, or an @ref.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "direction"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "setting",
+    "description": "System settings by key, with no screens to tap (Android 17+; elsewhere it answers unsupported: use `shell`). `find` lists keys and accepted values (`dark theme|media volume` for several); `values` {key: value} writes; `key` reads one; `open` shows the `screen` with that key.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "find": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "open": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "values": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "shell",
+    "description": "Run a device shell command: exit code, output, screen change. For intents, keys and state, and for settings where `setting` is unsupported: `am start -a android.intent.action.VIEW -d <url>`, `input keyevent 3`, `cmd uimode night yes`. Simulator: `simctl ui appearance dark`. A physical iPhone has no shell.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "command": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "command"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "snapshot",
+    "description": "The screen as lines like `@e4 button \"Save\"`; refs name elements for other tools. `find` lists matching lines (`A|B` for either). `under-keyboard` = hidden by the keyboard. `audit` adds accessibility problems.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "find": {
+          "type": "string"
+        },
+        "page": {
+          "description": "The web page in front as text, whole, no scrolling (Chrome; web views of debug builds). `find` keeps matching lines.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "swipe",
+    "description": "A finger gesture: flip pages, dismiss. `to` drags `from` to a target; `pinch` (in, out) zooms. Use `scroll` for lists.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "direction": {
+          "description": "up, down, left or right.",
+          "type": "string"
+        },
+        "from": {
+          "description": "Start; default the screen's center.",
+          "type": "string"
+        },
+        "pinch": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "tap",
+    "description": "Tap by @ref, text or x,y point (from a screenshot). `long` holds the press that many ms (context menus). The reply is the new screen: read it, and call tools one at a time (they share one screen).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "long": {
+          "type": "integer"
+        },
+        "target": {
+          "description": "@ref, `x,y` or text.",
+          "type": "string"
+        },
+        "then": {
+          "description": "Texts to tap next on the screens that follow, in order (a menu path in one call); stops at the first one missing.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "type",
+    "description": "Put text in a field (replaces its content) and report what it shows; empty text clears. `secret` for any password or code.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "into": {
+          "description": "@ref, `x,y` or text; default the focused field.",
+          "type": "string"
+        },
+        "secret": {
+          "type": "boolean"
+        },
+        "submit": {
+          "description": "Then press enter.",
+          "type": "boolean"
+        },
+        "text": {
+          "type": "string"
+        },
+        "then": {
+          "description": "Texts to tap after typing, in order (pick a suggestion).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wait",
+    "description": "Wait for `settled`, a text (`A|B` for either) or @ref to appear, or `gone:<text>`; or `vpn` up or down; or a `log` line (of `app`) written from now on.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "app": {
+          "type": "string"
+        },
+        "condition": {
+          "type": "string"
+        },
+        "log": {
+          "type": "string"
+        },
+        "timeout_ms": {
+          "description": "Default 5000.",
+          "type": "integer"
+        },
+        "vpn": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+]

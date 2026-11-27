@@ -1,0 +1,435 @@
+[
+  {
+    "name": "verify",
+    "description": "Whether page_url links to domain, whether the link passes ranking credit (followed; or nofollow, sponsored,\nugc; or only a redirect through the site's own page) and where on the page it sits: body text, header,\nnavigation, sidebar, footer, comments. Free: one request to the page.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "page_url": {
+          "title": "Page Url",
+          "type": "string"
+        },
+        "domain": {
+          "title": "Domain",
+          "type": "string"
+        }
+      },
+      "required": [
+        "page_url",
+        "domain"
+      ],
+      "type": "object",
+      "title": "verifyArguments"
+    }
+  },
+  {
+    "name": "submissions",
+    "description": "The user's submission log on this machine (ledger.jsonl), with its warnings: more than five a week, one anchor\nused over and over. Free and instant.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "submissionsArguments"
+    }
+  },
+  {
+    "name": "log_add",
+    "description": "Record a submission in the local ledger (ledger.jsonl) and return the updated submission log and pace/anchor\nwarnings. Free and instant.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "site": {
+          "title": "Site",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "anchor": {
+          "default": "",
+          "title": "Anchor",
+          "type": "string"
+        },
+        "paid": {
+          "default": 0.0,
+          "title": "Paid",
+          "type": "number"
+        },
+        "url": {
+          "default": "",
+          "title": "Url",
+          "type": "string"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "site",
+        "kind"
+      ],
+      "type": "object",
+      "title": "log_addArguments"
+    }
+  },
+  {
+    "name": "recheck",
+    "description": "Recheck the sites in the user's submission log against their previous snapshot, and when `to` (the user's\ndomain) is given, verify whether the live links are still present. free=True reads only the sites' own pages\n(free); otherwise paid (same per-site cost as vet).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "to": {
+          "default": "",
+          "title": "To",
+          "type": "string"
+        },
+        "deep": {
+          "default": false,
+          "title": "Deep",
+          "type": "boolean"
+        },
+        "free": {
+          "default": false,
+          "title": "Free",
+          "type": "boolean"
+        }
+      },
+      "type": "object",
+      "title": "recheckArguments"
+    }
+  },
+  {
+    "name": "ai_access",
+    "description": "Three-gate AI accessibility check on a URL or domain: (1) Permission gate (robots.txt for training, search,\nand user AI bots + llms.txt), (2) Edge & index gate (WAF/403 blocks + Common Crawl index), (3) Rendering &\ndirectives gate (visible words without JS vs empty CSR shell, meta robots, JSON-LD). Free.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "target": {
+          "title": "Target",
+          "type": "string"
+        },
+        "check_cc": {
+          "default": true,
+          "title": "Check Cc",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "type": "object",
+      "title": "ai_accessArguments"
+    }
+  },
+  {
+    "name": "vet",
+    "description": "Check link sources (directories, lists, guest-post sites) before submitting to them: each gets an action (skip,\nlook first, free only, low value, submit), a verdict (avoid, caution, ok) and the evidence for each finding.\n\nsites: domains or URLs, 30 at most a call; put every site being considered in one call. free=True reads the\nsites' own pages only: free. Otherwise paid: about 0.01 USD a site plus about 0.16 USD for the batch (spam\nscores and search history), the same for one site or thirty. deep adds about 0.19 USD a site (0.27 with an\nAIsa key). topics: keywords to see where each site ranks for them (about 0.005 USD a keyword). newcomers: also\nread each site's newest sitemap pages and date the sites they link to, to answer whether it still takes new\nsites; free, but 20 to 60 seconds a site.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "sites": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Sites",
+          "type": "array"
+        },
+        "deep": {
+          "default": false,
+          "title": "Deep",
+          "type": "boolean"
+        },
+        "free": {
+          "default": false,
+          "title": "Free",
+          "type": "boolean"
+        },
+        "topics": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Topics"
+        },
+        "newcomers": {
+          "default": false,
+          "title": "Newcomers",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "sites"
+      ],
+      "type": "object",
+      "title": "vetArguments"
+    }
+  },
+  {
+    "name": "find",
+    "description": "The pages that rank on Google (US) for the keywords and are not the user's: directories, lists, articles,\nvideos, threads, repositories, sorted by the visitors they get from these searches, each with what can honestly\nbe done there. site: the user's own domain, left out. Paid: about 0.005 USD a keyword (0.006 through Glasser)\nplus 0.012 USD for the search volumes.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "keywords": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Keywords",
+          "type": "array"
+        },
+        "site": {
+          "default": "",
+          "title": "Site",
+          "type": "string"
+        }
+      },
+      "required": [
+        "keywords"
+      ],
+      "type": "object",
+      "title": "findArguments"
+    }
+  },
+  {
+    "name": "audit",
+    "description": "The user's own backlink profile: totals, new and lost referring domains by week, backlinks read one by one\nwith the referring domains behind each anchor, site-wide links counted once, the spam score of the sites\nlinking in, and the sites one owner runs among them. Paid: about 0.12 USD, with deep (the full anchor\ndistribution) about 0.16 USD. rows: backlinks read one by one, 1,000 at most (100 cost about 0.03 USD).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "domain": {
+          "title": "Domain",
+          "type": "string"
+        },
+        "deep": {
+          "default": false,
+          "title": "Deep",
+          "type": "boolean"
+        },
+        "rows": {
+          "default": 1000,
+          "title": "Rows",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "domain"
+      ],
+      "type": "object",
+      "title": "auditArguments"
+    }
+  },
+  {
+    "name": "lost",
+    "description": "The user's backlinks that land on pages of the user's that are gone (404, 410) or redirect, most referring\ndomains first: each dead page with the closest live page in the user's sitemaps to 301 it to, each redirect\nfollowed hop by hop and judged. Nothing is redirected. Paid: about 0.06 USD, nothing more after an audit of the\nsame site in the last 7 days.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "domain": {
+          "title": "Domain",
+          "type": "string"
+        }
+      },
+      "required": [
+        "domain"
+      ],
+      "type": "object",
+      "title": "lostArguments"
+    }
+  },
+  {
+    "name": "competitors",
+    "description": "Links the user's competitors earned and the user lacks: each rival's referring domains first seen in the\nlast `days` days, and the sites linking to two or more rivals but not to the user, each with a linking page and\nwhat to do there. Paid: about 0.025 USD a call, 2N + 2 calls for N rivals (three: about 0.20 USD); a call is\nmade only while its estimated price fits under max_usd (default 0.30).\n\nearly=True reads their earliest links instead, the channels each used at launch, which take a new site: each\nrival's first 90 days against the user's site at the same age, the weeks that brought a burst, and the sites\ntwo or more rivals got early that do not link to the user (a launch checklist), the first `vetted` of them\nvetted free. Paid: about 0.06 USD a site, the user's included, plus a linking page call a rival: three rivals\nabout 0.35 USD; a call is made only while its estimated price fits under max_usd (default 0.50). The free vets\ntake a few minutes.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "domain": {
+          "title": "Domain",
+          "type": "string"
+        },
+        "rivals": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Rivals",
+          "type": "array"
+        },
+        "days": {
+          "default": 7,
+          "title": "Days",
+          "type": "integer"
+        },
+        "limit": {
+          "default": 100,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "max_usd": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Usd"
+        },
+        "early": {
+          "default": false,
+          "title": "Early",
+          "type": "boolean"
+        },
+        "vetted": {
+          "default": 10,
+          "title": "Vetted",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "domain",
+        "rivals"
+      ],
+      "type": "object",
+      "title": "competitorsArguments"
+    }
+  },
+  {
+    "name": "cited",
+    "description": "Which sites Google's AI Overview cites for each keyword (US, English), whether the user's domain is among\nthem and where it ranks, then the sites cited most: the places to be mentioned on. Paid: 0.002 USD a keyword\nthrough AIsa (0.004 when the overview loads late), 0.004 through Glasser (0.006); a call is made only while its\nestimated price fits under max_usd.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "domain": {
+          "title": "Domain",
+          "type": "string"
+        },
+        "keywords": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Keywords",
+          "type": "array"
+        },
+        "max_usd": {
+          "default": 0.1,
+          "title": "Max Usd",
+          "type": "number"
+        },
+        "samples": {
+          "default": 1,
+          "title": "Samples",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "domain",
+        "keywords"
+      ],
+      "type": "object",
+      "title": "citedArguments"
+    }
+  },
+  {
+    "name": "questions",
+    "description": "How buyers would ask an AI assistant for what the user makes: ChatGPT, Claude and Gemini each write `count`\nquestions without searching the web. what: what the user makes, the way a buyer would put it. Paid (AIsa):\nabout 0.01 USD for the three.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "what": {
+          "title": "What",
+          "type": "string"
+        },
+        "count": {
+          "default": 10,
+          "title": "Count",
+          "type": "integer"
+        },
+        "max_usd": {
+          "default": 0.05,
+          "title": "Max Usd",
+          "type": "number"
+        }
+      },
+      "required": [
+        "what"
+      ],
+      "type": "object",
+      "title": "questionsArguments"
+    }
+  },
+  {
+    "name": "asked",
+    "description": "The user's questions put to ChatGPT, Google's AI Mode, Perplexity, Claude and Gemini: what each searched for,\nthe pages it cited, the tools it named and whether it named or cited the user; then the sites and pages cited\nmost. names: other names the answers may call the user by. rank: also look up each search they ran on Google\nand Bing. Paid (AIsa): about 0.12 USD a question, rank 0.0035 USD a search on each engine; a call is made only\nwhile its estimated price fits under max_usd.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "domain": {
+          "title": "Domain",
+          "type": "string"
+        },
+        "questions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Questions",
+          "type": "array"
+        },
+        "names": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Names"
+        },
+        "rank": {
+          "default": false,
+          "title": "Rank",
+          "type": "boolean"
+        },
+        "max_usd": {
+          "default": 1.0,
+          "title": "Max Usd",
+          "type": "number"
+        },
+        "samples": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Samples"
+        }
+      },
+      "required": [
+        "domain",
+        "questions"
+      ],
+      "type": "object",
+      "title": "askedArguments"
+    }
+  }
+]

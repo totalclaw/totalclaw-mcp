@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-27T09:44:32Z",
+  "generated_at": "2026-11-27T09:50:46Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -5760,7 +5760,7 @@
       "display_name_en": "omx-hyperliquid-mcp",
       "description": "Non-custodial, policy-checked execution engine for Hyperliquid (CLI + MCP for AI agents)",
       "description_zh": "非托管的 Hyperliquid 永续合约执行引擎，提供面向 AI 代理的 MCP 服务器：在本地风控限额内报价、预览和提交市价/限价/TWAP/POV/追价订单，超过阈值需人工批准，代理可触发但不能解除紧急停止，所有决策写入哈希链审计日志。仅使用无法提现的 API 钱包签名。`uvx omx-hyperliquid` 可免密钥运行演示。可选 1 bp builder 费用需用户在自己钱包中批准。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "Lumen-Founder",
       "license": "MIT",
       "homepage": "https://github.com/Lumen-Founder/omx-hyperliquid-mcp",
@@ -5794,11 +5794,23 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 10,
+      "tools": [
+        "get_quote",
+        "preview_order",
+        "submit_order",
+        "approval_status",
+        "order_status",
+        "get_receipt",
+        "cancel_order",
+        "kill_switch",
+        "account_summary",
+        "policy_limits"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/biz/omx_hyperliquid",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/biz/omx_hyperliquid",
@@ -5809,11 +5821,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "66216870e0fae47ba57d296c7a64dc5d80db30e751e4a903df54999485c972ab",
-          "size": 1419
+          "sha256": "1e13b58bb6566861dbbb239e72261977b1cc51701d8d48821ecef93a63073787",
+          "size": 1675
+        },
+        {
+          "path": "tools.json",
+          "sha256": "2df00fad7dc39092d0ee26d5efb11e0237985513bebac8e717b9428e97869c4a",
+          "size": 7581
         }
       ],
-      "bundle_sha256": "483fe1af7d8015a4d97c694913d9239295477eee1e29af503c0cd518b7427ff0",
+      "bundle_sha256": "59aa993d3f4a61f662065832d3641307a3b766f15964af3646e1ce4f2cf53dac",
       "popularity": {
         "score": 0
       }
@@ -15252,7 +15269,7 @@
       "display_name_en": "kordoc",
       "description": "Parse Korean documents (HWP3-5, HWPX, HWPML, PDF, XLS(X), DOCX) to Markdown — CLI + MCP server with lossless patch/roundtrip, form-filler, document diff, print & layout-preserving SVG renderer",
       "description_zh": "韩国文档解析库、CLI 与 MCP 服务器：将 HWP 3.x/5.x、HWPX、HWPML 以及 PDF、DOCX、XLSX、PPTX 和图片转换为 Markdown 与结构化数据，并支持表单填写、保留格式的文档修改、文档对比和公文样式 HWPX 生成。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "chrisryugj",
       "license": "MIT",
       "homepage": "https://github.com/chrisryugj/kordoc",
@@ -15286,11 +15303,35 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 22,
+      "tools": [
+        "parse_document",
+        "detect_format",
+        "parse_metadata",
+        "parse_pages",
+        "parse_table",
+        "compare_documents",
+        "parse_chunks",
+        "parse_form",
+        "fill_form",
+        "place_seal",
+        "add_memo",
+        "patch_document",
+        "redact_document",
+        "render_document",
+        "crop_regions",
+        "extract_tables",
+        "extract_profile",
+        "generate_document",
+        "build_agency_pack",
+        "agency_pack_info",
+        "lint_document",
+        "convert_to_hwpx"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/kordoc",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/kordoc",
@@ -15301,11 +15342,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "8074a594de2f98fc22dd5c786a3da001ad74ecd8e2ca047ce2a31adf1d7873fd",
-          "size": 1269
+          "sha256": "569160cd2cd044e8a96fefa55322e6d61b7d149a34b611fa20ab0f09b89bcd6e",
+          "size": 1569
+        },
+        {
+          "path": "tools.json",
+          "sha256": "b134f90f2cf84dfe56a5593cc594b1e1fb2cf7f5b698542b3abd007d9b0e9b1a",
+          "size": 70475
         }
       ],
-      "bundle_sha256": "4c42f0040ef077c8da7f1a413ee49eb0a61b96cc83e82de0ba26c3339e1e446f",
+      "bundle_sha256": "57047f73a6bbc95827649eac2b8887cbd347b5ef09d2032a8877b51bd07c75ae",
       "popularity": {
         "score": 799,
         "downloads_weekly": 34729,
@@ -16052,7 +16098,7 @@
       "display_name_en": "minas-webdav",
       "description": "Xiaomi Smart Storage (MINAS) WebDAV control toolkit: CLI, probe, local proxy",
       "description_zh": "小米智能存储（MINAS）NAS 的 WebDAV 控制工具箱：不挂盘直接列目录、统计、上传下载、移动复制删除文件，附 WebDAV 能力探测、本地反向代理（供映射 N 盘）、CLI、MCP server 与 agent 技能。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "LUgABeEEE",
       "license": "Apache-2.0",
       "homepage": "https://github.com/LUgABeEEE/minas-webdav",
@@ -16081,16 +16127,32 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "minas-webdav==0.3.7"
+          "package": "minas-webdav[mcp]==0.3.7"
         }
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 14,
+      "tools": [
+        "nas_ls",
+        "nas_stat",
+        "nas_tree",
+        "nas_find",
+        "nas_du",
+        "nas_df",
+        "nas_cat",
+        "nas_get",
+        "nas_put",
+        "nas_mkdir",
+        "nas_mv",
+        "nas_cp",
+        "nas_rm",
+        "nas_probe"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/minas_webdav",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/minas_webdav",
@@ -16101,11 +16163,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "c69b107f92ffde5402d73801ed1c0e3409042b5c386a503e2185679703c3ccf6",
-          "size": 1136
+          "sha256": "758a9712cb727c257ee676e1bf8984e6d7007d2ba8bb48de8abee8ca97b25c33",
+          "size": 1450
+        },
+        {
+          "path": "tools.json",
+          "sha256": "70dbcba91e9938aff03c99d59a87381d0854d916f8494f657879e2debf9c2a95",
+          "size": 7503
         }
       ],
-      "bundle_sha256": "70d74118e8a3c0e147c2356321d96acbb6b0bb17ba4ab793380673843eea3225",
+      "bundle_sha256": "437aa0f012247d55a08199b99e0623d52135c8600fb31bc7214cdbb93765907d",
       "popularity": {
         "score": 0
       }
@@ -24168,7 +24235,7 @@
       "display_name_en": "XcodeBuildMCP",
       "description": "MobileBuildMCP is a Model Context Protocol server that provides tools for Xcode project management, simulator management, and app utilities.",
       "description_zh": "面向 iOS/macOS 开发的 MCP 服务器与 CLI，为 AI 代理提供 Xcode 项目构建、运行、模拟器管理与日志捕获等工具，打通 Apple 平台开发工作流。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "getsentry",
       "license": "MIT",
       "homepage": "https://github.com/getsentry/XcodeBuildMCP",
@@ -24202,11 +24269,37 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 24,
+      "tools": [
+        "session_show_defaults",
+        "session_use_defaults_profile",
+        "session_set_defaults",
+        "session_clear_defaults",
+        "list_sims",
+        "boot_sim",
+        "open_sim",
+        "build_sim",
+        "build_run_sim",
+        "test_sim",
+        "get_sim_app_path",
+        "install_app_sim",
+        "launch_app_sim",
+        "stop_app_sim",
+        "record_sim_video",
+        "clean",
+        "discover_projs",
+        "list_schemes",
+        "show_build_settings",
+        "get_app_bundle_id",
+        "screenshot",
+        "snapshot_ui",
+        "get_coverage_report",
+        "get_file_coverage"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/mobilebuildmcp",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/mobilebuildmcp",
@@ -24217,11 +24310,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a1bbe6a0dbbc5b13a53d1902657329ab468436b69238098827f64bbba188b289",
-          "size": 1174
+          "sha256": "a31f4b30dc5beee829d29ccf91e6bc1033d212666efd05838bc478e8ad2bd1c5",
+          "size": 1395
+        },
+        {
+          "path": "tools.json",
+          "sha256": "9a79a9ed56b7b7331c2486bb0ddb9a2aeef781be613fb4ca8a125dc6668d6332",
+          "size": 18766
         }
       ],
-      "bundle_sha256": "4d2abf9d68c88764d9a3e91e2f6e2bf09e0c3a24121a2ad814caf9c47f716dbe",
+      "bundle_sha256": "4a838cc1f9037af1ede5c86dcb4eb28659641f9a7fb3070371260f86ee137c49",
       "popularity": {
         "score": 327,
         "downloads_weekly": 1845
@@ -25679,7 +25777,7 @@
       "display_name_en": "serena",
       "description": "A powerful MCP toolkit for coding, providing semantic retrieval and editing capabilities - the IDE for your agent",
       "description_zh": "功能齐全的编码代理，依赖于使用语言服务器的符号化代码操作。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "oraios",
       "license": "GPL-3.0-or-later",
       "homepage": "https://github.com/oraios/serena",
@@ -25713,11 +25811,16 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 3,
+      "tools": [
+        "activate_project",
+        "initial_instructions",
+        "serena_repl"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/serena_agent",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/serena_agent",
@@ -25728,11 +25831,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f7c9027a2829c46e0d78371e847c03b2d748ac1df1963936199928ede7dc829a",
-          "size": 1023
+          "sha256": "27b05bfe27b5fed3990b2a4c985f1571750d7a5bb905c1ec5ce60682b1a09321",
+          "size": 1269
+        },
+        {
+          "path": "tools.json",
+          "sha256": "148eef368e1e2ff55753f16f236e342e427e40e0f86273d84c643c054b4796ab",
+          "size": 4011
         }
       ],
-      "bundle_sha256": "86e61b4ae46415fa39a9e1aa637b0f3ae80989819c645f6ed94588dd423c60e9",
+      "bundle_sha256": "55a53947f6bfa332bf8621faf951db6ebdcdbc150986b9dddedf90b663a084a1",
       "popularity": {
         "score": 913,
         "downloads_weekly": 43883,
@@ -26585,7 +26693,7 @@
       "display_name_en": "",
       "description": "XcodeBuildMCP is a Model Context Protocol server that provides tools for Xcode project management, simulator management, and app utilities.",
       "description_zh": "Xcode项目构建和管理的MCP工具",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "upstream",
       "license": "MIT",
       "homepage": "https://www.npmjs.com/package/xcodebuildmcp",
@@ -26619,11 +26727,37 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 24,
+      "tools": [
+        "session_show_defaults",
+        "session_use_defaults_profile",
+        "session_set_defaults",
+        "session_clear_defaults",
+        "list_sims",
+        "boot_sim",
+        "open_sim",
+        "build_sim",
+        "build_run_sim",
+        "test_sim",
+        "get_sim_app_path",
+        "install_app_sim",
+        "launch_app_sim",
+        "stop_app_sim",
+        "record_sim_video",
+        "clean",
+        "discover_projs",
+        "list_schemes",
+        "show_build_settings",
+        "get_app_bundle_id",
+        "screenshot",
+        "snapshot_ui",
+        "get_coverage_report",
+        "get_file_coverage"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/xcodebuildmcp",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/xcodebuildmcp",
@@ -26634,11 +26768,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "8821921290d7980c98b68872288ff3244d2b27e89fa046969e3441493293169a",
-          "size": 954
+          "sha256": "a2075a76661e1a0515025ba302cf68003230246107c7b1472638fdc0f1439459",
+          "size": 1175
+        },
+        {
+          "path": "tools.json",
+          "sha256": "bf23a4de426f0718071354e3af0032382b87dbb064196a87432526d5c5796492",
+          "size": 17965
         }
       ],
-      "bundle_sha256": "06e96823b6523145383a5a978b9d0f9d48816e2acde2b0a828768be723b59025",
+      "bundle_sha256": "eae5b2d2a48de25bfe3b3e88e5fec49b90e4629319e9f3b352fb328b9d2d3f1b",
       "popularity": {
         "score": 495,
         "downloads_weekly": 89697
@@ -28458,7 +28597,7 @@
       "display_name_en": "Reliant Forge",
       "description": "Guardrails for apps in any agent harness. Deploy with no account: a live URL plus a claim link. Forge is an open-source CLI and MCP server for Claude Code, Codex, Cursor or a harness you wrote: run `npx -y @reliantlabs/forge@latest env deploy prod --claim",
       "description_zh": "Reliant Labs 官方 MCP 服务器：`deploy_claimable` 无需账号即可把 Vite 应用、Next.js 静态导出或 forge 项目部署到 Reliant 托管，返回公开 URL 和认领链接（未认领的部署保留 72 小时）；另提供 forge（Go + protobuf + SQL 迁移）项目的 lint、代码生成和项目内省工具，共 14 个工具。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "reliant-labs",
       "license": "Apache-2.0",
       "homepage": "https://github.com/reliant-labs/forge",
@@ -28492,11 +28631,37 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 24,
+      "tools": [
+        "annotations",
+        "audit",
+        "benefits",
+        "blast_radius",
+        "capabilities",
+        "db_query",
+        "deploy_claimable",
+        "deploy_status",
+        "explain_error",
+        "generate",
+        "libraries",
+        "lint",
+        "obs_check",
+        "obs_issue",
+        "obs_issues",
+        "obs_logs",
+        "obs_status",
+        "report_bug",
+        "schema",
+        "shapes",
+        "skill_list",
+        "skill_load",
+        "skill_search",
+        "why"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/infra/forge",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/forge",
@@ -28507,11 +28672,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "0310cbc15dc3ebc7aa0b28d7ba8961dc7140dc9a27433216da4e14f5f8bcae9a",
-          "size": 1462
+          "sha256": "62eb6b108b59544550390866f44cf5d05c1996cc462916df003ab9b239e365e8",
+          "size": 1718
+        },
+        {
+          "path": "tools.json",
+          "sha256": "03f05495b7bef3d16bd56c26f255fd8a981a37af3f8ad9b747e34c5119263020",
+          "size": 30258
         }
       ],
-      "bundle_sha256": "c47c7911620ac79a23f12a4665e865995887351223069ca7eef6875339cf9b88",
+      "bundle_sha256": "29795b213a18061b6df72711aad05103ac20f6c1f4397e584ab6f81767f3801c",
       "popularity": {
         "score": 0
       }
@@ -28893,7 +29063,7 @@
       "display_name_en": "keystash",
       "description": "Local secret broker for AI agents: values live in the macOS Keychain, only metadata stays on disk, and no tool ever returns a secret.",
       "description_zh": "本地单文件加密的密钥库，`keystash mcp` 把它变成 MCP 服务器：AI 能把密钥注入命令的环境变量、复制进剪贴板或生成新密钥，但始终看不到明文值；另有 `doctor` 扫描散落各处的明文密钥。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "thu-lawyer",
       "license": "MIT",
       "homepage": "https://github.com/thu-lawyer/keystash",
@@ -28927,11 +29097,19 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 6,
+      "tools": [
+        "secret_list",
+        "secret_store",
+        "secret_rotate",
+        "secret_generate",
+        "secret_use",
+        "secret_delete"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/infra/keystash",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/keystash",
@@ -28942,11 +29120,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a01b4261f87e0fd969d98c5f683d9613016b74f9b0f7123520f47eacf89b0ed7",
-          "size": 1209
+          "sha256": "bcb25f14a3b7f9c36066637f5a3b7b42d04bd7577b54ed03c061935b9ae25a5e",
+          "size": 1469
+        },
+        {
+          "path": "tools.json",
+          "sha256": "c28fa258a10026aab4455557ecf418a82d2ba37c1ba397fbff9800ce0d63cf11",
+          "size": 4901
         }
       ],
-      "bundle_sha256": "e2b32237d40e2ccb8a28eb091e441dc04dd66e570ea3caecd56949ff44bffd3d",
+      "bundle_sha256": "213d313758915ffdd81f831096acc0e2a49384fdee49bd239510f46e3a78bf4b",
       "popularity": {
         "score": 186,
         "downloads_weekly": 72
@@ -32513,7 +32696,7 @@
       "display_name_en": "Local GPU Imagegen",
       "description": "MCP-first control plane for ComfyUI workflows with explicit approvals and no silent downloads.",
       "description_zh": "可审计、显式审批的本地 GPU 生图控制平面（ComfyUI）：SHA-256 模型身份验证、许可审批、证据留存、17 工具 human-in-the-loop 工作流；支持 Codex、Claude Code、DeepSeek Harness。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "ChevalGrand520",
       "license": "MIT",
       "homepage": "https://github.com/ChevalGrand520/local-gpu-imagegen",
@@ -32547,11 +32730,30 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 17,
+      "tools": [
+        "local_gpu_imagegen_check",
+        "local_gpu_generate_image",
+        "local_gpu_discover_models",
+        "local_gpu_inspect_workflow",
+        "local_gpu_register_workflow",
+        "local_gpu_set_model_trust",
+        "local_gpu_recommend_models",
+        "local_gpu_list_profiles",
+        "local_gpu_start_run",
+        "local_gpu_get_run",
+        "local_gpu_branch_run",
+        "local_gpu_prepare_mask",
+        "local_gpu_confirm_mask",
+        "local_gpu_generate_round",
+        "local_gpu_record_review",
+        "local_gpu_finalize_run",
+        "local_gpu_cleanup_run"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/media/local_gpu_imagegen",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/media/local_gpu_imagegen",
@@ -32562,11 +32764,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "c3e949d6e7a5f7383b40578f4723169fabf608e65b6a00d6cc8e0de827303e46",
-          "size": 1213
+          "sha256": "421b738d9022e080736088a6d34489d6fd839645f188686ff1dbee1ae630d329",
+          "size": 1439
+        },
+        {
+          "path": "tools.json",
+          "sha256": "e50acc9c0615d11bc4f5008bc9e314353d9e166f16fc077acaa566c348a09e07",
+          "size": 39377
         }
       ],
-      "bundle_sha256": "9812e9149436909c3ca8238e816963a96b9e9b78415b442eacf5023f9ab1378b",
+      "bundle_sha256": "155a25914022f58644fa7381822a60a87f1f5e105086b36617b60086c81118d1",
       "popularity": {
         "score": 0
       }
@@ -46273,7 +46480,7 @@
       "display_name_en": "backlink-guard",
       "description": "Check a link source before you submit to it, verify the listing, and audit your own backlinks for link-spam patterns",
       "description_zh": "外链检测：提交网站之前先查目录、awesome 列表、客座文章站等外链来源，按 Google 链接垃圾政策给出建议（跳过 / 先看看 / 只免费提交 / 价值低 / 可以提交）并附证据；上线后核实链接是否传权重、在页面哪个位置，也能体检自己的外链。不替你提交任何东西。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "zhuyansen",
       "license": "MIT",
       "homepage": "https://github.com/zhuyansen/backlink-guard",
@@ -46302,16 +46509,31 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "backlink-guard==0.12.2"
+          "package": "backlink-guard[mcp]==0.12.2"
         }
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 13,
+      "tools": [
+        "verify",
+        "submissions",
+        "log_add",
+        "recheck",
+        "ai_access",
+        "vet",
+        "find",
+        "audit",
+        "lost",
+        "competitors",
+        "cited",
+        "questions",
+        "asked"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/backlink_guard",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/backlink_guard",
@@ -46322,11 +46544,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "8e49d33c145245b72ab0782ddd1bc8447d4e48fb66483a5892ed914427bbfae0",
-          "size": 1278
+          "sha256": "109e3d33cc40f5dcb2c1d2bbcd823bb1d48524c8ec0d270ca350d4460002482b",
+          "size": 1596
+        },
+        {
+          "path": "tools.json",
+          "sha256": "9fa4671a3f5cba31ea5ffa003e0bf06eb45f1b8d92a096fcb8c4f775b6a645ad",
+          "size": 13790
         }
       ],
-      "bundle_sha256": "fd0ce757bd61f82611c9278557bb7df838062797549561f1156ce9956f3880fa",
+      "bundle_sha256": "9664b130c35a221b4f9cd362d6bc9a272219e4ded0f87e0d7b74bab8b6ec1448",
       "popularity": {
         "score": 0
       }
@@ -49612,7 +49839,7 @@
       "display_name_en": "new-term-radar",
       "description": "Names that are starting to surge in AI, and the generic search terms behind them",
       "description_zh": "AI 新名词雷达：从 X、Hugging Face、GitHub 和 sitemap 找出刚出现的 AI 模型、产品和仓库名，再用 Google Ads 搜索量和 Google Trends 估算其背后通用搜索词的需求，给出 prioritize / watch / skip。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "zhuyansen",
       "license": "MIT",
       "homepage": "https://github.com/zhuyansen/new-term-radar",
@@ -49641,16 +49868,21 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "new-term-radar==0.8.0"
+          "package": "new-term-radar[mcp]==0.8.0"
         }
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 3,
+      "tools": [
+        "recent_leads",
+        "keyword_table",
+        "run_radar"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/new_term_radar",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/new_term_radar",
@@ -49661,11 +49893,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "88f41e23c650ed0f08cae53ab154378786e4147416e8c3142c1229766dfd872a",
-          "size": 1134
+          "sha256": "e1829a4fa47e0512459c3939490a1954c429f28cd571639639a867e69d4aff43",
+          "size": 1451
+        },
+        {
+          "path": "tools.json",
+          "sha256": "ccab2602b79da07e0733add696a7b8e5c9eb64b3cdaa2d83b4561f196e85226c",
+          "size": 3007
         }
       ],
-      "bundle_sha256": "6390f321f2635d33894f03e31e1fe904b495935c2f604c69f5580a0cf8a3b044",
+      "bundle_sha256": "36e70f2b3012e02f013773d123e3e309288eb945e308241b0ab8806b324787a4",
       "popularity": {
         "score": 0
       }
@@ -49740,7 +49977,7 @@
       "display_name_en": "Octocrawl",
       "description": "Octocrawl as an MCP server over stdio, a client of a running Octocrawl API (octocrawl serve).",
       "description_zh": "把公开网页转成 Markdown 或结构化 JSON 交给 AI 代理，每条结果附带证据记录（最终 URL、抓取时间、HTTP 状态、robots.txt 判定、内容哈希）；页面被拦截、为空或内容不对时，返回状态和原因，而不是当作正文。提供 scrape、map、crawl、batch_scrape 等工具。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "77777R7",
       "license": "AGPL-3.0-only",
       "homepage": "https://github.com/77777R7/Octocrawl",
@@ -49830,8 +50067,8 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "cd76c5c16588d87087a94554716f54b166cfb58cf6ff75a457f9c6952aad0f25",
-          "size": 1444
+          "sha256": "debfeda1ee681548fe81ae3a76367687271f54d50083d16096faf8fec57e015c",
+          "size": 1507
         },
         {
           "path": "tools.json",
@@ -49839,7 +50076,7 @@
           "size": 67331
         }
       ],
-      "bundle_sha256": "c45c484f2353df2dfb954d522591e3f873a0042f113ce47c966b7c195e589d1c",
+      "bundle_sha256": "a9d39c4e2a7d9f8306d9fa1fef1e94dd4ac7a50daca1dfce1645b0aa58b2d4e3",
       "popularity": {
         "score": 0
       }
@@ -50310,7 +50547,7 @@
       "display_name_en": "phonedriver",
       "description": "MCP server and CLI that lets AI agents like Claude Code, Codex and Cursor see and control Android and iOS phones. 6.9x fewer tokens than mobile-mcp, asks before it pays, no telemetry.",
       "description_zh": "让 AI 代理查看并操作 Android 与 iOS 手机（真机、模拟器、iOS Simulator）：屏幕以带编号的简短文本列表返回，点击、输入、滑动后只返回发生变化的行；点击“支付”“下单”等按钮前会暂停并等待用户确认。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "hridaya423",
       "license": "AGPL-3.0-only",
       "homepage": "https://github.com/hridaya423/phonedriver",
@@ -50344,11 +50581,31 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 18,
+      "tools": [
+        "apps",
+        "batch",
+        "clipboard",
+        "devices",
+        "launch",
+        "logs",
+        "network",
+        "press",
+        "replay",
+        "screenshot",
+        "scroll",
+        "setting",
+        "shell",
+        "snapshot",
+        "swipe",
+        "tap",
+        "type",
+        "wait"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/phonedriver",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/phonedriver",
@@ -50359,11 +50616,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "04fdc3d1c04d0c8694ca0f2a85bef31413ca2ddcf4389a3c2907483829d8ddbc",
-          "size": 1307
+          "sha256": "39a30bc003a3a8ee62a8d3771339d5342f661ebe7c5a4ce6c6185f5d9e1309c0",
+          "size": 1563
+        },
+        {
+          "path": "tools.json",
+          "sha256": "1055d7ec652bd19c9d816cd77ffb226767edeae7246ff30805a9e52a13d75b64",
+          "size": 10658
         }
       ],
-      "bundle_sha256": "ed0523e182ac89fb40616767f3c11ac1ae27cc11d9c33089904debd4506d1904",
+      "bundle_sha256": "4045188bcb44475077ad88403d2332488466776147744e68c08d08cf00acfc71",
       "popularity": {
         "score": 0
       }

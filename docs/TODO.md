@@ -816,6 +816,12 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
   - 未修：friday_memory（`friday` 可执行无输出，不是 MCP 入口）、preloop（只有 preloop-sync）、cal（npm 包 bin 缺 shebang，包本身坏）
 - 缺子命令 / 必填参数 17：backlink_guard、forge、keystash、knowlyr_datacheck/modelaudit/sandbox、kordoc、kubernetes_containers、local_gpu_imagegen、minas_webdav、
   mobilebuildmcp、new_term_radar、omx_hyperliquid、phonedriver、serena_agent、xcodebuildmcp 等 → 从包文档查 MCP 启动子命令
+  - [x] 已修并实探写回工具清单 13 条（入口取自包元数据 entry_points / npm bin 与源码）：
+    - README 的 `# Claude Code` 注释被当成参数（全注册表仅此 4 条）：forge、phonedriver、octocrawl、omx_hyperliquid
+    - MCP 服务器是另一个可执行：backlink_guard / new_term_radar / minas_webdav（`--from 包[mcp] *-mcp`）、kordoc（`npx -p kordoc kordoc-mcp`）
+    - 缺 MCP 子命令：keystash `mcp`、local_gpu_imagegen `serve`、serena_agent `start-mcp-server`、mobilebuildmcp / xcodebuildmcp `mcp`
+  - 包本身坏、清单层面修不了：knowlyr_datacheck / knowlyr_modelaudit / knowlyr_sandbox（用 mcp 1.x 低层装饰器，却按另一套签名调 `Server.run()`，mcp 1.x / 2.x 下都起不来）；friday_memory（没有 stdio MCP 入口）、preloop（MCP 只在其 HTTP API 服务里）、cal（npm bin 缺 shebang）→ 建议并入 G1 下架拍板
+  - 本机前提：kubernetes_containers 要本机 kubeconfig 配有当前上下文，清单无误
 - 依赖问题 7：python_interpreter、roundtable_ai（mcp 2.x，补 `--with mcp<2`）；chroma、davinci_resolve、markitdown、simple_pubmed、md_to_word_docx（缺依赖 / 版本冲突）
 - 其余 ~30 条 stderr 没有明确原因（静默退出、需本机 bun / IDE / 平台限制等），逐条看
 - [ ] 修完逐条重探；凭据类并入 credentials-needed.md

@@ -1,0 +1,185 @@
+[
+  {
+    "name": "secret_list",
+    "description": "List stored secrets as metadata only: name, tags, rotation policy, last rotation, allowed URLs. Never returns a value.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Return only this entry."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Return only entries carrying this tag."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "secret_store",
+    "description": "Store a secret. The value is collected from the human through a native macOS dialog; it is never passed as an argument and never returned. Use this only when the human is present.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Reference name, SERVICE_ENV_PURPOSE, e.g. OPENAI_PROD_KEY."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rotate_every_days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "allowed_urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "URL prefixes this entry may be sent to, each ending with '/'. secret_use refuses every other destination."
+        },
+        "auth_header": {
+          "type": "string",
+          "description": "Default 'Authorization'."
+        },
+        "auth_prefix": {
+          "type": "string",
+          "description": "Default 'Bearer '."
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "secret_rotate",
+    "description": "Replace an existing secret's value with a new one collected from the human through a native macOS dialog. Metadata is preserved unless overridden.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rotate_every_days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "allowed_urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "secret_generate",
+    "description": "Generate a high-entropy value, store it, and return only a short fingerprint. The value is never returned; the human retrieves it with `keystash copy NAME` (clipboard, auto-cleared).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rotate_every_days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "allowed_urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 16,
+          "maximum": 128
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "secret_use",
+    "description": "Send one HTTP request to an allow-listed URL with the entry's value as its credential. Returns the status and the scrubbed response body. The AI does not choose the credential and cannot read it.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "description": "Must be covered by the entry's allowed_urls."
+        },
+        "method": {
+          "type": "string",
+          "description": "Default GET."
+        },
+        "body": {
+          "description": "Request body: object, string, or omitted."
+        },
+        "timeout": {
+          "type": "number",
+          "description": "Seconds, max 300."
+        }
+      },
+      "required": [
+        "name",
+        "url"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "secret_delete",
+    "description": "Delete a secret and its metadata. Requires a native confirmation dialog from the human; without it nothing is deleted.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

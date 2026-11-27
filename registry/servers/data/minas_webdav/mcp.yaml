@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
 # 人工修改后请同步递增 version。
+# 2026-11-27：包名同名的可执行是 CLI（要子命令），MCP 服务器是另一个可执行 minas-webdav-mcp（依赖在 [mcp] extra）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: minas_webdav
 display_name: minas-webdav
 display_name_en: minas-webdav
-version: 0.1.1
+version: 0.1.2
 description: 'Xiaomi Smart Storage (MINAS) WebDAV control toolkit: CLI, probe, local proxy'
 description_zh: 小米智能存储（MINAS）NAS 的 WebDAV 控制工具箱：不挂盘直接列目录、统计、上传下载、移动复制删除文件，附 WebDAV 能力探测、本地反向代理（供映射 N 盘）、CLI、MCP server 与 agent
   技能。
@@ -26,7 +27,9 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - minas-webdav==0.3.7
+  - --from
+  - minas-webdav[mcp]==0.3.7
+  - minas-webdav-mcp
   requires:
     python: '>=3.10'
 requires_env: []
@@ -34,6 +37,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:50:29Z'
+  probed_runtime: uvx
+  count: 14
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

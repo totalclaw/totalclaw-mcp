@@ -1,0 +1,1519 @@
+[
+  {
+    "name": "local_gpu_imagegen_check",
+    "description": "Check Python packages and CUDA readiness for local GPU image generation.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_generate_image",
+    "description": "Compatibility tool for WebUI or Diffusers image generation; not for ComfyUI routes and never a bypass for the confirmed high-level run workflow.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "prompt"
+      ],
+      "properties": {
+        "prompt": {
+          "type": "string"
+        },
+        "negative_prompt": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "backend": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "webui",
+            "diffusers"
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "txt2img",
+            "img2img",
+            "inpaint"
+          ]
+        },
+        "webui_url": {
+          "type": "string"
+        },
+        "sampler_name": {
+          "type": "string"
+        },
+        "scheduler": {
+          "type": "string",
+          "enum": [
+            "default",
+            "dpmpp",
+            "euler",
+            "euler-a",
+            "ddim",
+            "unipc",
+            "lcm"
+          ]
+        },
+        "input_image": {
+          "type": "string"
+        },
+        "mask_image": {
+          "type": "string"
+        },
+        "strength": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "lora": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lora_scale": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "cpu_offload": {
+          "type": "boolean"
+        },
+        "vae_tiling": {
+          "type": "boolean"
+        },
+        "disable_safety_checker": {
+          "type": "boolean"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 256,
+          "maximum": 1536
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 256,
+          "maximum": 1536
+        },
+        "steps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 80
+        },
+        "guidance_scale": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "seed": {
+          "type": "integer"
+        },
+        "output_dir": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "allow_cpu": {
+          "type": "boolean"
+        },
+        "allow_download": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_discover_models",
+    "description": "Plan or execute bounded local model discovery without loading model weights.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "phase"
+      ],
+      "properties": {
+        "phase": {
+          "type": "string",
+          "enum": [
+            "plan",
+            "execute"
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "api_only",
+            "selected_folders",
+            "common_locations",
+            "full_drive",
+            "exact_file"
+          ]
+        },
+        "stage": {
+          "type": "string",
+          "enum": [
+            "index",
+            "fingerprint",
+            "verify",
+            "revoke"
+          ]
+        },
+        "backends": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "webui",
+              "comfyui"
+            ]
+          }
+        },
+        "roots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "explicit_includes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "plan_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confirmation": {
+          "description": "Exact confirmation token returned by the matching discovery plan; required before filesystem access.",
+          "type": "string",
+          "minLength": 1
+        },
+        "network_confirmation": {
+          "description": "Exact separately displayed confirmation authorizing network verification for this unchanged plan.",
+          "type": "string",
+          "minLength": 1
+        },
+        "selected_candidates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expected_backend_model_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authorization_id": {
+          "type": "string",
+          "pattern": "^verification:[0-9a-f]{24}$"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_inspect_workflow",
+    "description": "Inspect one local ComfyUI API workflow and infer a safe ordinary txt2img binding without writing state.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "workflow_path"
+      ],
+      "properties": {
+        "workflow_path": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_register_workflow",
+    "description": "Recheck and immutably register one exact previously inspected ComfyUI workflow proposal.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "workflow_path",
+        "proposal_digest",
+        "confirmation"
+      ],
+      "properties": {
+        "workflow_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "proposal_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "confirmation": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_set_model_trust",
+    "description": "Inspect, approve, or revoke one exact current local model identity. A trust mutation requires the exact confirmation previously returned for the same mutation boundary, displayed to the user, and repeated in a later user message.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "action",
+        "identity_token"
+      ],
+      "properties": {
+        "action": {
+          "description": "Trust operation to inspect, approve, or revoke for the exact supplied identity.",
+          "type": "string",
+          "enum": [
+            "inspect_workflow_binding",
+            "approve_private",
+            "approve_public_candidate",
+            "revoke"
+          ]
+        },
+        "identity_token": {
+          "description": "Exact model identity token returned by discovery or workflow inspection.",
+          "type": "string",
+          "minLength": 1
+        },
+        "confirmation": {
+          "description": "Exact confirmation string returned for this mutation and repeated in a later user message.",
+          "type": "string",
+          "minLength": 1
+        },
+        "capabilities": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "public_metadata": {
+          "type": "object",
+          "required": [
+            "source",
+            "license_id",
+            "license_url",
+            "output_redistribution_status"
+          ],
+          "properties": {
+            "source": {
+              "type": "string",
+              "minLength": 1
+            },
+            "license_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "license_url": {
+              "type": "string",
+              "minLength": 1
+            },
+            "output_redistribution_status": {
+              "type": "string",
+              "minLength": 1
+            },
+            "components": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "role",
+                  "sha256",
+                  "source",
+                  "license_id",
+                  "license_url",
+                  "output_redistribution_status"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "primary_model",
+                      "text_encoder",
+                      "vae"
+                    ]
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "source": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "license_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "license_url": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "output_redistribution_status": {
+                    "type": "string",
+                    "const": "approved"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "component_identity_tokens": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^model:[0-9a-f]{64}$"
+          }
+        },
+        "workflow_template_id": {
+          "type": "string",
+          "enum": [
+            "anima-txt2img",
+            "sd15-txt2img",
+            "sdxl-regional-txt2img",
+            "sdxl-two-stage-copy-subject",
+            "sdxl-txt2img",
+            "z-image-turbo-txt2img"
+          ]
+        },
+        "registered_workflow_id": {
+          "type": "string",
+          "pattern": "^imported:[0-9a-f]{64}$"
+        },
+        "workflow_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_binding": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "catalog_id": {
+          "type": "string",
+          "pattern": "^local:[0-9a-f]{24}$"
+        },
+        "preference": {
+          "type": "integer",
+          "minimum": -100,
+          "maximum": 100
+        },
+        "two_stage_layout": {
+          "type": "object",
+          "required": [
+            "mode",
+            "canvas",
+            "copy_protected_rect",
+            "subject_mask_rect",
+            "feather_pixels",
+            "vae_grow_mask_by"
+          ],
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "copy-subject-two-stage-v1"
+              ]
+            },
+            "canvas": {
+              "type": "object",
+              "required": [
+                "width",
+                "height"
+              ],
+              "properties": {
+                "width": {
+                  "type": "integer",
+                  "minimum": 256,
+                  "maximum": 1536
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 256,
+                  "maximum": 1536
+                }
+              },
+              "additionalProperties": false
+            },
+            "copy_protected_rect": {
+              "type": "object",
+              "required": [
+                "x",
+                "y",
+                "width",
+                "height"
+              ],
+              "properties": {
+                "x": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "y": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "subject_mask_rect": {
+              "type": "object",
+              "required": [
+                "x",
+                "y",
+                "width",
+                "height"
+              ],
+              "properties": {
+                "x": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "y": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "feather_pixels": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 64
+            },
+            "vae_grow_mask_by": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 64
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_recommend_models",
+    "description": "Recommend one exact confirmed-capability route and at most two alternatives. preferred_model_id must be an exact catalog ID. Requires prior api_only discovery and model trust (local_gpu_discover_models then local_gpu_set_model_trust). Display the selected route and start_run_boundary, then wait for later user confirmation before local_gpu_start_run.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "authorization_scope",
+        "operation",
+        "profile",
+        "style",
+        "width",
+        "height",
+        "affinity_tags",
+        "required_vram_gb",
+        "preferred_model_id"
+      ],
+      "properties": {
+        "authorization_scope": {
+          "type": "string",
+          "enum": [
+            "private",
+            "public_evidence"
+          ]
+        },
+        "operation": {
+          "type": "string",
+          "enum": [
+            "txt2img",
+            "img2img",
+            "inpaint"
+          ]
+        },
+        "profile": {
+          "type": "string",
+          "enum": [
+            "presentation-visual",
+            "standalone-illustration",
+            "ui-visual-asset"
+          ]
+        },
+        "style": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "anime"
+          ]
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 256,
+          "maximum": 1536
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 256,
+          "maximum": 1536
+        },
+        "affinity_tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "required_vram_gb": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "preferred_model_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^local:[0-9a-f]{24}$"
+        },
+        "regional_layout": {
+          "type": "object"
+        },
+        "two_stage_layout": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_list_profiles",
+    "description": "List registered visual-asset profiles and current local backend capabilities.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "authorization_scope": {
+          "type": "string",
+          "enum": [
+            "private",
+            "public_evidence"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_start_run",
+    "description": "Create a visual-asset run only after later user confirmation; copy start_run_boundary exactly from the previously displayed recommendation and add the remaining run fields.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "intent",
+        "profile",
+        "subtype",
+        "style",
+        "constraints",
+        "model_choice",
+        "backend",
+        "authorization_scope",
+        "route_token",
+        "max_rounds",
+        "upscale_policy"
+      ],
+      "properties": {
+        "intent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "type": "string",
+          "enum": [
+            "presentation-visual",
+            "standalone-illustration",
+            "ui-visual-asset"
+          ]
+        },
+        "subtype": {
+          "type": "string",
+          "enum": [
+            "character",
+            "content-background",
+            "cover",
+            "decorative-texture",
+            "environment",
+            "hero",
+            "rectangular-background",
+            "section",
+            "section-illustration",
+            "wallpaper"
+          ]
+        },
+        "style": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "anime"
+          ]
+        },
+        "constraints": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "initial_regional_conditioning": {
+          "type": "object",
+          "required": [
+            "copy_prompt",
+            "copy_strength",
+            "subject_prompt",
+            "subject_strength"
+          ],
+          "properties": {
+            "copy_prompt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "copy_strength": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 2
+            },
+            "subject_prompt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "subject_strength": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 2
+            }
+          },
+          "additionalProperties": false
+        },
+        "initial_two_stage_conditioning": {
+          "type": "object",
+          "required": [
+            "subject_prompt",
+            "subject_negative_prompt",
+            "subject_denoise"
+          ],
+          "properties": {
+            "subject_prompt": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "subject_negative_prompt": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "subject_denoise": {
+              "type": "number",
+              "minimum": 0.8,
+              "maximum": 1.0
+            }
+          },
+          "additionalProperties": false
+        },
+        "model_choice": {
+          "type": "string",
+          "minLength": 1
+        },
+        "backend": {
+          "type": "string",
+          "enum": [
+            "webui",
+            "diffusers",
+            "comfyui"
+          ]
+        },
+        "authorization_scope": {
+          "type": "string",
+          "enum": [
+            "private",
+            "public_evidence"
+          ]
+        },
+        "route_token": {
+          "description": "Opaque recommendation token binding the model, workflow, backend, dimensions, and authorization scope.",
+          "type": "string",
+          "minLength": 1
+        },
+        "max_rounds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "upscale_policy": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "off"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_get_run",
+    "description": "Get the current persisted state of a visual-asset run.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "run_id"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_branch_run",
+    "description": "Create an immutable child revision run from one reviewed parent round.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "parent_run_id",
+        "parent_round",
+        "contract",
+        "max_rounds",
+        "edit_mode"
+      ],
+      "properties": {
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_round": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "contract": {
+          "type": "object",
+          "required": [
+            "preserve",
+            "change"
+          ],
+          "properties": {
+            "preserve": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "target",
+                  "strength"
+                ],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "strength": {
+                    "type": "string",
+                    "enum": [
+                      "hard",
+                      "soft"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "change": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "max_rounds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "edit_mode": {
+          "type": "string",
+          "enum": [
+            "prompt-refine",
+            "img2img",
+            "inpaint"
+          ]
+        },
+        "denoising_strength": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_prepare_mask",
+    "description": "Prepare an unconfirmed child-run inpaint mask and return its JPEG overlay.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "run_id"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "user_mask_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "geometry": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "rectangle",
+                  "polygon"
+                ]
+              },
+              "x": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "y": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "width": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "height": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "points": {
+                "type": "array",
+                "minItems": 3,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "x",
+                    "y"
+                  ],
+                  "properties": {
+                    "x": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "y": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "feather_pixels": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 64
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_confirm_mask",
+    "description": "Confirm an unchanged prepared mask after explicit overlay approval.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "mask_id"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mask_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_generate_round",
+    "description": "Generate one root or immutable revision round and return an optional bounded JPEG preview. Construct the plan from the frozen run returned by local_gpu_get_run, copying every confirmed route, identity, workflow, compiler, policy, and budget field.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "idempotency_key",
+        "action",
+        "edit_mode",
+        "plan",
+        "seed",
+        "change_summary"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "description": "Caller-chosen key for safely retrying the same round request; reuse with different inputs is rejected.",
+          "type": "string",
+          "minLength": 1
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "initial",
+            "refine",
+            "explore"
+          ]
+        },
+        "edit_mode": {
+          "type": "string",
+          "enum": [
+            "txt2img",
+            "img2img",
+            "inpaint"
+          ]
+        },
+        "mask_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "seed": {
+          "type": "integer"
+        },
+        "change_summary": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_record_review",
+    "description": "Record human or model review evidence for one generated round.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "round_number",
+        "scores",
+        "hard_failures",
+        "critique",
+        "constraint_results",
+        "visual_checks",
+        "next_action"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "round_number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "scores": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "hard_failures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "critique": {
+          "type": "string",
+          "minLength": 1
+        },
+        "constraint_results": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "visual_checks": {
+          "type": "object",
+          "required": [
+            "full_resolution_inspected",
+            "prominent_human",
+            "limb_separation",
+            "feet_and_contact",
+            "hands_and_held_objects",
+            "text_and_watermarks"
+          ],
+          "properties": {
+            "full_resolution_inspected": {
+              "type": "boolean",
+              "const": true
+            },
+            "prominent_human": {
+              "type": "boolean"
+            },
+            "limb_separation": {
+              "type": "object",
+              "required": [
+                "status",
+                "observation"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain",
+                    "not_applicable"
+                  ]
+                },
+                "observation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              "additionalProperties": false
+            },
+            "feet_and_contact": {
+              "type": "object",
+              "required": [
+                "status",
+                "observation"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain",
+                    "not_applicable"
+                  ]
+                },
+                "observation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              "additionalProperties": false
+            },
+            "hands_and_held_objects": {
+              "type": "object",
+              "required": [
+                "status",
+                "observation"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain",
+                    "not_applicable"
+                  ]
+                },
+                "observation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              "additionalProperties": false
+            },
+            "text_and_watermarks": {
+              "type": "object",
+              "required": [
+                "status",
+                "observation"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain",
+                    "not_applicable"
+                  ]
+                },
+                "observation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "stage_checks": {
+          "type": "object",
+          "required": [
+            "base_copy_space",
+            "base_subject_absent",
+            "final_subject_inside_mask",
+            "final_safe_margins",
+            "final_forbidden_content",
+            "feather_transition",
+            "pixel_preservation"
+          ],
+          "properties": {
+            "base_copy_space": {
+              "type": "object",
+              "required": [
+                "status",
+                "observation"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain"
+                  ]
+                },
+                "observation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              "additionalProperties": false
+            },
+            "base_subject_absent": {
+              "type": "object",
+              "required": [
+                "status",
+                "observation"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain"
+                  ]
+                },
+                "observation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              "additionalProperties": false
+            },
+            "final_subject_inside_mask": {
+              "type": "object",
+              "required": [
+                "status",
+                "observation"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain"
+                  ]
+                },
+                "observation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              "additionalProperties": false
+            },
+            "final_safe_margins": {
+              "type": "object",
+              "required": [
+                "status",
+                "observation"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain"
+                  ]
+                },
+                "observation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              "additionalProperties": false
+            },
+            "final_forbidden_content": {
+              "type": "object",
+              "required": [
+                "status",
+                "observation"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain"
+                  ]
+                },
+                "observation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              "additionalProperties": false
+            },
+            "feather_transition": {
+              "type": "object",
+              "required": [
+                "status",
+                "observation"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain"
+                  ]
+                },
+                "observation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              "additionalProperties": false
+            },
+            "pixel_preservation": {
+              "type": "object",
+              "required": [
+                "status",
+                "observation"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain"
+                  ]
+                },
+                "observation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "preservation_results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "next_action": {
+          "type": "string",
+          "enum": [
+            "refine",
+            "explore",
+            "finalize"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_finalize_run",
+    "description": "Publish the selected reviewed round as the run's final PNG.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "round_number",
+        "summary",
+        "confirmation"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "round_number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confirmation": {
+          "description": "Exact finalize:<run_id>:<round_number>:<image_sha256> value previously displayed to the user.",
+          "type": "string",
+          "minLength": 1
+        },
+        "postprocess": {
+          "type": "object",
+          "required": [
+            "type",
+            "model"
+          ],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "anime_upscale"
+              ]
+            },
+            "model": {
+              "type": "string",
+              "enum": [
+                "realesr-animevideov3-x4",
+                "realesrgan-x4plus-anime"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "local_gpu_cleanup_run",
+    "description": "Remove run intermediates or a fully confirmed run directory.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "scope",
+        "confirmation"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "intermediates",
+            "all"
+          ]
+        },
+        "confirmation": {
+          "description": "Exact run_id required to authorize cleanup; scope all removes the complete run directory.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+]

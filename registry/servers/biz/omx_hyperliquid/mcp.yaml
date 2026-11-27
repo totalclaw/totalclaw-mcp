@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
 # 人工修改后请同步递增 version。
+# 2026-11-27：README 里的 `# …` 注释被导入脚本当成了参数，服务器报 unrecognized arguments / unknown command；截掉 `#` 及其后。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: omx_hyperliquid
 display_name: omx-hyperliquid-mcp
 display_name_en: omx-hyperliquid-mcp
-version: 0.1.1
+version: 0.1.2
 description: Non-custodial, policy-checked execution engine for Hyperliquid (CLI + MCP for AI agents)
 description_zh: 非托管的 Hyperliquid 永续合约执行引擎，提供面向 AI 代理的 MCP 服务器：在本地风控限额内报价、预览和提交市价/限价/TWAP/POV/追价订单，超过阈值需人工批准，代理可触发但不能解除紧急停止，所有决策写入哈希链审计日志。仅使用无法提现的
   API 钱包签名。`uvx omx-hyperliquid` 可免密钥运行演示。可选 1 bp builder 费用需用户在自己钱包中批准。
@@ -27,9 +28,6 @@ runtimes:
   command: uvx
   args:
   - omx-hyperliquid==0.1.9
-  - '#'
-  - Claude
-  - Code
   requires:
     python: '>=3.10'
 requires_env: []
@@ -37,6 +35,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:50:28Z'
+  probed_runtime: uvx
+  count: 10
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

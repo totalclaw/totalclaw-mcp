@@ -1,0 +1,322 @@
+[
+  {
+    "name": "nas_ls",
+    "description": "List one directory under /pool0/data (default root). Returns up to `limit` entries, sorted dirs-first.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "default": "/pool0/data",
+          "title": "Path",
+          "type": "string"
+        },
+        "limit": {
+          "default": 500,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "nas_lsArguments"
+    }
+  },
+  {
+    "name": "nas_stat",
+    "description": "Metadata for a single path (exists check, size, modified, is_dir).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "type": "object",
+      "title": "nas_statArguments"
+    }
+  },
+  {
+    "name": "nas_tree",
+    "description": "Tree listing with bounded depth (max_depth <= 4 enforced). Use instead of recursive ls.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "default": "/pool0/data",
+          "title": "Path",
+          "type": "string"
+        },
+        "max_depth": {
+          "default": 2,
+          "title": "Max Depth",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "nas_treeArguments"
+    }
+  },
+  {
+    "name": "nas_find",
+    "description": "Find by name wildcard (e.g. '*.mp4') under `path`, bounded depth (max 4). Returns matches with sizes.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "default": "/pool0/data",
+          "title": "Path",
+          "type": "string"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "max_depth": {
+          "default": 3,
+          "title": "Max Depth",
+          "type": "integer"
+        },
+        "files_only": {
+          "default": false,
+          "title": "Files Only",
+          "type": "boolean"
+        },
+        "dirs_only": {
+          "default": false,
+          "title": "Dirs Only",
+          "type": "boolean"
+        },
+        "limit": {
+          "default": 200,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "nas_findArguments"
+    }
+  },
+  {
+    "name": "nas_du",
+    "description": "Per-subdirectory size rollup under `path` (bytes + file count), bounded depth (max 3).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "default": "/pool0/data",
+          "title": "Path",
+          "type": "string"
+        },
+        "max_depth": {
+          "default": 2,
+          "title": "Max Depth",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "nas_duArguments"
+    }
+  },
+  {
+    "name": "nas_df",
+    "description": "Storage pool capacity: total / used / free (bytes and human-readable).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "nas_dfArguments"
+    }
+  },
+  {
+    "name": "nas_cat",
+    "description": "Print a text file (truncated to max_bytes, default 64KB). For large files use nas_get.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "max_bytes": {
+          "default": 65536,
+          "title": "Max Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "type": "object",
+      "title": "nas_catArguments"
+    }
+  },
+  {
+    "name": "nas_get",
+    "description": "Download one file to a local path. Max 32MB per call; larger files via the CLI.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "remote": {
+          "title": "Remote",
+          "type": "string"
+        },
+        "local": {
+          "title": "Local",
+          "type": "string"
+        }
+      },
+      "required": [
+        "remote",
+        "local"
+      ],
+      "type": "object",
+      "title": "nas_getArguments"
+    }
+  },
+  {
+    "name": "nas_put",
+    "description": "Upload one local file to /pool0/data/... (creates/overwrites). Max 32MB per call; larger via CLI.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "local": {
+          "title": "Local",
+          "type": "string"
+        },
+        "remote": {
+          "title": "Remote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "local",
+        "remote"
+      ],
+      "type": "object",
+      "title": "nas_putArguments"
+    }
+  },
+  {
+    "name": "nas_mkdir",
+    "description": "Create a directory (including parents) under /pool0/data.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "type": "object",
+      "title": "nas_mkdirArguments"
+    }
+  },
+  {
+    "name": "nas_mv",
+    "description": "Move/rename within /pool0/data (Destination is percent-encoded by the server wrapper). Not idempotent.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "src": {
+          "title": "Src",
+          "type": "string"
+        },
+        "dst": {
+          "title": "Dst",
+          "type": "string"
+        },
+        "force": {
+          "default": false,
+          "title": "Force",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "src",
+        "dst"
+      ],
+      "type": "object",
+      "title": "nas_mvArguments"
+    }
+  },
+  {
+    "name": "nas_cp",
+    "description": "Copy within /pool0/data. Idempotent when force=True (overwrites dst).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "src": {
+          "title": "Src",
+          "type": "string"
+        },
+        "dst": {
+          "title": "Dst",
+          "type": "string"
+        },
+        "force": {
+          "default": false,
+          "title": "Force",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "src",
+        "dst"
+      ],
+      "type": "object",
+      "title": "nas_cpArguments"
+    }
+  },
+  {
+    "name": "nas_rm",
+    "description": "Delete a file or directory. DESTRUCTIVE.\n\nrecursive=True requires confirm=True — only after the user explicitly agreed.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "recursive": {
+          "default": false,
+          "title": "Recursive",
+          "type": "boolean"
+        },
+        "confirm": {
+          "default": false,
+          "title": "Confirm",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "type": "object",
+      "title": "nas_rmArguments"
+    }
+  },
+  {
+    "name": "nas_probe",
+    "description": "Run the WebDAV capability probe.\n\nCreates unique temp paths under /pool0/data and cleans up. Self-check after setup.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "nas_probeArguments"
+    }
+  }
+]

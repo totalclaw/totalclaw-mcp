@@ -1,0 +1,62 @@
+[
+  {
+    "name": "activate_project",
+    "description": "Activates the project with the given name or path.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project": {
+          "title": "Project",
+          "type": "string",
+          "description": "The name of a registered project to activate or a path to a project directory."
+        },
+        "session": {
+          "title": "Session",
+          "type": "string",
+          "description": "Your Serena session id, as provided in Serena's instructions (call `initial_instructions` if you do not have one)."
+        }
+      },
+      "required": [
+        "project",
+        "session"
+      ],
+      "type": "object",
+      "title": "applyArguments"
+    }
+  },
+  {
+    "name": "initial_instructions",
+    "description": "Provides the 'Serena Instructions Manual', which contains essential information on how to use the Serena toolbox,\nand the Serena session ID.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "applyArguments"
+    }
+  },
+  {
+    "name": "serena_repl",
+    "description": "Executes the given Python code in a REPL, which provides access to all of Serena's functionality\n(symbol & reference search, file overviews, editing, refactoring, inspections, etc.).\n\nSerena's functionality is provided through an object `s`.\nThe functionality is organised in facades, which are attributes of `s`.\n\nDocumentation: Use `s.info(\"<facade>\")` when you will use a facade's functionality (it documents all common\noperations at once) and `s.info(\"<facade>.<method>\")` for a single or a rarely needed operation. Several items\ncan be requested in one call, e.g. `s.info(\"lsp\", \"edit.replace_content\")`.\n`s.info(\"<facade>\")` documents the facade's operations only, not their result types. The facade listing\nprovides result types (`method -> Type`); request their documentation via `s.info(\"<Type>\")`, which\nincludes the types they contain, ONLY if you intend to process results in code (filter, aggregate, chain\ncalls).\n\nThe code is executed like a notebook cell: if its last statement is an expression, the expression's value is\nthe result. Results of facade methods are rendered in a form optimised for you; lists are rendered element-wise,\nstrings are passed through unchanged.\nYou cannot use `print` or other output functions to return content; only use the last expression to return content.\n\nOutput size: methods with a `max_answer_chars` parameter limit the size of the rendered result (-1 uses the\nconfigured default). If the limit is exceeded, a shortened result (or no content) is rendered instead;\nadjust the limit only if there is no other way to obtain the content required for the task (e.g. by\nnarrowing the query or processing the result in code and returning only what is needed).\n\nPersistence: variables, functions and classes defined at the top level of your code persist across calls\nwithin your session (like the cells of a notebook), so you can reuse results and define helper functions once.\n`s.vars()` lists the persisted items, `s.clear()` removes them. Do not store facades (`s.<facade>`) in\nvariables; access them via `s` at call time. Do not keep large results longer than needed. Returns the representation of the returned value, or the error if execution failed\nAvailable facades are provided at project activation.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "session": {
+          "title": "Session",
+          "type": "string",
+          "description": "Your Serena session id, as provided in Serena's instructions (call `initial_instructions` if you do not have one)."
+        },
+        "code": {
+          "title": "Code",
+          "type": "string",
+          "description": "The Python code to execute."
+        }
+      },
+      "required": [
+        "session",
+        "code"
+      ],
+      "type": "object",
+      "title": "applyArguments"
+    }
+  }
+]

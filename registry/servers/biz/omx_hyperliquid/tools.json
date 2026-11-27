@@ -1,0 +1,302 @@
+[
+  {
+    "name": "get_quote",
+    "description": "Top of book, mid, data age and depth within the policy band for an agent-allowed coin.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "coin": {
+          "title": "Coin",
+          "type": "string"
+        }
+      },
+      "required": [
+        "coin"
+      ],
+      "type": "object",
+      "title": "get_quoteArguments"
+    }
+  },
+  {
+    "name": "preview_order",
+    "description": "Dry run: planned child orders, policy decisions, fee bound, and whether a human must approve.\nside: buy|sell. algo: market|limit|twap|pov|chase|native_twap. size in base units. Sends nothing.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "coin": {
+          "title": "Coin",
+          "type": "string"
+        },
+        "side": {
+          "title": "Side",
+          "type": "string"
+        },
+        "size": {
+          "title": "Size",
+          "type": "number"
+        },
+        "algo": {
+          "default": "twap",
+          "title": "Algo",
+          "type": "string"
+        },
+        "limit_px": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Limit Px"
+        },
+        "duration_s": {
+          "default": 0,
+          "title": "Duration S",
+          "type": "integer"
+        },
+        "slices": {
+          "default": 1,
+          "title": "Slices",
+          "type": "integer"
+        },
+        "pov_rate": {
+          "default": 0.0,
+          "title": "Pov Rate",
+          "type": "number"
+        },
+        "post_only": {
+          "default": false,
+          "title": "Post Only",
+          "type": "boolean"
+        },
+        "reduce_only": {
+          "default": false,
+          "title": "Reduce Only",
+          "type": "boolean"
+        },
+        "max_slippage_bps": {
+          "default": 50.0,
+          "title": "Max Slippage Bps",
+          "type": "number"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "coin",
+        "side",
+        "size"
+      ],
+      "type": "object",
+      "title": "preview_orderArguments"
+    }
+  },
+  {
+    "name": "submit_order",
+    "description": "Submit an intent. Above the approval threshold or the daily agent budget it is queued for a\nhuman and an approval_id is returned instead; check it with approval_status.\nALWAYS pass a fresh client_intent_id (8..40 chars, A-Z a-z 0-9 _ -) and REUSE it when you retry\nafter a timeout or error: a repeated id returns the existing intent (status \"duplicate\",\nintent_id \"ag-<client_intent_id>\") and never sends a second order.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "coin": {
+          "title": "Coin",
+          "type": "string"
+        },
+        "side": {
+          "title": "Side",
+          "type": "string"
+        },
+        "size": {
+          "title": "Size",
+          "type": "number"
+        },
+        "algo": {
+          "default": "twap",
+          "title": "Algo",
+          "type": "string"
+        },
+        "limit_px": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Limit Px"
+        },
+        "duration_s": {
+          "default": 0,
+          "title": "Duration S",
+          "type": "integer"
+        },
+        "slices": {
+          "default": 1,
+          "title": "Slices",
+          "type": "integer"
+        },
+        "pov_rate": {
+          "default": 0.0,
+          "title": "Pov Rate",
+          "type": "number"
+        },
+        "post_only": {
+          "default": false,
+          "title": "Post Only",
+          "type": "boolean"
+        },
+        "reduce_only": {
+          "default": false,
+          "title": "Reduce Only",
+          "type": "boolean"
+        },
+        "max_slippage_bps": {
+          "default": 50.0,
+          "title": "Max Slippage Bps",
+          "type": "number"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        },
+        "client_intent_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Client Intent Id"
+        }
+      },
+      "required": [
+        "coin",
+        "side",
+        "size"
+      ],
+      "type": "object",
+      "title": "submit_orderArguments"
+    }
+  },
+  {
+    "name": "approval_status",
+    "description": "State of a queued approval: pending, approved, rejected, expired, executed or failed.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "approval_id": {
+          "title": "Approval Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "approval_id"
+      ],
+      "type": "object",
+      "title": "approval_statusArguments"
+    }
+  },
+  {
+    "name": "order_status",
+    "description": "Fill progress, average price, cost vs arrival mid, fees and block reasons of an intent.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "intent_id": {
+          "title": "Intent Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "intent_id"
+      ],
+      "type": "object",
+      "title": "order_statusArguments"
+    }
+  },
+  {
+    "name": "get_receipt",
+    "description": "Execution receipt of an intent: every child order and fill (venue ids), exchange and builder fees,\ncost vs arrival mid, self-checks and a sha256 receipt_hash; a finished intent's receipt is anchored in\nthe audit log.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "intent_id": {
+          "title": "Intent Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "intent_id"
+      ],
+      "type": "object",
+      "title": "get_receiptArguments"
+    }
+  },
+  {
+    "name": "cancel_order",
+    "description": "Cancel an intent this agent (same client name) created, and its resting children.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "intent_id": {
+          "title": "Intent Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "intent_id"
+      ],
+      "type": "object",
+      "title": "cancel_orderArguments"
+    }
+  },
+  {
+    "name": "kill_switch",
+    "description": "Stop all new orders and cancel resting ones. Agents can turn it on, never off.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reason"
+      ],
+      "type": "object",
+      "title": "kill_switchArguments"
+    }
+  },
+  {
+    "name": "account_summary",
+    "description": "Equity, day P&L (flows excluded), positions, open orders and remaining agent budget.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "account_summaryArguments"
+    }
+  },
+  {
+    "name": "policy_limits",
+    "description": "Read-only view of the policy limits, agent thresholds and builder fee.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "policy_limitsArguments"
+    }
+  }
+]

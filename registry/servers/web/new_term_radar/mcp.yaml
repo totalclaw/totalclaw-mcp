@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
 # 人工修改后请同步递增 version。
+# 2026-11-27：包名同名的可执行是 CLI（要子命令），MCP 服务器是另一个可执行 new-term-radar-mcp（依赖在 [mcp] extra）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: new_term_radar
 display_name: new-term-radar
 display_name_en: new-term-radar
-version: 0.1.1
+version: 0.1.2
 description: Names that are starting to surge in AI, and the generic search terms behind them
 description_zh: AI 新名词雷达：从 X、Hugging Face、GitHub 和 sitemap 找出刚出现的 AI 模型、产品和仓库名，再用 Google Ads 搜索量和 Google Trends 估算其背后通用搜索词的需求，给出
   prioritize / watch / skip。
@@ -26,7 +27,9 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
-  - new-term-radar==0.8.0
+  - --from
+  - new-term-radar[mcp]==0.8.0
+  - new-term-radar-mcp
   requires:
     python: '>=3.10'
 requires_env: []
@@ -34,6 +37,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:50:29Z'
+  probed_runtime: uvx
+  count: 3
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []
