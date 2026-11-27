@@ -1,0 +1,11 @@
+[
+  {
+    "name": "studio_status",
+    "description": "Inspect local AI Art Engine workspace status, active DAG canvas, 30+ model providers, offline ONNX vision & 102 production tools (Editable TySh PSD, Unity/Godot UI, Spine 2D, Machinations Economy, Short-Drama CapCut, Blender 3D, Playable HTML5).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

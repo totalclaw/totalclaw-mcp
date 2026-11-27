@@ -1,0 +1,174 @@
+[
+  {
+    "name": "ipinfo_lookup_my_ip",
+    "description": "Geolocate the calling client's own IP. No arguments.\n\nOn stdio transports the result is this server's outbound IP, not the\nend user's. Use `ipinfo_lookup_ips` when the caller already has a\nspecific IP. Errors raise ToolError with a JSON-encoded envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ipinfo_lookup_ips",
+    "description": "Geolocate one or more IPs and return ISP/ASN details.\n\nReturns a list in input order (after dedup and invalid-IP filtering); match\nresults back to your input via the `ip` field. IPs that fail upstream are\nomitted and logged; if the batch resolves no IPs at all the failure is\nraised rather than masked — `auth_insufficient_scope` when the upstream\nreturned nothing (token tier likely lacks `/batch` access; look IPs up one\nat a time or upgrade to Core+), otherwise a retryable `api_error`. Defaults\nto `detail=\"summary\"` (heavy nested blocks\nomitted); pass `detail=\"full\"` for every field. Capped at 1,000 IPs per\ncall (`too_many_ips` above that): this tool returns one record per IP, so\nfor larger batches use `ipinfo_summarize_ips` (fixed-size aggregates) or\n`ipinfo_generate_map_url`. Higher plan tiers populate more fields; see the\nserver instructions for the Lite/Core/Plus/Enterprise tier mapping. For\nVPN/Tor/open-proxy/hosting detection read the `privacy` flags on each\nrecord; for residential-proxy exit-node classification use the separate\n`ipinfo_check_residential_proxy` tool. Typically completes in seconds;\nbounded by a 120s tool timeout that surfaces as a `timeout` envelope.\nErrors raise ToolError with a JSON-encoded envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "ips": {
+          "description": "IPv4/IPv6 addresses to look up. Invalid or special-use IPs are filtered.",
+          "examples": [
+            [
+              "8.8.8.8"
+            ],
+            [
+              "8.8.8.8",
+              "1.1.1.1",
+              "208.67.222.222"
+            ]
+          ],
+          "items": {
+            "format": "ip",
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "minItems": 1,
+          "type": "array"
+        },
+        "detail": {
+          "default": "summary",
+          "description": "'summary' (default) OMITS heavy nested blocks (continent, country_flag*, country_currency, abuse, domains) for batch token savings; 'full' returns every IPDetails field.",
+          "enum": [
+            "summary",
+            "full"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "ips"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ipinfo_summarize_ips",
+    "description": "Aggregate one or more IP lookups into counts and percentages.\n\nUses the same validation, deduplication, cache, and upstream batch lookup\npath as `ipinfo_lookup_ips`, but returns fixed-size summary buckets instead\nof per-IP records. This is the preferred tool for large log-analysis tasks\nsuch as \"where did visitors come from?\" when the caller does not need the\nunderlying records. Percentages are based on `mapped_ip_count`; filtered\nand failed IPs are counted separately. Errors raise ToolError with a\nJSON-encoded envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "ips": {
+          "description": "IPv4/IPv6 addresses to aggregate. Invalid or special-use IPs are filtered.",
+          "examples": [
+            [
+              "8.8.8.8",
+              "1.1.1.1",
+              "208.67.222.222"
+            ]
+          ],
+          "items": {
+            "format": "ip",
+            "type": "string"
+          },
+          "maxItems": 500000,
+          "minItems": 1,
+          "type": "array"
+        },
+        "group_by": {
+          "default": [
+            "country",
+            "asn"
+          ],
+          "description": "Summary dimensions to include. Empty returns only mapped, skipped, and failed counts.",
+          "examples": [
+            [
+              "country",
+              "asn"
+            ],
+            [
+              "privacy"
+            ],
+            []
+          ],
+          "items": {
+            "enum": [
+              "country",
+              "continent",
+              "asn",
+              "privacy"
+            ],
+            "type": "string"
+          },
+          "maxItems": 4,
+          "type": "array"
+        },
+        "top_n": {
+          "default": 50,
+          "description": "Maximum buckets to return per requested group. truncated_groups reports the true distinct count when capped.",
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "ips"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ipinfo_check_residential_proxy",
+    "description": "Classify whether an IP is a known residential-proxy exit node.\n\nReturns ResidentialProxyDetails with `is_residential_proxy` (the canonical\nyes/no), and — when true — `service`, `last_seen` (YYYY-MM-DD), and\n`percent_days_seen` over a 7-day window. Useful for fraud, bot, and\nad-fraud detection. This is distinct from the general `privacy` flags on\n`ipinfo_lookup_ips` (VPN / Tor / open web proxy / hosting): use this tool\nonly to detect residential-proxy networks that route traffic through real\nresidential IPs. Requires IPINFO_API_TOKEN with the Enterprise\nresidential-proxy add-on; absence surfaces as `auth_insufficient_scope`\n(distinct from `auth_invalid` for a missing/wrong token).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "ip": {
+          "description": "IPv4/IPv6 address to classify.",
+          "examples": [
+            "142.250.80.46"
+          ],
+          "format": "ip",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ip"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "ipinfo_generate_map_url",
+    "description": "Build an interactive ipinfo.io map for a set of IPs.\n\nReturns MapResult{url, mapped_ip_count, skipped_ips, skipped_count,\ntruncated}. `skipped_ips` is a list of {ip, reason} entries for filtered\ninputs, capped at 100; `truncated` flags overflow. `skipped_count` is the\ntrue total even when the list is capped, so `mapped_ip_count +\nskipped_count` equals the input length. Errors raise ToolError with a\nJSON-encoded envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "ips": {
+          "description": "IPv4/IPv6 addresses to plot. Invalid or special-use IPs are filtered.",
+          "examples": [
+            [
+              "8.8.8.8",
+              "1.1.1.1",
+              "208.67.222.222"
+            ]
+          ],
+          "items": {
+            "format": "ip",
+            "type": "string"
+          },
+          "maxItems": 500000,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "ips"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  }
+]

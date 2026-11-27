@@ -1,0 +1,478 @@
+[
+  {
+    "name": "search_breach",
+    "description": "Check if an email appears in data breaches via HaveIBeenPwned. Uses HIBP_API_KEY env var. [passive] One request to haveibeenpwned.com.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "email"
+      ]
+    }
+  },
+  {
+    "name": "search_whois",
+    "description": "Retrieve WHOIS registration data for a domain. [passive] Queries the registry/registrar WHOIS server, not the target.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "domain"
+      ]
+    }
+  },
+  {
+    "name": "search_ip",
+    "description": "Retrieve geolocation and ASN data for an IP address via ipinfo.io. [passive] One request to ipinfo.io.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "ip"
+      ]
+    }
+  },
+  {
+    "name": "generate_dorks",
+    "description": "Generate targeted Google dork URLs for any target (name, email, username, domain). [passive] Builds Google search URLs locally; sends nothing.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "search_paste",
+    "description": "Search Pastebin dumps for an email or username via psbdmp.ws. [passive] One request to psbdmp.ws.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "search_shodan",
+    "description": "Query Shodan for host intelligence or banner search. IP address → host lookup (open ports, org, CVEs). Any other string → keyword/service search. Uses SHODAN_API_KEY env var. [passive] Shodan API; reads Shodan's existing index, requests no new scan.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "search_virustotal",
+    "description": "Check IP, domain, URL, or file hash against VirusTotal's 70+ antivirus engines and threat intelligence. Auto-detects input type. Uses VIRUSTOTAL_API_KEY env var. [passive] IP, domain and hash lookups read VirusTotal's existing data. URL submission is a separate active mode, off by default: it makes VirusTotal fetch the URL and makes it visible to the VirusTotal community.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "search_censys",
+    "description": "Search Censys for internet-facing infrastructure data. IP address → open ports, services, ASN, country. Domain → certificate history, SANs, issuer, first/last seen. Uses CENSYS_API_ID and CENSYS_SECRET env vars. [passive] Censys API; returns data Censys already holds.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "search_ip2location",
+    "description": "Enhanced IP intelligence using IP2Location Security Plan. Returns geolocation, ISP, ASN, and detects VPN, proxy, Tor exit nodes, and datacenter hosting. Sponsored integration. Uses IP2LOCATION_API_KEY env var. [passive] One request to api.ip2location.io.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "ip"
+      ]
+    }
+  },
+  {
+    "name": "search_abuseipdb",
+    "description": "Check an IP address against the AbuseIPDB v2 API for abuse reputation. Returns abuse confidence score (0–100%), total reports, country, ISP, domain, and last reported timestamp. Shows a warning when score exceeds 50%. Uses ABUSEIPDB_API_KEY env var. [passive] One request to api.abuseipdb.com.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "ip"
+      ]
+    }
+  },
+  {
+    "name": "search_github",
+    "description": "Search GitHub for a username, email, or keyword. For exact username matches: returns full profile, recent repos, and emails discovered from commit history. For other queries: top 5 matching accounts. Optional GITHUB_TOKEN env var raises rate limit from 60 to 5000 req/h. [passive] A few requests to api.github.com.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "search_rdap",
+    "description": "Structured domain registration lookup via RDAP (the machine-readable successor to WHOIS): registrar, registration and expiry dates, name servers and status codes. Registrant contact details are redacted by policy. No API key required. [passive] Queries IANA and the registry's RDAP server, not the target.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "domain"
+      ]
+    }
+  },
+  {
+    "name": "search_dns",
+    "description": "Comprehensive DNS record enumeration (A, AAAA, MX, NS, TXT, CNAME, SOA). Highlights email security misconfigurations: missing SPF, weak SPF policy, missing or unenforced DMARC, and absent DKIM across common selectors. No external API or credentials required. [passive; DKIM selector probes (enumeration) run only with active tools enabled.] Record lookups go through your DNS resolver; the target's nameservers see the resolver, not you.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "domain"
+      ]
+    }
+  },
+  {
+    "name": "search_gdelt_geo",
+    "description": "Search recent, geolocated worldwide news from GDELT's 15-minute article feed (headlines/URLs matched against the query). No API key required. Returns a text summary plus a GeoJSON FeatureCollection, and says how far back it covers (the first call may cover only the last 15 minutes while older articles load). Optionally scope to a bounding box; query \"*\" lists everything inside it. [passive] Downloads GDELT's public news feed and filters it locally; your search term never leaves your machine.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Keywords (quoted phrases, OR groups) or \"*\" for all."
+        },
+        "timespan": {
+          "type": "integer",
+          "description": "Lookback in minutes (15-1440, capped at the loaded window). Default 60."
+        },
+        "maxpoints": {
+          "type": "integer",
+          "description": "Max point features to return (1-500). Default 250."
+        },
+        "bbox": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 4,
+          "maxItems": 4,
+          "description": "[min_lon, min_lat, max_lon, max_lat]"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "search_dorks_live",
+    "description": "Execute Google dork queries for a target via the Bright Data SERP API, returning live structured results (title, URL, snippet). Runs up to 5 dorks by default — each is a billable API call. Uses BRIGHTDATA_API_KEY and BRIGHTDATA_SERP_ZONE env vars. [passive] Google results via Bright Data; the target is sent to those two services.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string"
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "search_footprint",
+    "description": "Collect a target's public search-engine footprint via the Bright Data SERP API. Detects entity type (email, username, domain, phone, or full name) and runs entity-type-aware Google queries, returning structured results and Entity Correlation Graph nodes/edges for discovered domains and profiles. Uses BRIGHTDATA_API_KEY and BRIGHTDATA_SERP_ZONE env vars. [passive] Up to 3 Google queries via Bright Data; the target is sent to those two services.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string"
+        },
+        "max_queries": {
+          "type": "integer",
+          "description": "Max SERP queries (default 3, each is billable)."
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "target"
+      ]
+    }
+  },
+  {
+    "name": "graph_export",
+    "description": "Export the additive FollowTheMoney entity graph (openosint.graph) as newline-delimited JSON, one FtM entity per line (.ftm-compatible). Optionally exclude whole datasets, e.g. exclude_datasets=['openosint:hibp'] to omit every breach-derived fact. Requires the 'graph' extra: pip install 'openosint[graph]'. [passive] Reads the local graph database only.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "exclude_datasets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Dataset names to omit entirely, e.g. ['openosint:hibp']."
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      }
+    }
+  },
+  {
+    "name": "graph_neighbors",
+    "description": "Traverse the FollowTheMoney entity graph from one entity id out to a given depth, returning entities, edges, and per-edge provenance (collection method, confidence, run id). Set cross_layer=true to also surface bridge links into the raw infra correlation graph (IPs, domains, hashes). Requires the 'graph' extra: pip install 'openosint[graph]'. [passive] Reads the local graph database only.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "entity_id": {
+          "type": "string"
+        },
+        "depth": {
+          "type": "integer",
+          "description": "Hops to traverse (default 1, capped at 5)."
+        },
+        "cross_layer": {
+          "type": "boolean",
+          "description": "Include bridge links into the raw infra graph."
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "entity_id"
+      ]
+    }
+  },
+  {
+    "name": "graph_review_candidates",
+    "description": "Human review queue for suggested same_as entity matches produced by graph-dedup cross-referencing. action='list' shows pending candidates (score, identifying properties, human-readable match explanation), filterable by schema/score range/dataset. action='decide' records a human verdict on one pair: decision='accept' merges it (judgement='positive'), decision='reject' permanently excludes it from future suggestions (judgement='negative'). Nothing in this project ever auto-merges — only this action can write judgement='positive'. [passive] Reads the local graph database only.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "list",
+            "decide"
+          ]
+        },
+        "schema": {
+          "type": "string",
+          "enum": [
+            "Person",
+            "LegalEntity",
+            "Organization",
+            "UserAccount"
+          ],
+          "description": "list filter: restrict to one FtM schema."
+        },
+        "min_score": {
+          "type": "number",
+          "description": "list filter: minimum score."
+        },
+        "max_score": {
+          "type": "number",
+          "description": "list filter: maximum score."
+        },
+        "dataset": {
+          "type": "string",
+          "description": "list filter: either entity must carry a statement from this dataset."
+        },
+        "entity_id": {
+          "type": "string",
+          "description": "decide: first entity of the pair."
+        },
+        "canonical_id": {
+          "type": "string",
+          "description": "decide: second entity of the pair."
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "accept",
+            "reject"
+          ]
+        },
+        "reviewer_id": {
+          "type": "string",
+          "description": "decide: reviewer identifier, recorded if given."
+        },
+        "json_output": {
+          "type": "boolean",
+          "description": "Return result as structured JSON."
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  },
+  {
+    "name": "investigate_multi",
+    "description": "Investigate multiple targets in parallel using the full OSINT tool chain. Each target gets its own report file. A summary report is also generated. Maximum 10 targets. Uses ANTHROPIC_API_KEY env var. [inherits] Runs one agent per target under a shared tool-call cap; passive unless active is enabled.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "targets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of OSINT targets (emails, usernames, domains, IPs). Max 10."
+        }
+      },
+      "required": [
+        "targets"
+      ]
+    }
+  }
+]

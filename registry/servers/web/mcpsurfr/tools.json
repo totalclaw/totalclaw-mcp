@@ -1,0 +1,389 @@
+[
+  {
+    "name": "rag_search_ddgs",
+    "description": "Search the web and return the most relevant pages as text, for when whole pages are\nwanted (search returns only the relevant passages). Results are re-ranked locally by\nsemantic similarity to the query before the top pages are fetched.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "The search query. Use natural language questions or keywords.\n        Example: \"latest developments in quantum computing\""
+        },
+        "num_results": {
+          "default": 10,
+          "type": "integer",
+          "description": "Number of initial search results to rank.\n              More results provide better coverage but increase processing time.\n              Default: 10"
+        },
+        "top_k": {
+          "default": 5,
+          "type": "integer",
+          "description": "Number of top-ranked pages to fetch and return.\n        Default: 5"
+        },
+        "include_urls": {
+          "default": true,
+          "type": "boolean",
+          "description": "Whether to include each page's source URL for citation.\n                Default: True"
+        },
+        "backend": {
+          "default": "auto",
+          "type": "string",
+          "description": "Search backend, same names as deep_research. Default \"auto\" (ddgs\n           metasearch over several engines, skipping blocked ones). Non-auto\n           backends that return nothing are retried with \"auto\"."
+        },
+        "recency": {
+          "anyOf": [
+            {
+              "enum": [
+                "day",
+                "week",
+                "month",
+                "year"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Only results from the past \"day\", \"week\", \"month\" or \"year\"."
+        },
+        "region": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Region-language code like \"us-en\", \"uk-en\" or \"de-de\". Default: ddgs's own (us-en)."
+        },
+        "include_domains": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Only results from these sites, subdomains included.\nExample: [\"python.org\", \"stackoverflow.com\"]"
+        },
+        "exclude_domains": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Never results from these sites. Example: [\"pinterest.com\"]"
+        },
+        "news": {
+          "default": false,
+          "type": "boolean",
+          "description": "Search news articles instead of the web. Results then carry their published\n\"date\". News backends: auto, bing, duckduckgo, yahoo. Pair with recency for current events."
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "search",
+    "description": "Search the web and return only the passages that answer the query, not whole\npages: usually about a tenth of the text of rag_search_ddgs. Use this first.\n\nTiers, cheapest first:\n1. Search, then keep the top_pages results whose title/snippet match best.\n2. Fetch those pages, split them into ~600-char passages, keyword-match them (BM25)\n   against the query plus `keywords`.\n3. Only if that leaves too many candidates, or matches nothing (a paraphrase),\n   the local embedder ranks them by meaning.\nIf nothing matched the keywords and the client can show questions, the user is\nasked whether they want the full pages instead.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "The question or topic, in natural language."
+        },
+        "keywords": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Terms a good answer would contain, including\nsynonyms and exact phrases. Example for \"how do I make postgres faster\":\n[\"index\", \"EXPLAIN ANALYZE\", \"query planner\", \"vacuum\"]. Strongly improves results."
+        },
+        "num_results": {
+          "default": 10,
+          "type": "integer",
+          "description": "Search results to consider. Default 10."
+        },
+        "top_pages": {
+          "default": 5,
+          "type": "integer",
+          "description": "Pages to fetch and split. Default 5."
+        },
+        "max_passages": {
+          "default": 8,
+          "type": "integer",
+          "description": "Passages to return. Default 8."
+        },
+        "backend": {
+          "default": "auto",
+          "type": "string",
+          "description": "Search backend, same names as deep_research. Default \"auto\"."
+        },
+        "recency": {
+          "anyOf": [
+            {
+              "enum": [
+                "day",
+                "week",
+                "month",
+                "year"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Only results from the past \"day\", \"week\", \"month\" or \"year\"."
+        },
+        "region": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Region-language code like \"us-en\", \"uk-en\" or \"de-de\". Default: ddgs's own (us-en)."
+        },
+        "include_domains": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Only results from these sites, subdomains included.\nExample: [\"python.org\", \"stackoverflow.com\"]"
+        },
+        "exclude_domains": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Never results from these sites. Example: [\"pinterest.com\"]"
+        },
+        "news": {
+          "default": false,
+          "type": "boolean",
+          "description": "Search news articles instead of the web. Results then carry their published\n\"date\". News backends: auto, bing, duckduckgo, yahoo. Pair with recency for current events."
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "read_url",
+    "description": "Read one page whose URL you already have: a link the user pasted, or one from earlier\nresults. HTML or PDF. With a query, returns only the passages that answer it, the same\nway search does; without one, the page's main text (cut to the shared budget).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "A public http(s) URL. Localhost and private network addresses are refused."
+        },
+        "query": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "What you want from the page. Leave out to get the whole text."
+        },
+        "keywords": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Terms a good answer would contain, as for search."
+        },
+        "max_passages": {
+          "default": 8,
+          "type": "integer",
+          "description": "Passages to return when there's a query. Default 8."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "deep_research",
+    "description": "Research a topic across several search terms and engines. Each term is searched on\neach backend, results are re-ranked locally by relevance, duplicates are removed,\nand the best pages are fetched as text.\n\nBackends: auto, brave, duckduckgo, google, grokipedia, mojeek, startpage, wikipedia, yahoo.\n- \"auto\" (default): ddgs metasearch over several engines, skipping blocked ones. Most reliable.\n- \"brave\": fast and usually available.\n- \"wikipedia\": exact article lookups, best with title-like terms.\n- \"google\", \"startpage\", \"yahoo\", \"mojeek\": often blocked. Empty engines are reported\n  as warnings, and if every chosen engine is empty the terms are retried with \"auto\".",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "search_terms": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "2-5 specific, related search queries covering different angles.\n                      Example: [\"postgres query planner\", \"postgres index types\", \"EXPLAIN ANALYZE tutorial\"]"
+        },
+        "backends": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Backends to use. Defaults to [\"auto\"]. Unknown names are skipped with a warning."
+        },
+        "num_results_per_term": {
+          "default": 10,
+          "type": "integer",
+          "description": "Number of results to rank per search term per backend."
+        },
+        "top_k_per_term": {
+          "default": 3,
+          "type": "integer",
+          "description": "Number of top-ranked results to keep per search term per backend."
+        },
+        "include_urls": {
+          "default": true,
+          "type": "boolean",
+          "description": "Whether to include each page's source URL."
+        },
+        "recency": {
+          "anyOf": [
+            {
+              "enum": [
+                "day",
+                "week",
+                "month",
+                "year"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Applied to every term. Only results from the past \"day\", \"week\", \"month\" or \"year\"."
+        },
+        "region": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Region-language code like \"us-en\", \"uk-en\" or \"de-de\". Default: ddgs's own (us-en)."
+        },
+        "include_domains": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Only results from these sites, subdomains included.\nExample: [\"python.org\", \"stackoverflow.com\"]"
+        },
+        "exclude_domains": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Never results from these sites. Example: [\"pinterest.com\"]"
+        },
+        "news": {
+          "default": false,
+          "type": "boolean",
+          "description": "Search news articles instead of the web. Results then carry their published\n\"date\". News backends: auto, bing, duckduckgo, yahoo. Pair with recency for current events."
+        }
+      },
+      "required": [
+        "search_terms"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  }
+]

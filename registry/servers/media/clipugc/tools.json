@@ -1,0 +1,422 @@
+[
+  {
+    "name": "list_characters",
+    "description": "List ClipUGC AI characters (AI influencers). Same as `clipugc characters list`. scope \"mine\" (default) lists the authenticated user's own characters, \"discover\" the public feed, \"feed\" own characters first then public ones. Returns items with id, display_name, age, gender, is_public, status, plus pagination. Costs no credits.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "scope": {
+          "description": "Which list: mine (default), discover, or feed.",
+          "type": "string",
+          "enum": [
+            "mine",
+            "discover",
+            "feed"
+          ]
+        },
+        "search": {
+          "description": "Search by name (same as --search).",
+          "type": "string"
+        },
+        "page": {
+          "description": "Page number (same as --page).",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "per_page": {
+          "description": "Results per page, max 50 (same as --per-page).",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50
+        }
+      }
+    }
+  },
+  {
+    "name": "create_character",
+    "description": "Create a new AI character from a plain-text description. Same as `clipugc characters create`. The server extracts the appearance DNA and generates the first look automatically (2 credits; confirm with get_credits). Be specific: nationality, age, hair, eyes, face shape, skin, style, and a realism anchor such as \"natural skin texture, not airbrushed\". Characters are public by default; set private=true to opt out. make_video=true also stages the first clip (extra clip cost). Returns the character with first_look_id. Looks generate in the background. Poll list_images with the same character id every 5 to 10 seconds until each new look has status \"completed\" (or \"failed\"), then pass the look id to create_clip. Advanced: pass name (2-120 chars) plus optional age, gender, dna_json instead of description for a structured create.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "description": {
+          "description": "Plain-words description of the person, 10-1000 chars (same as --description). Preferred path.",
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 1000
+        },
+        "scene": {
+          "description": "Optional scene/pose for the first look, up to 600 chars (same as --scene).",
+          "type": "string",
+          "maxLength": 600
+        },
+        "inspiration": {
+          "description": "Optional local file paths of up to 6 inspiration images (same as --inspiration).",
+          "maxItems": 6,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "private": {
+          "description": "Keep the character private (same as --private). Default: public.",
+          "type": "boolean"
+        },
+        "make_video": {
+          "description": "Also stage the character's first video clip (same as --make-video).",
+          "type": "boolean"
+        },
+        "motion_prompt": {
+          "description": "Motion prompt for that first clip; requires make_video (same as --motion-prompt).",
+          "type": "string"
+        },
+        "name": {
+          "description": "[advanced] Full name, 2-120 chars, for the structured path without a description (same as --name).",
+          "type": "string"
+        },
+        "age": {
+          "description": "[advanced] Age 18-99 (same as --age).",
+          "type": "integer",
+          "minimum": 18,
+          "maximum": 99
+        },
+        "gender": {
+          "description": "[advanced] Gender, e.g. male, female, other (same as --gender).",
+          "type": "string"
+        },
+        "dna_json": {
+          "description": "[advanced] Appearance DNA fields as an inline JSON object string or a JSON file path (same as --dna-json).",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "generate_image",
+    "description": "Generate one or more new looks (reference images) of an existing character. Same as `clipugc images generate`. Every look is generated from the character's base image, so the face stays the same person: only describe the new setting, outfit and light in scene, never the person again. Costs 2 credits per shot (confirm with get_credits). Returns the created image ids. Looks generate in the background. Poll list_images with the same character id every 5 to 10 seconds until each new look has status \"completed\" (or \"failed\"), then pass the look id to create_clip.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "character": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Character id, as returned by other tools (numbers are fine as strings)."
+        },
+        "shots": {
+          "description": "Comma-separated shot types: frontal, three_quarter, profile, back (same as --shots). Default \"frontal\".",
+          "type": "string"
+        },
+        "template": {
+          "description": "Template (same as --template). Omit to let the server pick: scene_recreation when scene is set, else model_digitals.",
+          "type": "string",
+          "enum": [
+            "model_digitals",
+            "scene_recreation",
+            "specific_angle"
+          ]
+        },
+        "scene": {
+          "description": "Scene prompt, max 600 chars (same as --scene).",
+          "type": "string",
+          "maxLength": 600
+        },
+        "resolution": {
+          "description": "Resolution (same as --resolution). Default 2K.",
+          "type": "string",
+          "enum": [
+            "0.5K",
+            "1K",
+            "2K",
+            "4K"
+          ]
+        }
+      },
+      "required": [
+        "character"
+      ]
+    }
+  },
+  {
+    "name": "list_images",
+    "description": "List the looks (reference images) of a character with id, status (pending, processing, completed, failed), scene_prompt and image url when ready. Same as `clipugc images list --character <id>`. Also the poll call for generate_image and create_character. Costs no credits.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "character": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Character id, as returned by other tools (numbers are fine as strings)."
+        }
+      },
+      "required": [
+        "character"
+      ]
+    }
+  },
+  {
+    "name": "create_clip",
+    "description": "Animate a character look (or your own photo) into a short video clip. Same as `clipugc videos create`. Costs 7 credits for 5 seconds or 13 for 10 seconds; adding scene makes it a scene-staged clip (9 at 5s, 15 at 10s). Confirm with get_credits first. Prefer a silent reaction prompt (mouth closed, no talking, an arc in beats, ambient motion): lip-sync from a still image is what makes AI video look fake. Provide exactly one of image or photo. Returns the clip id and status. Generation runs in the background. Poll get_video with {\"id\": <clip id>, \"kind\": \"clip\"} every 5 to 10 seconds until status is \"completed\" or \"failed\", then call download_video.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "image": {
+          "description": "Id of a generated character look (same as --image).",
+          "type": "string"
+        },
+        "photo": {
+          "description": "Local path to your own photo, png/jpg/jpeg/webp; uploaded first (same as --photo).",
+          "type": "string"
+        },
+        "prompt": {
+          "description": "What the character does, max 1500 chars (same as --prompt).",
+          "type": "string",
+          "maxLength": 1500
+        },
+        "scene": {
+          "description": "Extra scene description, max 600 chars; makes it a scene-staged clip (same as --scene).",
+          "type": "string",
+          "maxLength": 600
+        },
+        "duration": {
+          "description": "5 or 10 seconds, default 5 (same as --duration).",
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 5
+            },
+            {
+              "type": "number",
+              "const": 10
+            }
+          ]
+        },
+        "keep_sound": {
+          "description": "Keep the original sound (same as --keep-sound).",
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "name": "create_motion_clip",
+    "description": "Animate a character look (or your own photo) by copying the motion of a driver video. Same as `clipugc videos motion`. Two engines: kling (default, 3 credits per second of driver video, reads the prompt) or wan (2 credits per second, keeps the look's own background, ignores the prompt, resolution 480p, 580p or 720p). Rounded up, capped at 30 seconds (confirm with get_credits). The driver must be mp4/mov, at most 50 MB and 30 seconds; it is uploaded first. Provide exactly one of image or photo. Returns the clip id and status. Generation runs in the background. Poll get_video with {\"id\": <clip id>, \"kind\": \"clip\"} every 5 to 10 seconds until status is \"completed\" or \"failed\", then call download_video.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "image": {
+          "description": "Id of a generated character look (same as --image).",
+          "type": "string"
+        },
+        "photo": {
+          "description": "Local path to your own photo, png/jpg/jpeg/webp; uploaded first (same as --photo).",
+          "type": "string"
+        },
+        "driver": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Local path of the driver video, mp4/mov, max 50 MB and 30s (same as --driver)."
+        },
+        "prompt": {
+          "description": "What the character does, max 1500 chars (same as --prompt).",
+          "type": "string",
+          "maxLength": 1500
+        },
+        "engine": {
+          "description": "kling (default) or wan, the cheaper engine (same as --engine).",
+          "type": "string",
+          "enum": [
+            "kling",
+            "wan"
+          ]
+        },
+        "resolution": {
+          "description": "wan only: 480p, 580p or 720p, default 720p (same as --resolution).",
+          "type": "string",
+          "enum": [
+            "480p",
+            "580p",
+            "720p"
+          ]
+        },
+        "keep_sound": {
+          "description": "Keep the driver video's original sound (same as --keep-sound).",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "driver"
+      ]
+    }
+  },
+  {
+    "name": "create_scene_replace_clip",
+    "description": "Put an AI influencer into a video the user filmed or holds the rights to: the AI influencer takes the place of the person in it, in that video's own room, light and camera, and the clip carries a visible \"AI generated\" label. Same as `clipugc videos replace`. Needs a look of an AI influencer designed in ClipUGC (not the user's own photo) and a local video file, mp4/mov, at most 50 MB and 30 seconds; it is uploaded first. Costs 3 credits per second of the video, rounded up, capped at 30 seconds (confirm with get_credits). Rendering takes several minutes. Returns the clip id and status. Generation runs in the background. Poll get_video with {\"id\": <clip id>, \"kind\": \"clip\"} every 5 to 10 seconds until status is \"completed\" or \"failed\", then call download_video.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Id of a look of an AI influencer designed in ClipUGC (same as --image)."
+        },
+        "driver": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Local path of the user's own video, mp4/mov, max 50 MB and 30s (same as --driver)."
+        },
+        "resolution": {
+          "description": "480p, 580p or 720p, default 720p (same as --resolution).",
+          "type": "string",
+          "enum": [
+            "480p",
+            "580p",
+            "720p"
+          ]
+        },
+        "keep_sound": {
+          "description": "Keep the video's original sound (same as --keep-sound).",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "image",
+        "driver"
+      ]
+    }
+  },
+  {
+    "name": "merge_ad",
+    "description": "Put an app screen recording and a hook text overlay (plus optional background music) into a completed clip to make the finished UGC video for the app. Same as `clipugc videos merge <clipId>`. The clip must have status \"completed\" (check with get_video). This step is free at the time of writing; the live cost is the `merge` key of get_credits. Files are uploaded first. Returns merged_video_id: the finished video id, which is a different id space from the clip id. The finished video renders in the background. Poll get_video with {\"id\": <merged_video_id>, \"kind\": \"finished\"} every 5 to 10 seconds until status is \"completed\" or \"failed\", then call download_video with kind \"finished\".",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "video": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Clip (character video) id, as returned by other tools (numbers are fine as strings)."
+        },
+        "app_video": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Local path of the app screen recording: mp4, mov, m4v, 3gp or webm, max 100 MB (same as --app-video)."
+        },
+        "hook": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 150,
+          "description": "Hook text overlaid on the video, max 150 chars (same as --hook)."
+        },
+        "music": {
+          "description": "Local path of background music, mp3/wav/m4a (same as --music).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "video",
+        "app_video",
+        "hook"
+      ]
+    }
+  },
+  {
+    "name": "get_video",
+    "description": "Get the current status of a clip (kind \"clip\", default; same as `clipugc videos status <id>`) or of a finished video (kind \"finished\"; same as `clipugc finished show <videoId>`). This is the poll tool for create_clip, create_motion_clip and merge_ad. Status is pending, processing, completed or failed. A clip record also carries merge_status and merged_video_id once a finished video was made from it. Costs no credits.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Clip or finished video id, as returned by other tools (numbers are fine as strings)."
+        },
+        "kind": {
+          "description": "\"clip\" (default) for a clip id, \"finished\" for a finished video id (merged_video_id).",
+          "type": "string",
+          "enum": [
+            "clip",
+            "finished",
+            "ad"
+          ]
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "download_video",
+    "description": "Download a completed clip (kind \"clip\", default; same as `clipugc videos download <id>`) or a completed finished video (kind \"finished\"; same as `clipugc finished download <videoId>`) to a local mp4 file. Pass an absolute output path; missing parent directories are created. Costs no credits. Fails if the video has not completed yet.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Clip or finished video id, as returned by other tools (numbers are fine as strings)."
+        },
+        "kind": {
+          "description": "\"clip\" (default) for a clip id, \"finished\" for a finished video id (merged_video_id).",
+          "type": "string",
+          "enum": [
+            "clip",
+            "finished",
+            "ad"
+          ]
+        },
+        "output": {
+          "description": "Destination file path (same as --output). Default: clipugc-video-<id>.mp4 or clipugc-finished-<id>.mp4 in the server's working directory.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "get_credits",
+    "description": "Return the authenticated user's credit balance and the live per-action credit costs (keys `image`, `clip`, `clip_10s`, `scene_staged`, `motion_per_second`, `motion_wan_per_second`, `scene_replace_per_second`, `merge`). Same as `clipugc credits`. Call it before any generation tool so you can tell the user the cost and stop early when the balance is too low. Costs no credits.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "list_hooks",
+    "description": "Get AI-suggested hook texts (the short attention-grabbing line burned over a UGC video). Same as `clipugc hooks suggest`. Pass context describing the app for tailored hooks. Pick one (max 150 chars) and pass it as hook to merge_ad. Costs no credits.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "context": {
+          "description": "Describe the app, e.g. \"my app is a habit tracker\" (same as --context).",
+          "type": "string"
+        }
+      }
+    }
+  }
+]

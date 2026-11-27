@@ -1,0 +1,281 @@
+[
+  {
+    "name": "get_account",
+    "description": "The signed-in user, workspace and plan behind the stored CLI token.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "get_workspace",
+    "description": "Workspace timezone and the default posting times smart scheduling uses.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "list_accounts",
+    "description": "Connected social accounts with their ids, platform and display name. Account ids are what schedule_post takes.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "platform": {
+          "description": "Filter by platform, e.g. tiktok, youtube, instagram, x, linkedin, bluesky.",
+          "type": "string"
+        },
+        "groupId": {
+          "description": "Only accounts in this channel group.",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Page size, 1 to 100 (default 20).",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "cursor": {
+          "description": "nextCursor from the previous page, passed back verbatim.",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "list_groups",
+    "description": "Channel groups (named sets of accounts). A group name is what smart_schedule takes.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Filter: name contains.",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Page size, 1 to 100 (default 20).",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "cursor": {
+          "description": "nextCursor from the previous page, passed back verbatim.",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "list_posts",
+    "description": "Posts in the workspace: drafts, scheduled, posted and failed.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "scheduled",
+            "posted",
+            "failed"
+          ]
+        },
+        "accountId": {
+          "description": "Only posts targeting this account.",
+          "type": "string"
+        },
+        "from": {
+          "description": "ISO date lower bound.",
+          "type": "string"
+        },
+        "to": {
+          "description": "ISO date upper bound.",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Page size, 1 to 100 (default 20).",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "cursor": {
+          "description": "nextCursor from the previous page, passed back verbatim.",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "get_post",
+    "description": "One post with its content, media and per-account publish state.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "postId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "postId"
+      ]
+    }
+  },
+  {
+    "name": "upload_media",
+    "description": "Upload a local image or video file to the workspace media library. Returns the media key to pass to create_post.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "filePath": {
+          "type": "string",
+          "description": "Absolute path to an .mp4, .mov, .webm, .png, .jpg or .webp file."
+        }
+      },
+      "required": [
+        "filePath"
+      ]
+    }
+  },
+  {
+    "name": "create_post",
+    "description": "Create a draft post. Pass filePath to upload one local file, or mediaKeys from upload_media. Drafts publish only after schedule_post or smart_schedule.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "content": {
+          "description": "Caption or body.",
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "hashtags": {
+          "description": "Without the # prefix.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "text",
+            "image",
+            "video",
+            "story"
+          ]
+        },
+        "filePath": {
+          "description": "Local media file to upload and attach.",
+          "type": "string"
+        },
+        "mediaKeys": {
+          "description": "Keys returned by upload_media.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "coverKey": {
+          "description": "Key of an already uploaded cover image.",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "schedule_post",
+    "description": "Schedule one draft to one or more accounts at a time, or publish it now when publishAt is omitted.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "postId": {
+          "type": "string"
+        },
+        "accountIds": {
+          "minItems": 1,
+          "maxItems": 10,
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Ids from list_accounts."
+        },
+        "publishAt": {
+          "description": "ISO 8601 UTC. Omit to publish now.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "postId",
+        "accountIds"
+      ]
+    }
+  },
+  {
+    "name": "smart_schedule",
+    "description": "Spread draft posts across a channel group at the workspace preset times, at least minPerDay a day. dryRun returns the plan without scheduling.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "group": {
+          "type": "string",
+          "description": "Channel group name."
+        },
+        "minPerDay": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "postIds": {
+          "description": "Specific drafts; default is every draft.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "startDate": {
+          "description": "First day, ISO date; default tomorrow.",
+          "type": "string"
+        },
+        "times": {
+          "description": "HH:MM overrides for the workspace default times.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dryRun": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "group",
+        "minPerDay"
+      ]
+    }
+  }
+]

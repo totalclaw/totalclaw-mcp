@@ -1,0 +1,71 @@
+[
+  {
+    "name": "list_dbs",
+    "description": "查看 DolphinDB 中有哪些库",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_tbs",
+    "description": "查看 DolphinDB中，某个分布式库下面有哪些表",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "dbName": {
+          "type": "string",
+          "description": "DolphinDB的库名称，通常是dfs://开头的"
+        }
+      },
+      "required": [
+        "dbName"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "query_table_diskusage",
+    "description": "查看DolphinDB中，某个库表，其磁盘空间占用",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "database": {
+          "type": "string",
+          "description": "DolphinDB的库名称，通常是dfs://开头的"
+        },
+        "tableName": {
+          "type": "string",
+          "description": "DolphinDB的表名称"
+        }
+      },
+      "required": [
+        "database",
+        "tableName"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "query_dolphindb",
+    "description": "在 DolphinDB 执行查询",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "script": {
+          "type": "string",
+          "description": "要执行的 DolphinDB 脚本"
+        }
+      },
+      "required": [
+        "script"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  }
+]

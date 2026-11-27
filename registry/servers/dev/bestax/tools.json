@@ -1,0 +1,230 @@
+[
+  {
+    "name": "search_bestax",
+    "description": "Search components, props, usage examples, CSS variables and agent skills at once. The entry point — each hit names the tool to call for the full thing. Use this before guessing a component name.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "What you are looking for, e.g. \"date picker\" or \"spacing\""
+        },
+        "kind": {
+          "description": "Restrict to one kind of result. Defaults to all.",
+          "type": "string",
+          "enum": [
+            "component",
+            "prop",
+            "example",
+            "css-var",
+            "skill",
+            "all"
+          ]
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "list_components",
+    "description": "Every documented component with a one-line purpose, grouped by category. Cheap — use it to find the right name before calling get_component.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "category": {
+          "description": "elements, components, form, columns, grid, layout, helpers",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "get_component",
+    "description": "Import statement, summary and prop table for one component. Add `include` for examples, CSS variables, accessibility notes or related components. A dot-path like \"Navbar.Brand\" answers with that part.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Component name or dot-path, e.g. \"Button\" or \"Navbar.Brand\""
+        },
+        "include": {
+          "description": "Extra sections. Defaults to [\"props\"].",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "props",
+              "examples",
+              "cssVars",
+              "accessibility",
+              "related",
+              "reference"
+            ]
+          }
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "get_props",
+    "description": "The prop table for a component, or for one part of a compound family (pass a dot-path like \"Navbar.Brand\"). Cheaper than get_component when the props are all you need.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "component": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Component name, e.g. \"Navbar\""
+        },
+        "path": {
+          "description": "Dot-path of a subcomponent, e.g. \"Navbar.Brand\"",
+          "type": "string",
+          "maxLength": 100
+        }
+      },
+      "required": [
+        "component"
+      ]
+    }
+  },
+  {
+    "name": "get_examples",
+    "description": "Working examples from the component's documentation page. Every one is executed on the docs site, so they compile against this version.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "component": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "query": {
+          "description": "Filter by example heading or code, e.g. \"loading\"",
+          "type": "string",
+          "maxLength": 200
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        }
+      },
+      "required": [
+        "component"
+      ]
+    }
+  },
+  {
+    "name": "get_css_variables",
+    "description": "The --bulma-* custom properties a component reads, with their Sass names and defaults. This is how you restyle bestax — reach for these before writing custom CSS. Omit `component` to search across all of them.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "component": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "query": {
+          "description": "Substring of a variable name, e.g. \"radius\"",
+          "type": "string",
+          "maxLength": 200
+        }
+      }
+    }
+  },
+  {
+    "name": "get_helper_props",
+    "description": "The helper props every bestax component accepts — spacing, colour, typography, flexbox, visibility — and their valid values. Call this BEFORE writing an inline style or a utility class by hand; this library expects those to be props.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "group": {
+          "description": "Filter to one area, e.g. \"spacing\", \"flex\", \"color\"",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "lookup_bulma_classes",
+    "description": "The bestax component and props for a Bulma class string, one row per class: \"button is-primary\", \"columns is-mobile\", \"has-text-centered mt-4\". Call this BEFORE writing a Bulma class by hand, and when converting existing Bulma markup. Pass the tag the classes sit on when there is one.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "classes": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "The class string, e.g. \"button is-primary is-large\""
+        },
+        "tag": {
+          "description": "The lowercase tag the classes are on, e.g. \"a\" or \"h2\"",
+          "type": "string",
+          "maxLength": 20,
+          "pattern": "^[a-z][a-z0-9]*$"
+        }
+      },
+      "required": [
+        "classes"
+      ]
+    }
+  },
+  {
+    "name": "list_skills",
+    "description": "The bestax Agent Skills — task-level guides for forms, theming, layout scaffolding, icons, custom components, migration and CSS size. Read one with get_skill when a task matches.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "get_skill",
+    "description": "A skill's instructions, or one of its reference documents. Load the skill first; pull a reference only when you need that depth.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Skill name, e.g. \"bestax-theming\" or \"theming\""
+        },
+        "reference": {
+          "description": "Reference id from list_skills, e.g. \"css-variables\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  }
+]

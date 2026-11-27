@@ -1,0 +1,107 @@
+[
+  {
+    "name": "recall",
+    "description": "Use this when the answer may depend on something the user told you or another of their AI apps before: their preferences, projects, decisions or people. Searches the user's memory by meaning and keywords.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "description": "What to look for, in plain words."
+        },
+        "k": {
+          "description": "How many memories at most (default 8).",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "section": {
+          "description": "Keep one part of memory, if the user names one.",
+          "type": "string",
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "remember",
+    "description": "Use this when the user tells you something worth knowing in future conversations, in any of their AI apps: who they are, a preference, a decision, a person, a pointer. One self-contained fact per call: a first line that sums it up, then the detail. A near-duplicate updates the older memory. Facts only: a rule, an instruction or anything with a command or link is kept for recall only (never added to prompts automatically) until the user confirms it; a command piped to a shell, or words that keep something from the user, are refused.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000,
+          "description": "The fact, readable with no other context."
+        },
+        "kind": {
+          "description": "Leave it out and memory files it where this app can see it again; the reply says where.",
+          "type": "string",
+          "enum": [
+            "user",
+            "feedback",
+            "project",
+            "reference",
+            "note"
+          ]
+        },
+        "project": {
+          "description": "The project it belongs to, if any.",
+          "type": "string",
+          "maxLength": 100
+        }
+      },
+      "required": [
+        "content"
+      ]
+    }
+  },
+  {
+    "name": "forget",
+    "description": "Use this when a memory recall showed is wrong, out of date, or the user asks you to forget it. Hides that memory and its exact copies at once; they are deleted for good after 24 hours unless the user restores them first. The reply says what was hidden.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "string",
+              "pattern": "^\\s*[cC]?\\d{1,9}\\s*$"
+            }
+          ],
+          "description": "The memory's id exactly as recall showed it."
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "access_status",
+    "description": "Use this when the user asks what this app can see in their memory, or why something is hidden from it.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

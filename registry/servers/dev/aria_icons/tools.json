@@ -1,0 +1,318 @@
+[
+  {
+    "name": "search_icons",
+    "description": "Search 340k+ icons across Aria Icons collections. Returns ids like lucide:house for get_icon / add.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Search query, e.g. 'arrow', 'shopping cart'"
+        },
+        "limit": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 999,
+          "default": 32,
+          "description": "Max results"
+        },
+        "collection": {
+          "type": "string",
+          "description": "Filter by collection: lucide, tabler, mdi, ph, thesvg, …"
+        },
+        "style": {
+          "type": "string",
+          "description": "outline, solid, or a style id"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "get_icon",
+    "description": "Get SVG + React/Vue/Svelte snippets for an icon id (lucide:house).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "icon_id": {
+          "type": "string",
+          "description": "Icon id, e.g. lucide:house"
+        },
+        "color": {
+          "type": "string"
+        },
+        "size": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "icon_id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "get_icon_svg",
+    "description": "Get only the SVG string for an icon.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "icon_id": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "size": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "icon_id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "get_icon_component",
+    "description": "Get a single-framework component for an icon.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "icon_id": {
+          "type": "string"
+        },
+        "framework": {
+          "type": "string",
+          "enum": [
+            "react",
+            "vue",
+            "svelte",
+            "solid",
+            "flutter",
+            "react-native",
+            "svg"
+          ],
+          "default": "react"
+        },
+        "color": {
+          "type": "string"
+        },
+        "size": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "icon_id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "get_icons",
+    "description": "Batch-get up to 20 icons.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "icon_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 20
+        },
+        "color": {
+          "type": "string"
+        },
+        "size": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "icon_ids"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "list_collections",
+    "description": "List Aria Icons collections with icon counts.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "search": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "find_similar_icons",
+    "description": "Same icon in other collections, plus related names.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "icon_id": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 50,
+          "default": 10
+        }
+      },
+      "required": [
+        "icon_id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "find_equivalent_icon",
+    "description": "Map an icon to the closest match in a target collection.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "icon_id": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string",
+          "description": "Target collection, e.g. lucide"
+        }
+      },
+      "required": [
+        "icon_id",
+        "to"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "recommend_icons",
+    "description": "Recommend icons for a UI use case.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "use_case": {
+          "type": "string"
+        },
+        "style": {
+          "type": "string",
+          "enum": [
+            "solid",
+            "outline",
+            "any"
+          ],
+          "default": "any"
+        },
+        "limit": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 20,
+          "default": 10
+        }
+      },
+      "required": [
+        "use_case"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "get_recent_icons",
+    "description": "Icons this machine recently fetched via the CLI/MCP.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 50,
+          "default": 20
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "add_icon_to_project",
+    "description": "Download an icon and write it into the project's icons folder (shadcn-style, no giant dependency). Detects framework unless provided.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "icon_id": {
+          "type": "string",
+          "description": "Icon id or search term, e.g. lucide:house or house"
+        },
+        "framework": {
+          "type": "string",
+          "enum": [
+            "react",
+            "vue",
+            "svelte",
+            "solid",
+            "flutter",
+            "react-native",
+            "svg"
+          ]
+        },
+        "out_dir": {
+          "type": "string",
+          "description": "Relative output directory"
+        }
+      },
+      "required": [
+        "icon_id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "scan_project_icons",
+    "description": "Scan the current project for third-party icon library usage.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "dir": {
+          "type": "string",
+          "default": "src"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  }
+]

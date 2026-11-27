@@ -1,0 +1,500 @@
+[
+  {
+    "name": "engram_store",
+    "description": "Store a memory. All memories start in Buffer and promote to Working/Core through access frequency and LLM quality gating. Procedural memories and lessons (tag=lesson) auto-promote to Working after 2h. Use supersedes to replace outdated memories by their ids.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "Memory content text"
+        },
+        "importance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Importance 0-1 (default 0.5, bumps +0.02 on each recall)"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "semantic",
+            "episodic",
+            "procedural"
+          ],
+          "description": "Memory type: semantic (facts, default), episodic (events), procedural (how-to, persists indefinitely)"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tags for categorization"
+        },
+        "source": {
+          "type": "string",
+          "description": "Source identifier"
+        },
+        "supersedes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "IDs of old memories this one replaces"
+        },
+        "skip_dedup": {
+          "type": "boolean",
+          "description": "Skip near-duplicate detection"
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Override namespace. Use \"default\" for cross-project knowledge (user identity, preferences, universal lessons)"
+        },
+        "sync_embed": {
+          "type": "boolean",
+          "description": "Wait for embedding generation before returning (default: false)"
+        }
+      },
+      "required": [
+        "content"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "engram_recall",
+    "description": "Hybrid semantic + keyword search with budget-aware retrieval. Fast by default (~30ms cached, ~1s first query). Optional expand adds LLM query expansion (+1-2s) — only use for short/vague queries.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Search query"
+        },
+        "budget_tokens": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "description": "Max token budget"
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "description": "Filter by layers"
+        },
+        "min_importance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Min importance threshold"
+        },
+        "limit": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "description": "Max results"
+        },
+        "since": {
+          "type": "integer",
+          "description": "Only memories created after this unix ms timestamp"
+        },
+        "until": {
+          "type": "integer",
+          "description": "Only memories created before this unix ms timestamp"
+        },
+        "sort_by": {
+          "type": "string",
+          "enum": [
+            "score",
+            "recent",
+            "accessed"
+          ],
+          "description": "Sort order (default: score)"
+        },
+        "expand": {
+          "type": "boolean",
+          "description": "LLM query expansion (+1-2s). Use for short/vague queries like single words"
+        },
+        "source": {
+          "type": "string",
+          "description": "Filter by source (e.g. session, extract, api)"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Filter by tags (must have ALL specified)"
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Filter by namespace (also includes \"default\" namespace automatically)"
+        },
+        "min_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Drop results below this score (0-1)"
+        },
+        "dry": {
+          "type": "boolean",
+          "description": "Skip touch/reinforcement on results (for background queries)"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "engram_recent",
+    "description": "List recent memories by creation time. Good for session context recovery.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "hours": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Look back N hours (default 2)"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Max results (default 20)"
+        },
+        "layer": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3,
+          "description": "Filter by layer"
+        },
+        "source": {
+          "type": "string",
+          "description": "Filter by source (e.g. session)"
+        },
+        "min_importance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Minimum importance threshold"
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Filter by namespace (also includes \"default\" namespace automatically)"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "engram_resume",
+    "description": "Full memory bootstrap for session recovery. Returns core (permanent knowledge), working (ongoing context/decisions), buffer (transient), recent activity, and session notes. Use workspace tags to filter by current work context. Compact mode (default) minimizes token usage.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "recent_epochs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "description": "Number of consolidation epochs to look back for recent section (default 24). Epoch-based: only counts active consolidation cycles, not wall-clock time."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Filter by namespace (also includes \"default\" namespace automatically)"
+        },
+        "workspace": {
+          "type": "string",
+          "description": "Comma-separated workspace tags to filter core/working memories (e.g. 'engram,rust')"
+        },
+        "compact": {
+          "type": "boolean",
+          "description": "Compact output: content+tags only (default true)"
+        },
+        "budget": {
+          "type": "number",
+          "description": "Max chars across all sections (default 8000, 0=unlimited)"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max memories per layer (default 100)"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "engram_extract",
+    "description": "Extract structured memories from raw text using LLM. Feed conversation logs or notes and get individual memories.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Raw text to extract memories from"
+        },
+        "auto_embed": {
+          "type": "boolean",
+          "description": "Generate embeddings (default true)"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "engram_search",
+    "description": "Quick keyword search. Lighter than recall — no scoring or budget logic.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "q": {
+          "type": "string",
+          "description": "Search query"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "description": "Max results (default 10)"
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Filter by namespace (also includes \"default\" namespace automatically)"
+        }
+      },
+      "required": [
+        "q"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "engram_consolidate",
+    "description": "Run a memory consolidation cycle. Promotes important memories upward, drops decayed entries. With merge=true, uses LLM to merge similar memories.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "merge": {
+          "type": "boolean",
+          "description": "Use LLM to merge similar memories"
+        },
+        "promote_threshold": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "description": "Min access count to promote (default 3)"
+        },
+        "promote_min_importance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Min importance to promote (default 0.6)"
+        },
+        "decay_drop_threshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Drop below this recency (default 0.01)"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "engram_stats",
+    "description": "Get memory statistics: counts per layer, AI status, version.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "engram_repair",
+    "description": "Repair FTS search index. Removes orphaned entries and rebuilds missing ones. Safe to run anytime — idempotent.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "engram_health",
+    "description": "Detailed health check: uptime, RSS memory, embed cache stats, AI config status.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "engram_triggers",
+    "description": "Fetch trigger memories for a specific action. Call before performing an action (e.g. git-push, deploy) to recall relevant lessons and rules.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Action name (e.g. git-push, deploy, send-message)"
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "engram_delete",
+    "description": "Delete a memory by ID. Use when a memory is outdated, incorrect, or redundant.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Memory ID to delete"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "engram_update",
+    "description": "Update a memory's content, metadata (importance, tags, layer, kind). Use supersedes on store to replace with history.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Memory ID to update"
+        },
+        "content": {
+          "type": "string",
+          "description": "New content text"
+        },
+        "importance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "New importance value"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Replace tags"
+        },
+        "layer": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3,
+          "description": "Move to layer: 1=buffer, 2=working, 3=core"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "semantic",
+            "episodic",
+            "procedural"
+          ],
+          "description": "Memory type"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "engram_trash",
+    "description": "List soft-deleted memories. Recently deleted items can be restored.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "description": "Max results (default 100)"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "engram_restore",
+    "description": "Restore a soft-deleted memory from trash back to its original layer.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Memory ID to restore from trash"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "engram_topic",
+    "description": "Drill into topic clusters by ID. Use after /resume to explore specific topics from the knowledge index.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Topic IDs to fetch (e.g. [\"kb1\", \"kb3\"])"
+        }
+      },
+      "required": [
+        "ids"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  }
+]

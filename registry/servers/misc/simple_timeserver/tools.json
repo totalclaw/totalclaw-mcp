@@ -1,0 +1,164 @@
+[
+  {
+    "name": "get_local_time",
+    "description": "Returns the current local time and timezone information from your local machine.\nThis helps you understand what time it is for the user you're assisting.",
+    "read_only": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_utc",
+    "description": "Returns accurate UTC time from an NTP server.\nThis provides a universal time reference regardless of local timezone.",
+    "read_only": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "server": {
+          "default": "pool.ntp.org",
+          "type": "string",
+          "description": "NTP server address (default: pool.ntp.org)"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_current_time",
+    "description": "Returns current time, optionally localized to a specific location or timezone,\nwith optional conversion to additional calendar systems.\n\nLOCATION PARAMETERS (use one, priority: timezone > city > country):",
+    "read_only": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "calendar": {
+          "default": "",
+          "type": "string",
+          "description": "Comma-separated list of additional calendars/formats.\n    Valid values (case-insensitive):\n    - \"unix\" - Unix timestamp (seconds since 1970-01-01)\n    - \"isodate\" - ISO 8601 week date (YYYY-Www-D)\n    - \"hijri\" - Islamic/Hijri lunar calendar\n    - \"japanese\" - Japanese Era calendar (English and Kanji)\n    - \"persian\" - Persian/Jalali calendar (English and Farsi)\n    - \"hebrew\" - Hebrew/Jewish calendar (English and Hebrew script)\n\n    Calendars are calculated for the LOCAL time when location is specified.\n\nEXAMPLES:\n- get_current_time(city=\"Warsaw\") - Time in Warsaw with timezone info\n- get_current_time(city=\"Tokyo\", calendar=\"japanese\") - Tokyo time with Japanese calendar\n- get_current_time(timezone=\"+05:30\") - Time at UTC+5:30 offset\n- get_current_time() - UTC time only (no location)\n\nUses accurate time from NTP server when available.\nInvalid locations fall back to UTC with a helpful message."
+        },
+        "timezone": {
+          "default": "",
+          "type": "string",
+          "description": "Direct IANA timezone or UTC offset. Examples: \"Europe/Warsaw\", \"+05:30\"\n    Escape hatch for precise control. Use when you know the exact timezone.\n\nWhen a location is provided, the response includes:\n- Local time at that location\n- Timezone name and abbreviation (e.g., \"Europe/Warsaw (CET)\")\n- UTC offset (e.g., \"+01:00\")\n- DST status (Yes/No)\n- UTC time for reference\n\nWhen NO location is provided, returns UTC time only (original behavior).\n\nCALENDAR PARAMETER:"
+        },
+        "country": {
+          "default": "",
+          "type": "string",
+          "description": "Country name or code. Examples: \"Poland\", \"JP\", \"United States\"\nFalls back to capital/major city timezone. Use when city is unknown."
+        },
+        "city": {
+          "default": "",
+          "type": "string",
+          "description": "City name (PRIMARY USE CASE). Examples: \"Warsaw\", \"Tokyo\", \"New York\"\nResolves city to timezone automatically. Best for most queries."
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "calculate_time_distance",
+    "description": "Calculate the duration/distance between two dates or datetimes.\nUse this tool for countdowns, elapsed time calculations, or scheduling queries.",
+    "read_only": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "from_date": {
+          "default": "now",
+          "type": "string",
+          "description": "Start date in ISO 8601 format (YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS) or \"now\".\nExamples: \"2025-01-15\", \"2025-01-15T09:30:00\", \"now\""
+        },
+        "to_date": {
+          "default": "now",
+          "type": "string",
+          "description": "End date in ISO 8601 format or \"now\".\nExamples: \"2025-12-31\", \"2025-06-01T17:00:00\", \"now\""
+        },
+        "unit": {
+          "default": "auto",
+          "type": "string",
+          "description": "Output format for the distance. Options:\n    - \"auto\" (default) - Human-readable breakdown (e.g., \"15 days, 3 hours, 45 minutes\")\n    - \"days\" - Decimal days (e.g., \"15.50 days\")\n    - \"weeks\" - Decimal weeks (e.g., \"2.21 weeks\")\n    - \"hours\" - Decimal hours (e.g., \"372.00 hours\")\n    - \"minutes\" - Decimal minutes (e.g., \"22320.00 minutes\")\n    - \"seconds\" - Total seconds (e.g., \"1339200 seconds\")\n\nLOCATION PARAMETERS (optional, same as get_current_time):"
+        },
+        "timezone": {
+          "default": "",
+          "type": "string",
+          "description": "Direct IANA timezone or UTC offset. Examples: \"Europe/Warsaw\", \"+05:30\"\n\nLocation affects how dates without explicit timezone are interpreted.\nPriority: timezone > city > country. If none provided, UTC is used.\n\nOUTPUT FORMAT:\n- Distance: The calculated duration\n- Human readable: Simplified summary (when unit=\"auto\")\n- Direction: \"future\" if to_date > from_date, \"past\" if to_date < from_date\n- From/To: The parsed datetime values\n- UTC Reference: Both times converted to UTC\n\nBUSINESS DAYS MODE (optional):"
+        },
+        "city": {
+          "default": "",
+          "type": "string",
+          "description": "City name for timezone context. Examples: \"Warsaw\", \"Tokyo\", \"New York\""
+        },
+        "country": {
+          "default": "",
+          "type": "string",
+          "description": "Country name or code. Examples: \"Poland\", \"JP\""
+        },
+        "business_days": {
+          "default": false,
+          "type": "boolean",
+          "description": "Count only business days (Mon-Fri), excluding weekends. Default: False.\nWhen True, returns business day count instead of elapsed-time duration.\nTime-of-day is ignored; dates are counted as full days (inclusive endpoints).\nThe `unit` parameter is ignored in this mode."
+        },
+        "exclude_holidays": {
+          "default": false,
+          "type": "boolean",
+          "description": "Also exclude public holidays. Default: False.\n    Only effective when business_days=True.\n    Requires country or city parameter to determine which holidays to exclude.\n    If country cannot be determined, proceeds with weekend-only exclusion.\n\nExample: \"How many business days until project deadline?\"\n    from_date=\"now\", to_date=\"2026-03-15\", business_days=True, country=\"Poland\"\n\nCOMMON USE CASES:\n- \"How many days until Dec 31?\" → from_date=\"now\", to_date=\"2025-12-31\"\n- \"How long since Jan 1?\" → from_date=\"2025-01-01\", to_date=\"now\"\n- \"Duration between two dates\" → from_date=\"2025-01-01\", to_date=\"2025-03-15\"\n\nNOTE: If both parameters are the same (e.g., both \"now\"), returns an error message.\nUses accurate NTP time when \"now\" is specified."
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_holidays",
+    "description": "Get a list of public holidays (and optionally school holidays) for a country and year.\nUse this tool when the user asks about holidays, days off, or vacation periods.",
+    "read_only": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "country": {
+          "type": "string",
+          "description": "Country name or ISO code (required).\nExamples: \"Poland\", \"PL\", \"United States\", \"US\", \"Germany\", \"DE\"\nSupports common aliases like \"UK\" for United Kingdom."
+        },
+        "year": {
+          "default": 0,
+          "type": "integer",
+          "description": "Year to get holidays for (optional).\nDefaults to current year if not specified or 0.\nExamples: 2026, 2027"
+        },
+        "include_school_holidays": {
+          "default": false,
+          "type": "boolean",
+          "description": "Whether to include school vacation periods (optional).\n    Default is False. Set to True to see school holidays.\n    School holidays are only available for ~36 countries (mostly European).\n    School holidays may vary by region (e.g., different dates for different states/provinces).\n\nOUTPUT FORMAT:\n- Public holidays: Date, name (with local name if different)\n- School holidays (if requested): Date range, name, regions affected\n\nEXAMPLES:\n- get_holidays(country=\"Poland\") - All public holidays in Poland this year\n- get_holidays(country=\"DE\", year=2026) - German holidays for 2026\n- get_holidays(country=\"Poland\", include_school_holidays=True) - Polish holidays + school vacations\n\nNOTE: Public holiday data is available for ~119 countries.\nSchool holiday data is available for ~36 countries (mostly European)."
+        }
+      },
+      "required": [
+        "country"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "is_holiday",
+    "description": "Check if a specific date is a holiday in a given country or city.\nUse this tool to quickly verify if a particular day is a public or school holiday.\n\nLOCATION PARAMETERS (use at least one):",
+    "read_only": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "country": {
+          "default": "",
+          "type": "string",
+          "description": "Country name or ISO code.\nExamples: \"Poland\", \"PL\", \"United States\", \"US\""
+        },
+        "date": {
+          "default": "",
+          "type": "string",
+          "description": "Date to check in ISO format YYYY-MM-DD (optional).\n    Defaults to today if not specified.\n    Examples: \"2026-01-01\", \"2026-12-25\"\n\nOUTPUT FORMAT:\n- Yes/No indication if the date is a public holiday\n- Holiday name(s) if it is a holiday\n- School holiday information filtered to the specific region (if city provided)\n\nEXAMPLES:\n- is_holiday(city=\"Warsaw\", date=\"2026-01-19\") - Check school holidays in Warsaw\n- is_holiday(city=\"Krakow\") - Check if today is a holiday in Krakow\n- is_holiday(country=\"Poland\", date=\"2026-01-01\") - Check New Year's Day in Poland\n- is_holiday(country=\"Germany\", date=\"2026-12-25\") - Check Christmas Day in Germany\n\nNOTE: Using city parameter provides region-specific school holiday info.\nSchool holidays vary by region in many countries (e.g., Polish voivodeships,\nGerman Bundesländer). Only ~36 countries have school holiday data available."
+        },
+        "city": {
+          "default": "",
+          "type": "string",
+          "description": "City name (PRIMARY USE CASE for regional holidays).\nExamples: \"Warsaw\", \"Krakow\", \"Berlin\", \"Munich\"\nWhen specified, automatically detects country and region for accurate\nschool holiday filtering (e.g., school holidays vary by Polish voivodeship)."
+        }
+      },
+      "type": "object"
+    }
+  }
+]

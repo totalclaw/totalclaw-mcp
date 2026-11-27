@@ -1,0 +1,64 @@
+[
+  {
+    "name": "get_clojars_latest_version",
+    "description": "Get the latest version of a Clojars dependency (Maven artifact)",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "dependency": {
+          "type": "string",
+          "description": "Clojars dependency name in format \"group/artifact\" (e.g. \"metosin/reitit\")"
+        }
+      },
+      "required": [
+        "dependency"
+      ]
+    }
+  },
+  {
+    "name": "check_clojars_version_exists",
+    "description": "Check if a specific version of a Clojars dependency exists",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "dependency": {
+          "type": "string",
+          "description": "Clojars dependency name in format \"group/artifact\" (e.g. \"metosin/reitit\")"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version to check (e.g. \"0.7.2\")"
+        }
+      },
+      "required": [
+        "dependency",
+        "version"
+      ]
+    }
+  },
+  {
+    "name": "get_clojars_history",
+    "description": "Get version history of a Clojars dependency",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "dependency": {
+          "type": "string",
+          "description": "Clojars dependency name in format \"group/artifact\" (e.g. \"metosin/reitit\")"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Number of versions to return (default: 15, max: 100)",
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "dependency"
+      ]
+    }
+  }
+]

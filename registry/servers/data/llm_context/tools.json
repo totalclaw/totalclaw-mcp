@@ -1,0 +1,122 @@
+[
+  {
+    "name": "lc_changed",
+    "description": "Returns list of files modified since given timestamp.\nArgs:\n    root_path: Root directory path (e.g. '/home/user/projects/myproject')\n    timestamp: Unix timestamp to check modifications since\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "root_path": {
+          "title": "Root Path",
+          "type": "string"
+        },
+        "timestamp": {
+          "title": "Timestamp",
+          "type": "number"
+        }
+      },
+      "required": [
+        "root_path",
+        "timestamp"
+      ],
+      "type": "object",
+      "title": "lc_changedArguments"
+    }
+  },
+  {
+    "name": "lc_outlines",
+    "description": "Returns excerpted content highlighting important sections in all supported files.\nArgs:\n    root_path: Root directory path\n    rule_name: Rule to use for file selection rules\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "root_path": {
+          "title": "Root Path",
+          "type": "string"
+        },
+        "rule_name": {
+          "title": "Rule Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "root_path",
+        "rule_name"
+      ],
+      "type": "object",
+      "title": "lc_outlinesArguments"
+    }
+  },
+  {
+    "name": "lc_rule_instructions",
+    "description": "Provides step-by-step instructions for creating custom rules.\nArgs:\n    root_path: Root directory path\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "root_path": {
+          "title": "Root Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "root_path"
+      ],
+      "type": "object",
+      "title": "lc_rule_instructionsArguments"
+    }
+  },
+  {
+    "name": "lc_preview",
+    "description": "Preview what files a rule selects and their sizes.\nArgs:\n    root_path: Root directory path (e.g. '/home/user/projects/myproject')\n    rule_name: Name of the rule to preview (e.g. 'prm-code', 'tmp-prm-auth-jwt')\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "root_path": {
+          "title": "Root Path",
+          "type": "string"
+        },
+        "rule_name": {
+          "title": "Rule Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "root_path",
+        "rule_name"
+      ],
+      "type": "object",
+      "title": "lc_previewArguments"
+    }
+  },
+  {
+    "name": "lc_missing",
+    "description": "Unified tool for retrieving missing context (files, implementations, or excluded sections).\nArgs:\n    root_path: Root directory path (e.g. '/home/user/projects/myproject')\n    param_type: Type of data - 'f' for files, 'i' for implementations, 'e' for excluded sections\n    data: JSON string containing the data (file paths in /{project-name}/ format or implementation queries)\n    timestamp: Context generation timestamp\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "root_path": {
+          "title": "Root Path",
+          "type": "string"
+        },
+        "param_type": {
+          "title": "Param Type",
+          "type": "string"
+        },
+        "data": {
+          "title": "Data",
+          "type": "string"
+        },
+        "timestamp": {
+          "title": "Timestamp",
+          "type": "number"
+        }
+      },
+      "required": [
+        "root_path",
+        "param_type",
+        "data",
+        "timestamp"
+      ],
+      "type": "object",
+      "title": "lc_missingArguments"
+    }
+  }
+]

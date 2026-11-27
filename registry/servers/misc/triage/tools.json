@@ -1,0 +1,44 @@
+[
+  {
+    "name": "triage_scan",
+    "description": "Scan the MCP configuration files of the agent clients on this machine (Claude Desktop, Claude Code, Codex, Cursor, VS Code, Windsurf, OpenClaw, dsh) and report findings: broken JSON/TOML, commands not on PATH, missing env vars, relative-path arguments, plain-http remotes, transport mismatches, and cross-client drift for same-named servers. Read-only.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "Scan this single config file instead of the standard locations."
+        },
+        "cwd": {
+          "type": "string",
+          "description": "Directory whose project-level configs are included (default: the server process working directory)."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "triage_fix",
+    "description": "Repair MCP config files that fail to parse — mechanical repairs only (strip JSON comments and trailing commas). Dry-run by default: unless dry_run is explicitly false, nothing is written. A .mcp-triage.bak backup is kept before any write, and nothing is written unless the repaired copy parses cleanly.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "Fix this single config file instead of the standard locations."
+        },
+        "cwd": {
+          "type": "string",
+          "description": "Directory whose project-level configs are included (default: the server process working directory)."
+        },
+        "dry_run": {
+          "type": "boolean",
+          "description": "When true (the default), report what would be fixed and write nothing."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+]

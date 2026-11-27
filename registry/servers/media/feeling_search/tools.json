@@ -1,0 +1,126 @@
+[
+  {
+    "name": "word_analyze",
+    "description": "把一句中文/英文口语描述解析成感受词与视觉风格。默认纯本地词典（免费、不联网）；本地一个词都没命中且允许时，才上云。返回 score 是相对值不是概率，styles[].matched 是可以直接引用给用户看的命中词。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "description": "要解析的描述，最长 500 字"
+        },
+        "words": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12,
+          "default": 6,
+          "description": "返回几个感受词"
+        },
+        "styles": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20,
+          "default": 5,
+          "description": "返回几个视觉风格"
+        },
+        "lang": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "zh",
+            "en"
+          ],
+          "default": "auto",
+          "description": "用哪个语义引擎：auto 按是否含汉字判定。中文问句请用中文整句，英文问句请用英文整句，中英混写会落到中文引擎"
+        },
+        "allow_cloud": {
+          "type": "boolean",
+          "default": true,
+          "description": "本地零命中且本机没装引擎时，是否允许上云"
+        },
+        "quota": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "已购额度令牌（响应头 X-FS-Quota 的值）。本机也可用环境变量 FS_QUOTA；远端 MCP 客户端没法设环境变量，就用这个参数"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "word_lookup",
+    "description": "查一个感受词：落在哪些风格、对立词是什么、常一起出现的词、是否标识词。纯本地查表。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "word": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30,
+          "description": "要查的词，如「留白」「枯淡」"
+        }
+      },
+      "required": [
+        "word"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "word_list",
+    "description": "列出全部感受词（带共享度）或视觉风格（带定义与词集规模）。调 analyze 之前先拉一次可避免名字拼错。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "words",
+            "styles"
+          ],
+          "default": "words",
+          "description": "枚举哪一类"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "style_get",
+    "description": "按风格 id（或中文名）取一个风格：定义、生成用提示词、感受词、年代地域，以及它对应的图片（thumb 320 / full 960 绝对地址，带 kind/credit/license）。kind=work 是有出处的真作品，synthetic 是 AI 示意，placeholder 是占位图。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "description": "风格 id（如 synthwave）或中文名（如 合成器波）"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "word_status",
+    "description": "返回词表版本、规模（词/风格/变种/挂靠率）以及是否配置了云端额度。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  }
+]

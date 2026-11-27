@@ -1,0 +1,500 @@
+[
+  {
+    "name": "hid.click",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Click mouse. Default semantics: (x, y) is an ABSOLUTE screen coordinate — the server queries the OS for the current cursor position (Win32 GetCursorPos / macOS CGEventGetLocation / Linux/X11 XQueryPointer via ctypes) and emits a relative move so the firmware (which is a USB Boot Mouse and only supports relative deltas) lands at the target. Pass relative=true to skip the OS query and send (x, y) directly as a pixel delta. On Wayland and on hosts where the OS cursor query fails, absolute mode returns an error and the caller must use relative=true.\n\nAbsolute mode runs a closed-loop converge (query → delta → settle, up to 10 iterations, ≤5 px tolerance) to absorb OS pointer-ballistics non-linearity (macOS scales single HID deltas ~110% in the low-speed segment, so a fire-and-forget move overshoots by 10-90 px). The returned `x`/`y` are the actual landing coordinates; `target_x`/`target_y` echo the request; `converged: true` means residual ≤5 px. The click only fires after the move succeeds — i.e. the cursor is confirmed within ≤5 px of target. If convergence fails (or the OS cursor query is unavailable), NO click is sent and the move result is returned unchanged (`ok: false` plus `converged`/`residual_x`/`residual_y`/`hint`); inspect those and retry.\n\nOptional `move_ms` switches to glide mode: the move is broken into ~10 ms HID reports over N ms (linear interpolation, then a closed-loop converge pass to clean up the final landing). Default 0 = snap mode.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        },
+        "button": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right",
+            "middle"
+          ],
+          "default": "left"
+        },
+        "double": {
+          "type": "boolean",
+          "default": false
+        },
+        "relative": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, x/y are pixel deltas; absolute mode is skipped."
+        },
+        "move_ms": {
+          "type": "integer",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 5000,
+          "description": "Glide mode: break the move into ~10 ms HID reports over N ms (linear interp + post-slide converge). 0 = snap mode (default, instant move)."
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
+    }
+  },
+  {
+    "name": "hid.move",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Move mouse. Default semantics: (x, y) is an ABSOLUTE screen coordinate (see hid.click for how absolute mode works under the hood, including the closed-loop convergence that absorbs OS pointer-ballistics). Pass relative=true to send (x, y) as a pixel delta directly. On hosts where the OS cursor query is unavailable, absolute mode returns an error.\n\nReturns `x`/`y` = actual landing coordinates, `target_x`/`target_y` = original request, `converged` / `iters` for the absolute path. Optional `move_ms` switches snap mode (default) → glide mode; see hid.click for the trade-off.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        },
+        "relative": {
+          "type": "boolean",
+          "default": false
+        },
+        "move_ms": {
+          "type": "integer",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 5000,
+          "description": "Glide mode: break the move into ~10 ms HID reports over N ms (linear interp + post-slide converge). 0 = snap mode (default, instant move)."
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
+    }
+  },
+  {
+    "name": "hid.hover",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Move mouse to (x,y) then idle for duration_ms (no click). `duration_ms` is the IDLE time AFTER reaching the target; `move_ms` (optional) is the time spent on the move ITSELF (glide mode). Default move_ms=0 = snap mode (instant move), then idles. Absolute mode runs the same closed-loop converge as hid.click — see that tool's description for landing / convergence semantics.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        },
+        "duration_ms": {
+          "type": "integer",
+          "default": 500,
+          "minimum": 0,
+          "maximum": 10000,
+          "description": "Idle time AFTER reaching target."
+        },
+        "move_ms": {
+          "type": "integer",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 5000,
+          "description": "Glide mode for the move itself: break into ~10 ms HID reports over N ms (linear interp + post-slide converge). 0 = snap mode (default, instant move)."
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
+    }
+  },
+  {
+    "name": "hid.type",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Type a string as if on a physical keyboard (US layout). Plain ASCII only: text containing any other character (Chinese, emoji, curly quotes) is refused before anything is typed - paste such text via the clipboard instead.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "hid.scroll",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Scroll the mouse wheel. Positive=up, negative=down.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "delta": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "delta"
+      ]
+    }
+  },
+  {
+    "name": "hid.key",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Press a key or keyboard shortcut.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Named key (enter/tab/f1…), a single character, or shortcut shorthand like 'ctrl+c' or 'ctrl+alt+l' — modifiers in the prefix are split out and combined with the modifiers array."
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ctrl",
+              "shift",
+              "alt",
+              "gui",
+              "win",
+              "cmd"
+            ]
+          },
+          "default": [],
+          "description": "Explicit modifier list. Combined with any modifiers parsed from the key shorthand. Optional when the key field already encodes the modifiers (e.g. 'ctrl+c')."
+        }
+      },
+      "required": [
+        "key"
+      ]
+    }
+  },
+  {
+    "name": "hid.release_all",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Release every held key / mouse button (panic stop).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "hid.mouse_button_down",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Press a mouse button WITHOUT releasing it. Pair with hid.mouse_button_up (and hid.move in between) to compose a drag, or use hid.drag for a one-call wrapper. Matches Anthropic Computer Use's left_mouse_down action.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "button": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right",
+            "middle"
+          ],
+          "default": "left"
+        }
+      }
+    }
+  },
+  {
+    "name": "hid.mouse_button_up",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Release a previously-pressed mouse button. Idempotent — releasing a non-held button is a no-op (no error). Matches Anthropic Computer Use's left_mouse_up action.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "button": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right",
+            "middle"
+          ],
+          "default": "left"
+        }
+      }
+    }
+  },
+  {
+    "name": "hid.drag",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Drag from (from_x, from_y) to (to_x, to_y) while holding the named button. Internally: absolute move to source → mouse_button_down → glided absolute move to destination → mouse_button_up. Matches Anthropic Computer Use's left_click_drag action. Useful for design / spreadsheet / file-manager workflows where 'press → drag → release' is the atomic UI gesture.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "from_x": {
+          "type": "integer"
+        },
+        "from_y": {
+          "type": "integer"
+        },
+        "to_x": {
+          "type": "integer"
+        },
+        "to_y": {
+          "type": "integer"
+        },
+        "button": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right",
+            "middle"
+          ],
+          "default": "left"
+        },
+        "move_ms": {
+          "type": "integer",
+          "default": 300,
+          "minimum": 0,
+          "maximum": 5000,
+          "description": "Duration of the held-button move from source to destination."
+        },
+        "relative": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, from_x/y and to_x/y are pixel deltas, not absolute coords."
+        }
+      },
+      "required": [
+        "from_x",
+        "from_y",
+        "to_x",
+        "to_y"
+      ]
+    }
+  },
+  {
+    "name": "hid.key_press",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Press a key (or shortcut) WITHOUT releasing. Pair with hid.key_release. Useful for 'hold shift while clicking N times' multi-select patterns: hid.key_press('shift') → several hid.click → hid.key_release('shift'). For a fixed-duration hold, prefer hid.hold_key.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ctrl",
+              "shift",
+              "alt",
+              "gui",
+              "win",
+              "cmd"
+            ]
+          },
+          "default": []
+        }
+      },
+      "required": [
+        "key"
+      ]
+    }
+  },
+  {
+    "name": "hid.key_release",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Release a previously-pressed key (or shortcut). Idempotent. Pass no arguments to release ALL held keys and mouse buttons (panic stop, same as hid.release_all).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "default": ""
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ctrl",
+              "shift",
+              "alt",
+              "gui",
+              "win",
+              "cmd"
+            ]
+          },
+          "default": []
+        }
+      }
+    }
+  },
+  {
+    "name": "hid.hold_key",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Press a key, wait duration_ms, then release. Matches Anthropic Computer Use's hold_key action. Useful for scenarios where a single tap is too short — e.g. holding an arrow key to scroll a long list, or holding Space to pan in a design app.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "duration_ms": {
+          "type": "integer",
+          "default": 500,
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ctrl",
+              "shift",
+              "alt",
+              "gui",
+              "win",
+              "cmd"
+            ]
+          },
+          "default": []
+        }
+      },
+      "required": [
+        "key"
+      ]
+    }
+  },
+  {
+    "name": "hid.batch",
+    "description": "[Physical HID input — pick this when other automation paths (file APIs, browser automation, OS APIs) cannot accomplish the task, or when the user explicitly requests physical keyboard or mouse input.] Run a SHORT, PRE-PLANNED sequence of HID actions (max 10) in ONE call, in strict order. This is a transport convenience for an action list you ALREADY know — e.g. clicking several fixed coordinates a solver has computed — collapsing N tool round-trips into one. It is NOT an orchestration / control-flow layer: no branching, no reading a result mid-sequence, no looping. For 'act → observe → decide → act' you still issue separate calls (an action that depends on an earlier action's outcome cannot be pre-planned into a batch).\n\nEach op is {type, ...params, delay_ms?}. Types:\n  • click / move — (x, y, relative, button, double, move_ms); identical absolute closed-loop converge and ACK semantics to hid.click / hid.move.\n  • button_down / button_up — (button).\n  • key — (key, modifiers); same 'ctrl+c' shorthand as hid.key.\n  • type — (text).\n  • scroll — (delta).\n`delay_ms` pauses AFTER that op (0–2000 ms). Omit it and click/button ops get a small default gap (~50 ms) so the OS doesn't merge or drop back-to-back clicks; non-click ops default to 0. Set delay_ms explicitly (including 0) to override.\n\nExecution: ops run strictly sequentially. With stop_on_error=true (default) the run halts at the first op that fails; if any button/key was pressed before the stop, release_all fires so nothing stays held. Returns {ok (= every op ok), count, failed_index, stopped_early, released_all, results:[per-op dicts carrying the same fields the standalone tool returns — e.g. converged / clicked / chars]}. Held state is NOT auto-released on clean completion, so a batch may intentionally leave a button/key down for a follow-up call.\n\nCapped at 10 ops: this drives real input and a batch cannot be interrupted mid-run (stdio is serial), so a large blind burst is refused at the boundary.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "ops": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 10,
+          "description": "Up to 10 HID actions, executed in array order.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "click",
+                  "move",
+                  "button_down",
+                  "button_up",
+                  "key",
+                  "type",
+                  "scroll"
+                ]
+              },
+              "x": {
+                "type": "integer"
+              },
+              "y": {
+                "type": "integer"
+              },
+              "button": {
+                "type": "string",
+                "enum": [
+                  "left",
+                  "right",
+                  "middle"
+                ],
+                "default": "left"
+              },
+              "double": {
+                "type": "boolean",
+                "default": false
+              },
+              "relative": {
+                "type": "boolean",
+                "default": false
+              },
+              "move_ms": {
+                "type": "integer",
+                "default": 0,
+                "minimum": 0,
+                "maximum": 5000
+              },
+              "key": {
+                "type": "string"
+              },
+              "modifiers": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "ctrl",
+                    "shift",
+                    "alt",
+                    "gui",
+                    "win",
+                    "cmd"
+                  ]
+                },
+                "default": []
+              },
+              "text": {
+                "type": "string"
+              },
+              "delta": {
+                "type": "integer"
+              },
+              "delay_ms": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2000,
+                "description": "Pause AFTER this op (ms). Omit for a smart default: ~50 ms after click/button ops (so back-to-back clicks aren't merged/dropped by the OS), 0 otherwise. Set explicitly (including 0) to override."
+              }
+            },
+            "required": [
+              "type"
+            ]
+          }
+        },
+        "stop_on_error": {
+          "type": "boolean",
+          "default": true,
+          "description": "Halt at the first failing op (default). false = run every op, recording failures."
+        }
+      },
+      "required": [
+        "ops"
+      ]
+    }
+  },
+  {
+    "name": "device.list",
+    "description": "List candidate Pico serial ports.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "device.info",
+    "description": "Active bridge's connection + sequence info.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "device.status",
+    "description": "Ask the board what it is: firmware version, board name, whether it has the absolute pointer and whether this server uses it. Connects to the board first if it is not connected. Sends no HID report: nothing is pressed or moved.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

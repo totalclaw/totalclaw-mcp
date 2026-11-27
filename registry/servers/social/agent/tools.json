@@ -1,0 +1,424 @@
+[
+  {
+    "name": "taisly_agent_setup_start",
+    "description": "Start browser-based Taisly authentication for an AI agent. Returns a loginUrl that the user must open and approve before checkin.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "type": "string",
+          "description": "Short agent slug, for example claude-code, codex, cursor, openclaw, or hermes-agent."
+        },
+        "agentId": {
+          "type": "string",
+          "description": "Alias for agent."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "taisly_agent_checkin",
+    "description": "Finish setup after the user approves the loginUrl in the browser. Saves the local Taisly agent credential for later CLI and MCP calls.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "type": "string",
+          "description": "Short agent slug used with taisly_agent_setup_start."
+        },
+        "agentId": {
+          "type": "string",
+          "description": "Alias for agent."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "taisly_auth_status",
+    "description": "Check whether the Taisly API key is valid and count connected social accounts.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "taisly_platforms_list",
+    "description": "List connected TikTok, Instagram, YouTube, X, Facebook, and other social accounts available to this API key.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "taisly_platform_schema",
+    "description": "Get posting constraints and supported settings for a destination platform.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "description": "Platform name, for example TikTok, Instagram, YouTube, X, or Facebook."
+        }
+      },
+      "required": [
+        "platform"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "taisly_platform_connect_start",
+    "description": "Start browser-based connection for a social account. Returns a connectUrl that the user must open and approve in the browser.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "description": "Platform to connect. Supported: instagram, tiktok, youtube, x, facebook."
+        }
+      },
+      "required": [
+        "platform"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "taisly_platform_connect_check",
+    "description": "Check whether a social account connection started by taisly_platform_connect_start has appeared in Taisly.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "description": "Platform to check. Supported: instagram, tiktok, youtube, x, facebook."
+        }
+      },
+      "required": [
+        "platform"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "taisly_posts_validate",
+    "description": "Validate a local video path, destination platform IDs, caption, and optional schedule before publishing.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "video": {
+          "type": "string",
+          "description": "Local video path available to the agent."
+        },
+        "platforms": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Destination platform IDs from taisly_platforms_list."
+        },
+        "description": {
+          "type": "string",
+          "description": "Post caption or description."
+        },
+        "settings": {
+          "type": "object",
+          "description": "Optional per-platform posting settings. All fields are optional; omitted values keep the existing posting behavior. These settings apply to every selected account on the corresponding platform.",
+          "properties": {
+            "TikTok": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "PUBLIC_TO_EVERYONE",
+                    "MUTUAL_FOLLOW_FRIENDS",
+                    "FOLLOWER_OF_CREATOR",
+                    "SELF_ONLY"
+                  ],
+                  "description": "TikTok visibility. Choose a value permitted by the creator's account. Branded content cannot use SELF_ONLY."
+                },
+                "comment_disabled": {
+                  "type": "boolean",
+                  "description": "true disables comments; false does not override the creator's account restrictions."
+                },
+                "duet_disabled": {
+                  "type": "boolean",
+                  "description": "true disables Duet; false does not override the creator's account restrictions."
+                },
+                "stitch_disabled": {
+                  "type": "boolean",
+                  "description": "true disables Stitch; false does not override the creator's account restrictions."
+                },
+                "brand_content_toggle": {
+                  "type": "boolean",
+                  "description": "true discloses a paid partnership promoting a third-party business. Cannot be combined with status SELF_ONLY."
+                },
+                "brand_organic_toggle": {
+                  "type": "boolean",
+                  "description": "true discloses promotion of the creator's own business. May be combined with brand_content_toggle."
+                },
+                "is_aigc": {
+                  "type": "boolean",
+                  "description": "Whether this video is AI-generated. Omit to keep the existing behavior."
+                }
+              },
+              "additionalProperties": true
+            },
+            "YouTube": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Optional YouTube video title, up to 100 characters. Omit to use the post caption."
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "public",
+                    "private",
+                    "unlisted"
+                  ],
+                  "description": "YouTube video visibility."
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true
+        },
+        "scheduled": {
+          "type": "string",
+          "description": "Optional ISO datetime or Unix timestamp in milliseconds."
+        }
+      },
+      "required": [
+        "video",
+        "platforms",
+        "description"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "taisly_posts_create",
+    "description": "Start publishing or schedule a video post after explicit user confirmation. success: true means Taisly accepted the request, not that every platform published it. For an immediate post, use the returned historyId with taisly_posts_status and report success only when the per-platform status is SUCCESS.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "video": {
+          "type": "string",
+          "description": "Local video path available to the agent."
+        },
+        "platforms": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Destination platform IDs from taisly_platforms_list."
+        },
+        "description": {
+          "type": "string",
+          "description": "Post caption or description."
+        },
+        "settings": {
+          "type": "object",
+          "description": "Optional per-platform posting settings. All fields are optional; omitted values keep the existing posting behavior. These settings apply to every selected account on the corresponding platform.",
+          "properties": {
+            "TikTok": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "PUBLIC_TO_EVERYONE",
+                    "MUTUAL_FOLLOW_FRIENDS",
+                    "FOLLOWER_OF_CREATOR",
+                    "SELF_ONLY"
+                  ],
+                  "description": "TikTok visibility. Choose a value permitted by the creator's account. Branded content cannot use SELF_ONLY."
+                },
+                "comment_disabled": {
+                  "type": "boolean",
+                  "description": "true disables comments; false does not override the creator's account restrictions."
+                },
+                "duet_disabled": {
+                  "type": "boolean",
+                  "description": "true disables Duet; false does not override the creator's account restrictions."
+                },
+                "stitch_disabled": {
+                  "type": "boolean",
+                  "description": "true disables Stitch; false does not override the creator's account restrictions."
+                },
+                "brand_content_toggle": {
+                  "type": "boolean",
+                  "description": "true discloses a paid partnership promoting a third-party business. Cannot be combined with status SELF_ONLY."
+                },
+                "brand_organic_toggle": {
+                  "type": "boolean",
+                  "description": "true discloses promotion of the creator's own business. May be combined with brand_content_toggle."
+                },
+                "is_aigc": {
+                  "type": "boolean",
+                  "description": "Whether this video is AI-generated. Omit to keep the existing behavior."
+                }
+              },
+              "additionalProperties": true
+            },
+            "YouTube": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Optional YouTube video title, up to 100 characters. Omit to use the post caption."
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "public",
+                    "private",
+                    "unlisted"
+                  ],
+                  "description": "YouTube video visibility."
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true
+        },
+        "scheduled": {
+          "type": "string",
+          "description": "Optional ISO datetime or Unix timestamp in milliseconds."
+        },
+        "previewTime": {
+          "type": "number",
+          "description": "Optional preview timestamp used by the Taisly posting API."
+        },
+        "confirmed": {
+          "type": "boolean",
+          "description": "Must be true only after explicit user confirmation."
+        }
+      },
+      "required": [
+        "video",
+        "platforms",
+        "description",
+        "confirmed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "taisly_posts_status",
+    "description": "Fetch per-platform status for a Taisly post by historyId. Inspect data.result[].status: PENDING is still processing, SUCCESS is published, and FAILED is not published.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Taisly historyId returned by taisly_posts_create."
+        },
+        "historyId": {
+          "type": "string",
+          "description": "Alias for id."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "taisly_posts_list",
+    "description": "List recent Taisly post history for status checks and audits.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "number",
+          "description": "History page number. Defaults to 1."
+        },
+        "startTime": {
+          "type": "string",
+          "description": "Optional start timestamp filter."
+        },
+        "endTime": {
+          "type": "string",
+          "description": "Optional end timestamp filter."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "taisly_reposts_list",
+    "description": "List configured repost automations for connected social accounts.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "taisly_reposts_create",
+    "description": "Create a repost automation from one connected account to one or more destination accounts.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string",
+          "description": "Source platform ID."
+        },
+        "to": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Destination platform IDs."
+        }
+      },
+      "required": [
+        "from",
+        "to"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

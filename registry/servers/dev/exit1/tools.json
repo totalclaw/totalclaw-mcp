@@ -1,0 +1,578 @@
+[
+  {
+    "name": "create_account",
+    "description": "Create a free exit1 account for the user and connect this server to it, so the other tools work right away. Use the user's own email address: exit1 emails it a link to claim the account, and alerts are only delivered once they claim it. Monitors you create before then start running immediately. Fails if the email already has an account; then ask the user for an API key instead.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "The user's email address. Ask them if you don't know it."
+        },
+        "agent_name": {
+          "type": "string",
+          "description": "How you identify yourself to the user in the claim email, e.g. \"Claude Code\"."
+        }
+      },
+      "required": [
+        "email"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_account",
+    "description": "Get the current plan, its limits, and how much of them is already used. Call this FIRST when setting up monitoring — it tells you how many checks you can create and the fastest check interval the plan allows, so you can plan within the plan instead of hitting errors halfway through.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_checks",
+    "description": "List monitored checks with their current status and folder. Use for an overview, to find offline checks, or to see what is already monitored before creating duplicates. Pass folder to list one folder; add recursive to include its subfolders. Pass include=\"uptime\" to add 24h and 30d uptime percentages and the 24h average response time to each check.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "online",
+            "offline",
+            "unknown"
+          ],
+          "description": "Filter by current status"
+        },
+        "folder": {
+          "type": "string",
+          "description": "Only checks in this folder, as a path like \"Clients/Acme\" (exact match unless recursive is true)"
+        },
+        "recursive": {
+          "type": "boolean",
+          "description": "With folder, also include checks in its subfolders (default false)"
+        },
+        "include": {
+          "type": "string",
+          "enum": [
+            "uptime"
+          ],
+          "description": "Set to \"uptime\" to add uptime24hPercent, uptime30dPercent and avgResponseTime24hMs to each check (null when unavailable)"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Results per page (default 25)"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Page number"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_check",
+    "description": "Get full detail for one check: status, response time, SSL certificate state and maintenance mode.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "description": "The check ID returned by list_checks or create_check"
+        }
+      },
+      "required": [
+        "check_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_check_history",
+    "description": "Get individual check results over time — timestamps, status codes, response times and errors. Use when investigating an incident or confirming a fix held.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "description": "The check ID returned by list_checks or create_check"
+        },
+        "from": {
+          "type": "string",
+          "description": "Start date, ISO 8601 (e.g. 2026-07-01T00:00:00Z)"
+        },
+        "to": {
+          "type": "string",
+          "description": "End date, ISO 8601"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "online",
+            "offline",
+            "unknown"
+          ]
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "description": "Results per page (default 25)"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "check_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_check_stats",
+    "description": "Get aggregate uptime percentage and response-time statistics for a check across one or more time ranges. Good for 'how has this been doing' questions and week-over-week comparisons.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "description": "The check ID returned by list_checks or create_check"
+        },
+        "ranges": {
+          "type": "string",
+          "description": "Comma-separated ranges: 1h, 6h, 1d, 7d, 30d, 60d, 90d. Default 1d,7d,30d"
+        }
+      },
+      "required": [
+        "check_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_status_page",
+    "description": "Get the current snapshot of a public status page, with each check's status and uptime percentage.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "status_page_id": {
+          "type": "string",
+          "description": "The status page ID"
+        }
+      },
+      "required": [
+        "status_page_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "create_check",
+    "description": "Create a new monitor. Use 'website' for a page that should return 200, 'rest_endpoint' for an API endpoint (supports JSONPath assertions on the response body), 'ping' for ICMP, 'tcp' for a raw port, 'dns' for record drift, 'domain' for registration expiry, and 'heartbeat' for cron jobs that call in. Check the plan's minCheckIntervalMinutes via get_account before setting check_frequency_minutes.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "URL to monitor. For 'dns' and 'domain' pass a bare domain. Omit for 'heartbeat'."
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Human-readable name, e.g. 'Production API'"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "website",
+            "rest_endpoint",
+            "redirect",
+            "ping",
+            "tcp",
+            "dns",
+            "heartbeat",
+            "domain"
+          ],
+          "description": "Check type (default 'website')"
+        },
+        "check_frequency_minutes": {
+          "type": "number",
+          "description": "Minutes between checks. Must be >= the plan's minCheckIntervalMinutes."
+        },
+        "http_method": {
+          "type": "string",
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE",
+            "HEAD"
+          ]
+        },
+        "expected_status_codes": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 599
+          },
+          "description": "Status codes treated as healthy. Defaults to 2xx."
+        },
+        "request_headers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Extra request headers. Do not put secrets here that you would not paste into a dashboard."
+        },
+        "request_body": {
+          "type": "string",
+          "description": "JSON request body for POST/PUT/PATCH rest_endpoint checks"
+        },
+        "response_validation": {
+          "type": "object",
+          "properties": {
+            "containsText": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 10
+            },
+            "containsTextMode": {
+              "type": "string",
+              "enum": [
+                "all",
+                "any"
+              ],
+              "description": "'all' (default): every containsText entry must appear. 'any': at least one."
+            },
+            "notContainsText": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 10,
+              "description": "Fail if any of these appear in the body (case-insensitive)"
+            },
+            "jsonPath": {
+              "type": "string",
+              "description": "Single JSONPath expression, e.g. $.status. Ignored when jsonAssertions is set."
+            },
+            "jsonPathOperator": {
+              "type": "string",
+              "enum": [
+                "equals",
+                "not_equals",
+                "contains",
+                "exists",
+                "greater_than",
+                "greater_or_equal",
+                "less_than",
+                "less_or_equal"
+              ]
+            },
+            "expectedValue": {
+              "description": "Value the JSONPath result is compared against"
+            },
+            "jsonAssertions": {
+              "type": "array",
+              "maxItems": 20,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "JSONPath, e.g. $.engines['mail-intake'].sinceMs"
+                  },
+                  "operator": {
+                    "type": "string",
+                    "enum": [
+                      "equals",
+                      "not_equals",
+                      "contains",
+                      "exists",
+                      "greater_than",
+                      "greater_or_equal",
+                      "less_than",
+                      "less_or_equal"
+                    ]
+                  },
+                  "expectedValue": {
+                    "description": "Compared value. A number for the greater/less operators. Omit for 'exists'."
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "additionalProperties": false
+              },
+              "description": "Several JSONPath assertions, combined by jsonAssertionsMode. Replaces jsonPath/jsonPathOperator/expectedValue."
+            },
+            "jsonAssertionsMode": {
+              "type": "string",
+              "enum": [
+                "all",
+                "any"
+              ],
+              "description": "'all' (default): every assertion must pass (AND). 'any': one is enough (OR)."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Body assertions: this is what turns a 200 into a real health check."
+        },
+        "response_time_limit_ms": {
+          "type": "number",
+          "description": "Fail the check if it responds slower than this"
+        },
+        "record_types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "A",
+              "AAAA",
+              "CNAME",
+              "MX",
+              "TXT",
+              "NS",
+              "SOA"
+            ]
+          },
+          "description": "DNS record types to baseline (type 'dns' only)"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "update_check",
+    "description": "Change an existing check's settings. Only the fields you pass are modified.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "description": "The check ID returned by list_checks or create_check"
+        },
+        "url": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "check_frequency_minutes": {
+          "type": "number"
+        },
+        "http_method": {
+          "type": "string",
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE",
+            "HEAD"
+          ]
+        },
+        "expected_status_codes": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 599
+          }
+        },
+        "response_validation": {
+          "type": "object",
+          "description": "Same shape as create_check.response_validation"
+        },
+        "response_time_limit_ms": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "check_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "toggle_check",
+    "description": "Enable or disable a check without deleting it. Disabled checks stop probing and stop alerting — use this rather than delete_check for a temporary pause.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "description": "The check ID returned by list_checks or create_check"
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "true to pause the check, false to resume it"
+        }
+      },
+      "required": [
+        "check_id",
+        "disabled"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "delete_check",
+    "description": "Permanently delete a check and stop monitoring it. This cannot be undone. Prefer toggle_check unless the user explicitly wants it gone.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "description": "The check ID returned by list_checks or create_check"
+        }
+      },
+      "required": [
+        "check_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_alert_settings",
+    "description": "Show where alerts currently go — email recipients and connected webhooks. Call this before configuring alerts so you do not duplicate a channel the user already has.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "set_email_alerts",
+    "description": "Set which email addresses receive alerts and which events trigger them. Events: website_down, website_up, website_error, ssl_error, ssl_warning, domain_expiring, domain_expired, domain_renewed. Defaults to website_down + website_up, which is the right pair for most people.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "recipients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 10,
+          "description": "Email addresses that should receive alerts"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Events to alert on"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Turn email alerting on or off (default true)"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "html",
+            "text"
+          ],
+          "description": "Use 'text' for ticketing systems"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "add_webhook_alert",
+    "description": "Send alerts to Slack, Discord, Microsoft Teams or any HTTPS endpoint. Paste the incoming-webhook URL the user gives you; the platform is detected from the URL if you do not pass webhook_type.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "HTTPS webhook URL (e.g. a Slack incoming webhook)"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Label shown in the dashboard, e.g. '#alerts'"
+        },
+        "webhook_type": {
+          "type": "string",
+          "enum": [
+            "slack",
+            "discord",
+            "teams",
+            "pumble",
+            "generic"
+          ],
+          "description": "Override auto-detection"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Defaults to website_down + website_up"
+        },
+        "secret": {
+          "type": "string",
+          "description": "Optional HMAC signing secret for generic webhooks"
+        }
+      },
+      "required": [
+        "url",
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "send_test_alert",
+    "description": "Fire a real test alert so the user can confirm delivery works. ALWAYS finish a monitoring setup with this — a channel that was configured but never tested is the most common way monitoring silently fails. Pass channel='email' or channel='webhook' with a webhook_id.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "enum": [
+            "email",
+            "webhook"
+          ],
+          "description": "Which channel to test"
+        },
+        "webhook_id": {
+          "type": "string",
+          "description": "Required when channel is 'webhook'"
+        }
+      },
+      "required": [
+        "channel"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

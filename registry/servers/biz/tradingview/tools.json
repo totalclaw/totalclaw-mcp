@@ -1,0 +1,1055 @@
+[
+  {
+    "name": "top_gainers",
+    "description": "Return top gainers for an exchange and timeframe using Bollinger Band analysis.\n\nArgs:\n    exchange: Exchange name — crypto: KUCOIN, BINANCE, BYBIT, MEXC; stocks: EGX, BIST, NASDAQ, NYSE, BURSA, HKEX, SSE, SZSE, TWSE, TPEX\n    timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M\n    limit: Number of rows to return (max 50)\n\nReturns:\n    list[dict] on success. On ANY failure returns a structured error\n    envelope ``{\"error\": {\"code\": ..., \"retryable\": ...}}`` — never a\n    raw exception string.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "exchange": {
+          "default": "KUCOIN",
+          "title": "Exchange",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "15m",
+          "title": "Timeframe",
+          "type": "string"
+        },
+        "limit": {
+          "default": 25,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "top_gainersArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "top_losers",
+    "description": "Return top losers for an exchange and timeframe. Supports crypto (KUCOIN, BINANCE, MEXC) and stocks (EGX, BIST, NASDAQ).\n\nReturns ``list[dict]`` on success. On ANY failure returns a structured\nerror envelope ``{\"error\": {\"code\": ..., \"retryable\": ...}}``.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "exchange": {
+          "default": "KUCOIN",
+          "title": "Exchange",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "15m",
+          "title": "Timeframe",
+          "type": "string"
+        },
+        "limit": {
+          "default": 25,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "top_losersArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "bollinger_scan",
+    "description": "Scan for assets with low Bollinger Band Width (squeeze detection). Works with crypto and stocks.\n\nThis scans a whole EXCHANGE for squeezes (canonical name is exactly\n`bollinger_scan`; there is no \"get_bollinger_band_analysis\" tool). For\nthe Bollinger read of ONE symbol, call `coin_analysis` instead.\n\nExample: bollinger_scan(exchange=\"BINANCE\", timeframe=\"15m\", bbw_threshold=0.008)\n\nArgs:\n    exchange: Exchange — crypto: KUCOIN, BINANCE, BYBIT, MEXC; stocks: EGX, BIST, NASDAQ, NYSE, BURSA, HKEX, SSE, SZSE, TWSE, TPEX\n    timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M. Typical squeeze thresholds: 15m→0.008, 1h→0.02, 4h→0.04, 1D→0.12\n    bbw_threshold: Maximum BBW value to filter (default 0.04)\n    limit: Number of rows to return (max 100)\n\nReturns ``list[dict]`` on success. On ANY failure returns a structured\nerror envelope ``{\"error\": {\"code\": ..., \"retryable\": ...}}``.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "exchange": {
+          "default": "KUCOIN",
+          "title": "Exchange",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "4h",
+          "title": "Timeframe",
+          "type": "string"
+        },
+        "bbw_threshold": {
+          "default": 0.04,
+          "title": "Bbw Threshold",
+          "type": "number"
+        },
+        "limit": {
+          "default": 50,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "bollinger_scanArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "rating_filter",
+    "description": "Filter coins by Bollinger Band rating.\n\nArgs:\n    exchange: Exchange name like KUCOIN, BINANCE, BYBIT, MEXC, etc.\n    timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M\n    rating: BB rating (-3 to +3): -3=Strong Sell, -2=Sell, -1=Weak Sell, 1=Weak Buy, 2=Buy, 3=Strong Buy\n    limit: Number of rows to return (max 50)\n\nReturns ``list[dict]`` on success. On ANY failure returns a structured\nerror envelope ``{\"error\": {\"code\": ..., \"retryable\": ...}}``.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "exchange": {
+          "default": "KUCOIN",
+          "title": "Exchange",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "5m",
+          "title": "Timeframe",
+          "type": "string"
+        },
+        "rating": {
+          "default": 2,
+          "title": "Rating",
+          "type": "integer"
+        },
+        "limit": {
+          "default": 25,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "rating_filterArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "coin_analysis",
+    "description": "Get detailed analysis for a specific asset (coin or stock) on specified exchange and timeframe.\n\nThis is the canonical single-symbol technical readout (there is no\n\"get_technical_analysis\" or \"get_technical_summary\" tool — use THIS one).\nUse `multi_timeframe_analysis` instead when you need trend alignment\nacross several timeframes, and `combined_analysis` when you also want\nnews sentiment + headlines in the same call.\n\nExample: coin_analysis(symbol=\"BTCUSDT\", exchange=\"BINANCE\", timeframe=\"1h\")\n\nArgs:\n    symbol: Bare ticker, no exchange prefix — crypto: \"BTCUSDT\", \"ETHUSDT\"; stocks: \"COMI\" (EGX), \"THYAO\" (BIST), \"600519\" (SSE), \"300251\" (SZSE), \"2330\" (TWSE), \"3105\" (TPEX)\n    exchange: Exchange — crypto: KUCOIN, BINANCE, MEXC; stocks: EGX, BIST, NASDAQ, NYSE, BURSA, HKEX, SSE, SZSE, TWSE, TPEX. If the symbol isn't listed there, the error's `listed_on` field names exchanges that do list it.\n    timeframe: Time interval (5m, 15m, 1h, 4h, 1D, 1W, 1M)\n\nReturns:\n    Detailed analysis with all indicators and metrics\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "exchange": {
+          "default": "KUCOIN",
+          "title": "Exchange",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "15m",
+          "title": "Timeframe",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "coin_analysisArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "consecutive_candles_scan",
+    "description": "Scan for coins with consecutive growing/shrinking candles pattern.\n\nArgs:\n    exchange: Exchange name (BINANCE, KUCOIN, etc.)\n    timeframe: Time interval (5m, 15m, 1h, 4h)\n    pattern_type: \"bullish\" (growing candles) or \"bearish\" (shrinking candles)\n    candle_count: Number of consecutive candles to check (2-5)\n    min_growth: Minimum growth percentage for each candle\n    limit: Maximum number of results to return\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "exchange": {
+          "default": "KUCOIN",
+          "title": "Exchange",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "15m",
+          "title": "Timeframe",
+          "type": "string"
+        },
+        "pattern_type": {
+          "default": "bullish",
+          "title": "Pattern Type",
+          "type": "string"
+        },
+        "candle_count": {
+          "default": 3,
+          "title": "Candle Count",
+          "type": "integer"
+        },
+        "min_growth": {
+          "default": 2.0,
+          "title": "Min Growth",
+          "type": "number"
+        },
+        "limit": {
+          "default": 20,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "consecutive_candles_scanArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "advanced_candle_pattern",
+    "description": "Advanced candle pattern analysis using multi-timeframe data.\n\nArgs:\n    exchange: Exchange name (BINANCE, KUCOIN, etc.)\n    base_timeframe: Base timeframe for analysis (5m, 15m, 1h, 4h)\n    pattern_length: Number of consecutive periods to analyse (2-4)\n    min_size_increase: Minimum percentage increase in candle size\n    limit: Maximum number of results to return\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "exchange": {
+          "default": "KUCOIN",
+          "title": "Exchange",
+          "type": "string"
+        },
+        "base_timeframe": {
+          "default": "15m",
+          "title": "Base Timeframe",
+          "type": "string"
+        },
+        "pattern_length": {
+          "default": 3,
+          "title": "Pattern Length",
+          "type": "integer"
+        },
+        "min_size_increase": {
+          "default": 10.0,
+          "title": "Min Size Increase",
+          "type": "number"
+        },
+        "limit": {
+          "default": 15,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "advanced_candle_patternArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "volume_breakout_scanner",
+    "description": "Detect coins with volume breakout + price breakout.\n\nArgs:\n    exchange: Exchange name like KUCOIN, BINANCE, BYBIT, MEXC, etc.\n    timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M\n    volume_multiplier: How many times the volume should be above normal level (default 2.0)\n    price_change_min: Minimum price change percentage (default 3.0)\n    limit: Number of rows to return (max 50)\n\nReturns ``list[dict]`` on success, or an error envelope on total upstream\nfailure (``{\"error\": {\"code\": \"ALL_BATCHES_FAILED\", ...}}``). The empty\nlist now strictly means \"no matches today\"; rate-limit cliffs surface\nexplicitly.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "exchange": {
+          "default": "KUCOIN",
+          "title": "Exchange",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "15m",
+          "title": "Timeframe",
+          "type": "string"
+        },
+        "volume_multiplier": {
+          "default": 2.0,
+          "title": "Volume Multiplier",
+          "type": "number"
+        },
+        "price_change_min": {
+          "default": 3.0,
+          "title": "Price Change Min",
+          "type": "number"
+        },
+        "limit": {
+          "default": 25,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "volume_breakout_scannerArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "volume_confirmation_analysis",
+    "description": "Detailed volume confirmation analysis for a specific coin.\n\nArgs:\n    symbol: Coin symbol (e.g., BTCUSDT)\n    exchange: Exchange name\n    timeframe: Time frame for analysis\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "exchange": {
+          "default": "KUCOIN",
+          "title": "Exchange",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "15m",
+          "title": "Timeframe",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "volume_confirmation_analysisArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "smart_volume_scanner",
+    "description": "Smart volume + technical analysis combination scanner.\n\nArgs:\n    exchange: Exchange name\n    min_volume_ratio: Minimum volume multiplier (default 2.0)\n    min_price_change: Minimum price change percentage (default 2.0)\n    rsi_range: \"oversold\" (<30), \"overbought\" (>70), \"neutral\" (30-70), \"any\"\n    limit: Number of results (max 30)\n\nReturns ``list[dict]`` on success. On ANY failure returns a structured\nerror envelope ``{\"error\": {\"code\": ..., \"retryable\": ...}}``.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "exchange": {
+          "default": "KUCOIN",
+          "title": "Exchange",
+          "type": "string"
+        },
+        "min_volume_ratio": {
+          "default": 2.0,
+          "title": "Min Volume Ratio",
+          "type": "number"
+        },
+        "min_price_change": {
+          "default": 2.0,
+          "title": "Min Price Change",
+          "type": "number"
+        },
+        "rsi_range": {
+          "default": "any",
+          "title": "Rsi Range",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "smart_volume_scannerArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "multi_agent_analysis",
+    "description": "Run a multi-agent debate (Technical, Sentiment, Risk) for a specific symbol.\n\nArgs:\n    symbol: Symbol — crypto: \"BTCUSDT\"; stocks: \"COMI\" (EGX), \"THYAO\" (BIST), \"600519\" (SSE), \"300251\" (SZSE), \"2330\" (TWSE), \"3105\" (TPEX), \"GDX\" (AMEX)\n    exchange: Exchange — crypto: KUCOIN, BINANCE, MEXC; stocks: EGX, BIST, NASDAQ, NYSE, AMEX, NYSEARCA, PCX, SSE, SZSE, TWSE, TPEX\n    timeframe: Time interval (5m, 15m, 1h, 4h, 1D, 1W)\n\nReturns:\n    A structured debate between 3 AI agents culminating in a final trading decision.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "exchange": {
+          "default": "KUCOIN",
+          "title": "Exchange",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "15m",
+          "title": "Timeframe",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "multi_agent_analysisArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "egx_market_overview",
+    "description": "Get a comprehensive overview of the Egyptian Exchange (EGX) market.\n\nArgs:\n    timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M (default 1D for stocks)\n    limit: Number of stocks per category (max 20)\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "timeframe": {
+          "default": "1D",
+          "title": "Timeframe",
+          "type": "string"
+        },
+        "limit": {
+          "default": 10,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "egx_market_overviewArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "egx_sector_scan",
+    "description": "Scan EGX stocks by sector. Shows available sectors if none specified.\n\nArgs:\n    sector: Sector name (banks, healthcare_and_pharma, real_estate, etc.)\n            Leave empty to list all sectors.\n    timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M\n    limit: Max results per sector (max 50)\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "sector": {
+          "default": "",
+          "title": "Sector",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "1D",
+          "title": "Timeframe",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "egx_sector_scanArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "egx_sector_scanner",
+    "description": "Sector rotation scanner for EGX — identifies hot/cold sectors and top picks.\n\nArgs:\n    timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M (default 1D)\n    top_n_sectors: Number of top sectors to show stock picks for (1-18, default 5)\n    top_n_stocks: Number of top stocks per highlighted sector (1-10, default 3)\n    min_stock_score: Minimum stock score for picks (0-100, default 60)\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "timeframe": {
+          "default": "1D",
+          "title": "Timeframe",
+          "type": "string"
+        },
+        "top_n_sectors": {
+          "default": 5,
+          "title": "Top N Sectors",
+          "type": "integer"
+        },
+        "top_n_stocks": {
+          "default": 3,
+          "title": "Top N Stocks",
+          "type": "integer"
+        },
+        "min_stock_score": {
+          "default": 60,
+          "title": "Min Stock Score",
+          "type": "integer"
+        }
+      },
+      "title": "egx_sector_scannerArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "egx_index_analysis",
+    "description": "Analyse an EGX index showing constituent performance with full indicators.\n\nArgs:\n    index: EGX30, EGX70, EGX100, SHARIAH33, EGX35LV, TAMAYUZ\n    timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M (default 1D)\n    limit: Number of stocks to show in detail (max 100)\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "index": {
+          "default": "EGX30",
+          "title": "Index",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "1D",
+          "title": "Timeframe",
+          "type": "string"
+        },
+        "limit": {
+          "default": 30,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "egx_index_analysisArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "egx_stock_screener",
+    "description": "Production stock ranking engine for EGX — finds strong stocks with actionable setups.\n\nArgs:\n    timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M (default 1D)\n    min_score: Minimum stock score to include (0-100, default 55)\n    index_filter: Filter by index — EGX30, EGX70, EGX100, SHARIAH33, EGX35LV, TAMAYUZ\n    limit: Number of results (max 50)\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "timeframe": {
+          "default": "1D",
+          "title": "Timeframe",
+          "type": "string"
+        },
+        "min_score": {
+          "default": 55,
+          "title": "Min Score",
+          "type": "integer"
+        },
+        "index_filter": {
+          "default": "",
+          "title": "Index Filter",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "egx_stock_screenerArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "egx_trade_plan",
+    "description": "Generate a full trade plan for a specific EGX stock.\n\nArgs:\n    symbol: EGX stock symbol (e.g., \"COMI\", \"TMGH\", \"FWRY\")\n    timeframe: One of 5m, 15m, 1h, 4h, 1D, 1W, 1M (default 1D)\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "1D",
+          "title": "Timeframe",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "egx_trade_planArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "egx_fibonacci_retracement",
+    "description": "Fibonacci retracement analysis for EGX stocks.\n\nArgs:\n    symbol: EGX stock symbol (e.g., \"COMI\", \"TMGH\", \"FWRY\")\n    lookback: Period for swing high/low — \"1M\", \"3M\", \"6M\", \"52W\", \"ALL\" (default 52W)\n    timeframe: Analysis timeframe (5m, 15m, 1h, 4h, 1D, 1W, 1M — default 1D)\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "lookback": {
+          "default": "52W",
+          "title": "Lookback",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "1D",
+          "title": "Timeframe",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "egx_fibonacci_retracementArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "multi_timeframe_analysis",
+    "description": "Multi-timeframe alignment analysis (Weekly → Daily → 4H → 1H → 15m).\n\nCanonical name is exactly `multi_timeframe_analysis` (there is no\n\"get_multi_timeframe_analysis\" tool). Use this for cross-timeframe trend\nalignment on ONE symbol; for a single-timeframe deep dive use\n`coin_analysis`; for TA + sentiment + news use `combined_analysis`.\n\nExample: multi_timeframe_analysis(symbol=\"SOLUSDT\", exchange=\"BINANCE\")\n\nArgs:\n    symbol: Bare ticker, no exchange prefix — crypto: \"BTCUSDT\"; stocks: \"COMI\" (EGX), \"THYAO\" (BIST), \"600519\" (SSE), \"300251\" (SZSE), \"2330\" (TWSE), \"3105\" (TPEX), \"GDX\" (AMEX)\n    exchange: Exchange — crypto: KUCOIN, BINANCE, MEXC; stocks: EGX, BIST, NASDAQ, NYSE, AMEX, NYSEARCA, PCX, SSE, SZSE, TWSE, TPEX\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "exchange": {
+          "default": "KUCOIN",
+          "title": "Exchange",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "multi_timeframe_analysisArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "market_sentiment",
+    "description": "News sentiment for stocks and crypto (licensed Marketaux entity sentiment).\n\nArgs:\n    symbol: Asset symbol (\"AAPL\", \"BTC\", \"ETH\", \"TSLA\")\n    category: News group to search (\"crypto\", \"stocks\", \"all\")\n    limit: Max articles to analyse\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "category": {
+          "default": "all",
+          "title": "Category",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "market_sentimentArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "financial_news",
+    "description": "Real-time financial news via Marketaux (licensed).\n\nArgs:\n    symbol: Optional symbol filter (\"AAPL\", \"BTC\"). None = all news.\n    category: News category (\"crypto\", \"stocks\", \"all\")\n    limit: Max number of news items\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "default": null,
+          "title": "Symbol",
+          "type": "string"
+        },
+        "category": {
+          "default": "stocks",
+          "title": "Category",
+          "type": "string"
+        },
+        "limit": {
+          "default": 10,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "financial_newsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "combined_analysis",
+    "description": "POWER TOOL: TradingView technical analysis + news sentiment + financial news.\n\nUse this when you want TA AND sentiment AND news for one symbol in a\nsingle call. For indicators only, `coin_analysis` is faster; for\ncross-timeframe trend alignment use `multi_timeframe_analysis`.\n\nExample: combined_analysis(symbol=\"NVDA\", exchange=\"NASDAQ\", timeframe=\"1D\")\n\nArgs:\n    symbol: Bare ticker, no exchange prefix (\"AAPL\", \"BTCUSDT\", \"THYAO\", \"GDX\")\n    exchange: Exchange (NASDAQ, NYSE, AMEX, NYSEARCA, PCX, BINANCE, KUCOIN, MEXC, BIST, EGX, TWSE, TPEX)\n    timeframe: Analysis timeframe (5m, 15m, 1h, 4h, 1D, 1W)\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "exchange": {
+          "default": "NASDAQ",
+          "title": "Exchange",
+          "type": "string"
+        },
+        "timeframe": {
+          "default": "1D",
+          "title": "Timeframe",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "combined_analysisArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "backtest_strategy",
+    "description": "Backtest a trading strategy on historical data with institutional-grade metrics.\n\nArgs:\n    symbol: Yahoo Finance symbol (AAPL, BTC-USD, THYAO.IS, ^GSPC)\n    strategy: rsi | bollinger | macd | ema_cross | supertrend | donchian\n              | rsi_pullback | keltner_breakout | triple_ema\n              (rsi_pullback and triple_ema need period >= '1y' for SMA200 warmup)\n    period: '1mo', '3mo', '6mo', '1y', '2y'\n    initial_capital: Starting capital in USD (default $10,000)\n    commission_pct: Per-trade commission % (default 0.1%)\n    slippage_pct: Per-trade slippage % (default 0.05%)\n    interval: '1d' (daily) or '1h' (hourly)\n    include_trade_log: Include full per-trade log (default False)\n    include_equity_curve: Include equity curve data points (default False)\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "strategy": {
+          "title": "Strategy",
+          "type": "string"
+        },
+        "period": {
+          "default": "1y",
+          "title": "Period",
+          "type": "string"
+        },
+        "initial_capital": {
+          "default": 10000.0,
+          "title": "Initial Capital",
+          "type": "number"
+        },
+        "commission_pct": {
+          "default": 0.1,
+          "title": "Commission Pct",
+          "type": "number"
+        },
+        "slippage_pct": {
+          "default": 0.05,
+          "title": "Slippage Pct",
+          "type": "number"
+        },
+        "interval": {
+          "default": "1d",
+          "title": "Interval",
+          "type": "string"
+        },
+        "include_trade_log": {
+          "default": false,
+          "title": "Include Trade Log",
+          "type": "boolean"
+        },
+        "include_equity_curve": {
+          "default": false,
+          "title": "Include Equity Curve",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "symbol",
+        "strategy"
+      ],
+      "title": "backtest_strategyArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "compare_strategies",
+    "description": "Run all 9 strategies (RSI, Bollinger, MACD, EMA Cross, Supertrend, Donchian, RSI Pullback, Keltner Breakout, Triple EMA) and return a ranked leaderboard.\n\nArgs:\n    symbol: Yahoo Finance symbol (AAPL, BTC-USD, SPY…)\n    period: '1mo', '3mo', '6mo', '1y', '2y'\n            (period >= '1y' recommended so rsi_pullback and triple_ema can\n             complete SMA200 warmup; otherwise they contribute zero trades)\n    initial_capital: Starting capital in USD (default $10,000)\n    interval: '1d' (daily) or '1h' (hourly)\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "period": {
+          "default": "1y",
+          "title": "Period",
+          "type": "string"
+        },
+        "initial_capital": {
+          "default": 10000.0,
+          "title": "Initial Capital",
+          "type": "number"
+        },
+        "interval": {
+          "default": "1d",
+          "title": "Interval",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "compare_strategiesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "walk_forward_backtest_strategy",
+    "description": "Walk-forward backtest to detect overfitting — validates strategy on unseen data.\n\nArgs:\n    symbol: Yahoo Finance symbol (AAPL, BTC-USD, SPY…)\n    strategy: rsi | bollinger | macd | ema_cross | supertrend | donchian\n              | keltner_breakout\n              (rsi_pullback and triple_ema not supported here — SMA200 warmup\n               exceeds typical fold size; use run_backtest with period='2y')\n    period: '1mo', '3mo', '6mo', '1y', '2y' (recommend '2y')\n    initial_capital: Starting capital per fold in USD (default $10,000)\n    commission_pct: Per-trade commission % (default 0.1%)\n    slippage_pct: Per-trade slippage % (default 0.05%)\n    n_splits: Number of walk-forward folds (default 3, max 10)\n    train_ratio: Fraction of each fold used for training (default 0.7)\n    interval: '1d' (daily) or '1h' (hourly)\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "strategy": {
+          "title": "Strategy",
+          "type": "string"
+        },
+        "period": {
+          "default": "2y",
+          "title": "Period",
+          "type": "string"
+        },
+        "initial_capital": {
+          "default": 10000.0,
+          "title": "Initial Capital",
+          "type": "number"
+        },
+        "commission_pct": {
+          "default": 0.1,
+          "title": "Commission Pct",
+          "type": "number"
+        },
+        "slippage_pct": {
+          "default": 0.05,
+          "title": "Slippage Pct",
+          "type": "number"
+        },
+        "n_splits": {
+          "default": 3,
+          "title": "N Splits",
+          "type": "integer"
+        },
+        "train_ratio": {
+          "default": 0.7,
+          "title": "Train Ratio",
+          "type": "number"
+        },
+        "interval": {
+          "default": "1d",
+          "title": "Interval",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol",
+        "strategy"
+      ],
+      "title": "walk_forward_backtest_strategyArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "yahoo_price",
+    "description": "Real-time price quote from Yahoo Finance for any stock, crypto, ETF or index.\n\nArgs:\n    symbol: Yahoo Finance symbol — e.g. AAPL, BTC-USD, SPY, ^GSPC, EURUSD=X, THYAO.IS\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "yahoo_priceArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "market_snapshot",
+    "description": "Global market overview: major indices, top crypto, FX rates, and key ETFs.\nPowered by Yahoo Finance.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "market_snapshotArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "bitcoin_market_pulse",
+    "description": "Single-call BTC macro context: price, dominance, total market cap + risk assessment.\n\nUse this WHENEVER analyzing any cryptocurrency (altcoin or BTC itself) to\nget the broader market frame in one shot. A SOL/ETH/whatever setup looks\nvery different when BTC is dumping with rising dominance vs. when alts\nare leading. Calling this once gives Claude the macro context to provide\nBitcoin-aware commentary alongside the per-coin analysis - without\nchaining 2-3 separate yahoo_price + manual reasoning calls.\n\nReturns:\n  - bitcoin: price, 24h change %, volume, market cap\n  - dominance: BTC and ETH market-cap share of total crypto\n  - total_market: total crypto mcap + 24h change + active coin count\n  - assessment: label (HIGH_RISK / ALT_RISK / ALT_FAVORABLE / OPPORTUNITY_WITH_CAUTION / NEUTRAL) + 1-paragraph reasoning\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "bitcoin_market_pulseArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "stock_extended_hours",
+    "description": "Real-time pre-market and after-hours prices for a US stock symbol.\n\nUse this when the user asks about a stock outside the regular 9:30am-4pm\nET session — earnings reactions, overnight news, \"what is X doing in\nafter-hours?\", \"how did Y open in pre-market?\". Returns the most recent\nvalid print from each session window (pre-market, regular, post-market)\nalong with computed % changes vs. the previous close and the regular\nclose, respectively.\n\nDuring the regular session, post_market will be null (no data yet).\nOn weekends/holidays, returns whatever's most recent in each window.\n\nArgs:\n    symbol: US stock symbol — AAPL, NVDA, TSLA, SPY, ^GSPC, etc.\n\nReturns:\n    - pre_market: {price, as_of_utc, change_vs_previous_close_pct} or null\n    - regular: {price, as_of_utc, change_pct} (consolidated tape close)\n    - post_market: {price, as_of_utc, change_vs_regular_close_pct} or null\n    - previous_close, currency, exchange, market_state for context\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "stock_extended_hoursArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "stock_options_chain",
+    "description": "Full options chain (calls + puts) for a US stock symbol and one expiry.\n\nUse this when the user asks \"what's the options chain for X?\", \"show me\nAAPL puts expiring next Friday\", or wants to inspect bid/ask/IV/volume on\na specific strike. If no expiry is provided, returns the nearest expiry\nso Claude can quote it back and ask \"want a different one?\".\n\nArgs:\n    symbol: US stock symbol — AAPL, NVDA, TSLA, SPY, etc.\n    expiry: Optional ISO date (YYYY-MM-DD). Must match one of the\n        `available_expiries` Yahoo returns; otherwise returns an error\n        with the list of valid dates.\n\nReturns:\n    - underlying_price, underlying_change_pct\n    - requested_expiry, available_expiries (list of YYYY-MM-DD)\n    - call_count, put_count\n    - calls: list of {strike, last_price, bid, ask, volume,\n      open_interest, implied_volatility, in_the_money, expiration}\n    - puts: same shape as calls\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "expiry": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expiry"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "stock_options_chainArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "stock_options_unusual_activity",
+    "description": "Top strikes by volume / open-interest ratio — institutional positioning signal.\n\nUse this when the user asks \"any unusual options activity on X?\", \"where\nis the smart money positioned on NVDA before earnings?\", or wants a\nV/OI screener for a ticker. A V/OI ratio > 1 means today's volume already\nexceeds standing open interest, which classically flags fresh institutional\npositioning on a specific strike in a specific direction (call vs put).\n\nScans the soonest few expirations, filters out illiquid strikes (under\n`min_volume`), and returns the top-N sorted by V/OI descending. Also\nreturns aggregate call vs put volume so Claude can comment on the\noverall directional bias.\n\nArgs:\n    symbol: US stock symbol — AAPL, NVDA, TSLA, SPY, META, etc.\n    top_n: How many strikes to return. Default 10.\n    min_volume: Filter floor for today's volume — prevents noise from\n        illiquid strikes with high V/OI ratios. Default 100.\n    expiries: Number of soonest expirations to scan. Default 4\n        (typically covers ~1 month of weeklies + monthlies).\n\nReturns:\n    - underlying_price\n    - expiries_scanned (list of YYYY-MM-DD)\n    - total_call_volume, total_put_volume, put_call_volume_ratio\n    - unusual: list of top-N contracts sorted by V/OI desc, each with\n      {strike, side (call|put), expiration, volume, open_interest,\n      v_oi_ratio, last_price, implied_volatility, in_the_money,\n      strike_vs_spot_pct (moneyness)}\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "title": "Symbol",
+          "type": "string"
+        },
+        "top_n": {
+          "default": 10,
+          "title": "Top N",
+          "type": "integer"
+        },
+        "min_volume": {
+          "default": 100,
+          "title": "Min Volume",
+          "type": "integer"
+        },
+        "expiries": {
+          "default": 4,
+          "title": "Expiries",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "stock_options_unusual_activityArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "futures_market_overview",
+    "description": "Top futures contracts sorted by trading volume.\n\nArgs:\n    category:   all | equity_index | energy | metals | agriculture | rates | forex | crypto_futures\n    exchanges:  us (CME, COMEX, NYMEX, CBOT) | global (adds ICE, EUREX)\n    limit:      max contracts to return (default 30)\n    volume_min: minimum volume filter (0 = no filter)\n\nReturns:\n    Dict with total_available count and list of contracts with OHLCV + % change.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "category": {
+          "default": "all",
+          "title": "Category",
+          "type": "string"
+        },
+        "exchanges": {
+          "default": "us",
+          "title": "Exchanges",
+          "type": "string"
+        },
+        "limit": {
+          "default": 30,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "volume_min": {
+          "default": 0,
+          "title": "Volume Min",
+          "type": "integer"
+        }
+      },
+      "title": "futures_market_overviewArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "futures_top_movers",
+    "description": "Futures contracts with the biggest percentage moves today.\n\nArgs:\n    direction:  gainers | losers\n    exchanges:  us | global\n    limit:      max results\n    volume_min: minimum volume filter (default 10, filters illiquid contracts)\n\nReturns:\n    List of futures ranked by % change with OHLCV data.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "direction": {
+          "default": "gainers",
+          "title": "Direction",
+          "type": "string"
+        },
+        "exchanges": {
+          "default": "us",
+          "title": "Exchanges",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "volume_min": {
+          "default": 10,
+          "title": "Volume Min",
+          "type": "integer"
+        }
+      },
+      "title": "futures_top_moversArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "futures_category_snapshot",
+    "description": "Quote all major front-month contracts in a specific futures category.\n\nArgs:\n    category: equity_index | energy | metals | agriculture | rates | forex | crypto_futures\n\nReturns:\n    OHLCV quotes for the standard watchlist of contracts in that category.\n    Example symbols: ES1! NQ1! (equity_index), CL1! NG1! (energy), GC1! SI1! (metals).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "category": {
+          "default": "energy",
+          "title": "Category",
+          "type": "string"
+        }
+      },
+      "title": "futures_category_snapshotArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "futures_watchlist",
+    "description": "Return the full categorized list of well-known front-month futures symbols.\n\nCategories: equity_index, energy, metals, agriculture, rates, forex, crypto_futures.\nUse these symbols with futures_category_snapshot or coin_analysis for deeper analysis.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "futures_watchlistArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "stock_screener",
+    "description": "Screen stocks by share type — the API twin of TradingView's\n\"Common stock\" / \"Preferred stock\" symbol-search filter.\n\nArgs:\n    country: TradingView market name — e.g. america, korea, germany,\n        brazil, japan, uk, india, turkey, canada, australia, france, hongkong\n    stock_type: common | preferred\n    limit: rows to return (max 2000, single upstream request), ranked by market cap descending\n    exclude_otc: default True — drop OTC listings (foreign companies traded\n        over-the-counter); \"america\" otherwise means \"US venue\", not \"US company\"\n    compact: default False — True returns only ticker/symbol/price/currency/\n        change_percent per row (light payload for bulk price feeds)\n    sort_by: market_cap (default) | dividend_yield | change | price —\n        server-side descending sort over the WHOLE market, so e.g.\n        sort_by=dividend_yield with limit=20 is the market's true top-20\n        dividend payers, not just the biggest companies re-sorted\n\nReturns:\n    Envelope dict: total_matches (market-wide count), returned, and rows\n    of {ticker, symbol, description, exchange, price, open, high, low,\n    currency, change_percent, dividend_yield, market_cap} — price is the\n    current/last close; open/high/low are the current session's daily bar. Prices are in the\n    market's local currency (e.g. KRW for korea).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "country": {
+          "default": "america",
+          "title": "Country",
+          "type": "string"
+        },
+        "stock_type": {
+          "default": "common",
+          "title": "Stock Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 50,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "exclude_otc": {
+          "default": true,
+          "title": "Exclude Otc",
+          "type": "boolean"
+        },
+        "compact": {
+          "default": false,
+          "title": "Compact",
+          "type": "boolean"
+        },
+        "sort_by": {
+          "default": "market_cap",
+          "title": "Sort By",
+          "type": "string"
+        }
+      },
+      "title": "stock_screenerArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "stock_prices",
+    "description": "Current price + daily % change for specific stock symbols.\n\nArgs:\n    tickers: comma-separated EXCHANGE:SYMBOL list (max 2000 — one\n        upstream request even at full size), e.g.\n        \"NASDAQ:NVDA, NASDAQ:TSLA, KRX:005930\". The exchange prefix is\n        required — the scanner's direct-ticker lookup is exchange-scoped.\n\nReturns:\n    Envelope dict: rows of {ticker, symbol, description, exchange, price,\n    open, high, low, currency, change_percent} plus a not_found list naming any requested\n    ticker the scanner didn't recognize.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "tickers": {
+          "title": "Tickers",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tickers"
+      ],
+      "title": "stock_pricesArguments",
+      "type": "object"
+    }
+  }
+]

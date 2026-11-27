@@ -1,0 +1,29 @@
+[
+  {
+    "name": "memory_recall",
+    "description": "Associative memory recall over linked markdown notes. Retrieves relevant context using vector search, 1-hop [[wikilink]] graph expansion, ordered by dense similarity (cross-encoder rerank is opt-in). Returns a formatted context bundle.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "The search query or topic to retrieve memory for."
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "associative",
+            "direct",
+            "ab"
+          ],
+          "default": "associative",
+          "description": "Retrieval mode: 'associative' (vector + graph expansion, recommended), 'direct' (vector search only), or 'ab' (run both and log comparison telemetry)."
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  }
+]

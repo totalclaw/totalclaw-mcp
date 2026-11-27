@@ -1,0 +1,37 @@
+[
+  {
+    "name": "search_bolt_pattern",
+    "description": "Search automotive wheel fitment specifications (PCD / bolt pattern, center bore, offset ET, thread size, lug count) by vehicle make, model, year, or exact PCD (e.g. 'Jimny', 'Roadster', '5x114.3', 'Raize', 'BMW 3 Series').",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Search term: vehicle model name, manufacturer make, chassis code, or bolt pattern (e.g., 'Jimny', 'MX-5', '4x100', 'Tesla')."
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "get_make_models",
+    "description": "List all automotive manufacturers and supported model highlights available in the BoltPatternHQ sample library.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "get_sample_data",
+    "description": "Export the complete curated 50-row JSON sample dataset for CAD integration, wheel fitment calculators, and B2B testing.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

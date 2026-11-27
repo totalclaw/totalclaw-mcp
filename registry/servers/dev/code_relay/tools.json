@@ -1,0 +1,191 @@
+[
+  {
+    "name": "bind_project",
+    "description": "Bind the current project and branch to Code Relay.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "ref": {
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "orchestrator",
+            "checkpoint"
+          ],
+          "type": "string"
+        },
+        "root": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "role"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "create_checkpoint_invite",
+    "description": "Create a short-lived checkpoint join link.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "expires": {
+          "maximum": 1440,
+          "minimum": 5,
+          "type": "integer"
+        },
+        "one_time": {
+          "type": "boolean"
+        },
+        "root": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  },
+  {
+    "name": "join_checkpoint",
+    "description": "Join a branch-scoped checkpoint subscription.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "destination": {
+          "type": "string"
+        },
+        "root": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "watcher_status",
+    "description": "Show the legacy local watcher state.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "root": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  },
+  {
+    "name": "stop_watcher",
+    "description": "Stop the legacy local watcher state.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "root": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  },
+  {
+    "name": "doctor",
+    "description": "Run non-mutating local health checks.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "root": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  },
+  {
+    "name": "publish_runbook",
+    "description": "Validate and publish a runbook.md.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "force": {
+          "type": "boolean"
+        },
+        "markdown": {
+          "type": "string"
+        },
+        "no_git": {
+          "type": "boolean"
+        },
+        "root": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "markdown"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "status",
+    "description": "Show runbook and receipt status.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "root": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  },
+  {
+    "name": "fetch_receipt",
+    "description": "Load and validate a runbook receipt.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "root": {
+          "type": "string"
+        },
+        "runbook_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "runbook_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "analyze",
+    "description": "Analyze a runbook receipt and determine the next state.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "root": {
+          "type": "string"
+        },
+        "runbook_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "runbook_id"
+      ],
+      "type": "object"
+    }
+  }
+]

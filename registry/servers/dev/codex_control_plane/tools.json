@@ -1,0 +1,2630 @@
+[
+  {
+    "name": "codex_list_projects",
+    "description": "List known Codex projects from registry, hook history, transcripts, and cached Codex state. Use this before preflight or submit when you need a project reference; later tools accept projectId, project name, or project path and return canonical projectId. Next call codex_preflight_project_run for a concrete project.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "compact": {
+          "type": "boolean",
+          "default": true
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000,
+          "default": 200
+        },
+        "refresh": {
+          "type": "boolean",
+          "default": false
+        },
+        "include_private_details": {
+          "type": "boolean",
+          "default": false
+        },
+        "roots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_list_project_chats",
+    "description": "List chats for one project from the bounded read model. Use this to find existing threads before continuation or review. Next call codex_get_chat_status, codex_get_chat, or codex_submit_task.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "project_id"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "include_archived": {
+          "type": "boolean",
+          "default": false
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 100
+        },
+        "cursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "include_preview": {
+          "type": "boolean",
+          "default": false
+        },
+        "title_max_chars": {
+          "type": "integer",
+          "minimum": 20,
+          "maximum": 2000,
+          "default": 160
+        },
+        "preview_max_chars": {
+          "type": "integer",
+          "minimum": 20,
+          "maximum": 4000,
+          "default": 200
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_list_active_chats",
+    "description": "List chats that look active from tracked, hook, transcript, or cached evidence. Use this for operator inspection, not for creating retries. Next call codex_get_turn_status or codex_get_operation_status when ids are available.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "include_waiting_for_user": {
+          "type": "boolean",
+          "default": true
+        },
+        "include_waiting_for_approval": {
+          "type": "boolean",
+          "default": true
+        },
+        "include_running": {
+          "type": "boolean",
+          "default": true
+        },
+        "active_window_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1440,
+          "default": 120
+        },
+        "include_evidence": {
+          "type": "boolean",
+          "default": false
+        },
+        "title_max_chars": {
+          "type": "integer",
+          "minimum": 20,
+          "maximum": 2000,
+          "default": 160
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_search_chats",
+    "description": "Search chat history through the MCP-owned index and safe fallback sources. Use this for discovery or recovery when ids were lost. Do not use search results as proof that a turn is still active.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "query"
+      ],
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "match_mode": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "all_terms",
+            "any_term",
+            "phrase"
+          ],
+          "default": "auto"
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "include_archived": {
+          "type": "boolean",
+          "default": false
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "default": 10
+        },
+        "cursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "include_snippets": {
+          "type": "boolean",
+          "default": true
+        },
+        "snippets_per_chat": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5,
+          "default": 2
+        },
+        "snippet_max_chars": {
+          "type": "integer",
+          "minimum": 80,
+          "maximum": 1000,
+          "default": 240
+        },
+        "refresh_index": {
+          "type": "boolean",
+          "default": true
+        },
+        "index_time_budget_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60,
+          "default": 8
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_chat_status",
+    "description": "Read lightweight chat status and safe previews. Use this to inspect a known thread without starting live work. Next call codex_get_chat for content or codex_submit_task for a new operation.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "chat_id"
+      ],
+      "properties": {
+        "chat_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "preview_max_chars": {
+          "type": "integer",
+          "minimum": 20,
+          "maximum": 4000,
+          "default": 300
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_chat",
+    "description": "Read bounded chat content from hook history, transcripts, or legacy fallback. Use this for context recovery and final report inspection. It is not a write path and should not trigger retries.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "chat_id"
+      ],
+      "properties": {
+        "chat_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "range": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "all",
+                "last_messages",
+                "last_turns",
+                "time_range",
+                "line_range",
+                "token_budget"
+              ],
+              "default": "last_messages"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000,
+              "default": 50
+            },
+            "from": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null
+            },
+            "to": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null
+            },
+            "token_budget": {
+              "type": "integer",
+              "minimum": 1000,
+              "maximum": 200000,
+              "default": 12000
+            }
+          },
+          "additionalProperties": false
+        },
+        "include_tool_calls": {
+          "type": "boolean",
+          "default": false
+        },
+        "include_tool_outputs": {
+          "type": "boolean",
+          "default": false
+        },
+        "include_command_outputs": {
+          "type": "boolean",
+          "default": false
+        },
+        "include_reasoning": {
+          "type": "boolean",
+          "default": false
+        },
+        "include_metadata": {
+          "type": "boolean",
+          "default": true
+        },
+        "include_items": {
+          "type": "boolean",
+          "default": false
+        },
+        "tail_max_messages": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000,
+          "default": 80
+        },
+        "tail_max_chars": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 200000,
+          "default": 30000
+        },
+        "force_refresh_summary": {
+          "type": "boolean",
+          "default": false
+        },
+        "response_budget_chars": {
+          "type": "integer",
+          "minimum": 2000,
+          "maximum": 300000,
+          "default": 50000
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "structured",
+            "markdown",
+            "compact"
+          ],
+          "default": "structured"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_send_message",
+    "description": "Compatibility write for sending a message to an existing Codex thread. Prefer codex_submit_task with operation_type='send_message' for durable long work. In client mode this delegates to the durable queue.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "chat_id",
+        "message"
+      ],
+      "properties": {
+        "chat_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200000
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "normal",
+            "command",
+            "append_context"
+          ],
+          "default": "normal"
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7200,
+          "default": 300
+        },
+        "first_message_timeout_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 600,
+          "default": 0,
+          "description": "Deprecated and ignored. This tool now returns immediately after turn/start; use codex_get_turn_status for messages."
+        },
+        "first_message_max_chars": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 200000,
+          "default": 8000
+        },
+        "approval_policy": {
+          "type": "string",
+          "enum": [
+            "never",
+            "on-request",
+            "on-failure",
+            "untrusted",
+            "respect_existing",
+            "never_auto_approve",
+            "ask_openclaw"
+          ],
+          "default": "on-request"
+        },
+        "collaboration_mode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "default",
+            "plan",
+            null
+          ],
+          "default": null
+        },
+        "sandbox": {
+          "type": "string",
+          "enum": [
+            "danger-full-access",
+            "workspace-write",
+            "read-only",
+            "respect_existing"
+          ],
+          "default": "read-only"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_start_chat",
+    "description": "Compatibility write for starting a new Codex chat. Prefer codex_submit_task with operation_type='start_chat' for durable long work. In client mode this delegates to the durable queue.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "project_id",
+        "message"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200000
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "cwd": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "sandbox": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "read-only",
+            "workspace-write",
+            "danger-full-access",
+            null
+          ],
+          "default": "read-only"
+        },
+        "approval_policy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "never",
+            "on-request",
+            "on-failure",
+            "untrusted",
+            "ask_openclaw",
+            null
+          ],
+          "default": "on-request"
+        },
+        "collaboration_mode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "default",
+            "plan",
+            null
+          ],
+          "default": null
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7200,
+          "default": 300
+        },
+        "first_message_timeout_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 600,
+          "default": 0,
+          "description": "Deprecated and ignored. This tool now returns immediately after turn/start; use codex_get_turn_status for messages."
+        },
+        "first_message_max_chars": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 200000,
+          "default": 8000
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_start_plan_workflow",
+    "description": "Start a durable Plan Mode workflow and return workflowId immediately. Use this when a plan must be prepared before implementation. Next poll codex_get_workflow_status, then call codex_approve_plan when latestPlan is ready.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "project_id",
+        "message"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200000
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "cwd": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "sandbox": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "read-only",
+            "workspace-write",
+            "danger-full-access",
+            null
+          ],
+          "default": "read-only"
+        },
+        "approval_policy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "never",
+            "on-request",
+            "on-failure",
+            "untrusted",
+            "ask_openclaw",
+            null
+          ],
+          "default": "on-request"
+        },
+        "client_request_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "goal": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Optional explicit Codex thread goal objective mirrored through app-server thread/goal/set after the workflow thread exists."
+        },
+        "goal_token_budget": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 10000000,
+          "default": null
+        },
+        "goal_completion_action": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "clear",
+            "set_complete",
+            "leave",
+            null
+          ],
+          "default": "clear",
+          "description": "What MCP should do with its managed Codex thread goal after workflow completion."
+        },
+        "goal_completion_objective": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Optional objective used when goal_completion_action is set_complete."
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7200,
+          "default": 300
+        },
+        "first_message_timeout_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 600,
+          "default": 0,
+          "description": "Deprecated and ignored. Workflow start returns after turn/start; poll codex_get_workflow_status for plan readiness."
+        },
+        "first_message_max_chars": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 200000,
+          "default": 8000
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_start_review_workflow",
+    "description": "Start a durable Codex review workflow and return workflowId immediately. Use this for code review tasks. Next poll codex_get_workflow_status for progress and final report.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "target_type"
+      ],
+      "properties": {
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "cwd": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "target_type": {
+          "type": "string",
+          "enum": [
+            "uncommitted_changes",
+            "base_branch",
+            "commit",
+            "custom"
+          ]
+        },
+        "base_branch": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "commit_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "commit_title": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "instructions": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "maxLength": 200000
+        },
+        "delivery": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "inline",
+            "detached",
+            null
+          ],
+          "default": null
+        },
+        "client_request_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "sandbox": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "read-only",
+            "workspace-write",
+            "danger-full-access",
+            null
+          ],
+          "default": "read-only"
+        },
+        "approval_policy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "never",
+            "on-request",
+            "on-failure",
+            "untrusted",
+            "ask_openclaw",
+            null
+          ],
+          "default": "on-request"
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7200,
+          "default": 300
+        },
+        "first_message_max_chars": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 200000,
+          "default": 8000
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_workflow_status",
+    "description": "Poll workflow state from storage by default. Use this for Plan Mode, execution, and review workflows. Follow nextRecommendedAction and do not create replacement work unless guidance tells you to.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "workflow_id"
+      ],
+      "properties": {
+        "workflow_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "last_messages": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "default": 10
+        },
+        "message_max_chars": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 200000,
+          "default": 8000
+        },
+        "include_events": {
+          "type": "boolean",
+          "default": true
+        },
+        "refresh_live": {
+          "type": "boolean",
+          "default": false,
+          "description": "Reserved explicit live refresh flag. Default polling is passive."
+        },
+        "refresh_live_goal": {
+          "type": "boolean",
+          "default": false,
+          "description": "Best-effort live thread/goal sync. Defaults to false so frequent workflow polling stays passive and cannot create app-server requests."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_adopt_workflow_plan",
+    "description": "Adopt a valid newer Plan Mode candidate already present in the workflow thread. Use this only when status or diagnostics reports an adoptable plan. Next poll codex_get_workflow_status.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "workflow_id",
+        "candidate_turn_id",
+        "candidate_plan_hash"
+      ],
+      "properties": {
+        "workflow_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "candidate_turn_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "candidate_plan_hash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "client_request_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "adoption_note": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "maxLength": 4000
+        },
+        "message_max_chars": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 200000,
+          "default": 8000
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_approve_plan",
+    "description": "Approve the latest ready plan and queue execution. Use this after codex_get_workflow_status reports plan_ready and a valid latestPlan. Next poll codex_get_workflow_status with the same workflowId.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "workflow_id"
+      ],
+      "properties": {
+        "workflow_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "client_request_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Stable retry idempotency key for workflow approval/execution."
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": "Implement the plan."
+        },
+        "output_schema": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "default": null,
+          "additionalProperties": true,
+          "description": "Optional JSON Schema passed to app-server outputSchema for the execution turn final assistant message."
+        },
+        "approval_policy": {
+          "type": "string",
+          "enum": [
+            "never",
+            "on-request",
+            "on-failure",
+            "untrusted",
+            "respect_existing",
+            "never_auto_approve",
+            "ask_openclaw"
+          ],
+          "default": "on-request"
+        },
+        "sandbox": {
+          "type": "string",
+          "enum": [
+            "danger-full-access",
+            "workspace-write",
+            "read-only",
+            "respect_existing"
+          ],
+          "default": "read-only"
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7200,
+          "default": 300
+        },
+        "first_message_max_chars": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 200000,
+          "default": 8000
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_preflight_project_run",
+    "description": "Check whether a project is safe to use before a Codex run. Use this after project discovery and before write operations. Do not treat skipped worker-managed account checks as hard auth failures.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "cwd": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "sandbox": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "read-only",
+            "workspace-write",
+            "danger-full-access",
+            null
+          ],
+          "default": null
+        },
+        "approval_policy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "never",
+            "on-request",
+            "on-failure",
+            "untrusted",
+            "ask_openclaw",
+            null
+          ],
+          "default": null
+        },
+        "workflow_kind": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "plan",
+            "write",
+            "review",
+            null
+          ],
+          "default": "plan"
+        },
+        "live_probe": {
+          "type": "boolean",
+          "default": false
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300,
+          "default": 30
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_turn_status",
+    "description": "Read one tracked Codex turn, including safe progress and terminal evidence. Use this when you have threadId and turnId. Do not infer stalled state from row age alone.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "turn_id"
+      ],
+      "properties": {
+        "turn_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "last_messages": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "default": 10
+        },
+        "message_max_chars": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 200000,
+          "default": 8000
+        },
+        "progress_events": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 10
+        },
+        "progress_max_chars": {
+          "type": "integer",
+          "minimum": 200,
+          "maximum": 20000,
+          "default": 2000
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_execute_plan",
+    "description": "Compatibility write for executing an approved plan. Prefer codex_approve_plan or codex_submit_task with operation_type='execute_plan'. In client mode this delegates to durable workflow execution.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "workflow_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "chat_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "client_request_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": "Implement the plan."
+        },
+        "output_schema": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "default": null,
+          "additionalProperties": true,
+          "description": "Optional JSON Schema passed to app-server outputSchema for the execution turn final assistant message."
+        },
+        "force": {
+          "type": "boolean",
+          "default": false
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7200,
+          "default": 300
+        },
+        "first_message_timeout_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 600,
+          "default": 0,
+          "description": "Deprecated and ignored. Plan execution returns after turn/start; poll codex_get_workflow_status or codex_get_turn_status."
+        },
+        "first_message_max_chars": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 200000,
+          "default": 8000
+        },
+        "approval_policy": {
+          "type": "string",
+          "enum": [
+            "never",
+            "on-request",
+            "on-failure",
+            "untrusted",
+            "respect_existing",
+            "never_auto_approve",
+            "ask_openclaw"
+          ],
+          "default": "on-request"
+        },
+        "sandbox": {
+          "type": "string",
+          "enum": [
+            "danger-full-access",
+            "workspace-write",
+            "read-only",
+            "respect_existing"
+          ],
+          "default": "read-only"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_submit_task",
+    "description": "Queue a durable Codex write operation and return operationId immediately. For project-scoped work, pass project_id from codex_list_projects.projectId; project name or project path are accepted aliases and MCP stores the canonical projectId. Always pass client_request_id and poll codex_get_operation_status.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "operation_type"
+      ],
+      "properties": {
+        "operation_type": {
+          "type": "string",
+          "enum": [
+            "start_chat",
+            "send_message",
+            "execute_plan",
+            "steer_turn",
+            "fork_thread"
+          ]
+        },
+        "client_request_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Stable retry idempotency key. If omitted, MCP creates a new operation and relies on prompt deduplication to prevent active duplicate turns."
+        },
+        "agent_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Optional orchestrator/agent id used by the central worker scheduler for per-agent limits."
+        },
+        "resource_keys": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "default": null,
+          "description": "Optional write-scope keys. Disjoint keys allow parallel workspace-write/danger-full-access turns in the same project.",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "maxItems": 50
+        },
+        "priority": {
+          "type": "string",
+          "enum": [
+            "low",
+            "normal",
+            "high"
+          ],
+          "default": "normal"
+        },
+        "estimated_cost_class": {
+          "type": "string",
+          "enum": [
+            "light",
+            "normal",
+            "heavy"
+          ],
+          "default": "normal"
+        },
+        "thread_mode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "new_thread",
+            "continue_thread",
+            "auto",
+            null
+          ],
+          "default": null,
+          "description": "Explicit thread intent. Defaults to new_thread for start_chat and continue_thread for send_message/execute_plan."
+        },
+        "dedup_policy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "idempotency_only",
+            "active_prompt_guard",
+            "allow_parallel_with_resource_keys",
+            null
+          ],
+          "default": null,
+          "description": "Controls prompt duplicate handling without changing client_request_id idempotency."
+        },
+        "allow_historical_continuation": {
+          "type": "boolean",
+          "default": false,
+          "description": "Opt-in only. Allows fuzzy duplicate matching to continue a completed historical thread."
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Project reference for start_chat and other project-scoped operations. Prefer the canonical projectId returned by codex_list_projects; the listed project name or full project path are also accepted and canonicalized before durable writes."
+        },
+        "chat_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Required for operation_type='steer_turn'. Target thread that owns the active turn."
+        },
+        "source_thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Required for operation_type='fork_thread'. Source thread to fork from."
+        },
+        "expected_turn_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Required for operation_type='steer_turn'. Active turn id precondition passed to Codex app-server."
+        },
+        "workflow_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 200000,
+          "default": null,
+          "description": "Required for all operation types except fork_thread. For fork_thread, omit it for fork-only or provide it to start the first turn in the forked thread."
+        },
+        "input_items": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "default": null,
+          "maxItems": 10,
+          "description": "Optional image inputs appended to the text message for operation types that start a new turn. Supports image URL and localImage file path items only.",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "type",
+                  "url"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "image"
+                    ]
+                  },
+                  "url": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8192
+                  },
+                  "detail": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "auto",
+                      "low",
+                      "high",
+                      "original",
+                      null
+                    ],
+                    "default": "auto"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type",
+                  "path"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "localImage"
+                    ]
+                  },
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "detail": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "auto",
+                      "low",
+                      "high",
+                      "original",
+                      null
+                    ],
+                    "default": "auto"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "cwd": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "fork_config": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "default": null,
+          "additionalProperties": true
+        },
+        "ephemeral": {
+          "type": "boolean",
+          "default": false
+        },
+        "output_schema": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "default": null,
+          "additionalProperties": true,
+          "description": "Optional JSON Schema passed to app-server outputSchema for this turn final assistant message."
+        },
+        "collaboration_mode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "default",
+            "plan",
+            null
+          ],
+          "default": null
+        },
+        "approval_policy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "never",
+            "on-request",
+            "on-failure",
+            "untrusted",
+            "ask_openclaw",
+            "respect_existing",
+            "never_auto_approve",
+            null
+          ],
+          "default": "on-request"
+        },
+        "sandbox": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "read-only",
+            "workspace-write",
+            "danger-full-access",
+            "respect_existing",
+            null
+          ],
+          "default": "read-only"
+        },
+        "force": {
+          "type": "boolean",
+          "default": false
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7200,
+          "default": 300
+        },
+        "first_message_max_chars": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 200000,
+          "default": 8000
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_operation_status",
+    "description": "Poll a durable operation from storage. Use this after codex_submit_task and follow nextRecommendedAction, pollRecommended, queueState, and agentGuidance. Never create a new retry while an existing operation is active.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "operation_id"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "last_messages": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "default": 10
+        },
+        "message_max_chars": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 200000,
+          "default": 8000
+        },
+        "progress_events": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 10
+        },
+        "progress_max_chars": {
+          "type": "integer",
+          "minimum": 200,
+          "maximum": 20000,
+          "default": 2000
+        },
+        "include_events": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_list_pending_interactions",
+    "description": "List pending approvals, input requests, or elicitation requests. Use this when operation or workflow status reports pending interaction. Next answer with codex_answer_pending_interaction or ask a human.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "turn_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "operation_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "workflow_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "pending",
+            "answered",
+            "auto_declined",
+            "expired",
+            "failed",
+            "orphaned_after_app_server_exit",
+            null
+          ],
+          "default": "pending"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "default": 50
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_answer_pending_interaction",
+    "description": "Answer one pending Codex interaction so a turn can continue. Use this only for a listed interaction id. Next poll the owning operation, turn, or workflow.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "interaction_id"
+      ],
+      "properties": {
+        "interaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decision": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "accept",
+            "acceptForSession",
+            "decline",
+            "cancel",
+            null
+          ],
+          "default": null
+        },
+        "decision_payload": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "default": null
+        },
+        "answers": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "default": null
+        },
+        "action": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "accept",
+            "decline",
+            "cancel",
+            null
+          ],
+          "default": null
+        },
+        "content": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "default": null
+        },
+        "permissions": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "default": null
+        },
+        "scope": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "turn",
+            "session",
+            null
+          ],
+          "default": "turn"
+        },
+        "strict_auto_review": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": null
+        },
+        "raw_response": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_interrupt_turn",
+    "description": "Interrupt a running Codex turn by direct ids or durable operation/workflow context. Use this for explicit cancellation or stop conditions. Next poll status until terminal evidence is visible.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "turn_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "operation_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "workflow_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120,
+          "default": 30
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_archive_thread",
+    "description": "Archive a known Codex thread through the worker or app-server command lane. Use this only when the thread has no active work. Next poll codex_get_worker_command_status when commandId is returned.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "thread_id"
+      ],
+      "properties": {
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120,
+          "default": 30
+        },
+        "refresh_catalog": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_unarchive_thread",
+    "description": "Unarchive a known Codex thread through the worker or app-server command lane. Use this only for an existing archived thread. Next poll codex_get_worker_command_status when commandId is returned.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "thread_id"
+      ],
+      "properties": {
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120,
+          "default": 30
+        },
+        "refresh_catalog": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_start_thread_compaction",
+    "description": "Start context compaction for a known thread and return actionId. Use this after active work is terminal. Next poll codex_get_thread_compaction_status.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "thread_id"
+      ],
+      "properties": {
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120,
+          "default": 30
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_thread_compaction_status",
+    "description": "Poll a thread compaction action. Use this with actionId from codex_start_thread_compaction. It is passive and should return a bounded status or guidance.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "action_id"
+      ],
+      "properties": {
+        "action_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "include_events": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_worker_status",
+    "description": "Read central worker heartbeat and execution-mode state without starting app-server. Use this when health or queue guidance says inspect_worker_health. Next compare with queue and concurrency status.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "include_recent_commands": {
+          "type": "boolean",
+          "default": false
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 20
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_queue_status",
+    "description": "Read durable queue state, queued reasons, running operations, and worker assignment. Use this to understand slot pressure or lock waits. Do not retry when queued work already exists.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "queued",
+            "scheduled",
+            "running",
+            "completed",
+            "failed",
+            "blocked",
+            null
+          ],
+          "default": null
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 100
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_concurrency_status",
+    "description": "Read active turn counts and scheduler resource locks. Use this with queue status when diagnosing parallel work. Active locks are not a retry instruction by themselves.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "include_locks": {
+          "type": "boolean",
+          "default": true
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 200
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_worker_command_status",
+    "description": "Poll a worker command created by a client-mode control action. Use this for archive, unarchive, compaction, restart, runtime refresh, and delegated lifecycle commands. Keep include_result=false unless the result is needed.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "command_id"
+      ],
+      "properties": {
+        "command_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "include_result": {
+          "type": "boolean",
+          "default": true
+        },
+        "max_result_chars": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 200000,
+          "default": 12000
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_restart_app_server",
+    "description": "Restart only the MCP-owned codex-app-server subprocess. Use this only when guidance recommends restart and active work is absent or explicitly handled. In client mode this delegates to the worker command lane.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "start_after_restart": {
+          "type": "boolean",
+          "default": true
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120,
+          "default": 30
+        },
+        "force": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_app_server_status",
+    "description": "Read MCP-owned app-server status without starting it. Use this with worker, queue, and concurrency status to verify active work. In client mode prefer worker-derived active turns over local guesses.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "include_recent_events": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_runtime_capabilities",
+    "description": "Read compact runtime capabilities, models, permissions, hooks, account state, and supported methods. Use this after health or before new work. In client mode refresh queues a worker command.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "refresh": {
+          "type": "boolean",
+          "default": false
+        },
+        "cwd": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30,
+          "default": 2
+        },
+        "include_models": {
+          "type": "boolean",
+          "default": true
+        },
+        "include_hooks": {
+          "type": "boolean",
+          "default": true
+        },
+        "include_skills": {
+          "type": "boolean",
+          "default": true
+        },
+        "include_account": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_health_summary",
+    "description": "Read compact MCP readiness and contract metadata. Use this first on startup, reconnect, and after MCP restart. Next inspect runtime capabilities or follow agentGuidance if health is degraded.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "operation_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "workflow_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "turn_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "action_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "command_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "since_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10080,
+          "default": 120
+        },
+        "stale_after_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10080,
+          "default": 30
+        },
+        "include_recent_errors": {
+          "type": "boolean",
+          "default": true
+        },
+        "max_recent_errors": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 50,
+          "default": 5
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_agent_contract",
+    "description": "Read the machine-readable agent guide for this MCP server. Use this when tools/list metadata was unavailable or when a client wants the full contract examples. It is passive and the next normal startup call is codex_health_summary.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "detail": {
+          "type": "string",
+          "enum": [
+            "compact",
+            "full"
+          ],
+          "default": "compact"
+        },
+        "client_type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "maxLength": 100
+        },
+        "include_examples": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_collect_diagnostics",
+    "description": "Collect a scoped diagnostic snapshot with compact evidence and guidance. Use this before repair when status reports failed, stale, orphaned, or degraded state. It does not execute repairs.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "operation_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "workflow_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "turn_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "since_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10080,
+          "default": 120
+        },
+        "include_logs": {
+          "type": "boolean",
+          "default": false
+        },
+        "log_limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 50
+        },
+        "event_limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 100
+        },
+        "include_timeline": {
+          "type": "boolean",
+          "default": true
+        },
+        "timeline_limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 100
+        },
+        "refresh_catalog": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_get_diagnostic_logs",
+    "description": "Read redacted diagnostic log and app-server audit entries with filters. Use this only for targeted troubleshooting, not normal polling. Raw payload mode is for local audit and remains secret-redacted.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": [
+            "all",
+            "mcp_log",
+            "app_server_events"
+          ],
+          "default": "all"
+        },
+        "workflow_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "turn_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "process_generation": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": null
+        },
+        "since_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10080,
+          "default": 120
+        },
+        "severity": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "debug",
+            "info",
+            "warning",
+            "error",
+            "critical",
+            null
+          ],
+          "default": null
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000,
+          "default": 100
+        },
+        "max_line_chars": {
+          "type": "integer",
+          "minimum": 200,
+          "maximum": 20000,
+          "default": 4000
+        },
+        "include_payload": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_analyze_issue",
+    "description": "Analyze scoped diagnostics and recommend safe next actions. Use this after collect_diagnostics or when a human needs a compact root-cause summary. Follow agentGuidance rather than inventing retries.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "problem_text": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "operation_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "workflow_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "turn_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "action_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "command_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "since_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10080,
+          "default": 120
+        },
+        "include_evidence": {
+          "type": "boolean",
+          "default": true
+        },
+        "record": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "codex_repair_issue",
+    "description": "Run an allowlisted repair action with dry-run first by default. Use this only when diagnostics or agentGuidance recommends a specific action. Stop when loopGuard.allowed is false.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "required": [
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "recover_stale_operations",
+            "refresh_catalog_and_history",
+            "reconcile_workflow_from_thread",
+            "retry_workflow_with_runtime_policy",
+            "refresh_catalog_and_kb",
+            "mark_orphaned_after_exit",
+            "restart_app_server_idle",
+            "force_restart_app_server",
+            "mark_stale_turns_orphaned",
+            "expire_stale_pending_interactions",
+            "refresh_catalog",
+            "rebuild_search_index",
+            "validate_paths_and_config",
+            "interrupt_turn",
+            "cleanup_prompt_submissions"
+          ]
+        },
+        "diagnosis_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "turn_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "operation_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "workflow_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "client_request_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "maxLength": 4000
+        },
+        "sandbox": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "read-only",
+            "workspace-write",
+            "danger-full-access",
+            null
+          ],
+          "default": null
+        },
+        "approval_policy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "never",
+            "on-request",
+            "on-failure",
+            "untrusted",
+            "ask_openclaw",
+            null
+          ],
+          "default": null
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "force": {
+          "type": "boolean",
+          "default": false
+        },
+        "stale_after_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10080,
+          "default": 30
+        },
+        "older_than_days": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3650,
+          "default": 30
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120,
+          "default": 30
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+]

@@ -1,0 +1,73 @@
+[
+  {
+    "name": "publish_article",
+    "description": "Format a Markdown article using a selected theme and publish it to '微信公众号'.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "The Markdown text to publish. REQUIRED if 'file' or 'content_url' is not provided. DO INCLUDE frontmatter if present."
+        },
+        "content_url": {
+          "type": "string",
+          "description": "A URL (e.g. GitHub raw link) to a Markdown file. Preferred over 'content' for large files to save tokens."
+        },
+        "file": {
+          "type": "string",
+          "description": "The local path (absolute or relative) to a Markdown file. Preferred over 'content' for large files to save tokens."
+        },
+        "theme_id": {
+          "type": "string",
+          "description": "ID of the theme to use (e.g., default, orangeheart, rainbow, lapis, pie, maize, purple, phycat)."
+        },
+        "app_id": {
+          "type": "string",
+          "description": "AppID for the WeChat MP platform ('微信公众号')."
+        }
+      }
+    }
+  },
+  {
+    "name": "list_themes",
+    "description": "List the themes compatible with the 'publish_article' tool to publish an article to '微信公众号'.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "register_theme",
+    "description": "Register a custom theme compatible with the 'publish_article' tool to publish an article to '微信公众号'.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the new custom theme."
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to the new custom theme CSS file. It could be a path to a local file or a URL."
+        }
+      }
+    }
+  },
+  {
+    "name": "remove_theme",
+    "description": "Remove a custom theme compatible with the 'publish_article' tool to publish an article to '微信公众号'.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the custom theme to remove."
+        }
+      }
+    }
+  }
+]

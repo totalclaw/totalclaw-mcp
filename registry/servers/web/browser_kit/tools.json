@@ -1,0 +1,679 @@
+[
+  {
+    "name": "captureTab",
+    "description": "Screenshot a tab.\nWhen: MV2 tabs only; you need pixel coordinates for coordinate tools.\nHow: browserId, windowId, tabId from bk:///context; use returned dimensions to compute x/y.\nRequires: browserId, windowId, tabId.\nReturns: value { data (base64 image), width, height, mimeType } — use width/height to scale coordinates.\nAvoid: calling on manifestVersion 3 — use readable-elements instead.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId"
+      ]
+    }
+  },
+  {
+    "name": "savePage",
+    "description": "Save a tab's page to the user's download folder as a self-contained file.\nWhen: you need to archive a page for later; works on every browser and manifest version.\nHow: format \"zip\" (default) writes index.html plus an assets/ folder — smaller, and the extracted folder is browsable and greppable. format \"html\" writes one file with resources inlined as data: URIs — larger, but opens by double-click.\nRequires: browserId, windowId, tabId. Optional: format.\nReturns: value { filename, bytes, format, resourceCount, skipped } — skipped lists resources that could not be embedded, with a reason each.\nNote: the filename is derived from the page title; the agent cannot choose it. Scripts are never saved. Fonts, srcset and iframes are not embedded, and cross-origin resources without CORS headers appear in skipped.\nAvoid: assuming an empty skipped list — check it when fidelity matters.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        },
+        "format": {
+          "description": "Output format. \"zip\" (default) writes index.html plus an assets/ folder; \"html\" writes a single file with resources inlined as data: URIs",
+          "type": "string",
+          "enum": [
+            "zip",
+            "html"
+          ]
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId"
+      ]
+    }
+  },
+  {
+    "name": "invokeJsFn",
+    "description": "Execute a JavaScript function body in the page context.\nWhen: MV2 only, and only when element/coordinate tools cannot accomplish the task — e.g. setting a native <select> (.value then dispatch change) or a range slider.\nHow: fnBodyCode is the function body only (no function wrapper); use return to send a value back. Example: return document.title;\nRequires: browserId, windowId, tabId, fnBodyCode.\nReturns: value.result = whatever you return (must be JSON-serializable).\nAvoid: on manifestVersion 3; wrapping in function () { ... }.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        },
+        "fnBodyCode": {
+          "type": "string",
+          "description": "Function body only (no function wrapper). Example: return document.title; MV2 only"
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId",
+        "fnBodyCode"
+      ]
+    }
+  },
+  {
+    "name": "openTab",
+    "description": "Open a URL in a new tab.\nWhen: navigating to a page not already open.\nHow: browserId and windowId from bk:///context; url must include scheme (https://); after success re-read context for the new tabId and wait for page load.\nRequires: browserId, windowId, url.\nReturns: value { browserId, windowId, tabId } — use the returned ids for follow-up calls.\nAvoid: interacting immediately — tab needs a moment to load.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "url": {
+          "type": "string",
+          "description": "URL to open, including scheme (e.g. https://example.com)"
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "url"
+      ]
+    }
+  },
+  {
+    "name": "closeTab",
+    "description": "Close a tab. Irreversible.\nWhen: finished with a tab and no further interaction needed.\nHow: browserId, windowId, tabId from bk:///context.\nRequires: browserId, windowId, tabId.\nReturns: ok=true once closed.\nAvoid: closing the tab you still need for further interactions.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId"
+      ]
+    }
+  },
+  {
+    "name": "getSelection",
+    "description": "Get the user's current text selection in a tab.\nWhen: you need text the user has highlighted on the page.\nHow: browserId, windowId, tabId from bk:///context.\nRequires: browserId, windowId, tabId.\nReturns: value.selectedText — empty string when nothing is selected.\nAvoid: expecting content when nothing is selected.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId"
+      ]
+    }
+  },
+  {
+    "name": "clickOnCoordinates",
+    "description": "Click at pixel coordinates inside a tab.\nWhen: MV2 fallback when no readablePath is available.\nHow: x/y from a recent captureTab screenshot (same width/height); browserId, windowId, tabId from context.\nRequires: browserId, windowId, tabId, x, y.\nReturns: after auto-waiting, value { changed, navigated, url, added, removed, tooLarge, diff? } — diff shows readable elements added (+), removed (-) and nearby unchanged ones, with their element ids. No diff when tooLarge or navigated: re-read readable-elements.\nOn ok=false: re-capture the tab and recompute x/y.\nAvoid: on MV3 (no screenshot source); prefer clickOnElement when readablePath exists.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        },
+        "x": {
+          "type": "number",
+          "description": "X coordinate in pixels from a recent captureTab screenshot (MV2 only)"
+        },
+        "y": {
+          "type": "number",
+          "description": "Y coordinate in pixels from a recent captureTab screenshot (MV2 only)"
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId",
+        "x",
+        "y"
+      ]
+    }
+  },
+  {
+    "name": "fillTextToCoordinates",
+    "description": "Click at (x, y) then type text into the focused input.\nWhen: MV2 fallback for inputs without a readablePath.\nHow: coordinates from recent captureTab; submit via clickOnCoordinates on submit button or hitEnterOnCoordinates.\nRequires: browserId, windowId, tabId, x, y, value.\nReturns: after auto-waiting, value { changed, navigated, url, added, removed, tooLarge, diff? } — diff shows readable elements added (+), removed (-) and nearby unchanged ones, with their element ids. No diff when tooLarge or navigated: re-read readable-elements.\nOn ok=false: re-capture the tab and recompute x/y.\nAvoid: on MV3; prefer fillTextToElement when readablePath is available.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        },
+        "x": {
+          "type": "number",
+          "description": "X coordinate in pixels from a recent captureTab screenshot (MV2 only)"
+        },
+        "y": {
+          "type": "number",
+          "description": "Y coordinate in pixels from a recent captureTab screenshot (MV2 only)"
+        },
+        "value": {
+          "type": "string",
+          "description": "Text to enter into the input field"
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId",
+        "x",
+        "y",
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "hitEnterOnCoordinates",
+    "description": "Click at (x, y) then press Enter to submit a form.\nWhen: MV2 fallback to submit when no submit button readablePath exists.\nHow: coordinates from recent captureTab.\nRequires: browserId, windowId, tabId, x, y.\nReturns: after auto-waiting, value { changed, navigated, url, added, removed, tooLarge, diff? } — diff shows readable elements added (+), removed (-) and nearby unchanged ones, with their element ids. No diff when tooLarge or navigated: re-read readable-elements.\nOn ok=false: re-capture the tab and recompute x/y.\nAvoid: on MV3; prefer hitEnterOnElement when readablePath is available.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        },
+        "x": {
+          "type": "number",
+          "description": "X coordinate in pixels from a recent captureTab screenshot (MV2 only)"
+        },
+        "y": {
+          "type": "number",
+          "description": "Y coordinate in pixels from a recent captureTab screenshot (MV2 only)"
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId",
+        "x",
+        "y"
+      ]
+    }
+  },
+  {
+    "name": "clickOnElement",
+    "description": "Click an element by readablePath.\nWhen: primary click method on MV2 and MV3.\nHow: read {tabUri}/readable-elements; filter [path, role, text, value?] tuples by role and text; copy path exactly (e.g. f1:e1a) — not a CSS selector.\nCustom dropdown/combobox/datepicker: click the trigger to open it, then re-read readable-elements and click the option/day cell. Native <select>: clicking an option can work for listbox selects (multiple or size>1) but single-line dropdowns use a native popup that ignores synthetic clicks — those need invokeJsFn (MV2) or showHumanHint (MV3). Verify by re-reading and escalate. See Complex inputs.\nRequires: browserId, windowId, tabId, readablePath.\nReturns: after auto-waiting, value { changed, navigated, url, added, removed, tooLarge, diff? } — diff shows readable elements added (+), removed (-) and nearby unchanged ones, with their element ids. No diff when tooLarge or navigated: re-read readable-elements.\nOn ok=false: the reason says why (not visible, disabled, covered by <el>, detached); re-read readable-elements and pick a fresh id.\nAvoid: inventing paths; re-read elements after navigation if click fails.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        },
+        "readablePath": {
+          "type": "string",
+          "description": "Stable element id (e.g. f1:e1a) — first element of [path, role, text] tuple from readable-elements; not a CSS selector"
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId",
+        "readablePath"
+      ]
+    }
+  },
+  {
+    "name": "fillTextToElement",
+    "description": "Type text into an <input> or <textarea> by readablePath.\nWhen: primary fill method on MV2 and MV3. Also handles native <input> date/time/datetime-local/month/color when value is in the exact format (date YYYY-MM-DD, time HH:MM, datetime-local YYYY-MM-DDTHH:MM, month YYYY-MM, color #rrggbb).\nHow: readablePath from first element of [path, role, text, value?] tuple in readable-elements; submit via clickOnElement on submit button or hitEnterOnElement.\nRequires: browserId, windowId, tabId, readablePath, value.\nReturns: after auto-waiting, value { changed, navigated, url, added, removed, tooLarge, diff? } — diff shows readable elements added (+), removed (-) and nearby unchanged ones, with their element ids. No diff when tooLarge or navigated: re-read readable-elements.\nOn ok=false: the reason says why (not visible, disabled, covered by <el>, detached); re-read readable-elements and pick a fresh id.\nAvoid: CSS selectors as readablePath; ids of elements that were removed or re-rendered. Does not work on contenteditable rich-text editors (MV2 invokeJsFn instead), native <select>, or custom popup dropdowns/datepickers — use the strategy ladder under Complex inputs in server instructions.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        },
+        "readablePath": {
+          "type": "string",
+          "description": "Stable element id (e.g. f1:e1a) — first element of [path, role, text] tuple from readable-elements; not a CSS selector"
+        },
+        "value": {
+          "type": "string",
+          "description": "Text to enter into the input field"
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId",
+        "readablePath",
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "hitEnterOnElement",
+    "description": "Focus an element by readablePath then press Enter.\nWhen: submitting a form when no explicit submit button exists.\nHow: readablePath from readable-elements tuple (stable element id like f1:e1a).\nRequires: browserId, windowId, tabId, readablePath.\nReturns: after auto-waiting, value { changed, navigated, url, added, removed, tooLarge, diff? } — diff shows readable elements added (+), removed (-) and nearby unchanged ones, with their element ids. No diff when tooLarge or navigated: re-read readable-elements.\nOn ok=false: the reason says why (not visible, disabled, covered by <el>, detached); re-read readable-elements and pick a fresh id.\nAvoid: using when a submit button readablePath is available — click it instead.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        },
+        "readablePath": {
+          "type": "string",
+          "description": "Stable element id (e.g. f1:e1a) — first element of [path, role, text] tuple from readable-elements; not a CSS selector"
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId",
+        "readablePath"
+      ]
+    }
+  },
+  {
+    "name": "scrollPage",
+    "description": "Scroll the page viewport in a direction.\nWhen: target content or elements are off-screen; reveal more of the page before reading or interacting. Works on MV2 and MV3 (no screenshot needed).\nHow: direction is up/down/left/right; optional amount in pixels — omit it to scroll ~one viewport (a page). browserId, windowId, tabId from bk:///context.\nRequires: browserId, windowId, tabId, direction.\nReturns: after auto-waiting, value { changed, navigated, url, added, removed, tooLarge, diff? } — diff shows readable elements added (+), removed (-) and nearby unchanged ones, with their element ids. No diff when tooLarge or navigated: re-read readable-elements.\nAlready at that edge (nothing to scroll) is still ok=true.\nAvoid: assuming new elements exist — re-read readable-elements after scrolling, snapshots go stale.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "up",
+            "down",
+            "left",
+            "right"
+          ],
+          "description": "Direction to scroll the viewport"
+        },
+        "amount": {
+          "description": "Pixels to scroll; defaults to ~one viewport when omitted",
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId",
+        "direction"
+      ]
+    }
+  },
+  {
+    "name": "scrollElement",
+    "description": "Scroll inside a scrollable element (a panel, list, or any container with its own scrollbar).\nWhen: content lives in a scrollable region that scrollPage (whole viewport) does not move — e.g. a chat panel or a long list inside a div. Works on MV2 and MV3 (no screenshot needed).\nHow: readablePath from a readable-elements tuple; direction is up/down/left/right; optional amount in pixels — omit it to scroll ~90% of the element's size. The element at readablePath is scrolled, or its nearest scrollable ancestor when it isn't itself scrollable (so you can target an interactive child inside the panel). browserId, windowId, tabId from bk:///context.\nRequires: browserId, windowId, tabId, readablePath, direction.\nReturns: after auto-waiting, value { changed, navigated, url, added, removed, tooLarge, diff? } — diff shows readable elements added (+), removed (-) and nearby unchanged ones, with their element ids. No diff when tooLarge or navigated: re-read readable-elements.\nAlready at that edge, or no scrollable container found (nothing to scroll), is still ok=true.\nAvoid: using for whole-page scrolling — use scrollPage instead; re-read readable-elements after scrolling, snapshots go stale.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        },
+        "readablePath": {
+          "type": "string",
+          "description": "Stable element id (e.g. f1:e1a) — first element of [path, role, text] tuple from readable-elements; not a CSS selector"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "up",
+            "down",
+            "left",
+            "right"
+          ],
+          "description": "Direction to scroll the element"
+        },
+        "amount": {
+          "description": "Pixels to scroll; defaults to ~one element height/width when omitted",
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId",
+        "readablePath",
+        "direction"
+      ]
+    }
+  },
+  {
+    "name": "showHumanHint",
+    "description": "Highlight an element and instruct the human to act when automation fails or the step is human-only.\nWhen: CAPTCHA, 2FA, irreversible confirmations, repeated tool failures, or MV3 inputs that tools cannot set (native <select>, range slider).\nHow: provide exactly one target — readablePath (preferred) OR x and y, not both; fill action requires value.\nRequires: browserId, windowId, tabId, action (click | fill | hit-enter), message.\nReturns: humanMessage (relay verbatim to the user) and expiresInSeconds.\nAvoid: both readablePath and coordinates.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "windowId": {
+          "type": "string",
+          "description": "windowId from bk:///context browsers[].tabs[].windowId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "click",
+            "fill",
+            "hit-enter"
+          ],
+          "description": "Manual step the human should take"
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-facing instruction shown in browser callout and chat"
+        },
+        "value": {
+          "description": "Required for fill — text the human should type",
+          "type": "string"
+        },
+        "readablePath": {
+          "description": "Stable element id from readable-elements (e.g. f1:e1a); provide this OR x+y, not both",
+          "type": "string"
+        },
+        "x": {
+          "description": "X coordinate from captureTab (MV2); provide this with y OR readablePath, not both",
+          "type": "number"
+        },
+        "y": {
+          "description": "Y coordinate from captureTab (MV2); provide this with x OR readablePath, not both",
+          "type": "number"
+        }
+      },
+      "required": [
+        "browserId",
+        "windowId",
+        "tabId",
+        "action",
+        "message"
+      ]
+    }
+  },
+  {
+    "name": "getContext",
+    "description": "Get aggregated state of every connected browser.\nWhen: discovering available tabs before interacting — equivalent to reading the bk:///context resource.\nHow: no parameters needed.\nRequires: nothing.\nReturns: serverVersion, browsers[] (each with browserId, extensionInfo, versionMismatch when the extension's major version differs from the server's, windows) and tabs (each with id (tabId), windowId, tabUri, url, title, active).\nAvoid: calling repeatedly in a tight loop — cache the result for the duration of a task.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "getReadableText",
+    "description": "Get the readable inner text of a tab.\nWhen: you need the text content of a page — equivalent to reading {tabUri}/readable-text resource.\nHow: browserId and tabId from getContext or bk:///context.\nRequires: browserId, tabId.\nReturns: { snapshotId, data (text), hasNextPage, nextPageNumber, totalPages }.\nPagination: if hasNextPage is true, call getSnapshotPage with the returned snapshotId and nextPageNumber.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        }
+      },
+      "required": [
+        "browserId",
+        "tabId"
+      ]
+    }
+  },
+  {
+    "name": "getReadableElements",
+    "description": "Get interactive elements of a tab as [path, role, text, value?] tuples.\nWhen: you need element paths for clickOnElement/fillTextToElement — equivalent to reading {tabUri}/readable-elements resource.\nHow: browserId and tabId from getContext or bk:///context.\nRequires: browserId, tabId.\nReturns: { snapshotId, data ([path, role, text, value?] tuples), hasNextPage, nextPageNumber, totalPages }.\npath is a stable element id (e.g. f1:e1a) — use as readablePath in interaction tools.\nPagination: if hasNextPage is true, call getSnapshotPage with the returned snapshotId and nextPageNumber.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        }
+      },
+      "required": [
+        "browserId",
+        "tabId"
+      ]
+    }
+  },
+  {
+    "name": "getReadableElementHtml",
+    "description": "Get the outerHTML of a single element by readablePath.\nWhen: you need the exact markup (attributes, classes, nested structure) of one element — equivalent to reading {tabUri}/readable-element-html/<readablePath>.\nHow: get readablePath from a readable-elements tuple (first field); browserId and tabId from getContext or bk:///context.\nRequires: browserId, tabId, readablePath (stable element id e.g. f1:e1a, not a CSS selector).\nReturns: { snapshotId, data (HTML), hasNextPage, nextPageNumber, totalPages }.\nPagination: if hasNextPage is true, call getSnapshotPage with the returned snapshotId, type readable-element-html, and nextPageNumber.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "browserId": {
+          "type": "string",
+          "description": "browserId from bk:///context browsers[].browserId"
+        },
+        "tabId": {
+          "type": "string",
+          "description": "tabId from bk:///context browsers[].tabs[].id"
+        },
+        "readablePath": {
+          "type": "string",
+          "description": "Stable element id (e.g. f1:e1a) — first element of a [path, role, text, value?] tuple from readable-elements; not a CSS selector"
+        }
+      },
+      "required": [
+        "browserId",
+        "tabId",
+        "readablePath"
+      ]
+    }
+  },
+  {
+    "name": "getSnapshotPage",
+    "description": "Get a continuation page for a readable-text, readable-elements, or readable-element-html snapshot.\nWhen: a previous getReadableText, getReadableElements, or getReadableElementHtml call returned hasNextPage=true.\nHow: use the snapshotId and nextPageNumber from the previous response.\nRequires: snapshotId, type (readable-text | readable-elements | readable-element-html), pageNumber.\nReturns: same shape as the original call — { snapshotId, data, hasNextPage, nextPageNumber, totalPages }.\nAvoid: calling without first fetching page 1 via getReadableText, getReadableElements, or getReadableElementHtml.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "snapshotId": {
+          "type": "string",
+          "description": "The snapshotId returned from a previous getReadableText or getReadableElements call"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "readable-text",
+            "readable-elements",
+            "readable-element-html"
+          ],
+          "description": "Content type: readable-text, readable-elements, or readable-element-html"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "description": "Page number to retrieve (from nextPageNumber in a prior response)"
+        }
+      },
+      "required": [
+        "snapshotId",
+        "type",
+        "pageNumber"
+      ]
+    }
+  }
+]

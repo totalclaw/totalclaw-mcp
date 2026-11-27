@@ -1,0 +1,19 @@
+[
+  {
+    "name": "check_cabal_risk",
+    "description": "On-chain coordinated-wallet (cabal) and rug detection for any Solana token mint. One call returns risk_level (LOW_SIGNAL | ELEVATED | HIGH), a 0-100 cabal score, funding-cluster detection (top holders walked back to a shared funding wallet), same-block bundle detection (slot-based: a Jito bundle is one way to buy in a single slot, not the only one), same-block coordinated selling, serial-launcher deployer history (e.g. 'launched 92, 90 dead'), and a honeypot check (freeze authority + Token-2022 traps). Wallet clusters carry evidence_txs[] — the signatures behind that cluster; concentration, deployer and honeypot flags are read from chain state and carry none. risk and cabal_score are COORDINATION ONLY: read honeypot_risk and risk_level before calling a token clean. degraded:true means we could not verify everything and is never an all-clear. Use it before an agent buys a pump.fun / PumpSwap / Raydium token to answer: are you the exit liquidity? FREE: 5 scans/month with no key; 250/month with a free key (one email). FRESHNESS: a mint traced in the last 8h is answered from that trace in <100ms (computed_at says when); anything else runs a live trace taking 15-20s, so allow a 30s+ timeout.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "mint": {
+          "type": "string",
+          "description": "The Solana token mint (contract) address to scan, e.g. DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263"
+        }
+      },
+      "required": [
+        "mint"
+      ]
+    }
+  }
+]

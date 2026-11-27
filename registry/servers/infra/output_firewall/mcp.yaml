@@ -38,6 +38,17 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T08:16:51Z'
+  probed_runtime: npx
+  count: 4
+  file: tools.json
 security:
+  # 人工复核（2026-11-27）：工具描述注入扫描命中 1 处，判定误报 —— scan_content 是检测提示注入 / 外传载荷 / 泄露密钥的防护工具，描述里的 exfiltration 指它检测的对象。命中记录保留在 prompt_injection_findings。
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings:
+  - tool: scan_content
+    pattern: 疑似外传数据
+    excerpt: another server — for prompt injection, exfiltration payloads and leaked secrets. Returns findings
+      with the rule that ma

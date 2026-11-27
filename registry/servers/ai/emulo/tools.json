@@ -1,0 +1,23 @@
+[
+  {
+    "name": "load_emulo_profile",
+    "description": "Return the user's mined Emulo profile for one domain: rules mined from their own coding sessions, each with dated quotes. Read it before working on their task. domain 'work' covers execution, debugging, planning, and shipping; 'design' covers UI/UX and visual taste; 'write' covers their writing voice; 'video' covers pacing, captions, voiceover, and shot and render choices. Returns the mined profile text, or a recovery instruction if no profile is active yet.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "enum": [
+            "design",
+            "video",
+            "work",
+            "write"
+          ],
+          "description": "Which profile to load. Defaults to work."
+        }
+      },
+      "required": []
+    }
+  }
+]

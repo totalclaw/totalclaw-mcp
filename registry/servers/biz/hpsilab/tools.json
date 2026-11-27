@@ -1,0 +1,283 @@
+[
+  {
+    "name": "register_account",
+    "description": "Register a free hpsilab account for yourself, with no human involvement,\n    and receive an API key immediately.\n\n    Call this when the user has no API key yet and asks to sign up from here,\n    or when a refusal's `next_actions` names register_account and the user\n    agrees. This is the only tool that works without an API key. You do not\n    need a password, a wallet, or a web browser. The account is bound to you\n    server-side, so calls you make after this are metered as your account even\n    though you cannot change your own Authorization header.\n\n    The account is created unverified, with only a capped evaluation\n    allowance and no trial Credits, until the email address is confirmed;\n    confirming it grants the one-time 100-Credit Registered Trial (14 days).\n    Ask the human you are working with to click the link in the email that\n    will arrive. Calling again from the same caller returns the same account\n    with a fresh key; an address that belongs to another account is refused.\n\n    A valid user email address is required. Do not call this tool with an\n    empty or fabricated email address. If the user's email is unavailable,\n    ask the user to provide it before calling register_account.\n\n    Args:\n        email: The real user email address that will receive verification.\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "email": {
+          "format": "email",
+          "title": "Email",
+          "type": "string"
+        }
+      },
+      "required": [
+        "email"
+      ],
+      "title": "register_accountArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_iv_radar",
+    "description": "Implied-volatility (IV) structure for a stock: how expensive options are,\n    whether volatility is being squeezed, and whether traders are paying up for\n    upside (calls) or downside (puts). Available to all signed-in users.\n\n    Returns spot price, the expiry used, the option quote time (latest trade\n    in the chain, UTC) and fetch time, ATM and 30-day IV, IV rank/percentile\n    with their basis, the 25-delta risk reversal in vol points, a squeeze\n    score and the volatility regime.\n\n    Args:\n        ticker: Stock symbol, e.g. \"NVDA\".\n        refresh: Bypass the backend's fresh IV cache and request the latest\n            option-chain pull. Defaults to False.\n    ",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "ticker": {
+          "description": "Stock ticker symbol, e.g. AAPL.",
+          "examples": [
+            "AAPL"
+          ],
+          "title": "Ticker",
+          "type": "string"
+        },
+        "refresh": {
+          "default": false,
+          "title": "Refresh",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "ticker"
+      ],
+      "title": "get_iv_radarArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_monte_carlo",
+    "description": "Monte Carlo price simulation for the next ~10 trading days: thousands of\n    random price paths estimate a likely price range and the odds of finishing\n    higher.\n\n    Returns the price-history date and starting close, mean and median\n    projected close, the 90% range, daily volatility, support/resistance and\n    the chance of finishing above resistance. It also returns the simulated\n    distribution of day-10 closes: percentiles (p5-p95), a 40-bin histogram\n    (price range and path count per bin) and a Gaussian KDE curve on the same\n    count scale - enough to chart the distribution as a histogram with the 90%\n    range, mean and resistance marked. The simulation is seeded from the price\n    history, so repeated calls on the same data return the same numbers.\n\n    Args:\n        ticker: Stock symbol, e.g. \"AAPL\".\n    ",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "ticker": {
+          "description": "Stock ticker symbol, e.g. AAPL.",
+          "examples": [
+            "AAPL"
+          ],
+          "title": "Ticker",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ticker"
+      ],
+      "title": "get_monte_carloArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_ai_prediction",
+    "description": "AI next-day prediction: probability the stock closes UP, a\n    paper-trading buy/watch/sell lean (research only, not a trade\n    instruction), and how strongly the models agree (consensus).\n\n    basis=\"live\" (default) uses the latest available market data: while the\n    market is open that is today's still-trading bar, labelled intraday with\n    its computation time. basis=\"close\" uses only the latest completed\n    session's close. Returns the model input date and close (and which of the\n    two it is), the model name, the blended UP probability and each of the two\n    models' (Random Forest, Logistic Regression) probabilities, whether they\n    agree, suggested stop-loss / take-profit, and the news sentiment with its\n    source (or a note that no headline was dated that day).\n\n    Available to every authenticated plan (Free / Pro / Enterprise); subject\n    to the caller's plan requests/day and requests/minute limits.\n\n    Args:\n        ticker: Stock symbol, e.g. \"TSLA\".\n        basis: \"live\" (default) or \"close\".\n    ",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "ticker": {
+          "description": "Stock ticker symbol, e.g. AAPL.",
+          "examples": [
+            "AAPL"
+          ],
+          "title": "Ticker",
+          "type": "string"
+        },
+        "basis": {
+          "default": "live",
+          "description": "\"live\": latest available data (today's trading bar while the market is open). \"close\": latest completed session only.",
+          "enum": [
+            "live",
+            "close"
+          ],
+          "examples": [
+            "live"
+          ],
+          "title": "Basis",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ticker"
+      ],
+      "title": "get_ai_predictionArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_equity_curve",
+    "description": "Backtest performance of the quant strategy across your watchlist:\n    Sharpe ratio, max drawdown, win rate and total return per symbol.\n\n    Available to every authenticated plan (Free / Pro / Enterprise); subject\n    to the caller's plan requests/day and requests/minute limits.\n\n    Args:\n        ticker: Optional symbol to show just one row, e.g. \"SPY\". Leave blank for all.\n    ",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "ticker": {
+          "default": "",
+          "title": "Ticker",
+          "type": "string"
+        }
+      },
+      "title": "get_equity_curveArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_option_pressure",
+    "description": "Option-chain pressure map for the nearest weekly/monthly expiry — Max\n    Pain, dealer Gamma Wall, likely weekly high, and an extreme squeeze target.\n\n    Returns spot, the expiry and days to it, the option quote time (latest\n    trade in the chain, UTC), max pain, gamma/call/put walls, likely weekly\n    high, squeeze target, likely expiry close range, ATM IV and the weekly\n    expected move. Its expiry can differ from get_iv_radar's.\n\n    Args:\n        ticker: Stock symbol, e.g. \"SPY\".\n    ",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "ticker": {
+          "description": "Stock ticker symbol, e.g. AAPL.",
+          "examples": [
+            "AAPL"
+          ],
+          "title": "Ticker",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ticker"
+      ],
+      "title": "get_option_pressureArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "analyze_stock",
+    "description": "Aggregate all quant tools into one JSON stock analysis.\n\n    The tool reuses the existing MCP tools as its data sources, then derives a\n    direction signal, direction score, bullish factors, bearish factors and\n    plain-English summary. `tool_responses` carries each source's full text\n    (AI prediction, IV radar, option pressure, equity curve, Monte Carlo with\n    its distribution), including their data dates; `confidence_score_meaning`\n    explains the 0-100 score. If one underlying tool is gated, unavailable or\n    raises an error, the remaining tools still contribute to the final result\n    (status \"partial\"); if every underlying tool fails, the whole call fails\n    (status \"error\", isError=True) instead of a misleadingly \"successful\"\n    empty analysis.\n\n    Args:\n        symbol: Stock symbol, e.g. \"NVDA\".\n        refresh: Request fresh IV Radar data instead of using the backend's\n            fresh IV cache. Defaults to False.\n        lang: Language for `summary`, `bullish_factors` and `bearish_factors`\n            - \"en\" (default), \"zh\" or \"ja\"; regional forms like \"zh-CN\" are\n            accepted. Everything else in the response, `signal` included, is\n            language-independent, so an existing caller that omits this gets\n            byte-identical output to before.\n    ",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "description": "Stock ticker symbol, e.g. AAPL.",
+          "examples": [
+            "AAPL"
+          ],
+          "title": "Symbol",
+          "type": "string"
+        },
+        "refresh": {
+          "default": false,
+          "title": "Refresh",
+          "type": "boolean"
+        },
+        "lang": {
+          "default": "en",
+          "title": "Lang",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "analyze_stockArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_pretrade_risk_scan",
+    "description": "Full pre-trade risk scan JSON for a stock. Pro tool ($0.15/call via x402\n    for anonymous callers; Credits for signed-in accounts).\n\n    `riskDeltas` compares the SPY benchmark (`beforeValue`) with this stock on\n    its own (`afterValue`). Neither side is a portfolio, so it is not a\n    before/after of the caller's holdings; `exposure` and `correlation` are\n    the parts that use the holdings (see `methodology.riskDeltas`).\n\n    Signed-in hpsilab users (including Free, on its trial Credits) spend\n    Credits from their balance at this tool's catalog price — each tool is\n    priced differently; see GET /api/credits/catalog.\n    Anonymous / tokenless agents pay per call via x402 (USDC on Base) when\n    payments are enabled — send the x402 payment in the request _meta.\n\n    Args:\n        symbol: Stock symbol, e.g. \"NVDA\".\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "description": "Stock ticker symbol, e.g. AAPL.",
+          "examples": [
+            "AAPL"
+          ],
+          "title": "Symbol",
+          "type": "string"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "get_pretrade_risk_scanArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "generate_stock_images",
+    "description": "Generate stock-report PNG images and return their URLs, with the charts\n    attached as PNG image content so the assistant can see them.\n\n    The JSON (symbol, status, images with url/status, disclaimer) is the same\n    with or without attachments; the image blocks are added after it.\n\n    Args:\n        symbol: Stock symbol, e.g. \"RXRX\".\n        force: Regenerate images instead of using cached PNGs. Defaults to True\n            so manually requested images reflect the latest available data.\n        types: Optional subset of chart types. Allowed values are\n            \"ai_prediction\", \"iv_radar\", \"option_pressure\", \"monte_carlo\",\n            and \"equity_curves\". Omit to generate every chart type.\n        attach_images: Attach each available chart as an image. Defaults to\n            True; False returns the JSON with URLs only.\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "description": "Stock ticker symbol, e.g. AAPL.",
+          "examples": [
+            "AAPL"
+          ],
+          "title": "Symbol",
+          "type": "string"
+        },
+        "force": {
+          "default": true,
+          "title": "Force",
+          "type": "boolean"
+        },
+        "types": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "ai_prediction",
+                  "iv_radar",
+                  "option_pressure",
+                  "monte_carlo",
+                  "equity_curves"
+                ],
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Types"
+        },
+        "attach_images": {
+          "default": true,
+          "title": "Attach Images",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "generate_stock_imagesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "generate_stock_research_report",
+    "description": "Full markdown research report with its most relevant stock-report charts attached as images. Pro tool\n    ($0.35/call via x402 for anonymous callers; free within plan limits for\n    signed-in accounts, subject to a monthly report quota).\n\n    Runs analyze_stock and stock-report image generation concurrently, then\n    renders a presentation-ready markdown report (direction, direction score, bullish /\n    bearish factors, source-tool status). The one or two most relevant charts are\n    attached as PNG image content; the markdown is returned for display and the\n    same data, with chart URLs, is mirrored in structured JSON.\n\n    Signed-in hpsilab users call this within their plan's free rate limits.\n    Anonymous / tokenless agents pay per call via x402 (USDC on Base) when\n    payments are enabled — send the x402 payment in the request _meta.\n\n    Args:\n        symbol: Stock symbol, e.g. \"RXRX\".\n        refresh: Bypass the backend's fresh IV cache for the IV-driven modules.\n            Defaults to False.\n        force_images: Force a fresh image render instead of reusing the backend's\n            image cache. Defaults to False.\n    ",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "symbol": {
+          "description": "Stock ticker symbol, e.g. AAPL.",
+          "examples": [
+            "AAPL"
+          ],
+          "title": "Symbol",
+          "type": "string"
+        },
+        "refresh": {
+          "default": false,
+          "title": "Refresh",
+          "type": "boolean"
+        },
+        "force_images": {
+          "default": false,
+          "title": "Force Images",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "symbol"
+      ],
+      "title": "generate_stock_research_reportArguments",
+      "type": "object"
+    }
+  }
+]

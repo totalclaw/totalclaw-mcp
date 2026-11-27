@@ -1,0 +1,77 @@
+[
+  {
+    "name": "scan_dependencies",
+    "description": "Scan all dependencies of a Maven project and build mapping index from class names to JAR packages",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "projectPath": {
+          "type": "string",
+          "description": "Maven project root directory path"
+        },
+        "forceRefresh": {
+          "type": "boolean",
+          "description": "Whether to force refresh index",
+          "default": false
+        }
+      },
+      "required": [
+        "projectPath"
+      ]
+    }
+  },
+  {
+    "name": "decompile_class",
+    "description": "Decompile specified Java class file and return Java source code",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "className": {
+          "type": "string",
+          "description": "Fully qualified name of the Java class to decompile, e.g., com.example.QueryBizOrderDO"
+        },
+        "projectPath": {
+          "type": "string",
+          "description": "Maven project root directory path"
+        },
+        "useCache": {
+          "type": "boolean",
+          "description": "Whether to use cache, default true",
+          "default": true
+        },
+        "cfrPath": {
+          "type": "string",
+          "description": "JAR package path of CFR decompilation tool, optional"
+        }
+      },
+      "required": [
+        "className",
+        "projectPath"
+      ]
+    }
+  },
+  {
+    "name": "analyze_class",
+    "description": "Analyze structure, methods, fields and other information of a Java class",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "className": {
+          "type": "string",
+          "description": "Fully qualified name of the Java class to analyze"
+        },
+        "projectPath": {
+          "type": "string",
+          "description": "Maven project root directory path"
+        }
+      },
+      "required": [
+        "className",
+        "projectPath"
+      ]
+    }
+  }
+]

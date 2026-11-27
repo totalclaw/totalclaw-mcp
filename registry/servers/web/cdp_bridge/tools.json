@@ -1,0 +1,283 @@
+[
+  {
+    "name": "browser_observe",
+    "description": "List visible interactive controls on a tab with short-lived references.\n\nArgs:\n    tab_id: Tab to observe. Uses the active MCP tab if empty.\n    limit: Maximum controls to return, up to 150.\n\nReturns a page_revision and control refs for browser_act. Observe again after\nan action, navigation, or a stale-reference response.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "tab_id": {
+          "default": "",
+          "title": "Tab Id",
+          "type": "string"
+        },
+        "limit": {
+          "default": 80,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "browser_observeArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_act",
+    "description": "Click or fill one control returned by browser_observe.\n\nArgs:\n    tab_id: Tab ID returned by browser_observe.\n    page_revision: Revision returned by browser_observe.\n    ref: Control reference returned by browser_observe.\n    action: Either \"click\" or \"fill\".\n    value: Text to enter for \"fill\".\n\nReferences are single-use and expire after 60 seconds. A stale result means\nthe page or target changed; call browser_observe again.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "tab_id": {
+          "title": "Tab Id",
+          "type": "string"
+        },
+        "page_revision": {
+          "title": "Page Revision",
+          "type": "string"
+        },
+        "ref": {
+          "title": "Ref",
+          "type": "string"
+        },
+        "action": {
+          "title": "Action",
+          "type": "string"
+        },
+        "value": {
+          "default": "",
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tab_id",
+        "page_revision",
+        "ref",
+        "action"
+      ],
+      "title": "browser_actArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_get_tabs",
+    "description": "Get all open browser tabs with their IDs, URLs, and titles.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "browser_get_tabsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_scan",
+    "description": "Get simplified HTML content of the active tab plus tab list. The HTML is optimized for LLM consumption (stripped of scripts, styles, invisible elements).\n\nArgs:\n    tabs_only: Only return tab list without page content (saves tokens).\n    switch_tab_id: Switch to this tab before scanning.\n    text_only: Return plain text instead of simplified HTML.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "tabs_only": {
+          "default": false,
+          "title": "Tabs Only",
+          "type": "boolean"
+        },
+        "switch_tab_id": {
+          "default": "",
+          "title": "Switch Tab Id",
+          "type": "string"
+        },
+        "text_only": {
+          "default": false,
+          "title": "Text Only",
+          "type": "boolean"
+        }
+      },
+      "title": "browser_scanArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_execute_js",
+    "description": "Execute JavaScript in the browser and capture results plus DOM changes.\n\nArgs:\n    script: JavaScript code to execute (or JSON command for CDP operations).\n    switch_tab_id: Switch to this tab before executing.\n    no_monitor: Skip DOM change monitoring (faster, less info).\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "script": {
+          "title": "Script",
+          "type": "string"
+        },
+        "switch_tab_id": {
+          "default": "",
+          "title": "Switch Tab Id",
+          "type": "string"
+        },
+        "no_monitor": {
+          "default": false,
+          "title": "No Monitor",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "script"
+      ],
+      "title": "browser_execute_jsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_switch_tab",
+    "description": "Switch the active MCP browser tab without changing the visible Chrome tab.\n\nArgs:\n    tab_id: The tab ID to switch to (from browser_get_tabs).\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "tab_id": {
+          "title": "Tab Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tab_id"
+      ],
+      "title": "browser_switch_tabArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_focus_tab",
+    "description": "Bring a Chrome tab to the foreground: activate the tab AND focus its window.\n\nUnlike browser_switch_tab (which only changes the MCP-side active session\nwithout touching the visible Chrome UI), this actually makes the tab visible\nto the user. Use this when the user can't find the tab the agent is working\non (e.g. across many windows / Spaces / minimized windows).\n\nGoes through chrome.tabs.update + chrome.windows.update (extension-native\nAPIs), avoiding the chrome.debugger CDP \"Not allowed\" restriction on\nTarget.activateTarget.\n\nArgs:\n    tab_id: The tab ID to focus (from browser_get_tabs).\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "tab_id": {
+          "title": "Tab Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tab_id"
+      ],
+      "title": "browser_focus_tabArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_batch",
+    "description": "Run multiple extension/CDP commands in one request.\n\nArgs:\n    commands: Command objects supported by the extension, such as\n        {\"cmd\":\"cdp\",\"method\":\"DOM.getDocument\",\"params\":{\"depth\":1}}.\n    tab_id: Optional tab ID inherited by commands that omit tabId.\n    timeout: Seconds to wait for the batch result.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "commands": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Commands",
+          "type": "array"
+        },
+        "tab_id": {
+          "default": "",
+          "title": "Tab Id",
+          "type": "string"
+        },
+        "timeout": {
+          "default": 20,
+          "title": "Timeout",
+          "type": "number"
+        }
+      },
+      "required": [
+        "commands"
+      ],
+      "title": "browser_batchArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_wait",
+    "description": "Wait until JavaScript condition returns a truthy value.\n\nArgs:\n    condition_js: JavaScript expression or script. The return value is tested for truthiness.\n    timeout: Maximum seconds to wait.\n    interval: Seconds between checks.\n    switch_tab_id: Optional tab ID to make active before waiting.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "condition_js": {
+          "title": "Condition Js",
+          "type": "string"
+        },
+        "timeout": {
+          "default": 10,
+          "title": "Timeout",
+          "type": "number"
+        },
+        "interval": {
+          "default": 0.5,
+          "title": "Interval",
+          "type": "number"
+        },
+        "switch_tab_id": {
+          "default": "",
+          "title": "Switch Tab Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "condition_js"
+      ],
+      "title": "browser_waitArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_navigate",
+    "description": "Navigate the active tab to a URL.\n\nArgs:\n    url: The URL to navigate to.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "url": {
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "title": "browser_navigateArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_screenshot",
+    "description": "Take a screenshot of the active tab (returns base64 PNG).\n\nArgs:\n    tab_id: Optional tab ID to screenshot. Uses active tab if empty.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "tab_id": {
+          "default": "",
+          "title": "Tab Id",
+          "type": "string"
+        }
+      },
+      "title": "browser_screenshotArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "browser_save_image",
+    "description": "Save base64 screenshot data to PNG file.\n\nArgs:\n    screenshot_json_str_or_file: JSON output from browser_screenshot tool, or path to a JSON file containing the screenshot data.\n    output_path: Output PNG file path or directory. Behavior:\n        - Existing directory: save as {directory}/screenshot_{timestamp}.png\n        - File path with existing parent dir: save directly to that file\n        - File path with non-existing parent dir: return error\n        - Empty/not provided: auto-generate based on input path or timestamp\n\nReturns:\n    JSON with status, saved_path, and size_bytes.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "screenshot_json_str_or_file": {
+          "title": "Screenshot Json Str Or File",
+          "type": "string"
+        },
+        "output_path": {
+          "default": "",
+          "title": "Output Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "screenshot_json_str_or_file"
+      ],
+      "title": "browser_save_imageArguments",
+      "type": "object"
+    }
+  }
+]

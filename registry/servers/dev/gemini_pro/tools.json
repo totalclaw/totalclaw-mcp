@@ -1,0 +1,698 @@
+[
+  {
+    "name": "gemini_ask",
+    "description": "Ask Gemini a question or give it a reading task, through the Antigravity\nCLI on the user's Google AI Pro plan (no API cost; uses the plan's limits).\n\nGood for a second opinion on code or a design, reviewing local files passed\nin `paths`, and long reasoning. The text of each file up to 20 000\ncharacters goes into the prompt, so pass the files themselves; Gemini\ncan't open folders or larger files on its own when the Antigravity CLI\nruns headless. Gemini runs read-only: it can search the web but cannot\nchange files or run commands. For web research with cited sources use\ngemini_research; to let Gemini edit a folder use gemini_code.\n\nArgs:\n    prompt: The question or task.\n    model: Model id from gemini_models (e.g. \"gemini-3.8-flash-medium\");\n        default is agy's (or GEMINI_PRO_AGY_MODEL).\n    paths: Local files for Gemini to read; their text is sent with the\n        prompt (about 22 000 characters in all).\n    conversation_id: Continue an earlier gemini_ask/gemini_research chat.\n    effort: Reasoning effort: low, medium, high, xhigh or max.\n\nReturns:\n    Gemini's answer and a conversation_id for follow-ups.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "prompt": {
+          "title": "Prompt",
+          "type": "string"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "paths": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Paths"
+        },
+        "conversation_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Conversation Id"
+        },
+        "effort": {
+          "anyOf": [
+            {
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "xhigh",
+                "max"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effort"
+        }
+      },
+      "required": [
+        "prompt"
+      ],
+      "type": "object",
+      "title": "gemini_askArguments"
+    }
+  },
+  {
+    "name": "gemini_research",
+    "description": "Research a question on the live web with Gemini and Google Search, and\nget an answer that cites its sources. Use it for current facts, releases,\nprices, docs or comparisons that may be newer than your training data.\n\nRuns through the Antigravity CLI on the user's Google AI Pro plan: no API\ncost, uses the plan's limits. Read-only. Gemini prefers official sources,\ncross-checks key facts and says when sources disagree. Usually takes one\nto three minutes. For questions about local files use gemini_ask instead.\n\nArgs:\n    question: What to find out, with context that narrows it, e.g.\n        \"What changed in Flutter 3.47 for Android builds?\".\n    model: Model id from gemini_models, e.g. \"gemini-4-argon-high\";\n        omit for agy's default (or GEMINI_PRO_AGY_MODEL).\n    effort: Reasoning effort: \"low\", \"medium\", \"high\", \"xhigh\" or \"max\".\n\nReturns:\n    The answer followed by a \"Sources\" list of URLs, and a conversation_id;\n    pass it to gemini_ask to ask follow-up questions in the same chat.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "effort": {
+          "anyOf": [
+            {
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "xhigh",
+                "max"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effort"
+        }
+      },
+      "required": [
+        "question"
+      ],
+      "type": "object",
+      "title": "gemini_researchArguments"
+    }
+  },
+  {
+    "name": "gemini_code",
+    "description": "Delegate a coding task to Gemini, which reads and EDITS files in one\nlocal folder through the Antigravity agent on the user's Google AI Pro plan\n(no API cost). This changes files: tell the user, and review the result\nafterwards, e.g. with `git diff`. Gemini can't run terminal commands here,\nso run the tests yourself afterwards. Antigravity CLI 1.5 can't get approval\nfor file access when it runs headless. Then this tool returns agy's\nexplanation within about a minute and changes nothing; use jules_start\ninstead.\n\nGood for a well-defined change: fix a bug, add tests, refactor a module.\nFor read-only questions use gemini_ask; for a task on a GitHub repo that\nshould end in a pull request use jules_start.\n\nArgs:\n    task: What to change and how to know it is done, e.g. \"Add unit tests\n        for parse_date in utils/dates.py; all tests must pass\".\n    folder: Absolute path of the project folder Gemini may edit.\n    model: Model id from gemini_models; omit for agy's default.\n    agent: Name of an Antigravity agent from gemini_agents to run the task.\n    effort: Reasoning effort: \"low\", \"medium\", \"high\", \"xhigh\" or \"max\".\n    conversation_id: Continue an earlier gemini_code or gemini_ask chat, e.g.\n        to ask for fixes to the previous change.\n\nReturns:\n    Gemini's summary of what it changed, and a conversation_id for follow-up\n    requests; or an error if the folder does not exist.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "task": {
+          "title": "Task",
+          "type": "string"
+        },
+        "folder": {
+          "title": "Folder",
+          "type": "string"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "agent": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Agent"
+        },
+        "effort": {
+          "anyOf": [
+            {
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "xhigh",
+                "max"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effort"
+        },
+        "conversation_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Conversation Id"
+        }
+      },
+      "required": [
+        "task",
+        "folder"
+      ],
+      "type": "object",
+      "title": "gemini_codeArguments"
+    }
+  },
+  {
+    "name": "gemini_agents",
+    "description": "List the custom Antigravity agents the user has made or installed, such\nas a \"reviewer\" or \"test-writer\" agent with its own instructions.\nRead-only, free and quick. Call it before gemini_code when the user wants\na task done by a specific agent.\n\nReturns:\n    The agent names and descriptions as the Antigravity CLI prints them; pass\n    a name as `agent` to gemini_code. \"No custom agents.\" if there are none.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "gemini_agentsArguments"
+    }
+  },
+  {
+    "name": "gemini_models",
+    "description": "List the models the user's Google account can use through the Antigravity\nCLI, e.g. Gemini 4 Argon and Gemini 3.8 Flash at several thinking levels.\nRead-only, free and quick. Call it when the user asks for a specific or\nstronger model; otherwise the gemini_* tools use agy's default.\n\nReturns:\n    One \"id — name\" line per model, e.g. \"gemini-4-argon-high — Gemini 4\n    Argon (High)\". Pass the id as `model` to gemini_ask, gemini_research or\n    gemini_code.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "gemini_modelsArguments"
+    }
+  },
+  {
+    "name": "video_generate",
+    "description": "Generate a short video with native sound from a text prompt, with Gemini\nOmni Flash through the Gemini API, and save it as an .mp4 in\nGEMINI_PRO_OUTPUT_DIR. One call makes one clip of about 8 seconds; for\nlonger videos chain video_edit, or use flow_make_video on the user's Flow\ncredits when browser tools are enabled.\n\nCOSTS MONEY: billed to the API key's Google Cloud project (about $0.10 per\nsecond of 720p video, no free tier). Confirm with the user before calling.\n\nArgs:\n    prompt: Subject, action, setting, camera and sound, e.g. \"A red tram\n        crosses Baku at sunset, slow dolly shot, street noise\". English works\n        best; timecodes like \"[0-3s] ... [3-6s] ...\" sequence the shot.\n    aspect_ratio: \"16:9\" (landscape, default) or \"9:16\" (vertical).\n    resolution: \"720p\" (default), \"360p\", or upscaled \"1080p\" or \"4k\".\n    first_frame: Local image path the video starts from.\n    last_frame: Local image path the video ends on.\n    reference_images: Up to 3 local images of characters or objects to keep.\n    file_name: Optional .mp4 file name; default is the date plus prompt words.\n    wait_seconds: How long to wait for the render (default 300) before\n        returning an id to fetch later with video_check.\n\nReturns:\n    The saved .mp4 path and an id to change or extend it with video_edit;\n    or, if rendering takes longer than wait_seconds, an id for video_check.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "prompt": {
+          "title": "Prompt",
+          "type": "string"
+        },
+        "aspect_ratio": {
+          "default": "16:9",
+          "enum": [
+            "16:9",
+            "9:16"
+          ],
+          "title": "Aspect Ratio",
+          "type": "string"
+        },
+        "resolution": {
+          "default": "720p",
+          "enum": [
+            "360p",
+            "720p",
+            "1080p",
+            "4k"
+          ],
+          "title": "Resolution",
+          "type": "string"
+        },
+        "first_frame": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "First Frame"
+        },
+        "last_frame": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Frame"
+        },
+        "reference_images": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reference Images"
+        },
+        "file_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "File Name"
+        },
+        "wait_seconds": {
+          "default": 300,
+          "title": "Wait Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "prompt"
+      ],
+      "type": "object",
+      "title": "video_generateArguments"
+    }
+  },
+  {
+    "name": "video_edit",
+    "description": "Change or extend a video; the result is saved as a new file.\n\nCOSTS MONEY: billed like video_generate. Confirm with the user before calling.\nGive exactly one of previous_id (from video_generate/video_edit) or\nvideo_path (a local video of 10 seconds or less).\n\nArgs:\n    instruction: e.g. \"Make it night\", or to extend: \"Continue the scene:\n        the car drives off\" (adds 3-10 s, up to 40 s in total).\n    previous_id: id returned by an earlier video_generate or video_edit.\n    video_path: Local video (max 10 s) to edit instead.\n    aspect_ratio: \"16:9\" or \"9:16\".\n    resolution: \"720p\" (default), \"360p\", \"1080p\" or \"4k\".\n    file_name: Optional .mp4 file name.\n    wait_seconds: How long to wait before returning an id for video_check.\n\nReturns:\n    The saved .mp4 path and a new id (or an id for video_check).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "instruction": {
+          "title": "Instruction",
+          "type": "string"
+        },
+        "previous_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Previous Id"
+        },
+        "video_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Video Path"
+        },
+        "aspect_ratio": {
+          "default": "16:9",
+          "enum": [
+            "16:9",
+            "9:16"
+          ],
+          "title": "Aspect Ratio",
+          "type": "string"
+        },
+        "resolution": {
+          "default": "720p",
+          "enum": [
+            "360p",
+            "720p",
+            "1080p",
+            "4k"
+          ],
+          "title": "Resolution",
+          "type": "string"
+        },
+        "file_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "File Name"
+        },
+        "wait_seconds": {
+          "default": 300,
+          "title": "Wait Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "instruction"
+      ],
+      "type": "object",
+      "title": "video_editArguments"
+    }
+  },
+  {
+    "name": "video_check",
+    "description": "Fetch a video that video_generate or video_edit started but had not\nfinished rendering when they returned, and save it as an .mp4. Free: the\nvideo was paid for when it was started, and checking costs nothing. Call it\nagain with the same id if the video is still rendering.\n\nArgs:\n    id: The id returned by video_generate or video_edit.\n    wait_seconds: How long to keep waiting in this call (default 120)\n        before returning the current status.\n\nReturns:\n    The saved .mp4 path and an id for video_edit once the video is ready;\n    otherwise its status (still rendering, or failed with the reason).\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "wait_seconds": {
+          "default": 120,
+          "title": "Wait Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object",
+      "title": "video_checkArguments"
+    }
+  },
+  {
+    "name": "image_generate",
+    "description": "Create a new image from a prompt, or edit local images, with Nano Banana\nthrough the Gemini API, and save the result in GEMINI_PRO_OUTPUT_DIR. Pass\nprevious_id to refine an earlier result step by step (\"make the sky\ndarker\") without starting over.\n\nCOSTS MONEY: about $0.034 (1K), $0.05 (2K) or $0.11 (4K) per image with\nNano Banana 2.1; Nano Banana Pro (\"gemini-3-pro-image\") is $0.13-0.24.\nNo free tier. Confirm with the user before calling.\n\nArgs:\n    prompt: What to draw, or how to change the input images, e.g. \"Turn\n        this sketch into a clean flat app icon on a white background\".\n    model: \"gemini-nano-banana-2.1\" (default), \"gemini-3.1-flash-lite-image\"\n        (cheapest, 1K only) or \"gemini-3-pro-image\" (best, for hard tasks).\n    aspect_ratio: \"1:1\" (default), \"2:3\", \"3:2\", \"3:4\", \"4:3\", \"4:5\", \"5:4\",\n        \"9:16\", \"16:9\" or \"21:9\".\n    image_size: \"1K\" (default), \"2K\" or \"4K\".\n    input_images: Local image paths to edit or to use as references.\n    previous_id: The id of an earlier image_generate result to refine.\n    file_name: Optional file name; default is the date plus prompt words.\n\nReturns:\n    The saved image path and an id to pass as previous_id for further edits.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "prompt": {
+          "title": "Prompt",
+          "type": "string"
+        },
+        "model": {
+          "default": "gemini-nano-banana-2.1",
+          "enum": [
+            "gemini-nano-banana-2.1",
+            "gemini-3.1-flash-lite-image",
+            "gemini-3-pro-image"
+          ],
+          "title": "Model",
+          "type": "string"
+        },
+        "aspect_ratio": {
+          "default": "1:1",
+          "enum": [
+            "1:1",
+            "2:3",
+            "3:2",
+            "3:4",
+            "4:3",
+            "4:5",
+            "5:4",
+            "9:16",
+            "16:9",
+            "21:9"
+          ],
+          "title": "Aspect Ratio",
+          "type": "string"
+        },
+        "image_size": {
+          "default": "1K",
+          "enum": [
+            "1K",
+            "2K",
+            "4K"
+          ],
+          "title": "Image Size",
+          "type": "string"
+        },
+        "input_images": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Input Images"
+        },
+        "previous_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Previous Id"
+        },
+        "file_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "File Name"
+        }
+      },
+      "required": [
+        "prompt"
+      ],
+      "type": "object",
+      "title": "image_generateArguments"
+    }
+  },
+  {
+    "name": "video_stitch",
+    "description": "Join local video clips, in the given order, into one .mp4 with ffmpeg.\nRuns on this computer and costs nothing. Clips with the same format (e.g.\nall from video_generate or Flow) are joined losslessly; mixed formats are\nre-encoded to H.264/AAC. Use it to combine clips made by video_generate,\nvideo_edit or flow_collect; flow_make_video already joins its own clips.\n\nArgs:\n    clips: Paths of the clips, first to last (at least one).\n    file_name: Name for the joined file, saved in GEMINI_PRO_OUTPUT_DIR; a\n        number is added if it already exists.\n\nReturns:\n    \"Saved: <path>\" with the joined video, or an error such as a missing clip.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "clips": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Clips",
+          "type": "array"
+        },
+        "file_name": {
+          "default": "stitched",
+          "title": "File Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "clips"
+      ],
+      "type": "object",
+      "title": "video_stitchArguments"
+    }
+  },
+  {
+    "name": "jules_sources",
+    "description": "List the GitHub repositories the user has connected to Jules, Google's\ncloud coding agent. Read-only and free. Call it before jules_start to get\nthe exact repo name; Jules can only work on repositories listed here.\n\nReturns:\n    One source name per line, e.g. \"github/owner/repo\", to pass as `repo`\n    to jules_start; or a note that no repository is connected yet, with the\n    link where the user connects GitHub.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "jules_sourcesArguments"
+    }
+  },
+  {
+    "name": "jules_start",
+    "description": "Start a Jules session: Google's coding agent works on a task in one of\nthe user's GitHub repositories, in the cloud and asynchronously, within the\nGoogle AI Pro plan's Jules limits (no extra cost). It can push a branch and\nopen a pull request, so confirm the task with the user first.\n\nThen poll with jules_status, answer questions with jules_message, and\napprove the plan with jules_approve_plan if you asked for approval. For a\nchange in a local folder use gemini_code instead.\n\nArgs:\n    prompt: The task with acceptance criteria, e.g. \"Add input validation\n        to the /signup endpoint and tests for it\".\n    repo: Repository from jules_sources, e.g. \"github/owner/repo\"; omit for\n        a session without a repository.\n    branch: Branch Jules starts from (default \"main\").\n    title: Optional session title; Jules makes one up otherwise.\n    create_pr: True lets Jules open a pull request automatically when done.\n    require_plan_approval: True makes Jules wait for jules_approve_plan\n        before it changes any code.\n\nReturns:\n    The session id and its web link (https://jules.google.com/session/<id>),\n    or an error such as an unknown repository.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "prompt": {
+          "title": "Prompt",
+          "type": "string"
+        },
+        "repo": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repo"
+        },
+        "branch": {
+          "default": "main",
+          "title": "Branch",
+          "type": "string"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Title"
+        },
+        "create_pr": {
+          "default": false,
+          "title": "Create Pr",
+          "type": "boolean"
+        },
+        "require_plan_approval": {
+          "default": false,
+          "title": "Require Plan Approval",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "prompt"
+      ],
+      "type": "object",
+      "title": "jules_startArguments"
+    }
+  },
+  {
+    "name": "jules_status",
+    "description": "Check on a Jules session started with jules_start: its state, its most\nrecent activities (plan, progress messages, questions, completion) and the\npull request it opened, if any. Read-only and free; call it again to poll a\nsession that is still working.\n\nUse jules_sessions to find a session id, jules_approve_plan when the state\nsays it awaits plan approval, and jules_message to answer a question.\n\nArgs:\n    session: Session id from jules_start or jules_sessions, or its full\n        \"sessions/<id>\" name or web link.\n    activities: How many of the latest activities to show (default 15).\n\nReturns:\n    The session title and state, any pull request links, and one line per\n    recent activity with its time, kind and text.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "session": {
+          "title": "Session",
+          "type": "string"
+        },
+        "activities": {
+          "default": 15,
+          "title": "Activities",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "session"
+      ],
+      "type": "object",
+      "title": "jules_statusArguments"
+    }
+  },
+  {
+    "name": "jules_sessions",
+    "description": "List the user's most recent Jules sessions, newest first, to find a\nsession id or see which tasks are still running. Read-only and free.\n\nPass an id from the result to jules_status for details, to\njules_approve_plan or to jules_message.\n\nArgs:\n    limit: How many sessions to list (default 10).\n\nReturns:\n    One line per session: id, state (as Jules reports it, for example in\n    progress, awaiting plan approval or completed) and title, or\n    \"No sessions yet.\"\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "limit": {
+          "default": 10,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "jules_sessionsArguments"
+    }
+  },
+  {
+    "name": "jules_approve_plan",
+    "description": "Approve the plan Jules proposed, so it starts writing code. Only for a\nsession started with jules_start(require_plan_approval=True) whose state is\nawaiting plan approval; read the plan with jules_status first and show it\nto the user. To change the plan instead, send feedback with jules_message.\n\nArgs:\n    session: Session id from jules_start or jules_sessions.\n\nReturns:\n    A confirmation that Jules is working, or an error such as the session\n    not waiting for approval. Follow progress with jules_status.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "session": {
+          "title": "Session",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session"
+      ],
+      "type": "object",
+      "title": "jules_approve_planArguments"
+    }
+  },
+  {
+    "name": "jules_message",
+    "description": "Send a message to Jules inside an existing session: answer a question it\nasked, give feedback on its plan or code, or ask for a change. Jules\nreplies asynchronously, so read the answer later with jules_status. To give\nJules a new task, use jules_start instead.\n\nArgs:\n    session: Session id from jules_start or jules_sessions.\n    message: What to tell Jules, in plain language.\n\nReturns:\n    A confirmation that the message was sent, or an error.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "session": {
+          "title": "Session",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session",
+        "message"
+      ],
+      "type": "object",
+      "title": "jules_messageArguments"
+    }
+  },
+  {
+    "name": "google_pro_benefits",
+    "description": "List everything a Google AI Pro plan includes and which tool of this\nserver reaches each part, or why a part cannot be reached (mobile-only,\nUS-only, purchases). Read-only, free and offline. Call it first when the\nuser asks what their plan can do or which tool to use.\n\nThe browser-based tools it names (Flow, Gemini app, Notebooks, AI Mode)\nappear only when the server runs with GEMINI_PRO_ENABLE_BROWSER=1.\n\nReturns:\n    One entry per benefit: what it is, where it lives, and how to use it here.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "google_pro_benefitsArguments"
+    }
+  }
+]

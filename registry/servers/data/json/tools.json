@@ -1,0 +1,51 @@
+[
+  {
+    "name": "query",
+    "description": "Query JSON data using JSONPath syntax",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "URL of the JSON data source"
+        },
+        "jsonPath": {
+          "type": "string",
+          "description": "JSONPath expression (e.g. $.store.book[*].author)"
+        }
+      },
+      "required": [
+        "url",
+        "jsonPath"
+      ]
+    }
+  },
+  {
+    "name": "filter",
+    "description": "Filter JSON data using conditions",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "URL of the JSON data source"
+        },
+        "jsonPath": {
+          "type": "string",
+          "description": "Base JSONPath expression"
+        },
+        "condition": {
+          "type": "string",
+          "description": "Filter condition (e.g. @.price < 10)"
+        }
+      },
+      "required": [
+        "url",
+        "jsonPath",
+        "condition"
+      ]
+    }
+  }
+]

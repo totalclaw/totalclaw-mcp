@@ -1,0 +1,81 @@
+[
+  {
+    "name": "account",
+    "description": "Connect ContextStream to an account without handling an API key manually. Actions: status; connect_browser then connect_poll (browser sign-in or sign-up; show the user the link and code); signup_start (email) → signup_verify_email (code) → signup_request_sms_consent (phone) → signup_confirm_sms_consent (the user's verbatim reply to the notice) → signup_verify_phone (code) for the inline email route, only when status says it is available; resend (channel email|sms); fetch_credentials; cancel. Let the user choose the route first; never ask for an email or phone number unless they choose the inline route. Secrets are never returned in results.",
+    "read_only": false,
+    "input_schema": {
+      "description": "Connect ContextStream to an account (browser sign-in, or inline email + SMS signup when offered)",
+      "properties": {
+        "action": {
+          "description": "status | connect_browser | connect_poll | signup_start | signup_verify_email | signup_request_sms_consent | signup_confirm_sms_consent | signup_verify_phone | resend | fetch_credentials | cancel",
+          "enum": [
+            "status",
+            "connect_browser",
+            "connect_poll",
+            "signup_start",
+            "signup_verify_email",
+            "signup_request_sms_consent",
+            "signup_confirm_sms_consent",
+            "signup_verify_phone",
+            "resend",
+            "fetch_credentials",
+            "cancel"
+          ],
+          "type": "string"
+        },
+        "channel": {
+          "description": "resend: which code to resend",
+          "enum": [
+            "email",
+            "sms"
+          ],
+          "type": "string"
+        },
+        "code": {
+          "description": "signup_verify_email / signup_verify_phone: the 6-digit code the user received",
+          "type": "string"
+        },
+        "email": {
+          "description": "signup_start: the user's email address",
+          "type": "string"
+        },
+        "full_name": {
+          "description": "signup_start: the user's name (optional)",
+          "type": "string"
+        },
+        "phone": {
+          "description": "signup_request_sms_consent: mobile number in international format",
+          "type": "string"
+        },
+        "user_response": {
+          "description": "signup_confirm_sms_consent: the user's exact reply to the consent notice",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "init",
+    "description": "Initialize a ContextStream session. This server is not connected to an account yet; init explains the connection routes. Call it FIRST in every conversation.",
+    "read_only": true,
+    "input_schema": {
+      "description": "Initialize a ContextStream session (limited mode: not connected yet)",
+      "properties": {
+        "allow_no_workspace": {
+          "description": "Accepted for compatibility.",
+          "type": "boolean"
+        },
+        "context_hint": {
+          "description": "The user's first message (accepted for compatibility).",
+          "type": "string"
+        },
+        "folder_path": {
+          "description": "Absolute path to the project folder (accepted for compatibility; used after connecting).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+]

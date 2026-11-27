@@ -1,0 +1,270 @@
+[
+  {
+    "name": "get_text_file_contents",
+    "description": "Read text file contents from multiple files and line ranges. Returns file contents with hashes for concurrency control and line numbers for reference. The hashes are used to detect conflicts when editing the files. File paths must be absolute.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "description": "List of files and their line ranges to read",
+          "items": {
+            "type": "object",
+            "properties": {
+              "file_path": {
+                "type": "string",
+                "description": "Path to the text file. File path must be absolute."
+              },
+              "ranges": {
+                "type": "array",
+                "description": "List of line ranges to read from the file",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "start": {
+                      "type": "integer",
+                      "description": "Starting line number (1-based)"
+                    },
+                    "end": {
+                      "type": "integer",
+                      "description": "Ending line number (null for end of file)",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "start"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "file_path",
+              "ranges"
+            ]
+          }
+        },
+        "encoding": {
+          "type": "string",
+          "description": "Text encoding (default: 'utf-8')",
+          "default": "utf-8"
+        }
+      },
+      "required": [
+        "files"
+      ]
+    }
+  },
+  {
+    "name": "patch_text_file_contents",
+    "description": "Apply patches to text files with hash-based validation for concurrency control.you need to use get_text_file_contents tool to get the file hash and range hash every time before using this tool. you can use append_text_file_contents tool to append text contents to the file without range hash, start and end. you can use insert_text_file_contents tool to insert text contents to the file without range hash, start and end.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to the text file. File path must be absolute."
+        },
+        "file_hash": {
+          "type": "string",
+          "description": "Hash of the file contents for concurrency control."
+        },
+        "patches": {
+          "type": "array",
+          "description": "List of patches to apply",
+          "items": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "integer",
+                "description": "Starting line number (1-based).it should match the range hash."
+              },
+              "end": {
+                "type": "integer",
+                "description": "Ending line number (null for end of file).it should match the range hash."
+              },
+              "contents": {
+                "type": "string",
+                "description": "New content to replace the range with"
+              },
+              "range_hash": {
+                "type": "string",
+                "description": "Hash of the content being replaced. it should get from get_text_file_contents tool with the same start and end."
+              }
+            },
+            "required": [
+              "start",
+              "end",
+              "contents",
+              "range_hash"
+            ]
+          }
+        },
+        "encoding": {
+          "type": "string",
+          "description": "Text encoding (default: 'utf-8')",
+          "default": "utf-8"
+        }
+      },
+      "required": [
+        "file_path",
+        "file_hash",
+        "patches"
+      ]
+    }
+  },
+  {
+    "name": "create_text_file",
+    "description": "Create a new text file with given content. The file must not exist already.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to the text file. File path must be absolute."
+        },
+        "contents": {
+          "type": "string",
+          "description": "Content to write to the file"
+        },
+        "encoding": {
+          "type": "string",
+          "description": "Text encoding (default: 'utf-8')",
+          "default": "utf-8"
+        }
+      },
+      "required": [
+        "file_path",
+        "contents"
+      ]
+    }
+  },
+  {
+    "name": "append_text_file_contents",
+    "description": "Append content to an existing text file. The file must exist.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to the text file. File path must be absolute."
+        },
+        "contents": {
+          "type": "string",
+          "description": "Content to append to the file"
+        },
+        "file_hash": {
+          "type": "string",
+          "description": "Hash of the file contents for concurrency control. it should be matched with the file_hash when get_text_file_contents is called."
+        },
+        "encoding": {
+          "type": "string",
+          "description": "Text encoding (default: 'utf-8')",
+          "default": "utf-8"
+        }
+      },
+      "required": [
+        "file_path",
+        "contents",
+        "file_hash"
+      ]
+    }
+  },
+  {
+    "name": "delete_text_file_contents",
+    "description": "Delete specified content ranges from a text file. The file must exist. File paths must be absolute. You need to provide the file_hash comes from get_text_file_contents.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to the text file. File path must be absolute."
+        },
+        "file_hash": {
+          "type": "string",
+          "description": "Hash of the file contents for concurrency control. it should be matched with the file_hash when get_text_file_contents is called."
+        },
+        "ranges": {
+          "type": "array",
+          "description": "List of line ranges to delete",
+          "items": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "integer",
+                "description": "Starting line number (1-based)"
+              },
+              "end": {
+                "type": "integer",
+                "description": "Ending line number (null for end of file)",
+                "nullable": true
+              },
+              "range_hash": {
+                "type": "string",
+                "description": "Hash of the content being deleted. it should be matched with the range_hash when get_text_file_contents is called with the same range."
+              }
+            },
+            "required": [
+              "start",
+              "range_hash"
+            ]
+          }
+        },
+        "encoding": {
+          "type": "string",
+          "description": "Text encoding (default: 'utf-8')",
+          "default": "utf-8"
+        }
+      },
+      "required": [
+        "file_path",
+        "file_hash",
+        "ranges"
+      ]
+    }
+  },
+  {
+    "name": "insert_text_file_contents",
+    "description": "Insert content before or after a specific line in a text file. Uses hash-based validation for concurrency control. You need to provide the file_hash comes from get_text_file_contents.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to the text file. File path must be absolute."
+        },
+        "file_hash": {
+          "type": "string",
+          "description": "Hash of the file contents for concurrency control. it should be matched with the file_hash when get_text_file_contents is called."
+        },
+        "contents": {
+          "type": "string",
+          "description": "Content to insert"
+        },
+        "before": {
+          "type": "integer",
+          "description": "Line number before which to insert content (mutually exclusive with 'after')"
+        },
+        "after": {
+          "type": "integer",
+          "description": "Line number after which to insert content (mutually exclusive with 'before')"
+        },
+        "encoding": {
+          "type": "string",
+          "description": "Text encoding (default: 'utf-8')",
+          "default": "utf-8"
+        }
+      },
+      "required": [
+        "file_path",
+        "file_hash",
+        "contents"
+      ]
+    }
+  }
+]

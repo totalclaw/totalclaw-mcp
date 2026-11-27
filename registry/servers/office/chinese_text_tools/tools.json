@@ -1,0 +1,144 @@
+[
+  {
+    "name": "analyze_text",
+    "description": "分析中文/英文混合文本。返回 editorWordCount（与番茄/作家助手对齐的字数）、段落数、平均段长、预估阅读时间。适用于小说章节、论文章节的快速评估。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "要分析的文本内容"
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "generate_outline",
+    "description": "根据主题生成结构化大纲。支持三种类型：paper（学术论文）、novel（小说）、business（商业计划书）。支持三级详细程度：brief（仅一级标题）、medium（二级）、detailed（三级）。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "topic": {
+          "type": "string",
+          "description": "主题/标题"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "paper",
+            "novel",
+            "business"
+          ],
+          "description": "大纲类型，默认 paper"
+        },
+        "detailLevel": {
+          "type": "string",
+          "enum": [
+            "brief",
+            "medium",
+            "detailed"
+          ],
+          "description": "详细程度，默认 detailed"
+        }
+      },
+      "required": [
+        "topic"
+      ]
+    }
+  },
+  {
+    "name": "format_gbt7714",
+    "description": "将文献信息格式化为 GB/T 7714-2015 标准引用格式（中文毕业论文通用格式）。支持期刊论文、图书、学位论文、专利、标准、在线资源、会议论文。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "authors": {
+          "type": "string",
+          "description": "作者，多人用分号分隔，如 '张三; 李四'"
+        },
+        "title": {
+          "type": "string",
+          "description": "文献标题"
+        },
+        "journal": {
+          "type": "string",
+          "description": "期刊名/出版社/学校名"
+        },
+        "year": {
+          "type": "string",
+          "description": "出版年份"
+        },
+        "volume": {
+          "type": "string",
+          "description": "卷号（期刊论文）"
+        },
+        "issue": {
+          "type": "string",
+          "description": "期号（期刊论文）"
+        },
+        "pages": {
+          "type": "string",
+          "description": "页码，如 '45-50'"
+        },
+        "doi": {
+          "type": "string",
+          "description": "DOI 号"
+        },
+        "url": {
+          "type": "string",
+          "description": "网址（在线资源）"
+        },
+        "accessDate": {
+          "type": "string",
+          "description": "引用日期，如 '2025-07-17'（在线资源）"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "journal",
+            "book",
+            "thesis",
+            "patent",
+            "standard",
+            "online",
+            "conference"
+          ],
+          "description": "文献类型，默认 journal"
+        }
+      },
+      "required": [
+        "authors",
+        "title",
+        "journal",
+        "year"
+      ]
+    }
+  },
+  {
+    "name": "count_frequency",
+    "description": "统计中文文本的字频分布。用于分析写作风格、检测重复用词、优化文本表达。默认返回前20个高频字。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "要分析的文本"
+        },
+        "topN": {
+          "type": "number",
+          "description": "返回前N个高频字，默认20"
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  }
+]

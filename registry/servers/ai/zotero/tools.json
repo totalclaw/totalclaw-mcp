@@ -1,0 +1,1165 @@
+[
+  {
+    "name": "zotero_get_annotations",
+    "description": "Get PDF/EPUB annotations (highlights and their comments) for one item, or for the whole active library when item_key is omitted (can be thousands, so pass item_key when you know it). item_key: the parent item or an attachment. use_pdf_extraction=True parses the PDF itself when Zotero has no stored annotations (e.g. ones made in another reader). limit: default all. format: 'markdown' (default) or 'json' (normalized records).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_key": {
+          "default": null,
+          "type": "string"
+        },
+        "use_pdf_extraction": {
+          "default": false,
+          "type": "boolean"
+        },
+        "limit": {
+          "default": null,
+          "type": "integer"
+        },
+        "format": {
+          "default": "markdown",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_get_notes",
+    "description": "Read notes in the active library. Without query it LISTS notes: an item's child notes with item_key, else notes library-wide. With query it SEARCHES note and annotation text (case-insensitive substring, library-wide, so not with item_key). limit: default 20. truncate=False returns whole bodies (list mode). raw_html=True returns the note's HTML, for editing and passing back to zotero_manage_note(action='update').",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_key": {
+          "default": null,
+          "type": "string"
+        },
+        "query": {
+          "default": null,
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "type": "integer"
+        },
+        "truncate": {
+          "default": true,
+          "type": "boolean"
+        },
+        "raw_html": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_manage_note",
+    "description": "Create, update or trash a note. item_key: the PARENT item for action='create'; the NOTE's own key for 'update' and 'delete' (zotero_get_notes finds it). note_text: Markdown with $math$ plus <u> <s> <sub> <sup> <mark> <span style=\"color:red\"> (or background-color), or note HTML (sanitized). note_title becomes a heading and tags are optional (create). update REPLACES the body unless append=True; to keep formatting, edit the HTML from zotero_get_notes(raw_html=True) and pass it back whole. delete moves the note to the Trash (recoverable). Notes only: other items go through zotero_delete_item.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "action": {
+          "enum": [
+            "create",
+            "update",
+            "delete"
+          ],
+          "type": "string"
+        },
+        "item_key": {
+          "type": "string"
+        },
+        "note_text": {
+          "default": null,
+          "type": "string"
+        },
+        "note_title": {
+          "default": null,
+          "type": "string"
+        },
+        "tags": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "append": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "action",
+        "item_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_create_annotation",
+    "description": "Annotate a PDF (EPUB: highlights and underlines only). One mode per call: text= highlights that exact text (underline=True underlines it), matched against the text layer (scanned PDFs will not match); rect=[x, y, width, height] draws an area box over a figure or table; note=[x, y] places a sticky note at that point, its text in comment. rect and note are PDF only, normalized 0-1 from the page's top-left: take boxes from zotero_get_page_layout instead of guessing. attachment_key: the attachment, NOT the parent item (zotero_get_item_children lists it). page: 1-indexed (EPUB: chapter). comment, color (hex, default '#ffd400') and tags are optional. Needs PyMuPDF (the [pdf] extra). Example: (attachment_key='NHZFE5A7', page=7, rect=[0.15, 0.22, 0.6, 0.35], comment='Figure 3').",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "attachment_key": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer"
+        },
+        "text": {
+          "default": null,
+          "type": "string"
+        },
+        "rect": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "default": null
+        },
+        "comment": {
+          "default": null,
+          "type": "string"
+        },
+        "color": {
+          "default": "#ffd400",
+          "type": "string"
+        },
+        "tags": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "default": null
+        },
+        "underline": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "attachment_key",
+        "page"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_get_page_layout",
+    "description": "Detect figure, table and display-equation regions on one PDF page and return their boxes (x, y, width, height, normalized 0-1), each with its caption or equation number, a confidence and a ready-made zotero_create_annotation call. Use it before an area annotation instead of guessing coordinates. Boxes cover the graphic itself: labels inside a figure or unruled table headers can fall outside, and confidence reflects caption matching, not box completeness. attachment_key: the PDF attachment, NOT the parent item (zotero_get_item_children lists it). page: 1-indexed. PDFs only.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "attachment_key": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "attachment_key",
+        "page"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_update_annotation",
+    "description": "Update an existing Zotero annotation. Editable fields: text (highlight text), comment, color (hex like '#ffd400'), and tags. Tags can be replaced wholesale via `tags`, or edited incrementally via `add_tags`/`remove_tags` (mutually exclusive with `tags`). Position/page/sortIndex are anchored to the PDF/EPUB geometry and are not editable.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "annotation_key": {
+          "type": "string"
+        },
+        "text": {
+          "default": null,
+          "type": "string"
+        },
+        "comment": {
+          "default": null,
+          "type": "string"
+        },
+        "color": {
+          "default": null,
+          "type": "string"
+        },
+        "tags": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "add_tags": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "remove_tags": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "annotation_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_delete_annotation",
+    "description": "Permanently delete a Zotero annotation. This cannot be undone. Annotations are deleted outright, as Zotero's own PDF reader does: a trashed annotation stays visible in the reader with no way to remove it there.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "annotation_key": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "annotation_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_get_item_metadata",
+    "description": "Metadata for ONE item by its 8-character key (not a DOI or title): title, creators, date, DOI, tags, abstract, URL, collections (as keys). format: 'markdown' (default), 'json' (the raw Zotero record) or 'bibtex'. include_abstract=False shortens markdown output. Trashed items are returned too, marked In Trash. To read the paper use zotero_get_item_fulltext; to find items, the search tools.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_key": {
+          "type": "string"
+        },
+        "include_abstract": {
+          "default": true,
+          "type": "boolean"
+        },
+        "format": {
+          "default": "markdown",
+          "enum": [
+            "markdown",
+            "bibtex",
+            "json"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "item_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_get_item_fulltext",
+    "description": "Return the extracted text of an item's PDF or EPUB: most of the paper, often 10K+ tokens. Use it only when the user wants the paper READ, never to search (zotero_semantic_search, zotero_search_items) or for metadata (zotero_get_item_metadata); avoid reading several papers unless asked. item_key: normally the parent item, whose best attachment is picked (PDF first unless attachment_priority says otherwise); an attachment's own key reads exactly that file. PDFs stop at fulltext_display_max_pages (default 10), and a TRUNCATED heading names the pages read: continue with zotero_read_pdf_pages. Scanned PDFs without OCR may return little text.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_key": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "item_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_get_attachment_path",
+    "description": "Return the local filesystem path(s) of a Zotero item's attachments. Local mode only. Useful when you want to read a large PDF directly (e.g., a book) instead of going through zotero_get_item_fulltext, which is page-limited.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_key": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "item_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_get_collections",
+    "description": "List every collection in the active library as an indented tree with keys. To find one collection by name, zotero_search_collections is cheaper. limit: default 100, up to 5000. include_trashed=True also shows collections in the Trash.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "limit": {
+          "default": null,
+          "type": "integer"
+        },
+        "include_trashed": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_get_collection_items",
+    "description": "List the items in one collection. detail: 'keys_only', 'summary' (default, no abstracts) or 'full' (with abstracts). include_subcollections=True adds items in nested collections. Page with limit (default 50) and offset; the response names the next offset. To find papers on a topic, zotero_semantic_search is better.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "collection_key": {
+          "type": "string"
+        },
+        "detail": {
+          "default": "summary",
+          "enum": [
+            "keys_only",
+            "summary",
+            "full"
+          ],
+          "type": "string"
+        },
+        "limit": {
+          "default": 50,
+          "type": "integer"
+        },
+        "include_subcollections": {
+          "default": false,
+          "type": "boolean"
+        },
+        "offset": {
+          "default": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "collection_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_get_item_children",
+    "description": "List the child attachments and notes of one or more items. Use it to get the attachment key that zotero_create_annotation and zotero_get_page_layout need. item_key: one key or an array of keys; pass all of them in one call (a bad key is reported, not fatal). One key shows attachments (type, filename) and notes in full; several show one line per child, grouped by parent.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_key": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "required": [
+        "item_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_get_tags",
+    "description": "List every tag in the active library, one per line. Use it to find tag names before filtering with zotero_search_items(tag=...) or editing with zotero_batch_update. limit: default all.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "limit": {
+          "default": null,
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_list_libraries",
+    "description": "List the libraries you can switch to: the personal library, group libraries (with group IDs) and, in local mode, RSS feeds, each with its item count. Use it to get an ID for zotero_switch_library. The active library is not marked.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_switch_library",
+    "description": "Set the library that every later tool call reads and writes, for the rest of the session. library_id: an ID from zotero_list_libraries ('user' or '0' for the personal library). library_type: 'group' (default), 'user', 'feeds', or 'default' to go back to the configured library (library_id is then ignored). Fails if the library is not accessible.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "library_id": {
+          "type": "string"
+        },
+        "library_type": {
+          "default": "group",
+          "type": "string"
+        }
+      },
+      "required": [
+        "library_id"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_get_recent",
+    "description": "List the most recently ADDED items, newest first, in the active library or one collection (collection_key). For 'what did I add lately', not topic search or a collection's full contents. Includes standalone notes and attachments. limit: default 10.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "limit": {
+          "default": 10,
+          "type": "integer"
+        },
+        "collection_key": {
+          "default": null,
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_set_item_parent",
+    "description": "Set or clear the parent of a Zotero item. Pass a parent item key to assign or change the parent, or null to make the item top-level. Zotero validates whether the requested parent-child relationship is allowed.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_key": {
+          "type": "string"
+        },
+        "parent_key": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "item_key",
+        "parent_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_authorize_local_writes",
+    "description": "Ask the user to allow writes to the local Zotero library (Zotero 10+). BLOCKS until they answer a dialog in the Zotero app, so tell them to switch to Zotero first. 'Always Allow' saves a reusable key; 'Allow' covers one write. Call it when a write fails and zotero_write_capabilities says local writes are supported but no key is held. app_name: shown in the dialog. timeout: seconds to wait (5-55, default 45). Zotero allows about 5 prompts a minute: do not retry in a loop.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "app_name": {
+          "default": "Zotero MCP",
+          "type": "string"
+        },
+        "timeout": {
+          "default": 45,
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_write_capabilities",
+    "description": "Report whether this server can write to Zotero (local API, web API, hybrid, or not at all) and what is missing. Instant; opens no dialog. Call it when a write tool reports no writable backend, before asking the user: if local writes are supported but no key is held, call zotero_authorize_local_writes; otherwise web API credentials are needed.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_read_pdf_pages",
+    "description": "Read chosen pages of an item's PDF, e.g. after zotero_get_pdf_outline. item_key: the paper or its PDF attachment. Reads start_page through end_page (1-indexed; omit end_page for one page). format='text' (default) returns Markdown and flags pages whose equations, figures or tables the text garbles; format='image' returns PNG page images (up to 10) to read those exactly. rect=[x, y, width, height] (normalized 0-1, e.g. from zotero_get_page_layout) returns just that region of start_page, zoomed in.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_key": {
+          "type": "string"
+        },
+        "start_page": {
+          "type": "integer"
+        },
+        "end_page": {
+          "default": null,
+          "type": "integer"
+        },
+        "format": {
+          "default": "text",
+          "enum": [
+            "text",
+            "image"
+          ],
+          "type": "string"
+        },
+        "rect": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "item_key",
+        "start_page"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_search_items",
+    "description": "Keyword search of item metadata: substring match on title, creators and year (qmode='everything' adds abstracts). Keep queries short, like 'Brewer 2011' or a surname: every extra word narrows the match. For topics or concepts use zotero_semantic_search. If nothing matches it retries simpler queries, then semantic search, and says so. tag: conditions that are ANDed; within one, ' OR ' alternates and a leading '-' excludes, e.g. ['methods OR methodology', '-draft']. Omit query to list items by tag alone (zotero_get_tags lists the names). item_type: '-attachment' (default) excludes attachments, or e.g. 'journalArticle'. limit: default 10. collection_key: search one collection (no retries); include_subcollections adds its subcollections. search_all_libraries=True searches every library and labels each result; needs a query, not with collection_key.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "default": "",
+          "type": "string"
+        },
+        "qmode": {
+          "default": "titleCreatorYear",
+          "enum": [
+            "titleCreatorYear",
+            "everything"
+          ],
+          "type": "string"
+        },
+        "item_type": {
+          "default": "-attachment",
+          "type": "string"
+        },
+        "limit": {
+          "default": 10,
+          "type": "integer"
+        },
+        "tag": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "collection_key": {
+          "default": null,
+          "type": "string"
+        },
+        "include_subcollections": {
+          "default": false,
+          "type": "boolean"
+        },
+        "search_all_libraries": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_search_by_citation_key",
+    "description": "Find the one item with this BetterBibTeX citation key (exact, case-sensitive), e.g. 'smith2024'. Checks Zotero's citationKey field, then 'Citation Key:' lines in Extra. For partial keys or free text use zotero_search_items.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "citekey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "citekey"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_advanced_search",
+    "description": "Search with structured field conditions, for what zotero_search_items cannot express: date ranges, item types, matches on one field. conditions: a list of {field, operation, value}. Fields include title, creator, date, dateAdded, dateModified, tag, itemType, publicationTitle, abstractNote, collection. Operations: is, isNot, contains, doesNotContain, beginsWith, endsWith, isGreaterThan, isLessThan, isBefore, isAfter. Dates are ISO; 'added in the last 30 days' is dateAdded isAfter <that date>. join_mode: 'all' (AND, default) or 'any' (OR). sort_by: a field such as dateAdded or title; sort_direction: 'asc' (default) or 'desc'. limit: default 50, max 500. include_subcollections=True makes collection is/isNot match the whole subtree. search_all_libraries=True searches every library (no collection conditions). Example: conditions=[{'field': 'itemType', 'operation': 'is', 'value': 'preprint'}, {'field': 'dateAdded', 'operation': 'isAfter', 'value': '2026-03-22'}].",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "conditions": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "join_mode": {
+          "default": "all",
+          "enum": [
+            "all",
+            "any"
+          ],
+          "type": "string"
+        },
+        "sort_by": {
+          "default": null,
+          "type": "string"
+        },
+        "sort_direction": {
+          "default": "asc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": "string"
+        },
+        "limit": {
+          "default": 50,
+          "type": "integer"
+        },
+        "include_subcollections": {
+          "default": false,
+          "type": "boolean"
+        },
+        "search_all_libraries": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "conditions"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_synthesize_annotations",
+    "description": "Gather highlights, comments and child notes across a scope into a per-paper digest for YOU to synthesize; no LLM is called. collection_key: only papers in that collection; omit for the whole active library. tag: a tag or list of tags to filter papers by. limit: annotations and notes scanned (default 200). format: 'markdown' (default, grouped by paper with a count summary) or 'json'. Use it before writing a thematic review.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "collection_key": {
+          "default": null,
+          "type": "string"
+        },
+        "tag": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "default": 200,
+          "type": "integer"
+        },
+        "format": {
+          "default": "markdown",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_export_bibliography",
+    "description": "Format references with Zotero's CSL engine. item_keys: up to 100 item keys (takes precedence); or collection_key; neither exports the active library's top-level items. style: a CSL style short name (default 'apa'; e.g. 'modern-language-association', 'chicago-note-bibliography', 'ieee'). export_format: 'bib' (reference list, default), 'citation' (in-text citations) or 'bibtex'.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_keys": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "collection_key": {
+          "default": null,
+          "type": "string"
+        },
+        "style": {
+          "default": "apa",
+          "type": "string"
+        },
+        "export_format": {
+          "default": "bib",
+          "enum": [
+            "bib",
+            "citation",
+            "bibtex"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_batch_update",
+    "description": "Edit many items in one call: add or remove tags, and set or remove `Key: value` lines in Extra (BetterBibTeX keys, tex.* fields). Select by item_keys, or by query and/or tag (ANDed; a list of tags ORs); item_keys wins. Needs a selector and an action. add_tags/remove_tags leave other tags alone. set_keys upserts Extra lines by case-insensitive key; remove_keys deletes them. limit: items selected by query/tag (default 50, up to 1000); the report says if more matched. Example: (tag='to-read', add_tags=['reviewed'], remove_tags=['to-read']).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_keys": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "query": {
+          "default": "",
+          "type": "string"
+        },
+        "tag": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "add_tags": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "remove_tags": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "set_keys": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "default": null
+        },
+        "remove_keys": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "default": 50,
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_manage_collection",
+    "description": "Create, update or delete a collection. action='create': name, and optionally parent_collection for a subcollection. 'update': collection_key plus a new name, a new parent_collection, or to_top_level=True; the key, items and subcollections are kept, and a collection cannot move under itself or its own subcollection. 'delete': collection_key; permanent (Zotero does not trash collections) and takes its subcollections with it, but the items stay in the library. parent_collection: a key, name or 'Parent/Child' path. To file items into collections use zotero_set_item_collections.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "action": {
+          "enum": [
+            "create",
+            "update",
+            "delete"
+          ],
+          "type": "string"
+        },
+        "collection_key": {
+          "default": null,
+          "type": "string"
+        },
+        "name": {
+          "default": null,
+          "type": "string"
+        },
+        "parent_collection": {
+          "default": null,
+          "type": "string"
+        },
+        "to_top_level": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_search_collections",
+    "description": "Find collections by name in the active library; returns their keys and parents. Case-insensitive substring on the collection's own name, and every word must match ('reading list' needs both). include_trashed=True also matches collections in the Trash.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "include_trashed": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_set_item_collections",
+    "description": "Add items to, or remove them from, collections, leaving their other memberships alone. item_keys: an array of item keys. add_to / remove_from: arrays of collection keys, names or 'Parent/Child' paths, all checked before anything changes. To replace memberships wholesale use zotero_update_item; to create, rename or delete a collection, zotero_manage_collection.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_keys": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "add_to": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "remove_from": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "item_keys"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_update_item",
+    "description": "Change metadata on one item; only what you pass changes. fields: {name: value} with snake_case names (title, date, doi, url, abstract, publication_title, short_title, book_title, citation_key, item_type, place, extra, volume, issue, pages, publisher, issn, isbn, edition, language, access_date) or raw Zotero field names. Unknown names fail and list the valid ones; names the item's type lacks are skipped and reported. citation_key sets the BetterBibTeX key; item_type converts the item, dropping fields the new type lacks. creators: a full replacement list of {creatorType, firstName, lastName}. tags REPLACES all tags; add_tags/remove_tags edit incrementally (preferred; not with tags). collections (keys) or collection_names REPLACE membership (collections=[] clears it); for incremental moves use zotero_set_item_collections. For notes use zotero_manage_note.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_key": {
+          "type": "string"
+        },
+        "fields": {
+          "anyOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "default": null
+        },
+        "creators": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "default": null
+        },
+        "tags": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "add_tags": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "remove_tags": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "collections": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "collection_names": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "item_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_delete_item",
+    "description": "Move an item to the Trash (recoverable in Zotero). Any item type, but for notes use zotero_manage_note(action='delete'), or pass allow_note=True.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_key": {
+          "type": "string"
+        },
+        "allow_note": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "item_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_get_pdf_outline",
+    "description": "Return a PDF's table of contents with page numbers, usually under 200 tokens: find the pages you need, then read them with zotero_read_pdf_pages instead of the full text. item_key: the parent item or the PDF attachment. Says so when the PDF has no outline. PDFs only; needs PyMuPDF (the [pdf] extra).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_key": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "item_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_attach_file",
+    "description": "Attach a file to an EXISTING regular item (not an attachment or note). To create a new item from a file, use zotero_add_item(source=<path>). Give exactly one of file_path (absolute; any regular file, no symlinks or .lnk) or url (a direct PDF link, downloaded by the server). filename: overrides the stored name. link_mode: 'import' (default) uploads a copy, which counts against Zotero storage unless WebDAV is set up; 'linked' links the file where it is (file_path only, nothing copied). Skips the upload when the item already has the same file. Returns the attachment key.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_key": {
+          "type": "string"
+        },
+        "file_path": {
+          "default": null,
+          "type": "string"
+        },
+        "url": {
+          "default": null,
+          "type": "string"
+        },
+        "filename": {
+          "default": null,
+          "type": "string"
+        },
+        "link_mode": {
+          "default": "import",
+          "type": "string"
+        }
+      },
+      "required": [
+        "item_key"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "zotero_add_item",
+    "description": "Add items from a DOI, URL, ISBN, PMID, BibTeX, CSL JSON or a local file; use it for every 'add this to Zotero' request. source: the identifier, URL, citation text or ABSOLUTE file path. DOI/URL/ISBN/PMID also take a comma- or newline-separated batch; BibTeX and CSL JSON may be inline (many entries) or a .bib/.json path. source_type: 'auto' (default) detects it. Prefer a DOI: a URL other than doi.org or arxiv.org becomes a bare webpage item, and ISBN metadata is noisy (verify it). For a file, its DOI is looked up, else metadata is guessed, then the file is attached; title overrides a missed title. collections: keys, names or 'Parent/Child' paths, checked before anything is created (create_missing_collections=True makes missing ones). if_exists: 'file' (default) reuses an item with the same DOI/arXiv ID/ISBN/URL, adding missing collections and tags; 'duplicate' always creates; 'skip' leaves a match alone. attach_mode: 'auto' (default) attaches an open-access PDF, 'linked_url' links it, 'none' skips, 'required' fails without one.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "source_type": {
+          "default": "auto",
+          "enum": [
+            "auto",
+            "doi",
+            "url",
+            "isbn",
+            "pmid",
+            "bibtex",
+            "csl_json",
+            "file"
+          ],
+          "type": "string"
+        },
+        "collections": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "attach_mode": {
+          "default": "auto",
+          "type": "string"
+        },
+        "if_exists": {
+          "default": "file",
+          "enum": [
+            "duplicate",
+            "file",
+            "skip"
+          ],
+          "type": "string"
+        },
+        "create_missing_collections": {
+          "default": false,
+          "type": "boolean"
+        },
+        "title": {
+          "default": null,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  }
+]

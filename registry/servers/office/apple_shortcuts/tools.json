@@ -1,0 +1,32 @@
+[
+  {
+    "name": "run_shortcut",
+    "description": "Run a Shortcuts automation by name",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the shortcut to run"
+        },
+        "input": {
+          "type": "string",
+          "description": "Optional input to pass to the shortcut"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "list_shortcuts",
+    "description": "List all available shortcuts",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

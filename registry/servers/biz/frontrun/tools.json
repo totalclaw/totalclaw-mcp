@@ -1,0 +1,1586 @@
+[
+  {
+    "name": "trending_teaser",
+    "description": "FREE SAMPLE - no auth or API key needed. Top 30 trending companies from Frontrun's follow graph over the last 7 days: name, X handle, sector, logo, follower count, first-flagged date, how many tracked accounts newly followed each, and up to four follower avatars as image URLs (counts and faces only - identities require a plan). Use this to try Frontrun before configuring a key.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "send_feedback",
+    "description": "Send feedback to the Frontrun team - no auth or API key needed. Hit a confusing error, a missing capability, or a docs gap? Report it here so we can fix it for agents like you. Include the tool name and your agent runtime if relevant.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "The feedback itself (required, max 2000 chars)"
+        },
+        "tool": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Which Frontrun tool/endpoint this is about, e.g. \"frontrun_trending\""
+        },
+        "agent": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Your agent runtime, e.g. \"claude-code\""
+        },
+        "contact": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Optional contact (email/X handle) if you want a reply"
+        }
+      },
+      "required": [
+        "message"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_status",
+    "description": "Get account status: who the key runs as, tracked account count, % of monthly usage used, and when usage resets.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "frontrun_billing",
+    "description": "Usage and billing for this key: how much of the period is used, whether a card is on file, auto-refill state, the top-up packs on sale with prices, and the Max upgrade. Free. Call it when a tool answers out_of_usage, before buying anything.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "frontrun_topup",
+    "description": "Buy a usage top-up pack with the card on file and continue. THIS CHARGES MONEY: name the pack and its price to the user and get a yes before calling. Omit pack for the smallest pack; ids and prices come from frontrun_billing or the out_of_usage error. Credits this key at once, so retry the original call after. If no card is on file the answer is a checkout_url to hand to the user. Set auto_refill true to buy the same pack automatically whenever usage runs low, so the session never stalls again. At most 3 purchases per key per day.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "pack": {
+          "type": "string",
+          "description": "Pack id from frontrun_billing (e.g. the \"popular\" one). Omit for the smallest pack."
+        },
+        "auto_refill": {
+          "type": "boolean",
+          "description": "Also turn on auto-refill with this pack for this key. Default false."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_auto_refill",
+    "description": "Turn auto-refill on or off for this key. On = whenever usage runs low a pack is bought with the card on file, so an agent never hits out_of_usage. Enabling charges money later: confirm the pack and price with the user first. Needs a card on file (buy one pack with frontrun_topup first if not).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "true to turn auto-refill on, false to turn it off."
+        },
+        "pack": {
+          "type": "string",
+          "description": "Pack id to buy each time. Omit to keep the current one (or the smallest)."
+        }
+      },
+      "required": [
+        "enabled"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_list_tracked",
+    "description": "List all accounts currently being monitored for follow activity.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "frontrun_track",
+    "description": "Start monitoring Twitter/X account(s) for follow activity. The response includes account.username — the account every call runs and bills as. Surface it to the user at the start of a session, and stop if it is not who they expect. Pass `usernames` (an array, max 50) to onboard a whole list in ONE call instead of one call per handle - always prefer that for more than one account. Partial success is normal: read each result's `status` (tracked / already_tracked / not_found / deferred / ...). Only accounts NEW to the platform draw on usage; accounts already in the shared coverage pool are free. At most 10 new-account introductions are attempted per request; handles beyond that come back \"deferred\" - resubmit just those.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "Single Twitter/X handle to track (without @)"
+        },
+        "usernames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Batch form: up to 50 Twitter/X handles to track in one call. Use instead of username when adding more than one."
+        },
+        "max_credits": {
+          "type": "number",
+          "description": "Optional spend ceiling for this one call. Fails closed: if the call could use more, nothing runs and nothing is charged."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_untrack",
+    "description": "Stop monitoring a Twitter/X account.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "Twitter/X handle to stop tracking (without @)"
+        }
+      },
+      "required": [
+        "username"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_preview",
+    "description": "Preview an account before tracking. Returns profile summary, signal potential score (0-1), sector hints, and a tracking recommendation. Use this to evaluate whether an account is worth monitoring.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": "string",
+          "description": "Twitter/X handle to preview (without @)"
+        }
+      },
+      "required": [
+        "handle"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_new_follows",
+    "description": "Detect new follows across tracked accounts. Returns temporal diffs - who each tracked account recently followed and when (detected_at per follow). By default returns company-grade signal: follows classified as non-companies are hidden (hidden_non_companies reports the count) and classification labels are attached. Set raw=true for the unfiltered feed. Accounts added very recently appear under \"baselining\" and are live-checked against X for follows made since they were added.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "since": {
+          "type": "string",
+          "description": "Time window: \"24h\", \"7d\", \"30d\", or ISO date. Default: \"24h\""
+        },
+        "hours": {
+          "type": "number",
+          "description": "Shorthand: hours to look back (e.g. 48). Alternative to since."
+        },
+        "username": {
+          "type": "string",
+          "description": "Filter to a specific tracked account"
+        },
+        "raw": {
+          "type": "boolean",
+          "description": "Return the unfiltered follow feed (default hides non-companies)"
+        },
+        "only": {
+          "type": "string",
+          "enum": [
+            "companies",
+            "people",
+            "all"
+          ],
+          "description": "\"people\" = only individuals (plus follows not classified yet), for people-first sourcing; \"all\" = unfiltered; default \"companies\""
+        },
+        "include_baseline": {
+          "type": "boolean",
+          "description": "Include the initial indexed follow lists of accounts still establishing a baseline"
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Opaque watermark from a previous response's next_cursor. Resumes exactly where that run stopped, so a scheduled job that retries neither double counts nor drops records. Overrides since. Pass it back unmodified; save it only AFTER processing the response."
+        },
+        "scope": {
+          "type": "string",
+          "description": "Whose follows to read: \"tracked\" (default, your tracked accounts), \"network\" (the whole Frontrun network, paid Pro plans) or \"list:<id>\" (one of your lists from frontrun_lists, with its sectors)."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_snapshot",
+    "description": "Get the current follow list for a tracked account. Shows everyone they currently follow based on stored data.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "Twitter/X handle of the tracked account"
+        }
+      },
+      "required": [
+        "username"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_enriched_follows",
+    "description": "New follows with full enrichment: AI classification + custom rules + custom tags + filtering. The most powerful signal endpoint. Use sector/keyword/entity_type filters to query like \"show me all stablecoin neobanks my tracked VCs followed this week\".",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "since": {
+          "type": "string",
+          "description": "Time window: \"24h\", \"7d\", etc. Default: \"24h\""
+        },
+        "hours": {
+          "type": "number",
+          "description": "Shorthand: hours to look back"
+        },
+        "username": {
+          "type": "string",
+          "description": "Filter to a specific tracked account"
+        },
+        "sector": {
+          "type": "string",
+          "description": "Filter by sector (e.g. \"DeFi\", \"AI\", \"stablecoins\")"
+        },
+        "keyword": {
+          "type": "string",
+          "description": "Search keyword (matches username, name, bio, sector)"
+        },
+        "entity_type": {
+          "type": "string",
+          "description": "Filter by type: \"company\", \"project\", \"person\", \"fund\", \"vc\""
+        },
+        "tag": {
+          "type": "string",
+          "description": "Filter by custom tag or rule name"
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Opaque watermark from a previous response's next_cursor. Resumes exactly where that run stopped, so a scheduled job that retries neither double counts nor drops records. Overrides since. Pass it back unmodified; save it only AFTER processing the response."
+        },
+        "scope": {
+          "type": "string",
+          "description": "Whose follows to read: \"tracked\" (default, your tracked accounts), \"network\" (the whole Frontrun network, paid Pro plans) or \"list:<id>\" (one of your lists from frontrun_lists, with its sectors)."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_convergence",
+    "description": "Detect convergence: startups followed by 2+ of your tracked accounts (min_accounts, default 2) independently in the window. Startups only: a result must be marked a company in our curated companies table (entity type company, project, protocol or product) with at most 25,000 X followers. People, investors, VC firms, media, organizations, public companies and big established brands are left out, as is anything not yet classified. When 3+ tracked investors independently follow the same startup, it strongly suggests pre-funding interest. frontrun_companies stays the full catalog. Default window 7d.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "min_accounts": {
+          "type": "number",
+          "description": "Minimum tracked accounts that must follow. Default: 2. Use 3+ for high-conviction."
+        },
+        "since": {
+          "type": "string",
+          "description": "Time window. Default: \"7d\""
+        },
+        "hours": {
+          "type": "number",
+          "description": "Shorthand: hours to look back"
+        },
+        "scope": {
+          "type": "string",
+          "description": "Whose follows to read: \"tracked\" (default, your tracked accounts), \"network\" (the whole Frontrun network, paid Pro plans) or \"list:<id>\" (one of your lists from frontrun_lists, with its sectors)."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_trending",
+    "description": "Startups ranked by how many of your tracked accounts recently followed them. Startups only: a result must be marked a company in our curated companies table (entity type company, project, protocol or product) with at most 25,000 X followers. People, investors, VC firms, media, organizations, public companies and big established brands are left out, as is anything not yet classified. classify=true attaches the cached classification to each result. frontrun_companies stays the full catalog. Default window 7d. classify=true uses more usage per item classified.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "since": {
+          "type": "string",
+          "description": "Time window. Default: \"7d\""
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max results (max 100). Default: 25"
+        },
+        "classify": {
+          "type": "boolean",
+          "description": "Include AI classification"
+        },
+        "max_credits": {
+          "type": "number",
+          "description": "Optional spend ceiling for this one call. Fails closed: if the call could use more, nothing runs and nothing is charged."
+        },
+        "scope": {
+          "type": "string",
+          "description": "Whose follows to read: \"tracked\" (default, your tracked accounts), \"network\" (the whole Frontrun network, paid Pro plans) or \"list:<id>\" (one of your lists from frontrun_lists, with its sectors)."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_search",
+    "description": "Keyword search over Frontrun-discovered companies. Use scope \"catalog\" (recommended for discovery) to search every company YOUR tracked accounts have ever surfaced, which is far wider than any single time window of follows - companies describe themselves in plain words, so exact terms like \"post-training\", \"fine-tune\", \"RL environments\" often find what semantic thesis search misses. scope \"tracked\" (default) searches only entities in YOUR tracked accounts' follow graph. For \"companies under N followers\" questions this is ONE call: scope \"catalog\" + sector or keyword + max_followers=N - counts come back live-verified against X (followers_live: true), so do NOT re-check sizes with per-company calls; follow up with frontrun_founders_batch for all result handles at once. PRESENTATION: always show catalog results as a markdown table - Company (linked to x.com/username) | Description | Followers | Founders (@handles linked) | Website. Never a prose list. For broad thesis work, run BOTH frontrun_thesis_search and this tool with 2-4 keyword variants, then merge.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sector": {
+          "type": "string",
+          "description": "Legacy sector substring: \"DeFi\", \"AI\", \"Robotics\", \"Infrastructure\", \"Payments\", etc. Prefer industry / ai / sub."
+        },
+        "industry": {
+          "type": "string",
+          "description": "Taxonomy industry (market served). \"AI\" = any AI-native company, or one of: B2B Software, Developer Tools, Fintech, Crypto, Consumer, Gaming, Commerce, Healthcare, Bio, Industrials, Aerospace & Defense, Energy, Hardware, Security, Education, Real Estate"
+        },
+        "sub": {
+          "type": "string",
+          "description": "Taxonomy sub-industry, e.g. \"Robotics\", \"Payments\", \"DeFi\", \"Legal\", \"Healthcare IT\". frontrun_sectors lists them."
+        },
+        "ai": {
+          "type": "string",
+          "description": "Kind of AI company, one of: Foundation Models & Research, AI Infra & Compute, Agent Infra, Training Data & Annotation, Evals & RL Environments, Agent Builders, General Assistants, Vertical Agents, Coding Agents, Voice AI, Generative Media, Physical AI, AI Security & Safety. \"any\" = AI-native, \"none\" = no AI."
+        },
+        "buyer": {
+          "type": "string",
+          "description": "Who buys: Enterprise | SMB | Developers | Consumers | Government | Crypto users"
+        },
+        "crypto": {
+          "type": "boolean",
+          "description": "true = onchain / token component; false = none"
+        },
+        "keyword": {
+          "type": "string",
+          "description": "Search keyword (matched against company name and bio/description)"
+        },
+        "entity_type": {
+          "type": "string",
+          "description": "Filter: \"company\", \"project\", \"person\", \"fund\", \"vc\""
+        },
+        "scope": {
+          "type": "string",
+          "description": "\"catalog\" = keyword search over your catalog of companies; otherwise whose follows to search: \"tracked\" (default), \"network\" (whole Frontrun network, paid Pro plans) or \"list:<id>\" (one of your lists)."
+        },
+        "max_followers": {
+          "type": "number",
+          "description": "Catalog scope only: only companies at or under this follower count, live-verified against X"
+        },
+        "min_followers": {
+          "type": "number",
+          "description": "Catalog scope only: only companies at or above this follower count, live-verified against X"
+        },
+        "verify_followers": {
+          "type": "boolean",
+          "description": "Set false to skip live verification of follower bounds (faster, counts may be stale). Default: true when a bound is set"
+        },
+        "include_founders": {
+          "type": "boolean",
+          "description": "Catalog scope only: include each company's founders (name, role, X handle) in the same response. Uses more usage per company with founders found"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max results (max 200). Default: 50"
+        },
+        "max_credits": {
+          "type": "number",
+          "description": "Optional spend ceiling for this one call. Fails closed: if the call could use more, nothing runs and nothing is charged."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_thesis_search",
+    "description": "Thesis search over Frontrun-discovered companies: describe an investment thesis in plain language and get matching companies. Searches BOTH by meaning (embeddings) and by vocabulary (catalog keyword sweep), merged server-side - pass 3-8 domain keywords for much better coverage (companies self-describe in their field's insider jargon; e.g. an AI-training thesis benefits from keywords like \"post-training\", \"evals\"; a payments thesis from \"payment rails\", \"x402\"). Each result says which route found it (found_by) and which keywords matched. IMPORTANT: followers_count null means UNKNOWN, not zero - treat unknown as possibly-small when filtering. Negation (\"NOT exchanges\") is unsupported - retrieve broadly, filter yourself.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "q": {
+          "type": "string",
+          "description": "Investment thesis in plain language (min 10 characters)"
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "3-8 short keyword phrases in the field's own vocabulary; dramatically improves recall over meaning-only search"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max results (max 50). Default: 25"
+        }
+      },
+      "required": [
+        "q"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_classify",
+    "description": "Run AI classification on specific entities. Returns sector, entity type, confidence.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "usernames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Usernames to classify"
+        },
+        "twitter_user_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Twitter user IDs to classify"
+        },
+        "max_credits": {
+          "type": "number",
+          "description": "Optional spend ceiling for this one call. Fails closed: if the call could use more, nothing runs and nothing is charged."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_create_rule",
+    "description": "Create a custom classification rule. Rules auto-tag entities matching your conditions in enriched follows and discover results. Free.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Rule name, e.g. \"DeFi Protocols\" or \"stablecoin-neobank\""
+        },
+        "conditions": {
+          "type": "object",
+          "properties": {
+            "bio_keywords": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Keywords to match in bio (any match triggers)"
+            },
+            "username_pattern": {
+              "type": "string",
+              "description": "Regex pattern for username"
+            },
+            "sector_contains": {
+              "type": "string",
+              "description": "Match entities in this sector"
+            },
+            "must_be_company": {
+              "type": "boolean",
+              "description": "Only match companies (true) or individuals (false)"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Conditions that must ALL be met"
+        },
+        "actions": {
+          "type": "object",
+          "properties": {
+            "custom_sector": {
+              "type": "string",
+              "description": "Override sector classification"
+            },
+            "custom_entity_type": {
+              "type": "string",
+              "description": "Override entity type"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Tags to apply"
+            },
+            "priority": {
+              "type": "string",
+              "description": "\"high\", \"medium\", or \"low\""
+            }
+          },
+          "additionalProperties": false,
+          "description": "What to apply when conditions match"
+        }
+      },
+      "required": [
+        "name",
+        "conditions",
+        "actions"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_list_rules",
+    "description": "List your custom classification rules. Free.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "frontrun_update_rule",
+    "description": "Update an existing custom classification rule. Free.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Rule UUID to update"
+        },
+        "name": {
+          "type": "string",
+          "description": "New rule name"
+        },
+        "conditions": {
+          "type": "object",
+          "properties": {
+            "bio_keywords": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "username_pattern": {
+              "type": "string"
+            },
+            "sector_contains": {
+              "type": "string"
+            },
+            "must_be_company": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Updated conditions"
+        },
+        "actions": {
+          "type": "object",
+          "properties": {
+            "custom_sector": {
+              "type": "string"
+            },
+            "custom_entity_type": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "priority": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Updated actions"
+        },
+        "active": {
+          "type": "boolean",
+          "description": "Enable or disable the rule"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_delete_rule",
+    "description": "Delete a custom classification rule. Free.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Rule UUID to delete"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_tag",
+    "description": "Add custom tags, sector override, or notes to a specific entity. Free.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "twitter_user_id": {
+          "type": "string",
+          "description": "Twitter user ID"
+        },
+        "username": {
+          "type": "string",
+          "description": "Username (alternative to twitter_user_id)"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tags, e.g. [\"watchlist\", \"portfolio\"]"
+        },
+        "custom_sector": {
+          "type": "string",
+          "description": "Custom sector override"
+        },
+        "custom_entity_type": {
+          "type": "string",
+          "description": "Custom entity type override"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Free-text notes"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_list_tags",
+    "description": "List your custom-tagged entities. Free.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "type": "string",
+          "description": "Filter by tag name"
+        },
+        "sector": {
+          "type": "string",
+          "description": "Filter by custom sector"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_company",
+    "description": "Synthesized company overview: what they do, sector, stage, website summary, recent activity. Combines Twitter profile, website scrape, and AI classification. Use `include` to get the FULL picture of one company in ONE call instead of four - include=\"resources,founders,funding\" bundles what frontrun_company_resources, frontrun_company_founders and frontrun_company_funding return. Each section draws on usage like its dedicated tool. Founders use nothing when none are found and funding uses nothing when nothing resolves, same as the dedicated tools. Note: include=founders uses the fast cached lookup, so a brand-new stealth company comes back resolution_status \"resolving\" - call frontrun_company_founders for the blocking live resolve.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": "string",
+          "description": "Twitter/X handle (without @)"
+        },
+        "include": {
+          "type": "string",
+          "description": "Comma-separated sections to bundle in: \"resources\", \"founders\", \"funding\". Example: \"resources,founders,funding\". Founders are free when none are found, funding is free when none resolves."
+        },
+        "max_credits": {
+          "type": "number",
+          "description": "Optional spend ceiling for this one call. Fails closed: if the call could use more, nothing runs and nothing is charged."
+        }
+      },
+      "required": [
+        "handle"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_company_founders",
+    "description": "Founder intelligence for ONE company (for several companies, call frontrun_founders_batch instead). Identifies founders via social graph analysis and enriches with LinkedIn data. Each founder's \"handle\" field is their X handle - present it as @handle. Returns name, role, background, previous companies.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": "string",
+          "description": "Twitter/X handle of the company (without @)"
+        }
+      },
+      "required": [
+        "handle"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_founders_batch",
+    "description": "Founder lookup for up to 10 companies in ONE call - always prefer this over calling frontrun_company_founders once per company. Serves verified cached founder data in about a second. Each founder's \"handle\" field is their X handle - present it as @handle. Companies returned with resolution_status \"resolving\" have live discovery running in the background: retry just those via frontrun_company_founders in about a minute. Companies with founders found draw on usage; misses are free.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "handles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Company X handles (without @), max 10"
+        },
+        "max_credits": {
+          "type": "number",
+          "description": "Optional spend ceiling for this one call. Fails closed: if the call could use more, nothing runs and nothing is charged."
+        }
+      },
+      "required": [
+        "handles"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_warm_path",
+    "description": "Are you already connected to this founder, and through whom. Returns whether you follow them and which accounts you follow ALSO follow them, drawn from your own X follow graph. FREE - no upstream call, so run it on every founder in a brief rather than picking. Use the warmest_angle field verbatim in outreach: it is the one line that turns a cold DM into a warm one. When warmest_angle is null there is no verified connection - say nothing about knowing them. If synced is false the user has not signed in with X, so no graph exists yet; that is different from having no connections.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": "string",
+          "description": "Founder X handle (without @)"
+        }
+      },
+      "required": [
+        "handle"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_draft_dm",
+    "description": "Draft a cold DM to a founder, grounded in which tracked investors moved on the company and any verified shared connection. Writes only - this NEVER sends anything and holds no permission to. The returned grounded_in block lists every fact the draft was allowed to claim, so a human can check each one before sending. If grounded_in.warm_angle is null the draft will not imply a shared connection, because a fabricated mutual is checkable in one tap and costs the sender the meeting. Show the user the draft and let them send it themselves.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "company": {
+          "type": "string",
+          "description": "Company X handle (without @)"
+        },
+        "founder": {
+          "type": "string",
+          "description": "Founder X handle (without @). Improves the draft and enables the warm-path angle."
+        },
+        "founder_name": {
+          "type": "string",
+          "description": "Founder display name, for the greeting"
+        },
+        "founder_bio": {
+          "type": "string",
+          "description": "Founder bio, for a specific reference"
+        },
+        "funding_context": {
+          "type": "string",
+          "description": "Anything known about their funding, e.g. \"no round announced\""
+        },
+        "angle": {
+          "type": "string",
+          "description": "Steer the draft, e.g. \"lead with the infra angle\""
+        },
+        "sender": {
+          "type": "object",
+          "properties": {
+            "userName": {
+              "type": "string"
+            },
+            "fundName": {
+              "type": "string"
+            },
+            "fundDescription": {
+              "type": "string"
+            },
+            "fundWebsite": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Who the DM is from. Without this the draft uses placeholders."
+        }
+      },
+      "required": [
+        "company"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_send_dm",
+    "description": "Send a DM from the USER'S OWN X account. FREE. This actually sends: there is no undo, and the founder sees the user, not Frontrun. NEVER call this without showing the exact message to the user first and getting them to say yes. Requires confirm: true, which you may only set after they have approved that specific text; if you call without it you get the draft echoed back and nothing is sent. Off by default per account, and capped per day, because these calls run through a shared X app. If it fails with a closed inbox, do not retry: suggest the company account or a public reply instead.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "recipient": {
+          "type": "string",
+          "description": "Recipient X handle (without @)"
+        },
+        "message": {
+          "type": "string",
+          "description": "The exact text to send, as approved by the user"
+        },
+        "confirm": {
+          "type": "boolean",
+          "description": "Must be true, and only after the user approved this exact message. Without it nothing sends."
+        },
+        "company": {
+          "type": "string",
+          "description": "Company handle this relates to, for the audit record"
+        },
+        "grounded_in": {
+          "description": "Pass through the grounded_in block from frontrun_draft_dm so the claims are recorded alongside the send"
+        }
+      },
+      "required": [
+        "recipient",
+        "message",
+        "confirm"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_company_signals",
+    "description": "Social signal analysis: buzz score, sentiment, notable mentions, and which of your tracked VCs follow this entity.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": "string",
+          "description": "Twitter/X handle (without @)"
+        }
+      },
+      "required": [
+        "handle"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_company_resources",
+    "description": "Discovered links and resources: website, GitHub, docs, Discord, Telegram. Extracted from profile and website scrape.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": "string",
+          "description": "Twitter/X handle (without @)"
+        }
+      },
+      "required": [
+        "handle"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_company_funding",
+    "description": "Funding/deal info cross-referenced with VC follow signals. Returns round details, investors, and which of your tracked VCs follow them.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": "string",
+          "description": "Twitter/X handle (without @)"
+        }
+      },
+      "required": [
+        "handle"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_vc_activity",
+    "description": "VC follow pattern analysis: velocity, sector distribution, recent follows with classification.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": "string",
+          "description": "Twitter/X handle of the tracked VC"
+        },
+        "since": {
+          "type": "string",
+          "description": "Time window. Default: \"30d\""
+        },
+        "scope": {
+          "type": "string",
+          "description": "Whose follows to read: \"tracked\" (default, your tracked accounts), \"network\" (the whole Frontrun network, paid Pro plans) or \"list:<id>\" (one of your lists from frontrun_lists, with its sectors)."
+        }
+      },
+      "required": [
+        "handle"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_vc_similar",
+    "description": "Find investors similar to an X account across the whole Frontrun network: the accounts whose last 90 days of follows overlap most with theirs, rare shared picks weighted up. Returns the top matches with shared companies and people as proof, and whether you already track each one.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": "string",
+          "description": "X handle of the investor (tracked or not)"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max results (max 50). Default: 10"
+        }
+      },
+      "required": [
+        "handle"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_feed",
+    "description": "Real-time activity feed across tracked accounts. \"Who has my tracked list followed today?\" Filter by event type (new_follow, convergence) and sector.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "event_type": {
+          "type": "string",
+          "description": "Filter: \"new_follow\" or \"convergence\""
+        },
+        "since": {
+          "type": "string",
+          "description": "Time window. Default: \"24h\""
+        },
+        "hours": {
+          "type": "number",
+          "description": "Shorthand: hours to look back"
+        },
+        "sector": {
+          "type": "string",
+          "description": "Filter targets by sector"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max events (max 200). Default: 50"
+        },
+        "offset": {
+          "type": "number",
+          "description": "Pagination offset over the sorted event list. Default: 0"
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Opaque watermark from a previous response's next_cursor. Resumes exactly where that run stopped, so a scheduled job that retries neither double counts nor drops records. Overrides since. Pass it back unmodified; save it only AFTER processing the response."
+        },
+        "scope": {
+          "type": "string",
+          "description": "Whose follows to read: \"tracked\" (default, your tracked accounts), \"network\" (the whole Frontrun network, paid Pro plans) or \"list:<id>\" (one of your lists from frontrun_lists, with its sectors)."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_companies",
+    "description": "Your company catalog, the best first call for \"what companies do I have\". Your list (\"your_list\"): every company in your daily reports, plus what the accounts you track discovered in the last 30 days. Plus a one-time starter set of the last 30 days of companies in your sectors (\"starter\") so a new account is never empty. Each row has tracked_followers (how many of your tracked accounts follow it): sort by it to find what your accounts are converging on. Filter by sector, since, q or source.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sector": {
+          "type": "string",
+          "description": "Filter by sector (substring match, e.g. \"AI\", \"Robotics\")"
+        },
+        "since": {
+          "type": "string",
+          "description": "Only companies flagged since: \"7d\", \"48h\" or an ISO date"
+        },
+        "q": {
+          "type": "string",
+          "description": "Search handle, name or description"
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "your_list",
+            "starter"
+          ],
+          "description": "Only your own list, or only the starter set"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max results (max 200). Default: 50"
+        },
+        "offset": {
+          "type": "number",
+          "description": "Pagination offset. Default: 0"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_sectors",
+    "description": "Sector breakdown of all discovered entities across your tracked accounts. Shows distribution with counts and percentages. Also returns taxonomy: industries with sub-industries, AI types and buyers with counts - the exact values frontrun_search takes as industry / sub / ai / buyer.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "type": "string",
+          "description": "Whose follows to read: \"tracked\" (default, your tracked accounts), \"network\" (the whole Frontrun network, paid Pro plans) or \"list:<id>\" (one of your lists from frontrun_lists, with its sectors)."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_discover",
+    "description": "Personalized account recommendations based on your tracked set and custom classification rules. \"You track 50 VCs - here are accounts they follow that you're not tracking yet.\"",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sector": {
+          "type": "string",
+          "description": "Narrow by sector"
+        },
+        "min_signal": {
+          "type": "number",
+          "description": "Minimum signal score (0-1). Default: 0.3"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max results (max 50). Default: 20"
+        },
+        "scope": {
+          "type": "string",
+          "description": "Whose follows to read: \"tracked\" (default, your tracked accounts), \"network\" (the whole Frontrun network, paid Pro plans) or \"list:<id>\" (one of your lists from frontrun_lists, with its sectors)."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_reports",
+    "description": "Daily reports of newly found startups. Two kinds. report=\"network\" is the Frontrun Report: every new startup found across the whole Frontrun network that day (Pro and Max); each company says in_your_sectors when it is in the sectors you picked in onboarding. report=\"list\" is the report from only the accounts YOU track. Leave report out and you get the one your account is emailed each morning. Filter by date range and sector. \"Show me last week's stablecoin discoveries across the network.\"",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "report": {
+          "type": "string",
+          "enum": [
+            "network",
+            "list"
+          ],
+          "description": "\"network\" = the Frontrun Report, every new startup across the whole network (Pro and Max). \"list\" = only what the accounts you track found. Default: the report your account is emailed."
+        },
+        "since": {
+          "type": "string",
+          "description": "Time range: \"7d\", \"14d\", \"30d\", or \"YYYY-MM-DD\". Default: \"7d\""
+        },
+        "date": {
+          "type": "string",
+          "description": "Specific date: \"YYYY-MM-DD\""
+        },
+        "sector": {
+          "type": "string",
+          "description": "Filter by sector keyword (e.g. \"stablecoin\", \"DeFi\", \"AI\")"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max reports to return (max 30). Default: 7"
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Opaque watermark from a previous response's next_cursor. Picks up from the day after the newest report already returned, so a repeating job never re-reads or skips one. Cannot be combined with date."
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_people",
+    "description": "Stealth founders: people who just left a role to start something, went stealth on LinkedIn, or are being followed by the network as a builder before any company exists. Each has name, links, past orgs, what they are building and when we first reported them. Default = everyone the lane reported; scope \"tracked\" or \"list:<id>\" keeps the people those accounts follow (followed_by only ever names your own accounts). Not on every plan: a 403 lanes_not_enabled means the plan does not include it. Empty answers are free.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "since": {
+          "type": "string",
+          "description": "Window: \"7d\" (default), \"30d\", \"48h\" or an ISO date. Max 90 days"
+        },
+        "lane": {
+          "type": "string",
+          "enum": [
+            "stealth",
+            "follow",
+            "convergence"
+          ],
+          "description": "\"stealth\" = went stealth / left a role (LinkedIn), \"follow\" = the network follows them as a builder, \"convergence\" = several accounts converging"
+        },
+        "q": {
+          "type": "string",
+          "description": "Search name, handle, bio, past company"
+        },
+        "scope": {
+          "type": "string",
+          "description": "\"tracked\" or \"list:<id>\" to keep only people those accounts follow. Omit for everyone the lane reported."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max results (max 100). Default 50"
+        },
+        "offset": {
+          "type": "number",
+          "description": "Pagination offset"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_accelerators",
+    "description": "New accelerator cohort companies (YC, a16z Speedrun, South Park Commons, Founders Inc, Z Fellows...) as we detect them, including stealth teams: name, program, batch, sector, one-liner, website and founders. The response carries programs (counts per accelerator) to see what else is there. Not on every plan: a 403 lanes_not_enabled means the plan does not include it. Empty answers are free.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "since": {
+          "type": "string",
+          "description": "Window: \"30d\" (default), \"7d\" or an ISO date. Max 90 days"
+        },
+        "program": {
+          "type": "string",
+          "description": "Accelerator key, e.g. \"yc\", \"speedrun\", \"spc\", \"finc\", \"zfellows\" (see programs in any response)"
+        },
+        "batch": {
+          "type": "string",
+          "description": "Batch text match, e.g. \"Fall 2026\", \"SR008\""
+        },
+        "stealth": {
+          "type": "boolean",
+          "description": "true = only stealth teams, false = only named companies"
+        },
+        "q": {
+          "type": "string",
+          "description": "Search name, handle, one-liner, sector, founder names"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max results (max 100). Default 50"
+        },
+        "offset": {
+          "type": "number",
+          "description": "Pagination offset"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_lists",
+    "description": "Your own lists of accounts (the same lists as your Home tabs and reports in the app), with sizes and ids. Pass scope \"list:<id>\" to frontrun_feed, frontrun_convergence, frontrun_trending and the other scoped tools to query just that list. FREE.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "frontrun_list_get",
+    "description": "One of your lists with its members (name, firm, whether each is in the Frontrun network). FREE.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "List id from frontrun_lists"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_list_create",
+    "description": "Create a list: name it, add X handles of the investors/scouts/operators whose follows you trust, and optionally narrow it to sectors. It shows up as a tab in the app and can be queried with scope \"list:<id>\". feed \"network\" = a list over the whole Frontrun network instead of its members (needs a paid Pro plan to query). Members outside the network come back in not_polled: track them with frontrun_track to get their follows. FREE.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "List name (max 60 chars)"
+        },
+        "handles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "X handles to put in the list (without @, max 5,000)"
+        },
+        "feed": {
+          "type": "string",
+          "enum": [
+            "accounts",
+            "network"
+          ],
+          "description": "\"accounts\" (default) = only the members' follows; \"network\" = the whole Frontrun network"
+        },
+        "sectors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Only companies in these sectors (e.g. [\"AI\", \"Robotics\"]). Empty = all"
+        },
+        "max_followers": {
+          "type": "number",
+          "description": "Only companies under this many X followers"
+        },
+        "min_tracking": {
+          "type": "number",
+          "description": "Only companies at least this many of the list's accounts follow"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_list_update",
+    "description": "Rename a list or change its feed settings (feed, sectors, max_followers, min_tracking). Only the fields you pass change. FREE.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "List id"
+        },
+        "name": {
+          "type": "string",
+          "description": "New name"
+        },
+        "feed": {
+          "type": "string",
+          "enum": [
+            "accounts",
+            "network"
+          ],
+          "description": "\"accounts\" or \"network\""
+        },
+        "sectors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Sectors; [] = all"
+        },
+        "max_followers": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Follower cap; null = any"
+        },
+        "min_tracking": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Minimum list accounts following; null = any"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_list_members",
+    "description": "Add and/or remove accounts on one of your lists. FREE.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "List id"
+        },
+        "add": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "X handles to add"
+        },
+        "remove": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "X handles to remove"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_list_delete",
+    "description": "Delete one of your lists (its app tab and any reports built on it go too). Confirm with the user first. FREE.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "List id"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_list_webhooks",
+    "description": "List your registered webhooks with status and last delivery time. Free.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "frontrun_create_webhook",
+    "description": "Register a webhook to receive push notifications for signal events: new_follows, convergence, and on plans with the discovery lanes, people (the day's new stealth founders) and accelerators (the day's new cohort companies), delivered once a day when the lanes publish. Deliveries are signed with your secret if provided. Setup and each delivery draw on your monthly usage.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "HTTPS endpoint to receive event payloads"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "new_follows",
+              "convergence",
+              "people",
+              "accelerators"
+            ]
+          },
+          "description": "Event types to subscribe to. people / accelerators need the lane on your plan (403 lanes_not_enabled otherwise)"
+        },
+        "filters": {
+          "type": "object",
+          "properties": {
+            "tracked_accounts": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Only deliver events from these tracked accounts"
+            },
+            "sectors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Only deliver events for targets in these sectors"
+            },
+            "entity_types": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Only deliver events for these entity types (e.g. \"company\", \"fund\")"
+            },
+            "is_company_only": {
+              "type": "boolean",
+              "description": "Only deliver events for companies"
+            },
+            "only": {
+              "type": "string",
+              "enum": [
+                "companies",
+                "people",
+                "all"
+              ],
+              "description": "new_follows only: \"people\" = every individual your tracked accounts followed that day; \"all\" = raw diff; default \"companies\". people/all deliver once a day (~6 PM ET)"
+            },
+            "min_convergence": {
+              "type": "number",
+              "description": "Convergence only: minimum tracked accounts following. Default: 2"
+            },
+            "lanes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "stealth",
+                  "follow",
+                  "convergence"
+                ]
+              },
+              "description": "people only: which lanes to deliver"
+            },
+            "programs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "accelerators only: accelerator keys, e.g. \"yc\", \"speedrun\""
+            },
+            "stealth_only": {
+              "type": "boolean",
+              "description": "accelerators only: stealth teams only"
+            },
+            "tracked_only": {
+              "type": "boolean",
+              "description": "people / accelerators: only rows one of your tracked accounts follows"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Optional event filters (AND logic)"
+        },
+        "secret": {
+          "type": "string",
+          "description": "Secret used to HMAC-sign delivery payloads"
+        }
+      },
+      "required": [
+        "url",
+        "events"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "frontrun_delete_webhook",
+    "description": "Delete a registered webhook. Free.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Webhook ID to delete"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "name": "signet_generate_keypair",
+    "description": "Create a fresh Ed25519 identity for demos, tests, or agent bootstrapping. Returns JSON with {public_key, note}. The secret key is intentionally not returned by this MCP tool, so use Signet CLI or your own secure key storage for long-lived identities.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "signet_sign",
+    "description": "Create a Signet receipt for a tool call before execution. The secret key is read from the SIGNET_SECRET_KEY environment variable (never passed as an argument). Returns the full signed receipt JSON.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tool": {
+          "type": "string",
+          "description": "Name of the tool or action being attested, for example github_create_issue or file_write."
+        },
+        "params": {
+          "description": "Exact JSON arguments to bind into the receipt. Changing this JSON later will change the params hash and invalidate verification expectations."
+        },
+        "signer_name": {
+          "type": "string",
+          "description": "Stable signer or agent name that will appear in the receipt, such as ci-agent or research-bot."
+        },
+        "signer_owner": {
+          "type": "string",
+          "description": "Optional human, team, or org that owns the signer identity."
+        },
+        "target": {
+          "type": "string",
+          "description": "Optional target URI for the system where the action will run, such as mcp://github.local."
+        }
+      },
+      "required": [
+        "tool",
+        "signer_name"
+      ]
+    }
+  },
+  {
+    "name": "signet_verify",
+    "description": "Verify that a receipt was signed by the expected public key. Use this to validate receipts from agents, logs, tests, or exchanged MCP metadata. Returns JSON {valid: boolean}. This checks signature validity against the supplied key; it does not enforce freshness, authorization, or policy decisions.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "receipt_json": {
+          "type": "string",
+          "description": "Serialized receipt JSON to verify. This should be the full receipt object as a string."
+        },
+        "public_key": {
+          "type": "string",
+          "description": "Expected signer public key, either bare base64 or ed25519:base64."
+        }
+      },
+      "required": [
+        "receipt_json",
+        "public_key"
+      ]
+    }
+  },
+  {
+    "name": "signet_content_hash",
+    "description": "Compute a deterministic SHA-256 hash over canonical JSON using RFC 8785 JCS. Use this when you need a stable digest for receipt params, audit records, or comparing semantically identical JSON with different formatting or key order. Returns JSON {hash: string}.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "description": "Any JSON value to hash: object, array, string, number, boolean, or null."
+        }
+      },
+      "required": [
+        "content"
+      ]
+    }
+  }
+]

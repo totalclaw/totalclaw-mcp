@@ -1,0 +1,771 @@
+[
+  {
+    "name": "website_test",
+    "description": "Run prepared synthetic visitors on a real website URL. Actions and screenshots are observed; only supplied DOM checks verify goals. Cart changes are enabled by cart/checkout goals; signup submission requires explicit test data and opt-in. No payments/orders. Background job: poll job_status.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "simulation_id": {
+          "type": "string"
+        },
+        "spec": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string"
+            },
+            "goal": {
+              "type": "string"
+            },
+            "task": {
+              "type": "string"
+            },
+            "checks": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "goal_check": {
+              "type": "string"
+            },
+            "max_personas": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            },
+            "max_steps": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30
+            },
+            "device": {
+              "type": "string",
+              "enum": [
+                "mobile",
+                "desktop"
+              ]
+            },
+            "headless": {
+              "type": "boolean"
+            },
+            "record_video": {
+              "type": "boolean"
+            },
+            "record_trace": {
+              "type": "boolean",
+              "description": "Opt-in raw trace may contain test credentials and network data"
+            },
+            "max_recoveries": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "observation_mode": {
+              "type": "string",
+              "enum": [
+                "compact",
+                "full"
+              ]
+            },
+            "observation_text_chars": {
+              "type": "integer",
+              "minimum": 1000,
+              "maximum": 10000
+            },
+            "max_model_calls": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 600
+            },
+            "max_input_tokens": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000000
+            },
+            "max_elapsed_s": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 86400
+            },
+            "loop_limit": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 10
+            },
+            "allow_cart": {
+              "type": "boolean"
+            },
+            "allow_signup_submit": {
+              "type": "boolean"
+            },
+            "test_data": {
+              "type": "object",
+              "description": "Owned test identity only. Multiple signup visitors need an email template containing {visitor}. Never provider API keys."
+            }
+          },
+          "required": [
+            "url"
+          ]
+        },
+        "out": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "simulation_id",
+        "spec"
+      ]
+    }
+  },
+  {
+    "name": "provider_setup",
+    "description": "List provider choices and official key guides, inspect masked local settings, configure a local model or an existing key environment variable, or discover available models. Never paste an API key into tool arguments. ChatGPT/CLI login choices return local login commands.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "list",
+            "status",
+            "configure",
+            "check"
+          ]
+        },
+        "provider": {
+          "type": "string",
+          "enum": [
+            "ollama",
+            "lmstudio",
+            "anthropic",
+            "openai",
+            "compatible",
+            "siwc",
+            "codex",
+            "claude"
+          ]
+        },
+        "model": {
+          "type": "string"
+        },
+        "base_url": {
+          "type": "string"
+        },
+        "key_env": {
+          "type": "string",
+          "description": "Environment variable NAME only; never the key itself"
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  },
+  {
+    "name": "doctor",
+    "description": "Check MarketMirror: engine installed, Python deps, API key configured (never shown), backend running.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "setup",
+    "description": "Install or update the MarketMirror engine (git clone + uv sync). Background job; poll job_status. Needs git and uv.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "start_backend",
+    "description": "Start the MarketMirror backend (port 5001). Configure an API-key, eligible ChatGPT sign-in, local CLI gateway, or local-model provider first.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "market_test",
+    "description": "All-in-one market test. Config keys: name, title, seeds (absolute paths to documents), requirement (text), personas (persona spec object or absolute path) or auto_personas (int), creatives (feed-test object with creatives, landing, benchmarks), seeds_n (int, repeat the feed test with N seeds and report ranges), rounds (int), survey {offer, goal, messages (list), split, pricing}, panel {analysts, brief}, report (bool), simulation_id (reuse), approve_spend (bool). Without approve_spend it stops after creating the personas so you can show them to the user; then call again with simulation_id and approve_spend true. Background job.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "config": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "config"
+      ]
+    }
+  },
+  {
+    "name": "job_status",
+    "description": "Status, log tail and final result of a background job.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "job_id"
+      ]
+    }
+  },
+  {
+    "name": "results",
+    "description": "Key results of a run: decision, verdicts, segments, objections, messages, pricing, feed-test metrics, ROI projections, files.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "run": {
+          "type": "string",
+          "description": "run name under mirofish_runs or absolute path"
+        }
+      },
+      "required": [
+        "run"
+      ]
+    }
+  },
+  {
+    "name": "list_runs",
+    "description": "List previous runs with their decision.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "start_live",
+    "description": "Serve the live dashboard at http://127.0.0.1:5050/ (newest run, or a given run).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "run": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "ads_import",
+    "description": "Turn a Meta/Google Ads export (CSV or JSON, absolute path) into a seed Markdown file plus benchmarks JSON.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "out": {
+          "type": "string",
+          "description": "absolute path of the seed .md to write"
+        }
+      },
+      "required": [
+        "file",
+        "out"
+      ]
+    }
+  },
+  {
+    "name": "campaign_plan",
+    "description": "Save an evidence-led campaign plan and runnable test specs from a profile or existing project. No campaign is sent.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "type": "object"
+        },
+        "profile_file": {
+          "type": "string"
+        },
+        "project": {
+          "type": "string"
+        },
+        "research": {
+          "type": "object"
+        },
+        "research_file": {
+          "type": "string"
+        },
+        "goal": {
+          "type": "string"
+        },
+        "budget": {
+          "type": "object"
+        },
+        "channels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "out": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "goal",
+        "budget"
+      ]
+    }
+  },
+  {
+    "name": "actuals_import",
+    "description": "Normalize a local ads, email, website, CRM or survey CSV/JSON export, retaining provenance and row-level validation errors.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "source_type": {
+          "type": "string",
+          "enum": [
+            "ads",
+            "email",
+            "website",
+            "crm",
+            "survey"
+          ]
+        },
+        "mapping": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "market": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "quality": {
+          "type": "string"
+        },
+        "out": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "file",
+        "source_type"
+      ]
+    }
+  },
+  {
+    "name": "holdout_backtest",
+    "description": "Evaluate independent held-out real experiments against a training-mean no-persona baseline.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "pairs": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "out": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pairs"
+      ]
+    }
+  },
+  {
+    "name": "backtest",
+    "description": "Score a run's feed test against real ad results (from ads_import): rank correlation, winner match, calibration.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "run": {
+          "type": "string"
+        },
+        "actuals": {
+          "type": "string"
+        },
+        "map": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "run",
+        "actuals"
+      ]
+    }
+  },
+  {
+    "name": "understand",
+    "description": "Step one for any product: read the user's documents (absolute paths to .md/.txt), a landing page URL and/or an ads export into one product profile (what it is, for whom, pricing, offer, proofs, differentiators, competitors, channels, likely objections, brand voice, KPIs, unknowns). Every later step uses it. Synchronous, one Claude call. Writes product_profile.json; pass `project` instead of docs to profile an existing project (also seeds the market map before the graph build).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "url": {
+          "type": "string"
+        },
+        "ads_file": {
+          "type": "string"
+        },
+        "project": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "out": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "quickstart",
+    "description": "Easiest start. Answer a few questions and get a ready scenario folder (brief, personas, two template captions per platform, messages, launch calendar, pitch) plus the simulated people (stops before any paid rounds). Keys: brand, product (what, for whom, price), buyers (who and where), platforms (comma list), tests (ads, messages, price, launch, pitch), budget ('300 USD'), size (small|medium|large), past_ads (absolute path, optional), docs (paths, optional). Background job; poll job_status. The result names the files to edit and the exact next command.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "answers": {
+          "type": "object"
+        },
+        "no_run": {
+          "type": "boolean"
+        },
+        "from_docs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "documents to understand first; prefills the answers"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "answers"
+      ]
+    }
+  },
+  {
+    "name": "pitch",
+    "description": "Sales rehearsal: pitch a script to every simulated buyer of a simulation (its environment must be alive: run market_test with rounds first, or start it), collect objections and the questions they ask back, then answer with rebuttals ({objection_type: text, '*': generic}). Scores the pitch, each rebuttal, and every person (lead score). Background job.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "simulation_id": {
+          "type": "string"
+        },
+        "run": {
+          "type": "string"
+        },
+        "script": {
+          "type": "string"
+        },
+        "rebuttals": {
+          "type": "object"
+        },
+        "product": {
+          "type": "string"
+        },
+        "channel": {
+          "type": "string"
+        },
+        "segment": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "simulation_id",
+        "script"
+      ]
+    }
+  },
+  {
+    "name": "ideas",
+    "description": "Next test ideas from real data: pass ad rows you fetched from a connected ads tool (Meta/Google/TikTok: name, campaign, spend, impressions, clicks, conversions, country...) and/or an export file path, plus a previous run (its objections, audiences and decision). Returns prioritised experiments, each citing its evidence, with the MarketMirror config to simulate it first. Writes ideas.json/.md into the run folder and adds a 'Test ideas' section to the dashboard.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "ads_file": {
+          "type": "string"
+        },
+        "run": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "brief": {
+          "type": "string"
+        },
+        "n": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  {
+    "name": "push_context",
+    "description": "While a simulation is running (or before it starts), push what people are saying today into every persona card from the next round on: a news item, a competitor's move, a real thread you just read with your browser, a price change. Each update is one or two sentences; the runner re-reads the file every round. Use it to ground the rounds in live reality.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "simulation_id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "round": {
+          "type": "integer"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "simulation_id",
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "research",
+    "description": "What real people say about a product, category or competitor, from public keyless sources: Hacker News stories and comments, App Store listings and recent reviews for a country storefront (in, ph, ke, us...), Reddit public search when it answers (it often blocks non-browser clients; the result says so, then use your own browser tools and add what you find as seed files), and any page URLs. Writes research.md (themes with quotes and links), research.json and voices.json (short real quotes the personas and feeds draw on) under scenarios/<query>/research. Run it before planning personas.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "subreddits": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "out": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "predict",
+    "description": "Predictions with intervals for a run: CTR per ad, cost per lead, would-convert overall and per audience, email click rates, each scaled by the real-vs-simulated results stored so far (from backtest and calibrate) and labelled with its basis ('calibrated on N real results' or 'uncalibrated prior'); optional targets (e.g. {ctr: 2, cpl: 10}) give a probability of success. Also a 30/60/90-day adoption forecast from the best ad, its landing conversion and the word of mouth seen in the rounds.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "run": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "targets": {
+          "type": "object"
+        },
+        "spend": {
+          "type": "number"
+        },
+        "days": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "run"
+      ]
+    }
+  },
+  {
+    "name": "study",
+    "description": "Several scenarios x several seeds on the same simulated people, one defended conclusion. spec: {name, base (a market_test config object: creatives, survey, pitch, emails, rounds...), simulation_id (the people to reuse), scenarios: [{name, overrides}], seeds: [1,2,3], steps: [feed_test, rounds, survey, pitch, email_test]}. Writes study_summary.json (per-scenario mean, spread and 95% interval of every metric, deltas, winner stability, decision agreement matrix, conclusion with confidence), study_report.md and study.html under mirofish_runs/<name>/. Finished cells are reused on rerun. Background job.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "spec": {
+          "type": "object"
+        },
+        "out": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "spec"
+      ]
+    }
+  },
+  {
+    "name": "run_test",
+    "description": "Test anything from one spec on a prepared simulation: type = ad | message | price | offer | positioning | naming | landing | launch | pitch | email | creator_post | channel_mix; variants = the things to compare (ad creatives, message lines, prices, offer wordings, names, landing pages, launch posts with rounds, pitch scripts, emails); audience {segments, countries}; metric (default per type); budget {amount, cpm, currency}; rounds (launch). Returns one result shape for every type: each variant's metric with a 95% margin, the winner, the lift, whether it is clear or a tie, and how to read it. Background job.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "simulation_id": {
+          "type": "string"
+        },
+        "spec": {
+          "type": "object"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "run": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "simulation_id",
+        "spec"
+      ]
+    }
+  },
+  {
+    "name": "email_test",
+    "description": "Email campaign test on the simulated people's inboxes: pass emails [{id, from_name, subject, preheader, body, cta, send_time (morning|midday|evening|night), segments?, sequence?: [{delay_days, subject, body}]}] plus optional list_size and benchmarks {cost_per_send, lead_value, close_rate, deal_value}. Each person gets a realistic inbox for the day; an attention gate decides opens, Claude decides skim/read/click/reply/unsubscribe/spam with honest odds. Returns open, click, click-to-open, unsubscribe and spam rates per variant and audience, subject-line ranking, sequence funnel, projection from list size to leads and revenue, spam-word warnings. Needs a prepared simulation (simulation_id). Background job.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "simulation_id": {
+          "type": "string"
+        },
+        "run": {
+          "type": "string"
+        },
+        "emails": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "list_size": {
+          "type": "integer"
+        },
+        "benchmarks": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "simulation_id",
+        "emails"
+      ]
+    }
+  },
+  {
+    "name": "calibrate",
+    "description": "Check a run's simulated survey against real answers (absolute path to a CSV with segment,country,gender,age,y where y is yes/maybe/no or 0-1; 50-300 rows is enough): covariate overlap, per-audience calibration, a trust / correct / walk-away verdict and an AIPW-corrected rate. Writes calibration.json into the run folder.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "run": {
+          "type": "string"
+        },
+        "real_csv": {
+          "type": "string"
+        },
+        "field": {
+          "type": "string"
+        },
+        "by": {
+          "type": "string"
+        },
+        "map": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "run",
+        "real_csv"
+      ]
+    }
+  },
+  {
+    "name": "cli",
+    "description": "Advanced: run any MarketMirror CLI command as a background job, e.g. ['survey','--simulation','sim_x','--offer','...']. See CLAUDE.md in the engine.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "args"
+      ]
+    }
+  }
+]

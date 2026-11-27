@@ -1,0 +1,2116 @@
+[
+  {
+    "name": "safari_navigate",
+    "description": "Navigate this session's tab to a URL (pass `receipt` to pin the tab). Waits for the page to load. Returns {title, url} — plus a fresh `receipt` when the origin changed; use that one from then on.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "URL to navigate to"
+        },
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ]
+    }
+  },
+  {
+    "name": "safari_go_back",
+    "description": "Go back in browser history",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_go_forward",
+    "description": "Go forward in browser history",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_reload",
+    "description": "Reload the current page",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "hard": {
+          "description": "Hard reload (bypass cache)",
+          "type": "boolean"
+        },
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_read_page",
+    "description": "Read page text content (title, URL, body text). Use for reading article text or page content. For interacting with elements, prefer safari_snapshot (gives ref IDs). Use selector to read specific element. Use maxLength to limit output.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector to read specific element",
+          "type": "string"
+        },
+        "maxLength": {
+          "description": "Max chars to return (default: 50000)",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_get_source",
+    "description": "Get HTML source of current page",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "maxLength": {
+          "description": "Max chars (default: 200000)",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_snapshot",
+    "description": "PREFERRED way to see page state. Returns accessibility tree with ref IDs for every interactive element. Use refs with click/fill/type instead of CSS selectors. Workflow: snapshot → see refs → click({ref:'0_5'}). PREFER THIS over safari_screenshot (cheaper, structured text vs heavy image) and over safari_read_page (includes interactive refs). Use safari_screenshot only when you need to see visual layout/styling.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "selector": {
+          "description": "CSS selector for subtree (default: full page)",
+          "type": "string"
+        },
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "diff": {
+          "description": "Return only the lines that changed since this tab's previous snapshot (+ added, with fresh refs; - removed). Much smaller after a click or a fill",
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_navigate_and_read",
+    "description": "Navigate to a URL and return the page content in one step — saves 1 full round-trip vs navigate+read_page. Use instead of safari_navigate + safari_read_page. Like safari_navigate, returns a fresh `receipt` when the origin changed; use that one from then on.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "description": "URL to navigate to"
+        },
+        "maxLength": {
+          "description": "Max chars to return (default: 50000)",
+          "type": "number"
+        },
+        "timeout": {
+          "description": "Load timeout in ms (default: 30000)",
+          "type": "number"
+        }
+      },
+      "required": [
+        "url"
+      ]
+    }
+  },
+  {
+    "name": "safari_click",
+    "description": "Click element. Use ref (from snapshot), selector, text, or x/y. Works on React/Airtable/virtual DOM apps via full PointerEvent+MouseEvent sequence + React Fiber fallback. Pure JS — never touches user's mouse. When using ref, always take a FRESH safari_snapshot first — refs expire after each new snapshot.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "ref": {
+          "description": "Ref ID from safari_snapshot (e.g. '0_5')",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector",
+          "type": "string"
+        },
+        "text": {
+          "description": "Visible text to find and click",
+          "type": "string"
+        },
+        "x": {
+          "description": "X coordinate",
+          "type": "number"
+        },
+        "y": {
+          "description": "Y coordinate",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_click_and_read",
+    "description": "Click an element then return the updated page — saves 1 full round-trip vs separate click+read_page. Handles both React Router navigation and full page loads.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "text": {
+          "description": "Visible text of the element to click",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector",
+          "type": "string"
+        },
+        "x": {
+          "description": "X coordinate",
+          "type": "number"
+        },
+        "y": {
+          "description": "Y coordinate",
+          "type": "number"
+        },
+        "wait": {
+          "description": "Ms to wait after click (default: auto-detect navigation)",
+          "type": "number"
+        },
+        "maxLength": {
+          "description": "Max chars to return (default: 50000)",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_double_click",
+    "description": "Double-click an element by CSS selector or x/y coordinates (e.g. to select a word in text)",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector",
+          "type": "string"
+        },
+        "x": {
+          "description": "X coordinate",
+          "type": "number"
+        },
+        "y": {
+          "description": "Y coordinate",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_right_click",
+    "description": "Right-click (context menu) an element by CSS selector or x/y coordinates",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector",
+          "type": "string"
+        },
+        "x": {
+          "description": "X coordinate",
+          "type": "number"
+        },
+        "y": {
+          "description": "Y coordinate",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_native_click",
+    "description": "Real click performed by WebKit through the macOS accessibility tree — mousedown/mouseup/click arrive with isTrusted: true, so WAF/bot-gated and isTrusted-checking handlers accept it (G2, Cloudflare, Google editors). Runs in the background: Safari is never activated, no window is raised and the mouse does not move. Use when regular safari_click has no effect or is rejected. Use ref (from snapshot), selector, text, or x/y. When using ref, always take a FRESH safari_snapshot first. Needs an unlocked screen.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "ref": {
+          "description": "Ref ID from safari_snapshot (e.g. '0_5')",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector",
+          "type": "string"
+        },
+        "text": {
+          "description": "Visible text to find and click",
+          "type": "string"
+        },
+        "x": {
+          "description": "Viewport X coordinate",
+          "type": "number"
+        },
+        "y": {
+          "description": "Viewport Y coordinate",
+          "type": "number"
+        },
+        "doubleClick": {
+          "default": false,
+          "description": "Double-click instead of single click",
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_native_hover",
+    "description": "OS-level mouse hover via macOS CGEvent — moves the real cursor to an element to trigger native :hover / mouseenter handlers. Use for obfuscated UIs where JS-dispatched mouseenter isn't enough, like Discord server sidebars (tooltips only appear on real hover) or portal-rendered tooltips. After hover, call safari_wait_for or safari_evaluate to read the tooltip. Dwells for dwellMs to let tooltips render, then restores the original cursor position by default. Requires Safari window to be visible.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "ref": {
+          "description": "Ref ID from safari_snapshot",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector",
+          "type": "string"
+        },
+        "text": {
+          "description": "Visible text to find and hover",
+          "type": "string"
+        },
+        "x": {
+          "description": "Viewport X coordinate",
+          "type": "number"
+        },
+        "y": {
+          "description": "Viewport Y coordinate",
+          "type": "number"
+        },
+        "dwellMs": {
+          "default": 500,
+          "description": "Milliseconds to dwell over the element so tooltips render (clamped 0-5000)",
+          "type": "number"
+        },
+        "restoreMouse": {
+          "default": true,
+          "description": "Restore cursor to original position after dwell",
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_native_keyboard",
+    "description": "OS-level keyboard event via macOS CGEvent — sends a real keypress (with optional modifiers) to the Safari window WITHOUT activating Safari or stealing focus. Use when safari_press_key's JS path doesn't reach React trust-gated handlers (Discord ProseMirror Enter, Slack send, virtualized editors). Keys: enter, return, tab, escape, space, delete, backspace, up/down/left/right, home, end, pageup, pagedown, f1-f6, a-z, 0-9 and common punctuation. Modifiers: cmd, shift, alt, ctrl. Produces isTrusted:true events. Never activates Safari — runs entirely in the background.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "key": {
+          "type": "string",
+          "description": "Key name: enter, escape, tab, space, arrow keys, letters, digits, etc."
+        },
+        "modifiers": {
+          "default": [],
+          "description": "Modifier keys: cmd, shift, alt, ctrl",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "key"
+      ]
+    }
+  },
+  {
+    "name": "safari_native_type",
+    "description": "Insert text as real input, in the background (Safari is never activated). Inputs and textareas get it through the macOS accessibility tree (isTrusted beforeinput/input, any language, clipboard untouched); rich editors (contenteditable) get a real paste (Cmd+V to the Safari window). Unlike safari_fill which manipulates DOM directly (breaking React/ProseMirror state), this goes through the real paste pipeline — ProseMirror/Slate/Draft.js process the paste event natively and update their internal model. After native_type, pressing Enter (via safari_native_keyboard) will actually submit the form because the framework state matches the DOM. Saves and restores the user's clipboard. No focus stealing. Use for Discord, Slack, and any editor where safari_fill works visually but the content isn't 'really there' when you try to submit.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "description": "Text to insert via clipboard paste"
+        },
+        "selector": {
+          "description": "CSS selector of the editor element to focus first",
+          "type": "string"
+        },
+        "ref": {
+          "description": "Ref ID from safari_snapshot to focus first",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "safari_fill",
+    "description": "Fill/replace value in an input, textarea, select, OR contenteditable (rich text). Handles React controlled inputs, ProseMirror, Draft.js, and Google Closure editors automatically. Use for SETTING a value (replaces existing). For code editors (Monaco/CodeMirror/Ace), use safari_replace_editor instead. For character-by-character typing in search boxes, use safari_type_text. IMPORTANT: When using ref, always take a FRESH safari_snapshot first — refs expire after each new snapshot (prefix changes: 5_xx → 6_xx).",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "ref": {
+          "description": "Ref ID from safari_snapshot",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector",
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "description": "Value to fill"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "safari_clear_field",
+    "description": "Clear an input field",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "selector": {
+          "type": "string",
+          "description": "CSS selector of the input"
+        },
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "selector"
+      ]
+    }
+  },
+  {
+    "name": "safari_verify_state",
+    "description": "Verify the framework-level state of an editor/input matches the expected value. Returns JSON {match, mode, actual, expected, hint?}. Modern editors (ProseMirror, Lexical, Closure, React-controlled inputs) maintain state separately from the DOM — `.value` or `.textContent` may show new text while the internal store still holds old data, so a Submit click sends stale data. Call this AFTER safari_fill and BEFORE clicking Submit on critical forms (Featured.com, LinkedIn share, Medium, Reddit).",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "selector": {
+          "type": "string",
+          "description": "CSS selector of the editor/input to verify"
+        },
+        "expected": {
+          "type": "string",
+          "description": "Expected value or text fragment that should appear in framework state"
+        }
+      },
+      "required": [
+        "selector",
+        "expected"
+      ]
+    }
+  },
+  {
+    "name": "safari_select_option",
+    "description": "Select an option in a native <select> dropdown. Sets .value and dispatches change event. Pass `ref` (from safari_snapshot) for a select inside an iframe or shadow DOM — a plain `selector` only reaches the top document. For custom dropdowns (React/LinkedIn), use safari_click on the dropdown trigger, then safari_click on the option instead.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector of the select (top document only)",
+          "type": "string"
+        },
+        "ref": {
+          "description": "Ref ID from safari_snapshot — required for selects inside iframes/shadow DOM",
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "description": "Option value or visible label to select"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "safari_react_select_set",
+    "description": "Set a value in a react-select v5 dropdown by walking React fiber to find the Select component and invoking onChange directly — bypasses the menu UI entirely. Use when safari_click on the chevron or option keeps failing (Cloudflare custom token forms after a few rows, portal-rendered selects that intercept synthetic events). Returns JSON {ok, selected} on success, or {ok:false, error, available:[…]} listing up to 30 option labels on miss. Match is by label, value, or case-insensitive label. Either ref or selector required. NOTE: For Permissions-levels combos that are disabled until a Permission is selected, set the Permissions value first — the level combo becomes enabled and its props.options populate.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "selector": {
+          "description": "CSS selector — typically input[name=...] or the .react-select__control container",
+          "type": "string"
+        },
+        "ref": {
+          "description": "Ref ID from safari_snapshot",
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "description": "Option label (or value) to select — case-insensitive fallback"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "safari_react_select_list_options",
+    "description": "List available options of a react-select v5 dropdown without opening the menu. Returns JSON {ok, total, options:[{label,value}…]}. Useful when safari_react_select_set returns 'option not found' and you need to see exact labels (e.g. 'Email Routing Rules' vs 'Email Routing'). Either ref or selector required.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "selector": {
+          "description": "CSS selector",
+          "type": "string"
+        },
+        "ref": {
+          "description": "Ref ID from safari_snapshot",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_fill_form",
+    "description": "Fill multiple form fields at once",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector"
+              },
+              "value": {
+                "type": "string",
+                "description": "Value to fill"
+              }
+            },
+            "required": [
+              "selector",
+              "value"
+            ]
+          },
+          "description": "Array of {selector, value} pairs"
+        }
+      },
+      "required": [
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "safari_press_key",
+    "description": "Press a keyboard key (enter, tab, escape, arrows, etc). Supports modifiers (cmd, shift, alt, ctrl).",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "key": {
+          "type": "string",
+          "description": "Key name: enter, tab, escape, space, delete, up, down, left, right, or a single character"
+        },
+        "modifiers": {
+          "description": "Modifier keys: cmd, shift, alt, ctrl",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "key"
+      ]
+    }
+  },
+  {
+    "name": "safari_type_text",
+    "description": "Type text character-by-character with realistic key events. Best for: search boxes (triggers autocomplete), chat inputs, and fields that react to each keystroke. For rich text editors (Medium, HackerNoon, LinkedIn), use safari_fill instead — it uses framework-native APIs. For code editors (Monaco/CodeMirror), use safari_replace_editor. When using ref, always take a FRESH safari_snapshot first — refs expire after each new snapshot.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "text": {
+          "type": "string",
+          "description": "Text to type"
+        },
+        "ref": {
+          "description": "Ref ID from safari_snapshot",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector to focus",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "safari_replace_editor",
+    "description": "Replace ALL content in a code editor (Monaco, CodeMirror, Ace, ProseMirror). Use ONLY for code editors — Airtable automations, GitHub gists, CodePen, n8n code nodes, etc. NOT for rich text editors like Medium/LinkedIn (use safari_fill for those). Detects ProseMirror/Draft.js/CodeMirror/Monaco/Ace and uses their native API.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "text": {
+          "type": "string",
+          "description": "The complete code/text to put in the editor"
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "safari_screenshot",
+    "description": "Take a visual screenshot (base64 JPEG). EXPENSIVE — use safari_snapshot instead for most tasks. Only use screenshot when you need to verify visual layout, styling, images, or colors that snapshot can't show. Pass maxWidth (e.g. 1024) for layout checks — far fewer tokens.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "fullPage": {
+          "description": "Capture full page (not just viewport)",
+          "type": "boolean"
+        },
+        "maxWidth": {
+          "description": "Downscale to this pixel width before returning (default: env SAFARI_MCP_SCREENSHOT_MAX_WIDTH, else none). Retina captures are 2× the viewport; 1280 keeps text readable at a third fewer tokens, 800 is plenty for layout checks. 0 = never scale.",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_screenshot_element",
+    "description": "Take a screenshot of a specific element (by CSS selector). Returns a base64 image.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "selector": {
+          "type": "string",
+          "description": "CSS selector of the element to capture"
+        },
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "selector"
+      ]
+    }
+  },
+  {
+    "name": "safari_scroll",
+    "description": "Scroll the page up or down by a specified amount",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "direction": {
+          "description": "Scroll direction (default: down)",
+          "type": "string",
+          "enum": [
+            "up",
+            "down"
+          ]
+        },
+        "amount": {
+          "description": "Pixels to scroll (default: 500)",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_scroll_to",
+    "description": "Scroll to a specific position on the page",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "x": {
+          "description": "X position (default: 0)",
+          "type": "number"
+        },
+        "y": {
+          "description": "Y position (default: 0)",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_list_tabs",
+    "description": "List every tab in this session's Safari window (titles + URLs, including the user's own tabs — verbose and rarely needed). Tabs this session owns carry a receipt. Prefer keeping the receipt from safari_new_tab over listing.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_reload_extension",
+    "description": "Hot-reload the Safari MCP Bridge extension — forces it to reload its own code from disk without requiring manual Safari Preferences → Extensions → toggle. Use after editing extension/background.js or extension/content.js in the safari-mcp repo. The extension briefly disconnects during reload and auto-reconnects within ~2 seconds. NOTE: this tool itself requires the extension version already installed to support the `reload_extension` command (added in v2.9.1+). If your extension is older, trigger a manual reload once to pick up this feature.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_new_tab",
+    "description": "Open a new background tab (never steals focus), optionally with a URL. Returns {tabIndex, safeUrl, receipt}. KEEP THE RECEIPT and pass it as `receipt` to every later call on this tab — it survives MCP reconnects, daemon restarts, parallel sessions and subagents, and makes safari_list_tabs / safari_switch_tab unnecessary.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "url": {
+          "description": "URL to open (empty for blank tab)",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_close_tab",
+    "description": "Close the current tab. After a daemon/session restart, pass the opaque receipt returned by safari_new_tab or safari_list_tabs.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Opaque extension-issued tab receipt",
+          "type": "string"
+        },
+        "url": {
+          "description": "Deprecated legacy receipt URL",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_switch_tab",
+    "description": "Switch the MCP session's logical target without focusing Safari. Pass an index for the current session window, or an opaque receipt to recover the exact owned tab across Safari windows; a valid receipt takes precedence over any supplied index. Rarely needed: passing `receipt` on each tool call already targets that tab.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "index": {
+          "description": "Tab index (starting from 1); optional when receipt is provided",
+          "type": "number"
+        },
+        "receipt": {
+          "description": "Opaque extension-issued receipt for the exact owned tab",
+          "type": "string"
+        },
+        "url": {
+          "description": "Deprecated legacy receipt URL",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_wait_for",
+    "description": "Wait for an element or text to appear on the page",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector to wait for",
+          "type": "string"
+        },
+        "text": {
+          "description": "Text to wait for",
+          "type": "string"
+        },
+        "timeout": {
+          "description": "Timeout in ms (default: 10000)",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_wait_for_new_tab",
+    "description": "Wait for a new tab to appear (e.g. after OAuth login click opens popup). Automatically switches to the new tab.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "timeout": {
+          "description": "Timeout in ms (default: 10000)",
+          "type": "number"
+        },
+        "urlContains": {
+          "description": "Only match new tabs whose URL contains this string",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_list_frames",
+    "description": "List every document in the tab — the main page plus each iframe — with its frameId, URL and text length. Use when a page's content lives in a cross-origin iframe (an embedded app, a micro-frontend shell, a payment field): safari_read_page and safari_evaluate see only the main document there and come back empty or with a loader. Pass the frameId or a URL substring as safari_evaluate's `frame` to run inside it.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Opaque extension-issued tab receipt",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_evaluate",
+    "description": "Execute JavaScript in the current page (a returned Promise is awaited — fetch/timers work in background tabs; requestAnimationFrame never fires there). Automatically falls back to AppleScript when CSP blocks execution (e.g. Google Search Console, LinkedIn). For reading data, prefer safari_read_page or safari_snapshot. For interactions, prefer safari_click/fill with refs.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "script": {
+          "type": "string",
+          "description": "JavaScript code to execute"
+        },
+        "frame": {
+          "description": "Run inside a sub-frame instead of the main document: a frameId from safari_list_frames, or a substring of the frame's URL (must match exactly one). Needed for cross-origin iframes — micro-frontend app shells, embedded checkouts — where the main document only holds a loader.",
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "receipt": {
+          "description": "Opaque extension-issued tab receipt — pass the one safari_new_tab returned to keep targeting that tab after an MCP reconnect",
+          "type": "string"
+        }
+      },
+      "required": [
+        "script"
+      ]
+    }
+  },
+  {
+    "name": "safari_eval_file",
+    "description": "Execute JavaScript read from a FILE path (avoids passing huge scripts inline / manual copy). Same engine as safari_evaluate: extension-first (no focus steal), AppleScript fallback. Use to upload binary via a generated .js containing base64.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Absolute path to a .js file whose contents are the script to execute"
+        },
+        "receipt": {
+          "description": "Opaque extension-issued tab receipt — pass the one safari_new_tab returned to keep targeting that tab after an MCP reconnect",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ]
+    }
+  },
+  {
+    "name": "safari_get_element",
+    "description": "Get detailed info about an element (tag, text, rect, attributes, visibility)",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "selector": {
+          "type": "string",
+          "description": "CSS selector"
+        },
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "selector"
+      ]
+    }
+  },
+  {
+    "name": "safari_query_all",
+    "description": "Find all elements matching a CSS selector (returns tag, text, href, value). x/y are relative to each element's own frame viewport — for matches inside an iframe, click by selector or snapshot ref, not by these coordinates",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "selector": {
+          "type": "string",
+          "description": "CSS selector"
+        },
+        "limit": {
+          "description": "Max results (default: 20)",
+          "type": "number"
+        },
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "selector"
+      ]
+    }
+  },
+  {
+    "name": "safari_hover",
+    "description": "Hover over element. Use ref, selector, or x/y",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "ref": {
+          "description": "Ref ID from safari_snapshot",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector",
+          "type": "string"
+        },
+        "x": {
+          "description": "X coordinate",
+          "type": "number"
+        },
+        "y": {
+          "description": "Y coordinate",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_handle_dialog",
+    "description": "Set up handler for the next alert/confirm/prompt dialog",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "action": {
+          "description": "Accept or dismiss (default: accept)",
+          "type": "string",
+          "enum": [
+            "accept",
+            "dismiss"
+          ]
+        },
+        "text": {
+          "description": "Text to enter for prompt dialogs",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_resize",
+    "description": "Resize the Safari window",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "number",
+          "description": "Window width"
+        },
+        "height": {
+          "type": "number",
+          "description": "Window height"
+        }
+      },
+      "required": [
+        "width",
+        "height"
+      ]
+    }
+  },
+  {
+    "name": "safari_drag",
+    "description": "Drag an element to another element or position. Use CSS selectors or x/y coordinates.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "sourceSelector": {
+          "description": "CSS selector of element to drag",
+          "type": "string"
+        },
+        "targetSelector": {
+          "description": "CSS selector of drop target",
+          "type": "string"
+        },
+        "sourceX": {
+          "description": "Source X coordinate",
+          "type": "number"
+        },
+        "sourceY": {
+          "description": "Source Y coordinate",
+          "type": "number"
+        },
+        "targetX": {
+          "description": "Target X coordinate",
+          "type": "number"
+        },
+        "targetY": {
+          "description": "Target Y coordinate",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_upload_file",
+    "description": "Upload a file to a <input type='file'> element via JavaScript DataTransfer — NO file dialog, NO UI interaction. IMPORTANT: Do NOT click the file input before calling this tool — just provide the selector and file path. If a file dialog is already open, this tool will close it first. NOTE: 'verified 0 files' may appear even on success if the site uses a custom upload handler — check visually with safari_snapshot. For an IMAGE going into a composer/editor that should show a thumbnail, pass verifyPreview:true — some sites (Google Business Profile) accept the file handle and flip their UI to 'attached' while ingesting nothing, and the post then publishes with no image.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "selector": {
+          "type": "string",
+          "description": "CSS selector of the file input"
+        },
+        "filePath": {
+          "type": "string",
+          "description": "Absolute path to the file to upload"
+        },
+        "verifyPreview": {
+          "description": "Require a visible preview (blob:/data: image) to appear; if none does, the synthetic pickup was a ghost and this escalates to a real OS file dialog. Use for images going into a composer.",
+          "type": "boolean"
+        },
+        "forceNative": {
+          "description": "Skip synthetic injection and go straight to the real OS file dialog (isTrusted). Needs an unlocked screen and briefly focuses Safari. Use when the site is known to reject synthetic uploads.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "selector",
+        "filePath"
+      ]
+    }
+  },
+  {
+    "name": "safari_paste_image",
+    "description": "Paste an image from a local file into the focused element via JS DataTransfer (no clipboard, no focus steal). Works on Medium, dev.to, HackerNoon, TOI, etc.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "filePath": {
+          "type": "string",
+          "description": "Absolute path to the image file (PNG, JPG, WebP)"
+        }
+      },
+      "required": [
+        "filePath"
+      ]
+    }
+  },
+  {
+    "name": "safari_emulate",
+    "description": "Emulate a mobile device: sizes the Safari window to the device's CSS viewport and overrides navigator.userAgent/platform/maxTouchPoints (iOS/iPadOS 27 values) in the current page — JavaScript only: the HTTP User-Agent header is unchanged and a reload or navigation clears it. Devices: iphone-18-pro, iphone-18-pro-max, iphone-air, iphone-17, iphone-17e, iphone-16, iphone-14, iphone-14-pro-max, ipad, ipad-air-11, ipad-air-13, ipad-pro-11, ipad-pro-13, ipad-pro, pixel-7, galaxy-s24. Or pass width/height (and userAgent).",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "device": {
+          "description": "Device name from the list in the description, e.g. iphone-18-pro, iphone-air, ipad-pro-11",
+          "type": "string"
+        },
+        "width": {
+          "description": "Custom viewport width",
+          "type": "number"
+        },
+        "height": {
+          "description": "Custom viewport height",
+          "type": "number"
+        },
+        "userAgent": {
+          "description": "Custom user agent string",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_reset_emulation",
+    "description": "Reset device emulation: restores the window size from before safari_emulate and removes its navigator overrides (no reload)",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_get_cookies",
+    "description": "Get cookies for the current page",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_local_storage",
+    "description": "Get localStorage data for the current page",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "key": {
+          "description": "Specific key to get (omit for all)",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_network",
+    "description": "Quick network overview via Performance API (no setup needed). Shows URLs and timing for resources loaded by the page. For detailed request/response info (headers, status codes, POST bodies), use safari_start_network_capture + safari_network_details instead.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "description": "Max requests to return (default: 50)",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_run_script",
+    "description": "Batch Safari actions in one MCP session. Named profiles use the verified extension and support: newTab, switchTab, getReceipt, listTabs, closeTab, navigate, navigateAndRead, readPage, snapshot, getElementInfo, querySelectorAll, waitFor, waitForTime, click, clickAndOpenPopup, fill, fillForm, clearField, typeText, selectOption, pressKey, scroll, scrollTo, scrollToElement, hover, evaluate, reload, goBack, goForward. switchTab accepts an index or an opaque receipt; a valid receipt recovers the exact owned tab across Safari windows without focusing one. clickAndOpenPopup takes exactly one selector or snapshot ref, targets one exact frame, performs one click, captures a blocked HTTP(S) window.open, and opens it as a background tab without focusing Safari; it refuses CAPTCHA/challenge targets and never returns URL query/hash data. Non-profile mode retains the legacy action set plus getReceipt; there, closeTab and switchTab take a tab index, not a receipt, and getReceipt needs the tab's receipt in args. After a cross-origin redirect, rotate the tab's receipt with {\"action\":\"getReceipt\",\"args\":{\"receipt\":\"<old receipt>\"}}.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "description": "Action name (e.g. 'navigate', 'click', 'fill')"
+              },
+              "args": {
+                "description": "Arguments for the action",
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {}
+              }
+            },
+            "required": [
+              "action"
+            ]
+          },
+          "description": "Array of steps to execute sequentially"
+        }
+      },
+      "required": [
+        "steps"
+      ]
+    }
+  },
+  {
+    "name": "safari_start_console",
+    "description": "Start capturing console messages (log, warn, error, info). Call once per page.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_get_console",
+    "description": "Get captured console messages (must call safari_start_console first)",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_clear_console",
+    "description": "Clear all captured console messages",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_save_pdf",
+    "description": "Save the current page as a PDF file. Uses screencapture + PDF rendering (no Safari UI interaction needed).",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Absolute file path to save the PDF (e.g. /Users/am/Downloads/page.pdf)"
+        }
+      },
+      "required": [
+        "path"
+      ]
+    }
+  },
+  {
+    "name": "safari_accessibility_snapshot",
+    "description": "Get the accessibility tree of the page (roles, ARIA labels, focusable elements, form states). Essential for a11y auditing.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector for subtree (default: full page)",
+          "type": "string"
+        },
+        "maxDepth": {
+          "description": "Max tree depth (default: 5)",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_set_cookie",
+    "description": "Set a cookie on the current page",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Cookie name"
+        },
+        "value": {
+          "type": "string",
+          "description": "Cookie value"
+        },
+        "domain": {
+          "description": "Cookie domain",
+          "type": "string"
+        },
+        "path": {
+          "description": "Cookie path (default: /)",
+          "type": "string"
+        },
+        "expires": {
+          "description": "Expiry date (e.g. 'Thu, 01 Jan 2030 00:00:00 GMT')",
+          "type": "string"
+        },
+        "secure": {
+          "description": "Secure flag",
+          "type": "boolean"
+        },
+        "sameSite": {
+          "description": "SameSite attribute",
+          "type": "string",
+          "enum": [
+            "Strict",
+            "Lax",
+            "None"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "safari_delete_cookies",
+    "description": "Delete a specific cookie or all cookies for the current page",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Cookie name to delete",
+          "type": "string"
+        },
+        "all": {
+          "description": "Delete all cookies",
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_session_storage",
+    "description": "Get sessionStorage data for the current page",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "key": {
+          "description": "Specific key (omit for all)",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_set_session_storage",
+    "description": "Set a value in sessionStorage",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Storage key"
+        },
+        "value": {
+          "type": "string",
+          "description": "Value to store"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "safari_set_local_storage",
+    "description": "Set a value in localStorage",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Storage key"
+        },
+        "value": {
+          "type": "string",
+          "description": "Value to store"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ]
+    }
+  },
+  {
+    "name": "safari_delete_local_storage",
+    "description": "Delete a localStorage key, or clear all localStorage (omit key to clear all)",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "key": {
+          "description": "Key to delete (omit to clear ALL)",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_delete_session_storage",
+    "description": "Delete a sessionStorage key, or clear all sessionStorage (omit key to clear all)",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "key": {
+          "description": "Key to delete (omit to clear ALL)",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_export_storage",
+    "description": "Export all storage state (cookies + localStorage + sessionStorage) as JSON — useful for saving and restoring login sessions",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_import_storage",
+    "description": "Import storage state from JSON (as exported by safari_export_storage) — restores cookies, localStorage, sessionStorage",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "JSON string from safari_export_storage"
+        }
+      },
+      "required": [
+        "state"
+      ]
+    }
+  },
+  {
+    "name": "safari_clipboard_read",
+    "description": "Read the current clipboard content (text)",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_clipboard_write",
+    "description": "Write text to the system clipboard",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Text to copy to clipboard"
+        }
+      },
+      "required": [
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "safari_mock_route",
+    "description": "Intercept network requests matching a URL pattern and return a mock response. Works with both fetch and XHR. Useful for testing API error states, offline behavior, or replacing API responses.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "urlPattern": {
+          "type": "string",
+          "description": "URL substring or regex pattern to match (e.g. '/api/users' or 'example\\.com')"
+        },
+        "response": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "description": "HTTP status code (default: 200)",
+              "type": "number"
+            },
+            "body": {
+              "description": "Response body string (JSON, HTML, text)",
+              "type": "string"
+            },
+            "contentType": {
+              "description": "Content-Type header (default: application/json)",
+              "type": "string"
+            }
+          },
+          "description": "Mock response to return"
+        }
+      },
+      "required": [
+        "urlPattern",
+        "response"
+      ]
+    }
+  },
+  {
+    "name": "safari_clear_mocks",
+    "description": "Remove all network route mocks (restore real network behavior)",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_wait",
+    "description": "Wait for a fixed time in milliseconds. Use only when you need a brief pause between actions. PREFER safari_wait_for (waits for element/text to appear) — it's smarter and doesn't waste time.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "ms": {
+          "type": "number",
+          "description": "Milliseconds to wait"
+        }
+      },
+      "required": [
+        "ms"
+      ]
+    }
+  },
+  {
+    "name": "safari_start_network_capture",
+    "description": "Start capturing detailed network requests (fetch + XHR) with headers, status, timing. Call once per page. Intercepts fetch/XHR — captures requests AFTER this call only. For quick overview of already-loaded resources, use safari_network instead.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_network_details",
+    "description": "Get captured network requests with full details (must call safari_start_network_capture first)",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Max requests (default: 50)",
+          "type": "number"
+        },
+        "filter": {
+          "description": "Filter by URL substring",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_clear_network",
+    "description": "Clear all captured network requests",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_performance_metrics",
+    "description": "Get detailed performance metrics: navigation timing, Web Vitals (FCP, LCP, CLS), resource breakdown, memory usage",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_throttle_network",
+    "description": "Simulate slow network conditions. Profiles: slow-3g, fast-3g, 4g, offline. Or custom latency/speed. Call with no args to reset.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "profile": {
+          "description": "Preset: slow-3g, fast-3g, 4g, offline",
+          "type": "string"
+        },
+        "latency": {
+          "description": "Custom latency in ms",
+          "type": "number"
+        },
+        "downloadKbps": {
+          "description": "Custom download speed in Kbps",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_console_filter",
+    "description": "Get console messages filtered by level (must call safari_start_console first)",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": [
+            "log",
+            "warn",
+            "error",
+            "info"
+          ],
+          "description": "Console level to filter"
+        }
+      },
+      "required": [
+        "level"
+      ]
+    }
+  },
+  {
+    "name": "safari_extract_tables",
+    "description": "Extract HTML tables as structured JSON (headers + rows). Perfect for scraping data tables.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "selector": {
+          "description": "CSS selector (default: 'table')",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Max tables (default: 10)",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_extract_meta",
+    "description": "Extract all meta tags: title, description, canonical, OG tags, Twitter cards, JSON-LD, alternate languages, RSS feeds",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_extract_images",
+    "description": "Extract all images with src, alt, dimensions, loading strategy, viewport visibility",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "description": "Max images (default: 50)",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_extract_links",
+    "description": "Extract all links with href, text, rel, target, external/nofollow detection",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "description": "Max links (default: 100)",
+          "type": "number"
+        },
+        "filter": {
+          "description": "Filter by URL or text substring",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_override_geolocation",
+    "description": "Override the browser's geolocation API to return custom coordinates",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "description": "Latitude (-90 to 90)"
+        },
+        "longitude": {
+          "type": "number",
+          "description": "Longitude (-180 to 180)"
+        },
+        "accuracy": {
+          "description": "Accuracy in meters (default: 100)",
+          "type": "number"
+        }
+      },
+      "required": [
+        "latitude",
+        "longitude"
+      ]
+    }
+  },
+  {
+    "name": "safari_get_computed_style",
+    "description": "Get computed CSS styles for an element. Optionally filter specific properties.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "selector": {
+          "type": "string",
+          "description": "CSS selector"
+        },
+        "properties": {
+          "description": "Specific CSS properties to get (e.g. ['color', 'font-size'])",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "selector"
+      ]
+    }
+  },
+  {
+    "name": "safari_list_indexed_dbs",
+    "description": "List all IndexedDB databases on the current page",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_get_indexed_db",
+    "description": "Read records from an IndexedDB database store",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "dbName": {
+          "type": "string",
+          "description": "Database name"
+        },
+        "storeName": {
+          "type": "string",
+          "description": "Object store name"
+        },
+        "limit": {
+          "description": "Max records (default: 20)",
+          "type": "number"
+        }
+      },
+      "required": [
+        "dbName",
+        "storeName"
+      ]
+    }
+  },
+  {
+    "name": "safari_css_coverage",
+    "description": "Analyze CSS coverage: find unused CSS rules across all stylesheets. Shows coverage percentage per stylesheet.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_inspect_viewport",
+    "description": "Validate the page's <meta name=viewport> against iOS Safari best practices: width=device-width, initial-scale, disabled-zoom (WCAG 1.4.4), viewport-fit=cover. Returns parsed attributes + severity-tagged issues (error/warning/info).",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_safe_area_insets",
+    "description": "Read the live CSS safe-area-inset values (top/right/bottom/left) as the page sees them, whether viewport-fit=cover is set, and whether env(safe-area-inset-*) is used in any stylesheet. For notch / Dynamic Island layout debugging.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_check_pwa",
+    "description": "Audit the page for iOS 'Add to Home Screen' / PWA readiness: apple-mobile-web-app-capable, apple-touch-icon (incl. 180x180), theme-color, status-bar style, web app manifest, splash screens. Returns a pass/total checklist.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_webkit_compat",
+    "description": "Check every CSS property used on the page against THIS Safari via CSS.supports() — reports unsupported properties, properties that need a -webkit- prefix, and known Safari rendering quirks (e.g. position:sticky inside overflow ancestors). Tested in the live engine, so no false positives.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_doctor",
+    "description": "Diagnose the macOS permission + daemon chain in one shot: Safari running, Apple Events/Automation, native helper daemon, Accessibility (native clicks), Screen Recording, and the helper's codesign identity. Returns a pass/fail checklist with the exact System Settings fix per failure, then the extension bridge: which worker holds the profile lease, every worker that tried and what the profile probe answered it, and what each Safari profile's extension storage holds. Run this FIRST when clicks/screenshots/startup 'don't work even with permissions granted' or when tools answer 'profile extension unavailable'.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_detect_forms",
+    "description": "Auto-detect all forms on the page with their fields, types, selectors, and submit buttons. Great for automated form filling.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "safari_scroll_to_element",
+    "description": "Scroll to element by CSS selector OR text. For virtual DOM (Airtable) use text — scrolls down until text appears in DOM.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "description": "Tab receipt from safari_new_tab — pins this call to that tab (survives reconnects/subagents)",
+          "type": "string"
+        },
+        "selector": {
+          "description": "CSS selector of target element",
+          "type": "string"
+        },
+        "text": {
+          "description": "Text to find — scrolls down until it appears (for virtual DOM/lazy loading)",
+          "type": "string"
+        },
+        "block": {
+          "description": "Scroll alignment (default: center)",
+          "type": "string",
+          "enum": [
+            "start",
+            "center",
+            "end",
+            "nearest"
+          ]
+        },
+        "timeout": {
+          "description": "Max time to scroll in ms (default: 10000)",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_click_and_wait",
+    "description": "Click an element AND wait for the result (page load or element). Use instead of click + wait_for separately.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "selector": {
+          "description": "CSS selector to click",
+          "type": "string"
+        },
+        "text": {
+          "description": "Visible text to click",
+          "type": "string"
+        },
+        "waitFor": {
+          "description": "CSS selector to wait for after click",
+          "type": "string"
+        },
+        "timeout": {
+          "description": "Wait timeout in ms (default: 10000)",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "safari_fill_and_submit",
+    "description": "Fill a form AND submit it in one operation. Finds submit button automatically if not specified.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector"
+              },
+              "value": {
+                "type": "string",
+                "description": "Value to fill"
+              }
+            },
+            "required": [
+              "selector",
+              "value"
+            ]
+          },
+          "description": "Fields to fill"
+        },
+        "submitSelector": {
+          "description": "Submit button selector (auto-detected if omitted)",
+          "type": "string"
+        }
+      },
+      "required": [
+        "fields"
+      ]
+    }
+  },
+  {
+    "name": "safari_analyze_page",
+    "description": "Full page analysis in ONE call: title, URL, meta tags, OG, headings, link stats, image stats, forms, and text preview. Perfect for SEO/audit.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

@@ -1,0 +1,1089 @@
+[
+  {
+    "name": "kubectl_get",
+    "description": "List or get any Kubernetes resource, including custom resources (kubectl get).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "resource_type": {
+          "type": "string",
+          "description": "Kind, plural or short name, e.g. pods, deploy, svc, nodes, events, certificates.cert-manager.io"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "A single resource name (omit to list)"
+        },
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Namespace (omit for the context default; ignored for cluster-scoped kinds)"
+        },
+        "all_namespaces": {
+          "default": false,
+          "type": "boolean",
+          "description": "List across all namespaces"
+        },
+        "label_selector": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "e.g. app=web,tier!=db"
+        },
+        "field_selector": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "e.g. status.phase=Running or involvedObject.name=web-123"
+        },
+        "output": {
+          "default": "table",
+          "type": "string",
+          "description": "table (default), wide, name, yaml or json. Secret values are always redacted"
+        },
+        "sort_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "JSONPath to sort by, e.g. .lastTimestamp for events"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context (optional)"
+        }
+      },
+      "required": [
+        "resource_type"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "kubectl_logs",
+    "description": "Get container logs (kubectl logs).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pod_name": {
+          "type": "string",
+          "description": "Pod name, or TYPE/NAME such as deployment/web to pick a pod of a workload"
+        },
+        "namespace": {
+          "default": "default",
+          "type": "string",
+          "description": "Namespace of the pod"
+        },
+        "container": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Container name for multi-container pods"
+        },
+        "tail": {
+          "default": 200,
+          "type": "integer",
+          "description": "Lines from the end (default 200; -1 for all)"
+        },
+        "previous": {
+          "default": false,
+          "type": "boolean",
+          "description": "Logs of the previous, crashed container instance"
+        },
+        "since": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Only newer logs, e.g. 10m or 2h"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context (optional)"
+        }
+      },
+      "required": [
+        "pod_name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "kubectl_top",
+    "description": "CPU and memory usage of pods or nodes from metrics-server (kubectl top).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "resource": {
+          "default": "pods",
+          "type": "string",
+          "description": "pods or nodes"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "A single pod or node"
+        },
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Namespace for pods"
+        },
+        "all_namespaces": {
+          "default": false,
+          "type": "boolean",
+          "description": "Pods across all namespaces"
+        },
+        "containers": {
+          "default": false,
+          "type": "boolean",
+          "description": "Per-container usage for pods"
+        },
+        "sort_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "cpu or memory"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context (optional)"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "kubectl_scale",
+    "description": "Scale a deployment, statefulset, replicaset or any scalable resource (kubectl scale).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "resource_type": {
+          "type": "string",
+          "description": "deployment, statefulset, replicaset, or another kind with a scale subresource"
+        },
+        "name": {
+          "type": "string",
+          "description": "Resource name"
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Desired replica count (0 stops the workload and needs confirmation in confirm mode)"
+        },
+        "namespace": {
+          "default": "default",
+          "type": "string",
+          "description": "Namespace"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context (optional)"
+        }
+      },
+      "required": [
+        "resource_type",
+        "name",
+        "replicas"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "detect_ecosystem",
+    "description": "Detect installed operators (Flux, Argo CD, cert-manager, Kyverno, Istio, ...) and local CLIs, and report\nwhich toolsets or dedicated MCP servers cover them.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context (optional)"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "install_helm_chart",
+    "description": "Install a Helm chart.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Release name"
+        },
+        "chart": {
+          "type": "string",
+          "description": "Chart reference"
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Target namespace"
+        },
+        "repo": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Repository in format 'repo_name=repo_url'"
+        },
+        "values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Values to override"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "name",
+        "chart",
+        "namespace"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "upgrade_helm_chart",
+    "description": "Upgrade a Helm release.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Release name"
+        },
+        "chart": {
+          "type": "string",
+          "description": "Chart reference"
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Target namespace"
+        },
+        "repo": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Repository in format 'repo_name=repo_url'"
+        },
+        "values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Values to override"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "name",
+        "chart",
+        "namespace"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "uninstall_helm_chart",
+    "description": "Uninstall a Helm release.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Release name to uninstall"
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Target namespace"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "name",
+        "namespace"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "helm_list",
+    "description": "List Helm releases with optional filtering.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Target namespace (default: current namespace)"
+        },
+        "all_namespaces": {
+          "default": false,
+          "type": "boolean",
+          "description": "List releases across all namespaces"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter releases by name using regex"
+        },
+        "deployed": {
+          "default": false,
+          "type": "boolean",
+          "description": "Show deployed releases only"
+        },
+        "failed": {
+          "default": false,
+          "type": "boolean",
+          "description": "Show failed releases only"
+        },
+        "pending": {
+          "default": false,
+          "type": "boolean",
+          "description": "Show pending releases only"
+        },
+        "uninstalled": {
+          "default": false,
+          "type": "boolean",
+          "description": "Show uninstalled releases (if kept with --keep-history)"
+        },
+        "superseded": {
+          "default": false,
+          "type": "boolean",
+          "description": "Show superseded releases only"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "helm_status",
+    "description": "Get the status of a Helm release.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "release_name": {
+          "type": "string",
+          "description": "Name of the release"
+        },
+        "namespace": {
+          "default": "default",
+          "type": "string",
+          "description": "Kubernetes namespace"
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Show status for a specific revision (default: latest)"
+        },
+        "show_desc": {
+          "default": false,
+          "type": "boolean",
+          "description": "Show description of the release"
+        },
+        "show_resources": {
+          "default": false,
+          "type": "boolean",
+          "description": "Show resources created by the release"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "release_name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "helm_history",
+    "description": "Get the revision history of a Helm release.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "release_name": {
+          "type": "string",
+          "description": "Name of the release"
+        },
+        "namespace": {
+          "default": "default",
+          "type": "string",
+          "description": "Kubernetes namespace"
+        },
+        "max_revisions": {
+          "default": 256,
+          "type": "integer",
+          "description": "Maximum number of revisions to return"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "release_name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "helm_get",
+    "description": "Get details of a Helm release: values, manifest, notes, hooks, or all.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "release_name": {
+          "type": "string",
+          "description": "Name of the release"
+        },
+        "what": {
+          "default": "values",
+          "type": "string",
+          "description": "values (default), manifest, notes, hooks, or all"
+        },
+        "namespace": {
+          "default": "default",
+          "type": "string",
+          "description": "Kubernetes namespace"
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Specific revision (default: latest)"
+        },
+        "all_values": {
+          "default": false,
+          "type": "boolean",
+          "description": "For values, include chart defaults, not just user-supplied values"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "release_name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "helm_rollback",
+    "description": "Rollback a Helm release to a previous revision.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "release_name": {
+          "type": "string",
+          "description": "Name of the release"
+        },
+        "revision": {
+          "type": "integer",
+          "description": "Revision number to rollback to (use helm_history to see revisions)"
+        },
+        "namespace": {
+          "default": "default",
+          "type": "string",
+          "description": "Kubernetes namespace"
+        },
+        "force": {
+          "default": false,
+          "type": "boolean",
+          "description": "Force resource updates through delete/recreate"
+        },
+        "recreate_pods": {
+          "default": false,
+          "type": "boolean",
+          "description": "Force pod restarts"
+        },
+        "cleanup_on_fail": {
+          "default": false,
+          "type": "boolean",
+          "description": "Delete newly created resources on failure"
+        },
+        "wait": {
+          "default": false,
+          "type": "boolean",
+          "description": "Wait until all resources are ready"
+        },
+        "timeout": {
+          "default": "5m0s",
+          "type": "string",
+          "description": "Timeout for waiting"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "release_name",
+        "revision"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "kubectl_apply",
+    "description": "Apply a YAML manifest to the cluster.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "manifest": {
+          "type": "string",
+          "description": "YAML manifest content to apply"
+        },
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "default",
+          "description": "Target namespace"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "manifest"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "kubectl_describe",
+    "description": "Describe a Kubernetes resource in detail.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "resource_type": {
+          "type": "string",
+          "description": "Type of resource (e.g., pod, deployment, service)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the resource"
+        },
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "default",
+          "description": "Target namespace"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "resource_type",
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "kubectl_generic",
+    "description": "Execute any kubectl command. Use with caution.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "command": {
+          "type": "string",
+          "description": "kubectl command to execute (without kubectl prefix)"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "command"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "kubectl_patch",
+    "description": "Patch a Kubernetes resource.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "resource_type": {
+          "type": "string",
+          "description": "Type of resource to patch"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the resource"
+        },
+        "patch": {
+          "type": "string",
+          "description": "JSON patch content"
+        },
+        "patch_type": {
+          "default": "strategic",
+          "type": "string",
+          "description": "Type of patch (strategic, merge, json)"
+        },
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "default",
+          "description": "Target namespace"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "resource_type",
+        "name",
+        "patch"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "kubectl_rollout",
+    "description": "Manage rollouts (restart, status, history, undo, pause, resume).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Rollout action (status, history, restart, undo, pause, resume)"
+        },
+        "resource_type": {
+          "type": "string",
+          "description": "Type of resource (deployment, statefulset, daemonset)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the resource"
+        },
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "default",
+          "description": "Target namespace"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "action",
+        "resource_type",
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "delete_resource",
+    "description": "Delete a Kubernetes resource.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "resource_type": {
+          "type": "string",
+          "description": "Type of resource to delete"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the resource"
+        },
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "default",
+          "description": "Target namespace"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (optional, uses current context if not specified)"
+        }
+      },
+      "required": [
+        "resource_type",
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "exec_in_pod",
+    "description": "Execute a command inside a pod.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "pod_name": {
+          "type": "string",
+          "description": "Name of the pod"
+        },
+        "command": {
+          "type": "string",
+          "description": "Command to execute"
+        },
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "default",
+          "description": "Namespace of the pod"
+        },
+        "container": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Container name (for multi-container pods)"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (uses current context if not specified)"
+        }
+      },
+      "required": [
+        "pod_name",
+        "command"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "diagnose_pod_crash",
+    "description": "Automated diagnosis of pod crash loops and failures.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pod_name": {
+          "type": "string",
+          "description": "Name of the pod"
+        },
+        "namespace": {
+          "default": "default",
+          "type": "string",
+          "description": "Namespace of the pod"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (uses current context if not specified)"
+        }
+      },
+      "required": [
+        "pod_name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "detect_pending_pods",
+    "description": "Find pending pods and explain why they are not scheduled.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Namespace to search (all namespaces if not specified)"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (uses current context if not specified)"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_contexts",
+    "description": "List all available kubectl contexts with detailed info.\n\nReturns all contexts from kubeconfig with cluster, user, namespace info.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "health_check",
+    "description": "Perform a cluster health check.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (uses current context if not specified)"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "kubectl_explain",
+    "description": "Explain a Kubernetes resource.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "resource": {
+          "type": "string",
+          "description": "Resource type to explain (e.g., pods, deployments.spec)"
+        },
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (uses current context if not specified)"
+        }
+      },
+      "required": [
+        "resource"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_api_resources",
+    "description": "Get available API resources.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "context": {
+          "default": "",
+          "type": "string",
+          "description": "Kubernetes context to use (uses current context if not specified)"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  }
+]

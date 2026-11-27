@@ -1,0 +1,525 @@
+[
+  {
+    "name": "mcp_list",
+    "description": "List tools by layer: management (mcp_*/discovery_*) vs business (protocol.name.op). Default layer=business so agents are not flooded.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "verbose": {
+          "type": "boolean",
+          "description": "Include per-adapter health checks",
+          "default": false
+        },
+        "layer": {
+          "type": "string",
+          "enum": [
+            "business",
+            "management",
+            "all"
+          ],
+          "default": "business",
+          "description": "business = registered adapter tools; management = catalog/discovery; all = both"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "mcp_add",
+    "description": "Dynamically register a protocol endpoint. Tools appear immediately as namespaced MCP tools (protocol.name.operation).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "type": "string",
+          "description": "Adapter protocol. Built-in: alertmanager, amqp, asyncapi, aws_iam, azureblob, bacnet, beanstalkd, browser, caldav, carddav, cassandra, cifs, clickhouse, coap, consul, couchdb, dingtalk, dns, docker, duckdb, elasticsearch, enip, etcd, ethernetip, feishu, fix, ftp, gcs, github, graphql, grpc, http, imap, influx, influxdb, jira, journal, jsonrpc, k8s, kafka, kubernetes, lark, ldap, mariadb, mcp_bridge, memcached, modbus, mongodb, mqtt, mtconnect, mysql, nats, neo4j, nfs, notion, opcua, openapi, openbao, opensearch, os_info, oss, partner, pg, platform_fs, platform_process, platform_service, podman, pop3, postgres, postgresql, prometheus, pubsub, pulsar, qdrant, rabbitmq, redis, s3, s7, sftp, slack, smb, smtp, snmp, soap, solr, sparkplug, sql, sqlite, sqlserver, sqs, tftp, vault, webdav, websocket, wecom, whois, ws, xmlrpc, zookeeper"
+        },
+        "name": {
+          "type": "string",
+          "description": "Logical name used in tool prefixes and registration id"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Protocol-specific config. openapi: { spec, baseUrl?, allowWrite? }. mqtt: { url, allowWrite? }. soap: { wsdl, endpoint?, soapVersion?, allowWrite? }. grpc: { proto | protoInline | reflection:true, target, allowWrite?, ca?|caFile?, cert?|certFile?, key?|keyFile? }. asyncapi: { spec, brokerUrl?, bind?, allowWrite? }. sparkplug: { url, groupId?, edgeNode?, hostId?, encoding?, allowWrite? }. websocket: { url, allowWrite? }. graphql: { url? | simulator:true | wsUrl?, allowWrite? }  (subscribe_once = graphql-ws; HTTP is query/mutate). amqp: { url? | simulator:true, queue?, allowWrite? }  (publish/rpc 写闸; get/ack/nack). kafka: { brokers, topic?, groupId?, groupInstanceId?, idempotent?, transactionalId? (recorded, unused), allowWrite? }. fix: { sender?, target?, allowWrite?  (logon/logout/NOS are writes; encode/decode/status are not) }. opcua: { endpoint, simulator?, allowWrite? }  (wait_data_change = memory monitored-item; subscribe_once 仍一次性). modbus: { host, port?, mode?: tcp|rtu, unitId?, simulator?, allowWrite? }. coap: { host, port?, allowWrite? }. nats: { servers | url | simulator:true, allowWrite? }  (JetStream consumer/ack/interest 子集). xmlrpc: { url, allowWrite? }. jsonrpc: { url, allowWrite? }. redis: { url, allowWrite? }. smtp: { host, from?, raw?, starttls?, allowWrite? }  (send_mail 写闸; noop 只读; raw:true 走 EHLO/MAIL/DATA; 不是 IMAP/POP3). ldap: { url, base?, tls?, starttls?, allowWrite? }. bacnet: { host?, port?, deviceId?, devices?, udp?, allowWrite? }. ethernetip: { host?, port?, tcp?, tags?, allowWrite? }  (alias enip; CIP List Identity + local tags). s7: { host?, port?, rack?, slot?, tcp?, allowWrite? }  (ISO-TCP/S7comm Read Var subset). mtconnect: { url | fixture | xml }. sql: { driver: sqlite|postgres|mysql|sqlserver|duckdb, filename? | url?, allowWrite? }  (prefer specific protocol ids). sqlite: { filename?, native?:true (optional better-sqlite3), allowWrite? }. postgres: { url? | simulator:true | native:true + url (optional pg), allowWrite? }. mysql: { url? | simulator:true | native:true + url (optional mysql2), allowWrite? }  (MariaDB compatible; alias mariadb). sqlserver: { url? | simulator:true, allowWrite? }. duckdb: { filename? | simulator:true, allowWrite? }. mongodb: { url? | simulator:true, allowWrite? }  (无 url 内存; url 走 OP_MSG hello/find/insert/listCollections; 无 aggregation). elasticsearch: { url? | simulator:true, allowWrite? }  (url 走 HTTP _cat/_search/_doc; 写闸). opensearch: { url? | simulator:true, allowWrite? }  (ES 兼容 HTTP). clickhouse: { url? | simulator:true, allowWrite? }  (HTTP POST query FORMAT JSONEachRow; INSERT/DDL 需 allowWrite). neo4j: { url? | simulator:true, allowWrite? }  (http(s) /db/{db}/tx/commit; bolt 仍需注入 connectFn). qdrant: { url? | simulator:true, allowWrite? }. s3: { bucket, endpoint?, allowWrite?, unsigned?, accessKey?, secretKey?, region?, simulator? }. gcs: { bucket, endpoint?, allowWrite?, unsigned?, token?, simulator? }. oss: { bucket, endpoint?, allowWrite?, unsigned?, accessKey?, secretKey?, simulator? }. influx: { bucket, url?, org?, token?, allowWrite? }  (alias influxdb; Flux + /api/v2/delete; not InfluxQL). prometheus: { url? | simulator:true, timeoutMs?, allowWrite? }  (query/query_range; remote_write protobuf+snappy 需 allowWrite). sqs: { queue, endpoint?, unsigned?, allowWrite? }. pulsar: { topic, serviceUrl? (memory:// | http + unsigned | pulsar:// official LOOKUP | pulsar:// + dialect=e2p1 | pulsar+ssl://), tenant?, namespace?, subscription?, unsigned?, dialect?, allowWrite? }. snmp: { host?, port?, community?, simulator?, allowWrite? }  (SNMPv2c Get/GetNext/walk/Set; not v3/USM). webdav: { url?, simulator?, allowWrite? }  (PROPFIND/GET/PUT/DELETE/MKCOL). ftp: { host?, port?, user?, password?, simulator?, allowWrite? }  (LIST/RETR/STOR/DELE; not SFTP/FTPS). etcd: { url?, simulator?, allowWrite? }  (v3 HTTP KV range/put/delete; not watch/lease). imap: { host?, port?, user?, password?, simulator?, allowWrite? }  (IMAP4rev1 LIST/SELECT/FETCH/SEARCH; APPEND/STORE/EXPUNGE 需 allowWrite; 不是 SMTP). pop3: { host?, port?, user?, password?, simulator?, allowWrite? }  (STAT/LIST/RETR; DELE/RSET 需 allowWrite; 不是 SMTP). consul: { url?, token?, simulator?, allowWrite? }  (HTTP KV + catalog/health; 写需 allowWrite; 无 Connect). azureblob: { container, endpoint?, unsigned?, sasToken?, account?, accountKey?, simulator?, allowWrite? }  (SharedKey 子集或 SAS 查询串; 写需 allowWrite). sftp: { host?, port?, user?, password?, simulator?, allowWrite? }  (SSH-2 SFTP; 不是 FTP). memcached: { host?, port?, simulator?, allowWrite? }  (text GET/SET/DELETE/STATS). tftp: { host?, port?, simulator?, allowWrite? }  (RFC1350 RRQ/WRQ; 不是 FTP/SFTP). caldav: { url?, simulator?, allowWrite? }  (PROPFIND/REPORT time-range + freebusy; iTIP schedule E_UNSUPPORTED). carddav: { url?, simulator?, allowWrite? }  (PROPFIND/REPORT addressbook-query/GET/PUT). beanstalkd: { host?, port?, tube?, simulator?, allowWrite? }  (put/reserve/delete/stats). zookeeper: { host?, port?, simulator?, allowWrite? }  (ruok + get/create + watch_once + multi; ACL/SASL E_UNSUPPORTED). dns: { host?, port?, simulator?, timeoutMs? }  (unicast A/AAAA/TXT/PTR; 无 AXFR / 无组播). cassandra: { host? | url? | simulator:true, port?, allowWrite? }  (CQL 子集; native v4 STARTUP/QUERY; 写闸). couchdb: { url? | simulator:true, allowWrite? }  (_all_dbs / _all_docs / GET / PUT; 写闸). whois: { host? | url? | simulator:true, port? }  (TCP 43 只读 query). solr: { url? | simulator:true, allowWrite? }  (select/update HTTP; 写闸; 不是 SolrCloud admin). rabbitmq: { url? | simulator:true, vhost?, allowWrite? }  (management HTTP 15672; 不是 AMQP 0-9-1). kubernetes: { url? | simulator:true, namespace?, token? }  (只读 list/get/logs pods; exec/apply E_UNSUPPORTED). os_info: { }  (本机 OS/arch 只读; 热加载，不在 boot 强制挂载). platform_fs: { roots?, maxBytes? }  (gated list/read; 默认拒绝 / ; 不可 allowWrite). platform_process: { allowShell?, listFn? }  (process_list; shell_exec 闸+stub). platform_service: { allowShell? }  (systemd/sc/launchctl best-effort; 缺工具 E_UNSUPPORTED). docker: { url? | simulator:true, allowWrite? }  (Engine API 只读 list/inspect/logs; run E_UNSUPPORTED). podman: { url? | simulator:true, allowWrite? }  (docker-compat API; 同 docker). journal: { path? | simulator:true, format?: syslog|journal-export|evtx-xml, allowShell? }. smb: { host? | simulator:true, port? }  (别名 cifs; 模拟 list/get; live 仅 SMB2 NEGOTIATE). nfs: { host? | simulator:true, port? }  (NFSv3 NULL ping; live SHOWMOUNT E_UNSUPPORTED). vault: { url? | simulator:true, token?, allowReadSecrets? }  (health/list keys; 读 secret 默认关; 别名 openbao). aws_iam: { simulator:true }  (永不打 IMDS; live STS E_UNSUPPORTED). alertmanager: { url? | simulator:true, allowWrite? }  (alerts/status 只读; create_silence 写闸). pubsub: { url? | simulator:true, project?, allowWrite? }  (GCP Pub/Sub emulator HTTP; publish 写闸). jira: { url? | simulator:true, token? }  (myself/search/get_issue 只读). browser: { allowDesktop? }  (默认关; 即使打开也不启动 Chrome). partner: { capability_id, operations[], invoke:{kind:http,url} | simulator:true, heartbeatTtlMs?, allowWrite? }  (E2MCP Partner; 应用不实现 MCP). feishu: { url? | simulator:true, token?, allowWrite? }  (list_chats/search 只读; send_message 写闸). dingtalk: { url? | simulator:true, token?, allowWrite? }  (probe 只读; work notice / robot 写闸). wecom: { url? | simulator:true, token?, allowWrite? }  (dept/user 只读; send_app_message 写闸; 不是个人微信). slack: { url? | simulator:true, token?, allowWrite? }  (conversations.list 只读; post_message 写闸). notion: { url? | simulator:true, token?, allowWrite? }  (search/get_page 只读; create_page 写闸). github: { url? | simulator:true, token?, owner?, repo?, allowWrite? }  (issues/PRs 只读; create_issue 写闸). mcp_bridge: { mcpServers | path, simulator? }  (兜底导入 mcpServers JSON; live spawn E_UNSUPPORTED)"
+        }
+      },
+      "required": [
+        "protocol",
+        "name",
+        "config"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "mcp_update",
+    "description": "Update an existing registration's config and reconnect/reload its tools",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Registration id from mcp_list (protocol:name)"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "id",
+        "config"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "mcp_remove",
+    "description": "Disconnect an adapter and unregister its tools (same Catalog path as capability_unregister). Control-plane: does not require allowWrite.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "mcp_query_by_protocol",
+    "description": "Filter live adapters and tools by protocol type",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "protocol"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "mcp_health",
+    "description": "Process + adapter health snapshot for agents (live/restore_failed, tool counts)",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "verbose": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "mcp_explain_tool",
+    "description": "Explain a namespaced MCP tool: adapter, protocol, local operation, input schema",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Full tool name, e.g. openapi.widgets.getWidget"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "mcp_plan_bridge",
+    "description": "Turn a natural-language goal into recommended protocols, example configs, and next MCP tool calls. Does not scan by itself.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "goal": {
+          "type": "string",
+          "description": "What the agent wants to connect or automate"
+        },
+        "host": {
+          "type": "string",
+          "description": "Optional single hostname/IP to include in the plan"
+        }
+      },
+      "required": [
+        "goal"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "mcp_add_from_discovery",
+    "description": "Register an adapter from a discovery_suggest payload (protocol + name + config + confidence)",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "suggestion": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "schema_import",
+    "description": "Import OpenAPI, WSDL, proto, GraphQL SDL, or AsyncAPI from a URL or file (OpenAPI servers[] become config.baseUrl). OData / JSON:API / tRPC / Connect-RPC are import-first: export OpenAPI (or pass gRPC target for Connect proto).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "description": "File path or http(s) URL"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "openapi",
+            "wsdl",
+            "proto",
+            "graphql",
+            "asyncapi",
+            "odata",
+            "jsonapi",
+            "trpc",
+            "connectrpc"
+          ],
+          "description": "Force schema kind; otherwise auto-detect. odata/jsonapi/trpc/connectrpc are import-first."
+        },
+        "name": {
+          "type": "string"
+        },
+        "register": {
+          "type": "boolean",
+          "default": true
+        },
+        "target": {
+          "type": "string",
+          "description": "gRPC host:port when importing a .proto"
+        },
+        "url": {
+          "type": "string",
+          "description": "GraphQL HTTP endpoint when importing SDL"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Extra adapter config merged in"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "mcp_blacklist_list",
+    "description": "List operator blacklist entries. Match key is canonical protocol + host + port (or normalized url). See docs/BLACKLIST.md.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "mcp_blacklist_add",
+    "description": "Add a blacklist entry. kind=target (default): protocol + host+port or network url; blocks mcp_add, discovery register and invoke on matching adapters. kind=capability: adapterId (protocol:name); hides and blocks that one instance. kind=tool: pattern (exact tool name or glob, * = one segment, ** = any, e.g. redis.*.flushall); hides and blocks matching tools. Blacklist still applies in Full mode.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "target",
+            "capability",
+            "tool"
+          ]
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "host": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer"
+        },
+        "url": {
+          "type": "string",
+          "description": "Network URL; file paths are ignored"
+        },
+        "adapterId": {
+          "type": "string",
+          "description": "kind=capability: registration id protocol:name"
+        },
+        "pattern": {
+          "type": "string",
+          "description": "kind=tool: tool name or glob"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "mcp_blacklist_remove",
+    "description": "Remove a blacklist entry by id (protocol|host|port, cap|<adapterId>, or tool|<pattern>)",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "environment_inventory",
+    "description": "On-demand Environment Plane snapshot (OS/arch, permission hints, listening ports best-effort, runtimes, container clues, config paths). Feeds suggest only — never auto-registers, never sets allowWrite=true.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "capability_register",
+    "description": "Hot-add a capability through the shared Policy Gateway (same path as mcp_add). Pass a suggestion or protocol/name/config. auto:true only works for Safe + readonly + non-blacklist. Suggest never bulk-registers.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "suggestion": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "auto": {
+          "type": "boolean",
+          "description": "Only Safe+readonly+non-blacklist"
+        },
+        "confirm": {
+          "type": "boolean",
+          "description": "Operator confirm (console)"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "capability_unregister",
+    "description": "Hot-delete a live capability through the shared Policy Gateway (same path as mcp_remove). Removes the adapter instance and its tools immediately. Control-plane: does not require allowWrite. Console REST requires confirm:true. Missing id is E_NOT_FOUND.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "capability_configure",
+    "description": "Reconfigure a live capability (same path as mcp_update). Does not silently enable writes.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "id",
+        "config"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "partner_list",
+    "description": "List southbound Partner connections (ingress=partner). Agent-facing northbound is still MCP only. Apps do not implement MCP.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "compat_scan",
+    "description": "Compat Catalog scan: P0 installed∩catalog + Partner drops; P1 login clues; P2 ports; P3 mcpServers as mcp_bridge 兜底 only; P4 desktop UI deferred. Scan never opens write/desktop/secrets.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "includeInventory": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "discovery_suggest",
+    "description": "Map probe/scan candidates to one-click mcp_add drafts (protocol, name, config, confidence). Pass candidates or a host to scan first.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer"
+        },
+        "https": {
+          "type": "boolean"
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "candidates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "discovery_probe",
+    "description": "Probe a single host+port for common OpenAPI/SOAP/GraphQL paths. CIDR / ranges are never allowed.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string",
+          "description": "Hostname or single IP. CIDR / ranges / wildcards are never allowed."
+        },
+        "port": {
+          "type": "integer",
+          "description": "TCP port (default 80, or 443 if https=true)"
+        },
+        "https": {
+          "type": "boolean",
+          "default": false
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Limit probes: openapi, soap, graphql"
+        }
+      },
+      "required": [
+        "host"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "discovery_scan_host",
+    "description": "Parallel single-host discovery: OpenAPI/WSDL/GraphQL paths, gRPC reflection, Redis PING, MQTT CONNECT, Modbus, CoAP, NATS INFO, JSON-RPC/XML-RPC, Pulsar 8080/6650, GCS 4443, Influx 8086, OSS headers, SMTP 25/587 220-banner. CIDR / ranges are never allowed (EVERYTHING2MCP_DISCOVERY_ALLOW_SCAN is ignored). Timeouts + SSRF (blocks metadata IPs).",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string",
+          "description": "Single hostname or IP. CIDR / ranges / wildcards are never allowed."
+        },
+        "port": {
+          "type": "integer",
+          "description": "If set, HTTP probes this port; well-known protocol ports still tried unless onlyGivenPort"
+        },
+        "https": {
+          "type": "boolean"
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "onlyGivenPort": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "host"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

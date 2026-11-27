@@ -1,0 +1,25 @@
+[
+  {
+    "name": "get_transcript",
+    "description": "Extract transcript from a YouTube video URL or ID",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "YouTube video URL or ID"
+        },
+        "lang": {
+          "type": "string",
+          "description": "Language code for transcript (e.g., 'ko', 'en')",
+          "default": "en"
+        }
+      },
+      "required": [
+        "url",
+        "lang"
+      ]
+    }
+  }
+]

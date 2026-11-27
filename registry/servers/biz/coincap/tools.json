@@ -1,0 +1,32 @@
+[
+  {
+    "name": "bitcoin_price",
+    "description": "Get realtime bitcoin price",
+    "read_only": false,
+    "input_schema": {
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_crypto_price",
+    "description": "Get realtime crypto price on crypto",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the crypto coin"
+        }
+      }
+    }
+  },
+  {
+    "name": "list_assets",
+    "description": "Get all available crypto assets",
+    "read_only": false,
+    "input_schema": {
+      "type": "object"
+    }
+  }
+]

@@ -1,0 +1,1508 @@
+[
+  {
+    "name": "scrape",
+    "description": "Fetch a single URL via the crawlbrulee scraping API and return the requested content (markdown, cleaned HTML, raw HTML, links, images, screenshot, PDF, page metadata in `metadata`). Use this for one-shot page extraction. For full-site discovery use the `map` tool first. To pull named values such as prices, titles or links, set `extract.elements` (name → CSS selector) instead of reading the whole markdown: they come back in `elements`, for no extra credits. Markdown and metadata stay on unless you set `markdown: false` and `metadata: false`, so send both to get only the values. Rules: https://crawlbrulee.com/docs/scrape/targeted-extraction. Check `page_status_code` before you trust the content: it is the HTTP status the site answered with for the final page. A page the site served is a successful result whatever its status, so a 404 or 503 page comes back with its content, not as an error. A 404 means the markdown is the site's \"not found\" page, not the page you asked for. 2xx and 4xx pages are billed, except 403, 407, 408, 429, 444 and 451; 5xx pages are never billed. If the site cannot be reached at all the tool returns a `target_unreachable` error (HTTP 502, not billed): retry later or check the URL. Set `extract.pdf: {}` to save the page as a PDF (pages or one long page, a4 or letter); it costs what a screenshot costs, and both together are billed once. Set `extract.screenshot.color_scheme: \"dark\"` for a screenshot of the site's dark theme, at no extra cost; the PDF then shows it too. Set `actions` to do things on the page before it is read: `wait`, `scroll`, `wait_for` (an element), `hover` and `click`, with CSS selectors; up to 12, and 60 seconds for the whole list. They run after `cleanup`, so a cookie banner it removes is gone first. A click that loads a new page is followed: the response is that page, and the rest of the list runs there. The response `actions` reports each one (`ok`, `failed`, `skipped`, `not_run`); `actions_incomplete` in `warnings` means one failed or never ran, and the page is the one the actions left. When you know the next page's URL, scrape it directly instead of clicking to it. A long list on a slow page can take longer than your app waits for a tool reply: use `scrape_async` for it. If a try fails and is tried again, the actions run again from the start, so do not use them for anything that must happen only once, such as an order. To fill in and send a form (type text into a field, pick an option in a dropdown), call the HTTP API: this server does not offer those actions. Screenshot and PDF URLs in the response are signed download links that expire 24 hours after the scrape: download the file if you need it later; do not keep the link. The response also carries `response_meta.usage`: `total_credit_cost` = `engine_credit_cost` × `proxy_multiplier` + `screenshot_slicing_credit_cost` + `zero_data_retention_credit_cost`, plus `engine` and `proxy` (the resolved tier — never `auto`). `engine` is the billed engine (`http`, `browser`, `screenshot`, `cache`); a cache hit is represented by `engine: \"cache\"`. Set `zero_data_retention: true` to keep the result out of the shared cache; anything stored to deliver it is kept for 24 hours, then deleted. It adds 1 credit and must be enabled for the organization (else a `zero_data_retention_not_enabled` error, not billed). See https://crawlbrulee.com/docs/zero-data-retention. Extraction is capped per page: 30,000 links, 10,000 inline images and 10,000,000 characters of HTML. A page past a cap is truncated rather than refused, and the response `warnings` array names which one (`links_truncated`, `inline_images_truncated`, `raw_html_truncated`) — so treat that output as incomplete. `elements_truncated` means an `elements` value hit a limit. Use `cleanup` to control what is removed before any output is built: `ads_and_popups` (on by default) drops ads, cookie banners and chat widgets, and `exclude_selectors` removes anything else. It shapes markdown, cleaned_html, links, images and the screenshot, and NEVER `raw_html` — so request `raw_html` when you need the page exactly as it arrived. `warnings` also reports a section whose extraction failed outright (`links_unavailable`, `inline_images_unavailable`, `metadata_unavailable`): that field comes back omitted or empty while the rest of the scrape succeeded, so do NOT conclude the page had no links/images/metadata — re-run the scrape instead. An empty field with no such warning does mean the page had none. `screenshot_unavailable` means a screenshot was asked for, but the page came back from the http engine without one. `pdf_unavailable` means the PDF could not be made; the rest is there. `pdf_single_page_overflow` means a `single_page` PDF was too tall for one page and goes on over more pages. `custom_user_agent` means the request set its own `User-Agent` header; this can lower the success rate. `actions_incomplete` means an action failed or never ran. To send your own headers or cookies to the site, set `headers` (for example `Authorization`, or a fixed `User-Agent`) or `cookies`. They go only to the site in `url`, and such a request never uses the cache. Header and cookie values pass through the chat with the AI, so the AI host may keep them in its history. Use short-lived tokens or a test account, and never a password you can't change. Tell the user this before they share one. See https://crawlbrulee.com/docs/scrape/custom-headers-and-cookies.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The URL to scrape. Known tracking parameters are removed before the page is fetched, so they are neither sent to the target site nor part of the cache key. Every other query parameter is kept verbatim and is part of the cache key."
+        },
+        "extract": {
+          "description": "Which content formats to extract. Defaults to markdown + metadata.",
+          "default": {},
+          "type": "object",
+          "properties": {
+            "metadata": {
+              "default": true,
+              "description": "Extract page metadata (title, description, OG tags, etc.) from the page head",
+              "type": "boolean"
+            },
+            "cleaned_html": {
+              "default": false,
+              "description": "Extract cleaned HTML: the page body with scripts, styles, ads and cookie banners removed",
+              "type": "boolean"
+            },
+            "markdown": {
+              "default": true,
+              "description": "Extract page content as clean Markdown",
+              "type": "boolean"
+            },
+            "raw_html": {
+              "default": false,
+              "description": "Return the raw, unprocessed HTML, up to 10,000,000 characters of page body. A larger body is truncated at a tag boundary and the response carries a `raw_html_truncated` warning.",
+              "type": "boolean"
+            },
+            "links": {
+              "default": false,
+              "description": "Extract links found on the page, up to 30,000 per page. Beyond that the array is truncated and the response carries a `links_truncated` warning.",
+              "type": "boolean"
+            },
+            "images": {
+              "default": false,
+              "description": "Extract inline images found on the page, up to 10,000 per page. Beyond that the array is truncated and the response carries an `inline_images_truncated` warning.",
+              "type": "boolean"
+            },
+            "screenshot": {
+              "description": "Capture a screenshot of the page",
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "viewport",
+                    "full_page"
+                  ],
+                  "description": "Screenshot capture mode"
+                },
+                "viewport": {
+                  "description": "Custom viewport dimensions; uses device_mode defaults if omitted",
+                  "type": "object",
+                  "properties": {
+                    "width": {
+                      "type": "integer",
+                      "minimum": 16,
+                      "maximum": 10000,
+                      "description": "Viewport width in pixels (16–10000)"
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 16,
+                      "maximum": 10000,
+                      "description": "Viewport height in pixels (16–10000)"
+                    },
+                    "device_scale_factor": {
+                      "description": "Device pixel ratio (1–3, fractional allowed; e.g. 2 for Retina). Defaults to 1.",
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 3
+                    }
+                  },
+                  "required": [
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false
+                },
+                "device_mode": {
+                  "default": "desktop",
+                  "description": "Emulate desktop or mobile device viewport",
+                  "type": "string",
+                  "enum": [
+                    "desktop",
+                    "mobile"
+                  ]
+                },
+                "color_scheme": {
+                  "description": "`light` (default) or `dark`. `dark` asks the site for its dark theme, if it has one, and the screenshot shows it. A site without a dark theme, or whose dark theme is only a switch on the page, looks the same as with `light`. When the request also asks for `extract.pdf`, the PDF shows the dark theme too. No extra credits.",
+                  "type": "string",
+                  "enum": [
+                    "light",
+                    "dark"
+                  ]
+                },
+                "actions_after": {
+                  "default": [],
+                  "description": "Actions to perform after taking the screenshot (e.g. slice into tiles)",
+                  "maxItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "const": "slice",
+                        "description": "Slice the screenshot into horizontal tiles"
+                      },
+                      "height": {
+                        "type": "integer",
+                        "minimum": 500,
+                        "maximum": 9007199254740991,
+                        "description": "Height of each tile in pixels (minimum 500)"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "height"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "type"
+              ],
+              "additionalProperties": false
+            },
+            "pdf": {
+              "description": "Save the page as a PDF: a real document with selectable text and working links, backgrounds printed, and no header or footer added. `{}` takes every default. The request runs in a browser. The response carries a top-level `pdf` with a signed link that expires 24 hours after the scrape. It costs what a screenshot costs, and a PDF and a screenshot in one request are billed once. A cached copy of the page answers only when it has a PDF made with the same settings; `cache.max_age: 0` always makes a new one. In rare cases the PDF cannot be made: the rest of the scrape still comes back, with the `pdf_unavailable` warning, and the request costs what it costs without the PDF. A PDF-only request (every other format off, `markdown` and `metadata` included) on a page that cannot be made into a PDF is a 422 `unsupported_pdf_output`, not billed. An async job in that case, or one that asked only for a PDF and got none, ends `failed` and is not billed. A PDF on its own is made with the light theme. When the same request also asks for a screenshot with `color_scheme: \"dark\"`, the PDF is dark too.",
+              "type": "object",
+              "properties": {
+                "layout": {
+                  "default": "pages",
+                  "description": "`pages` (default): the page on sheets of paper, laid out as in the browser window (the desktop default, or the screenshot device and viewport when the request also asks for a screenshot) and shrunk to fit the paper width. `single_page`: one page as wide as the browser window and as tall as the web page, up to 15,000 px; a taller page goes on over more pages, with the `pdf_single_page_overflow` warning.",
+                  "type": "string",
+                  "enum": [
+                    "pages",
+                    "single_page"
+                  ]
+                },
+                "paper": {
+                  "description": "Paper size for `layout: \"pages\"`: `a4` (default) or `letter`. Not allowed with `single_page`.",
+                  "type": "string",
+                  "enum": [
+                    "a4",
+                    "letter"
+                  ]
+                },
+                "landscape": {
+                  "description": "Turn the paper sideways, for `layout: \"pages\"`. Defaults to false. Not allowed with `single_page`.",
+                  "type": "boolean"
+                },
+                "media": {
+                  "default": "screen",
+                  "description": "`screen` (default): the page as it looks on screen. `print`: the site's own print style, which on many sites hides menus and images; a site without one looks as on screen.",
+                  "type": "string",
+                  "enum": [
+                    "screen",
+                    "print"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "elements": {
+              "description": "Named values to read from the page by CSS selector, returned in the top-level `elements` field under the same names. Each value is either a selector string (the text of the first match) or an object with `selector`, `output`, `attribute` and `all`. `fields` (instead of `output`) turns each match into an object of named values read inside that match (the selector `:scope` reads the match itself, for example the matched element's own href), so a list of products can return a title, price and url per product. A name with no match is null, or [] with `all: true`. Read after cleanup; `<script>` and `<style>` tags are not part of it. An invalid selector is a 400. No extra credits, also when the page comes from cache. Limits and selector rules: https://crawlbrulee.com/docs/scrape/targeted-extraction.",
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 500
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "selector": {
+                        "type": "string",
+                        "maxLength": 500,
+                        "description": "CSS selector, up to 500 characters"
+                      },
+                      "output": {
+                        "description": "What to return for a match: `text` (default), `html` (the outer HTML) or `attribute`",
+                        "type": "string",
+                        "enum": [
+                          "text",
+                          "html",
+                          "attribute"
+                        ]
+                      },
+                      "attribute": {
+                        "description": "The attribute to read when `output` is `attribute`. `href` and `src` come back as full urls",
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "all": {
+                        "default": false,
+                        "description": "Return every match as a list instead of the first. Defaults to false",
+                        "type": "boolean"
+                      },
+                      "fields": {
+                        "description": "Used instead of `output`: turns each match into an object of named values, each read inside that match; the selector `:scope` reads the match itself. Same shape as `elements`; nests up to 3 levels",
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 500
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "selector": {
+                                  "type": "string",
+                                  "maxLength": 500
+                                },
+                                "output": {
+                                  "type": "string",
+                                  "enum": [
+                                    "text",
+                                    "html",
+                                    "attribute"
+                                  ]
+                                },
+                                "attribute": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 100
+                                },
+                                "all": {
+                                  "default": false,
+                                  "type": "boolean"
+                                },
+                                "fields": {
+                                  "type": "object",
+                                  "propertyNames": {
+                                    "type": "string"
+                                  },
+                                  "additionalProperties": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string",
+                                        "maxLength": 500
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "selector": {
+                                            "type": "string",
+                                            "maxLength": 500
+                                          },
+                                          "output": {
+                                            "type": "string",
+                                            "enum": [
+                                              "text",
+                                              "html",
+                                              "attribute"
+                                            ]
+                                          },
+                                          "attribute": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 100
+                                          },
+                                          "all": {
+                                            "default": false,
+                                            "type": "boolean"
+                                          },
+                                          "fields": {
+                                            "type": "object",
+                                            "propertyNames": {
+                                              "type": "string"
+                                            },
+                                            "additionalProperties": {
+                                              "anyOf": [
+                                                {
+                                                  "type": "string",
+                                                  "maxLength": 500
+                                                },
+                                                {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "selector": {
+                                                      "type": "string",
+                                                      "maxLength": 500
+                                                    },
+                                                    "output": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                        "text",
+                                                        "html",
+                                                        "attribute"
+                                                      ]
+                                                    },
+                                                    "attribute": {
+                                                      "type": "string",
+                                                      "minLength": 1,
+                                                      "maxLength": 100
+                                                    },
+                                                    "all": {
+                                                      "default": false,
+                                                      "type": "boolean"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "selector"
+                                                  ],
+                                                  "additionalProperties": false
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        },
+                                        "required": [
+                                          "selector"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "selector"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "selector"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "cache": {
+          "description": "Cache settings for this request",
+          "type": "object",
+          "properties": {
+            "max_age": {
+              "default": 172800,
+              "description": "Maximum cache age in seconds, or an ISO 8601 datetime cutoff",
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "require_js": {
+          "default": false,
+          "description": "Go straight to a headless browser to render JavaScript before scraping. Without it, we still move to a browser on our own when a page needs one; set it when you already know the page needs JavaScript, to save time.",
+          "type": "boolean"
+        },
+        "cleanup": {
+          "default": {
+            "ads_and_popups": true
+          },
+          "type": "object",
+          "properties": {
+            "ads_and_popups": {
+              "default": true,
+              "description": "Remove ads, cookie banners, consent dialogs and chat widgets. Defaults to true. Also affects the screenshot. Set it to false to capture the page as-is, or to get past a site that refuses to serve an ad-blocking client.",
+              "type": "boolean"
+            },
+            "exclude_selectors": {
+              "description": "CSS selectors whose elements are removed before anything is captured. Affects the extracted content and the screenshot, never raw_html. Use it for a banner or widget that ads_and_popups does not recognise. Sending any selector here makes the request skip the cache.",
+              "maxItems": 100,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              }
+            }
+          },
+          "additionalProperties": false,
+          "description": "What is removed from the page before any output is built. Applies to markdown, cleaned_html, links and images on every engine, and to the screenshot. Never applies to raw_html, which is always the page before we removed anything."
+        },
+        "proxy": {
+          "default": "auto",
+          "description": "Proxy tier. Defaults to auto: we start with the lightest way to get the page and step up our effort on our own when a site needs more (a stronger proxy, a real browser, or both), and bill the tier that delivered. basic or advanced pins the tier.",
+          "type": "string",
+          "enum": [
+            "basic",
+            "advanced",
+            "auto"
+          ]
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "locale": {
+              "description": "BCP-47 locale (2-35 chars, e.g. 'en-US', 'de-DE', 'pt-BR'): the language to ask the site for",
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 35
+            },
+            "country": {
+              "description": "ISO 3166-1 alpha-2 (e.g. 'us', 'de', 'br'; case-insensitive) driving the emulated browser timezone and proxy exit country. Also accepts 'eu' (random EU member state) or 'europe' (random European state incl. UK and non-EU).",
+              "type": "string",
+              "pattern": "^([a-zA-Z]{2}|europe)$"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Optional locale + country emulation for the scrape"
+        },
+        "zero_data_retention": {
+          "description": "Keeps the result out of the shared cache; anything stored to deliver it is kept for 24 hours, then deleted. Adds 1 credit. Must be enabled for your organization. See https://crawlbrulee.com/docs/zero-data-retention.",
+          "type": "boolean"
+        },
+        "headers": {
+          "description": "Your own HTTP headers to send to the site with the request, for example `Authorization`, an api key, or a fixed `User-Agent` that the site has on an allowlist. Sent only to the origin of `url` (same scheme, host and port), or to its https version when `url` is http, and not on a redirect to another origin. Up to 10 headers; headers and cookies together up to 16384 bytes. Values are printable ASCII, with no space or tab at either end. Headers a browser doesn't let a web page set can't be set here either (a 400 names the header). Use `cookies` for cookies and `location.locale` for the language. Never put secrets in the `User-Agent`. Your own `User-Agent` can lower the success rate, and the response carries the `custom_user_agent` warning. A `Referer` must be the full http or https url of a public page, with no username or password; it is sent the way a browser sends it after a click on that page. A request with headers or cookies never reads from or writes to the cache. On a plain http url they travel unencrypted. Header and cookie values pass through the chat with the AI, so the AI host may keep them in its history. Use short-lived tokens or a test account, and never a password you can't change. See https://crawlbrulee.com/docs/scrape/custom-headers-and-cookies.",
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "actions": {
+          "description": "Things to do on the page, in order, before it is read: `wait`, `scroll`, `wait_for` (an element), `hover` and `click`, with CSS selectors. Every output, the screenshot and the PDF included, shows the page as the actions left it. A list with an action that does something runs in a browser, so it is billed as a browser scrape, and never reads from or writes to the cache. The actions run after `cleanup`: ads, popups and cookie banners (with `cleanup.ads_and_popups` on) and the elements in `cleanup.exclude_selectors` are removed first, also from a page a click loads. A popup that opens later can still be in the way of a click and make it fail, so click the popup's close button first. Up to 12 actions, and 60 s for the whole list, waits and scroll durations included. An action that fails stops the list: the page still comes back as it is then, billed as usual, with the `actions_incomplete` warning; mark an action `optional` to go on past it. The response reports each action in `actions`. A click that loads a new page is followed: the response is that page (its url, its `page_status_code`, its content), and the rest of the list runs there. A click that opens a new tab is ignored. When you know the next page's url, such as `?page=2`, scrape that url directly instead of clicking to it: the page loads once, so it comes back faster, and it can come from the cache. If a try fails and we try again, the actions run again from the start, so do not use them for anything that must happen only once, such as an order. The actions themselves cost no extra credits. To fill in and send a form (type text into a field, pick an option in a dropdown), call the HTTP API: this server does not offer those actions.",
+          "maxItems": 12,
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "wait",
+                    "description": "Wait for a set time"
+                  },
+                  "ms": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 60000,
+                    "description": "Milliseconds to wait"
+                  },
+                  "optional": {
+                    "description": "When true, a failure of this action does not stop the list: it is reported as `skipped` and the next action runs. A page that moves on to another page during the action still stops the list. Defaults to false.",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type",
+                  "ms"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "scroll",
+                    "description": "Scroll the page"
+                  },
+                  "pixels": {
+                    "description": "Pixels to scroll down (negative scrolls up). Use either `pixels` or `to`, not both.",
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                  },
+                  "to": {
+                    "description": "Where to scroll: `top`, `bottom`, `left`, `right` of the page, or a CSS selector, which brings the first match to the middle of the window (it waits up to 5 s for the element). Use either `pixels` or `to`, not both.",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "duration_ms": {
+                    "description": "How long the scroll takes, in milliseconds. A slow scroll gives images further down the page time to load on the way. 0 jumps at once. Without it, the page scrolls at a steady pace, taking up to 5 s.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 60000
+                  },
+                  "optional": {
+                    "description": "When true, a failure of this action does not stop the list: it is reported as `skipped` and the next action runs. A page that moves on to another page during the action still stops the list. Defaults to false.",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "wait_for",
+                    "description": "Wait for an element to appear"
+                  },
+                  "selector": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500,
+                    "description": "CSS selector. The action waits until the first match is on the page and visible, for up to 10 s; after that it fails."
+                  },
+                  "optional": {
+                    "description": "When true, a failure of this action does not stop the list: it is reported as `skipped` and the next action runs. A page that moves on to another page during the action still stops the list. Defaults to false.",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type",
+                  "selector"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "hover",
+                    "description": "Move the mouse over an element, or to a point. Desktop only: on a mobile device it is skipped."
+                  },
+                  "selector": {
+                    "description": "CSS selector: the mouse goes to the first match, brought into view first. Use either `selector` or `x` and `y`.",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "x": {
+                    "description": "A point in the visible window, in pixels from its left edge. Needs `y`.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000
+                  },
+                  "y": {
+                    "description": "A point in the visible window, in pixels from its top edge. Needs `x`.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000
+                  },
+                  "optional": {
+                    "description": "When true, a failure of this action does not stop the list: it is reported as `skipped` and the next action runs. A page that moves on to another page during the action still stops the list. Defaults to false.",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "click",
+                    "description": "Click an element (a tap on a mobile device)"
+                  },
+                  "selector": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500,
+                    "description": "CSS selector: the first match on the page itself (not inside a frame or a shadow root), brought into view first."
+                  },
+                  "optional": {
+                    "description": "When true, a failure of this action does not stop the list: it is reported as `skipped` and the next action runs. A page that moves on to another page during the action still stops the list. Defaults to false.",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type",
+                  "selector"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "cookies": {
+          "description": "Your own cookies to send to the site with the request. Each is a `name` and a `value`, sent only to the host of `url`. Cookies the site sets while redirecting are not kept. Up to 20 cookies, each up to 4096 bytes (name and value), counted toward the limit on `headers`. A value may not hold \";\" or start or end with a space. A `__Secure-`, `__Host-` or `__Http-` cookie needs an https url. A request with headers or cookies never reads from or writes to the cache. Header and cookie values pass through the chat with the AI, so the AI host may keep them in its history. Use short-lived tokens or a test account, and never a password you can't change. See https://crawlbrulee.com/docs/scrape/custom-headers-and-cookies.",
+          "maxItems": 20,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "url"
+      ]
+    }
+  },
+  {
+    "name": "scrape_async",
+    "description": "Submit a scrape job to run ASYNCHRONOUSLY and return a `job_id` immediately, instead of holding the connection open. Use this for long-running scrapes (heavy JS rendering, full-page screenshots of long pages) — for a quick one-shot fetch prefer the synchronous `scrape` tool, which blocks and returns the page directly. Poll the job with `scrape_status` and fetch the page with `scrape_result` once done. Takes `extract.elements` like `scrape` (named values by CSS selector, no extra credits); the result carries them in `elements`. Rules: https://crawlbrulee.com/docs/scrape/targeted-extraction. Takes `extract.pdf` (save the page as a PDF) and `extract.screenshot.color_scheme` like `scrape`. Takes `actions` like `scrape` (wait, scroll, wait_for, hover, click); the result reports each one in `actions`. A long action list on a slow page is a good fit for this tool. Optionally attach a per-job completion `webhook`: we deliver a single signed `scrape.complete` POST to your endpoint when the job finishes (HTTPS required in production), and echoes your opaque `webhook.metadata` back in the delivery (under `data.metadata`, alongside `data.page_status_code` (on success) and `data.response_meta.usage`). Set `zero_data_retention: true` to keep the result out of the shared cache; anything stored to deliver it is kept for 24 hours, then deleted. It adds 1 credit and must be enabled for the organization (else a `zero_data_retention_not_enabled` error, not billed). See https://crawlbrulee.com/docs/zero-data-retention. To send your own headers or cookies to the site, set `headers` (for example `Authorization`, or a fixed `User-Agent`) or `cookies`. They go only to the site in `url`, and such a request never uses the cache. Header and cookie values pass through the chat with the AI, so the AI host may keep them in its history. Use short-lived tokens or a test account, and never a password you can't change. Tell the user this before they share one. See https://crawlbrulee.com/docs/scrape/custom-headers-and-cookies.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The URL to scrape. Known tracking parameters are removed before the page is fetched, so they are neither sent to the target site nor part of the cache key. Every other query parameter is kept verbatim and is part of the cache key."
+        },
+        "extract": {
+          "description": "Which content formats to extract. Defaults to markdown + metadata.",
+          "default": {},
+          "type": "object",
+          "properties": {
+            "metadata": {
+              "default": true,
+              "description": "Extract page metadata (title, description, OG tags, etc.) from the page head",
+              "type": "boolean"
+            },
+            "cleaned_html": {
+              "default": false,
+              "description": "Extract cleaned HTML: the page body with scripts, styles, ads and cookie banners removed",
+              "type": "boolean"
+            },
+            "markdown": {
+              "default": true,
+              "description": "Extract page content as clean Markdown",
+              "type": "boolean"
+            },
+            "raw_html": {
+              "default": false,
+              "description": "Return the raw, unprocessed HTML, up to 10,000,000 characters of page body. A larger body is truncated at a tag boundary and the response carries a `raw_html_truncated` warning.",
+              "type": "boolean"
+            },
+            "links": {
+              "default": false,
+              "description": "Extract links found on the page, up to 30,000 per page. Beyond that the array is truncated and the response carries a `links_truncated` warning.",
+              "type": "boolean"
+            },
+            "images": {
+              "default": false,
+              "description": "Extract inline images found on the page, up to 10,000 per page. Beyond that the array is truncated and the response carries an `inline_images_truncated` warning.",
+              "type": "boolean"
+            },
+            "screenshot": {
+              "description": "Capture a screenshot of the page",
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "viewport",
+                    "full_page"
+                  ],
+                  "description": "Screenshot capture mode"
+                },
+                "viewport": {
+                  "description": "Custom viewport dimensions; uses device_mode defaults if omitted",
+                  "type": "object",
+                  "properties": {
+                    "width": {
+                      "type": "integer",
+                      "minimum": 16,
+                      "maximum": 10000,
+                      "description": "Viewport width in pixels (16–10000)"
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 16,
+                      "maximum": 10000,
+                      "description": "Viewport height in pixels (16–10000)"
+                    },
+                    "device_scale_factor": {
+                      "description": "Device pixel ratio (1–3, fractional allowed; e.g. 2 for Retina). Defaults to 1.",
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 3
+                    }
+                  },
+                  "required": [
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false
+                },
+                "device_mode": {
+                  "default": "desktop",
+                  "description": "Emulate desktop or mobile device viewport",
+                  "type": "string",
+                  "enum": [
+                    "desktop",
+                    "mobile"
+                  ]
+                },
+                "color_scheme": {
+                  "description": "`light` (default) or `dark`. `dark` asks the site for its dark theme, if it has one, and the screenshot shows it. A site without a dark theme, or whose dark theme is only a switch on the page, looks the same as with `light`. When the request also asks for `extract.pdf`, the PDF shows the dark theme too. No extra credits.",
+                  "type": "string",
+                  "enum": [
+                    "light",
+                    "dark"
+                  ]
+                },
+                "actions_after": {
+                  "default": [],
+                  "description": "Actions to perform after taking the screenshot (e.g. slice into tiles)",
+                  "maxItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "const": "slice",
+                        "description": "Slice the screenshot into horizontal tiles"
+                      },
+                      "height": {
+                        "type": "integer",
+                        "minimum": 500,
+                        "maximum": 9007199254740991,
+                        "description": "Height of each tile in pixels (minimum 500)"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "height"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "type"
+              ],
+              "additionalProperties": false
+            },
+            "pdf": {
+              "description": "Save the page as a PDF: a real document with selectable text and working links, backgrounds printed, and no header or footer added. `{}` takes every default. The request runs in a browser. The response carries a top-level `pdf` with a signed link that expires 24 hours after the scrape. It costs what a screenshot costs, and a PDF and a screenshot in one request are billed once. A cached copy of the page answers only when it has a PDF made with the same settings; `cache.max_age: 0` always makes a new one. In rare cases the PDF cannot be made: the rest of the scrape still comes back, with the `pdf_unavailable` warning, and the request costs what it costs without the PDF. A PDF-only request (every other format off, `markdown` and `metadata` included) on a page that cannot be made into a PDF is a 422 `unsupported_pdf_output`, not billed. An async job in that case, or one that asked only for a PDF and got none, ends `failed` and is not billed. A PDF on its own is made with the light theme. When the same request also asks for a screenshot with `color_scheme: \"dark\"`, the PDF is dark too.",
+              "type": "object",
+              "properties": {
+                "layout": {
+                  "default": "pages",
+                  "description": "`pages` (default): the page on sheets of paper, laid out as in the browser window (the desktop default, or the screenshot device and viewport when the request also asks for a screenshot) and shrunk to fit the paper width. `single_page`: one page as wide as the browser window and as tall as the web page, up to 15,000 px; a taller page goes on over more pages, with the `pdf_single_page_overflow` warning.",
+                  "type": "string",
+                  "enum": [
+                    "pages",
+                    "single_page"
+                  ]
+                },
+                "paper": {
+                  "description": "Paper size for `layout: \"pages\"`: `a4` (default) or `letter`. Not allowed with `single_page`.",
+                  "type": "string",
+                  "enum": [
+                    "a4",
+                    "letter"
+                  ]
+                },
+                "landscape": {
+                  "description": "Turn the paper sideways, for `layout: \"pages\"`. Defaults to false. Not allowed with `single_page`.",
+                  "type": "boolean"
+                },
+                "media": {
+                  "default": "screen",
+                  "description": "`screen` (default): the page as it looks on screen. `print`: the site's own print style, which on many sites hides menus and images; a site without one looks as on screen.",
+                  "type": "string",
+                  "enum": [
+                    "screen",
+                    "print"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "elements": {
+              "description": "Named values to read from the page by CSS selector, returned in the top-level `elements` field under the same names. Each value is either a selector string (the text of the first match) or an object with `selector`, `output`, `attribute` and `all`. `fields` (instead of `output`) turns each match into an object of named values read inside that match (the selector `:scope` reads the match itself, for example the matched element's own href), so a list of products can return a title, price and url per product. A name with no match is null, or [] with `all: true`. Read after cleanup; `<script>` and `<style>` tags are not part of it. An invalid selector is a 400. No extra credits, also when the page comes from cache. Limits and selector rules: https://crawlbrulee.com/docs/scrape/targeted-extraction.",
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 500
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "selector": {
+                        "type": "string",
+                        "maxLength": 500,
+                        "description": "CSS selector, up to 500 characters"
+                      },
+                      "output": {
+                        "description": "What to return for a match: `text` (default), `html` (the outer HTML) or `attribute`",
+                        "type": "string",
+                        "enum": [
+                          "text",
+                          "html",
+                          "attribute"
+                        ]
+                      },
+                      "attribute": {
+                        "description": "The attribute to read when `output` is `attribute`. `href` and `src` come back as full urls",
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "all": {
+                        "default": false,
+                        "description": "Return every match as a list instead of the first. Defaults to false",
+                        "type": "boolean"
+                      },
+                      "fields": {
+                        "description": "Used instead of `output`: turns each match into an object of named values, each read inside that match; the selector `:scope` reads the match itself. Same shape as `elements`; nests up to 3 levels",
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 500
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "selector": {
+                                  "type": "string",
+                                  "maxLength": 500
+                                },
+                                "output": {
+                                  "type": "string",
+                                  "enum": [
+                                    "text",
+                                    "html",
+                                    "attribute"
+                                  ]
+                                },
+                                "attribute": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 100
+                                },
+                                "all": {
+                                  "default": false,
+                                  "type": "boolean"
+                                },
+                                "fields": {
+                                  "type": "object",
+                                  "propertyNames": {
+                                    "type": "string"
+                                  },
+                                  "additionalProperties": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string",
+                                        "maxLength": 500
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "selector": {
+                                            "type": "string",
+                                            "maxLength": 500
+                                          },
+                                          "output": {
+                                            "type": "string",
+                                            "enum": [
+                                              "text",
+                                              "html",
+                                              "attribute"
+                                            ]
+                                          },
+                                          "attribute": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 100
+                                          },
+                                          "all": {
+                                            "default": false,
+                                            "type": "boolean"
+                                          },
+                                          "fields": {
+                                            "type": "object",
+                                            "propertyNames": {
+                                              "type": "string"
+                                            },
+                                            "additionalProperties": {
+                                              "anyOf": [
+                                                {
+                                                  "type": "string",
+                                                  "maxLength": 500
+                                                },
+                                                {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "selector": {
+                                                      "type": "string",
+                                                      "maxLength": 500
+                                                    },
+                                                    "output": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                        "text",
+                                                        "html",
+                                                        "attribute"
+                                                      ]
+                                                    },
+                                                    "attribute": {
+                                                      "type": "string",
+                                                      "minLength": 1,
+                                                      "maxLength": 100
+                                                    },
+                                                    "all": {
+                                                      "default": false,
+                                                      "type": "boolean"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "selector"
+                                                  ],
+                                                  "additionalProperties": false
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        },
+                                        "required": [
+                                          "selector"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "selector"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "selector"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "cache": {
+          "description": "Cache settings for this request",
+          "type": "object",
+          "properties": {
+            "max_age": {
+              "default": 172800,
+              "description": "Maximum cache age in seconds, or an ISO 8601 datetime cutoff",
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "require_js": {
+          "default": false,
+          "description": "Go straight to a headless browser to render JavaScript before scraping. Without it, we still move to a browser on our own when a page needs one; set it when you already know the page needs JavaScript, to save time.",
+          "type": "boolean"
+        },
+        "cleanup": {
+          "default": {
+            "ads_and_popups": true
+          },
+          "type": "object",
+          "properties": {
+            "ads_and_popups": {
+              "default": true,
+              "description": "Remove ads, cookie banners, consent dialogs and chat widgets. Defaults to true. Also affects the screenshot. Set it to false to capture the page as-is, or to get past a site that refuses to serve an ad-blocking client.",
+              "type": "boolean"
+            },
+            "exclude_selectors": {
+              "description": "CSS selectors whose elements are removed before anything is captured. Affects the extracted content and the screenshot, never raw_html. Use it for a banner or widget that ads_and_popups does not recognise. Sending any selector here makes the request skip the cache.",
+              "maxItems": 100,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              }
+            }
+          },
+          "additionalProperties": false,
+          "description": "What is removed from the page before any output is built. Applies to markdown, cleaned_html, links and images on every engine, and to the screenshot. Never applies to raw_html, which is always the page before we removed anything."
+        },
+        "proxy": {
+          "default": "auto",
+          "description": "Proxy tier. Defaults to auto: we start with the lightest way to get the page and step up our effort on our own when a site needs more (a stronger proxy, a real browser, or both), and bill the tier that delivered. basic or advanced pins the tier.",
+          "type": "string",
+          "enum": [
+            "basic",
+            "advanced",
+            "auto"
+          ]
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "locale": {
+              "description": "BCP-47 locale (2-35 chars, e.g. 'en-US', 'de-DE', 'pt-BR'): the language to ask the site for",
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 35
+            },
+            "country": {
+              "description": "ISO 3166-1 alpha-2 (e.g. 'us', 'de', 'br'; case-insensitive) driving the emulated browser timezone and proxy exit country. Also accepts 'eu' (random EU member state) or 'europe' (random European state incl. UK and non-EU).",
+              "type": "string",
+              "pattern": "^([a-zA-Z]{2}|europe)$"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Optional locale + country emulation for the scrape"
+        },
+        "zero_data_retention": {
+          "description": "Keeps the result out of the shared cache; anything stored to deliver it is kept for 24 hours, then deleted. Adds 1 credit. Must be enabled for your organization. See https://crawlbrulee.com/docs/zero-data-retention.",
+          "type": "boolean"
+        },
+        "headers": {
+          "description": "Your own HTTP headers to send to the site with the request, for example `Authorization`, an api key, or a fixed `User-Agent` that the site has on an allowlist. Sent only to the origin of `url` (same scheme, host and port), or to its https version when `url` is http, and not on a redirect to another origin. Up to 10 headers; headers and cookies together up to 16384 bytes. Values are printable ASCII, with no space or tab at either end. Headers a browser doesn't let a web page set can't be set here either (a 400 names the header). Use `cookies` for cookies and `location.locale` for the language. Never put secrets in the `User-Agent`. Your own `User-Agent` can lower the success rate, and the response carries the `custom_user_agent` warning. A `Referer` must be the full http or https url of a public page, with no username or password; it is sent the way a browser sends it after a click on that page. A request with headers or cookies never reads from or writes to the cache. On a plain http url they travel unencrypted. Header and cookie values pass through the chat with the AI, so the AI host may keep them in its history. Use short-lived tokens or a test account, and never a password you can't change. See https://crawlbrulee.com/docs/scrape/custom-headers-and-cookies.",
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "actions": {
+          "description": "Things to do on the page, in order, before it is read: `wait`, `scroll`, `wait_for` (an element), `hover` and `click`, with CSS selectors. Every output, the screenshot and the PDF included, shows the page as the actions left it. A list with an action that does something runs in a browser, so it is billed as a browser scrape, and never reads from or writes to the cache. The actions run after `cleanup`: ads, popups and cookie banners (with `cleanup.ads_and_popups` on) and the elements in `cleanup.exclude_selectors` are removed first, also from a page a click loads. A popup that opens later can still be in the way of a click and make it fail, so click the popup's close button first. Up to 12 actions, and 60 s for the whole list, waits and scroll durations included. An action that fails stops the list: the page still comes back as it is then, billed as usual, with the `actions_incomplete` warning; mark an action `optional` to go on past it. The response reports each action in `actions`. A click that loads a new page is followed: the response is that page (its url, its `page_status_code`, its content), and the rest of the list runs there. A click that opens a new tab is ignored. When you know the next page's url, such as `?page=2`, scrape that url directly instead of clicking to it: the page loads once, so it comes back faster, and it can come from the cache. If a try fails and we try again, the actions run again from the start, so do not use them for anything that must happen only once, such as an order. The actions themselves cost no extra credits. To fill in and send a form (type text into a field, pick an option in a dropdown), call the HTTP API: this server does not offer those actions.",
+          "maxItems": 12,
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "wait",
+                    "description": "Wait for a set time"
+                  },
+                  "ms": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 60000,
+                    "description": "Milliseconds to wait"
+                  },
+                  "optional": {
+                    "description": "When true, a failure of this action does not stop the list: it is reported as `skipped` and the next action runs. A page that moves on to another page during the action still stops the list. Defaults to false.",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type",
+                  "ms"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "scroll",
+                    "description": "Scroll the page"
+                  },
+                  "pixels": {
+                    "description": "Pixels to scroll down (negative scrolls up). Use either `pixels` or `to`, not both.",
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                  },
+                  "to": {
+                    "description": "Where to scroll: `top`, `bottom`, `left`, `right` of the page, or a CSS selector, which brings the first match to the middle of the window (it waits up to 5 s for the element). Use either `pixels` or `to`, not both.",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "duration_ms": {
+                    "description": "How long the scroll takes, in milliseconds. A slow scroll gives images further down the page time to load on the way. 0 jumps at once. Without it, the page scrolls at a steady pace, taking up to 5 s.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 60000
+                  },
+                  "optional": {
+                    "description": "When true, a failure of this action does not stop the list: it is reported as `skipped` and the next action runs. A page that moves on to another page during the action still stops the list. Defaults to false.",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "wait_for",
+                    "description": "Wait for an element to appear"
+                  },
+                  "selector": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500,
+                    "description": "CSS selector. The action waits until the first match is on the page and visible, for up to 10 s; after that it fails."
+                  },
+                  "optional": {
+                    "description": "When true, a failure of this action does not stop the list: it is reported as `skipped` and the next action runs. A page that moves on to another page during the action still stops the list. Defaults to false.",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type",
+                  "selector"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "hover",
+                    "description": "Move the mouse over an element, or to a point. Desktop only: on a mobile device it is skipped."
+                  },
+                  "selector": {
+                    "description": "CSS selector: the mouse goes to the first match, brought into view first. Use either `selector` or `x` and `y`.",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "x": {
+                    "description": "A point in the visible window, in pixels from its left edge. Needs `y`.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000
+                  },
+                  "y": {
+                    "description": "A point in the visible window, in pixels from its top edge. Needs `x`.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000
+                  },
+                  "optional": {
+                    "description": "When true, a failure of this action does not stop the list: it is reported as `skipped` and the next action runs. A page that moves on to another page during the action still stops the list. Defaults to false.",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "click",
+                    "description": "Click an element (a tap on a mobile device)"
+                  },
+                  "selector": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500,
+                    "description": "CSS selector: the first match on the page itself (not inside a frame or a shadow root), brought into view first."
+                  },
+                  "optional": {
+                    "description": "When true, a failure of this action does not stop the list: it is reported as `skipped` and the next action runs. A page that moves on to another page during the action still stops the list. Defaults to false.",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type",
+                  "selector"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "cookies": {
+          "description": "Your own cookies to send to the site with the request. Each is a `name` and a `value`, sent only to the host of `url`. Cookies the site sets while redirecting are not kept. Up to 20 cookies, each up to 4096 bytes (name and value), counted toward the limit on `headers`. A value may not hold \";\" or start or end with a space. A `__Secure-`, `__Host-` or `__Http-` cookie needs an https url. A request with headers or cookies never reads from or writes to the cache. Header and cookie values pass through the chat with the AI, so the AI host may keep them in its history. Use short-lived tokens or a test account, and never a password you can't change. See https://crawlbrulee.com/docs/scrape/custom-headers-and-cookies.",
+          "maxItems": 20,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "webhook": {
+          "description": "Completion webhook delivered when this async job finishes. Async-only: the synchronous `scrape` tool does not accept it.",
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "maxLength": 2048,
+              "format": "uri",
+              "description": "Endpoint that receives a single signed POST when the job reaches a terminal state. Must be an http/https URL (HTTPS is required in production) of at most 2048 characters. The body is a `scrape.complete` envelope signed with your organization webhook secret on the X-Cwbl-Signature header."
+            },
+            "metadata": {
+              "description": "Opaque correlation object echoed verbatim in the webhook payload’s data.metadata. Must serialize to at most 2048 bytes (UTF-8 JSON). Use it to route deliveries without keeping your own job_id mapping.",
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "url"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "url"
+      ]
+    }
+  },
+  {
+    "name": "scrape_status",
+    "description": "Look up the current lifecycle status of an async scrape job submitted via `scrape_async`. Returns the job state (`pending`, `running`, `done`, `failed`), with an `error` message when it failed and a `response_meta.usage` block (total_credit_cost and its parts, billed engine, resolved proxy tier) once it is `done`. A job whose page the site served ends `done` even when that page is a 404 or 503 — read `page_status_code` in the result. A job that could not reach the site at all ends `failed` (the `error` text is a general message, not the reason) and is not billed; retry later or check the url. A job that asked only for a screenshot, a PDF or both and got no capture also ends `failed` and is not billed; `scrape_result` then names the reason. Poll this until the status is `done`, then call `scrape_result` to fetch the page. If you registered a completion webhook on submit you can skip polling and react to the delivery instead. A job answers for 24 hours after it was submitted; after that this returns `not_found`, the same as for an unknown job id.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "description": "Job identifier returned by the `scrape_async` tool"
+        }
+      },
+      "required": [
+        "job_id"
+      ]
+    }
+  },
+  {
+    "name": "scrape_result",
+    "description": "Fetch the extracted content of a completed async scrape job (the same result shape as the synchronous `scrape` tool: markdown, cleaned HTML, raw HTML, links, images, screenshot, PDF, page metadata in `metadata`, values from `extract.elements` in `elements`, and `response_meta.usage`). Errors if the job is still `pending`/`running` — check `scrape_status` first (status `done`) before calling this. A `failed` job has no result: this returns `job_failed`. A job that asked only for a screenshot, a PDF or both, on a content type that cannot be captured (such as JSON or plain text), returns `unsupported_screenshot_output` or `unsupported_pdf_output` instead, as `scrape` does. Either way the job is not billed. Check `page_status_code` before you trust the content: it is the HTTP status the site answered with for the final page. A page the site served is a successful result whatever its status, so a 404 or 503 page comes back with its content, not as an error. A 404 means the markdown is the site's \"not found\" page, not the page you asked for. 2xx and 4xx pages are billed, except 403, 407, 408, 429, 444 and 451; 5xx pages are never billed. A job answers for 24 hours after it was submitted, then returns `not_found`. Screenshot and PDF URLs are signed download links that expire at the same moment, however late you fetch the result: download the file if you need it later.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "description": "Job identifier returned by the `scrape_async` tool"
+        }
+      },
+      "required": [
+        "job_id"
+      ]
+    }
+  },
+  {
+    "name": "map",
+    "description": "Build (or fetch a cached) link map of a website from its sitemaps, plus the links on its home page. Returns paginated links, each { url, type, lastmod }: `type` is `page`, `sitemap` or `sitemap_index` (a sitemap file that lists other sitemap files); read either kind of sitemap file with `sitemap_url` in another call. `lastmod` is the date from the sitemap (UTC) or null. Filterable by link type (internal / external / subdomain). Use this to enumerate a site before scraping selected pages. By default the map reads the site's top sitemap files and 2 levels of nested ones (`depth` 3), returns pages (`entries`) and finds up to 5000 of them (`max_results`, max 100000). `max_results` is a discovery budget, not a trim at the end: discovery stops as soon as that many entries of the asked kind are found, so a smaller value is a faster map. A map stopped that way returns exactly `max_results` links with `response_capped` false; the signal that the site has more is `response_meta.truncation.discovery_cap_reason`. \"max_results\": ask again with a higher `max_results`. \"depth\": there are sitemap files past the `depth` you asked for, listed in `unread_sitemaps`; that is the answer to your depth, not a fault. \"unread_files\": a sitemap file could not be read whole this time, often temporary, so asking again later can return more. \"time\", \"file_budget\" and \"file_size\": the site is big or slow, and a retry will not help. `discovery_capped` says discovery stopped early, `sitemaps_skipped` how many sitemap files were skipped or only partly read. `limit` (default 5000, max 10000) only pages the answer. To map a very large site in several calls, first ask with `depth: 1` and `entries: \"sitemaps\"`: one call lists the top sitemap files and every file they list (a listed file shows as `sitemap` until a map reads it, even when it is an index). Then read each file with `sitemap_url` (on the same site as `url`, or on a host the site's robots.txt names, such as a CDN), or ask with a higher `depth`. `truncation.unread_sitemaps` names the files a call did not read whole, to read next (except a file that says it is over the size limit: no call reads that one); when that list is full, ask the same with `entries: \"sitemaps\"` to get every sitemap file as a link, paged. A sitemap index holds only sitemap files, so reading one at a low `depth` with `entries: \"pages\"` returns no pages: ask with `entries: \"sitemaps\"` or a higher `depth`. `modified_since` keeps only entries whose `lastmod` is at or after it: an entry with no `lastmod` is left out (so no home page link is returned). Every sitemap file is read whatever its own date, and each entry is judged by its own `lastmod`. With `entries: \"sitemaps\"` a file is returned by its own date, so ask with `entries: \"pages\"` to find the pages that changed. A request with `modified_since` is always mapped fresh, never from the cache, and priced as a fresh map. A map with `modified_since` or `sitemap_url` adds no home page links. If the site answers 429 on the file in `sitemap_url`, on its robots.txt or on one of its top sitemap files, the tool returns `too_many_requests` (not billed): wait and retry. Set `zero_data_retention: true` to keep the result out of the shared cache; anything stored to deliver it is kept for 24 hours, then deleted. It adds 1 credit and must be enabled for the organization (else a `zero_data_retention_not_enabled` error, not billed). See https://crawlbrulee.com/docs/zero-data-retention. Returned URLs are normalized the same way `scrape` normalizes its returned `url`, so map-then-scrape stays on one host. Results are ordered with the most useful links first. The response carries `response_meta.usage`: `total_credit_cost` = `engine_credit_cost` × `proxy_multiplier` + `zero_data_retention_credit_cost`, plus `engine` and `proxy` (the resolved tier, never `auto`). Map has no screenshot slicing and no `page_status_code`: it reads many files, not one page. A map that found nothing because the site answered only with statuses we don't bill (a 5xx, for example), or not at all, is empty and free. If the site cannot be reached, the tool can return a `target_unreachable` error (HTTP 502, not billed): retry later or check the URL. The full walk-through for a very large or deep site: https://crawlbrulee.com/docs/map/sitemaps#map-a-very-large-or-deep-site-in-several-calls.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The website URL to map. Mapping always targets the site root, so the path, query string and fragment are dropped; known tracking parameters are removed before the request is processed."
+        },
+        "proxy": {
+          "default": "auto",
+          "description": "Proxy tier. Defaults to auto: we start on basic and move to a stronger proxy on our own when a site needs it, and bill the tier that delivered. basic or advanced pins the tier.",
+          "type": "string",
+          "enum": [
+            "basic",
+            "advanced",
+            "auto"
+          ]
+        },
+        "sitemap_only": {
+          "default": false,
+          "description": "Use the sitemaps only: leave out the links found on the home page. A map with `modified_since` or `sitemap_url` never adds home page links.",
+          "type": "boolean"
+        },
+        "types": {
+          "description": "Filter which link types to include",
+          "type": "object",
+          "properties": {
+            "internal": {
+              "default": true,
+              "description": "Include internal links (same domain; www and the bare domain are equivalent)",
+              "type": "boolean"
+            },
+            "internal_subdomains": {
+              "default": true,
+              "description": "Include links to subdomains of the target domain (other than www)",
+              "type": "boolean"
+            },
+            "external": {
+              "default": true,
+              "description": "Include external links (different domains)",
+              "type": "boolean"
+            }
+          }
+        },
+        "cache": {
+          "description": "Cache settings for this request",
+          "type": "object",
+          "properties": {
+            "max_age": {
+              "default": 604800,
+              "description": "Maximum cache age in seconds, or an ISO 8601 datetime cutoff",
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              ]
+            }
+          }
+        },
+        "max_results": {
+          "description": "The most entries the map finds, counting only the kind asked for in `entries`. Default 5000, maximum 100000. Discovery stops as soon as this many have been found, so a smaller value is a faster and lighter map, not just a smaller answer.",
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 100000
+        },
+        "max_urls": {
+          "description": "Deprecated: use `max_results`, which means the same. This tool sends it as `max_results`. When both are given, only `max_results` is used.",
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 100000
+        },
+        "sitemap_url": {
+          "description": "Start from this sitemap file, as a full http or https address. It must be on the same site as `url`, or on a host the site's robots.txt names, such as a CDN. Left out: start from the site's own top sitemap files.",
+          "type": "string"
+        },
+        "depth": {
+          "description": "How many levels of nested sitemaps to follow: 0 to 3, default 3. With `sitemap_url`, level 0 is that file, and it is read. Without it, level 0 is the list of the site's top sitemap files, which 0 returns without reading their entries. A top file found at one of the usual addresses can still show as `sitemap_index`, because finding it shows its kind. A sitemap index holds only sitemap files, so reading one at a low depth with `entries: \"pages\"` returns no pages: ask with `entries: \"sitemaps\"` or a higher depth. `depth: 1` with `entries: \"sitemaps\"` lists the site's top sitemap files and every file they list, in one call. A listed file shows as `sitemap` until a map opens it, even when it is a sitemap index itself. To go deeper, read a listed file with `sitemap_url`, or ask with a higher depth. A large site can reach `max_results` or a discovery limit first; `discovery_cap_reason` then says which.",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "entries": {
+          "description": "What to return: `pages` (page addresses, the default), `sitemaps` (sitemap files, of type `sitemap` or `sitemap_index`) or `all` (both).",
+          "type": "string",
+          "enum": [
+            "pages",
+            "sitemaps",
+            "all"
+          ]
+        },
+        "modified_since": {
+          "description": "Return only entries whose `lastmod` is at or after this date (`2026-11-01`, the start of that day in UTC) or date and time (ISO 8601, with a time zone). An entry with no `lastmod` is left out, so every entry returned matches; links found on the home page have none, so none is returned. Every sitemap file is read whatever its own `lastmod`, and each entry returned, a page or a sitemap file, is judged by its own `lastmod`. With `entries: \"sitemaps\"`, a sitemap file is returned when its own `lastmod` matches, not when a page in it does: to find the pages that changed, ask with `entries: \"pages\"`. A request with this field is always mapped fresh: it never reads from or adds to the cache, so `cache.max_age` does nothing, and it is priced as a fresh map.",
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+            },
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            }
+          ]
+        },
+        "page": {
+          "default": 1,
+          "description": "Page number for paginated results",
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "limit": {
+          "default": 5000,
+          "description": "Number of URLs to return per page. Default 5000, maximum 10000.",
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 10000
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "country": {
+              "description": "ISO 3166-1 alpha-2 (e.g. 'us', 'de', 'br'; case-insensitive) hint for proxy egress country. Also accepts 'eu' (random EU member state) or 'europe' (random European state incl. UK and non-EU).",
+              "type": "string",
+              "pattern": "^([a-zA-Z]{2}|europe)$"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Optional country emulation for the map"
+        },
+        "zero_data_retention": {
+          "description": "Keeps the result out of the shared cache; anything stored to deliver it is kept for 24 hours, then deleted. Adds 1 credit. Must be enabled for your organization. See https://crawlbrulee.com/docs/zero-data-retention.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "url"
+      ]
+    }
+  },
+  {
+    "name": "usage",
+    "description": "Return the current billing-cycle usage for the authenticated organization: total / used / available credits, used quota percent, max concurrency, and cycle reset time. Call this before launching large scrape jobs to confirm available credit.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "whoami",
+    "description": "Return the organization name, token name, and truncated token preview for the API key currently configured on the MCP server. Useful for confirming which account is in use before performing credit-consuming operations.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

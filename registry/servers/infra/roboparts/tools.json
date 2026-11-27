@@ -1,0 +1,539 @@
+[
+  {
+    "name": "search_components",
+    "description": "搜索机器人零部件。可按品类、关键词筛选，返回匹配条目的摘要（id/name/category/manufacturer/关键规格/证据等级）。覆盖执行器、传感器、芯片、通信协议、接口、机器人平台、具身智能模型等 20 个品类。库存实时口径（总数/可选型/已隔离）见 initialize 的 instructions 或 GET /mcp 的 dataset 字段 —— 此处不写死数字，避免文案与真实库存漂移。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "description": "品类精确筛选，取值必须来自 enum（严格相等，不做别名映射：传 \"actuator\"、\"电机\" 均返回空）。不传则跨全部 20 个品类检索。注意品类与 ID 前缀不是一一对应的，请以本字段为准。",
+          "enum": [
+            "actuators",
+            "sensors",
+            "chips",
+            "interfaces",
+            "protocols",
+            "llms",
+            "platforms",
+            "flexible_actuators",
+            "robot_ai_models",
+            "data_acquisition",
+            "connectors",
+            "integrated_joints",
+            "reducers",
+            "controllers",
+            "grippers",
+            "structural",
+            "cables",
+            "power",
+            "pcb",
+            "bionic_mechanisms"
+          ]
+        },
+        "keyword": {
+          "type": "string",
+          "description": "关键词，对 name / name_en / manufacturer / type / protocol / interface / description 七个字段做大小写不敏感的**子串**匹配（非分词、非模糊、不纠错）。**中英文命中集合可能完全不重叠**，务必两种都试：实测 \"六维力\" 命中 16 条、\"force torque\" 命中 2 条、交集为 0（部分国产条目尚无英文名）。多个词不做 AND 拆分，\"harmonic drive 20Nm\" 会被当作一整个串匹配，实测返回 0 条；请只给一个词（如 \"harmonic\" 命中 9 条），再用 category 收窄。"
+        },
+        "limit": {
+          "type": "number",
+          "description": "返回条数上限，默认 10，最大 50（超出按 50 截断）。",
+          "default": 10
+        },
+        "include_market_intelligence": {
+          "type": "boolean",
+          "description": "默认 false。库内另有 3 条市场情报条目（专利地图/咨询报告/趋势条目），它们不是可采购零件，默认不返回；仅在你确实想查行业研究材料时设为 true。",
+          "default": false
+        }
+      }
+    }
+  },
+  {
+    "name": "get_component_detail",
+    "description": "按 ID 获取单个零部件的完整字段，包含 source_tier（数据来源等级）、confidence（置信度）、data_quality 与 mechanical_interface 等元数据。用于在做出采购/设计决策前核对证据强度。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "零部件 ID，如 ACT-001 / CHIP-001 / SENS-001。大小写与连字符需完全匹配，不做模糊查找；建议先由 search_components 返回值取得。注意 ID 前缀不能反推 category（库内存在前缀与品类不一致的条目，实时条数见 GET /mcp 的 dataset.id_category_mismatch）。"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "check_compatibility",
+    "description": "判定两个零部件在 protocol（协议）/ electrical（电气）/ mechanical（机械）/ software（ROS2）四个维度的兼容性，返回逐维结论、总体判定与置信说明。注意：结论基于厂商公开声明字段做规则推断，非实验室实测；厂商未声明的维度记为\"无法判定\"，既不计入兼容也不计入不兼容。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "component1_id": {
+          "type": "string",
+          "description": "零件 1 的 ID，形如 ACT-001 / CHIP-001 / PROTO-012。请先用 search_components 取得，不要自行拼造：ID 前缀与 category 并非一一对应（例如 sensors 品类下存在 CHIP-67，platforms 下存在 ACT-patsnap-actuator；实时不一致条数见 GET /mcp 的 dataset.id_category_mismatch），按品类猜前缀会取到错误条目或直接查无此项。"
+        },
+        "component2_id": {
+          "type": "string",
+          "description": "零件 2 的 ID，取值方式同 component1_id。两个 ID 可以属于不同品类（跨品类比对正是本工具的用途）。"
+        }
+      },
+      "required": [
+        "component1_id",
+        "component2_id"
+      ]
+    }
+  },
+  {
+    "name": "compare_components",
+    "description": "并排对比 2~6 个零部件的关键参数（torque/speed/voltage/protocol/interface/weight/price），相同值自动标注，替代为同一目的连发多次 get_component_detail。缺失字段以 null 呈现，不代表不支持该特性；跨厂商数值比较请配合 get_parameter_semantics。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "description": "待对比零部件 ID 数组（2~6 个），形如 [\"ACT-001\", \"ACT-002\"]。请先用 search_components 确认 ID。",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 2,
+          "maxItems": 6
+        }
+      },
+      "required": [
+        "ids"
+      ]
+    }
+  },
+  {
+    "name": "recommend_for_application",
+    "description": "按应用场景推荐零部件组合，可选预算上限（USD）。返回各品类的候选项及推荐理由。这是基于库内字段的启发式筛选，不构成工程选型意见，最终仍需核对厂商原始数据手册。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "application": {
+          "type": "string",
+          "description": "应用场景，必填，取值限 enum。判定方式是拿一组固定场景词去匹配条目的 applications/name/type/description 字段，而非人工标注的场景分类：humanoid=人形/双足，quadruped=四足，robot_arm=机械臂/协作臂，amr=移动机器人/AGV，industrial=工业产线。若某品类下无任何条目命中该场景，该品类会退化为品类罗列并在 scene_matched=false 中标明，此时结果不代表适配该场景，应改用 search_components 按具体参数筛选。",
+          "enum": [
+            "humanoid",
+            "quadruped",
+            "robot_arm",
+            "amr",
+            "industrial"
+          ]
+        },
+        "budget": {
+          "type": "number",
+          "description": "单件预算上限（USD，正数），可选。**价格字段覆盖率有限**（实时覆盖数见 GET /mcp 的 dataset.priced），因此本参数只能剔除「确定超预算」的条目，不能保证结果全部在预算内。每条结果会附 price_fit：within（确定在预算内）/ partial（区间跨越预算）/ unknown（库内无价格，未经校验）。不传则不做任何价格筛选，也不返回 price_fit。"
+        },
+        "count": {
+          "type": "number",
+          "description": "每品类返回条数，默认 3，上限 10（超出按 10 截断）。四个品类各自独立计数。",
+          "default": 3
+        }
+      },
+      "required": [
+        "application"
+      ]
+    }
+  },
+  {
+    "name": "get_parameter_semantics",
+    "description": "获取参数口径规范：同一个 torque/speed 字段在不同厂商那里含义可能不同（库内 torque 出现 19 种口径、speed 37 种，甚至混入 Gbps 与 rad/s）。本工具返回物理红线、单位换算、可比性分级与向厂商问询的清单，用于判断两份参数表到底能不能直接比较。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "bom_compatibility_check",
+    "description": "对一组零部件（BOM，物料清单）做两两兼容性矩阵。输入已有条目 ID（可含开源贡献层 OSS-xxx），返回每个组合在 protocol/electrical/mechanical/software 四维的判定与理由。判定基于厂商公开声明字段的规则推断而非实测；未声明维度记为无法判定，不会为了填满矩阵而编造结论。返回的 verdict_reason 才是结论依据，overall_compatible=null 表示\"证据不足\"，不等于不兼容。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "component_ids": {
+          "type": "array",
+          "description": "待校验的零件 ID 列表，如 [\"ACT-001\",\"SENS-001\",\"PROTO-012\"]。ID 必须真实存在：先用 search_components 取得，不要自行拼造（ID 前缀与 category 非一一对应）。支持主库零件与开源贡献层 OSS-xxx 混合。至少传 2 个才有意义。",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "component_ids"
+      ]
+    }
+  },
+  {
+    "name": "semantic_search",
+    "description": "用自然语言描述需求（如\"人形机器人髋部高扭矩电机\"）做语义召回，返回最相近的零部件。语义索引由离线哈希 TF-IDF 向量（构建时预计算、零外发、零外部模型）在当前全量实体上生成，是兼容性判定之外的\"发现\"通道：当你不确定零件的确切型号或参数名时，用它比关键词子串匹配更稳。索引不可用时自动降级为关键词检索，并明确告知。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "自然语言查询，如\"六维力传感器 防水\"或\"ROS2 通信模组\"。中英文均可，建议具体。"
+        },
+        "k": {
+          "type": "number",
+          "description": "语义召回返回的候选零部件条数（top-k），默认 5，取值 1–30；数值越大召回越广但越可能偏离查询意图。",
+          "default": 5
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "get_standard_audit",
+    "description": "返回标准登记表 ↔ 实体声明 的自动交叉校验结果：哪些机械/总线声明能被已知标准集核实、哪些声明的编码不在已知指定集中（无法核实），以及登记表缺口与行业标准覆盖情况。这是数据质量自检，不是兼容性裁决；其作用是指出\"声明了但出处存疑\"的条目，供人工补全证据。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "type": "string",
+          "description": "返回范围：all=完整审计报告（默认）；conflicts=仅数据质量冲突条目。",
+          "enum": [
+            "all",
+            "conflicts"
+          ],
+          "default": "all"
+        }
+      }
+    }
+  },
+  {
+    "name": "review_compatibility",
+    "description": "对两个零部件做「多 Agent 质保复核」：Worker 层执行标准四维兼容性裁决（与 /api/compatibility 同一引擎），Governor 层独立复核结论——按证据强度给出 L0–L3 风险分级、在证据不足 2 条时把\"兼容\"降级为\"需人工确认\"、对无法判定项显式列出缺失证据段。返回四维细节 + 证据契约 + governor_review。只读、免鉴权。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "component1_id": {
+          "type": "string",
+          "description": "零件 1 的 ID，形如 ACT-001 / CHIP-001 / PROTO-012。请先用 search_components 取得，不要自行拼造。"
+        },
+        "component2_id": {
+          "type": "string",
+          "description": "零件 2 的 ID，取值方式同 component1_id。两个 ID 可以属于不同品类。"
+        }
+      },
+      "required": [
+        "component1_id",
+        "component2_id"
+      ]
+    }
+  },
+  {
+    "name": "lint_urdf",
+    "description": "对 URDF（Unified Robot Description Format）XML 文件做静态兼容性检查。返回结构化 JSON 报告，含 severity（error/warning/info）、issues 数组、summary 与 stats。检查 10 类问题：XML 解析错误、缺失根 link、关节限位缺失、关节类型非法、重复 link 名、运动学树循环、缺少 ROS 工业标准帧（flange/tool0/base）、缺少 origin、缺少 inertial 数据、mesh 路径问题。只读、免鉴权。适用于上传 URDF 到 RoboParts 前做兼容性预检。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "urdf_xml": {
+          "type": "string",
+          "description": "URDF XML 文件内容（完整 XML 字符串，含 <?xml ... ?> 声明）。支持 DOMParser 与正则 fallback 双解析路径。最大 512KB，超出截断并返回 parse_error。"
+        },
+        "check_level": {
+          "type": "string",
+          "description": "检查严格度：all=全部检查（默认），errors_only=仅返回 error 级别，warnings_and_errors=warning+error。",
+          "enum": [
+            "all",
+            "errors_only",
+            "warnings_and_errors"
+          ],
+          "default": "all"
+        }
+      },
+      "required": [
+        "urdf_xml"
+      ]
+    }
+  },
+  {
+    "name": "explain_compose_frontier",
+    "description": "【研究层口径 · 与 check_compatibility 的四维不同】查询 RoboParts 三轴组合判定（mechanical 机械 / electrical 电气 / signal 信号角色）的现算结论：整体 composed/type_error/unknown、逐轴裁决与理由，以及「为什么 composed 通常为 0」的归因（L1 跨角色 → L2 机械可判定 → L3 全轴可判定的三层分解）。适合回答「这两个零件为什么判为 type_error」「哪些配对能真的装起来」「composed=0 是数据缺口还是关系类型问题」。只读、免鉴权。**注意口径差异**：本工具用 signal 角色互补（执行器↔传感器），check_compatibility 用 protocol 总线 + ROS2 支持，两者维度不同不可混用。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "component1_id": {
+          "type": "string",
+          "description": "零件 1 的 ID，形如 ACT-001 / GRIP-002 / SENS-852。请先用 search_components 取得。"
+        },
+        "component2_id": {
+          "type": "string",
+          "description": "零件 2 的 ID。若省略，则只返回库级聚合结论（frontier 概览 + composed 归因）。"
+        }
+      },
+      "required": []
+    }
+  },
+  {
+    "name": "explain_evidence_cohort",
+    "description": "【研究层口径】查询「最小可行同质集」取证判据：补哪一条数据最值、为什么单条声明的边际收益为 0、以及应按缺口画像批量取证的顺序。适合回答「取证该从哪开始」「补机械声明率有没有用」「K=2 是什么意思」。只读、免鉴权。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  },
+  {
+    "name": "explain_evidence_mdv",
+    "description": "【研究层口径】查询边际声明价值（MDV）：各轴未声明节点的零贡献率、哪些取证方向边际收益恒为 0、以及瓶颈轴是哪个。适合回答「补哪个轴最划算」「某个轴还有取证价值吗」。只读、免鉴权。口径与 check_compatibility 不同，不可混用。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  },
+  {
+    "name": "explain_connector_types",
+    "description": "【研究层口径】查询连接器取证与类型判据：已核实的连接器（针数/针序/供电）、「同族不同变体」的不可互插案例，以及 (family, pins, pinout) 三元组判据。适合回答「这两个连接器能不能互插」「同为 M8 为什么判不兼容」「pinout 为 null 是什么意思」。只读、免鉴权。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  },
+  {
+    "name": "get_research_progress",
+    "description": "查询「核心目标完成度」的可复现判据：把核心目标（脑×体×智做成机器可校验的组合 + 全链路可溯源）拆成四个维度的分项，每项给出分子/分母/口径/剩余缺口，并报出门控与朴素两个口径的加权完成度。适合回答「这个项目做到什么程度了」「核心目标完成了几成」「composed 为什么是 0」。只读、免鉴权。★ 口径警告：这是**一个口径**下的数字，不是客观测量；权重可争议；且采用**门控口径**——核心判据（composed）为 0 时 body 维记 0，因为「判定基础设施建成」不等于「组合成立」。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  },
+  {
+    "name": "check_co_mount",
+    "description": "查询**共装**关系（第三种关系类型，三段 A↔宿主↔B）：某个机器人本体能否同时装下两个器件（典型问题：「这台 UR5e 能同时装夹爪和六轴力传感器吗」）。与 check_compatibility 的区别：后者判「A 能不能插进 B」（二段互插），本工具判「A 和 B 能不能同时挂在同一台机器人的工具侧」。★ 三段判据：机械同型 + 宿主工具侧位数预算 + 信号角色互补。port_exhausted 表示「**装不下**（工程约束，如需转接/换本体）」，与 unknown（「数据不足，不知道」）严格区分。★ 参数：传 host+a+b 得单对裁决（附证据链）；只传 host 得该宿主的单件可装性 + 工具侧取证；不传参得全层摘要（含关系语义与示例）。只读、免鉴权。返回含 caliber 字段，口径与 check_compatibility 不同、不可混用。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string",
+          "description": "宿主机器人 id，如 HUB-030（UR3e）、HUB-031（UR5e）、SUPERDEX-fr3。"
+        },
+        "a": {
+          "type": "string",
+          "description": "器件 A 的实体 id，如 ACT-028。需与 b 同时给。"
+        },
+        "b": {
+          "type": "string",
+          "description": "器件 B 的实体 id，如 SENS-047。需与 a 同时给。"
+        }
+      },
+      "required": []
+    }
+  },
+  {
+    "name": "get_robot_tool_side",
+    "description": "查询机器人本体的**工具侧接口取证**：工具法兰（ISO 9409-1 标号）、工具 I/O 位数、连接器型号与承载信号。适合回答「这台机器人工具侧有几个电气接口」「tool_io_ports 为什么是 null」「UR 的工具侧能挂几个传感器」。★ tool_io_ports 是**一手取证的整数位计数**（不是针数）；未取证者留 null，判据据此走 unknown，**不按型号名推断**。只读、免鉴权。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  },
+  {
+    "name": "get_behavior_evidence",
+    "description": "查询**行为证据**：开源 VLA 在真机上的 benchmark 成功率（引用论文/官方报告，**非本仓自造日志**——本项目按锚点禁止造仿真器/训练栈）。适合回答「GR00T 真机成功率多少」「SmolVLA 有实测数据吗」「仿真成绩能不能当真机用」。★ 三条纪律：① 仿真（sim）与真机（real）**严格分列**，不可合并统计；② 只收录**有对照组**的数字（孤证可能是 cherry-pick）；③ 官方未报告的指标 value=null，不折算。样本量官方均未报告 ⇒ 不可用于统计比较。只读、免鉴权。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  },
+  {
+    "name": "get_body_binding",
+    "description": "查询**开源 VLA → 机器人本体**的绑定及其强度分档。强度四档：validated（论文明写真机评测跑在该本体）/ family（论文列该族）/ adaptable（官方称可微调，非特定硬件验证）/ category_only（只登记类别）。另有两个**非绑定态**：blocked_missing_body（依据充分但本体不在库内）与 category_only。适合回答「OpenVLA 能装在哪台机器人上」「这个绑定可信吗」「为什么 SmolVLA 没有 body_robot」。★ 只绑开源 VLA——闭源模型无公开验证栈，不编造绑定。只读、免鉴权。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  },
+  {
+    "name": "explain_unknown",
+    "description": "结构化解释「为什么某次判定是 unknown」。三种模式：① component_id + category → 返回该实体的 evidence_gaps / null 字段清单；② verdict_id → 反查当前请求内的判定（hosted 端点无跨请求会话，仅回当前请求）；③ 无参 → 返回全库 unknown 覆盖率摘要。★ 口径纪律：字段级扫描 ≠ 因果归因（后者属 gap_classification 研究层）。只读、免鉴权。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "component_id": {
+          "type": "string",
+          "description": "组件 ID，如 ACT-001、SENS-001"
+        },
+        "category": {
+          "type": "string",
+          "description": "品类：actuators / sensors / chips / interfaces / protocols / llms / platforms / flexible_actuators / robot_ai_models / data_acquisition / connectors / integrated_joints / reducers / controllers / grippers / structural / cables / power / pcb / bionic_mechanisms",
+          "enum": [
+            "actuators",
+            "sensors",
+            "chips",
+            "interfaces",
+            "protocols",
+            "llms",
+            "platforms",
+            "flexible_actuators",
+            "robot_ai_models",
+            "data_acquisition",
+            "connectors",
+            "integrated_joints",
+            "reducers",
+            "controllers",
+            "grippers",
+            "structural",
+            "cables",
+            "power",
+            "pcb",
+            "bionic_mechanisms"
+          ]
+        },
+        "verdict_id": {
+          "type": "string",
+          "description": "判定 verdict_id（hosted 端点仅当前请求内可查）"
+        },
+        "max_gaps": {
+          "type": "number",
+          "description": "最多返回多少条缺口",
+          "default": 20
+        }
+      }
+    }
+  },
+  {
+    "name": "start_long_task",
+    "description": "启动长任务并返回任务句柄。★ hosted 端点（Cloudflare Workers）无跨请求内存持久化，任务句柄只在 stdio npm 包 （roboparts-mcp-server）里可用。本端点返回 honest_note 引导到 stdio 模式，不假装能保存跨请求任务。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "task_type": {
+          "type": "string",
+          "enum": [
+            "batch_check_compatibility",
+            "bulk_export_bom",
+            "deep_dialect_evaluate"
+          ],
+          "description": "预定义任务类型"
+        },
+        "args": {
+          "type": "object",
+          "description": "任务参数"
+        }
+      },
+      "required": [
+        "task_type"
+      ]
+    }
+  },
+  {
+    "name": "get_task_status",
+    "description": "查询长任务状态。★ hosted 端点无跨请求任务句柄，返回 honest_note 引导到 stdio 模式。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 ID（stdio 模式下 start_long_task 返回）"
+        }
+      },
+      "required": [
+        "task_id"
+      ]
+    }
+  },
+  {
+    "name": "cancel_task",
+    "description": "置任务取消标志位。★ stdio 无中断通道，cancel 只置标志位；任务体在下一 checkpoint 才退出。hosted 端点无跨请求任务句柄，返回 honest_note 引导到 stdio。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 ID"
+        }
+      },
+      "required": [
+        "task_id"
+      ]
+    }
+  },
+  {
+    "name": "trace_export",
+    "description": "导出调用轨迹（默认去敏）。★ hosted 端点无跨请求内存持久化，trace 环形缓冲只在 stdio npm 包可用。本端点返回 honest_note 引导到 stdio 模式；stdio 支持 ROBOPARTS_TRACE_FILE 环境变量落盘 JSONL 供事后回放。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "number",
+          "description": "最多返回多少条",
+          "default": 200
+        },
+        "tool": {
+          "type": "string",
+          "description": "按工具名过滤"
+        },
+        "since": {
+          "type": "string",
+          "description": "ISO 8601 时间戳起点"
+        },
+        "redact": {
+          "type": "boolean",
+          "description": "是否去敏（默认 true）",
+          "default": true
+        }
+      }
+    }
+  },
+  {
+    "name": "trace_replay",
+    "description": "从 JSONL 文本重放轨迹（结构校验 + 计数）。本端点可处理**当前请求内传入的** json_lines；不做\"重算 verdict\"（语义重放属 P3，需要完整输入重演）。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "json_lines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "JSONL 行数组（每行一条 trace JSON）"
+        },
+        "strict": {
+          "type": "boolean",
+          "description": "严格模式：首个 parse 失败即中断",
+          "default": false
+        }
+      },
+      "required": [
+        "json_lines"
+      ]
+    }
+  }
+]

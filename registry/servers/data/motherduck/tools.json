@@ -1,0 +1,130 @@
+[
+  {
+    "name": "execute_query",
+    "description": "Execute a SQL query on the DuckDB or MotherDuck database. Unqualified table names resolve to current_database() and current_schema() automatically. Fully qualified names (database.schema.table) are only needed when multiple DuckDB databases are attached or when connected to MotherDuck.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "sql": {
+          "type": "string",
+          "description": "SQL query to execute (DuckDB SQL dialect)"
+        }
+      },
+      "required": [
+        "sql"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_databases",
+    "description": "List all databases available in the connection. Useful when multiple DuckDB databases are attached or when connected to MotherDuck.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_tables",
+    "description": "List all tables and views in a database with their comments. If database is not specified, uses the current database.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "database": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Database name to list tables from (defaults to current database)"
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional schema name to filter by"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_columns",
+    "description": "List all columns of a table or view with their types and comments. If database/schema are not specified, uses the current database/schema.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "table": {
+          "type": "string",
+          "description": "Table or view name"
+        },
+        "database": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Database name (defaults to current database)"
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Schema name (defaults to current schema)"
+        }
+      },
+      "required": [
+        "table"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "switch_database_connection",
+    "description": "Switch to a different database connection. For local files, use absolute paths only. The new connection respects the server's read-only/read-write mode. For local files, the file must exist unless create_if_not_exists=True (requires read-write mode).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Database path. For local files, must be an absolute path.\n  Also accepts :memory:, md:database_name, or s3:// paths."
+        },
+        "create_if_not_exists": {
+          "default": false,
+          "type": "boolean",
+          "description": "If True, create the database file if it doesn't exist.\n               Only works in read-write mode."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  }
+]

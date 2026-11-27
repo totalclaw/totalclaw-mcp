@@ -1,0 +1,106 @@
+[
+  {
+    "name": "transcribe_audio",
+    "description": "Uploads a local audio or video file to FreeAudioToText for transcription. Supported formats: MP3, M4A, WAV, MP4, MOV, etc. Returns a job_id.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "file_path": {
+          "type": "string",
+          "description": "Absolute local path to the audio or video file (e.g., /Users/name/Downloads/audio.mp3)"
+        },
+        "language": {
+          "type": "string",
+          "description": "Optional language code (e.g., 'en', 'zh'). Defaults to 'auto'."
+        }
+      },
+      "required": [
+        "file_path"
+      ]
+    }
+  },
+  {
+    "name": "transcribe_from_url",
+    "description": "Submits a YouTube or TikTok URL to FreeAudioToText for transcription. Returns a job_id.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "youtube_url": {
+          "type": "string",
+          "description": "The full URL of the YouTube or TikTok video."
+        },
+        "language": {
+          "type": "string",
+          "description": "Optional language code (e.g., 'en', 'zh'). Defaults to 'auto'."
+        }
+      },
+      "required": [
+        "youtube_url"
+      ]
+    }
+  },
+  {
+    "name": "get_job_status",
+    "description": "Checks the status of a transcription job using its job_id. Use this to poll until status is 'completed'.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "description": "The unique job_id returned by transcribe_audio or transcribe_from_url."
+        }
+      },
+      "required": [
+        "job_id"
+      ]
+    }
+  },
+  {
+    "name": "get_transcript",
+    "description": "Retrieves the full text transcript for a completed job, including speaker labels (diarization).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "description": "The unique job_id of the completed transcription job."
+        }
+      },
+      "required": [
+        "job_id"
+      ]
+    }
+  },
+  {
+    "name": "generate_ai_report",
+    "description": "Generates a deep AI structural analysis report (Summary, Action Items, Outline, or Speakers) for a completed transcript.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "description": "The unique job_id of the completed transcription job."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "summarize",
+            "action_items",
+            "outline",
+            "speakers"
+          ],
+          "description": "The type of analysis report to generate."
+        }
+      },
+      "required": [
+        "job_id",
+        "type"
+      ]
+    }
+  }
+]

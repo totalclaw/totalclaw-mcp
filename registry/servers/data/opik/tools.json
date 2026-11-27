@@ -1,0 +1,650 @@
+[
+  {
+    "name": "read",
+    "description": "Read any Opik entity by ID, name, or opik:// URI.\n\nA UUID `id` costs one API call. A name also works for project,\nexperiment, prompt, dataset and annotation_queue: two calls, and a name\nseveral records share returns them as candidates to retry by id.\n\nSpecial shapes:\n- project: returns {project, summary, vocabulary, contains, url} — the\n  week's figures against the 7 days before (SDK traffic only, as the Logs\n  cards show, though the UI opens on 30 days), the score names and usage\n  keys to filter on, and the freshest experiment / dataset / prompt version\n  / run. `since`/`until` move the summary's window; the rest is current.\n- trace: returns {trace, spans, spansTruncated} with up to 200 spans\n  inlined, their bodies slim, and spanBodies saying what the cut took.\n- prompt: returns {prompt, versions, versionsTruncated} with up to 100 versions.\n- annotation_queue: annotator_view.html comes back as html_chars, with the\n  fields=['annotator_view.html'] call that returns it whole.\n- thread: returns {thread, messages, messagesTruncated, messageBodies} —\n  each message is one turn's trace input/output + a trace_id to\n  read('trace', id). Bodies are slim, the thread's own first/last message\n  included, since those are copies of the first and last turn. Needs\n  project scope: pass a thread link/URI, or project_id/project_name.\n- An inlined collection longer than what fits sets its …Truncated flag and\n  adds moreSpans / moreMessages / moreVersions: the count, and the exact\n  list(...) call that continues from where the inlined part stopped.\n- agent_insights_issue: returns {issue, example_trace_ids, details, url,\n  trace_url_template} — the Diagnostics issue with cause and suggested fix,\n  the deduped ids of traces that exhibit it (open one with read('trace', id)),\n  the per-day breakdown, the issue's Diagnostics page link, and a template\n  for linking any example trace (both links omitted when the Opik URL or\n  the session's workspace is unknown). Needs project scope like thread.\n- All others: the flat record from /v1/private/{entity}/{id}.\n\nOutput is a one-line `[read: …]` header (entity_type, id, size in\ntokens) followed by the record as compact JSON. The record you asked for\nis never truncated: a large answer is large, and narrowing is done by\nasking a narrower question — `fields` to name the paths you want back, a\nspan rather than its trace, a filtered `list` rather than a composite\nread. A `fields` answer says in its header that it was projected.\n\nThe children a composite read inlines are the exception. Their bodies come\nback slim: a field over ~10 KB is cut and base64 images are replaced with\n\"[image]\", which is what keeps one attachment from costing more than the\nother 199 spans together. The read says so in `spanBodies` /\n`messageBodies`, and the named child is whole again through its own\nread('span', id) or read('trace', trace_id).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "entity_type": {
+          "description": "One of: agent_insights_issue, annotation_queue, dataset, dataset_item, experiment, project, prompt, span, thread, trace.",
+          "enum": [
+            "agent_insights_issue",
+            "annotation_queue",
+            "dataset",
+            "dataset_item",
+            "experiment",
+            "project",
+            "prompt",
+            "span",
+            "thread",
+            "trace"
+          ],
+          "title": "Entity Type",
+          "type": "string"
+        },
+        "id": {
+          "description": "UUID, entity name (for nameable types), full opik:// URI (e.g. opik://traces/<uuid>), or a pasted Opik link — a thread link or a Diagnostics page link (…/projects/<pid>/diagnostics?issue=<id>). When a URI/link is passed, entity_type (and, for project-scoped entities, the project) is overridden from it.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Project UUID. Required for entity_type='thread' and 'agent_insights_issue' unless the id is a full Opik URL/URI (which carries the project). Ignored for globally-unique entities like trace/span.",
+          "title": "Project Id"
+        },
+        "project_name": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Project name — alternative to project_id for project-scoped reads (thread, agent_insights_issue).",
+          "title": "Project Name"
+        },
+        "since": {
+          "anyOf": [
+            {
+              "maxLength": 40,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Start of the window, as a relative span ('7d', '24h') or an ISO-8601 instant with timezone. On read: project (the summary's period, 7d by default) and agent_insights_issue (per-day details, truncated to UTC report days, all-time by default). Rejected for other types.",
+          "title": "Since"
+        },
+        "until": {
+          "anyOf": [
+            {
+              "maxLength": 40,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "End of the window, same forms as since.",
+          "title": "Until"
+        },
+        "fields": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 50,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Return only these paths of the record, uncut: dotted into nested objects ('trace.output'), arrays whole ('spans'). The record's id is always kept; an unknown path is refused with the valid ones. The answer says it was projected and what it omitted. Omit for the whole record.",
+          "title": "Fields"
+        }
+      },
+      "required": [
+        "entity_type",
+        "id"
+      ],
+      "title": "readArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list",
+    "description": "List Opik entities with optional filters and pagination.\n\nOutput is a pipe-delimited table with id, name, and a few entity-specific\ncolumns, plus a pagination footer when more pages exist. When filters\napply, the first line echoes what was applied. Use read() to get full\ndetails on any specific item.\n\nProject-scoped types require their parent:\n- trace: project_id or project_name\n- span: project_id or project_name (searches spans across the project)\n- thread: project_id or project_name\n- agent_insights_issue: project_id or project_name (Diagnostics issues,\n  open ones by default; columns: severity, status, total_occurrences,\n  latest_count, last_seen)\n- score_name: project_id or project_name (the project's feedback score\n  names — trace, span and thread scores together, paged, no id)\n- online_rule: project_id or project_name (the automation rules scoring\n  this project's traces)\n- annotation_queue: project_id or project_name; takes `name`, `filters`, `sort`\n- project_metric: project_id or project_name, plus metric_type — one\n  metric over time. Rows are time buckets, so page/size/sort are refused.\n- dataset_item: dataset_id, or experiment_ids to compare runs case by case.\n  Filter the dataset's own cases on data.<key>, full_data, tags, source,\n  trace_id (no sort); read('dataset_item', id) is one case whole\n- prompt_version: prompt_id\n\nWorkspace-wide types (project, experiment, prompt, dataset) accept\nan optional `name` substring filter. trace, span, thread, experiment and\ndataset_item accept an OQL `filters` string; all but dataset_item also\ntake a `sort`, and trace, span, thread take a `since`/`until` window and\nfree-text `search`.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "entity_type": {
+          "description": "One of: agent_insights_issue, annotation_queue, dataset, dataset_item, experiment, online_rule, project, project_metric, prompt, prompt_version, score_name, span, thread, trace.",
+          "enum": [
+            "agent_insights_issue",
+            "annotation_queue",
+            "dataset",
+            "dataset_item",
+            "experiment",
+            "online_rule",
+            "project",
+            "project_metric",
+            "prompt",
+            "prompt_version",
+            "score_name",
+            "span",
+            "thread",
+            "trace"
+          ],
+          "title": "Entity Type",
+          "type": "string"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional substring filter on entity name. Supported for project, experiment, prompt, dataset; ignored for sub-collections.",
+          "title": "Name"
+        },
+        "filters": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "OQL filter for trace, span, thread, experiment, dataset_item, project_metric: <field>[.<key>] <op> <value> [AND ...]; ops = != > >= < <= contains not_contains starts_with ends_with is_empty is_not_empty in not_in; strings quoted, numbers bare (duration in ms). E.g. 'error_info is_not_empty AND duration > 5000', 'feedback_scores.accuracy < 0.5 AND start_time >= \"2026-09-08T00:00:00Z\"'. trace/span/thread default to source = \"sdk\"; a metric is filtered by the fields of the entity it is about. Reference: schema(\"list.trace\").",
+          "title": "Filters"
+        },
+        "sort": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Sort for trace, span, thread, experiment: '<field> [asc|desc]', desc by default. E.g. 'duration desc', 'total_estimated_cost', 'feedback_scores.accuracy asc', 'usage.total_tokens'. One field only.",
+          "title": "Sort"
+        },
+        "since": {
+          "anyOf": [
+            {
+              "maxLength": 40,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Start of the time window for trace, span, thread, project_metric, agent_insights_issue: a relative span ('30m', '1h', '24h', '7d') or an ISO-8601 instant with timezone. Trace/span/thread windows are by record creation time (for an exact start_time bound use filters); Diagnostics issues aggregate per report day, so their window is the UTC days it spans and defaults to all-time, matching the Diagnostics page.",
+          "title": "Since"
+        },
+        "until": {
+          "anyOf": [
+            {
+              "maxLength": 40,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "End of the time window, same forms as since.",
+          "title": "Until"
+        },
+        "search": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Free text for trace, span, thread: matches anywhere in id, name, input, output, metadata, tags, thread_id (spans: model, provider too). Expensive on large projects; narrow with since first.",
+          "title": "Search"
+        },
+        "fields": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 50,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Return only these columns, uncut: any name from the page's 'fields:' line ('data.question', 'feedback_scores.helpfulness', 'usage.total_tokens'). Each row keeps the id that opens the next level. An unknown name is refused with the valid ones. Omit for the table's own columns.",
+          "title": "Fields"
+        },
+        "page": {
+          "default": 1,
+          "description": "Page number (1-indexed).",
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "size": {
+          "default": 25,
+          "description": "Items per page. Capped at 100.",
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Size",
+          "type": "integer"
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Parent project UUID for project-scoped lists (trace, span, thread, agent_insights_issue). Pass this OR project_name.",
+          "title": "Project Id"
+        },
+        "project_name": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Parent project name — alternative to project_id for project-scoped lists; no UUID lookup needed.",
+          "title": "Project Name"
+        },
+        "dataset_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Required when listing dataset_items, unless experiment_ids is given. UUID of the dataset.",
+          "title": "Dataset Id"
+        },
+        "experiment_ids": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "dataset_item: compare these experiments case by case — which cases regressed, not two averages. First id is the baseline; up to 10. Resolves the dataset itself; sort and search apply to the runs, and so do filters (without it they apply to the cases).",
+          "title": "Experiment Ids"
+        },
+        "prompt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Required when listing prompt_versions. UUID of the prompt.",
+          "title": "Prompt Id"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "enum": [
+                "open",
+                "resolved",
+                "closed"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "agent_insights_issue only: which Diagnostics issues to list. Defaults to 'open' (what is broken now); 'resolved' and 'closed' show issues already dealt with. Ignored for other entity types.",
+          "title": "Status"
+        },
+        "metric_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "project_metric only: which metric to chart. Reference: schema('list.project_metric').",
+          "enum": [
+            "guardrails_failed_count",
+            "span_average_duration",
+            "span_cost",
+            "span_count",
+            "span_duration",
+            "span_error_rate",
+            "span_feedback_scores",
+            "span_token_usage",
+            "thread_average_duration",
+            "thread_cost",
+            "thread_count",
+            "thread_duration",
+            "thread_feedback_scores",
+            "trace_average_duration",
+            "trace_cost",
+            "trace_count",
+            "trace_duration",
+            "trace_error_rate",
+            "trace_feedback_scores",
+            "trace_token_usage"
+          ],
+          "title": "Metric Type"
+        },
+        "interval": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "project_metric only: bucket width. Omitted, it follows the window the way the Metrics tab does: hourly up to 3 days, daily up to 30, weekly beyond.",
+          "enum": [
+            "daily",
+            "hourly",
+            "total",
+            "weekly"
+          ],
+          "title": "Interval"
+        },
+        "breakdown": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "project_metric only: group each bucket by this field, or 'metadata.<key>'. Not valid for every metric — schema('list.project_metric') says which.",
+          "title": "Breakdown"
+        },
+        "series": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "project_metric only, with breakdown: which series to group — a percentile (p50/p90/p99), a score name, or a usage key.",
+          "title": "Series"
+        }
+      },
+      "required": [
+        "entity_type"
+      ],
+      "title": "list_entitiesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "write",
+    "description": "Create, update, or annotate Opik entities. The `operation` field selects which entity/verb pair to invoke; `data` carries the payload for that operation (single object, or array up to 1000 for batch).\n\nOperations:\n- trace.create: Log a single trace (or a batch). Sets up the parent for spans/scores/comments. (batch ok)\n- trace.update: Finalize or amend an existing trace by id. (batch ok)\n- span.create: Log a single span on an existing trace (or a batch).; required: trace_id (batch ok)\n- score.create: Attach a numeric feedback score to a trace, span, or thread.; required: target, target_id (batch ok)\n- comment.create: Attach a free-text comment to a trace, span, or thread.; required: target, target_id\n- prompt_version.save: Save a new prompt version. Creates the prompt by name if missing; BE auto-assigns the commit when omitted.\n- dataset.create: Create a dataset. Pass type='test_suite' for an evaluation suite (items carry assertions and run as tests); default is a plain dataset.\n- dataset_item.upsert: Upsert items into a dataset or test suite; data is the envelope {dataset_name|dataset_id, items: [...]}.; required: dataset_name, dataset_id\n- experiment.create: Create an experiment scoped to a dataset or test suite.; required: dataset_name, dataset_id\n- experiment_item.create: Attach trace + dataset_item rows to an experiment. Always the array envelope.; required: experiment_id, dataset_item_id, trace_id (batch ok)\n- thread.close: Close a thread (mark it inactive/done). Pass thread_id + project (project_name or project_id).\n- thread.open: Reopen a previously closed thread (mark it active). Pass thread_id + project (project_name or project_id).\n- agent_insights_issue.resolve: Mark a Diagnostics (Agent Insights) issue resolved — the failure it groups has been dealt with. It leaves the default issue list and shows under status='resolved'. Pass issue_id + project_id or project_name. Do this only when the user asks: whether a failure is fixed is their call, not an inference from the traces.\n- agent_insights_issue.close: Mark a Diagnostics (Agent Insights) issue closed — not worth acting on, as opposed to fixed. It leaves the default issue list and shows under status='closed'. Pass issue_id + project_id or project_name. Do this only when the user asks.\n- agent_insights_issue.reopen: Put a resolved or closed Diagnostics (Agent Insights) issue back on the open list, for a failure that came back or was closed too early. Pass issue_id + project_id or project_name.\n- agent_insights_job.enable: Turn Diagnostics (Agent Insights) on for a project: it then scans daily and groups recurring failures into issues you can read with list('agent_insights_issue', …). Pass project_id or project_name. Idempotent — an existing job is switched back on. Pair it with agent_insights_job.trigger to scan now instead of waiting for the nightly run. Refused when the deployment has no Diagnostics.\n- agent_insights_job.trigger: Run a Diagnostics (Agent Insights) scan for a project now, over the last 24 hours, instead of waiting for the nightly run. Fire and forget: the response says where to watch it, and issues appear in list('agent_insights_issue', …) once the run finishes (minutes). Needs Diagnostics enabled for the project — see agent_insights_job.enable.\n- annotation_queue.create: Create a project's annotation queue of traces or threads to review; annotator_view sets a custom HTML view, read_skill('opik-annotate') first.\n- annotation_queue.update: Change an annotation queue by id; only the fields passed change. clear_annotator_view removes its custom view.\n\nNotes:\n- `data` shape: object for single, array for batch (where supported). Always-envelope ops (dataset_item.upsert, experiment_item.create) take their list inside the envelope, not at the top level.\n- `dry_run=true`: validate + check authorization without calling the backend. Returns {dry_run, would_call: {method, path, body_size}}.\n- A schema mismatch returns `validation_failed` with the issues and one corrected example; `schema(operation)` returns the JSON Schema.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "operation": {
+          "description": "The entity/verb pair to invoke. See tool description for the list. Call schema(operation) for the JSON Schema, example, and required scope.",
+          "enum": [
+            "trace.create",
+            "trace.update",
+            "span.create",
+            "score.create",
+            "comment.create",
+            "prompt_version.save",
+            "dataset.create",
+            "dataset_item.upsert",
+            "experiment.create",
+            "experiment_item.create",
+            "thread.close",
+            "thread.open",
+            "agent_insights_issue.resolve",
+            "agent_insights_issue.close",
+            "agent_insights_issue.reopen",
+            "agent_insights_job.enable",
+            "agent_insights_job.trigger",
+            "annotation_queue.create",
+            "annotation_queue.update"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "data": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "items": {},
+              "type": "array"
+            }
+          ],
+          "description": "Payload for the operation. Object for a single write, or array (max 1000 elements) for batch. Always-envelope operations (dataset_item.upsert, experiment_item.create) take their list inside the envelope, not at the top level.",
+          "title": "Data"
+        },
+        "idempotency_key": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional client-supplied UUID. Re-running with the same key is a no-op on the backend. Takes precedence over data.id when both are set.",
+          "title": "Idempotency Key"
+        },
+        "dry_run": {
+          "default": false,
+          "description": "Validate against the operation's schema and OAuth scope without calling the backend. Returns {dry_run: true, would_call: ...}.",
+          "title": "Dry Run",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "operation",
+        "data"
+      ],
+      "title": "writeArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "schema",
+    "description": "Return the JSON Schema, OAuth scope, and one validated example for a write operation's `data` payload, or — for `list.trace` / `list.span` / `list.thread` / `list.experiment` — the list tool's filterable fields with their operators and its sortable fields. Pure lookup — no backend call.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation": {
+          "description": "Write operation whose schema to return, or list.<entity> (list.trace, list.span, list.thread, list.experiment) for the filter and sort reference of the list tool.",
+          "enum": [
+            "trace.create",
+            "trace.update",
+            "span.create",
+            "score.create",
+            "comment.create",
+            "prompt_version.save",
+            "dataset.create",
+            "dataset_item.upsert",
+            "experiment.create",
+            "experiment_item.create",
+            "thread.close",
+            "thread.open",
+            "agent_insights_issue.resolve",
+            "agent_insights_issue.close",
+            "agent_insights_issue.reopen",
+            "agent_insights_job.enable",
+            "agent_insights_job.trigger",
+            "annotation_queue.create",
+            "annotation_queue.update",
+            "list.trace",
+            "list.span",
+            "list.thread",
+            "list.experiment",
+            "list.dataset_item",
+            "list.dataset_item_case",
+            "list.annotation_queue",
+            "list.project_metric"
+          ],
+          "title": "Operation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation"
+      ],
+      "title": "schemaArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "read_skill",
+    "description": "Load one Opik agent skill — the same skills Opik publishes for coding agents. Use it when the skill you need is not already in your context.\n\nWHEN TO CALL: before instrumenting, evaluating, or debugging with Opik — no local copy in the project, nothing fetched earlier this session.\n\nMatch the user's task to a skill:\n- opik: \"why aren't my traces showing up\", \"how do I add metadata to a span\", \"how do I version a prompt\" — any SDK lookup. To instrument, use opik-instrument.\n- opik-annotate: \"build a custom annotator view\", \"set up an annotation queue\".\n- opik-compare: \"did my fix work\", \"compare against the baseline\", \"run the regression suite\", \"why did quality drop\", \"which cases regressed\", \"compare these two experiments\".\n- opik-diagnose: \"what is broken in production\", \"which traces need attention\", \"find failing or slow traces\", \"triage my agent\".\n- opik-evaluate: \"evaluate my agent\", \"measure quality\", \"build an eval\", \"write an LLM judge\", \"how good is my RAG\" — a first experiment with scores.\n- opik-explain: \"why did this trace fail\", \"explain this trace\", \"debug this trace\", \"why is my agent slow or wrong\".\n- opik-instrument: \"instrument my code\", \"add opik tracing\", \"add observability\", \"trace my agent\".\n- opik-online-eval: \"score production traces\", \"monitor hallucinations in prod\", \"take this judge live\", \"set up an online evaluation rule\".\n- opik-optimize: \"optimize this prompt\", \"improve my system prompt\", \"tune the prompt against my dataset\", \"run the prompt optimizer\".\n- opik-test: \"turn this into a test\", \"add a regression case for this trace\", \"make sure this doesn't happen again\", \"capture this failure\".\n- opik-verify: \"is this safe to ship\", \"can I merge this\", \"go/no-go on this change\", \"gate this release\" — a ship/hold verdict against a release policy.\n\n`skill_name` accepts any of these forms:\n- `opik` — the skill itself\n- `<skill>/references/<file>.md` — one document inside a skill; a SKILL.md ends with the list of its references",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "skill_name": {
+          "description": "A skill name ('opik-instrument'), a path inside a skill ('opik/references/tracing-python.md'), or a resource URI ('opik://skills/opik/SKILL.md'). A SKILL.md ends with the list of its references.",
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Skill Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "skill_name"
+      ],
+      "title": "read_skillArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "send_feedback",
+    "description": "Send feedback about this MCP server (opik-mcp) to the Opik team at Comet. It is not for the user's Opik data. Call it when an opik-mcp tool failed, gave a wrong or confusing result, or cannot do what the user needs, or when the user asks to send feedback. Do not call it when the task went well, to report progress, or as a test. Send at most one report per task. Describe the problem in general terms: no trace content, names, IDs or secrets from the user's data. The report carries the workspace name and the user's Comet login.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "category": {
+          "description": "What went wrong.",
+          "enum": [
+            "error",
+            "wrong_result",
+            "confusing",
+            "missing_capability",
+            "slow",
+            "other"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "impact": {
+          "description": "blocked: the task could not be done. workaround: it was done another way. minor: it cost time only.",
+          "enum": [
+            "blocked",
+            "workaround",
+            "minor"
+          ],
+          "title": "Impact",
+          "type": "string"
+        },
+        "description": {
+          "description": "2-4 sentences: what you tried, what came back, what you expected. No user data.",
+          "maxLength": 2000,
+          "title": "Description",
+          "type": "string"
+        },
+        "tool": {
+          "default": "none",
+          "description": "The opik-mcp tool it concerns.",
+          "enum": [
+            "read",
+            "list",
+            "write",
+            "schema",
+            "read_skill",
+            "none"
+          ],
+          "title": "Tool",
+          "type": "string"
+        },
+        "target": {
+          "default": "",
+          "description": "The entity type or write operation, e.g. trace.",
+          "maxLength": 64,
+          "title": "Target",
+          "type": "string"
+        },
+        "requested_by_user": {
+          "default": false,
+          "description": "True when the user asked to send this.",
+          "title": "Requested By User",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "category",
+        "impact",
+        "description"
+      ],
+      "title": "send_feedbackArguments",
+      "type": "object"
+    }
+  }
+]

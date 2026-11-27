@@ -1,0 +1,106 @@
+[
+  {
+    "name": "generate_key",
+    "description": "Generate a new Bitcoin key pair and address",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  },
+  {
+    "name": "validate_address",
+    "description": "Validate a Bitcoin address",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "The Bitcoin address to validate"
+        }
+      },
+      "required": [
+        "address"
+      ]
+    }
+  },
+  {
+    "name": "decode_tx",
+    "description": "Decode a Bitcoin transaction",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "rawHex": {
+          "type": "string",
+          "description": "Transaction hex"
+        }
+      },
+      "required": [
+        "rawHex"
+      ]
+    }
+  },
+  {
+    "name": "get_latest_block",
+    "description": "Get the latest block",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "get_transaction",
+    "description": "Get transaction details",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "txid": {
+          "type": "string",
+          "description": "Transaction ID"
+        }
+      },
+      "required": [
+        "txid"
+      ]
+    }
+  },
+  {
+    "name": "decode_invoice",
+    "description": "Decode a Lightning invoice",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "invoice": {
+          "type": "string",
+          "description": "BOLT11 Lightning invoice"
+        }
+      },
+      "required": [
+        "invoice"
+      ]
+    }
+  },
+  {
+    "name": "pay_invoice",
+    "description": "Pay a Lightning invoice",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "invoice": {
+          "type": "string",
+          "description": "BOLT11 Lightning invoice"
+        }
+      },
+      "required": [
+        "invoice"
+      ]
+    }
+  }
+]

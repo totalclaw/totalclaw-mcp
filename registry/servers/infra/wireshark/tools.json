@@ -1,0 +1,1323 @@
+[
+  {
+    "name": "wireshark_get_capabilities",
+    "description": "Get Wireshark suite capabilities for this MCP server instance (available tools and versions).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_get_file_info",
+    "description": "Get capture file metadata (type, packet count, duration, size) via capinfos.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_merge_pcaps",
+    "description": "Merge multiple capture files into one. input_files: comma-separated paths.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "output_file": {
+          "type": "string"
+        },
+        "input_files": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "output_file",
+        "input_files"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_text2pcap_import",
+    "description": "Convert ASCII or hex dump into a capture file using text2pcap. encapsulation: link-layer type (default: ether).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "input_text_file": {
+          "type": "string"
+        },
+        "output_file": {
+          "type": "string"
+        },
+        "encapsulation": {
+          "default": "ether",
+          "type": "string"
+        },
+        "timestamp_format": {
+          "default": "",
+          "type": "string"
+        },
+        "ascii_mode": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "input_text_file",
+        "output_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_list_interfaces",
+    "description": "List available network interfaces for capture.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_capture",
+    "description": "Capture live network traffic. capture_filter: BPF syntax. ring_buffer: \"filesize:1024,files:5\".",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "interface": {
+          "type": "string"
+        },
+        "output_file": {
+          "type": "string"
+        },
+        "duration_seconds": {
+          "default": 10,
+          "type": "integer"
+        },
+        "packet_count": {
+          "default": 0,
+          "type": "integer"
+        },
+        "capture_filter": {
+          "default": "",
+          "type": "string"
+        },
+        "ring_buffer": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "interface",
+        "output_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_filter_save",
+    "description": "Filter packets from a pcap and save to a new file using a Wireshark display filter.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "input_file": {
+          "type": "string"
+        },
+        "output_file": {
+          "type": "string"
+        },
+        "display_filter": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "input_file",
+        "output_file",
+        "display_filter"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_editcap_trim",
+    "description": "Trim capture to a timestamp window. Times in editcap format.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "input_file": {
+          "type": "string"
+        },
+        "output_file": {
+          "type": "string"
+        },
+        "start_time": {
+          "default": "",
+          "type": "string"
+        },
+        "stop_time": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "input_file",
+        "output_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_editcap_split",
+    "description": "Split a capture into smaller files by packet count or interval.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "input_file": {
+          "type": "string"
+        },
+        "output_prefix": {
+          "type": "string"
+        },
+        "packets_per_file": {
+          "default": 0,
+          "type": "integer"
+        },
+        "seconds_per_file": {
+          "default": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "input_file",
+        "output_prefix"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_editcap_time_shift",
+    "description": "Adjust all packet timestamps by a positive or negative offset in seconds.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "input_file": {
+          "type": "string"
+        },
+        "output_file": {
+          "type": "string"
+        },
+        "seconds": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "input_file",
+        "output_file",
+        "seconds"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_editcap_deduplicate",
+    "description": "Remove duplicate packets within a sliding window (default: 5 packets).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "input_file": {
+          "type": "string"
+        },
+        "output_file": {
+          "type": "string"
+        },
+        "duplicate_window": {
+          "default": 5,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "input_file",
+        "output_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_aggregate",
+    "description": "[Primary statistics] Full-filter counts, groups, distinct values, numeric metrics, top-k, and time buckets. Field lists are comma-separated.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "display_filter": {
+          "default": "",
+          "type": "string"
+        },
+        "group_by": {
+          "default": "",
+          "type": "string"
+        },
+        "distinct": {
+          "default": "",
+          "type": "string"
+        },
+        "sum_fields": {
+          "default": "",
+          "type": "string"
+        },
+        "min_fields": {
+          "default": "",
+          "type": "string"
+        },
+        "max_fields": {
+          "default": "",
+          "type": "string"
+        },
+        "avg_fields": {
+          "default": "",
+          "type": "string"
+        },
+        "time_bucket_seconds": {
+          "default": 0,
+          "type": "number"
+        },
+        "top_k": {
+          "default": 50,
+          "type": "integer"
+        },
+        "sort_by": {
+          "default": "auto",
+          "enum": [
+            "auto",
+            "count_desc",
+            "count_asc",
+            "key_asc",
+            "key_desc",
+            "numeric_desc",
+            "numeric_asc"
+          ],
+          "type": "string"
+        },
+        "sort_numeric": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_stats_protocol_hierarchy",
+    "description": "[PHS] Protocol hierarchy statistics showing distribution of protocols in the capture.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_stats_endpoints",
+    "description": "[Endpoints] List all endpoints and traffic stats. type: 'eth'|'ip'|'ipv6'|'tcp'|'udp'|'sctp'|'wlan'.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "type": {
+          "default": "ip",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_stats_conversations",
+    "description": "[Conversations] Communication pairs and stats. type: 'eth'|'ip'|'ipv6'|'tcp'|'udp'|'sctp'|'wlan'.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "type": {
+          "default": "ip",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_stats_io_graph",
+    "description": "[I/O Graph] Traffic volume by time bucket, optionally split by semicolon-separated display filters.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "interval": {
+          "default": 1,
+          "type": "integer"
+        },
+        "filters": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_stats_expert_info",
+    "description": "[Expert Info] Automatic anomaly detection: retransmissions, errors, warnings, protocol issues.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_stats_service_response_time",
+    "description": "[SRT] Service response time statistics. protocol: 'http'|'dns'|'smb' etc.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "protocol": {
+          "default": "http",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_index",
+    "description": "[Index] Build once; aggregate/extract_fields reuse it. more_files: extra captures (capture_id). query: SELECT on packets/pkt/flows/captures. timeline: first/last seen. diff: vs more_files/compare_filter. export: Parquet.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "action": {
+          "default": "build",
+          "enum": [
+            "build",
+            "status",
+            "query",
+            "timeline",
+            "diff",
+            "export",
+            "drop"
+          ],
+          "type": "string"
+        },
+        "sql": {
+          "default": "",
+          "type": "string"
+        },
+        "more_files": {
+          "default": "",
+          "type": "string"
+        },
+        "display_filter": {
+          "default": "",
+          "type": "string"
+        },
+        "compare_filter": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_get_packet_list",
+    "description": "[Summary] Packet list (top pane). TSV: No/Time/Src/Dst/Proto/Len/Info. custom_columns: comma-separated fields.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "type": "integer"
+        },
+        "offset": {
+          "default": 0,
+          "type": "integer"
+        },
+        "display_filter": {
+          "default": "",
+          "type": "string"
+        },
+        "custom_columns": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_get_packet_details",
+    "description": "[Detail] Full JSON for one packet. layers: comma-separated protocol filter (e.g. \"ip,tcp,http\").",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "frame_number": {
+          "type": "integer"
+        },
+        "layers": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "frame_number"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_get_packet_bytes",
+    "description": "[Bytes] Raw hex/ASCII dump of a single packet.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "frame_number": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "frame_number"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_get_packet_context",
+    "description": "[Context] Packets surrounding a specific frame (count before and after).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "frame_number": {
+          "type": "integer"
+        },
+        "count": {
+          "default": 5,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "frame_number"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_read_packets",
+    "description": "[DEPRECATED] JSON packet data. Use get_packet_list + get_packet_details instead.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "type": "integer"
+        },
+        "offset": {
+          "default": 0,
+          "type": "integer"
+        },
+        "display_filter": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_extract_fields",
+    "description": "[Tabular] Extract fields as TSV. fields: comma-separated; limit/offset count lines including the header.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "string"
+        },
+        "display_filter": {
+          "default": "",
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "type": "integer"
+        },
+        "offset": {
+          "default": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "fields"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_search_packets",
+    "description": "[Search] Find packets by content.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "match_pattern": {
+          "type": "string"
+        },
+        "search_type": {
+          "default": "string",
+          "enum": [
+            "string",
+            "hex",
+            "regex"
+          ],
+          "type": "string"
+        },
+        "limit": {
+          "default": 50,
+          "type": "integer"
+        },
+        "scope": {
+          "default": "bytes",
+          "enum": [
+            "bytes",
+            "details",
+            "filter"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "match_pattern"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_follow_stream",
+    "description": "[Stream] Reassemble stream with pagination. protocol: tcp|udp|tls|http|http2. output_mode: ascii|hex|raw.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "stream_index": {
+          "type": "integer"
+        },
+        "protocol": {
+          "default": "tcp",
+          "type": "string"
+        },
+        "output_mode": {
+          "default": "ascii",
+          "type": "string"
+        },
+        "limit_lines": {
+          "default": 500,
+          "type": "integer"
+        },
+        "offset_lines": {
+          "default": 0,
+          "type": "integer"
+        },
+        "search_content": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "stream_index"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_quick_analysis",
+    "description": "[Agent] One-call traffic overview: file info, protocols, top talkers, conversations, hostnames, anomalies.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_decode_as",
+    "description": "[Dissection] Decode-as for non-standard ports. Rules: 'tcp.port==8080,http;udp.port==5353,dns'.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "decode_rules": {
+          "type": "string"
+        },
+        "fields": {
+          "default": "",
+          "type": "string"
+        },
+        "display_filter": {
+          "default": "",
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "decode_rules"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_set_protocol_prefs",
+    "description": "[Dissection] Protocol preference overrides. Prefs: 'tcp.desegment_tcp_streams:TRUE;http.ssl.port:8443'.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "prefs": {
+          "type": "string"
+        },
+        "fields": {
+          "default": "",
+          "type": "string"
+        },
+        "display_filter": {
+          "default": "",
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "prefs"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_decrypt_tls",
+    "description": "[Decrypt] Decrypt TLS traffic using SSLKEYLOGFILE, show HTTP data.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "keylog_file": {
+          "type": "string"
+        },
+        "display_filter": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "keylog_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_decrypt_wpa",
+    "description": "[Decrypt] Decrypt WPA/WPA2 traffic with passphrase (+SSID).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "wpa_passphrase": {
+          "type": "string"
+        },
+        "ssid": {
+          "default": "",
+          "type": "string"
+        },
+        "display_filter": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "wpa_passphrase"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_extract_frames",
+    "description": "[File] Extract specific frame ranges to a new pcap. Ranges: '1-10 15 20-30'.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "output_file": {
+          "type": "string"
+        },
+        "frame_ranges": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "output_file",
+        "frame_ranges"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_flow_graph",
+    "description": "[Stats] Flow/sequence graph showing packet exchange. Types: 'any', 'tcp', 'icmp'.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "flow_type": {
+          "default": "any",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_case",
+    "description": "[Case] Saved investigation. create(text=title,target=pcaps) record(text=tool JSON) verdict(target=finding id,text=confirmed|dismissed|open: note) note show report list",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "case_id": {
+          "default": "",
+          "type": "string"
+        },
+        "text": {
+          "default": "",
+          "type": "string"
+        },
+        "target": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_analyze_protocol",
+    "description": "[Protocol] Analyze one protocol with preset fields and filter. Returns a summary and bounded rows; BLE values add device inventory, scanners, GATT timeline, connection lifecycle, pairing.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "protocol": {
+          "enum": [
+            "ble",
+            "ble_connections",
+            "ble_devices",
+            "ble_gatt_timeline",
+            "ble_pairing",
+            "ble_scan_activity",
+            "coap",
+            "dhcp",
+            "dnp3",
+            "doh",
+            "grpc",
+            "icmp_tunnel",
+            "kerberos",
+            "modbus",
+            "mqtt",
+            "quic",
+            "rtp",
+            "s7comm",
+            "smb",
+            "smtp",
+            "tls_handshakes",
+            "websocket",
+            "wifi",
+            "wireguard",
+            "zigbee"
+          ],
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "protocol"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_analyze_tcp_health",
+    "description": "[TCP] Analyze TCP connection health (retransmissions, dup ACKs, zero window, resets).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_detect_arp_spoofing",
+    "description": "[ARP] Detect potential ARP spoofing (duplicate IP-MAC, gratuitous floods, reply storms).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_detect_beaconing",
+    "description": "[Anomaly] Detect periodic communication patterns (C2 beacons) by analyzing connection timing intervals and jitter.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "min_connections": {
+          "default": 10,
+          "type": "integer"
+        },
+        "max_jitter": {
+          "default": 0.2,
+          "type": "number"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_detect_dns_tunnel",
+    "description": "[Security] Detect DNS tunneling candidates (long query names, TXT abuse, high subdomain fanout).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_detect_dos_attack",
+    "description": "[Security] Detect DoS/DDoS traffic volume patterns (SYN flood, ICMP/UDP flood, DNS amplification).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_detect_exfiltration",
+    "description": "[Anomaly] Detect data exfiltration (large outbound transfers, DNS length anomalies, non-standard ports).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "limit": {
+          "default": 10000,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_detect_port_scan",
+    "description": "[Security] Detect port scanning (SYN, FIN, NULL, Xmas scans). threshold: min unique dst ports to flag.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "threshold": {
+          "default": 15,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_detect_protocol_anomalies",
+    "description": "[Anomaly] Detect protocol anomalies (known protocols on non-standard ports, unusual protocol distributions).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "limit": {
+          "default": 5000,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_export_objects",
+    "description": "[Export] Extract embedded files from traffic. protocol: 'http'|'smb'|'tftp'|'imf'|'dicom'.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "dest_dir": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "protocol",
+        "dest_dir"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_extract_credentials",
+    "description": "[Security] Scan for plaintext credentials (HTTP Basic Auth, FTP passwords, Telnet).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_extract_dns_queries",
+    "description": "[DNS] Extract DNS query details (name, type, response flag) as TSV.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_extract_fingerprints",
+    "description": "[Forensics] Extract JA3/JA3S TLS fingerprints and optionally match local user-maintained lists. Treat matches as leads.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_extract_http_requests",
+    "description": "[HTTP] Extract HTTP request details (method, URI, host, user-agent) as TSV.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_geoip_enrich",
+    "description": "[Enrichment] GeoIP lookup for unique IPs — country, city, ASN. Needs GeoLite2 DB.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "limit": {
+          "default": 50,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_scan_file_signatures",
+    "description": "[Forensics] Count packets containing common file signatures. Hits require object extraction and verification.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_verify_ssl_decryption",
+    "description": "[TLS] Verify TLS decryption with SSLKEYLOGFILE-format keylog file.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "keylog_file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file",
+        "keylog_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_yara_scan",
+    "description": "[Security] YARA scan exported files. Detects malware, webshells, shellcode. protocol: http|smb|tftp.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        },
+        "protocol": {
+          "default": "http",
+          "type": "string"
+        },
+        "dest_dir": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "wireshark_open_file",
+    "description": "[Entry Point] Open a pcap and get protocol-aware tool recommendations. Returns protocols and relevant tools.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "pcap_file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pcap_file"
+      ],
+      "type": "object"
+    }
+  }
+]

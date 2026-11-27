@@ -1,0 +1,105 @@
+[
+  {
+    "name": "fuzz_domain",
+    "description": "Generate and analyze domain permutations to detect potential typosquatting, phishing, and brand impersonation",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Domain name to analyze (e.g., example.com)"
+        },
+        "nameservers": {
+          "type": "string",
+          "description": "Comma-separated DNS servers: IPv4 addresses or DNS-over-HTTPS URLs such as https://cloudflare-dns.com/dns-query (default: 1.1.1.1)",
+          "default": "1.1.1.1"
+        },
+        "threads": {
+          "type": "number",
+          "description": "Number of parallel lookups (1-100)",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 50
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "json",
+            "csv",
+            "list"
+          ],
+          "description": "Output format",
+          "default": "json"
+        },
+        "registered_only": {
+          "type": "boolean",
+          "description": "Show only registered domain permutations",
+          "default": true
+        },
+        "mxcheck": {
+          "type": "boolean",
+          "description": "Check whether each mail server would accept email for any address, so it could intercept mail sent to typos of your domain",
+          "default": true
+        },
+        "ssdeep": {
+          "type": "boolean",
+          "description": "Deprecated alias for lsh: \"ssdeep\" (ignored when lsh is set)",
+          "default": false
+        },
+        "lsh": {
+          "type": "string",
+          "enum": [
+            "ssdeep",
+            "tlsh"
+          ],
+          "description": "Compare each permutation's web page with the original using a fuzzy hash (slow) to spot cloned phishing pages"
+        },
+        "whois": {
+          "type": "boolean",
+          "description": "Look up WHOIS creation date and registrar for each domain (slower)",
+          "default": false
+        },
+        "all_records": {
+          "type": "boolean",
+          "description": "Return all DNS records instead of only the first of each type",
+          "default": false
+        },
+        "fuzzers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "addition",
+              "bitsquatting",
+              "cyrillic",
+              "homoglyph",
+              "hyphenation",
+              "insertion",
+              "omission",
+              "plural",
+              "repetition",
+              "replacement",
+              "subdomain",
+              "transposition",
+              "vowel-swap",
+              "various"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 14,
+          "uniqueItems": true,
+          "description": "Only use these fuzzing algorithms (default: all)"
+        },
+        "banners": {
+          "type": "boolean",
+          "description": "Capture HTTP and SMTP server banners",
+          "default": true
+        }
+      },
+      "required": [
+        "domain"
+      ]
+    }
+  }
+]

@@ -1,0 +1,866 @@
+[
+  {
+    "name": "search_jobs",
+    "description": "Jobs — Use this when the user wants to find, search, browse or see jobs, openings or who is hiring, in any field and any place: remote, local, part-time, entry-level and senior roles in tech, healthcare and nursing, retail, restaurants and food service, warehouse and logistics, driving, customer service, office and admin, finance, education, trades and construction, manufacturing, hospitality, government and more (e.g. 'nurse jobs in Oakland', 'part-time jobs near me', 'remote designer roles'), or names Worklittle. It opens the Worklittle job cards with live listings from company career pages, each with an Apply button that applies for the user. Shows Worklittle job cards for a place and an optional role. The cards scroll endlessly: jobs near the place first, then farther away. Send the place and the role as SEPARATE fields. Never write 'product manager in San Francisco' as one query. PLACE: always pass near_lat + near_lng (the city's coordinates, which you know) and location as the display name (e.g. 'San Francisco, CA'). radius_km 25-50 for a city. If the user names no place, omit all place fields; the cards start at the user's approximate (IP-based) area. When a search runs short, results continue with close matches (search.scope related: same role and place with seniority, salary, job type and date filters dropped), then the rest of the country and worldwide (search.scope country or world), so say which cards are exact matches and where the roles are. ROLE: query holds only the job title text (e.g. 'product manager') and may be omitted for 'any job'. People ask for jobs in plain words ('jobs near me', 'barista jobs in Oakland', 'who is hiring nurses') and rarely name Worklittle or this tool; it is for any job search, not only ones that mention Worklittle. Search by keyword, company, location, job type, seniority, or recency. Use for ANY industry (retail, finance, healthcare, tech, etc.). Search matches title and filter text (substring / FTS), not vector embeddings. Role / title text goes in query (+ optional keywords). The API matches job TITLE substrings only for that text — it does not mix company names into the same field. Preserve negative title terms with a leading dash, e.g. 'software engineer, -senior' excludes titles containing senior. Use company for employer slugs (include or exclude). Never concatenate many job titles into one query unless the user supplied comma-separated roles. Do not add seniority_level, stacks, or resume-derived terms unless they asked. Omit seniority_level unless they explicitly name a level as an inclusion filter (never infer from profile). Expand abbreviations only; umbrella phrases use neutral roles and/or company slugs. Umbrella or vague phrases ('big tech', 'FAANG', 'top retailers'): interpret intent, then one search_jobs with comma-separated company slugs and/or a broad role query — prefer one API call over many. company MUST be employer slug(s): bare slugs include (OR), e.g. meta,google,apple. Prefix a slug with '-' to exclude, e.g. -lucid-motors,-tesla. Same leading-dash rule as title negatives, but in company not query. Expand 'no car companies' / 'don't show Lucid' into -slug tokens. Never pass display names as query. If unsure of slug, try lowercase hyphenated brand. Add skills or stack to query/keywords only when the user mentioned them — not from profile by default. When an include company filter returns 0 results, try a broader query (drop include company, use role keywords) before telling the user nothing matched. Pass cursor from a previous response to paginate. Search is anonymous. Do not call get_account, apply, or ask the user to Connect to search or skip. Connect / OAuth is only when they apply. After it runs, recommend the 3-5 jobs that fit the person best (one line each: title, employer, place, pay if listed, why it fits), then offer to apply to any or all of them instantly. No counts, stats or trivia. The person already sees every job in the app: never describe the interface ('cards above', 'map', 'widget'). Applying is just 'apply' (never 'Apply with AI'); when they pick, call apply_for_job (job_ids for several). For visa / H-1B: set visa_sponsorship to 'yes' (plus optional query). Postings must be explicitly tagged. When visa_sponsorship is set and posted_within_days is omitted, the last 30 days are searched instead of the default 7 — tagged visa roles are sparse. For regional / nearby intent: near_lat, near_lng, radius_km (e.g. 50–65). Prefer this over the location substring when coordinates are known. For two or more metros in one user message (e.g. SF or NYC), pass location_or as comma-separated place names — one API request matches ANY listed place. Do not use near_* for multi-metro; use location_or or location with 'or' between cities. Recency: set posted_within_days from the user's words — today/just posted → 1; past few days → 3; this week → 7; past two weeks → 14; this month → 30. Omit when they did not mention timing (defaults to the last 7 days). Jobs older than 30 days are never returned; 0 means the full 30 days. Never put today/new/this week into query. Filters are only these: posted_within_days (Past 24 hours / 3 / 7 / 14 / 30 days), seniority_level (Experience: intern, entry/new grad, senior, manager, director/executive), employment_type (Type: full-time, part-time, contract), and visa_sponsorship (Visa). Prefer no filters: use one only when the user explicitly asks for it, because each filter shrinks the results a lot. For remote-only jobs send remote: true (and no place fields). There is no salary, hybrid, or benefits filter. If the user asks to filter by salary, search without it and say they can see salaries on the cards (listed pay shows on each card).",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Job title or role phrase (merged with keywords). Sent as API title= — matches job TITLE text only, separate from company. Preserve negative title terms with a leading dash, e.g. 'product manager, software engineer, -senior'. If they want any role / all jobs, omit. Never merge many titles into one string unless the user supplied comma-separated roles. Expand shorthand (swe, pm, sre) when applicable.",
+          "x-mcp-header": "Query"
+        },
+        "keywords": {
+          "type": "string",
+          "description": "Only if the user named skills or stacks in this turn. Omit by default — do not pull from resume or profile."
+        },
+        "company": {
+          "type": "string",
+          "description": "Employer slug(s): bare slug or comma-separated OR include (e.g. meta,google,apple). Prefix with '-' to exclude (e.g. -lucid-motors,-tesla). Mix allowed (meta,google,-amazon). Lowercase hyphenated. Mid-slug hyphens are part of the slug; only a leading '-' excludes. If include-only returns 0, retry without include slugs.",
+          "x-mcp-header": "Company"
+        },
+        "remote": {
+          "type": "boolean",
+          "description": "true: remote jobs only (any country unless country is set). Leave out place fields. location 'remote' does the same."
+        },
+        "location": {
+          "type": "string",
+          "description": "Display name of the place (e.g. 'San Francisco, CA'). When near_lat/near_lng are set this is only a label and is NOT used as a text filter. Otherwise a text filter on job location strings (partial match). For metro-area or 'near me' intent, prefer near_lat + near_lng + radius_km (50–65 km typical) so results are not tied to one city spelling. Use location only when you cannot geocode, or as a fallback. Avoid long 'City, Country' strings; use country for country filters. For multiple metros, prefer location_or."
+        },
+        "location_or": {
+          "type": "string",
+          "description": "Comma-separated place substrings when the user names two or more metros at once (e.g. San Francisco,New York). The API returns jobs whose location text matches ANY term. Mutually exclusive with distance search (near_lat/near_lng)."
+        },
+        "employment_type": {
+          "type": "string",
+          "description": "Type of employment contract.",
+          "enum": [
+            "full_time",
+            "part_time",
+            "contract",
+            "internship",
+            "temporary"
+          ]
+        },
+        "seniority_level": {
+          "type": "string",
+          "description": "Omit unless the user explicitly asked for a band. Never infer from profile. Enum when set:",
+          "enum": [
+            "new_grad",
+            "entry",
+            "mid",
+            "senior",
+            "staff",
+            "manager",
+            "director",
+            "executive"
+          ]
+        },
+        "posted_within_days": {
+          "type": "number",
+          "description": "Days of posted-date lookback, at most 30. Omit → default 7. 0 → the full 30 days. 1 → today/last 24h. 7 → this week. Jobs older than 30 days are never returned. Never encode recency words in query.",
+          "minimum": 0
+        },
+        "visa_sponsorship": {
+          "type": "string",
+          "description": "Filter by explicit visa sponsorship text in the posting (AI-extracted). Use 'yes' for jobs that sponsor visas (H-1B, etc.). Use 'no' only when the user wants roles that explicitly state no sponsorship. Omit when not relevant.",
+          "enum": [
+            "yes",
+            "no"
+          ]
+        },
+        "description_language": {
+          "type": "string",
+          "description": "ISO 639-1 code for the language of the job posting body. Examples: en, es, de, fr, pt."
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country filter (e.g. US, GB, DE). Returns jobs in that country or workplace_type remote."
+        },
+        "exclude_ids": {
+          "type": "string",
+          "description": "Comma-separated job IDs to exclude (e.g. postings already shown in the conversation)."
+        },
+        "near_lat": {
+          "type": "number",
+          "description": "Latitude for distance search. Use with near_lng. Typical source: browser geolocation or geocoded city."
+        },
+        "near_lng": {
+          "type": "number",
+          "description": "Longitude for distance search. Required with near_lat."
+        },
+        "radius_km": {
+          "type": "number",
+          "description": "Radius in kilometers around near_lat/near_lng. Default 50, max 500.",
+          "minimum": 1,
+          "maximum": 500
+        },
+        "applied": {
+          "type": "boolean",
+          "description": "Filter by whether the user already applied. false: leave out jobs they applied to. true: only jobs they applied to. Omit to get every job; ones they applied to say applied: true."
+        },
+        "exclude_remote": {
+          "type": "boolean",
+          "description": "Distance searches (near_lat/near_lng) return on-site and hybrid jobs in the radius. For remote jobs, search without near_lat/near_lng and set remote: true."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Number of results to return, at most 8 per call. Pass cursor from the response for more.",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Pagination cursor from a previous search_jobs response to fetch the next page."
+        }
+      }
+    }
+  },
+  {
+    "name": "search_companies",
+    "description": "Jobs — Search the Worklittle market company index by name or slug (ranked typeahead). Returns id, name, slug, logo_url, and enrichment fields for employers with open jobs. Use when the user names an employer and you need a real slug/id for search_jobs company= filters, job alerts, or automations. If zero hits, try alternate spellings or related employer names from further search_companies calls — do not invent company ids or slugs. If still empty, tell the user that employer is not in the index yet and offer any close matches you found.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "q": {
+          "type": "string",
+          "description": "Company name or slug query (min 2 characters, max 80)."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max results to return. Default 5, max 20.",
+          "minimum": 1,
+          "maximum": 20
+        }
+      },
+      "required": [
+        "q"
+      ]
+    }
+  },
+  {
+    "name": "get_job_details",
+    "description": "Jobs — Fetch detailed information about a specific job, including full responsibilities, qualifications, and company details. Pass job_id from search_jobs when you have one. If the user asks for full details of a role without an id (e.g. the first software engineer job in Austin), pass query and optional location instead — the tool loads the first matching live listing.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "description": "The job ID from a previous search_jobs result when available.",
+          "x-mcp-header": "Job-Id"
+        },
+        "query": {
+          "type": "string",
+          "description": "Role/title search used when job_id is missing (picks the first live match)."
+        },
+        "location": {
+          "type": "string",
+          "description": "Optional location substring when resolving details by query."
+        }
+      }
+    }
+  },
+  {
+    "name": "create_resume",
+    "description": "Jobs — Write a one-page resume for the user from what they tell you (work history, skills, education) or their saved profile, fitted to a job when job_id is given. Never invent facts. When details are thin, pass draft true and fill the [ ] gaps with them. When it is their new or updated main resume, pass save_to_profile true to save it to their profile in the same call (ask first; it replaces the current main resume). Costs $0.01.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "resume_text": {
+          "type": "string",
+          "description": "What the user told you or their old resume, as plain text."
+        },
+        "profile": {
+          "type": "object"
+        },
+        "job_id": {
+          "type": "string"
+        },
+        "job_context": {
+          "type": "object"
+        },
+        "instructions": {
+          "type": "string"
+        },
+        "draft": {
+          "type": "boolean",
+          "description": "true: a draft that keeps [ ] gaps for missing facts instead of failing on thin input. Same price. Can't be saved."
+        },
+        "save_to_profile": {
+          "type": "boolean",
+          "description": "true: save the finished PDF as the user's main resume, so applications send it. Not with draft."
+        },
+        "format": {
+          "type": "string",
+          "description": "html | pdf | docx. pdf/docx also include html. Prefer formats[] when requesting multiple."
+        },
+        "formats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Subset of html, pdf, docx. Default when omitted: html and pdf."
+        }
+      }
+    }
+  },
+  {
+    "name": "create_cover_letter",
+    "description": "Jobs — Create a hiring-manager-ready one-page cover letter (no placeholders). Same formats/format options as create_resume (default html+pdf). $0.01 per cover letter, charged only when returned.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "resume_text": {
+          "type": "string"
+        },
+        "profile": {
+          "type": "object"
+        },
+        "job_id": {
+          "type": "string"
+        },
+        "job_context": {
+          "type": "object"
+        },
+        "company": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "instructions": {
+          "type": "string"
+        },
+        "draft": {
+          "type": "boolean",
+          "description": "true: a draft that keeps [ ] gaps for missing facts instead of failing on thin input. Same price."
+        },
+        "format": {
+          "type": "string",
+          "description": "html | pdf | docx"
+        },
+        "formats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "get_market_overview",
+    "description": "Jobs — Returns aggregate job-market statistics from Worklittle. Call with no args for the whole market (workplace and job-type mix, top hiring companies). When the user names a role and/or city (e.g. product managers in San Francisco), pass query and location. The filtered slice includes match count, top companies in the sample, and salary signals from listings that publish pay.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Role or title filter for a market slice (e.g. product manager)."
+        },
+        "location": {
+          "type": "string",
+          "description": "Location substring for a market slice (e.g. San Francisco)."
+        },
+        "workplace_type": {
+          "type": "string",
+          "enum": [
+            "remote",
+            "hybrid",
+            "on_site"
+          ],
+          "description": "Optional workplace filter for the slice."
+        }
+      }
+    }
+  },
+  {
+    "name": "get_my_profile",
+    "description": "Jobs — Get everything Worklittle knows about the user, with the same field names update_my_profile takes: name, contact details, city/state/country, address, current_title and current_company, desired_role, desired_salary, work_authorization, needs_sponsorship, visa_status, school, degree, languages, links, experience and education (work history), about_you (the More about you text used on every application), the main resume (status ready, processing or missing, and its text when ready) and apply_settings (auto_apply, auto_submit, tailor_resume, max_per_company: most applications to one company in any 30 days). A field never filled in is null. If they have not linked their account it returns connected false.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "update_my_profile",
+    "description": "Jobs — Change anything on the user's Worklittle profile in one call; send only what changes, using the field names get_my_profile returns (name, phone, city, current_title, desired_role, desired_salary, work_authorization, needs_sponsorship, visa_status, experience, education, links, …). experience and education replace the whole list. about_you: the More about you text Worklittle uses on every future application; it replaces the old text, so read get_my_profile first and merge, in the user's words, never inventing facts. clear_fields: names of fields to empty. resume_file: the resume the user attached in the chat, saved as their main resume (replaces it; other saved resumes stay). delete_resume true deletes the main resume. auto_apply, auto_submit and tailor_resume change how Worklittle applies for them.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string",
+          "description": "Home street address"
+        },
+        "current_title": {
+          "type": "string",
+          "description": "Current job title(s), most recent first"
+        },
+        "current_company": {
+          "type": "string",
+          "description": "Current employer(s), most recent first"
+        },
+        "desired_role": {
+          "type": "string",
+          "description": "The roles they want, comma-separated"
+        },
+        "desired_salary": {
+          "type": "string",
+          "description": "e.g. \"$90,000+\" or \"$25+/hour\""
+        },
+        "work_authorization": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "ISO2 country codes they can work in"
+        },
+        "needs_sponsorship": {
+          "type": "boolean",
+          "description": "true if they need visa sponsorship to work"
+        },
+        "visa_status": {
+          "type": "string",
+          "enum": [
+            "us_citizen",
+            "permanent_resident",
+            "h1b",
+            "opt",
+            "cpt",
+            "l1",
+            "tn",
+            "o1",
+            "e3",
+            "h1b1",
+            "needs_sponsorship"
+          ],
+          "description": "Their US work status, when they say it. Wins over needs_sponsorship when both are sent."
+        },
+        "school": {
+          "type": "string"
+        },
+        "degree": {
+          "type": "string"
+        },
+        "years_experience": {
+          "type": "number"
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "about_you": {
+          "type": "string",
+          "description": "The More about you text Worklittle uses on every future application (standing answers like notice period, relocation, referrals). Replaces the old text: read get_my_profile first and merge, in the user's words, never inventing facts."
+        },
+        "drivers_license": {
+          "type": "string",
+          "description": "valid | none"
+        },
+        "linkedin": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "github": {
+          "type": "string"
+        },
+        "huggingface": {
+          "type": "string"
+        },
+        "x": {
+          "type": "string"
+        },
+        "instagram": {
+          "type": "string"
+        },
+        "youtube": {
+          "type": "string"
+        },
+        "facebook": {
+          "type": "string"
+        },
+        "tiktok": {
+          "type": "string"
+        },
+        "experience": {
+          "type": "array",
+          "description": "Replaces work history. Months as YYYY-MM; omit end for the current job.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "company": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "start": {
+                "type": "string"
+              },
+              "end": {
+                "type": "string"
+              },
+              "current": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "company"
+            ]
+          }
+        },
+        "education": {
+          "type": "array",
+          "description": "Replaces education. Months as YYYY-MM.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "school": {
+                "type": "string"
+              },
+              "degree": {
+                "type": "string"
+              },
+              "field_of_study": {
+                "type": "string"
+              },
+              "start": {
+                "type": "string"
+              },
+              "end": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "school"
+            ]
+          }
+        },
+        "clear_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Field names to empty, e.g. [\"address\"]"
+        },
+        "resume_file": {
+          "type": "object",
+          "description": "The resume file the user attached in the chat.",
+          "properties": {
+            "download_url": {
+              "type": "string"
+            },
+            "file_id": {
+              "type": "string"
+            },
+            "mime_type": {
+              "type": "string"
+            },
+            "file_name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "download_url",
+            "file_id"
+          ]
+        },
+        "delete_resume": {
+          "type": "boolean",
+          "description": "true: delete the user's main resume."
+        },
+        "auto_apply": {
+          "type": "boolean",
+          "description": "Worklittle applies to jobs that match the user on its own."
+        },
+        "auto_submit": {
+          "type": "boolean",
+          "description": "Send applications without stopping for the user's review first."
+        },
+        "tailor_resume": {
+          "type": "boolean",
+          "description": "Tailor the user's resume to each job it applies to."
+        }
+      }
+    }
+  },
+  {
+    "name": "list_applications",
+    "description": "Jobs — List the user's applications, newest first: ones Worklittle is filling out now (status active, with session_id), pending ones (matched by auto-apply or waiting for approval) and finished ones (completed = submitted; stopped = the person ended it; cancelled = ended before anything was filled in; failed = went wrong on our side). Check it before applying so the same job is never applied to twice. Filter with status, days (7 = the last week), job_id or applicant_id; when next_offset is set, call again with that offset. session_id: one application in detail instead (status, the answers filled in, a live view link; only completed means it was submitted). my_jobs true: the user's own Saved and Applied list on worklittle.com instead (jobs they saved or marked applied, including ones applied to elsewhere), filtered by stage.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "all",
+            "active",
+            "pending",
+            "matched",
+            "awaiting_approval",
+            "queued",
+            "running",
+            "awaiting_input",
+            "awaiting_submit",
+            "completed",
+            "stopped",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "days": {
+          "type": "number",
+          "description": "Only applications started or updated in the last this many days (7 = last week, 30 = last month)."
+        },
+        "job_id": {
+          "type": "string"
+        },
+        "applicant_id": {
+          "type": "string",
+          "description": "\"me\" for the user's own, or an applicant id (required on a shared API key)"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max rows to return (default 50, max 200)."
+        },
+        "offset": {
+          "type": "number",
+          "description": "Rows to skip: pass next_offset from the previous call to get the next page."
+        },
+        "session_id": {
+          "type": "string",
+          "description": "Show this one application in detail."
+        },
+        "my_jobs": {
+          "type": "boolean",
+          "description": "true: list the user's Saved and Applied list instead."
+        },
+        "stage": {
+          "type": "string",
+          "enum": [
+            "saved",
+            "in_progress",
+            "applied",
+            "interview",
+            "offer",
+            "rejected",
+            "withdrawn"
+          ],
+          "description": "With my_jobs: only jobs at this stage."
+        }
+      }
+    }
+  },
+  {
+    "name": "update_application",
+    "description": "Jobs — Change one of the user's applications. action submit: send an application waiting for review (status awaiting_submit), only after the user has seen its answers (list_applications with session_id) and said to send it. action steer: change what an application in progress fills in, without stopping it; pass their wish as instructions with their exact facts (\"say my notice period is one month\"), never adding facts. action stop: stop an application Worklittle is filling out; it cannot be resumed. These three need session_id from apply_for_job or list_applications. action move: put a job at a stage in the user's Saved and Applied list (saved, applied, interview, offer, rejected, withdrawn); action remove: take it off that list. These two need job_id.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "submit",
+            "steer",
+            "stop",
+            "move",
+            "remove"
+          ]
+        },
+        "session_id": {
+          "type": "string",
+          "description": "For submit, steer and stop.",
+          "x-mcp-header": "Session-Id"
+        },
+        "instructions": {
+          "type": "string",
+          "description": "For steer: what to change, in plain words."
+        },
+        "job_id": {
+          "type": "string",
+          "description": "For move and remove: the Worklittle job id."
+        },
+        "stage": {
+          "type": "string",
+          "enum": [
+            "saved",
+            "in_progress",
+            "applied",
+            "interview",
+            "offer",
+            "rejected",
+            "withdrawn"
+          ],
+          "description": "For move: the stage to put the job at."
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  },
+  {
+    "name": "add_applied_job",
+    "description": "Jobs — Add a job to the user's applied jobs (Applied and Saved on worklittle.com) at a status such as saved or applied. To move a job already there, use update_applied_job.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "description": "Worklittle job id from search_jobs or get_job_details."
+        },
+        "job_title": {
+          "type": "string"
+        },
+        "company_name": {
+          "type": "string"
+        },
+        "apply_url": {
+          "type": "string",
+          "description": "Optional employer apply URL."
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "apply",
+            "apply_with_ai",
+            "api"
+          ],
+          "description": "How the user applied. Defaults to apply."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "saved",
+            "in_progress",
+            "applied",
+            "interview",
+            "offer",
+            "rejected",
+            "withdrawn"
+          ],
+          "description": "Pipeline stage when known. Use saved for heart/save. Defaults to in_progress for apply / apply_with_ai, applied for api."
+        }
+      },
+      "required": [
+        "job_id",
+        "job_title",
+        "company_name"
+      ]
+    }
+  },
+  {
+    "name": "create_sign_in_link",
+    "description": "Jobs — Create a one-time link that opens worklittle.com signed in as the user (used by the app's buttons).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "logout_connected_account",
+    "description": "Jobs — Sign the user out of Worklittle in this app.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "apply_for_job",
+    "description": "Jobs — Apply to jobs for the user: Worklittle fills out and submits each application. Pass job_id from search_jobs, or job_ids (up to 10) when they want to apply to several or all of them at once. Worklittle-hosted postings work the same way: their form is filled from the user's profile. It submits by default; pass auto_submit false when the user wants to review first, then show them the answers from list_applications with the session_id and send it with update_application (action submit) only after they say so. If it answers RESUME_REQUIRED or resume_warning, the user has no résumé saved: save the one they attach with update_my_profile (resume_file), or write one with create_resume and save_to_profile true, and apply again.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "description": "Worklittle job id from search_jobs / get_job_details.",
+          "x-mcp-header": "Job-Id"
+        },
+        "url": {
+          "type": "string",
+          "description": "Instead of job_id: a link to the job posting (the employer's job page or application page), when the user pastes one. Worklittle finds the job, or adds it if it isn't listed, and applies; the result includes its job_id. If it can't apply through the link, the error says why and lists similar_jobs."
+        },
+        "auto_submit": {
+          "type": "boolean",
+          "description": "Default: the user's auto_submit setting (on unless they turned it off), which submits when the form is complete. false: stop at review (status awaiting_submit) so the user can check every answer; send it with submit_application."
+        },
+        "resume_html": {
+          "type": "string",
+          "description": "Optional resume HTML to seed."
+        },
+        "cover_letter_html": {
+          "type": "string",
+          "description": "Optional cover letter HTML to seed."
+        },
+        "job_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Apply to up to 10 jobs in one call (instead of job_id), all for the same person and with the same options. Returns one result per job."
+        },
+        "urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Like job_ids, for job posting links (can be combined with job_ids, up to 10 jobs in all). Each result includes its url and job_id."
+        },
+        "test": {
+          "type": "boolean",
+          "description": "true: a free practice run. Nothing opens, nothing is stored or sent to an employer, no personal information needed. The session moves queued → running → completed over ~25 seconds."
+        },
+        "use_profile": {
+          "type": "boolean",
+          "description": "Default true: apply as the signed-in user with their profile. false: apply as the applicant described below (another person, no Worklittle account needed)."
+        },
+        "applicant": {
+          "type": "object",
+          "description": "With use_profile false: the person applying. name and email are required; phone, city, state, country, work_authorization, needs_sponsorship, desired_salary, about_you are recommended. Send their resume as resume_text or resume_pdf_base64.",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "linkedin": {
+              "type": "string"
+            },
+            "website": {
+              "type": "string"
+            },
+            "work_authorization": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "ISO2 country codes"
+            },
+            "needs_sponsorship": {
+              "type": "boolean",
+              "description": "true if they need visa sponsorship to work"
+            },
+            "desired_salary": {
+              "type": "string"
+            },
+            "about_you": {
+              "type": "string",
+              "description": "Standing answers: notice period, sponsorship, referrals, anything else."
+            }
+          },
+          "required": [
+            "name",
+            "email"
+          ]
+        },
+        "applicant_id": {
+          "type": "string",
+          "description": "With use_profile false: the person from an earlier apply. Store it permanently with the person and reuse it; it works with any Worklittle API key. It is also emailed to them; if lost, ask them for it."
+        },
+        "resume_text": {
+          "type": "string",
+          "description": "With use_profile false: the applicant's resume as plain text."
+        },
+        "resume_pdf_base64": {
+          "type": "string",
+          "description": "With use_profile false: the applicant's resume PDF, base64."
+        },
+        "resume_id": {
+          "type": "string",
+          "description": "Use this one of the user's saved resumes. Leave out to let Worklittle pick the best one for the job."
+        },
+        "tailor_resume": {
+          "type": "boolean",
+          "description": "Default from apply settings (on): write a resume tailored to this job. false: send the resume as is."
+        },
+        "max_per_company": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10,
+          "description": "Applications to one company per 30 days for this person. Defaults to their apply setting (3). Raise it only after the person agrees, when a start returned COMPANY_LIMIT_REACHED."
+        }
+      },
+      "required": []
+    }
+  },
+  {
+    "name": "check_application_status",
+    "description": "Jobs — Check an application Worklittle is filling out: its status, which form fields are filled, and a live view link. Only the status completed means it was submitted.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "x-mcp-header": "Session-Id"
+        }
+      },
+      "required": [
+        "session_id"
+      ]
+    }
+  },
+  {
+    "name": "stop_application",
+    "description": "Jobs — Stop an application that Worklittle is filling out for the user. This cancels the application in progress and it cannot be resumed; the user would have to start it again. Needs the session_id from apply_for_job or list_applications.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "x-mcp-header": "Session-Id"
+        }
+      },
+      "required": [
+        "session_id"
+      ]
+    }
+  }
+]

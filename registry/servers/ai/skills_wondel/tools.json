@@ -1,0 +1,193 @@
+[
+  {
+    "name": "search_skills",
+    "description": "Search 51 book-based agent skills and 14 guided journeys by keyword or phrase. Each skill is matched against its own trigger text, so plain task language works (\"my UI looks amateur\", \"pricing\", \"dark mode\"). Returns compact hits, each quoting the line that matched. Use recommend_skills instead when you have a task rather than a keyword.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 2,
+          "description": "Keyword, phrase, slug or plain description of the problem"
+        },
+        "kind": {
+          "description": "Restrict to single skills or guided journeys",
+          "type": "string",
+          "enum": [
+            "skill",
+            "journey",
+            "all"
+          ]
+        },
+        "category": {
+          "description": "Restrict to one domain",
+          "type": "string",
+          "enum": [
+            "design",
+            "marketing",
+            "sales",
+            "product",
+            "strategy",
+            "team",
+            "code",
+            "architecture"
+          ]
+        },
+        "limit": {
+          "description": "Maximum hits (default 8)",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "context": {
+          "type": "string",
+          "description": "Why are you calling this tool? One line on the user's actual task, in their words — not a restatement of the tool name."
+        }
+      },
+      "required": [
+        "query",
+        "context"
+      ]
+    }
+  },
+  {
+    "name": "recommend_skills",
+    "description": "Route a task to the right skills. Describe the job in your own words and this returns which skills to load first, which to skip whenever a skill's own \"not for\" line rules it out for this task — quoted verbatim — and a guided journey when the task spans a whole project rather than one step. This is the tool to reach for first.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "task": {
+          "type": "string",
+          "minLength": 4,
+          "description": "The job to be done, in your own words — a full sentence beats a keyword"
+        },
+        "stack": {
+          "description": "Language, framework or platform, if it narrows the answer",
+          "type": "string"
+        },
+        "phase": {
+          "description": "Where in the work you are",
+          "type": "string",
+          "enum": [
+            "audit",
+            "build",
+            "launch"
+          ]
+        },
+        "max": {
+          "description": "How many skills to return (default 3)",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6
+        },
+        "context": {
+          "type": "string",
+          "description": "Why are you calling this tool? One line on the user's actual task, in their words — not a restatement of the tool name."
+        }
+      },
+      "required": [
+        "task",
+        "context"
+      ]
+    }
+  },
+  {
+    "name": "get_skill",
+    "description": "Metadata for one skill or journey: its definition, when to use it, when not to, and related slugs. Deliberately cheap (~300 tokens) so you can check a candidate before committing context to it. Pass sections to widen, or sections:[\"all\"] for the whole page. This does not return the skill instructions — load_skill does.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "description": "Skill or journey slug, e.g. \"refactoring-ui\" or \"create-business\""
+        },
+        "sections": {
+          "description": "Which parts to return. Default: definition, use_when, not_for, related. \"all\" returns the full page.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "definition",
+              "use_when",
+              "not_for",
+              "key_concepts",
+              "prompts",
+              "faqs",
+              "book",
+              "related",
+              "phases",
+              "all"
+            ]
+          }
+        },
+        "context": {
+          "type": "string",
+          "description": "Why are you calling this tool? One line on the user's actual task, in their words — not a restatement of the tool name."
+        }
+      },
+      "required": [
+        "slug",
+        "context"
+      ]
+    }
+  },
+  {
+    "name": "load_skill",
+    "description": "The skill's actual instructions — the upstream SKILL.md, ready to follow in this session with nothing installed. The response also lists the skill's reference files with their token cost, so you can pull deeper material on demand by calling again with part set to a filename.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "description": "Skill or journey slug"
+        },
+        "part": {
+          "description": "\"core\" (default) for SKILL.md, or a reference filename from a previous response",
+          "type": "string"
+        },
+        "context": {
+          "type": "string",
+          "description": "Why are you calling this tool? One line on the user's actual task, in their words — not a restatement of the tool name."
+        }
+      },
+      "required": [
+        "slug",
+        "context"
+      ]
+    }
+  },
+  {
+    "name": "get_journey",
+    "description": "One guided journey as a phase plan: the ordered skills, the decision question each phase answers, the docs/ file it writes, and which phases are go/no-go gates. Pass slug for a known journey, or goal to have one picked.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "slug": {
+          "description": "Journey slug, e.g. \"grow-website\"",
+          "type": "string"
+        },
+        "goal": {
+          "description": "What you are trying to achieve, if you do not know which journey fits",
+          "type": "string"
+        },
+        "context": {
+          "type": "string",
+          "description": "Why are you calling this tool? One line on the user's actual task, in their words — not a restatement of the tool name."
+        }
+      },
+      "required": [
+        "context"
+      ]
+    }
+  }
+]

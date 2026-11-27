@@ -1,0 +1,660 @@
+[
+  {
+    "name": "execute_sql",
+    "description": "Execute SQL query against GreptimeDB. Please use MySQL dialect.\n\nThe general query entry point: use it for logs, traces, events, joins\nacross tables, and metadata queries such as SHOW TABLES. For a plain\nmetric time series prefer execute_tql, where the table name is the metric\nname and PromQL states rate, increase and quantile directly.\n\nQualify a table as `schema.table` to read a database other than the one\nthis server connected to; the account needs read permission on it.\n\nRead-only by default. When the server runs with write mode enabled\n(--allow-write / GREPTIMEDB_ALLOW_WRITE), destructive SQL (DDL/DML) is\nalso permitted.\n\nResults are bounded by a byte budget and a row limit clamped to 1-10000.\nJSON row results report `truncated`; `truncation_reason` describes rows\ndropped for the byte budget. CSV and Markdown report truncation in a text\nnotice. Lowering `limit` or narrowing filters does not make the original\nresult complete. SHOW TABLES and SHOW DATABASES return plain text regardless\nof format.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "description": "The SQL query to execute (using MySQL dialect)",
+          "title": "Query",
+          "type": "string"
+        },
+        "format": {
+          "default": "csv",
+          "description": "Output format: csv, json, or markdown (default: csv)",
+          "title": "Format",
+          "type": "string"
+        },
+        "limit": {
+          "default": 1000,
+          "description": "Maximum rows to return, clamped to 1-10000 (default: 1000)",
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "type": "object",
+      "title": "execute_sqlArguments"
+    }
+  },
+  {
+    "name": "describe_table",
+    "description": "Get a table profile: schema, semantic metadata, sample rows, and guidance.\n\nUse it when deciding how to query an unfamiliar table. When the right table\nis not known yet, search_table_semantics first; describing candidates one\nby one is slower than querying the data.\n\nThe semantic profile says what the table means, not what its data says.\nsignal_type is metric, log, trace, or event; source and source_version name\nthe ingestion protocol; pipeline names the schema that shaped the rows;\nsemantic_options carries signal-specific facts such as metric type and\nunit. metadata_quality describes how the metric type was obtained --\n`declared` by the protocol or `inferred` from the name -- and says nothing\nabout telemetry quality. entity_declarations lists the entities the table\ncontributes to the semantic graph. A null or missing semantic field means\nunknown, not the opposite fact.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "table": {
+          "description": "Unquoted table, schema.table, or catalog.schema.table name. A catalog prefix is ignored; reads use the connected catalog.",
+          "title": "Table",
+          "type": "string"
+        },
+        "include_semantics": {
+          "default": true,
+          "description": "Include table semantic metadata from information_schema.table_semantics",
+          "title": "Include Semantics",
+          "type": "boolean"
+        },
+        "include_samples": {
+          "default": true,
+          "description": "Include a small sample of table rows for context",
+          "title": "Include Samples",
+          "type": "boolean"
+        },
+        "sample_limit": {
+          "default": 5,
+          "description": "Maximum sample rows to return (0-20, default: 5)",
+          "title": "Sample Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "table"
+      ],
+      "type": "object",
+      "title": "describe_tableArguments"
+    }
+  },
+  {
+    "name": "search_table_semantics",
+    "description": "Find tables by observability concept when the right table name is unknown.\n\nSearches table names, semantic options, and entity declarations, and ranks\ntables by how many query terms they matched. Use it before describe_table\nwhen the schema is wide or table names do not say what they hold.\n\nIt searches schema metadata only, never telemetry row values, so it can say\nwhich table holds Redis memory usage but not which row belongs to\n`Redis02`. It ranks on the values in that metadata, not on the schema's own\nkey names, so search for `gauge` or `bytes` rather than `metric type`. Once\nit returns candidates, query their data or describe one of them; do not\ndescribe every candidate in turn.\n\nIt searches one database at a time: the connected one by default, or the\none named by `schema`. Use SHOW DATABASES to see what else is there.\n\nOnly tables carrying a `greptime.semantic.*` option, or one a built-in\nconvention derives a declaration for, are visible here. A table absent from\nthe results may still exist and hold the data, so fall back to SHOW TABLES\nrather than concluding it is not there.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "description": "Telemetry concepts to search for, such as 'redis memory usage' or 'request latency'",
+          "title": "Query",
+          "type": "string"
+        },
+        "signal_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Restrict results to one signal type: metric, log, trace, event. Tables whose signal type was never stamped are excluded by this filter.",
+          "title": "Signal Type"
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Database to search. Defaults to the one this server is connected to.",
+          "title": "Schema"
+        },
+        "limit": {
+          "default": 50,
+          "description": "Maximum tables to return (1-50, default: 50)",
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "type": "object",
+      "title": "search_table_semanticsArguments"
+    }
+  },
+  {
+    "name": "query_semantic_graph",
+    "description": "Query the semantic graph: which entities exist and which are related.\n\nUse view=summary when the entity and relationship types in this graph are\nnot known yet; it reports them with the endpoint type pairs each\nrelationship connects. With a type or an id already in hand, query\nentities or relationships directly.\n\nThe window is required and half-open, [start_time, end_time), over\nobserved_at. Derived observations use 60-second buckets. Declared edges\ninstead reflect validity overlapping the window: observed_at is the later\nof the validity start and the window start, not a measured event time.\n\nrelationships groups by endpoints, relationship type, provenance, and\nconfidence. For trace-derived calls, the database reports confidence 1.0\nfor a bucket whose client and server spans paired and 0.5 for one where\nonly the client was seen, and it switches request_count, error_count and\nthe durations to whichever population that bucket describes: paired\nrequests timed by the server span, or unmatched clients\ntimed by their own. An edge observed both ways therefore comes back as two\nrows. unmatched_count reports client spans with no paired server span.\nDurations are in seconds. Attribute-derived edges describe identities\nobserved together, not measured calls. Declared edges retain their supplied\nconfidence and counts; these are assertions, not span-pairing evidence.\n\nentities returns one row per distinct set of attributes, so an entity whose\ndescriptive attributes changed inside the window appears more than once;\nitem_count counts rows, not entities. first_seen and last_seen bound where\nthe row was observed inside this window, not when the entity first existed.\n\nOrdering is by type and endpoint. Pass rel_type=calls to order by error\nand request count instead. When complete is false, more rows matched than\nthe limit and later types may be absent entirely rather than merely cut short.\n\nA missing edge is not evidence that two entities are unrelated: it can also\nmean the call was not instrumented, was sampled out, or fell outside this\nwindow. Entities are not deduplicated across identity schemes, so one\nprocess can appear under two ids if two sources named it differently.\n\nentity_id_attrs names the attributes an id was assembled from and\nsource_tables names the telemetry tables that witnessed it. Identifiers\nfrom alerts and other tools are not graph ids unless a query here returned\nthat exact string.\n\nWhen masking is on, a returned field is hidden if its own name matches a\nsensitive pattern, and an attribute map is also masked by the names inside\nit. entities additionally hides entity_id when a masked attribute helped\nbuild it; relationships cannot do the same, because its view does not carry\nattribute names, so such a value can still appear there as src_id or\ndst_id.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "view": {
+          "description": "summary: which entity and relationship types exist and what they connect. entities: the nodes. relationships: the edges.",
+          "enum": [
+            "summary",
+            "entities",
+            "relationships"
+          ],
+          "title": "View",
+          "type": "string"
+        },
+        "start_time": {
+          "description": "Inclusive start of the window, RFC3339, e.g. 2026-09-05T07:00:00Z. Without an offset it is read as UTC.",
+          "title": "Start Time",
+          "type": "string"
+        },
+        "end_time": {
+          "description": "Exclusive end of the window, RFC3339.",
+          "title": "End Time",
+          "type": "string"
+        },
+        "entity_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "entities only: service, k8s.pod, host, ...",
+          "title": "Entity Type"
+        },
+        "entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "entities only: a canonical id this graph returned.",
+          "title": "Entity Id"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "entities only: the namespace or environment an id is scoped to.",
+          "title": "Scope"
+        },
+        "rel_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "relationships only: calls, runs_on, contains, part_of, uses, invokes, depends_on, owns, or a custom declared value.",
+          "title": "Rel Type"
+        },
+        "src_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "relationships only: source endpoint type.",
+          "title": "Src Type"
+        },
+        "src_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "relationships only: a canonical source id this graph returned.",
+          "title": "Src Id"
+        },
+        "dst_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "relationships only: destination endpoint type.",
+          "title": "Dst Type"
+        },
+        "dst_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "relationships only: a canonical destination id this graph returned.",
+          "title": "Dst Id"
+        },
+        "provenance": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "relationships only: how the edge was obtained -- trace (span-derived), attribute (identities on one row), declared, or agent.",
+          "title": "Provenance"
+        },
+        "limit": {
+          "default": 100,
+          "description": "Maximum rows for entities or relationships; ignored for summary.",
+          "maximum": 500,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "view",
+        "start_time",
+        "end_time"
+      ],
+      "type": "object",
+      "title": "query_semantic_graphArguments"
+    }
+  },
+  {
+    "name": "health_check",
+    "description": "Check GreptimeDB connection status and server version.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "health_checkArguments"
+    }
+  },
+  {
+    "name": "execute_tql",
+    "description": "Execute TQL query for time-series analysis. TQL is PromQL-compatible.\n\nUse it for metric tables, where the table name is the metric name and the\nvalue columns are the PromQL fields. PromQL vector matching can combine\nmetrics from different tables. Use execute_sql for log or event rows,\ntrace analysis, and SQL JOINs.\n\n`metric{__schema__=\"other_db\"}` reads a database other than the connected\none. That matcher accepts `=` only.\n\nReturns at most 10000 rows, also bounded by a byte budget. JSON reports\n`truncated`; CSV and Markdown append a truncation notice. A shorter time\nrange or fewer series changes coverage; a larger step lowers resolution.\nAn untruncated retry with those changes does not cover the original query.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "description": "PromQL-compatible expression. Supports standard PromQL syntax: rate(), increase(), sum(), avg(), histogram_quantile(), etc. Example: rate(http_requests_total[5m])",
+          "title": "Query",
+          "type": "string"
+        },
+        "start": {
+          "description": "Start time: SQL expression (e.g., \"now() - interval '5' minute\"), RFC3339 (e.g., '2024-01-01T00:00:00Z'), or Unix timestamp",
+          "title": "Start",
+          "type": "string"
+        },
+        "end": {
+          "description": "End time: SQL expression (e.g., 'now()'), RFC3339, or Unix timestamp",
+          "title": "End",
+          "type": "string"
+        },
+        "step": {
+          "description": "Query resolution step, e.g., '1m', '5m', '1h'",
+          "title": "Step",
+          "type": "string"
+        },
+        "lookback": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Lookback delta: how far back a sample may be reused when a step lands where there is no sample, e.g. '5m'. Defaults to 5m.",
+          "title": "Lookback"
+        },
+        "format": {
+          "default": "json",
+          "description": "Output format: csv, json, or markdown (default: json)",
+          "title": "Format",
+          "type": "string"
+        }
+      },
+      "required": [
+        "query",
+        "start",
+        "end",
+        "step"
+      ],
+      "type": "object",
+      "title": "execute_tqlArguments"
+    }
+  },
+  {
+    "name": "query_range",
+    "description": "Execute time-window aggregation query using GreptimeDB's RANGE query syntax.\n\nThe narrowest of the three query entry points. Use it for a window\naggregation over a non-metric table, or an alignment PromQL cannot state;\na metric time series is better served by execute_tql and anything else by\nexecute_sql.\n\n`select` must carry at least one aggregate with its own RANGE, such as\n`avg(cpu) RANGE '5m'`, and `align` supplies the step between windows. A\nplain column list does not plan. `table` accepts `schema.table` to read a\ndatabase other than the connected one.\n\nA larger align lowers resolution; tighter filters or a lower limit return\na subset. An untruncated retry with those changes does not cover the\noriginal query.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "table": {
+          "description": "Table name to query (supports schema.table format)",
+          "title": "Table",
+          "type": "string"
+        },
+        "select": {
+          "description": "Columns and aggregations, e.g., ts, host, avg(cpu) RANGE '5m'",
+          "title": "Select",
+          "type": "string"
+        },
+        "align": {
+          "description": "Alignment interval, e.g., '1m', '5m'",
+          "title": "Align",
+          "type": "string"
+        },
+        "by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Group by columns, e.g., 'host'",
+          "title": "By"
+        },
+        "where": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "WHERE clause conditions",
+          "title": "Where"
+        },
+        "fill": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Fill strategy: NULL, PREV, LINEAR, or a value",
+          "title": "Fill"
+        },
+        "order_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "ORDER BY clause (e.g., 'ts DESC')",
+          "title": "Order By"
+        },
+        "format": {
+          "default": "json",
+          "description": "Output format: csv, json, or markdown (default: json)",
+          "title": "Format",
+          "type": "string"
+        },
+        "limit": {
+          "default": 1000,
+          "description": "Maximum rows to return, clamped to 1-10000",
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "table",
+        "select",
+        "align"
+      ],
+      "type": "object",
+      "title": "query_rangeArguments"
+    }
+  },
+  {
+    "name": "explain_query",
+    "description": "Analyze SQL or TQL query execution plan.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "description": "Original SQL query or full TQL EVAL (...) <PromQL> statement. Do not include EXPLAIN or ANALYZE wrappers.",
+          "title": "Query",
+          "type": "string"
+        },
+        "analyze": {
+          "default": false,
+          "description": "Execute and show actual metrics",
+          "title": "Analyze",
+          "type": "boolean"
+        },
+        "verbose": {
+          "default": false,
+          "description": "Show detailed per-partition scan metrics; combine with analyze=true to reveal index-pruning counters (rg_bloom_filtered, rg_inverted_filtered, rg_minmax_filtered, rows_bloom_filtered, rows_inverted_filtered)",
+          "title": "Verbose",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "type": "object",
+      "title": "explain_queryArguments"
+    }
+  },
+  {
+    "name": "list_pipelines",
+    "description": "List all pipelines or get details of a specific pipeline.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional pipeline name to filter by",
+          "title": "Name"
+        }
+      },
+      "type": "object",
+      "title": "list_pipelinesArguments"
+    }
+  },
+  {
+    "name": "create_pipeline",
+    "description": "Create a new pipeline in GreptimeDB.\n\nStores a new version of the pipeline; it does not replace existing ones.\nRefused unless the server runs with write mode enabled.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "description": "Name of the pipeline to create",
+          "title": "Name",
+          "type": "string"
+        },
+        "pipeline": {
+          "description": "Pipeline configuration in YAML format",
+          "title": "Pipeline",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "pipeline"
+      ],
+      "type": "object",
+      "title": "create_pipelineArguments"
+    }
+  },
+  {
+    "name": "dryrun_pipeline",
+    "description": "Test a pipeline with sample data without writing to the database.\n\nYou can test a pipeline in two ways:\n- Provide 'pipeline' with inline YAML configuration\n- Provide 'pipeline_name' to test a previously saved pipeline\n\nArgs:\n    pipeline: Pipeline YAML configuration (inline)\n    pipeline_name: Name of saved pipeline (mutually exclusive with pipeline)\n    data: Test data in JSON/NDJSON format\n    data_type: Optional content type (e.g., 'application/x-ndjson')\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "data": {
+          "description": "Test data in JSON or NDJSON format (single object or array)",
+          "title": "Data",
+          "type": "string"
+        },
+        "pipeline": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Pipeline configuration in YAML format (inline). Provide this to test a pipeline without saving it.",
+          "title": "Pipeline"
+        },
+        "pipeline_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Name of the saved pipeline to test. Provide either 'pipeline' or 'pipeline_name', not both.",
+          "title": "Pipeline Name"
+        },
+        "data_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Content type of the data (e.g., 'application/x-ndjson'). If omitted, GreptimeDB will use default.",
+          "title": "Data Type"
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "type": "object",
+      "title": "dryrun_pipelineArguments"
+    }
+  },
+  {
+    "name": "delete_pipeline",
+    "description": "Delete a specific version of a pipeline from GreptimeDB.\n\nIrreversible, and refused unless the server runs with write mode enabled.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "description": "Name of the pipeline to delete",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "description": "Version of the pipeline to delete (timestamp)",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "type": "object",
+      "title": "delete_pipelineArguments"
+    }
+  },
+  {
+    "name": "list_dashboards",
+    "description": "List all Perses dashboard definitions stored in GreptimeDB.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "list_dashboardsArguments"
+    }
+  },
+  {
+    "name": "create_dashboard",
+    "description": "Create or update a Perses dashboard definition in GreptimeDB.\n\nOverwrites any dashboard already stored under this name. Refused unless\nthe server runs with write mode enabled.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "description": "Name of the dashboard",
+          "title": "Name",
+          "type": "string"
+        },
+        "definition": {
+          "description": "Perses dashboard definition in JSON format",
+          "title": "Definition",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "definition"
+      ],
+      "type": "object",
+      "title": "create_dashboardArguments"
+    }
+  },
+  {
+    "name": "delete_dashboard",
+    "description": "Delete a Perses dashboard definition from GreptimeDB.\n\nIrreversible, and refused unless the server runs with write mode enabled.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "description": "Name of the dashboard to delete",
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "title": "delete_dashboardArguments"
+    }
+  }
+]

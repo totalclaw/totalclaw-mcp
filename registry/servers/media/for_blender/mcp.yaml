@@ -35,9 +35,15 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T08:22:23Z'
+  probed_runtime: uvx
+  count: 10
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
   # 关遥测：已装的老用户也由桌面端 MCP 医生 / agent mcp_hub 按这里补上（与 runtimes[].env 保持一致）
   enforced_env:
     BLENDER_MCP_DISABLE_TELEMETRY: 'true'
+  prompt_injection_findings: []

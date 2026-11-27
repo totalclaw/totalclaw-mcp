@@ -1,0 +1,232 @@
+[
+  {
+    "name": "genclass_status",
+    "description": "Which pages on this machine are connected to GenClass (route, schedule, model state), counts of findings by kind, the explore session and armed replays. Call it first in a web project, and before you test a page.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "genclass_findings",
+    "description": "What GenClass recorded in pages on this machine, ranked and deduplicated with counts: races found by explore (final state depends on response order), responses that overwrote newer data, uncaught errors (with the click and request before them), the same request sent twice by two clicks, the on-device model's detections, visual checks. Use when the user reports an intermittent bug, after changing data-fetching or submit code, or before saying a UI change is done.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "race",
+            "stale-write",
+            "error",
+            "duplicate-request",
+            "detection",
+            "intervention",
+            "check",
+            "expectation"
+          ],
+          "description": "Only this kind."
+        },
+        "route": {
+          "type": "string",
+          "description": "Only this page path, e.g. /checkout."
+        },
+        "since_minutes": {
+          "type": "number",
+          "description": "Only findings seen in the last N minutes."
+        },
+        "limit": {
+          "type": "number",
+          "description": "At most this many (default 20)."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "genclass_explain",
+    "description": "Everything about one finding: what happened in causal order (click → request → response → state write), the recorded steps and delivery order, what differed from the request-order baseline, the model's facts, how to replay it exactly, and a Playwright regression test that fails while the bug is there.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Finding id, e.g. f3."
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "genclass_explore",
+    "description": "Find races before users do. action \"start\" arms the next page loads: 2 baselines with responses in request order (with `slow_ms`, a third with no added delay), then `runs` loads where overlapping responses arrive in a seeded different order (optionally slower, or with `focus` endpoints last). Run the same scenario once per armed load, then action \"report\": each load's final state is compared with the baseline; a difference in what the page shows, its form values, the requests it sent or its errors depends on network timing (a race), and comes with a seed that replays it. Store values that differ while the page is the same are listed apart as internal state. Without `route`, the page of the first armed load is the page under test; set `route` when the scenario loads several pages. Armed loads expire after 30 minutes. \"stop\" disarms.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "start",
+            "report",
+            "stop"
+          ]
+        },
+        "runs": {
+          "type": "number",
+          "description": "Seeded loads after the baselines (default 6, max 50)."
+        },
+        "route": {
+          "type": "string",
+          "description": "Only arm page loads of this path (default: any page)."
+        },
+        "focus": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Request signatures to deliver last, e.g. [\"PUT /api/notes/:id\"] (one production flagged)."
+        },
+        "slow_ms": {
+          "type": "number",
+          "description": "Also add up to this much latency per response (a slow network), e.g. 800."
+        },
+        "seed": {
+          "type": "number",
+          "description": "First seed (default 1)."
+        },
+        "id": {
+          "type": "string",
+          "description": "report: the session id (default the latest)."
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "genclass_replay",
+    "description": "Reproduce one finding exactly. action \"arm\": the next page load of the finding's route gets the delivery order that produced it; do the same steps (genclass_explain lists them). action \"result\": whether that replay reproduced it. Use before a fix to confirm the bug and after it to prove the fix.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "arm",
+            "result"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "description": "Finding id, e.g. f3."
+        },
+        "times": {
+          "type": "number",
+          "description": "arm: how many page loads (default 1)."
+        }
+      },
+      "required": [
+        "action",
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "genclass_analytics",
+    "description": "What GenClass measured about the app. local: per-endpoint request counts, median and p95 latency, error rates and failure streaks; per-page runs, errors and overwritten fields; learned relations between fields and learned flows, from pages on this machine. production: the GenClass dashboard's sessions, detections by diagnosis and page, and latest decisions (needs GENCLASS_DASHBOARD, the dashboard's private link; \"sample\" reads the public sample).",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": [
+            "local",
+            "production",
+            "both"
+          ]
+        },
+        "route": {
+          "type": "string"
+        },
+        "range": {
+          "type": "string",
+          "enum": [
+            "24h",
+            "7d",
+            "30d",
+            "90d"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "genclass_setup",
+    "description": "The lines to add so this project's dev build connects to GenClass (detects Vite, Next.js and others from package.json), how to check it works, and this MCP client's config lines for keeping the server configured. It changes no file; show the user the lines and wait for a yes before you run or add them.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "genclass_scan",
+    "description": "Audit one page in one step with GenClass's 23 measured visual checks: text you cannot read against its background, images, fonts, stylesheets and media that failed to load, a page that scrolls sideways on a phone, controls stuck under fixed bars, layers that swallow clicks, covered dialogs, template leaks like {{name}} or [object Object]. It loads the URL headless at desktop and phone sizes in Playwright's Chromium on this machine (when that is missing it says how to install it); hosted: true runs it on the genclass.dev page check instead, which adds accessibility, speed and security audits, takes public pages only and is the one case where the URL leaves this machine and returns a score and each problem with its element, selector and a suggested CSS fix, worst first, plus the JSON report. Use it before you call a page or UI change done, after CSS or layout changes, and on a site you do not own. Works on any URL, including the dev server (http://localhost:5173/); no page needs GenClass installed.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The page, e.g. http://localhost:5173/pricing or https://example.com."
+        },
+        "phone": {
+          "type": "boolean",
+          "description": "The phone size only (default: desktop and phone)."
+        },
+        "hosted": {
+          "type": "boolean",
+          "description": "Run on the genclass.dev page check instead of this machine (public pages only; adds accessibility, speed and security). It sends the URL there, so ask the user first."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "genclass_clear",
+    "description": "Forget recorded runs and findings on this machine (all, findings or runs), e.g. after a fix to start clean.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "what": {
+          "type": "string",
+          "enum": [
+            "all",
+            "findings",
+            "runs"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+]

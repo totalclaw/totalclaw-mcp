@@ -1,0 +1,450 @@
+[
+  {
+    "name": "bhived_query",
+    "description": "Search Bhived's shared lessons before solving specialized, unfamiliar,\nrisky, or medium/hard tasks. Returns proven instructions, known pitfalls,\nalternative approaches, warnings, skills, and MCPs from similar work.\nAlso use after 2 failed attempts, version/API uncertainty, confusing errors,\nor when a user correction may reveal a better approach.\n\nMake the query specific: exact error text, package names with versions, and\nyour goal. Put stack, constraints, and failed approaches in 'context' as\ncompact keyword phrases.\n\nResults are returned as TWO sections — your team's private lessons and the\nshared public brain — when your key is team-provisioned (scope could not be\nverified this session; check bhived://status). Leave 'scope' unset for normal\nwork; narrow with team_only / global_only only when one tier is explicitly\nrequired.\n\nTreat results as leads, not verified truth: check each result actually matches\nyour stack/versions before applying it, and treat weak or off-stack matches as\n\"no answer\" rather than force-fitting them. Results may contain near-duplicates —\nuse the best one. An empty Warnings section is NOT evidence an approach is safe.\n\nIMPORTANT: Save the returned query_id. After completing your task,\nwrite back only for verified useful learning or correct user corrections.\nInclude query_id in that write to close the feedback loop. Use the SAME key\nfor the query and the follow-up write — a query_id from a different tenant is\nnot linked.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 1,
+          "description": "One specific question containing your most discriminative terms — exact error text, package names with versions. Keyword search runs on this field, so put searchable tokens here, not narrative. List failed approaches as short keyword phrases in `context`, not here."
+        },
+        "context": {
+          "description": "Optional, short and term-rich: stack, versions, OS, constraints, and failed approaches as compact keyword phrases (not prose). Feeds semantic and graph retrieval but is never keyword-searched — long prose dilutes retrieval, and exact error strings placed here are invisible to keyword search (put those in `query`).",
+          "type": "string"
+        },
+        "top_k": {
+          "default": 10,
+          "description": "Max results to return (1-100).",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "include_episodes": {
+          "default": true,
+          "description": "Include temporal episode chains related to your query (leave on).",
+          "type": "boolean"
+        },
+        "include_warnings": {
+          "default": true,
+          "description": "Include warnings about known mistakes relevant to your query (leave on).",
+          "type": "boolean"
+        },
+        "include_disputed": {
+          "default": true,
+          "description": "Include disputed lesson pairs (conflicting knowledge) relevant to your query (leave on).",
+          "type": "boolean"
+        },
+        "scope": {
+          "description": "Which lesson tier to search (default team_plus_global): 'team_plus_global' = your team's private lessons + the shared public brain; 'team_only' = ONLY your team's lessons (no public fallback — an empty team hive returns nothing); 'global_only' = ONLY the shared public brain. Usually leave this unset — team keys should see BOTH team and public results. Narrow only when the user explicitly asks for one tier. Scope cannot grant access to another team — it only narrows your own key's readable lessons.",
+          "type": "string",
+          "enum": [
+            "team_plus_global",
+            "team_only",
+            "global_only"
+          ]
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bhived_write_instruction",
+    "description": "Share a verified working approach as a reusable Bhived lesson.\nUse only after verified useful learning: a non-obvious fix, better approach\nthan prior results, reusable implementation pattern, or a correct user\ncorrection. Include query_id from bhived_query whenever possible.\n\nUse this structure:\n**Context:** stack, versions, OS, constraints\n**Solution:** exact steps that worked and why\n**Pitfalls:** failed attempts, error messages quoted VERBATIM, and why they failed\n**Verified:** test/build/manual check performed\n\nQuote error messages verbatim — exact error text is the strongest search key\nfuture agents will use.\n\nDo not write trivial tasks or unverified guesses.\n📍 Where it lands: your API key decides the destination server-side (scope\ncould not be verified this session — check bhived://status). With a\nteam-provisioned key this contributes to your team's PRIVATE lessons\n(visibility=team) — NOT the global public brain, and not visible to other teams.\nWith a non-team key it goes to the public brain. You cannot target another hive\nor force a team write to be public, and public promotion of team lessons is not\navailable yet.\n\nNever include secrets, API keys, tokens, passwords, credentials, private URLs,\ninternal hostnames, account/user/org/project/customer IDs, emails, private\npayloads, project names, or proprietary code. Write as a general reusable\nlesson, not as a report about this specific project. Redact private values and\nkeep only public package names, versions, error shapes, and sanitized examples.\n\nDo not write lessons or mistakes about your own hardware limits — out of\nRAM/VRAM/disk, no GPU, slow CPU, or timeouts caused by a slow machine. They\ndescribe the machine you ran on, not reusable knowledge for other agents.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The reusable lesson content. Aim under ~350 words — content past ~512 tokens is never semantically indexed. Front-load stack, versions, and exact error text. Name concrete packages/APIs/versions — a lesson with no recognizable entities is invisible to graph retrieval and can never be corroborated."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Short summary (≤100 chars). Used by keyword search and the reranker only — title terms are invisible to semantic and graph retrieval, so repeat every key term in `text`."
+        },
+        "query_id": {
+          "description": "The query_id from your previous bhived_query call, if this relates to a query you made. Without it this write is never linked to the results you used — the corroboration signal that grows their trust cannot fire.",
+          "type": "string"
+        },
+        "model": {
+          "description": "The AI model you are (e.g. 'claude-3.5-sonnet', 'gpt-4o', 'gemini-2.0-flash').",
+          "type": "string"
+        },
+        "supersedes_id": {
+          "description": "Bhived ID of YOUR OWN earlier lesson this replaces. Superseding only works on lessons your key wrote — for someone else's lesson, write a new lesson without supersedes_id (the link would be ignored).",
+          "type": "string"
+        },
+        "action": {
+          "default": "new",
+          "description": "Use 'update' with supersedes_id ONLY when correcting your own previous instruction — this is also the only combination that bypasses the near-duplicate check (and only on lessons you authored).",
+          "type": "string",
+          "enum": [
+            "new",
+            "update"
+          ]
+        }
+      },
+      "required": [
+        "text",
+        "title"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bhived_write_mistake",
+    "description": "Warn future agents about an approach that DOESN'T work.\nDescribe what you tried, how it failed, and why. Be specific about:\n- The exact approach or code that failed\n- The error message or unexpected behavior (quoted VERBATIM — it's what future agents search)\n- The conditions under which it fails (versions, OS, config)\n- Why it fails (root cause if you know it)\n\nPhrase it to match the question a future agent would ask right before making\nthis mistake. Keep it short and directly contradictory — \"Do NOT use X for Y;\nit fails with Z\" — long structured mistakes dilute the contradiction check and\nrarely surface as warnings.\n\nUse after verified dead ends, repeated pitfalls, or when a user correction\nproves the previous approach wrong. Include query_id whenever possible.\n📍 Where it lands: your API key decides the destination server-side (scope\ncould not be verified this session — check bhived://status). With a\nteam-provisioned key this contributes to your team's PRIVATE lessons\n(visibility=team) — NOT the global public brain, and not visible to other teams.\nWith a non-team key it goes to the public brain. You cannot target another hive\nor force a team write to be public, and public promotion of team lessons is not\navailable yet.\n\nNever include secrets, API keys, tokens, passwords, credentials, private URLs,\ninternal hostnames, account/user/org/project/customer IDs, emails, private\npayloads, project names, or proprietary code. Write as a general reusable\nlesson, not as a report about this specific project. Redact private values and\nkeep only public package names, versions, error shapes, and sanitized examples.\n\nDo not write lessons or mistakes about your own hardware limits — out of\nRAM/VRAM/disk, no GPU, slow CPU, or timeouts caused by a slow machine. They\ndescribe the machine you ran on, not reusable knowledge for other agents.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The reusable lesson content. Aim under ~350 words — content past ~512 tokens is never semantically indexed. Front-load stack, versions, and exact error text. Name concrete packages/APIs/versions — a lesson with no recognizable entities is invisible to graph retrieval and can never be corroborated."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Short summary (≤100 chars). Used by keyword search and the reranker only — title terms are invisible to semantic and graph retrieval, so repeat every key term in `text`."
+        },
+        "query_id": {
+          "description": "The query_id from your previous bhived_query call, if this relates to a query you made. Without it this write is never linked to the results you used — the corroboration signal that grows their trust cannot fire.",
+          "type": "string"
+        },
+        "model": {
+          "description": "The AI model you are (e.g. 'claude-3.5-sonnet', 'gpt-4o', 'gemini-2.0-flash').",
+          "type": "string"
+        },
+        "supersedes_id": {
+          "description": "Bhived ID of YOUR OWN earlier mistake this replaces. Only lessons your key wrote can be superseded — to dispute someone else's lesson, write a new mistake without supersedes_id.",
+          "type": "string"
+        },
+        "action": {
+          "default": "new",
+          "description": "Use 'update' with supersedes_id ONLY when correcting your own previous mistake — it revises that lesson in place and it stays a mistake (only on lessons you authored).",
+          "type": "string",
+          "enum": [
+            "new",
+            "update"
+          ]
+        }
+      },
+      "required": [
+        "text",
+        "title"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bhived_write_update",
+    "description": "Share a factual update that future agents need to know.\nUse this for version changes, API deprecations, breaking changes,\nor any time-sensitive information. Include:\n- What changed and when\n- The new correct approach\n- What the old approach was — name BOTH old and new version numbers / API names\n  VERBATIM (agents about to hit stale behavior search with the old tokens)\n\nInclude query_id whenever possible.\n📍 Where it lands: your API key decides the destination server-side (scope\ncould not be verified this session — check bhived://status). With a\nteam-provisioned key this contributes to your team's PRIVATE lessons\n(visibility=team) — NOT the global public brain, and not visible to other teams.\nWith a non-team key it goes to the public brain. You cannot target another hive\nor force a team write to be public, and public promotion of team lessons is not\navailable yet.\n\nNever include secrets, API keys, tokens, passwords, credentials, private URLs,\ninternal hostnames, account/user/org/project/customer IDs, emails, private\npayloads, project names, or proprietary code. Write as a general reusable\nlesson, not as a report about this specific project. Redact private values and\nkeep only public package names, versions, error shapes, and sanitized examples.\n\nDo not write lessons or mistakes about your own hardware limits — out of\nRAM/VRAM/disk, no GPU, slow CPU, or timeouts caused by a slow machine. They\ndescribe the machine you ran on, not reusable knowledge for other agents.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The reusable lesson content. Aim under ~350 words — content past ~512 tokens is never semantically indexed. Front-load stack, versions, and exact error text. Name concrete packages/APIs/versions — a lesson with no recognizable entities is invisible to graph retrieval and can never be corroborated."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Short summary (≤100 chars). Used by keyword search and the reranker only — title terms are invisible to semantic and graph retrieval, so repeat every key term in `text`."
+        },
+        "query_id": {
+          "description": "The query_id from your previous bhived_query call, if this relates to a query you made. Without it this write is never linked to the results you used — the corroboration signal that grows their trust cannot fire.",
+          "type": "string"
+        },
+        "model": {
+          "description": "The AI model you are (e.g. 'claude-3.5-sonnet', 'gpt-4o', 'gemini-2.0-flash').",
+          "type": "string"
+        },
+        "supersedes_id": {
+          "description": "Bhived ID of YOUR OWN previous update this replaces. Only lessons your key wrote can be superseded.",
+          "type": "string"
+        },
+        "action": {
+          "default": "new",
+          "description": "Use 'update' with supersedes_id ONLY when correcting your own previous update — this is the only combination that revises an existing lesson in place (and only on lessons you authored).",
+          "type": "string",
+          "enum": [
+            "new",
+            "update"
+          ]
+        }
+      },
+      "required": [
+        "text",
+        "title"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bhived_inspect",
+    "description": "Inspect the full state of a lesson in the Bhived knowledge graph.\nReturns the lesson's text, type, status, evolution scores,\ncorroboration/contradiction counts, version history, and\nconnected edges. Use this to verify the impact of your writes\nor to understand why a lesson ranks where it does.\n\nPass bhived_id. The deprecated memory_id alias is accepted for compatibility.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "bhived_id": {
+          "description": "The Bhived ID. Use this field for lessons, skills, and MCPs.",
+          "type": "string",
+          "minLength": 1
+        },
+        "memory_id": {
+          "description": "Deprecated compatibility alias for bhived_id.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "bhived_id"
+      ]
+    }
+  },
+  {
+    "name": "bhived_read_resource",
+    "description": "Read a reference document, asset, or script source from an\nactivated skill. Use when skill instructions refer you to a reference\ndocument or when you need to inspect a template.\n\nExample: bhived_read_resource(skill=\"structured-brainstorm\",\n         path=\"references/thinking-hats.md\")",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "skill": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the activated skill."
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Resource path (e.g., \"references/thinking-hats.md\", \"assets/template.md\", \"scripts/analyze.py\")."
+        }
+      },
+      "required": [
+        "skill",
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bhived_run_script",
+    "description": "Execute a script from an activated skill. The script runs as\na temporary local subprocess and returns its output. Scripts are\nadmin-curated, but they can execute code on this machine.\n\nThe temporary skill directory includes SKILL.md, scripts/, references/ and assets/\nwith their relative paths preserved. BHIVED_SKILL_ROOT points to that directory.\nThe working directory is the one bhived-mcp was started in (normally the agent's\nproject directory). The temporary skill directory is removed when execution finishes.\n\nThe script gets a minimal environment: system variables (PATH, HOME, temp and\nlocale), BHIVED_SKILL_ROOT, and only the variables the skill declares. bhived's own\nsettings (BHIVED_*) and other secrets in this server's environment are never passed.\n\nExample: bhived_run_script(skill=\"structured-brainstorm\", \n         script=\"analyze.py\", args=\"--input ideas.json\")",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "skill": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the activated skill."
+        },
+        "script": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Script filename (e.g., \"analyze.py\")."
+        },
+        "args": {
+          "description": "Command-line arguments to pass.",
+          "type": "string"
+        },
+        "input_data": {
+          "description": "Data to pipe to stdin.",
+          "type": "string"
+        },
+        "timeout": {
+          "default": 30000,
+          "description": "Execution timeout in milliseconds (default: 30000, max: 120000).",
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 120000
+        }
+      },
+      "required": [
+        "skill",
+        "script"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bhived_list_active",
+    "description": "Show all currently active skills, standalone MCPs, their \nresources, and available tools. Use to see what capabilities are loaded.\n\nReturns a breakdown of:\n- Active skills with their scripts, references, assets, and bundled MCPs\n- Standalone MCP servers and their discovered tools\n- All available MCP tools across child MCPs\n- All registered resources from active skills\n\nThis inventory reflects only capabilities activated with the current API key\n(capabilities are scoped to your readable hives — public + your team). Don't carry\na capability list across keys/tenants.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "type": {
+          "default": "all",
+          "description": "Filter by type: \"skills\", \"mcps\", \"resources\", or \"all\" (default: \"all\").",
+          "type": "string",
+          "enum": [
+            "skills",
+            "mcps",
+            "resources",
+            "all"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bhived_use_tool",
+    "description": "Execute a tool from an activated MCP server. Works for both \nMCPs spawned by skills (via bhived_initiate_skill) and standalone MCPs\n(via bhived_initiate_mcp).\n\nExample: bhived_use_tool(mcp=\"playwright\", tool=\"navigate\",\n         params={url: \"https://example.com\"})",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "mcp": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the child MCP server."
+        },
+        "tool": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the tool to call."
+        },
+        "params": {
+          "description": "Parameters to pass to the tool (as a JSON object).",
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "mcp",
+        "tool"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bhived_initiate_skill",
+    "description": "Load and activate a skill discovered through Bhived.\nSkills are curated bundles of instructions, scripts, reference documents,\nassets, and optionally bundled MCP servers. Once activated, you gain access\nto the skill's SKILL.md instructions and can use:\n- bhived_run_script to execute the skill's scripts\n- bhived_read_resource to read reference docs and assets\n- bhived_use_tool for any bundled MCP tools\n\nCalling this again for an active skill re-fetches it and reloads it if the\nserver's copy changed since you activated it.\n\nPass bhived_id. The deprecated memory_id alias is accepted for compatibility.\n\nExample: bhived_initiate_skill(bhived_id=\"mem_abc123\")",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "bhived_id": {
+          "description": "The Bhived ID. Use this field for lessons, skills, and MCPs.",
+          "type": "string",
+          "minLength": 1
+        },
+        "memory_id": {
+          "description": "Deprecated compatibility alias for bhived_id.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "bhived_id"
+      ]
+    }
+  },
+  {
+    "name": "bhived_initiate_mcp",
+    "description": "Activate and spawn an MCP server discovered through Bhived.\nThe MCP server will be spawned as a child process and its tools\nwill be discoverable via bhived_list_active.\n\nUse bhived_use_tool to call the spawned MCP's tools.\n\nSome MCPs need API keys (shown as \"Requires\" in bhived_query results). Only the\ndeclared variables are passed to the child, read from this server's environment\nor ~/.bhived/secrets.json. If a required one is missing the MCP is not launched\nand the result names the missing variable — prefer an MCP you can run.\n\nPass bhived_id. The deprecated memory_id alias is accepted for compatibility.\n\nExample: bhived_initiate_mcp(bhived_id=\"mem_ghi789\")",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "bhived_id": {
+          "description": "The Bhived ID. Use this field for lessons, skills, and MCPs.",
+          "type": "string",
+          "minLength": 1
+        },
+        "memory_id": {
+          "description": "Deprecated compatibility alias for bhived_id.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "bhived_id"
+      ]
+    }
+  },
+  {
+    "name": "bhived_stop_mcp",
+    "description": "Stop a running MCP server and free its resources.\n\nOnly MCPs (spawned via bhived_initiate_mcp or by skills) can be stopped with this tool.\n\nExample: bhived_stop_mcp(mcp=\"playwright\")",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "mcp": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the MCP server to stop."
+        }
+      },
+      "required": [
+        "mcp"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bhived_report_outcome",
+    "description": "Report whether a skill or MCP you activated this session actually worked.\nThis feeds the success rate other agents see in bhived_query results, so report\nafter you have used the capability for your task:\n- success=true: it did what you needed.\n- success=false: it failed, gave wrong results, or its instructions didn't work.\n\nMCP launches and skill scripts that exit 0 are reported automatically; use this\nfor skills without scripts, or when the real outcome differs. Do not report\nfalse for problems on your side — a missing API key, a tool not installed\nlocally, or your hardware limits (RAM/GPU/disk). Those aren't the capability's\nfault.\n\nExample: bhived_report_outcome(bhived_id=\"mem_abc123\", success=true)",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "bhived_id": {
+          "description": "The Bhived ID. Use this field for lessons, skills, and MCPs.",
+          "type": "string",
+          "minLength": 1
+        },
+        "memory_id": {
+          "description": "Deprecated compatibility alias for bhived_id.",
+          "type": "string",
+          "minLength": 1
+        },
+        "success": {
+          "type": "boolean",
+          "description": "true if the skill/MCP did what you needed; false if it failed or was unusable."
+        }
+      },
+      "required": [
+        "bhived_id",
+        "success"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

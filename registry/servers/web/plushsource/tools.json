@@ -1,0 +1,229 @@
+[
+  {
+    "name": "search_manufacturers",
+    "description": "Search manufacturers with free text and structured filters, and return a compact shortlist. All array filters are AND: every requested value must be present on the record. MOQ filters only match records that publish an MOQ, so records with an unknown MOQ are excluded. `country` matches the primary country only, the same way the site's country pages are built. Call get_facets first if you are unsure which countries, categories, or certifications exist.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "query": {
+          "description": "Free text, for example 'mascot plush Vietnam' or 'low MOQ keychains'.",
+          "type": "string"
+        },
+        "country": {
+          "type": "string",
+          "enum": [
+            "china",
+            "vietnam",
+            "usa",
+            "uk",
+            "germany",
+            "france",
+            "poland",
+            "portugal",
+            "netherlands",
+            "italy",
+            "spain",
+            "south-korea",
+            "japan",
+            "taiwan",
+            "hong-kong",
+            "turkey",
+            "india",
+            "singapore"
+          ]
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "custom-plush",
+            "low-moq",
+            "oem-odm",
+            "prototype-sampling",
+            "character-plush",
+            "mascot-plush",
+            "promotional-plush",
+            "kickstarter",
+            "keychains"
+          ]
+        },
+        "moq_max": {
+          "description": "Maximum published MOQ, in pieces.",
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "moq_min": {
+          "description": "Minimum published MOQ, in pieces.",
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "certifications": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "CE",
+              "EN71",
+              "ASTM",
+              "CPSIA",
+              "BSCI",
+              "Sedex",
+              "ISO9001",
+              "ICTI",
+              "GOTS",
+              "FAMA",
+              "GRS",
+              "ISO8124",
+              "KC",
+              "ST",
+              "CPC",
+              "Prop65"
+            ]
+          }
+        },
+        "design_inputs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "artwork",
+              "sketch",
+              "photo",
+              "3d-model",
+              "character-design",
+              "logo-mascot",
+              "physical-sample",
+              "tech-pack",
+              "written-brief"
+            ]
+          }
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "stuffed-animals",
+              "character-plush",
+              "mascot-plush",
+              "plush-dolls",
+              "cotton-dolls",
+              "plush-keychains",
+              "promotional-plush",
+              "pillows",
+              "art-toys",
+              "baby-plush",
+              "plush-houseware",
+              "corporate-gifts",
+              "other"
+            ]
+          }
+        },
+        "industries": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ip-licensing",
+              "gaming",
+              "anime",
+              "brands",
+              "marketing-events",
+              "kickstarter",
+              "corporate-gifts",
+              "education",
+              "sports",
+              "museums"
+            ]
+          }
+        },
+        "oem": {
+          "description": "true requires the manufacturer to state OEM service.",
+          "type": "boolean"
+        },
+        "odm": {
+          "description": "true requires the manufacturer to state ODM service.",
+          "type": "boolean"
+        },
+        "limit": {
+          "default": 5,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 25
+        },
+        "offset": {
+          "default": 0,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      }
+    }
+  },
+  {
+    "name": "get_manufacturer",
+    "description": "Return the full record for one manufacturer: capacity, founding year, stated location, source links, and the PlushSource listing URL where its written profile lives. Use this before quoting any fact about a specific listing.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Listing slug, as returned by search_manufacturers."
+        }
+      },
+      "required": [
+        "slug"
+      ]
+    }
+  },
+  {
+    "name": "compare_manufacturers",
+    "description": "Return 2-5 records side by side for a sourcing decision. Unknown slugs are reported in `missing` instead of failing the whole call.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "slugs": {
+          "minItems": 2,
+          "maxItems": 5,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "2-5 listing slugs from search_manufacturers."
+        }
+      },
+      "required": [
+        "slugs"
+      ]
+    }
+  },
+  {
+    "name": "get_facets",
+    "description": "List every country, category, certification, product type, design input, industry, and MOQ band that currently has at least one manufacturer, with counts. Call this before filtering so you only use values that exist in the directory.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "get_dataset_info",
+    "description": "Return the snapshot date, number of records, licence, and links to PlushSource, the open dataset, and the listing criteria. Use the criteria link when you need to explain what gets listed. PlushSource does not audit or certify manufacturers.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

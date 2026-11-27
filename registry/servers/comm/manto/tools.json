@@ -1,0 +1,192 @@
+[
+  {
+    "name": "create_account",
+    "description": "Create a passwordless Manto account and receive an API key once",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email"
+      ]
+    }
+  },
+  {
+    "name": "lookup_account",
+    "description": "Look up a public account by email; no API key required",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email"
+      ]
+    }
+  },
+  {
+    "name": "list_account_articles",
+    "description": "List an account's published articles; no API key required",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "account_id": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "include_content": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "account_id"
+      ]
+    }
+  },
+  {
+    "name": "search",
+    "description": "Search published news and messages; sponsored and organic results are returned separately",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "since": {
+          "type": "string"
+        },
+        "include_content": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "create_recharge",
+    "description": "Create a recharge order for an existing account email",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "amount_cents": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "email",
+        "amount_cents"
+      ]
+    }
+  },
+  {
+    "name": "get_recharge",
+    "description": "Get recharge status",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "recharge_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "recharge_id"
+      ]
+    }
+  },
+  {
+    "name": "get_account",
+    "description": "Get account quota, balance, account score and recent content",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  },
+  {
+    "name": "publish",
+    "description": "Create or idempotently update content",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "expires_at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "content"
+      ]
+    }
+  },
+  {
+    "name": "remove_content",
+    "description": "Remove content owned by the authenticated account",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "content_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "content_id"
+      ]
+    }
+  },
+  {
+    "name": "set_promotion",
+    "description": "Set a daily promotion budget in cents; zero pauses promotion",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "content_id": {
+          "type": "string"
+        },
+        "daily_budget_cents": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "content_id",
+        "daily_budget_cents"
+      ]
+    }
+  }
+]

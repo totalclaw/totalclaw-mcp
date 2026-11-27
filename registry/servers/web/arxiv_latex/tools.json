@@ -1,0 +1,122 @@
+[
+  {
+    "name": "get_paper_prompt",
+    "description": "Recommended default: fetch the full LaTeX source of an arXiv paper for precise interpretation of mathematical expressions.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "arxiv_id": {
+          "type": "string",
+          "description": "The arXiv ID of the paper (e.g., '2403.12345')"
+        }
+      },
+      "required": [
+        "arxiv_id"
+      ]
+    }
+  },
+  {
+    "name": "get_paper_abstract",
+    "description": "Get just the abstract of an arXiv paper. Use this for a quick preview when the user hasn't read the paper yet, not when they provide an arXiv ID to discuss a paper.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "arxiv_id": {
+          "type": "string",
+          "description": "The arXiv ID of the paper (e.g., '2403.12345')"
+        }
+      },
+      "required": [
+        "arxiv_id"
+      ]
+    }
+  },
+  {
+    "name": "list_paper_sections",
+    "description": "List section headings of an arXiv paper. Useful when the full paper is too long for context and you need to identify which sections to fetch individually. Returns the top-level section titles; pass one verbatim to get_paper_section.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "arxiv_id": {
+          "type": "string",
+          "description": "The arXiv ID of the paper (e.g., '2403.12345')"
+        }
+      },
+      "required": [
+        "arxiv_id"
+      ]
+    }
+  },
+  {
+    "name": "get_paper_section",
+    "description": "Get a specific section of an arXiv paper by its title. Use when the full paper is too long for context or the user wants to focus on a particular section. Use list_paper_sections first to get the titles.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "arxiv_id": {
+          "type": "string",
+          "description": "The arXiv ID of the paper (e.g., '2403.12345')"
+        },
+        "section_path": {
+          "type": "string",
+          "description": "A section title copied verbatim from list_paper_sections (e.g., 'Introduction'), including any LaTeX in it. For a subsection use 'Section > Subsection' with exact titles. Numbers such as '2.1' are not supported."
+        }
+      },
+      "required": [
+        "arxiv_id",
+        "section_path"
+      ]
+    }
+  },
+  {
+    "name": "search_papers",
+    "description": "Discover arXiv papers by topic, author, or title. Use quoted phrases for exact matches, ti:\"title phrase\", au:\"author name\", or abs:keyword. Combine terms with AND, OR, or ANDNOT. Optional categories such as cs.AI, cs.LG, stat.ML, and quant-ph are ORed together and restrict the query. Dates are inclusive submission dates in YYYY-MM-DD format (UTC). Pass a returned id to get_paper_prompt to read the LaTeX source. Requests are throttled; on rate-limit errors, wait 60s before retrying.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Topic, title, author, or arXiv search expression."
+        },
+        "max_results": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "default": 10,
+          "description": "Maximum number of papers to return."
+        },
+        "date_from": {
+          "type": "string",
+          "description": "Inclusive start date (YYYY-MM-DD)."
+        },
+        "date_to": {
+          "type": "string",
+          "description": "Inclusive end date (YYYY-MM-DD)."
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Categories to include, e.g. ['cs.LG', 'stat.ML']."
+        },
+        "sort_by": {
+          "type": "string",
+          "enum": [
+            "relevance",
+            "date"
+          ],
+          "default": "relevance"
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  }
+]

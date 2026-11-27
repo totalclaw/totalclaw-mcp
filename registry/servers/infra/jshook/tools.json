@@ -1,0 +1,214 @@
+[
+  {
+    "name": "search_tools",
+    "description": "Search 736 tools across 36 capability domains. This includes built-in tools plus any loaded plugin/workflow tools (0 currently loaded). In search-tier sessions, call this before assuming a capability is unavailable. Use activate_tools for exact matches, activate_domain for an entire domain. Domains: browser (85) | memory (75) | native-emulator (57) | binary-instrument (46) | network (38) | process (29) | tls-inspector (29) | adb-bridge (26) | core (25) | debugger (21) | exploit-dev (21) | v8-inspector (21) | protocol-analysis (20) | platform (18) | maintenance (17) | streaming (17) | wasm (17) | dart-inspector (16) | syscall-hook (15) | instrumentation (13) | workflow (13) | coordination (12) | canvas (11) | proxy (11) | trace (10) | webgpu (10) | cross-domain (8) | mojo-ipc (8) | transform (8) | extension-registry (7) | graphql (7) | sourcemap (7) | native-bridge (6) | encoding (5) | tasks (4) | session (3). Query tip: before searching, distill your intent into key concepts (action verb + target + domain). The engine combines token matching, fuzzy names, profile context, and optional static embeddings.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Before calling, distill your intent into 2-5 key concepts: what action, on what target, in which domain. Pass only those distilled keywords — not the original user request."
+        },
+        "top_k": {
+          "description": "Max results to return (default: 10, max: 30)",
+          "type": "number"
+        },
+        "auto_activate": {
+          "description": "Auto-activate found tools so they are immediately callable. Set false to only search without activating (default: true)",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "route_tool",
+    "description": "One-stop tool router: accepts a natural language task description, returns recommended tools and next actions. Automatically detects workflow patterns, recommends activation order, and provides example arguments. Use this instead of search_tools when you want guided tool discovery with actionable next steps.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "task": {
+          "type": "string",
+          "description": "Natural language description of the task you want to accomplish"
+        },
+        "context": {
+          "type": "object",
+          "properties": {
+            "preferredDomain": {
+              "type": "string",
+              "description": "Domain preference (e.g., \"browser\", \"network\")"
+            },
+            "autoActivate": {
+              "description": "Whether to auto-activate recommended tools (default: false)",
+              "type": "boolean"
+            },
+            "maxRecommendations": {
+              "description": "Maximum number of recommendations (default: 5)",
+              "type": "number"
+            }
+          },
+          "description": "Optional context hints for routing"
+        }
+      },
+      "required": [
+        "task"
+      ]
+    }
+  },
+  {
+    "name": "describe_tool",
+    "description": "Get detailed information about a specific tool, including its input schema. Use this to see the exact parameters a tool expects before calling it.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Tool name to describe"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "activate_tools",
+    "description": "Dynamically register specific tools by name, regardless of current base tier. Use after search_tools to enable exactly the tools you need. In search-tier sessions this is usually enough; use activate_domain when you need every tool in a domain. Activated tools appear in the tool list immediately. If tools do not appear after activation, use call_tool to invoke them directly.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "names": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "string",
+              "description": "JSON stringified array for MCP clients that serialize arrays as strings"
+            }
+          ],
+          "description": "Array of tool names to activate (from search_tools results). Also accepts a JSON stringified array for clients that serialize arrays as strings."
+        },
+        "precheck": {
+          "description": "Dry-run mode: report wouldActivate / wouldEvict (LRU candidates that must be deactivated to make budget room) and the projected afterEvict budget, without activating or deactivating anything.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "names"
+      ]
+    }
+  },
+  {
+    "name": "deactivate_tools",
+    "description": "Remove previously activated tools to free context. Only affects dynamically activated tools (added via activate_tools, activate_domain, or extension activation), not base profile tools.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "names": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "string",
+              "description": "JSON stringified array"
+            }
+          ],
+          "description": "Array of tool names to deactivate"
+        }
+      },
+      "required": [
+        "names"
+      ]
+    }
+  },
+  {
+    "name": "activate_domain",
+    "description": "Register every tool in a single domain at once. Use this when a task needs a whole capability area; prefer search_tools or activate_tools when you only need a few specific tools, because activating a domain costs far more context. Domains: . Activated tools appear in the tool list immediately; if your client does not refresh its tool list, invoke them with call_tool. Activation draws on the session context budget: when the budget is full, least-recently-used tools are evicted to make room, and the response reports what was activated and what was evicted. Pass precheck: true to preview wouldActivate / wouldEvict without changing anything. Activated tools auto-deactivate after ttlMinutes (default 30; pass 0 for no expiry). Use reload_extensions first to include external plugin/workflow domains.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Domain name to activate (e.g. \"debugger\", \"network\")"
+        },
+        "ttlMinutes": {
+          "description": "Auto-deactivate after N minutes (default: 30, set 0 for no expiry)",
+          "type": "number"
+        },
+        "precheck": {
+          "description": "Dry-run mode: report wouldActivate / wouldEvict (LRU candidates that must be deactivated to make budget room) and the projected afterEvict budget, without activating or deactivating anything.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "domain"
+      ]
+    }
+  },
+  {
+    "name": "call_tool",
+    "description": "Execute an already-active tool by name. Use this when activate_tools/activate_domain registered a tool but your client did not refresh its tool list. Does not auto-activate inactive tools.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The tool name to execute (from search_tools or describe_tool results)"
+        },
+        "args": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {},
+          "description": "Arguments object to pass to the tool"
+        },
+        "parameters": {
+          "type": "string",
+          "description": "Alternative: JSON-serialized arguments string. Some MCP clients serialize the nested arguments as a single stringified-JSON field."
+        },
+        "arguments": {
+          "type": "string",
+          "description": "Another alternative: MCP clients that stringify the entire arguments wrapper. Carries the same nested {name, args/parameters} payload as a JSON string."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "coverage_report",
+    "description": "Report which tools have been called in the current runtime and which known tools remain uncalled. Loads all domains first so the uncalled list reflects the full tool catalog, not just currently active tools.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {}
+    }
+  }
+]

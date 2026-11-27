@@ -1,0 +1,20 @@
+[
+  {
+    "name": "calculate",
+    "description": "Calculates/evaluates the given expression.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "expression": {
+          "title": "Expression",
+          "type": "string"
+        }
+      },
+      "required": [
+        "expression"
+      ],
+      "title": "calculateArguments",
+      "type": "object"
+    }
+  }
+]

@@ -1,0 +1,35 @@
+[
+  {
+    "name": "shell_execute",
+    "description": "Execute an allowed command as an argv array on the MCP server host. Allowed commands run with the server process's OS authority; the allowlist controls executable names, not what an allowed program does.\nAllowed commands: \nAllowed patterns: \nDefault timeout: 30s; maximum timeout: 300s; output cap: 1048576 bytes",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Command and its arguments as array"
+        },
+        "stdin": {
+          "type": "string",
+          "description": "Input to be passed to the command via stdin"
+        },
+        "directory": {
+          "type": "string",
+          "description": "Optional working directory. Omit to use the MCP server process current working directory; relative paths are resolved from that same server process CWD."
+        },
+        "timeout": {
+          "type": "integer",
+          "description": "Maximum execution time in seconds; clamped to server maximum",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "command"
+      ]
+    }
+  }
+]

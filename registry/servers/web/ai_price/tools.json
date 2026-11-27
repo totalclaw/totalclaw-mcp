@@ -1,0 +1,155 @@
+[
+  {
+    "name": "search_products",
+    "description": "按关键词搜索 AI 订阅产品（ChatGPT Plus、Claude Pro、Gemini、Grok、Cursor 等），返回 SKU、店内到手价区间和在售店铺数。支持中英文与常见俗称（如「克劳德」「GPT 会员」）。",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 1,
+          "description": "搜索关键词，如 'Claude Pro'、'ChatGPT Plus 直充'、'短效'、'Grok Heavy'"
+        },
+        "limit": {
+          "default": 10,
+          "description": "返回数量，默认 10，最多 30",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "get_lowest_price",
+    "description": "查询某个 AI 产品的可买最低价（店内核验的人民币到手价，有货优先）、价格区间、在售店铺数，以及最低价来自哪家店。",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "sku": {
+          "type": "string",
+          "minLength": 1,
+          "description": "产品 SKU，如 'gpt_plus_short'、'claude_pro'、'grok_heavy'；也接受产品名称。可先用 search_products 查找。"
+        }
+      },
+      "required": [
+        "sku"
+      ]
+    }
+  },
+  {
+    "name": "get_offers",
+    "description": "列出某个 AI 产品在各家店铺的报价，按「有货优先、再比到手价」排序：店名、人民币到手价（含支付手续费）、USDT 价、库存与店铺链接。用于回答「哪家店最便宜」「去哪买」。",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "sku": {
+          "type": "string",
+          "minLength": 1,
+          "description": "产品 SKU 或名称，如 'claude_pro'、'gpt_plus_topup'"
+        },
+        "limit": {
+          "default": 5,
+          "description": "返回店铺数，默认 5，最多 20",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "include_out_of_stock": {
+          "default": false,
+          "description": "是否包含明确无货的店铺，默认不包含",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "sku"
+      ]
+    }
+  },
+  {
+    "name": "get_price_trend",
+    "description": "查询某个 AI 产品近 30 天每天的可买最低价走势（与详情页走势图同口径），返回起止价格、最高最低点和涨跌幅。用于回答「最近是涨还是跌」「现在是不是低点」。",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "sku": {
+          "type": "string",
+          "minLength": 1,
+          "description": "产品 SKU 或名称，如 'claude_pro'、'gpt_plus_topup'"
+        }
+      },
+      "required": [
+        "sku"
+      ]
+    }
+  },
+  {
+    "name": "list_shops",
+    "description": "按在售商品数列出水獭收录的 AI 订阅店铺（卡网、独立站），可按平台筛选；返回店名、平台、在售商品数与水獭上的店铺页。",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "default": 10,
+          "description": "返回数量，默认 10，最多 30",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "platform": {
+          "description": "按平台过滤，如 ldxp（链动小铺）、aisou、catfk、jrsoft（鲸软）、cardnet、dujiao_next；传错时会列出可选值",
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "get_site_stats",
+    "description": "获取水獭比价站整体统计：收录店铺数、Telegram Bot 数、产品种类、商品总数与数据更新时间。",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "list_all_products",
+    "description": "列出所有可比价的 AI 产品（SKU）及店内到手价区间，方便了解全站覆盖范围。",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "sort": {
+          "default": "hits",
+          "description": "排序方式：price（店内最低价）、hits（广告热度）、merchants（在售店铺数）",
+          "type": "string",
+          "enum": [
+            "price",
+            "hits",
+            "merchants"
+          ]
+        },
+        "has_price_only": {
+          "default": false,
+          "description": "仅显示有核验价格的产品",
+          "type": "boolean"
+        }
+      }
+    }
+  }
+]

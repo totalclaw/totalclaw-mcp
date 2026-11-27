@@ -1,0 +1,284 @@
+[
+  {
+    "name": "get_maplet",
+    "description": "Fetch real map data around a coordinate and return a token-budgeted topological graph: named places joined by walkable edges with distances in metres and compass directions. Use this to answer 'what is near X' and 'how do I get from A to B'. Omissions are reported, so treat a missing feature as not-shown rather than absent.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "number",
+          "description": "Latitude in WGS84 degrees."
+        },
+        "lon": {
+          "type": "number",
+          "description": "Longitude in WGS84 degrees."
+        },
+        "radiusM": {
+          "type": "number",
+          "description": "Radius in metres. Default 300. Larger costs more tokens.",
+          "default": 300
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Semantic layers to include, e.g. [\"road\", \"poi\"]. Default all."
+        },
+        "budget": {
+          "type": "number",
+          "description": "Token budget for the response. Default 1024, hard cap 8192.",
+          "default": 1024
+        },
+        "returnScr": {
+          "type": "boolean",
+          "description": "Also return the wire SCR in a second content block. Keep it: it is the session state a later localize() call moves within, and the agent stores it in its own RAM rather than the chat context."
+        }
+      },
+      "required": [
+        "lat",
+        "lon"
+      ]
+    }
+  },
+  {
+    "name": "localize",
+    "description": "Move within a map session you already hold. Pass the session SCR (from get_maplet with returnScr, or from the last localize) and your new position; the answer is only the delta: + places that entered view, - places that left it, ~ places that moved or updated. Store the updated SCR from the second content block and discard the old one.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "scr": {
+          "type": "string",
+          "description": "Session state: the SCR string from the previous get_maplet or localize."
+        },
+        "lat": {
+          "type": "number",
+          "description": "Latitude in WGS84 degrees."
+        },
+        "lon": {
+          "type": "number",
+          "description": "Longitude in WGS84 degrees."
+        },
+        "radiusM": {
+          "type": "number",
+          "description": "Radius in metres. Default 300.",
+          "default": 300
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Semantic layers to include, e.g. [\"road\", \"poi\"]. Default all."
+        },
+        "budget": {
+          "type": "number",
+          "description": "Token budget for the re-fit view. Default 1024, hard cap 8192.",
+          "default": 1024
+        }
+      },
+      "required": [
+        "scr",
+        "lat",
+        "lon"
+      ]
+    }
+  },
+  {
+    "name": "route",
+    "description": "Feasibility between two coordinates: straight-line distance, the compass direction to head, and nothing that pretends to be turn-by-turn navigation. Turn-by-turn comes only from a routing engine the operator has verified; the default answer ends in \"verify the approach on arrival\", which is the honest limit of what it computes.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "fromLat": {
+          "type": "number"
+        },
+        "fromLon": {
+          "type": "number"
+        },
+        "toLat": {
+          "type": "number"
+        },
+        "toLon": {
+          "type": "number"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "walk",
+            "bike",
+            "drive"
+          ],
+          "default": "walk"
+        }
+      },
+      "required": [
+        "fromLat",
+        "fromLon",
+        "toLat",
+        "toLon"
+      ]
+    }
+  },
+  {
+    "name": "search_places",
+    "description": "Find named places (cafes, stations, shops) near a coordinate. Cheaper than get_maplet when only names are needed.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "number"
+        },
+        "lon": {
+          "type": "number"
+        },
+        "radiusM": {
+          "type": "number",
+          "default": 300
+        },
+        "query": {
+          "type": "string",
+          "description": "Substring match on place name or type."
+        },
+        "limit": {
+          "type": "number",
+          "default": 20
+        }
+      },
+      "required": [
+        "lat",
+        "lon"
+      ]
+    }
+  },
+  {
+    "name": "expand_feature",
+    "description": "Fetch the exact geometry of features by id, as WKT. Use only when shape matters, such as checking whether a route clears a building.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "scr": {
+          "type": "string",
+          "description": "SCR document from a previous get_maplet."
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "scr",
+        "ids"
+      ]
+    }
+  },
+  {
+    "name": "get_terrain",
+    "description": "Sample ground elevation around a coordinate, in metres. Returns the range plus high and low points, which is what an agent needs for grade reasoning.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "number"
+        },
+        "lon": {
+          "type": "number"
+        },
+        "radiusM": {
+          "type": "number",
+          "default": 1000
+        },
+        "samples": {
+          "type": "number",
+          "default": 16
+        }
+      },
+      "required": [
+        "lat",
+        "lon"
+      ]
+    }
+  },
+  {
+    "name": "get_weather",
+    "description": "Current weather conditions and a short forecast at a coordinate. Use this before telling someone to walk, cycle, or drive, or to pick between an indoor and outdoor option. Reports what is actually falling (rain, snow, sleet) rather than only a temperature.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "number"
+        },
+        "lon": {
+          "type": "number"
+        },
+        "hours": {
+          "type": "number",
+          "default": 12,
+          "description": "Forecast horizon in hours. Default 12, max 48."
+        }
+      },
+      "required": [
+        "lat",
+        "lon"
+      ]
+    }
+  },
+  {
+    "name": "get_air",
+    "description": "Air quality at a coordinate: European and US AQI bands, particulate load, and the forecast window. Use this before sending someone into prolonged outdoor exertion, or before recommending a walking route to a person with respiratory sensitivities.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "number"
+        },
+        "lon": {
+          "type": "number"
+        },
+        "hours": {
+          "type": "number",
+          "default": 12,
+          "description": "Forecast horizon in hours. Default 12, max 48."
+        }
+      },
+      "required": [
+        "lat",
+        "lon"
+      ]
+    }
+  },
+  {
+    "name": "get_daylight",
+    "description": "Sun position, sunrise, sunset, and twilight state for a coordinate. Twilight is reported as day, civil, nautical, or night rather than a boolean, because \"needs a torch\" and \"cannot see\" are different states.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "number"
+        },
+        "lon": {
+          "type": "number"
+        },
+        "at": {
+          "type": "string",
+          "description": "ISO 8601 instant. Defaults to now. Times are UTC."
+        }
+      },
+      "required": [
+        "lat",
+        "lon"
+      ]
+    }
+  }
+]

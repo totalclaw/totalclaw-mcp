@@ -1,0 +1,5897 @@
+[
+  {
+    "name": "mc_undo_control",
+    "description": "Note: automatic Undo is off by default. On Education 1.26.x, once it is on, the native check before the first build makes the game command channel stop responding for good (the player's typing gets no response either) until Minecraft is restarted; configure enabled=true only when the user explicitly asks for it. action=status only reads the automatic Undo state and timings; configure turns it on or off and sets the block budget (default 4096, max 32768); same-material ranges are saved as whole regions and compared with native region checks. clear releases this server's backups. Backups live only in game memory, with no disk backup and no Redo. Turning automatic backup off clears the old history.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "status",
+            "configure",
+            "clear"
+          ],
+          "default": "status"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "maxBlocks": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32768
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_undo",
+    "description": "Undo the last protected setblock/fill or build tool call; several build commands count as one step. All target blocks are checked first, then each region is restored with conditional commands so later changes are not overwritten. operationId guards against undoing the wrong version. Use overwriteChanges only when the user explicitly asks to overwrite conflicts, or accepts restoring the site after an operation whose outcome is uncertain; never set it to true on your own. This first version covers basic Overworld building blocks only: no mobs, inventories, water flow or redstone chains outside the region, and no Redo. Do not switch worlds or dimensions while it runs.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "operationId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "overwriteChanges": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_status",
+    "description": "Report the WebSocket bridge, whether the game is answering commands (commandState), the last reply and timeout times, the /connect command and subscribed events. connected only means the network link is up; timed-out means a recent command got no reply, so do not assume the game can still act. No side effects.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_await_connection",
+    "description": "Block until the game connects to the bridge, for at most timeoutSeconds seconds. A timeout is not an error; it just reports connected=false. Call it after asking the user to type /connect.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "timeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120,
+          "default": 30
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_run_command",
+    "description": "Send one raw slash command, for anything this server has no dedicated tool for. Single line only, no newline chaining. Refuses wsserver / connect / closewebsocket, including when wrapped in execute (that would cut this bridge). The leading slash is optional.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "description": "For example \"time set day\" or \"/give @s diamond 1\""
+        }
+      },
+      "required": [
+        "command"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_run_commands",
+    "description": "Send several raw commands in order; each one passes the command policy on its own. Good for hand-written macros; for many blocks use mc_build_shape or mc_build_blueprint, which merge them into the fewest fill commands automatically.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "commands": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "minItems": 1,
+          "maxItems": 200
+        },
+        "stopOnError": {
+          "type": "boolean",
+          "default": true
+        },
+        "delayMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5000,
+          "default": 0
+        },
+        "reportFailuresOnly": {
+          "type": "boolean",
+          "default": false,
+          "description": "Return only the failed commands and skip the successful ones. Per-command results of a large batch (for example 200 fill commands) easily run past ten thousand tokens, and most of them just say \"N blocks filled\"; turn this on for large batches when you do not need each number. The issued / succeeded / failed counts are not affected."
+        }
+      },
+      "required": [
+        "commands"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_agent_create",
+    "description": "Spawn the Agent next to the player. Calling it again when the Agent already exists is safe. The Agent is the robot found only in Education Edition; summon it with mc_agent_create first. Directions are relative to the way the Agent faces, not world directions.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_agent_move",
+    "description": "Move the Agent steps blocks in a direction, one command per block. A step blocked by a block fails without stopping the rest. The Agent is the robot found only in Education Edition; summon it with mc_agent_create first. Directions are relative to the way the Agent faces, not world directions.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "direction": {
+          "type": "string",
+          "enum": [
+            "forward",
+            "back",
+            "left",
+            "right",
+            "up",
+            "down"
+          ]
+        },
+        "steps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64,
+          "default": 1
+        },
+        "delayMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2000,
+          "default": 100,
+          "description": "Delay between steps, so the game has time to finish each move"
+        }
+      },
+      "required": [
+        "direction"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_agent_turn",
+    "description": "Turn the Agent left or right in place, 90 degrees each time. times=2 turns it around. The Agent is the robot found only in Education Edition; summon it with mc_agent_create first. Directions are relative to the way the Agent faces, not world directions.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "direction": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right"
+          ]
+        },
+        "times": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4,
+          "default": 1
+        }
+      },
+      "required": [
+        "direction"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_agent_teleport",
+    "description": "Bring the Agent to the player. Use it to recover the Agent when it is lost, stuck or has fallen into a hole. The Agent is the robot found only in Education Edition; summon it with mc_agent_create first. Directions are relative to the way the Agent faces, not world directions.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_agent_act",
+    "description": "Act in a direction: attack hits a mob, destroy breaks a block and puts it in the inventory, till turns dirt into farmland. repeat runs it several times in a row. The Agent is the robot found only in Education Edition; summon it with mc_agent_create first. Directions are relative to the way the Agent faces, not world directions.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "attack",
+            "destroy",
+            "till"
+          ]
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "forward",
+            "back",
+            "left",
+            "right",
+            "up",
+            "down"
+          ],
+          "default": "forward"
+        },
+        "repeat": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64,
+          "default": 1
+        },
+        "delayMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2000,
+          "default": 100
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_agent_place",
+    "description": "Take a block from an inventory slot (1-27) and place it in a direction. Fails when the slot is empty. The Agent is the robot found only in Education Edition; summon it with mc_agent_create first. Directions are relative to the way the Agent faces, not world directions.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "slot": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 27
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "forward",
+            "back",
+            "left",
+            "right",
+            "up",
+            "down"
+          ],
+          "default": "forward"
+        },
+        "repeat": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64,
+          "default": 1
+        },
+        "delayMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2000,
+          "default": 100
+        }
+      },
+      "required": [
+        "slot"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_agent_collect",
+    "description": "Pick up dropped items near the Agent. Leave item empty to pick up everything. The Agent is the robot found only in Education Edition; summon it with mc_agent_create first. Directions are relative to the way the Agent faces, not world directions.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "description": "Block ID, for example stone or minecraft:oak_planks"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Block ID, for example stone or minecraft:oak_planks",
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_agent_inventory",
+    "description": "Do one thing with the Agent inventory: count reads the amount in a slot, space reads the room left, detail reads item details, drop drops a quantity, dropAll drops everything in a direction, transfer moves items between slots. The Agent is the robot found only in Education Edition; summon it with mc_agent_create first. Directions are relative to the way the Agent faces, not world directions.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "count",
+            "space",
+            "detail",
+            "drop",
+            "dropAll",
+            "transfer"
+          ]
+        },
+        "slot": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 27,
+          "description": "Required for count / space / detail / drop"
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64,
+          "description": "Required for drop / transfer"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "forward",
+            "back",
+            "left",
+            "right",
+            "up",
+            "down"
+          ],
+          "description": "Required for drop / dropAll"
+        },
+        "destinationSlot": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 27,
+          "description": "Required for transfer"
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_agent_sense",
+    "description": "Read what is around the Agent without changing the world: inspect reads the block type, inspectData reads the block data value, detect checks whether there is a solid block in that direction, detectRedstone checks for a redstone signal. These are the Agent's eyes; look before acting.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "inspect",
+            "inspectData",
+            "detect",
+            "detectRedstone"
+          ],
+          "default": "inspect"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "forward",
+            "back",
+            "left",
+            "right",
+            "up",
+            "down"
+          ],
+          "default": "forward"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_agent_program",
+    "description": "Run a sequence of Agent actions in order as one program. This is the main tool for getting real work done with the Agent: laying a path as it walks, digging a tunnel, tilling a whole field. Each step is reported separately, and it can stop at the first failure.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "steps": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "const": "move"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "forward",
+                      "back",
+                      "left",
+                      "right",
+                      "up",
+                      "down"
+                    ]
+                  },
+                  "steps": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 64,
+                    "default": 1
+                  }
+                },
+                "required": [
+                  "action",
+                  "direction"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "const": "turn"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "left",
+                      "right"
+                    ]
+                  },
+                  "times": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 4,
+                    "default": 1
+                  }
+                },
+                "required": [
+                  "action",
+                  "direction"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "const": "attack"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "forward",
+                      "back",
+                      "left",
+                      "right",
+                      "up",
+                      "down"
+                    ]
+                  }
+                },
+                "required": [
+                  "action",
+                  "direction"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "const": "destroy"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "forward",
+                      "back",
+                      "left",
+                      "right",
+                      "up",
+                      "down"
+                    ]
+                  }
+                },
+                "required": [
+                  "action",
+                  "direction"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "const": "till"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "forward",
+                      "back",
+                      "left",
+                      "right",
+                      "up",
+                      "down"
+                    ]
+                  }
+                },
+                "required": [
+                  "action",
+                  "direction"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "const": "dropAll"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "forward",
+                      "back",
+                      "left",
+                      "right",
+                      "up",
+                      "down"
+                    ]
+                  }
+                },
+                "required": [
+                  "action",
+                  "direction"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "const": "place"
+                  },
+                  "slot": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 27
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "forward",
+                      "back",
+                      "left",
+                      "right",
+                      "up",
+                      "down"
+                    ]
+                  }
+                },
+                "required": [
+                  "action",
+                  "slot",
+                  "direction"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "const": "collect"
+                  },
+                  "item": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 80,
+                        "description": "Block ID, for example stone or minecraft:oak_planks"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "description": "null collects everything",
+                    "default": null
+                  }
+                },
+                "required": [
+                  "action"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "const": "drop"
+                  },
+                  "slot": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 27
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 64
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "forward",
+                      "back",
+                      "left",
+                      "right",
+                      "up",
+                      "down"
+                    ]
+                  }
+                },
+                "required": [
+                  "action",
+                  "slot",
+                  "quantity",
+                  "direction"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "const": "transfer"
+                  },
+                  "sourceSlot": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 27
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 64
+                  },
+                  "destinationSlot": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 27
+                  }
+                },
+                "required": [
+                  "action",
+                  "sourceSlot",
+                  "quantity",
+                  "destinationSlot"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 256
+        },
+        "stopOnError": {
+          "type": "boolean",
+          "default": false
+        },
+        "delayMs": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2000
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Delay between steps; null uses the default of 100 ms"
+        }
+      },
+      "required": [
+        "steps"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_set_block",
+    "description": "Place one block at a coordinate. For many blocks use mc_fill or mc_build_shape instead; calling this tool block by block is very slow.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false
+        },
+        "block": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Block ID, for example stone or minecraft:oak_planks"
+        },
+        "blockStates": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 200,
+              "description": "Optional block states, for example [\"stone_type\":\"granite\"]"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional block states, for example [\"stone_type\":\"granite\"]",
+          "default": null
+        },
+        "handling": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "replace",
+                "destroy",
+                "keep"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "position",
+        "block"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_fill",
+    "description": "Fill the box from from to to with one kind of block. Bedrock allows at most 32768 blocks per fill; beyond that use mc_build_shape, which splits the work into batches automatically. mode=hollow fills the six outer faces and clears the inside to air; mode=outline replaces only the six outer faces and leaves the inside as it is.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false
+        },
+        "to": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false
+        },
+        "block": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Block ID, for example stone or minecraft:oak_planks"
+        },
+        "blockStates": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 200,
+              "description": "Optional block states, for example [\"stone_type\":\"granite\"]"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional block states, for example [\"stone_type\":\"granite\"]",
+          "default": null
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "replace",
+                "destroy",
+                "keep",
+                "hollow",
+                "outline"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "replaceBlock": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "description": "Block ID, for example stone or minecraft:oak_planks"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Only used when mode=\"replace\"",
+          "default": null
+        },
+        "replaceStates": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 200,
+              "description": "Optional block states, for example [\"stone_type\":\"granite\"]"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional block states, for example [\"stone_type\":\"granite\"]",
+          "default": null
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "block"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_clone",
+    "description": "Copy the region from begin to end to destination. cloneMode=\"move\" clears the original. Good for mass-producing a hand-built template.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "begin": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false
+        },
+        "end": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false
+        },
+        "destination": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false
+        },
+        "maskMode": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "replace",
+                "masked"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cloneMode": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "normal",
+                "force",
+                "move"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "begin",
+        "end",
+        "destination"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_test_block",
+    "description": "Report whether a coordinate holds the given block, without changing the world. Use it to check the terrain before building or to verify what was just built.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false
+        },
+        "block": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Block ID, for example stone or minecraft:oak_planks"
+        },
+        "blockStates": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 200,
+              "description": "Optional block states, for example [\"stone_type\":\"granite\"]"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional block states, for example [\"stone_type\":\"granite\"]",
+          "default": null
+        }
+      },
+      "required": [
+        "position",
+        "block"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_analyze_symmetry",
+    "description": "Check whether a region is symmetric left to right (or front to back), and when it is not, point out **which parts** are not. Use it to grade student builds: the score is the share of symmetric cells, not a gut feeling. How it works: testforblocks only compares by translation, never mirrored, so a mirrored copy is made first with the mirror option of structure save / load and then compared with the original. Warning: this **temporarily writes** to the scratch area: its contents are always backed up first and restored right after the comparison; if the backup fails, it stops without touching the world. scratch must not overlap the analyzed region, or the mirrored copy overwrites the original build. The region is limited by the structure command (64x384x64).",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false,
+          "description": "One corner of the analyzed region"
+        },
+        "to": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false,
+          "description": "The opposite corner of the analyzed region"
+        },
+        "mirror": {
+          "type": "string",
+          "enum": [
+            "x",
+            "z",
+            "xz"
+          ],
+          "default": "x",
+          "description": "Mirror axis: x checks left-right symmetry, z checks front-back symmetry, xz requires both"
+        },
+        "scratch": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false,
+          "description": "Minimum corner of the scratch area; it is overwritten and then restored, and must not overlap the analyzed region"
+        },
+        "cellsPerAxis": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4,
+          "default": 2,
+          "description": "Subdivision when the whole region is not symmetric: n parts per axis, n^3 cells, one command per cell"
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "scratch"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_read_block",
+    "description": "Report what is actually at a coordinate, without you having to guess first. Education has no command to read a block, so this runs testforblock with air as a sentinel; when the guess is wrong, the game message names the actual block. Note: it returns the **localized display name** (for example \"Dirt\", or \"泥土\" in a Chinese game), not the block ID (dirt), so it cannot be fed back to mc_set_block; to check by ID, use mc_test_block. The message format has no official guarantee; when it cannot be parsed, this tool returns an error with the raw message instead of guessing.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "position"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_verify_reading",
+    "description": "Block reading relies on the testforblock **failure message** revealing the block name, and that message format has no official stability guarantee. When a game update changes the wording, or the game language is not Traditional Chinese, Simplified Chinese or English, parsing breaks, and it breaks **silently**. This probe actively checks whether the reading path still works; **run it once before class** to know whether mc_read_block results can be trusted. It does not need to know what is at the spot: if it is air, it asks about bedrock (a guaranteed mismatch) to force a failure message; if something is there, the first question already produced a message. At most two commands, and it never writes to the world. parseable=false means the protocol has drifted, and mc_read_block results cannot be trusted at all.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false,
+          "description": "Any coordinate works, empty or not"
+        }
+      },
+      "required": [
+        "position"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_compare_regions",
+    "description": "Compare a whole region with one command; good for checking whether a student build matches a reference. Comparing block by block hits the MCP host timeout beyond a few hundred blocks; this does not. masked=true ignores air in the source region and only checks that what should be there is there, regardless of anything extra around it; masked=false requires an exact match. Both regions must be the same size; destination is the minimum corner of the target region.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "begin": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false,
+          "description": "One corner of the source region"
+        },
+        "end": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false,
+          "description": "The opposite corner of the source region"
+        },
+        "destination": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false,
+          "description": "Minimum corner of the target region"
+        },
+        "masked": {
+          "type": "boolean",
+          "default": false,
+          "description": "When true, air in the source is ignored"
+        }
+      },
+      "required": [
+        "begin",
+        "end",
+        "destination"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_query_target",
+    "description": "Query the coordinates, facing and unique ID of entities by selector, returned as parsed JSON. This is the standard way to get the current position of the player or the Agent; ask this before building so you know where to build. It defaults to @p (the nearest player) rather than @s: commands sent over the WebSocket have no entity identity, so @s cannot be resolved in some cases.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Target selector (@a/@p/@s/@e/@r, optionally with []) or a player name",
+          "default": "@p"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_summon",
+    "description": "Spawn one entity at a coordinate, optionally with a name tag. Leave position empty to spawn it where the command runs.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Entity ID, for example cow or minecraft:villager"
+        },
+        "position": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "z": {
+                  "type": "number"
+                },
+                "mode": {
+                  "type": "string",
+                  "enum": [
+                    "absolute",
+                    "relative",
+                    "local"
+                  ],
+                  "default": "absolute",
+                  "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "z"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "nameTag": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "entity"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_world_settings",
+    "description": "Change one world setting at a time: time sets the time (day/night/noon/midnight or a tick count), weather the weather, gamerule a game rule, difficulty the difficulty.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "setting": {
+          "type": "string",
+          "enum": [
+            "time",
+            "weather",
+            "gamerule",
+            "difficulty"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "description": "time: day | weather: clear | difficulty: peaceful | the gamerule value"
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "description": "Rule name when setting=\"gamerule\""
+        },
+        "durationSeconds": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "setting",
+        "value"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_structure",
+    "description": "Save a region as a named structure, or place a saved structure back into the world. This is the official way to keep what the AI built, mass-produce it, or take it to another world.\n\n**Choose saveMode by what the user wants; do not always use the same one:**\n- `memory` (default) = temporary storage for this connection. Use it while the AI keeps revising the same build: save a version to keep a way back, and load it if a change goes wrong. It disappears when the game closes and leaves no files on disk.\n- `disk` = only when **the user explicitly says to keep it** (\"remember this building\", \"save it so I can use it next time\"). It is written as a file into the game world folder and survives closing the game, which really leaves something on the user disk, so do not write it when they did not ask to keep it.\n\nVersioning is **naming**: `castle_v1`, `castle_v2`. The same name overwrites without warning, so change the name before saving a new version. The game has no command to list saved structures, so names are the only record; mc_status lists the ones saved during this connection.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "save",
+            "load"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "description": "Versions are told apart by this; the same name overwrites"
+        },
+        "from": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false,
+          "description": "Required for save"
+        },
+        "to": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false,
+          "description": "Required for save"
+        },
+        "destination": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false,
+          "description": "Required for load"
+        },
+        "includeEntities": {
+          "type": "boolean",
+          "default": false
+        },
+        "saveMode": {
+          "type": "string",
+          "enum": [
+            "memory",
+            "disk"
+          ],
+          "default": "memory",
+          "description": "memory = temporary (default); disk = written to disk, only when the user explicitly says to keep it"
+        }
+      },
+      "required": [
+        "action",
+        "name"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_ticking_area",
+    "description": "Keep a region loaded so its mechanisms keep running after the player leaves. Needed when the Agent works on its own far away.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false
+        },
+        "to": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "from",
+        "to"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_teleport",
+    "description": "Teleport the targets of a selector to a coordinate. target defaults to @s, the player running the commands.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Target selector (@a/@p/@s/@e/@r, optionally with []) or a player name",
+          "default": "@s"
+        },
+        "destination": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "absolute",
+                "relative",
+                "local"
+              ],
+              "default": "absolute",
+              "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "destination"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_give",
+    "description": "Give a target a number of items. To give the Agent something to place, give it to the player first and then hand it to the Agent.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Target selector (@a/@p/@s/@e/@r, optionally with []) or a player name",
+          "default": "@s"
+        },
+        "item": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Block ID, for example stone or minecraft:oak_planks"
+        },
+        "amount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64,
+          "default": 1
+        },
+        "data": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 32767
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "item"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_gamemode",
+    "description": "Switch the target to survival, creative, adventure or spectator.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "survival",
+            "creative",
+            "adventure",
+            "spectator"
+          ]
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Target selector (@a/@p/@s/@e/@r, optionally with []) or a player name",
+          "default": "@s"
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_effect",
+    "description": "action=\"apply\" applies a potion effect; \"clear\" removes all effects.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "apply",
+            "clear"
+          ],
+          "default": "apply"
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Target selector (@a/@p/@s/@e/@r, optionally with []) or a player name",
+          "default": "@s"
+        },
+        "effect": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Required for apply, for example speed or night_vision"
+        },
+        "seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000,
+          "default": 30
+        },
+        "amplifier": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 0
+        },
+        "hideParticles": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_player_action",
+    "description": "kill kills the target, clear empties the inventory (optionally one item only), xp gives experience, ability turns the worldbuilder / mayfly / mute abilities on or off.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "kill",
+            "clear",
+            "xp",
+            "ability"
+          ]
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Target selector (@a/@p/@s/@e/@r, optionally with []) or a player name",
+          "default": "@s"
+        },
+        "item": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "description": "Block ID, for example stone or minecraft:oak_planks"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional for clear",
+          "default": null
+        },
+        "amount": {
+          "type": "integer",
+          "minimum": -100000,
+          "maximum": 100000,
+          "default": 1,
+          "description": "Required for xp"
+        },
+        "unit": {
+          "type": "string",
+          "enum": [
+            "levels",
+            "points"
+          ],
+          "default": "points"
+        },
+        "ability": {
+          "type": "string",
+          "enum": [
+            "worldbuilder",
+            "mayfly",
+            "mute"
+          ]
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_message",
+    "description": "say posts to everyone in chat, tell sends a private message, title / subtitle / actionbar show large text on screen. Use it to talk to players while teaching or reporting progress.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "enum": [
+            "say",
+            "tell",
+            "title",
+            "subtitle",
+            "actionbar"
+          ],
+          "default": "say"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Target selector (@a/@p/@s/@e/@r, optionally with []) or a player name",
+          "default": "@a"
+        }
+      },
+      "required": [
+        "message"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_feedback",
+    "description": "Play a sound or spawn a particle effect at a coordinate, to give players immediate sensory feedback.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "sound",
+            "particle"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Sound or particle ID, for example random.levelup or minecraft:heart_particle"
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Who hears it when kind=\"sound\"",
+          "default": "@a"
+        },
+        "position": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "z": {
+                  "type": "number"
+                },
+                "mode": {
+                  "type": "string",
+                  "enum": [
+                    "absolute",
+                    "relative",
+                    "local"
+                  ],
+                  "default": "absolute",
+                  "description": "absolute = world coordinates; relative = ~ relative to the command source; local = ^ relative to its facing"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "z"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "kind",
+        "id"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_build_preview",
+    "description": "Compute only, build nothing: report how many blocks the shape uses, where its bounding box is, and how many fill commands it splits into. All coordinates are absolute world coordinates; if you do not know where the player is, call mc_query_target first. Building changes the world directly, so check the block count and bounding box with the matching preview tool before you build.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "shape": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "line"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "box"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "sphere"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "ellipsoid"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radii": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 128
+                    },
+                    "y": {
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 128
+                    },
+                    "z": {
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 128
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radii"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "cylinder"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "cone"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "topRadius": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 128,
+                  "default": 0,
+                  "description": "Top radius; 0 is a classic cone, greater than 0 makes a truncated cone (chimneys, tower bodies, bridge piers)"
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "pyramid"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "baseRadius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128,
+                  "description": "Distance from the base center to an edge, not to a corner; base side length = 2*baseRadius+1"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "topRadius": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 128,
+                  "default": 0,
+                  "description": "Top radius; 0 ends in a point, greater than 0 makes a frustum (castle towers, temple bases)"
+                },
+                "sides": {
+                  "type": "integer",
+                  "minimum": 3,
+                  "maximum": 12,
+                  "default": 4,
+                  "description": "4 is a classic square base, 3 a triangular pyramid, 6 a hexagonal pyramid"
+                },
+                "rotation": {
+                  "type": "number",
+                  "minimum": -360,
+                  "maximum": 360,
+                  "default": 0,
+                  "description": "Degrees to rotate the base around the Y axis"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "baseRadius",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "disk"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 256
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "true draws only the outer ring"
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "torus"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "majorRadius": {
+                  "type": "number",
+                  "minimum": 2,
+                  "maximum": 128
+                },
+                "minorRadius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 64
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "majorRadius",
+                "minorRadius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "helix"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 384
+                },
+                "turns": {
+                  "type": "number",
+                  "minimum": 0.25,
+                  "maximum": 64
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "thickness": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 7,
+                  "default": 1
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius",
+                "height",
+                "turns"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "curve"
+                },
+                "points": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "integer"
+                      },
+                      "y": {
+                        "type": "integer"
+                      },
+                      "z": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "z"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 2,
+                  "maxItems": 64,
+                  "description": "The curve passes smoothly through every control point; it is not a polyline"
+                },
+                "thickness": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 7,
+                  "default": 1
+                },
+                "closed": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "When true, the ends join into a closed loop"
+                }
+              },
+              "required": [
+                "kind",
+                "points"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "revolution"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "profile": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "along": {
+                        "type": "integer",
+                        "description": "Position along the axis, relative to center"
+                      },
+                      "radius": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 128,
+                        "description": "Radius at that position"
+                      }
+                    },
+                    "required": [
+                      "along",
+                      "radius"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 2,
+                  "maxItems": 64,
+                  "description": "Side profile; the radius is linearly interpolated between neighboring points. Builds vases, turrets, domes"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "true keeps only the side shell"
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "profile"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "tube"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 64,
+                  "description": "A cylinder in any direction; both ends are capped with hemispheres"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "A closed shell: the hemispherical end caps are part of the shell, so it is not an open pipe"
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "to",
+                "radius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "wedge"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "rise": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y",
+                  "description": "Height direction"
+                },
+                "run": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "x",
+                  "description": "Direction the slope descends along; must be a different axis from rise. Full height at the start end, one block at the far end"
+                },
+                "reversed": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "When true, it gets lower toward the negative run axis instead"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "arch"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Center of the springing line, the midpoint between the two arch feet"
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128,
+                  "description": "Inner radius of the arch; opening width = 2*radius-1"
+                },
+                "thickness": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 64,
+                  "default": 1,
+                  "description": "Thickness of the arch ring"
+                },
+                "depth": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 256,
+                  "default": 1,
+                  "description": "Depth along the third axis"
+                },
+                "span": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "x",
+                  "description": "Direction the arch spans"
+                },
+                "rise": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y",
+                  "description": "Upward direction; must be a different axis from span"
+                },
+                "legHeight": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 256,
+                  "default": 0,
+                  "description": "Height of the straight legs below the springing line; city gates and bridge arches need it, set 0 for a pure semicircle"
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "stairs"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Starting corner of the first tread: the lowest block, nearest the start, with the smallest coordinate across the width"
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": [
+                    "x+",
+                    "x-",
+                    "z+",
+                    "z-"
+                  ],
+                  "description": "Horizontal direction of travel; stairs always rise along the Y axis"
+                },
+                "steps": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 256
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64,
+                  "default": 1,
+                  "description": "Stair width, extending to the left of the direction of travel"
+                },
+                "stepRise": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8,
+                  "default": 1,
+                  "description": "Blocks each step rises"
+                },
+                "stepRun": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8,
+                  "default": 1,
+                  "description": "Blocks each step advances (tread depth)"
+                },
+                "solid": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "false gives floating treads; true fills each step down to the starting height for a solid staircase"
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "direction",
+                "steps"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "prism"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128,
+                  "description": "Distance from the center to an edge; the more sides, the closer it gets to a cylinder of the same radius"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "sides": {
+                  "type": "integer",
+                  "minimum": 3,
+                  "maximum": 12,
+                  "default": 6,
+                  "description": "3 for a triangular prism, 6 for a hexagonal tower, 8 for an octagonal pavilion"
+                },
+                "rotation": {
+                  "type": "number",
+                  "minimum": -360,
+                  "maximum": 360,
+                  "default": 0,
+                  "description": "Degrees to rotate around the axis, to align one side with a direction"
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "polywall"
+                },
+                "points": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "integer"
+                      },
+                      "y": {
+                        "type": "integer"
+                      },
+                      "z": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "z"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 2,
+                  "maxItems": 32,
+                  "description": "Corner points of an XZ polyline; corners are not rounded (curve rounds them). The Y of the first point is the wall base"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "thickness": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 32,
+                  "default": 1
+                },
+                "closed": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "When true, the ends join to enclose a loop"
+                },
+                "battlement": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Make the top layer battlements, alternating gaps along the path"
+                },
+                "merlonWidth": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 32,
+                  "default": 2,
+                  "description": "Width in blocks of each merlon and each gap"
+                }
+              },
+              "required": [
+                "kind",
+                "points",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "ribbon"
+                },
+                "points": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "integer"
+                      },
+                      "y": {
+                        "type": "integer"
+                      },
+                      "z": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "z"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 2,
+                  "maxItems": 32,
+                  "description": "XZ polyline; the Y of the first point is the road surface height"
+                },
+                "width": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 64,
+                  "default": 3,
+                  "description": "Total width spread to both sides"
+                },
+                "thickness": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64,
+                  "default": 1,
+                  "description": "Number of layers stacked upward"
+                },
+                "closed": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "points"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "heightfield"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "One corner of the plot; Y is the base height"
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "The opposite corner of the plot"
+                },
+                "corners": {
+                  "type": "object",
+                  "properties": {
+                    "nw": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 384,
+                      "default": 1
+                    },
+                    "ne": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 384,
+                      "default": 1
+                    },
+                    "sw": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 384,
+                      "default": 1
+                    },
+                    "se": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 384,
+                      "default": 1
+                    }
+                  },
+                  "additionalProperties": false,
+                  "default": {
+                    "nw": 1,
+                    "ne": 1,
+                    "sw": 1,
+                    "se": 1
+                  },
+                  "description": "Height of each corner relative to from.y, bilinearly interpolated in between. -X is west, -Z is north"
+                },
+                "waves": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "amplitude": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 128
+                        },
+                        "wavelength": {
+                          "type": "number",
+                          "minimum": 1,
+                          "maximum": 512
+                        }
+                      },
+                      "required": [
+                        "amplitude",
+                        "wavelength"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "Sine waves added on top of the corner interpolation; pass null if not needed"
+                },
+                "solid": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "true fills solid from from.y up to the surface; false lays only the surface layer"
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "spiralStairs"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Bottom center of the spiral axis"
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128,
+                  "description": "Outer radius of the treads"
+                },
+                "innerRadius": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 128,
+                  "default": 0,
+                  "description": "Radius of the hole in the middle; 0 is solid to the axis"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "turns": {
+                  "type": "number",
+                  "minimum": 0.25,
+                  "maximum": 64,
+                  "description": "Total number of turns"
+                },
+                "clockwise": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Direction of rotation seen from above"
+                },
+                "stepRise": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8,
+                  "default": 1,
+                  "description": "Blocks each step rises"
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius",
+                "height",
+                "turns"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "cross"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128,
+                  "description": "Distance from the center to the end of an arm"
+                },
+                "armWidth": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64,
+                  "default": 1,
+                  "description": "Arm width in blocks"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "star"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "points": {
+                  "type": "integer",
+                  "minimum": 3,
+                  "maximum": 12,
+                  "default": 5,
+                  "description": "Number of star points"
+                },
+                "outerRadius": {
+                  "type": "number",
+                  "minimum": 2,
+                  "maximum": 128,
+                  "description": "Radius at the star tips"
+                },
+                "innerRadius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128,
+                  "description": "Radius at the inner corners; must be less than outerRadius"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384,
+                  "default": 1
+                },
+                "rotation": {
+                  "type": "number",
+                  "minimum": -360,
+                  "maximum": 360,
+                  "default": 0
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "outerRadius",
+                "innerRadius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "roof"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "One corner of the roof base; Y is the eave height"
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "The opposite corner of the roof base"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384,
+                  "description": "Height from the eaves to the ridge"
+                },
+                "style": {
+                  "type": "string",
+                  "enum": [
+                    "gable",
+                    "hip"
+                  ],
+                  "default": "gable",
+                  "description": "gable has two slopes; hip has four (it slopes down on all four sides)"
+                },
+                "ridgeAxis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "z"
+                  ],
+                  "default": "x",
+                  "description": "The direction the ridge runs along, not the direction a slope faces; the two differ by 90 degrees"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "true keeps only the roof shell and leaves the inside empty"
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "to",
+                "height"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "block": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Block ID, for example stone or minecraft:oak_planks"
+        },
+        "blockStates": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 200,
+              "description": "Optional block states, for example [\"stone_type\":\"granite\"]"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional block states, for example [\"stone_type\":\"granite\"]",
+          "default": null
+        }
+      },
+      "required": [
+        "shape",
+        "block"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_build_shape",
+    "description": "Build a shape directly in the world. Block coordinates are merged into the fewest fill commands automatically, so a sphere of radius 20 takes a few hundred commands instead of thirty thousand.\n[Choose a shape by intent]\nBasic volumes: box, sphere, ellipsoid, cylinder, cone (topRadius>0 makes a truncated cone), pyramid (sides sets the number of sides, topRadius>0 makes a frustum), prism (regular n-sided prism).\nLines and surfaces: line (straight line), curve (smooth curve), disk (disk / ring), tube (cylinder in any direction).\nBuilding parts: wedge (single slope), roof (gable / hip), arch, stairs (straight stairs), spiralStairs, polywall (polyline wall / city wall).\nTerrain and paths: heightfield (rolling ground), ribbon (road / bridge deck).\nDecoration and forms: torus (ring), helix, cross (plus-shaped column), star (star-shaped column), revolution (solid of revolution).\n\n[Easy to confuse; read this first]\nSlanted columns, beams, pipes -> tube, not cylinder (cylinder only aligns with x / y / z).\nWalls or fences with right-angle turns -> polywall, not curve (curve is smooth and rounds off right angles).\nA roof with a ridge -> roof; a single slope or ramp only -> wedge.\nStairs that wind around a tower -> spiralStairs; straight up and down -> stairs.\nTower bodies, bases or chimneys that are wider at one end -> cone or pyramid with topRadius, not stacked layers of box.\nDomes, vases, paraboloids, cooling towers and other round forms whose width changes -> revolution with a different profile; no other shape is needed.\nA stretch of rolling ground -> heightfield; a flat road with a width -> ribbon.\n\nIf unsure, check the block count and bounding box with mc_build_preview first; it does not touch the world.\n\nAll coordinates are absolute world coordinates; if you do not know where the player is, call mc_query_target first. Building changes the world directly, so check the block count and bounding box with the matching preview tool before you build.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "shape": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "line"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "box"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "sphere"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "ellipsoid"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radii": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 128
+                    },
+                    "y": {
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 128
+                    },
+                    "z": {
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 128
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radii"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "cylinder"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "cone"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "topRadius": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 128,
+                  "default": 0,
+                  "description": "Top radius; 0 is a classic cone, greater than 0 makes a truncated cone (chimneys, tower bodies, bridge piers)"
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "pyramid"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "baseRadius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128,
+                  "description": "Distance from the base center to an edge, not to a corner; base side length = 2*baseRadius+1"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "topRadius": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 128,
+                  "default": 0,
+                  "description": "Top radius; 0 ends in a point, greater than 0 makes a frustum (castle towers, temple bases)"
+                },
+                "sides": {
+                  "type": "integer",
+                  "minimum": 3,
+                  "maximum": 12,
+                  "default": 4,
+                  "description": "4 is a classic square base, 3 a triangular pyramid, 6 a hexagonal pyramid"
+                },
+                "rotation": {
+                  "type": "number",
+                  "minimum": -360,
+                  "maximum": 360,
+                  "default": 0,
+                  "description": "Degrees to rotate the base around the Y axis"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "baseRadius",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "disk"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 256
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "true draws only the outer ring"
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "torus"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "majorRadius": {
+                  "type": "number",
+                  "minimum": 2,
+                  "maximum": 128
+                },
+                "minorRadius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 64
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "majorRadius",
+                "minorRadius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "helix"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 384
+                },
+                "turns": {
+                  "type": "number",
+                  "minimum": 0.25,
+                  "maximum": 64
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "thickness": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 7,
+                  "default": 1
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius",
+                "height",
+                "turns"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "curve"
+                },
+                "points": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "integer"
+                      },
+                      "y": {
+                        "type": "integer"
+                      },
+                      "z": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "z"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 2,
+                  "maxItems": 64,
+                  "description": "The curve passes smoothly through every control point; it is not a polyline"
+                },
+                "thickness": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 7,
+                  "default": 1
+                },
+                "closed": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "When true, the ends join into a closed loop"
+                }
+              },
+              "required": [
+                "kind",
+                "points"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "revolution"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "profile": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "along": {
+                        "type": "integer",
+                        "description": "Position along the axis, relative to center"
+                      },
+                      "radius": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 128,
+                        "description": "Radius at that position"
+                      }
+                    },
+                    "required": [
+                      "along",
+                      "radius"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 2,
+                  "maxItems": 64,
+                  "description": "Side profile; the radius is linearly interpolated between neighboring points. Builds vases, turrets, domes"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "true keeps only the side shell"
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "profile"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "tube"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 64,
+                  "description": "A cylinder in any direction; both ends are capped with hemispheres"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "A closed shell: the hemispherical end caps are part of the shell, so it is not an open pipe"
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "to",
+                "radius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "wedge"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "rise": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y",
+                  "description": "Height direction"
+                },
+                "run": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "x",
+                  "description": "Direction the slope descends along; must be a different axis from rise. Full height at the start end, one block at the far end"
+                },
+                "reversed": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "When true, it gets lower toward the negative run axis instead"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "arch"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Center of the springing line, the midpoint between the two arch feet"
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128,
+                  "description": "Inner radius of the arch; opening width = 2*radius-1"
+                },
+                "thickness": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 64,
+                  "default": 1,
+                  "description": "Thickness of the arch ring"
+                },
+                "depth": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 256,
+                  "default": 1,
+                  "description": "Depth along the third axis"
+                },
+                "span": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "x",
+                  "description": "Direction the arch spans"
+                },
+                "rise": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y",
+                  "description": "Upward direction; must be a different axis from span"
+                },
+                "legHeight": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 256,
+                  "default": 0,
+                  "description": "Height of the straight legs below the springing line; city gates and bridge arches need it, set 0 for a pure semicircle"
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "stairs"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Starting corner of the first tread: the lowest block, nearest the start, with the smallest coordinate across the width"
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": [
+                    "x+",
+                    "x-",
+                    "z+",
+                    "z-"
+                  ],
+                  "description": "Horizontal direction of travel; stairs always rise along the Y axis"
+                },
+                "steps": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 256
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64,
+                  "default": 1,
+                  "description": "Stair width, extending to the left of the direction of travel"
+                },
+                "stepRise": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8,
+                  "default": 1,
+                  "description": "Blocks each step rises"
+                },
+                "stepRun": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8,
+                  "default": 1,
+                  "description": "Blocks each step advances (tread depth)"
+                },
+                "solid": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "false gives floating treads; true fills each step down to the starting height for a solid staircase"
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "direction",
+                "steps"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "prism"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128,
+                  "description": "Distance from the center to an edge; the more sides, the closer it gets to a cylinder of the same radius"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "sides": {
+                  "type": "integer",
+                  "minimum": 3,
+                  "maximum": 12,
+                  "default": 6,
+                  "description": "3 for a triangular prism, 6 for a hexagonal tower, 8 for an octagonal pavilion"
+                },
+                "rotation": {
+                  "type": "number",
+                  "minimum": -360,
+                  "maximum": 360,
+                  "default": 0,
+                  "description": "Degrees to rotate around the axis, to align one side with a direction"
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "polywall"
+                },
+                "points": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "integer"
+                      },
+                      "y": {
+                        "type": "integer"
+                      },
+                      "z": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "z"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 2,
+                  "maxItems": 32,
+                  "description": "Corner points of an XZ polyline; corners are not rounded (curve rounds them). The Y of the first point is the wall base"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "thickness": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 32,
+                  "default": 1
+                },
+                "closed": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "When true, the ends join to enclose a loop"
+                },
+                "battlement": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Make the top layer battlements, alternating gaps along the path"
+                },
+                "merlonWidth": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 32,
+                  "default": 2,
+                  "description": "Width in blocks of each merlon and each gap"
+                }
+              },
+              "required": [
+                "kind",
+                "points",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "ribbon"
+                },
+                "points": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "integer"
+                      },
+                      "y": {
+                        "type": "integer"
+                      },
+                      "z": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "z"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 2,
+                  "maxItems": 32,
+                  "description": "XZ polyline; the Y of the first point is the road surface height"
+                },
+                "width": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 64,
+                  "default": 3,
+                  "description": "Total width spread to both sides"
+                },
+                "thickness": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64,
+                  "default": 1,
+                  "description": "Number of layers stacked upward"
+                },
+                "closed": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "points"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "heightfield"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "One corner of the plot; Y is the base height"
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "The opposite corner of the plot"
+                },
+                "corners": {
+                  "type": "object",
+                  "properties": {
+                    "nw": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 384,
+                      "default": 1
+                    },
+                    "ne": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 384,
+                      "default": 1
+                    },
+                    "sw": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 384,
+                      "default": 1
+                    },
+                    "se": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 384,
+                      "default": 1
+                    }
+                  },
+                  "additionalProperties": false,
+                  "default": {
+                    "nw": 1,
+                    "ne": 1,
+                    "sw": 1,
+                    "se": 1
+                  },
+                  "description": "Height of each corner relative to from.y, bilinearly interpolated in between. -X is west, -Z is north"
+                },
+                "waves": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "amplitude": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 128
+                        },
+                        "wavelength": {
+                          "type": "number",
+                          "minimum": 1,
+                          "maximum": 512
+                        }
+                      },
+                      "required": [
+                        "amplitude",
+                        "wavelength"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "Sine waves added on top of the corner interpolation; pass null if not needed"
+                },
+                "solid": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "true fills solid from from.y up to the surface; false lays only the surface layer"
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "spiralStairs"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Bottom center of the spiral axis"
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128,
+                  "description": "Outer radius of the treads"
+                },
+                "innerRadius": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 128,
+                  "default": 0,
+                  "description": "Radius of the hole in the middle; 0 is solid to the axis"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "turns": {
+                  "type": "number",
+                  "minimum": 0.25,
+                  "maximum": 64,
+                  "description": "Total number of turns"
+                },
+                "clockwise": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Direction of rotation seen from above"
+                },
+                "stepRise": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8,
+                  "default": 1,
+                  "description": "Blocks each step rises"
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius",
+                "height",
+                "turns"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "cross"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "radius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128,
+                  "description": "Distance from the center to the end of an arm"
+                },
+                "armWidth": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64,
+                  "default": 1,
+                  "description": "Arm width in blocks"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "radius",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "star"
+                },
+                "center": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false
+                },
+                "points": {
+                  "type": "integer",
+                  "minimum": 3,
+                  "maximum": 12,
+                  "default": 5,
+                  "description": "Number of star points"
+                },
+                "outerRadius": {
+                  "type": "number",
+                  "minimum": 2,
+                  "maximum": 128,
+                  "description": "Radius at the star tips"
+                },
+                "innerRadius": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 128,
+                  "description": "Radius at the inner corners; must be less than outerRadius"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384,
+                  "default": 1
+                },
+                "rotation": {
+                  "type": "number",
+                  "minimum": -360,
+                  "maximum": 360,
+                  "default": 0
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "kind",
+                "center",
+                "outerRadius",
+                "innerRadius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "roof"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "One corner of the roof base; Y is the eave height"
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer"
+                    },
+                    "y": {
+                      "type": "integer"
+                    },
+                    "z": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "additionalProperties": false,
+                  "description": "The opposite corner of the roof base"
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 384,
+                  "description": "Height from the eaves to the ridge"
+                },
+                "style": {
+                  "type": "string",
+                  "enum": [
+                    "gable",
+                    "hip"
+                  ],
+                  "default": "gable",
+                  "description": "gable has two slopes; hip has four (it slopes down on all four sides)"
+                },
+                "ridgeAxis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "z"
+                  ],
+                  "default": "x",
+                  "description": "The direction the ridge runs along, not the direction a slope faces; the two differ by 90 degrees"
+                },
+                "hollow": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "true keeps only the roof shell and leaves the inside empty"
+                }
+              },
+              "required": [
+                "kind",
+                "from",
+                "to",
+                "height"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "block": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Block ID, for example stone or minecraft:oak_planks"
+        },
+        "blockStates": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 200,
+              "description": "Optional block states, for example [\"stone_type\":\"granite\"]"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional block states, for example [\"stone_type\":\"granite\"]",
+          "default": null
+        }
+      },
+      "required": [
+        "shape",
+        "block"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_blueprint_preview",
+    "description": "Compute only, build nothing: group a block-by-block blueprint by block type and report the total block count and the number of merged fill batches.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "integer"
+                  },
+                  "y": {
+                    "type": "integer"
+                  },
+                  "z": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "additionalProperties": false
+              },
+              "block": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80,
+                "description": "Block ID, for example stone or minecraft:oak_planks"
+              },
+              "blockStates": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 200,
+                "description": "Optional block states, for example [\"stone_type\":\"granite\"]"
+              }
+            },
+            "required": [
+              "position",
+              "block"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 20000
+        }
+      },
+      "required": [
+        "entries"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_build_blueprint",
+    "description": "Build any form from a list of coordinate -> block entries; identical blocks are merged into the fewest fill commands automatically. Prefer mc_build_shape for geometric shapes; this tool is for pixel art, text, irregular forms, or models converted from external data.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "integer"
+                  },
+                  "y": {
+                    "type": "integer"
+                  },
+                  "z": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "additionalProperties": false
+              },
+              "block": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80,
+                "description": "Block ID, for example stone or minecraft:oak_planks"
+              },
+              "blockStates": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 200,
+                "description": "Optional block states, for example [\"stone_type\":\"granite\"]"
+              }
+            },
+            "required": [
+              "position",
+              "block"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 20000
+        }
+      },
+      "required": [
+        "entries"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_events_catalog",
+    "description": "Return the event names known to work. Mojang does not formally document this list, so subscribing to a name outside it is allowed; it is just marked unverified. No side effects.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_events_subscribe",
+    "description": "Start receiving a kind of game event (for example PlayerMessage for chat, BlockPlaced for placed blocks, PlayerTravelled for movement). Events go into a ring buffer; read them later with mc_events_poll. This is how the AI perceives what the player is doing. Subscriptions are renewed automatically after a reconnect.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "eventName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "eventName"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_events_unsubscribe",
+    "description": "Stop receiving a kind of event. Events already in the buffer are kept.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "eventName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "eventName"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "mc_events_poll",
+    "description": "Return the events after a cursor. Use afterCursor=0 the first time, then pass back the nextCursor from the previous call to keep reading. dropped greater than 0 means the buffer wrapped around and some events are lost for good; poll more often. No side effects.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "afterCursor": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "default": 50
+        },
+        "eventName": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Only return this kind of event"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  }
+]

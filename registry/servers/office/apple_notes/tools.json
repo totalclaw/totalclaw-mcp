@@ -1,0 +1,387 @@
+[
+  {
+    "name": "overview",
+    "description": "Folders with note counts. With folder, dates or sort: notes as id | title | date | size | description. undescribed: true lists notes needing a description.",
+    "read_only": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "created_after": {
+          "description": "YYYY-MM-DD, inclusive",
+          "type": "string"
+        },
+        "created_before": {
+          "description": "YYYY-MM-DD, exclusive",
+          "type": "string"
+        },
+        "depth": {
+          "description": "Folder levels shown without other arguments (default 1)",
+          "maximum": 10,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "folder": {
+          "description": "Path, such as \"Projects/Ideas\", or id",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Default 30 (50 with undescribed)",
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "modified_after": {
+          "description": "YYYY-MM-DD, inclusive",
+          "type": "string"
+        },
+        "modified_before": {
+          "description": "YYYY-MM-DD, exclusive",
+          "type": "string"
+        },
+        "sort": {
+          "description": "Newest first by modified (default) or created, or by title",
+          "enum": [
+            "modified",
+            "created",
+            "title"
+          ],
+          "type": "string"
+        },
+        "undescribed": {
+          "description": "Only notes needing a description, with their opening text",
+          "type": "boolean"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  },
+  {
+    "name": "search",
+    "description": "Full-text search over titles and bodies, best matches first.",
+    "read_only": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "created_after": {
+          "description": "YYYY-MM-DD, inclusive",
+          "type": "string"
+        },
+        "created_before": {
+          "description": "YYYY-MM-DD, exclusive",
+          "type": "string"
+        },
+        "folder": {
+          "description": "Path or id; includes subfolders",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Default 10",
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "match": {
+          "description": "Every word (all, default) or any",
+          "enum": [
+            "all",
+            "any"
+          ],
+          "type": "string"
+        },
+        "modified_after": {
+          "description": "YYYY-MM-DD, inclusive",
+          "type": "string"
+        },
+        "modified_before": {
+          "description": "YYYY-MM-DD, exclusive",
+          "type": "string"
+        },
+        "query": {
+          "description": "Words",
+          "type": "string"
+        },
+        "sort": {
+          "description": "Instead of best match: newest modified or created first, or title",
+          "enum": [
+            "modified",
+            "created",
+            "title"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "read_note",
+    "description": "Notes as Markdown, with the version to pass back when writing. By id, several ids, or exact title; a long note can be read by section, or as an outline first.",
+    "read_only": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Note id",
+          "type": "string"
+        },
+        "ids": {
+          "description": "Several note ids, read in one call",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "type": "array"
+        },
+        "outline": {
+          "description": "Only the headings, with each section's size",
+          "type": "boolean"
+        },
+        "section": {
+          "description": "Only this heading's section",
+          "type": "string"
+        },
+        "title": {
+          "description": "Exact title, instead of id",
+          "type": "string"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  },
+  {
+    "name": "describe_note",
+    "description": "Saves one-line summaries of notes, shown by overview. Several at once.",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "descriptions": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "description": {
+                "description": "One line, under 80 characters",
+                "type": "string"
+              },
+              "id": {
+                "description": "Note id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "description"
+            ],
+            "type": "object"
+          },
+          "maxItems": 200,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "descriptions"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "create_note",
+    "description": "Creates a note from Markdown; the first line is the title.",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "folder": {
+          "description": "Path or id; default Notes",
+          "type": "string"
+        },
+        "markdown": {
+          "description": "Markdown",
+          "type": "string"
+        }
+      },
+      "required": [
+        "markdown"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "edit_note",
+    "description": "Changes a note in one call: replace (exact text pairs from read_note, applied in order), insert (Markdown at the end, the start, or under a heading), or rewrite (the whole note). Unchanged text keeps its formatting.",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "at": {
+          "description": "end (default), start, or a heading's text (list items join that section's list)",
+          "type": "string"
+        },
+        "id": {
+          "description": "Note id",
+          "type": "string"
+        },
+        "insert": {
+          "description": "Markdown to add",
+          "type": "string"
+        },
+        "replace": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "all": {
+                "type": "boolean"
+              },
+              "new": {
+                "description": "Markdown",
+                "type": "string"
+              },
+              "old": {
+                "description": "Exact Markdown, unique unless all",
+                "type": "string"
+              }
+            },
+            "required": [
+              "old",
+              "new"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "rewrite": {
+          "description": "The whole note as Markdown",
+          "type": "string"
+        },
+        "version": {
+          "description": "From read_note; required for rewrite",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "delete_note",
+    "description": "Moves a note to Recently Deleted.",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Note id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "move_note",
+    "description": "Moves a note to another folder, or restores it from Recently Deleted. Shared folders need allow_shared, after asking the user.",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "allow_shared": {
+          "description": "The user agreed to changing who can see the note",
+          "type": "boolean"
+        },
+        "folder": {
+          "description": "Path or id",
+          "type": "string"
+        },
+        "id": {
+          "description": "Note id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "folder"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "manage_folder",
+    "description": "Creates (folder = new path), renames, deletes or exports a folder. delete: empty, or recursive with expected_notes (notes go to Recently Deleted). export: subfolders too, as Markdown and original attachments, to a new directory or .zip. Renaming a shared folder needs allow_shared, after asking the user.",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "enum": [
+            "create",
+            "rename",
+            "delete",
+            "export"
+          ],
+          "type": "string"
+        },
+        "allow_shared": {
+          "description": "The user agreed to renaming a shared folder",
+          "type": "boolean"
+        },
+        "expected_notes": {
+          "description": "Notes you saw, subfolders included",
+          "type": "integer"
+        },
+        "folder": {
+          "description": "Path or id (for create, the new path)",
+          "type": "string"
+        },
+        "name": {
+          "description": "New name, for rename",
+          "type": "string"
+        },
+        "recursive": {
+          "type": "boolean"
+        },
+        "to": {
+          "description": "Export: new directory or .zip path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "action",
+        "folder"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "read_attachment",
+    "description": "Opens an attachment from a ![…](attachment:id) placeholder: images, scans, PDFs, audio, video, tables, links and files.",
+    "read_only": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Attachment id",
+          "type": "string"
+        },
+        "text_only": {
+          "description": "Only text, no images or files",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    }
+  }
+]

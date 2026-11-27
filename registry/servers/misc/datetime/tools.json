@@ -1,0 +1,206 @@
+[
+  {
+    "name": "get_datetime",
+    "description": "Get the current date and time in the given format.\n\nThe time is in the local timezone of the machine running the server, unless 'timezone' is given as an IANA name such as 'Asia/Tokyo' or 'UTC'.\n\n'format' is one of the format names below, or a custom pattern containing '%'.\nCustom patterns accept strftime directives (%Y %m %d %H %M %S %a %A %b %B %z %Z %j ...), %-m %-d %-H %-M %-S %-I %-j %-y for no leading zero, and these Japanese directives: %Je era name (令和), %JE era initial (R), %Jy era year (元 for year 1), %JY era year (always a number), %Ja weekday (火), %JA weekday (火曜日). Example: '%Je%Jy年%-m月%-d日（%Ja）' -> 令和6年12月10日（火）. Japanese era is supported from 1873-01-01.\n\nAvailable formats (example: 2024-12-10 00:54:01 JST):\n- date: 2024-12-10\n- date_slash: 2024/12/10\n- date_jp: 2024年12月10日\n- datetime: 2024-12-10 00:54:01\n- datetime_jp: 2024年12月10日 00時54分01秒\n- datetime_t: 2024-12-10T00:54:01\n- compact: 20241210005401\n- compact_date: 20241210\n- compact_time: 005401\n- filename_md: 20241210005401.md\n- filename_txt: 20241210005401.txt\n- filename_log: 20241210005401.log\n- iso: 2024-12-10T00:54:01+0900\n- iso_basic: 20241210T005401+0900\n- log: 2024-12-10 00:54:01.123456\n- log_compact: 20241210_005401\n- time: 00:54:01\n- time_jp: 00時54分01秒\n- date_wareki: 令和6年12月10日\n- datetime_wareki: 令和6年12月10日 00時54分01秒\n- date_wareki_short: R6.12.10\n- date_jp_weekday: 2024年12月10日（火）\n- datetime_jp_weekday: 2024年12月10日（火） 00時54分01秒\n- weekday_jp: 火曜日",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "format": {
+          "description": "Format name such as 'datetime', or a custom pattern containing '%'. See the tool description.",
+          "title": "Format",
+          "type": "string"
+        },
+        "timezone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "IANA timezone name such as 'Asia/Tokyo', 'UTC' or 'America/New_York'. Omit to use the local timezone of the machine.",
+          "title": "Timezone"
+        }
+      },
+      "required": [
+        "format"
+      ],
+      "type": "object",
+      "title": "get_datetimeArguments"
+    }
+  },
+  {
+    "name": "convert_time",
+    "description": "Convert a time or date-time from one timezone to another. Returns both sides with their timezone, UTC offset and weekday, and the time difference. A note is added when the time is skipped or repeated by a daylight saving time change. Accepted forms: '2024-12-10', '2024-12-10 14:30', '2024-12-10T14:30:00+09:00', '2024/12/10', '2024年12月10日 14時30分', Japanese era such as '令和6年12月10日' or 'R6.12.10', and a time only such as '14:30' (today).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "time": {
+          "description": "Time or date-time to convert, e.g. '14:30' or '2024-12-10 14:30'.",
+          "title": "Time",
+          "type": "string"
+        },
+        "target_timezone": {
+          "description": "IANA timezone to convert to, e.g. 'America/New_York'.",
+          "title": "Target Timezone",
+          "type": "string"
+        },
+        "source_timezone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "IANA timezone of 'time', e.g. 'Asia/Tokyo'. Omit to use the local timezone. An offset written in 'time' (+09:00, Z) takes precedence.",
+          "title": "Source Timezone"
+        },
+        "format": {
+          "default": "datetime",
+          "description": "Output format name or custom pattern, as in get_datetime.",
+          "title": "Format",
+          "type": "string"
+        }
+      },
+      "required": [
+        "time",
+        "target_timezone"
+      ],
+      "type": "object",
+      "title": "convert_timeArguments"
+    }
+  },
+  {
+    "name": "shift_datetime",
+    "description": "Add or subtract an amount of time to a date-time (default: now). Use negative numbers for the past. Years, months, weeks and days keep the wall time; if the day does not exist in the new month, the last day of that month is used (2024-01-31 + 1 month = 2024-02-29). Hours, minutes and seconds are elapsed time. Accepted forms: '2024-12-10', '2024-12-10 14:30', '2024-12-10T14:30:00+09:00', '2024/12/10', '2024年12月10日 14時30分', Japanese era such as '令和6年12月10日' or 'R6.12.10', and a time only such as '14:30' (today).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "years": {
+          "default": 0,
+          "title": "Years",
+          "type": "integer"
+        },
+        "months": {
+          "default": 0,
+          "title": "Months",
+          "type": "integer"
+        },
+        "weeks": {
+          "default": 0,
+          "title": "Weeks",
+          "type": "integer"
+        },
+        "days": {
+          "default": 0,
+          "title": "Days",
+          "type": "integer"
+        },
+        "hours": {
+          "default": 0,
+          "title": "Hours",
+          "type": "integer"
+        },
+        "minutes": {
+          "default": 0,
+          "title": "Minutes",
+          "type": "integer"
+        },
+        "seconds": {
+          "default": 0,
+          "title": "Seconds",
+          "type": "integer"
+        },
+        "base": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Start date-time. Omit to start from now.",
+          "title": "Base"
+        },
+        "timezone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "IANA timezone of 'base' and of the result. Omit for local time.",
+          "title": "Timezone"
+        },
+        "format": {
+          "default": "datetime",
+          "description": "Output format name or custom pattern, as in get_datetime.",
+          "title": "Format",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "shift_datetimeArguments"
+    }
+  },
+  {
+    "name": "get_datetime_info",
+    "description": "Get details of a date-time (default: now): ISO date-time, timezone, UTC offset, daylight saving time, Unix time, weekday in English and Japanese, Japanese era (wareki), day of year, ISO week, quarter, leap year, days in the month, and the difference from a reference date-time (default: now) in days and seconds, e.g. how many days until a date. Accepted forms: '2024-12-10', '2024-12-10 14:30', '2024-12-10T14:30:00+09:00', '2024/12/10', '2024年12月10日 14時30分', Japanese era such as '令和6年12月10日' or 'R6.12.10', and a time only such as '14:30' (today).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "datetime": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Date-time to inspect. Omit for now.",
+          "title": "Datetime"
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Date-time to compare with. Omit to compare with now.",
+          "title": "Reference"
+        },
+        "timezone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "IANA timezone for reading and showing the date-times. Omit for local.",
+          "title": "Timezone"
+        }
+      },
+      "type": "object",
+      "title": "get_datetime_infoArguments"
+    }
+  }
+]

@@ -1,0 +1,2250 @@
+[
+  {
+    "name": "accurlex_post_law_search_deep_accurlex_law_search",
+    "description": "Retrieve relevant Chinese statutory and judicial-interpretation text and sources from a natural-language request or case facts with the accurLex API. Supply a mode and a prompt. Sample fields include answers and citations. Use it in a legal research or due diligence workflow. Use the results to organize a research workflow and cross-check the relevant source records.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": false,
+          "description": "Retrieve relevant Chinese statutory and judicial-interpretation text and sources from a natural-language request or case facts.",
+          "properties": {
+            "mode": {
+              "const": "deep",
+              "default": "deep",
+              "description": "Fixed by this free-only catalog profile; paid overrides are not permitted.",
+              "enum": [
+                "deep"
+              ],
+              "type": "string"
+            },
+            "prompt": {
+              "description": "A description of the search request or the case material.",
+              "maxLength": 10000,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "prompt",
+            "mode"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "accurlex_post_law_search_expert_accurlex_law_search",
+    "description": "Retrieve relevant Chinese statutory and judicial-interpretation text and sources from a natural-language request or case facts with the accurLex API. Supply a mode and a prompt. Sample fields include answers and citations. Use it in a legal research or due diligence workflow. Use the results to organize a research workflow and cross-check the relevant source records.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": false,
+          "description": "Retrieve relevant Chinese statutory and judicial-interpretation text and sources from a natural-language request or case facts.",
+          "properties": {
+            "mode": {
+              "const": "expert",
+              "default": "expert",
+              "description": "Fixed by this free-only catalog profile; paid overrides are not permitted.",
+              "enum": [
+                "expert"
+              ],
+              "type": "string"
+            },
+            "prompt": {
+              "description": "A description of the search request or the case material.",
+              "maxLength": 30000,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "prompt",
+            "mode"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "accurlex_post_qa_deep_accurlex_legal_qa",
+    "description": "Analyze a question about Chinese law using retrieved statutory material with the accurLex API. Supply a mode and a question. Sample fields include answers and citations. Use it in a legal research or due diligence workflow.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": false,
+          "description": "Analyze a question about Chinese law using retrieved statutory material.",
+          "properties": {
+            "context_text": {
+              "description": "Optional background material or case facts, prepended to the question.",
+              "type": "string"
+            },
+            "history": {
+              "description": "Previous user and assistant messages for a multi-turn conversation.",
+              "items": {
+                "properties": {
+                  "content": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "enum": [
+                      "user",
+                      "assistant"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "role",
+                  "content"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "mode": {
+              "const": "deep",
+              "default": "deep",
+              "description": "Fixed by this free-only catalog profile; paid overrides are not permitted.",
+              "enum": [
+                "deep"
+              ],
+              "type": "string"
+            },
+            "question": {
+              "description": "The legal question to analyze.",
+              "maxLength": 10000,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "question",
+            "mode"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_agent_codex_resets",
+    "description": "Retrieve codex resets as an agent answer with the Aihot API. Use the operation’s published request contract for the selected endpoint. Use it in developer tools or technical research.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_agent_daily_date",
+    "description": "Retrieve A dated daily report as an agent answer with the Aihot API. The request takes a date. Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "date"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_agent_hot",
+    "description": "Retrieve current hot topics as an agent answer with the Aihot API. Use the operation’s published request contract for the selected endpoint. Request fields include result limit (limit). Use it to track developments in a news research workflow.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 10,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_agent_latest",
+    "description": "Retrieve latest items as an agent answer with the Aihot API. The request accepts a category when provided. Request fields include result limit (limit). Use it to track developments in a news research workflow. The GET request schema also lists mode.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "ai-models",
+            "ai-products",
+            "industry",
+            "paper",
+            "tip",
+            "opinion"
+          ],
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 30,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "mode": {
+          "enum": [
+            "selected",
+            "all"
+          ],
+          "type": "string"
+        },
+        "window": {
+          "enum": [
+            "24h",
+            "7d"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_agent_latest_daily",
+    "description": "Retrieve the latest daily report as an agent answer with the Aihot API. Use the operation’s published request contract for the selected endpoint. Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_agent_monthly",
+    "description": "Retrieve the latest monthly report as an agent answer with the Aihot API. Use the operation’s published request contract for the selected endpoint. Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_agent_monthly_by_month_month",
+    "description": "Retrieve A monthly report as an agent answer with the Aihot API. The request takes a month. Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "month": {
+          "description": "Calendar month, e.g. 2026-09.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "month"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_agent_search",
+    "description": "Search for the editorial picks first and, only when they have nothing, every public item, and says which with the Aihot API. Supply a search query (q) and optionally set a category. Request fields include result limit (limit). Use it for catalog research or marketplace monitoring. Use the results to organize a research workflow and cross-check the relevant source records.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "ai-models",
+            "ai-products",
+            "industry",
+            "paper",
+            "tip",
+            "opinion"
+          ],
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 30,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "q": {
+          "type": "string"
+        },
+        "window": {
+          "enum": [
+            "24h",
+            "7d"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "q"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_agent_story_publicid",
+    "description": "Retrieve A story's timeline as an agent answer with the Aihot API. The request takes a public ID. Request fields include result limit (limit). Use it in content discovery, monitoring, or research. The GET request schema also lists publicId.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 50,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "publicId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "publicId"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_agent_weekly",
+    "description": "Retrieve the latest weekly report as an agent answer with the Aihot API. Use the operation’s published request contract for the selected endpoint. Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_agent_weekly_by_week_week",
+    "description": "Retrieve A weekly report as an agent answer with the Aihot API. The request takes a week. Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "week": {
+          "description": "ISO week label, e.g. 2026-W39.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "week"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_codex_resets",
+    "description": "List Tibo Codex reset and reset-credit events with the Aihot API. The response includes explicit announcements and confirmed direct resets or reset-credit grants, Chinese source quotes and original links. Use it in developer tools or technical research.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_codex_resets_recent",
+    "description": "The polling form of /api/v1/codex-resets, in the same shape: events updated within the last 7 Beijing days plus every event still waiting to land (announced, in progress or just past its window), and the source posts of those 7 days. historyFrom is the start of that window. No query parameters. A few KB instead of the whole history; the full snapshot remains at /api/v1/codex-resets. Replace your previous copy on every change; timestamps use +08:00 (Asia/Shanghai). Poll every 10 minutes using If-None-Match and Accept-Encoding: gzip or br: an unchanged answer is a 304 with an empty body.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_dailies",
+    "description": "List daily-report archive entries with the Aihot API. Use the operation’s published request contract for the selected endpoint. Request fields include result limit (limit). Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 180,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_daily_by_date_date",
+    "description": "Retrieve a daily report by Shanghai calendar date with the Aihot API. The request takes a date. Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "date"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_hot_topics",
+    "description": "AIHOT — List current multi-source hot topics\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_items",
+    "description": "List recent public AI items with the Aihot API. The request accepts a category and a pagination cursor when provided. Request fields include result limit (limit), search query (q). Use it to track developments in a news research workflow. The GET request schema also lists by.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "by": {
+          "description": "Which timeline defines the window and ordering. 'timeline' (default) matches the site's published timeline: historical or explicitly backfilled items can retain their source publication date, and items first found more than 72h after publication retain that date unless the editors admit them as current news, at their admission time. Ordinary new items use discovery time; selected representatives follow their reading group's first appearance. 'published' uses the source publication time, falling back to receipt time when that date is unknown. Every item returns publishedAt (null when unknown) and discoveredAt (receipt time); these attribution timestamps do not replace the opaque pagination cursor.",
+          "enum": [
+            "timeline",
+            "published"
+          ],
+          "type": "string"
+        },
+        "category": {
+          "description": "Current values: ai-models, ai-products, industry, paper, tip, opinion. Use tip for tutorials and opinion for opinions; these match the website categories.",
+          "type": "string"
+        },
+        "cursor": {
+          "description": "Opaque, query-bound keyset cursor for the rolling window. It carries no issue time and does not expire on a timer, but the window keeps moving: once the cursor's own anchor has dropped out of the requested 24h or 7d window it is rejected with invalid_cursor, so restart the query from the first page instead of persisting a cursor across days. Older rows may also naturally leave the window between requests. Use selected snapshot + changes for an exact mirror.",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "mode": {
+          "enum": [
+            "selected",
+            "all"
+          ],
+          "type": "string"
+        },
+        "q": {
+          "description": "Leading and trailing whitespace is removed before validation; the remaining value must contain 2 to 200 Unicode code points.",
+          "type": "string"
+        },
+        "window": {
+          "enum": [
+            "24h",
+            "7d"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_latest_daily",
+    "description": "Retrieve the latest daily report with the Aihot API. Use the operation’s published request contract for the selected endpoint. Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_latest_monthly",
+    "description": "Retrieve the latest monthly report with the Aihot API. Use the operation’s published request contract for the selected endpoint. Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_latest_weekly",
+    "description": "Retrieve the latest weekly report with the Aihot API. Use the operation’s published request contract for the selected endpoint. Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_monthlies",
+    "description": "List monthly reports with the Aihot API. Use the operation’s published request contract for the selected endpoint. Request fields include result limit (limit). Use it to track developments in a news research workflow.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 60,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_monthly_by_month_month",
+    "description": "Retrieve a monthly report by month with the Aihot API. The request takes a month. Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "month": {
+          "description": "Calendar month, e.g. 2026-09.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "month"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_selected_changes",
+    "description": "Adds, edits and removals since your cursor, so a local copy stays correct without re-downloading anything. Apply a page, then save the returned cursor — never the other way round. The cursor is a ledger watermark, not a session: it does not expire on a timer, so a client may go offline for days and resume exactly where it stopped. On 409 snapshot_required, re-bootstrap from /api/v1/selected/snapshot; that response is the only signal that resuming is no longer safe.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "cursor": {
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "cursor"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_story_by_public_id_publicid",
+    "description": "Extract ids from the final path segment of a hot-topics links.story HTML URL, or use ids from another story's storyline/related refs. never request links.story as JSON. The request takes a public ID. Use it in content discovery, monitoring, or research. The GET request schema also lists publicId.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "publicId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "publicId"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_weeklies",
+    "description": "Index of published weekly reports, newest first: ISO week, its Monday-to-Sunday days, headline and AIHOT link. A weekly is published each Monday at 10:00 Asia/Shanghai, compiled from the dailies dated in that week, so checking more than once a day is wasted work.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 60,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    }
+  },
+  {
+    "name": "aihot_get_api_v1_weekly_by_week_week",
+    "description": "Retrieve a weekly report by ISO week with the Aihot API. The request takes a week. Use it to assemble a research feed or briefing.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "If-None-Match": {
+          "description": "Previously received ETag for this exact URL. A match returns 304 without a response body.",
+          "type": "string"
+        },
+        "User-Agent": {
+          "description": "User-Agent",
+          "type": "string"
+        },
+        "week": {
+          "description": "ISO week label, e.g. 2026-W39.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "week"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "alchemy_get_nft_v3_getcontractmetadata",
+    "description": "getContractMetadata - Retrieves high-level collection or contract-level information for an NFT with the Alchemy API. Supply a contract address. Sample fields include addresses and symbols. Use it in blockchain research or an on-chain monitoring dashboard. The GET request schema also lists contractAddress.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "contractAddress": {
+          "description": "String - Contract address for the NFT contract (ERC721 and ERC1155 supported).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contractAddress"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "alchemy_get_nft_v3_getcontractsforowner",
+    "description": "getContractsForOwner - Retrieves all NFT contracts held by a specified owner address with the Alchemy API. Supply a repository owner. Sample fields include addresses and symbols. Use it in blockchain research or an on-chain monitoring dashboard. The GET request schema also lists pageKey, pageSize.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "orderBy": {
+          "description": "Enum - ordering scheme to use for ordering NFTs in the response. If unspecified, NFTs will be ordered by contract address and token ID.\n  - transferTime: NFTs will be ordered by the time they were transferred into the wallet, with newest NFTs first. Note: This ordering is supported on Ethereum Mainnet, Optimism Mainnet, Polygon Mainnet, Base Mainnet, Arbitrum One, Polygon Amoy, Base Sepolia, Arbitrum Sepolia, Ethereum Sepolia, and Optimism Sepolia.",
+          "enum": [
+            "transferTime"
+          ],
+          "type": "string"
+        },
+        "owner": {
+          "description": "String - Address for NFT owner (can be in ENS format for Eth Mainnet).",
+          "type": "string"
+        },
+        "pageKey": {
+          "description": "String - key for pagination. If more results are available, a pageKey will be returned in the response. Pass back the pageKey as a param to fetch the next page of results.",
+          "type": "string"
+        },
+        "pageSize": {
+          "description": "Number of NFTs to be returned per page. Defaults to 100. Max is 100.",
+          "type": "integer"
+        },
+        "withMetadata": {
+          "description": "Boolean - if set to `true`, returns NFT metadata. Setting this to false will reduce payload size and may result in a faster API call. Defaults to `true`.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "owner"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "alchemy_get_nft_v3_getfloorprice",
+    "description": "Retrieve the floor prices of an NFT collection across different marketplaces with the Alchemy API. The request takes a contract address. Use it in blockchain research or an on-chain monitoring dashboard. The GET request schema also lists contractAddress, collectionSlug.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "collectionSlug": {
+          "description": "String - OpenSea slug for the NFT collection.",
+          "type": "string"
+        },
+        "contractAddress": {
+          "description": "String - Contract address for the NFT contract (ERC721 and ERC1155 supported).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contractAddress"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "alchemy_get_nft_v3_getnftmetadata",
+    "description": "getNFTMetadata - Retrieves the metadata associated with a specific NFT with the Alchemy API. Supply a contract address and a token ID. Sample fields include addresses and symbols. Use it in blockchain research or an on-chain monitoring dashboard. The GET request schema also lists contractAddress, tokenId, tokenType.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "contractAddress": {
+          "description": "String - Contract address for the NFT contract (ERC721 and ERC1155 supported).",
+          "type": "string"
+        },
+        "refreshCache": {
+          "description": "Defaults to false for faster response times.  If true will refresh metadata for given token. If false will check the cache and use it or refresh if cache doesn't exist.",
+          "type": "boolean"
+        },
+        "tokenId": {
+          "description": "String - The ID of the token. Can be in hex or decimal format.",
+          "type": "string"
+        },
+        "tokenType": {
+          "description": "String - 'ERC721' or 'ERC1155'; specifies type of token to query for. API requests will perform faster if this is specified.",
+          "type": "string"
+        },
+        "tokenUriTimeoutInMs": {
+          "description": "No set timeout by default - When metadata is requested, this parameter is the timeout (in milliseconds) for the website hosting the metadata to respond. If you want to _only_ access the cache and not live fetch any metadata for cache misses then set this value to 0.",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "contractAddress",
+        "tokenId"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "alchemy_get_nft_v3_getnftsforcontract",
+    "description": "getNFTsForContract - Retrieves all NFTs associated with a specific NFT contract with the Alchemy API. Supply a contract address. Sample fields include addresses and symbols. Use it in blockchain research or an on-chain monitoring dashboard. The GET request schema also lists contractAddress, withMetadata, startToken.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "contractAddress": {
+          "description": "String - Contract address for the NFT contract (ERC721 and ERC1155 supported).",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Integer - Sets the total number of NFTs returned in the response. Defaults to 100.",
+          "type": "integer"
+        },
+        "startToken": {
+          "description": "String - A tokenID offset used for pagination. Can be a hex string, or a decimal. Users can specify the offset themselves to start from a custom offset, or to fetch multiple token ranges in parallel.",
+          "type": "string"
+        },
+        "tokenUriTimeoutInMs": {
+          "description": "No set timeout by default - When metadata is requested, this parameter is the timeout (in milliseconds) for the website hosting the metadata to respond. If you want to _only_ access the cache and not live fetch any metadata for cache misses then set this value to 0.",
+          "type": "integer"
+        },
+        "withMetadata": {
+          "description": "Boolean - if set to `true`, returns NFT metadata. Setting this to false will reduce payload size and may result in a faster API call. Defaults to `true`.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "contractAddress"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "alchemy_get_nft_v3_getnftsforowner",
+    "description": "getNFTsForOwner - Retrieves all NFTs currently owned by a specified address with the Alchemy API. Supply a repository owner. Sample fields include addresses and symbols. Use it for on-chain or crypto market research. The GET request schema also lists withMetadata, orderBy.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "orderBy": {
+          "description": "Enum - ordering scheme to use for ordering NFTs in the response. If unspecified, NFTs will be ordered by contract address and token ID.\n  - transferTime: NFTs will be ordered by the time they were transferred into the wallet, with newest NFTs first. Note: This ordering is supported on Ethereum Mainnet, Optimism Mainnet, Polygon Mainnet, Base Mainnet, Arbitrum One, Polygon Amoy, Base Sepolia, Arbitrum Sepolia, Ethereum Sepolia, and Optimism Sepolia.",
+          "enum": [
+            "transferTime"
+          ],
+          "type": "string"
+        },
+        "owner": {
+          "description": "String - Address for NFT owner (can be in ENS format for Eth Mainnet).",
+          "type": "string"
+        },
+        "pageKey": {
+          "description": "String - key for pagination. If more results are available, a pageKey will be returned in the response. Pass back the pageKey as a param to fetch the next page of results.",
+          "type": "string"
+        },
+        "pageSize": {
+          "description": "Number of NFTs to be returned per page. Defaults to 100. Max is 100.",
+          "type": "integer"
+        },
+        "tokenUriTimeoutInMs": {
+          "description": "No set timeout by default - When metadata is requested, this parameter is the timeout (in milliseconds) for the website hosting the metadata to respond. If you want to _only_ access the cache and not live fetch any metadata for cache misses then set this value to 0.",
+          "type": "integer"
+        },
+        "withMetadata": {
+          "description": "Boolean - if set to `true`, returns NFT metadata. Setting this to false will reduce payload size and may result in a faster API call. Defaults to `true`.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "owner"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "alchemy_get_nft_v3_getownersforcontract",
+    "description": "getOwnersForContract - Retrieves all owners associated with a specific NFT contract with the Alchemy API. Supply a contract address. Sample fields include balances. Use it in blockchain research or an on-chain monitoring dashboard. The GET request schema also lists contractAddress, withTokenBalances, pageKey.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "contractAddress": {
+          "description": "String - Contract address for the NFT contract (ERC721 and ERC1155 supported).",
+          "type": "string"
+        },
+        "pageKey": {
+          "description": "String - used for contracts with >50,000 owners. `pageKey` field can be passed back as request parameter to get the next page of results.",
+          "type": "string"
+        },
+        "withTokenBalances": {
+          "description": "Boolean - If set to `true` the query will include the token balances per token id for each owner. `false` by default.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "contractAddress"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "alchemy_get_nft_v3_getownersfornft",
+    "description": "getOwnersForNFT - Retrieves the owner(s) for a specific token with the Alchemy API. The request takes a contract address and a token ID. Use it in blockchain research or an on-chain monitoring dashboard. The GET request schema also lists contractAddress, tokenId.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "contractAddress": {
+          "description": "String - Contract address for the NFT contract (ERC721 and ERC1155 supported).",
+          "type": "string"
+        },
+        "tokenId": {
+          "description": "String - The ID of the token. Can be in hex or decimal format.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contractAddress",
+        "tokenId"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "alchemy_post_nft_v3_getcontractmetadatabatch",
+    "description": "getContractMetadataBatch - Retrieves metadata for a list of specified contract addresses in a single request with the Alchemy API. The sample response includes addresses and symbols. Use it in blockchain research or an on-chain monitoring dashboard.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "description": "getContractMetadataBatch - Retrieves metadata for a list of specified contract addresses in a single request. Uses the shared Alchemy Free quota; not unlimited. Documentation prepared only, not runtime-verified.",
+          "properties": {
+            "contractAddresses": {
+              "default": [
+                "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
+                "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+              ],
+              "description": "List of contract addresses to batch metadata requests for.",
+              "items": {
+                "default": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "alchemy_post_nft_v3_getnftmetadatabatch",
+    "description": "getNFTMetadataBatch - Retrieves metadata for up to 100 specified NFT contracts in a single request with the Alchemy API. Supply a tokens. Sample fields include addresses and symbols. Use it in blockchain research or an on-chain monitoring dashboard.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "description": "getNFTMetadataBatch - Retrieves metadata for up to 100 specified NFT contracts in a single request. This endpoint is supported on Ethereum and many L2s, including Polygon, Arbitrum, Optimism, Base, World Chain and more. See the full list of supported networks [here](https://dashboard.alchemy.com/chains). Uses the shared Alchemy Free quota; not unlimited. Documentation prepared only, not runtime-verified.",
+          "properties": {
+            "refreshCache": {
+              "default": false,
+              "type": "boolean"
+            },
+            "tokenUriTimeoutInMs": {
+              "type": "integer"
+            },
+            "tokens": {
+              "description": "List of token objects to batch request NFT metadata for. Maximum 100.",
+              "items": {
+                "properties": {
+                  "contractAddress": {
+                    "default": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
+                    "type": "string"
+                  },
+                  "tokenId": {
+                    "default": "44",
+                    "type": "string"
+                  },
+                  "tokenType": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "contractAddress",
+                  "tokenId"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "tokens"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "alchemy_post_prices_v1_tokens_by_address",
+    "description": "Retrieve current prices for multiple tokens using network and address pairs with the Alchemy API. The response returns a list of token prices, each containing the network, address, prices, and an optional error field. Use it for on-chain or crypto market research.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "description": "Fetches current prices for multiple tokens using network and address pairs. Returns a list of token prices, each containing the network, address, prices, and an optional error field. Uses the shared Alchemy Free quota; not unlimited. Documentation prepared only, not runtime-verified.",
+          "properties": {
+            "addresses": {
+              "description": "Array of token network and address pairs (limit 25 addresses, max 3 networks). Networks should match network enums.\n",
+              "items": {
+                "properties": {
+                  "address": {
+                    "default": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                    "description": "Token contract address.",
+                    "example": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                    "type": "string"
+                  },
+                  "network": {
+                    "default": "eth-mainnet",
+                    "description": "Network identifier (e.g., eth-mainnet). Find more network enums [here](https://dashboard.alchemy.com/chains)",
+                    "example": "eth-mainnet",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "network",
+                  "address"
+                ],
+                "type": "object"
+              },
+              "maxItems": 25,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "addresses"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "alchemy_post_prices_v1_tokens_historical",
+    "description": "Retrieve historical price data for a single token over a time range with the Alchemy API. The sample response includes currency codes, symbols and market capitalizations. Build a market research view or track changes over time.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "description": "Request body for fetching historical token prices. Provide either the token `symbol` or both `network` and `address`, along with the required time range parameters.\n",
+          "oneOf": [
+            {
+              "properties": {
+                "endTime": {
+                  "description": "End of the time range.",
+                  "example": "2024-01-31T23:59:59Z",
+                  "oneOf": [
+                    {
+                      "default": "2024-01-31T23:59:59Z",
+                      "description": "End of the time range in ISO 8601 format.",
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    {
+                      "default": 1706745599,
+                      "description": "End of the time range as a timestamp in seconds since epoch.",
+                      "type": "number"
+                    }
+                  ]
+                },
+                "interval": {
+                  "default": "1d",
+                  "description": "Time interval for data points. Max ranges: (5m, 7d), (1h, 30d), (1d, 1yr)\n",
+                  "enum": [
+                    "5m",
+                    "1h",
+                    "1d"
+                  ],
+                  "example": "1d",
+                  "type": "string"
+                },
+                "startTime": {
+                  "description": "Start of the time range.",
+                  "example": "2024-01-01T00:00:00Z",
+                  "oneOf": [
+                    {
+                      "default": "2024-01-01T00:00:00Z",
+                      "description": "Start of the time range in ISO 8601 format.",
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    {
+                      "default": 1704067200,
+                      "description": "Start of the time range as a timestamp in seconds since epoch.",
+                      "type": "number"
+                    }
+                  ]
+                },
+                "symbol": {
+                  "default": "ETH",
+                  "description": "Token symbol (e.g., ETH, BTC).",
+                  "example": "ETH",
+                  "type": "string"
+                },
+                "withMarketData": {
+                  "default": false,
+                  "description": "Whether to include market cap and volume for each token",
+                  "example": true,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "symbol",
+                "startTime",
+                "endTime"
+              ]
+            },
+            {
+              "properties": {
+                "address": {
+                  "default": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                  "description": "Token contract address.",
+                  "example": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                  "type": "string"
+                },
+                "endTime": {
+                  "description": "End of the time range.",
+                  "example": "2024-01-31T23:59:59Z",
+                  "oneOf": [
+                    {
+                      "default": "2024-01-31T23:59:59Z",
+                      "description": "End of the time range in ISO 8601 format.",
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    {
+                      "default": 1706745599,
+                      "description": "End of the time range as a timestamp since epoch.",
+                      "type": "number"
+                    }
+                  ]
+                },
+                "interval": {
+                  "default": "1d",
+                  "description": "Time interval for data points. Max ranges: (5m, 7d), (1h, 30d), (1d, 1yr)\n",
+                  "enum": [
+                    "5m",
+                    "1h",
+                    "1d"
+                  ],
+                  "example": "1d",
+                  "type": "string"
+                },
+                "network": {
+                  "default": "eth-mainnet",
+                  "description": "Network identifier (e.g., eth-mainnet).",
+                  "example": "eth-mainnet",
+                  "type": "string"
+                },
+                "startTime": {
+                  "description": "Start of the time range.",
+                  "example": "2024-01-01T00:00:00Z",
+                  "oneOf": [
+                    {
+                      "default": "2024-01-01T00:00:00Z",
+                      "description": "Start of the time range in ISO 8601 format.",
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    {
+                      "default": 1704067200,
+                      "description": "Start of the time range as a timestamp since epoch.",
+                      "type": "number"
+                    }
+                  ]
+                },
+                "withMarketData": {
+                  "default": false,
+                  "description": "Whether to include market cap and volume for each token",
+                  "example": true,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "network",
+                "address",
+                "startTime",
+                "endTime"
+              ]
+            }
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "anyapi_post_v1_run_ahrefs_backlinks",
+    "description": "Retrieve the referring pages linking to a domain or URL, each with the source page, anchor text, linking domain rating, and page title with the AnyAPI API. The request takes a URL. Use it to study recurring themes in customer feedback. The POST request schema also lists fields, max_items.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "Idempotency-Key": {
+          "description": "Optional wallet idempotency key, scoped to this customer for 24 hours. When the gateway honors the key, this synchronous in-process execution can continue after the caller disconnects, bounded by its execution deadline. A completed replayable result charges normally exactly once and can be replayed without another provider run or charge. A pending duplicate returns 409 idempotency_in_progress; reuse with different request semantics returns 409 idempotency_conflict.",
+          "type": "string"
+        },
+        "allowFallbacks": {
+          "description": "Optional, default true. When false, only the sources listed in `source` may serve; the request is refused with no charge if none of them can. When true, the listed sources are tried first and any other source may serve after them, at the normal price.",
+          "type": "boolean"
+        },
+        "fields": {
+          "description": "Optional. Comma-separated keys (dotted paths like `author.name` descend into nested objects) to keep on each result item: each row of the API's result list, or the `data` object itself for an API that returns one record. Keys are matched relative to that item, not against the top-level response envelope, so use `jq` to reshape the whole envelope. Shrinks the response without changing cost.",
+          "type": "string"
+        },
+        "ignoreSources": {
+          "description": "Optional. Source ids to skip for this request, taken from this endpoint's `lanes[].source.id`. The cheapest remaining source serves and the price is that of the dearest remaining source. An id that does not serve this endpoint, or that is also in `source`, is rejected as invalid input with no charge; skipping every source is rejected the same way.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "jq": {
+          "description": "Optional. A jq expression applied to the result envelope; its output replaces `output` (multiple outputs collect into an array). Reshape freely, e.g. `jq=.data | {title, description, md: .markdown[:3500]}`. Runs sandboxed with a 250ms / 2MB budget; on failure the full result is returned with a `jqError`. Does not change cost.",
+          "type": "string"
+        },
+        "max_cost_usd": {
+          "description": "Optional. The most you are willing to pay for this one request, in US dollars (for example 0.05). Any route that would charge more than this is not used, so a request only ever runs on something you can afford. If nothing is available at or below your amount, the request is refused before it runs, nothing is charged, and the message tells you the cheapest price per request so you can raise it. Leave it out to accept the normal price.",
+          "type": "string"
+        },
+        "max_items": {
+          "description": "Optional. Cap the number of result rows returned; a `_truncated` note reports how many were withheld so you can page via the API's own `limit`. An API that returns one record is not trimmed. Does not change cost.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "mode": {
+          "description": "Match scope: \"exact\" for the given URL only, or \"subdomains\" to include the domain and its subdomains.",
+          "enum": [
+            "exact",
+            "subdomains"
+          ],
+          "type": "string"
+        },
+        "preferLatencyUnderMs": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Prefer sources whose typical response time (median over the trailing 30 days, as published on this endpoint's lane health) is under this many milliseconds; among those, the cheapest serves. This can raise your price: when the cheapest source misses the target, a faster and dearer one serves, and you are quoted and charged its price. If no source is that fast the request is still served, by whichever source offers the best speed for its price - it is never refused for being slow. Sources we have not timed are tried last. This is a preference, not a guarantee: the median describes past requests and is not a ceiling on this one, and it excludes any wait this request itself asks for. On a paginated walk it applies to the first page only: later pages stay with the source that page chose, at the price it was quoted.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "source": {
+          "description": "Optional. Source ids to prefer, in order, taken from this endpoint's `lanes[].source.id` in /catalog or /apis. Omit it and the cheapest source serves, with automatic failover. Listed sources are tried first in the order given, then the others, unless `allowFallbacks` is false. A single source with `allowFallbacks` false is served only by that source at its price, quoted and charged exactly, with no failover. The price is that of the dearest source that may serve. An id that does not serve this endpoint is rejected as invalid input with no charge; a listed source that is not serving right now is refused with no charge, so omit `source` to be served by another. On a paginated walk, later pages must include the source that served page one, or omit `source`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "summary": {
+          "description": "Optional. Return only a structural outline (top-level keys, item counts, and per-field byte sizes) instead of the full data. Does not change cost.",
+          "type": "boolean"
+        },
+        "url": {
+          "description": "The domain or page URL to find backlinks for (e.g. \"ahrefs.com\").",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "anyapi_post_v1_run_airbnb_search",
+    "description": "Search for Airbnb listings by location and dates with optional price, beds/bedrooms/bathrooms, and guest-party filters and get results (name, total-stay price label, rating, host) as normalized JSON. The request takes a location. Build a market research view or track changes over time. The POST request schema also lists fields, max_items. Use the results to organize a research workflow and cross-check the relevant source records.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "Idempotency-Key": {
+          "description": "Optional wallet idempotency key, scoped to this customer for 24 hours. When the gateway honors the key, this synchronous in-process execution can continue after the caller disconnects, bounded by its execution deadline. A completed replayable result charges normally exactly once and can be replayed without another provider run or charge. A pending duplicate returns 409 idempotency_in_progress; reuse with different request semantics returns 409 idempotency_conflict.",
+          "type": "string"
+        },
+        "adults": {
+          "description": "Number of adult guests (e.g. 2).",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "allowFallbacks": {
+          "description": "Optional, default true. When false, only the sources listed in `source` may serve; the request is refused with no charge if none of them can. When true, the listed sources are tried first and any other source may serve after them, at the normal price.",
+          "type": "boolean"
+        },
+        "checkIn": {
+          "description": "Check-in date in YYYY-MM-DD format (e.g. 2026-07-01).",
+          "type": "string"
+        },
+        "checkOut": {
+          "description": "Check-out date in YYYY-MM-DD format (e.g. 2026-07-05).",
+          "type": "string"
+        },
+        "children": {
+          "description": "Number of child guests (e.g. 1).",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "currency": {
+          "description": "Currency code for prices (e.g. EUR).",
+          "enum": [
+            "USD",
+            "CZK",
+            "AUD",
+            "BRL",
+            "BGN",
+            "CAD",
+            "CLP",
+            "CNY",
+            "COP",
+            "CRC",
+            "HRK",
+            "DKK",
+            "EGP",
+            "AED",
+            "EUR",
+            "GHS",
+            "HKD",
+            "HUF",
+            "INR",
+            "IDR",
+            "ILS",
+            "JPY",
+            "KZT",
+            "KES",
+            "MYR",
+            "MXN",
+            "MAD",
+            "TWD",
+            "NZD",
+            "NOK",
+            "PEN",
+            "PHP",
+            "PLN",
+            "GBP",
+            "QAR",
+            "RON",
+            "SAR",
+            "SGD",
+            "ZAR",
+            "KRW",
+            "SEK",
+            "CHF",
+            "THB",
+            "TRY",
+            "UGX",
+            "UAH",
+            "UYU",
+            "VND"
+          ],
+          "type": "string"
+        },
+        "fields": {
+          "description": "Optional. Comma-separated keys (dotted paths like `author.name` descend into nested objects) to keep on each result item: each row of the API's result list, or the `data` object itself for an API that returns one record. Keys are matched relative to that item, not against the top-level response envelope, so use `jq` to reshape the whole envelope. Shrinks the response without changing cost.",
+          "type": "string"
+        },
+        "ignoreSources": {
+          "description": "Optional. Source ids to skip for this request, taken from this endpoint's `lanes[].source.id`. The cheapest remaining source serves and the price is that of the dearest remaining source. An id that does not serve this endpoint, or that is also in `source`, is rejected as invalid input with no charge; skipping every source is rejected the same way.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "infants": {
+          "description": "Number of infant guests (e.g. 1).",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "jq": {
+          "description": "Optional. A jq expression applied to the result envelope; its output replaces `output` (multiple outputs collect into an array). Reshape freely, e.g. `jq=.data | {title, description, md: .markdown[:3500]}`. Runs sandboxed with a 250ms / 2MB budget; on failure the full result is returned with a `jqError`. Does not change cost.",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Maximum number of results to return (1-20, default 20). You are billed per result returned, so a lower limit costs less.",
+          "maximum": 20,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "location": {
+          "description": "Location to search listings in (e.g. London).",
+          "type": "string"
+        },
+        "max_cost_usd": {
+          "description": "Optional. The most you are willing to pay for this one request, in US dollars (for example 0.05). Any route that would charge more than this is not used, so a request only ever runs on something you can afford. If nothing is available at or below your amount, the request is refused before it runs, nothing is charged, and the message tells you the cheapest price per request so you can raise it. Leave it out to accept the normal price.",
+          "type": "string"
+        },
+        "max_items": {
+          "description": "Optional. Cap the number of result rows returned; a `_truncated` note reports how many were withheld so you can page via the API's own `limit`. An API that returns one record is not trimmed. Does not change cost.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "minBathrooms": {
+          "description": "Minimum number of bathrooms (e.g. 2).",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "minBedrooms": {
+          "description": "Minimum number of bedrooms (e.g. 2).",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "minBeds": {
+          "description": "Minimum number of beds (e.g. 2).",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "pets": {
+          "description": "Number of pets; only pet-friendly listings are returned when set (e.g. 1).",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "preferLatencyUnderMs": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Prefer sources whose typical response time (median over the trailing 30 days, as published on this endpoint's lane health) is under this many milliseconds; among those, the cheapest serves. This can raise your price: when the cheapest source misses the target, a faster and dearer one serves, and you are quoted and charged its price. If no source is that fast the request is still served, by whichever source offers the best speed for its price - it is never refused for being slow. Sources we have not timed are tried last. This is a preference, not a guarantee: the median describes past requests and is not a ceiling on this one, and it excludes any wait this request itself asks for. On a paginated walk it applies to the first page only: later pages stay with the source that page chose, at the price it was quoted.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "priceMax": {
+          "description": "Maximum search price in the selected currency (e.g. 300).",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "priceMin": {
+          "description": "Minimum search price in the selected currency (e.g. 50).",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source": {
+          "description": "Optional. Source ids to prefer, in order, taken from this endpoint's `lanes[].source.id` in /catalog or /apis. Omit it and the cheapest source serves, with automatic failover. Listed sources are tried first in the order given, then the others, unless `allowFallbacks` is false. A single source with `allowFallbacks` false is served only by that source at its price, quoted and charged exactly, with no failover. The price is that of the dearest source that may serve. An id that does not serve this endpoint is rejected as invalid input with no charge; a listed source that is not serving right now is refused with no charge, so omit `source` to be served by another. On a paginated walk, later pages must include the source that served page one, or omit `source`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "summary": {
+          "description": "Optional. Return only a structural outline (top-level keys, item counts, and per-field byte sizes) instead of the full data. Does not change cost.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "location"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "anyapi_post_v1_run_alibaba_search",
+    "description": "Search for Alibaba by keyword and get up to 25 wholesale listings (title, price range, minimum order, and supplier) in one normalized response. Supply a search query. Sample fields include currency codes and images. Build a market research view or track changes over time. The POST request schema also lists max_items. Use the results to organize e-commerce research and compare the relevant product, shop, or category records.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "Idempotency-Key": {
+          "description": "Optional wallet idempotency key, scoped to this customer for 24 hours. When the gateway honors the key, this synchronous in-process execution can continue after the caller disconnects, bounded by its execution deadline. A completed replayable result charges normally exactly once and can be replayed without another provider run or charge. A pending duplicate returns 409 idempotency_in_progress; reuse with different request semantics returns 409 idempotency_conflict.",
+          "type": "string"
+        },
+        "allowFallbacks": {
+          "description": "Optional, default true. When false, only the sources listed in `source` may serve; the request is refused with no charge if none of them can. When true, the listed sources are tried first and any other source may serve after them, at the normal price.",
+          "type": "boolean"
+        },
+        "fields": {
+          "description": "Optional. Comma-separated keys (dotted paths like `author.name` descend into nested objects) to keep on each result item: each row of the API's result list, or the `data` object itself for an API that returns one record. Keys are matched relative to that item, not against the top-level response envelope, so use `jq` to reshape the whole envelope. Shrinks the response without changing cost.",
+          "type": "string"
+        },
+        "ignoreSources": {
+          "description": "Optional. Source ids to skip for this request, taken from this endpoint's `lanes[].source.id`. The cheapest remaining source serves and the price is that of the dearest remaining source. An id that does not serve this endpoint, or that is also in `source`, is rejected as invalid input with no charge; skipping every source is rejected the same way.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "jq": {
+          "description": "Optional. A jq expression applied to the result envelope; its output replaces `output` (multiple outputs collect into an array). Reshape freely, e.g. `jq=.data | {title, description, md: .markdown[:3500]}`. Runs sandboxed with a 250ms / 2MB budget; on failure the full result is returned with a `jqError`. Does not change cost.",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Maximum number of results to return (1-25, default 25). You are billed per result returned, so a lower limit costs less.",
+          "maximum": 25,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_cost_usd": {
+          "description": "Optional. The most you are willing to pay for this one request, in US dollars (for example 0.05). Any route that would charge more than this is not used, so a request only ever runs on something you can afford. If nothing is available at or below your amount, the request is refused before it runs, nothing is charged, and the message tells you the cheapest price per request so you can raise it. Leave it out to accept the normal price.",
+          "type": "string"
+        },
+        "max_items": {
+          "description": "Optional. Cap the number of result rows returned; a `_truncated` note reports how many were withheld so you can page via the API's own `limit`. An API that returns one record is not trimmed. Does not change cost.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "preferLatencyUnderMs": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Prefer sources whose typical response time (median over the trailing 30 days, as published on this endpoint's lane health) is under this many milliseconds; among those, the cheapest serves. This can raise your price: when the cheapest source misses the target, a faster and dearer one serves, and you are quoted and charged its price. If no source is that fast the request is still served, by whichever source offers the best speed for its price - it is never refused for being slow. Sources we have not timed are tried last. This is a preference, not a guarantee: the median describes past requests and is not a ceiling on this one, and it excludes any wait this request itself asks for. On a paginated walk it applies to the first page only: later pages stay with the source that page chose, at the price it was quoted.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "query": {
+          "description": "Keywords to search for on Alibaba (e.g. \"bluetooth speaker wholesale\").",
+          "type": "string"
+        },
+        "source": {
+          "description": "Optional. Source ids to prefer, in order, taken from this endpoint's `lanes[].source.id` in /catalog or /apis. Omit it and the cheapest source serves, with automatic failover. Listed sources are tried first in the order given, then the others, unless `allowFallbacks` is false. A single source with `allowFallbacks` false is served only by that source at its price, quoted and charged exactly, with no failover. The price is that of the dearest source that may serve. An id that does not serve this endpoint is rejected as invalid input with no charge; a listed source that is not serving right now is refused with no charge, so omit `source` to be served by another. On a paginated walk, later pages must include the source that served page one, or omit `source`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "summary": {
+          "description": "Optional. Return only a structural outline (top-level keys, item counts, and per-field byte sizes) instead of the full data. Does not change cost.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "anyapi_post_v1_run_amazon_bestsellers",
+    "description": "List the top-ranked products of any Amazon Best Sellers category (rank, title, price, and rating) in one normalized request. The request takes a URL. Build a market research view or track changes over time. The POST request schema also lists fields, max_items.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "Idempotency-Key": {
+          "description": "Optional wallet idempotency key, scoped to this customer for 24 hours. When the gateway honors the key, this synchronous in-process execution can continue after the caller disconnects, bounded by its execution deadline. A completed replayable result charges normally exactly once and can be replayed without another provider run or charge. A pending duplicate returns 409 idempotency_in_progress; reuse with different request semantics returns 409 idempotency_conflict.",
+          "type": "string"
+        },
+        "allowFallbacks": {
+          "description": "Optional, default true. When false, only the sources listed in `source` may serve; the request is refused with no charge if none of them can. When true, the listed sources are tried first and any other source may serve after them, at the normal price.",
+          "type": "boolean"
+        },
+        "fields": {
+          "description": "Optional. Comma-separated keys (dotted paths like `author.name` descend into nested objects) to keep on each result item: each row of the API's result list, or the `data` object itself for an API that returns one record. Keys are matched relative to that item, not against the top-level response envelope, so use `jq` to reshape the whole envelope. Shrinks the response without changing cost.",
+          "type": "string"
+        },
+        "ignoreSources": {
+          "description": "Optional. Source ids to skip for this request, taken from this endpoint's `lanes[].source.id`. The cheapest remaining source serves and the price is that of the dearest remaining source. An id that does not serve this endpoint, or that is also in `source`, is rejected as invalid input with no charge; skipping every source is rejected the same way.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "jq": {
+          "description": "Optional. A jq expression applied to the result envelope; its output replaces `output` (multiple outputs collect into an array). Reshape freely, e.g. `jq=.data | {title, description, md: .markdown[:3500]}`. Runs sandboxed with a 250ms / 2MB budget; on failure the full result is returned with a `jqError`. Does not change cost.",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Maximum number of results to return (1-20, default 20).",
+          "maximum": 20,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_cost_usd": {
+          "description": "Optional. The most you are willing to pay for this one request, in US dollars (for example 0.05). Any route that would charge more than this is not used, so a request only ever runs on something you can afford. If nothing is available at or below your amount, the request is refused before it runs, nothing is charged, and the message tells you the cheapest price per request so you can raise it. Leave it out to accept the normal price.",
+          "type": "string"
+        },
+        "max_items": {
+          "description": "Optional. Cap the number of result rows returned; a `_truncated` note reports how many were withheld so you can page via the API's own `limit`. An API that returns one record is not trimmed. Does not change cost.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "preferLatencyUnderMs": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Prefer sources whose typical response time (median over the trailing 30 days, as published on this endpoint's lane health) is under this many milliseconds; among those, the cheapest serves. This can raise your price: when the cheapest source misses the target, a faster and dearer one serves, and you are quoted and charged its price. If no source is that fast the request is still served, by whichever source offers the best speed for its price - it is never refused for being slow. Sources we have not timed are tried last. This is a preference, not a guarantee: the median describes past requests and is not a ceiling on this one, and it excludes any wait this request itself asks for. On a paginated walk it applies to the first page only: later pages stay with the source that page chose, at the price it was quoted.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "requireFields": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Name the output fields this request must be able to return, for example `offersCount` or `categoryName`, and it is served only by a source that returns every one of them. Fields you do not name are still returned whenever the serving source has them. This can raise your price: when the cheapest source cannot return a named field, a dearer source serves, and you are quoted and charged its price. A named field can still be absent on a product that genuinely lacks it. Naming a combination that no single source returns together is refused as invalid input, with no charge.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "source": {
+          "description": "Optional. Source ids to prefer, in order, taken from this endpoint's `lanes[].source.id` in /catalog or /apis. Omit it and the cheapest source serves, with automatic failover. Listed sources are tried first in the order given, then the others, unless `allowFallbacks` is false. A single source with `allowFallbacks` false is served only by that source at its price, quoted and charged exactly, with no failover. The price is that of the dearest source that may serve. An id that does not serve this endpoint is rejected as invalid input with no charge; a listed source that is not serving right now is refused with no charge, so omit `source` to be served by another. On a paginated walk, later pages must include the source that served page one, or omit `source`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "summary": {
+          "description": "Optional. Return only a structural outline (top-level keys, item counts, and per-field byte sizes) instead of the full data. Does not change cost.",
+          "type": "boolean"
+        },
+        "url": {
+          "description": "Amazon Best Sellers category URL (e.g. https://www.amazon.com/Best-Sellers-Electronics/zgbs/electronics).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "anyapi_post_v1_run_amazon_product",
+    "description": "Retrieve full Amazon product details (title, brand, price when in stock, images, ratings, review count, variants, and attributes) from a product URL. The request takes a URL. Use it for catalog research or marketplace monitoring. The POST request schema also lists fields, max_items.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "Idempotency-Key": {
+          "description": "Optional wallet idempotency key, scoped to this customer for 24 hours. When the gateway honors the key, this synchronous in-process execution can continue after the caller disconnects, bounded by its execution deadline. A completed replayable result charges normally exactly once and can be replayed without another provider run or charge. A pending duplicate returns 409 idempotency_in_progress; reuse with different request semantics returns 409 idempotency_conflict.",
+          "type": "string"
+        },
+        "allowFallbacks": {
+          "description": "Optional, default true. When false, only the sources listed in `source` may serve; the request is refused with no charge if none of them can. When true, the listed sources are tried first and any other source may serve after them, at the normal price.",
+          "type": "boolean"
+        },
+        "fields": {
+          "description": "Optional. Comma-separated keys (dotted paths like `author.name` descend into nested objects) to keep on each result item: each row of the API's result list, or the `data` object itself for an API that returns one record. Keys are matched relative to that item, not against the top-level response envelope, so use `jq` to reshape the whole envelope. Shrinks the response without changing cost.",
+          "type": "string"
+        },
+        "ignoreSources": {
+          "description": "Optional. Source ids to skip for this request, taken from this endpoint's `lanes[].source.id`. The cheapest remaining source serves and the price is that of the dearest remaining source. An id that does not serve this endpoint, or that is also in `source`, is rejected as invalid input with no charge; skipping every source is rejected the same way.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "jq": {
+          "description": "Optional. A jq expression applied to the result envelope; its output replaces `output` (multiple outputs collect into an array). Reshape freely, e.g. `jq=.data | {title, description, md: .markdown[:3500]}`. Runs sandboxed with a 250ms / 2MB budget; on failure the full result is returned with a `jqError`. Does not change cost.",
+          "type": "string"
+        },
+        "max_cost_usd": {
+          "description": "Optional. The most you are willing to pay for this one request, in US dollars (for example 0.05). Any route that would charge more than this is not used, so a request only ever runs on something you can afford. If nothing is available at or below your amount, the request is refused before it runs, nothing is charged, and the message tells you the cheapest price per request so you can raise it. Leave it out to accept the normal price.",
+          "type": "string"
+        },
+        "max_items": {
+          "description": "Optional. Cap the number of result rows returned; a `_truncated` note reports how many were withheld so you can page via the API's own `limit`. An API that returns one record is not trimmed. Does not change cost.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "preferLatencyUnderMs": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Prefer sources whose typical response time (median over the trailing 30 days, as published on this endpoint's lane health) is under this many milliseconds; among those, the cheapest serves. This can raise your price: when the cheapest source misses the target, a faster and dearer one serves, and you are quoted and charged its price. If no source is that fast the request is still served, by whichever source offers the best speed for its price - it is never refused for being slow. Sources we have not timed are tried last. This is a preference, not a guarantee: the median describes past requests and is not a ceiling on this one, and it excludes any wait this request itself asks for. On a paginated walk it applies to the first page only: later pages stay with the source that page chose, at the price it was quoted.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "requireFields": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Name the output fields this request must be able to return, for example `category` or `condition`, and it is served only by a source that returns every one of them. Fields you do not name are still returned whenever the serving source has them. This can raise your price: when the cheapest source cannot return a named field, a dearer source serves, and you are quoted and charged its price. A named field can still be absent on a product that genuinely lacks it. Naming a combination that no single source returns together is refused as invalid input, with no charge.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "source": {
+          "description": "Optional. Source ids to prefer, in order, taken from this endpoint's `lanes[].source.id` in /catalog or /apis. Omit it and the cheapest source serves, with automatic failover. Listed sources are tried first in the order given, then the others, unless `allowFallbacks` is false. A single source with `allowFallbacks` false is served only by that source at its price, quoted and charged exactly, with no failover. The price is that of the dearest source that may serve. An id that does not serve this endpoint is rejected as invalid input with no charge; a listed source that is not serving right now is refused with no charge, so omit `source` to be served by another. On a paginated walk, later pages must include the source that served page one, or omit `source`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "summary": {
+          "description": "Optional. Return only a structural outline (top-level keys, item counts, and per-field byte sizes) instead of the full data. Does not change cost.",
+          "type": "boolean"
+        },
+        "url": {
+          "description": "Full Amazon product URL (e.g. https://www.amazon.com/dp/B0CX23V2ZK).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "anyapi_post_v1_run_amazon_reviews",
+    "description": "Retrieve reviews with the Amazon API. Supply a product and optionally set a region and a sort order. Use it for catalog and marketplace research. The POST request schema also lists fields, max_items.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "Idempotency-Key": {
+          "description": "Optional wallet idempotency key, scoped to this customer for 24 hours. When the gateway honors the key, this synchronous in-process execution can continue after the caller disconnects, bounded by its execution deadline. A completed replayable result charges normally exactly once and can be replayed without another provider run or charge. A pending duplicate returns 409 idempotency_in_progress; reuse with different request semantics returns 409 idempotency_conflict.",
+          "type": "string"
+        },
+        "allowFallbacks": {
+          "description": "Optional, default true. When false, only the sources listed in `source` may serve; the request is refused with no charge if none of them can. When true, the listed sources are tried first and any other source may serve after them, at the normal price.",
+          "type": "boolean"
+        },
+        "endDate": {
+          "description": "Only return reviews on or before this date, inclusive, in YYYY-MM-DD format (e.g. 2026-06-30).",
+          "type": "string"
+        },
+        "fields": {
+          "description": "Optional. Comma-separated keys (dotted paths like `author.name` descend into nested objects) to keep on each result item: each row of the API's result list, or the `data` object itself for an API that returns one record. Keys are matched relative to that item, not against the top-level response envelope, so use `jq` to reshape the whole envelope. Shrinks the response without changing cost.",
+          "type": "string"
+        },
+        "ignoreSources": {
+          "description": "Optional. Source ids to skip for this request, taken from this endpoint's `lanes[].source.id`. The cheapest remaining source serves and the price is that of the dearest remaining source. An id that does not serve this endpoint, or that is also in `source`, is rejected as invalid input with no charge; skipping every source is rejected the same way.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "jq": {
+          "description": "Optional. A jq expression applied to the result envelope; its output replaces `output` (multiple outputs collect into an array). Reshape freely, e.g. `jq=.data | {title, description, md: .markdown[:3500]}`. Runs sandboxed with a 250ms / 2MB budget; on failure the full result is returned with a `jqError`. Does not change cost.",
+          "type": "string"
+        },
+        "keyword": {
+          "description": "Only return reviews whose title or text contains this keyword, case-insensitively (e.g. battery).",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Maximum number of results to return (1-50, default 50).",
+          "maximum": 50,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_cost_usd": {
+          "description": "Optional. The most you are willing to pay for this one request, in US dollars (for example 0.05). Any route that would charge more than this is not used, so a request only ever runs on something you can afford. If nothing is available at or below your amount, the request is refused before it runs, nothing is charged, and the message tells you the cheapest price per request so you can raise it. Leave it out to accept the normal price.",
+          "type": "string"
+        },
+        "max_items": {
+          "description": "Optional. Cap the number of result rows returned; a `_truncated` note reports how many were withheld so you can page via the API's own `limit`. An API that returns one record is not trimmed. Does not change cost.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "preferLatencyUnderMs": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Prefer sources whose typical response time (median over the trailing 30 days, as published on this endpoint's lane health) is under this many milliseconds; among those, the cheapest serves. This can raise your price: when the cheapest source misses the target, a faster and dearer one serves, and you are quoted and charged its price. If no source is that fast the request is still served, by whichever source offers the best speed for its price - it is never refused for being slow. Sources we have not timed are tried last. This is a preference, not a guarantee: the median describes past requests and is not a ceiling on this one, and it excludes any wait this request itself asks for. On a paginated walk it applies to the first page only: later pages stay with the source that page chose, at the price it was quoted.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "product": {
+          "description": "Amazon product ASIN or full product URL (e.g. B07CMS5Q6P).",
+          "type": "string"
+        },
+        "ratings": {
+          "description": "Only return reviews whose star rating is in this set (e.g. [\"5\", \"4\"] for 4 and 5 star reviews); omit for all ratings.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "region": {
+          "description": "Amazon marketplace domain the product ASIN belongs to (e.g. amazon.co.uk).",
+          "enum": [
+            "amazon.com",
+            "amazon.ca",
+            "amazon.de",
+            "amazon.fr",
+            "amazon.co.uk",
+            "amazon.it",
+            "amazon.es",
+            "amazon.com.au",
+            "amazon.co.jp",
+            "amazon.com.br",
+            "amazon.com.mx",
+            "amazon.nl",
+            "amazon.ie",
+            "amazon.se",
+            "amazon.com.tr",
+            "amazon.ae",
+            "amazon.sg",
+            "amazon.sa",
+            "amazon.pl",
+            "amazon.com.be",
+            "amazon.eg",
+            "amazon.in"
+          ],
+          "type": "string"
+        },
+        "requireFields": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Name the output fields this request must be able to return, for example `url`, and it is served only by a source that returns every one of them. Fields you do not name are still returned whenever the serving source has them. This can raise your price: when the cheapest source cannot return a named field, a dearer source serves, and you are quoted and charged its price. A named field can still be absent on a review that genuinely lacks it. Naming a combination that no single source returns together is refused as invalid input, with no charge.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "sort": {
+          "description": "Review sort order: most helpful first or most recent first (e.g. recent).",
+          "enum": [
+            "helpful",
+            "recent"
+          ],
+          "type": "string"
+        },
+        "source": {
+          "description": "Optional. Source ids to prefer, in order, taken from this endpoint's `lanes[].source.id` in /catalog or /apis. Omit it and the cheapest source serves, with automatic failover. Listed sources are tried first in the order given, then the others, unless `allowFallbacks` is false. A single source with `allowFallbacks` false is served only by that source at its price, quoted and charged exactly, with no failover. The price is that of the dearest source that may serve. An id that does not serve this endpoint is rejected as invalid input with no charge; a listed source that is not serving right now is refused with no charge, so omit `source` to be served by another. On a paginated walk, later pages must include the source that served page one, or omit `source`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "startDate": {
+          "description": "Only return reviews on or after this date, inclusive, in YYYY-MM-DD format (e.g. 2026-01-01).",
+          "type": "string"
+        },
+        "summary": {
+          "description": "Optional. Return only a structural outline (top-level keys, item counts, and per-field byte sizes) instead of the full data. Does not change cost.",
+          "type": "boolean"
+        },
+        "verifiedOnly": {
+          "description": "Set true to return only verified-purchase reviews (e.g. true).",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "product"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "anyapi_post_v1_run_amazon_search",
+    "description": "Search for Amazon from any search or category URL and get up to 20 matching products (title, price, rating, and thumbnail) in one normalized response. The request takes a URL. Build a market research view or track changes over time. The POST request schema also lists fields, max_items. Use the results to organize a research workflow and cross-check the relevant source records.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "Idempotency-Key": {
+          "description": "Optional wallet idempotency key, scoped to this customer for 24 hours. When the gateway honors the key, this synchronous in-process execution can continue after the caller disconnects, bounded by its execution deadline. A completed replayable result charges normally exactly once and can be replayed without another provider run or charge. A pending duplicate returns 409 idempotency_in_progress; reuse with different request semantics returns 409 idempotency_conflict.",
+          "type": "string"
+        },
+        "allowFallbacks": {
+          "description": "Optional, default true. When false, only the sources listed in `source` may serve; the request is refused with no charge if none of them can. When true, the listed sources are tried first and any other source may serve after them, at the normal price.",
+          "type": "boolean"
+        },
+        "fields": {
+          "description": "Optional. Comma-separated keys (dotted paths like `author.name` descend into nested objects) to keep on each result item: each row of the API's result list, or the `data` object itself for an API that returns one record. Keys are matched relative to that item, not against the top-level response envelope, so use `jq` to reshape the whole envelope. Shrinks the response without changing cost.",
+          "type": "string"
+        },
+        "ignoreSources": {
+          "description": "Optional. Source ids to skip for this request, taken from this endpoint's `lanes[].source.id`. The cheapest remaining source serves and the price is that of the dearest remaining source. An id that does not serve this endpoint, or that is also in `source`, is rejected as invalid input with no charge; skipping every source is rejected the same way.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "jq": {
+          "description": "Optional. A jq expression applied to the result envelope; its output replaces `output` (multiple outputs collect into an array). Reshape freely, e.g. `jq=.data | {title, description, md: .markdown[:3500]}`. Runs sandboxed with a 250ms / 2MB budget; on failure the full result is returned with a `jqError`. Does not change cost.",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Maximum number of results to return (1-20, default 20).",
+          "maximum": 20,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_cost_usd": {
+          "description": "Optional. The most you are willing to pay for this one request, in US dollars (for example 0.05). Any route that would charge more than this is not used, so a request only ever runs on something you can afford. If nothing is available at or below your amount, the request is refused before it runs, nothing is charged, and the message tells you the cheapest price per request so you can raise it. Leave it out to accept the normal price.",
+          "type": "string"
+        },
+        "max_items": {
+          "description": "Optional. Cap the number of result rows returned; a `_truncated` note reports how many were withheld so you can page via the API's own `limit`. An API that returns one record is not trimmed. Does not change cost.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "preferLatencyUnderMs": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Prefer sources whose typical response time (median over the trailing 30 days, as published on this endpoint's lane health) is under this many milliseconds; among those, the cheapest serves. This can raise your price: when the cheapest source misses the target, a faster and dearer one serves, and you are quoted and charged its price. If no source is that fast the request is still served, by whichever source offers the best speed for its price - it is never refused for being slow. Sources we have not timed are tried last. This is a preference, not a guarantee: the median describes past requests and is not a ceiling on this one, and it excludes any wait this request itself asks for. On a paginated walk it applies to the first page only: later pages stay with the source that page chose, at the price it was quoted.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "source": {
+          "description": "Optional. Source ids to prefer, in order, taken from this endpoint's `lanes[].source.id` in /catalog or /apis. Omit it and the cheapest source serves, with automatic failover. Listed sources are tried first in the order given, then the others, unless `allowFallbacks` is false. A single source with `allowFallbacks` false is served only by that source at its price, quoted and charged exactly, with no failover. The price is that of the dearest source that may serve. An id that does not serve this endpoint is rejected as invalid input with no charge; a listed source that is not serving right now is refused with no charge, so omit `source` to be served by another. On a paginated walk, later pages must include the source that served page one, or omit `source`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "summary": {
+          "description": "Optional. Return only a structural outline (top-level keys, item counts, and per-field byte sizes) instead of the full data. Does not change cost.",
+          "type": "boolean"
+        },
+        "url": {
+          "description": "Amazon search or category URL. For U.S. URLs, include page to select an Amazon results page; limit caps that page. Supported keyword, category, price, brand, rating and Prime selectors and standard Amazon sort orders are preserved. Unsupported selectors are rejected.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "anyapi_post_v1_run_appstore_reviews",
+    "description": "Retrieve App Store reviews for any iOS app by app ID, in any storefront country: ratings, titles, and review text with the Apple API. Supply an app ID and optionally set a country and a pagination cursor. Use it for catalog research or marketplace monitoring. The POST request schema also lists appId, fields, max_items.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "Idempotency-Key": {
+          "description": "Optional wallet idempotency key, scoped to this customer for 24 hours. When the gateway honors the key, this synchronous in-process execution can continue after the caller disconnects, bounded by its execution deadline. A completed replayable result charges normally exactly once and can be replayed without another provider run or charge. A pending duplicate returns 409 idempotency_in_progress; reuse with different request semantics returns 409 idempotency_conflict.",
+          "type": "string"
+        },
+        "allowFallbacks": {
+          "description": "Optional, default true. When false, only the sources listed in `source` may serve; the request is refused with no charge if none of them can. When true, the listed sources are tried first and any other source may serve after them, at the normal price.",
+          "type": "boolean"
+        },
+        "appId": {
+          "description": "Numeric App Store app ID, the digits at the end of the app's store URL without the 'id' prefix (e.g. 310633997).",
+          "type": "string"
+        },
+        "country": {
+          "description": "Two-letter App Store storefront country code to read reviews from.",
+          "type": "string"
+        },
+        "cursor": {
+          "description": "Opaque pagination cursor from a previous response's nextCursor. Omit for the first page; pass it to fetch the next page of reviews.",
+          "type": "string"
+        },
+        "fields": {
+          "description": "Optional. Comma-separated keys (dotted paths like `author.name` descend into nested objects) to keep on each result item: each row of the API's result list, or the `data` object itself for an API that returns one record. Keys are matched relative to that item, not against the top-level response envelope, so use `jq` to reshape the whole envelope. Shrinks the response without changing cost.",
+          "type": "string"
+        },
+        "ignoreSources": {
+          "description": "Optional. Source ids to skip for this request, taken from this endpoint's `lanes[].source.id`. The cheapest remaining source serves and the price is that of the dearest remaining source. An id that does not serve this endpoint, or that is also in `source`, is rejected as invalid input with no charge; skipping every source is rejected the same way.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "jq": {
+          "description": "Optional. A jq expression applied to the result envelope; its output replaces `output` (multiple outputs collect into an array). Reshape freely, e.g. `jq=.data | {title, description, md: .markdown[:3500]}`. Runs sandboxed with a 250ms / 2MB budget; on failure the full result is returned with a `jqError`. Does not change cost.",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Maximum number of results to return (1-100, default 100).",
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_cost_usd": {
+          "description": "Optional. The most you are willing to pay for this one request, in US dollars (for example 0.05). Any route that would charge more than this is not used, so a request only ever runs on something you can afford. If nothing is available at or below your amount, the request is refused before it runs, nothing is charged, and the message tells you the cheapest price per request so you can raise it. Leave it out to accept the normal price.",
+          "type": "string"
+        },
+        "max_items": {
+          "description": "Optional. Cap the number of result rows returned; a `_truncated` note reports how many were withheld so you can page via the API's own `limit`. An API that returns one record is not trimmed. Does not change cost.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "preferLatencyUnderMs": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Prefer sources whose typical response time (median over the trailing 30 days, as published on this endpoint's lane health) is under this many milliseconds; among those, the cheapest serves. This can raise your price: when the cheapest source misses the target, a faster and dearer one serves, and you are quoted and charged its price. If no source is that fast the request is still served, by whichever source offers the best speed for its price - it is never refused for being slow. Sources we have not timed are tried last. This is a preference, not a guarantee: the median describes past requests and is not a ceiling on this one, and it excludes any wait this request itself asks for. On a paginated walk it applies to the first page only: later pages stay with the source that page chose, at the price it was quoted.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "requireFields": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Name the output fields this request must be able to return, for example `helpfulVotes` or `version`, and it is served only by a source that returns every one of them. Fields you do not name are still returned whenever the serving source has them. This can raise your price: when the cheapest source cannot return a named field, a dearer source serves, and you are quoted and charged its price. A named field can still be absent on a review that genuinely lacks it. Naming a combination that no single source returns together is refused as invalid input, with no charge. On a paginated walk it applies to the first page only; later pages stay with the source that page chose, at the price it was quoted.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "source": {
+          "description": "Optional. Source ids to prefer, in order, taken from this endpoint's `lanes[].source.id` in /catalog or /apis. Omit it and the cheapest source serves, with automatic failover. Listed sources are tried first in the order given, then the others, unless `allowFallbacks` is false. A single source with `allowFallbacks` false is served only by that source at its price, quoted and charged exactly, with no failover. The price is that of the dearest source that may serve. An id that does not serve this endpoint is rejected as invalid input with no charge; a listed source that is not serving right now is refused with no charge, so omit `source` to be served by another. On a paginated walk, later pages must include the source that served page one, or omit `source`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "summary": {
+          "description": "Optional. Return only a structural outline (top-level keys, item counts, and per-field byte sizes) instead of the full data. Does not change cost.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "appId"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "anyapi_post_v1_run_bluesky_post",
+    "description": "Retrieve a single Bluesky post by URL - text, author handle, like, reply, and repost counts as clean JSON. The request takes a URL. Surface recurring topics and audience feedback. The POST request schema also lists fields, max_items.\nUses the caller's OpenAny gateway credentials. Charges and authorization are determined by the gateway.",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "Idempotency-Key": {
+          "description": "Optional wallet idempotency key, scoped to this customer for 24 hours. When the gateway honors the key, this synchronous in-process execution can continue after the caller disconnects, bounded by its execution deadline. A completed replayable result charges normally exactly once and can be replayed without another provider run or charge. A pending duplicate returns 409 idempotency_in_progress; reuse with different request semantics returns 409 idempotency_conflict.",
+          "type": "string"
+        },
+        "allowFallbacks": {
+          "description": "Optional, default true. When false, only the sources listed in `source` may serve; the request is refused with no charge if none of them can. When true, the listed sources are tried first and any other source may serve after them, at the normal price.",
+          "type": "boolean"
+        },
+        "fields": {
+          "description": "Optional. Comma-separated keys (dotted paths like `author.name` descend into nested objects) to keep on each result item: each row of the API's result list, or the `data` object itself for an API that returns one record. Keys are matched relative to that item, not against the top-level response envelope, so use `jq` to reshape the whole envelope. Shrinks the response without changing cost.",
+          "type": "string"
+        },
+        "ignoreSources": {
+          "description": "Optional. Source ids to skip for this request, taken from this endpoint's `lanes[].source.id`. The cheapest remaining source serves and the price is that of the dearest remaining source. An id that does not serve this endpoint, or that is also in `source`, is rejected as invalid input with no charge; skipping every source is rejected the same way.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "jq": {
+          "description": "Optional. A jq expression applied to the result envelope; its output replaces `output` (multiple outputs collect into an array). Reshape freely, e.g. `jq=.data | {title, description, md: .markdown[:3500]}`. Runs sandboxed with a 250ms / 2MB budget; on failure the full result is returned with a `jqError`. Does not change cost.",
+          "type": "string"
+        },
+        "max_cost_usd": {
+          "description": "Optional. The most you are willing to pay for this one request, in US dollars (for example 0.05). Any route that would charge more than this is not used, so a request only ever runs on something you can afford. If nothing is available at or below your amount, the request is refused before it runs, nothing is charged, and the message tells you the cheapest price per request so you can raise it. Leave it out to accept the normal price.",
+          "type": "string"
+        },
+        "max_items": {
+          "description": "Optional. Cap the number of result rows returned; a `_truncated` note reports how many were withheld so you can page via the API's own `limit`. An API that returns one record is not trimmed. Does not change cost.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "preferLatencyUnderMs": {
+          "description": "Optional; omit it and routing is unchanged, with the cheapest source serving. Prefer sources whose typical response time (median over the trailing 30 days, as published on this endpoint's lane health) is under this many milliseconds; among those, the cheapest serves. This can raise your price: when the cheapest source misses the target, a faster and dearer one serves, and you are quoted and charged its price. If no source is that fast the request is still served, by whichever source offers the best speed for its price - it is never refused for being slow. Sources we have not timed are tried last. This is a preference, not a guarantee: the median describes past requests and is not a ceiling on this one, and it excludes any wait this request itself asks for. On a paginated walk it applies to the first page only: later pages stay with the source that page chose, at the price it was quoted.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "source": {
+          "description": "Optional. Source ids to prefer, in order, taken from this endpoint's `lanes[].source.id` in /catalog or /apis. Omit it and the cheapest source serves, with automatic failover. Listed sources are tried first in the order given, then the others, unless `allowFallbacks` is false. A single source with `allowFallbacks` false is served only by that source at its price, quoted and charged exactly, with no failover. The price is that of the dearest source that may serve. An id that does not serve this endpoint is rejected as invalid input with no charge; a listed source that is not serving right now is refused with no charge, so omit `source` to be served by another. On a paginated walk, later pages must include the source that served page one, or omit `source`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "summary": {
+          "description": "Optional. Return only a structural outline (top-level keys, item counts, and per-field byte sizes) instead of the full data. Does not change cost.",
+          "type": "boolean"
+        },
+        "url": {
+          "description": "Bluesky post URL, e.g. \"https://bsky.app/profile/bsky.app/post/3l6oveex3ii2l\".",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "type": "object"
+    }
+  }
+]

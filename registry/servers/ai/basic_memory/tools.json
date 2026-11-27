@@ -1,0 +1,1237 @@
+[
+  {
+    "name": "bm_context",
+    "description": "Follow the Basic Memory knowledge graph from a note: the note, its observations, and the notes its relations reach, up to `depth` hops (1-5). `identifier` is a path, permalink, memory:// URL, or a pattern such as 'specs/*'. `since` limits related results to recent changes. `compact` returns the graph without note bodies; read chosen notes with bm_read.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "identifier": {
+          "description": "Where to start: a note path, permalink, memory:// URL, or a pattern such as 'specs/*'.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "depth": {
+          "default": 1,
+          "description": "Relation hops to follow (1-5).",
+          "maximum": 5,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "since": {
+          "default": "7d",
+          "description": "How far back to look: '7d', '24h', '2 days ago', 'last week', or a date. Windows shorter than one day are widened to one day.",
+          "type": "string"
+        },
+        "max_related": {
+          "default": 10,
+          "description": "Most related results to return (0-100).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "compact": {
+          "default": false,
+          "description": "Omit note bodies and observations; keep the graph shape.",
+          "type": "boolean"
+        },
+        "page": {
+          "default": 1,
+          "description": "Page number.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "description": "Primary results per page (1-50).",
+          "maximum": 50,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "output_format": {
+          "enum": [
+            "text",
+            "json"
+          ],
+          "type": "string",
+          "default": "json"
+        },
+        "project": {
+          "description": "Required project name, 'workspace/project', or project external id. Discover projects with bm_project(command='list'). Paths are relative to this project; a qualified path must agree with it.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "identifier",
+        "project"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bm_delete",
+    "description": "Delete a Basic Memory note (`identifier`) or a directory (`path`). A directory delete removes every file under it and needs `recursive=true`. Pass `expected_checksum` (from bm_read) to delete a note only if it is still the revision you read. A note that does not exist is an error. This cannot be undone.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "identifier": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The note to delete: a path, permalink, memory:// URL or exact title."
+        },
+        "path": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The directory to delete, with everything in it."
+        },
+        "recursive": {
+          "default": false,
+          "description": "Required true to delete a directory and everything under it.",
+          "type": "boolean"
+        },
+        "expected_checksum": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Delete the note only while it is still this revision (from bm_read)."
+        },
+        "output_format": {
+          "enum": [
+            "text",
+            "json"
+          ],
+          "type": "string",
+          "default": "text"
+        },
+        "project": {
+          "description": "Required project name, 'workspace/project', or project external id. Discover projects with bm_project(command='list'). Paths are relative to this project; a qualified path must agree with it.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bm_edit",
+    "description": "Change part of an existing Basic Memory note. `command`: append or prepend `content`; find_replace `find_text` with `content` (exact text, which must occur `expected_replacements` times, default 1); replace_section, insert_before_section or insert_after_section for a `section` heading ('Decisions', 'Auth/Decisions', 'Decisions[1]', as bm_read takes it); set_metadata to merge `metadata` into the frontmatter without touching the body. `metadata` also merges with any other command. Pass `expected_checksum` (from bm_read) to edit only the revision you read. A missing note is an error; create notes with bm_write.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "identifier": {
+          "description": "The note or file: a file path ('notes/plan.md'), permalink, memory:// URL, exact title, external id, or '<project>/path'.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "command": {
+          "enum": [
+            "append",
+            "prepend",
+            "find_replace",
+            "replace_section",
+            "insert_before_section",
+            "insert_after_section",
+            "set_metadata"
+          ],
+          "type": "string",
+          "description": "The edit."
+        },
+        "content": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The text to add or the replacement. Not used by set_metadata."
+        },
+        "section": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The heading for section commands: \"Decisions\", \"Auth/Decisions\" for one under \"Auth\", or \"Decisions[1]\" for the second of two."
+        },
+        "find_text": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "For find_replace: the exact, case-sensitive text to replace."
+        },
+        "expected_replacements": {
+          "default": 1,
+          "description": "For find_replace: how many times find_text must occur.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "replace_subsections": {
+          "default": true,
+          "description": "For replace_section: true replaces the section's subsections too; false stops at the first subsection heading.",
+          "type": "boolean"
+        },
+        "metadata": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Frontmatter fields to set; other fields are kept."
+        },
+        "expected_checksum": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Edit only while the note is still this revision (from bm_read)."
+        },
+        "output_format": {
+          "enum": [
+            "text",
+            "json"
+          ],
+          "type": "string",
+          "default": "text"
+        },
+        "project": {
+          "description": "Required project name, 'workspace/project', or project external id. Discover projects with bm_project(command='list'). Paths are relative to this project; a qualified path must agree with it.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "identifier",
+        "command",
+        "project"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bm_find",
+    "description": "Find files in a Basic Memory project, recursively. With `name`, match file names against a glob ('*meeting*'). With `filters`, match notes by frontmatter, e.g. {\"status\": \"active\"} or {\"priority\": {\"$in\": [\"high\"]}}, and with `fields` return just those frontmatter values per note. `path` limits the search to a folder. For ranked text or meaning search, use bm_search.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "default": "/",
+          "description": "A directory in the project, e.g. 'specs' or 'specs/active'. '/' is the project root; '<project>/path' addresses another project.",
+          "type": "string"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "File-name glob, e.g. '*.md'. Not with `filters`."
+        },
+        "filters": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Frontmatter filters as {field: condition}. Nested fields use dot notation (\"schema.confidence\"). A condition is a value for equality ({\"status\": \"draft\"}), null for absent-or-null ({\"owner\": null}), a list for contains-all ({\"tags\": [\"a\", \"b\"]}), or an operator object with $gt, $gte, $lt, $lte, $in, $between, $contains or $exists, e.g. {\"priority\": {\"$in\": [\"high\"]}}. Several operators on one field AND together."
+        },
+        "fields": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Frontmatter fields to return per note (dot paths allowed), e.g. [\"title\", \"priority\"]. Needs `filters`."
+        },
+        "depth": {
+          "default": 10,
+          "description": "Folder levels to search (1-10).",
+          "maximum": 10,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "page": {
+          "default": 1,
+          "description": "Page number.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "description": "Results per page (1-100).",
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "output_format": {
+          "enum": [
+            "text",
+            "json"
+          ],
+          "type": "string",
+          "default": "text"
+        },
+        "project": {
+          "description": "Required project name, 'workspace/project', or project external id. Discover projects with bm_project(command='list'). Paths are relative to this project; a qualified path must agree with it.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bm_list",
+    "description": "List one folder of a Basic Memory project: its subfolders, then its files with title, date and id. `project` is required; '/' lists its root. Discover projects with bm_project(command='list'). Filter files with `glob` and order them with `sort`. For a recursive search by name or frontmatter, use bm_find.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "default": "/",
+          "description": "A directory in the project, e.g. 'specs' or 'specs/active'. '/' is the project root; '<project>/path' addresses another project.",
+          "type": "string"
+        },
+        "glob": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "File-name glob, e.g. '*.md' or '*meeting*'."
+        },
+        "sort": {
+          "anyOf": [
+            {
+              "enum": [
+                "title_asc",
+                "title_desc",
+                "updated_asc",
+                "updated_desc"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "File order. Folders always come first."
+        },
+        "page": {
+          "default": 1,
+          "description": "Page number.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "description": "Results per page (1-100).",
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "output_format": {
+          "enum": [
+            "text",
+            "json"
+          ],
+          "type": "string",
+          "default": "text"
+        },
+        "project": {
+          "description": "Required project name, 'workspace/project', or project external id. Discover projects with bm_project(command='list'). Paths are relative to this project; a qualified path must agree with it.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bm_man",
+    "description": "Read the Basic Memory manual. With no arguments, the index of every page. `page` reads one page: 'bm-search(3)' for an MCP tool, 'grep(1)' for a shell command; a tool name such as 'bm_search' works too. `query` lists the pages that mention every word given, like `man -k`.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "page": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The page to read, e.g. 'bm-search(3)', 'grep(1)' or 'bm_search'."
+        },
+        "query": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Words to find in the manual; lists the pages that mention them all."
+        },
+        "output_format": {
+          "enum": [
+            "text",
+            "json"
+          ],
+          "type": "string",
+          "default": "text"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bm_move",
+    "description": "Move or rename a Basic Memory note (`identifier`) or a directory (`path`) within its project. `destination` is the new project-relative path; ending it with '/' moves into that folder under the current name ('archive/'). A note keeps its file extension ('.markdown' may become '.md'). Pass `expected_checksum` (from bm_read) to move a note only if it is still the revision you read. Moving into another project is refused: bm_read, bm_write there, then bm_delete.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "destination": {
+          "description": "New path, e.g. 'archive/plan.md'. A trailing '/' ('archive/') moves the note or directory into that folder under its current name.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "identifier": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The note to move: a path, permalink, memory:// URL or exact title."
+        },
+        "path": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The directory to move, with everything in it, e.g. 'drafts/2025'."
+        },
+        "expected_checksum": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Move the note only while it is still this revision (from bm_read)."
+        },
+        "output_format": {
+          "enum": [
+            "text",
+            "json"
+          ],
+          "type": "string",
+          "default": "text"
+        },
+        "project": {
+          "description": "Required project name, 'workspace/project', or project external id. Discover projects with bm_project(command='list'). Paths are relative to this project; a qualified path must agree with it.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "destination",
+        "project"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bm_schema",
+    "description": "Basic Memory note schemas (Picoschema). `command`: validate notes against their schema (one `note_type`, one note by `identifier`, or every type that has a schema); infer a schema from the notes of a `note_type`; diff a `note_type`'s notes against its schema to find drift. A schema is a note with type: schema whose `entity` field names the note type it describes.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "command": {
+          "enum": [
+            "validate",
+            "infer",
+            "diff"
+          ],
+          "type": "string",
+          "description": "What to do."
+        },
+        "note_type": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The frontmatter `type:` to check. Required for infer and diff."
+        },
+        "identifier": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "For validate: one note, instead of a whole note type."
+        },
+        "threshold": {
+          "default": 0.25,
+          "description": "For infer: the share of notes a field must appear in to be suggested.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "output_format": {
+          "enum": [
+            "text",
+            "json"
+          ],
+          "type": "string",
+          "default": "text"
+        },
+        "project": {
+          "description": "Required project name, 'workspace/project', or project external id. Discover projects with bm_project(command='list'). Paths are relative to this project; a qualified path must agree with it.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "command",
+        "project"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bm_project",
+    "description": "Basic Memory projects. `command`: list (projects, grouped by workspace); create (`name`, `path`, optional `set_default`, `workspace`); recent (what changed lately in the required `project`: `since`, `items`, paging).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "command": {
+          "enum": [
+            "list",
+            "create",
+            "recent"
+          ],
+          "type": "string",
+          "description": "What to do."
+        },
+        "name": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "For create: the new project's name."
+        },
+        "path": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "For create: the folder that holds the project's notes."
+        },
+        "set_default": {
+          "default": false,
+          "description": "For create: make the new project the default.",
+          "type": "boolean"
+        },
+        "workspace": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "In Cloud: the workspace slug, name or id that holds the project."
+        },
+        "since": {
+          "default": "7d",
+          "description": "How far back to look: '7d', '24h', '2 days ago', 'last week', or a date. Windows shorter than one day are widened to one day.",
+          "type": "string"
+        },
+        "items": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "note",
+                  "observation",
+                  "relation"
+                ],
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "What to return: notes, observations, relations, or a mix. Default: notes."
+        },
+        "page": {
+          "default": 1,
+          "description": "Page number.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "description": "Results per page (1-100).",
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "output_format": {
+          "enum": [
+            "text",
+            "json"
+          ],
+          "type": "string",
+          "default": "text"
+        },
+        "project": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Project name, 'workspace/project', or external id. Required for one-project operations; search may instead use `projects` or `all_projects=true`. Project discovery needs no scope."
+        }
+      },
+      "required": [
+        "command"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bm_search",
+    "description": "Search a Basic Memory project, ranked by relevance. `query` supports quoted phrases, AND/OR/NOT and tag:name. `mode` picks hybrid (the default when semantic search is available), text, semantic, title or permalink (globs with *). Narrow with `filters` (frontmatter), `note_types`, `items` (notes, observations, relations) and `since`. `lines` returns the matching lines of each hit with that many lines of context, like grep. `path` limits the search to a folder; `identifier` searches one note. Scope every search with `project` (one project), `projects` (a list), or `all_projects=true`. Read full notes with bm_read.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "What to search for. Omit to search by filters alone."
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "enum": [
+                "hybrid",
+                "text",
+                "semantic",
+                "title",
+                "permalink"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search mode."
+        },
+        "filters": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Frontmatter filters as {field: condition}. Nested fields use dot notation (\"schema.confidence\"). A condition is a value for equality ({\"status\": \"draft\"}), null for absent-or-null ({\"owner\": null}), a list for contains-all ({\"tags\": [\"a\", \"b\"]}), or an operator object with $gt, $gte, $lt, $lte, $in, $between, $contains or $exists, e.g. {\"priority\": {\"$in\": [\"high\"]}}. Several operators on one field AND together."
+        },
+        "note_types": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Frontmatter `type` values, e.g. ['person', 'meeting']."
+        },
+        "items": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "note",
+                  "observation",
+                  "relation"
+                ],
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "What to return: notes, observations, relations, or a mix. Default: notes."
+        },
+        "categories": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Observation categories to match exactly, e.g. ['decision']."
+        },
+        "since": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "How far back to look: '7d', '24h', '2 days ago', 'last week', or a date. Windows shorter than one day are widened to one day."
+        },
+        "lines": {
+          "anyOf": [
+            {
+              "maximum": 10,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Return each hit's matching lines with this many lines of context (0-10), instead of a match excerpt."
+        },
+        "max_matches": {
+          "default": 10,
+          "description": "Matching lines shown per note with `lines`.",
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "identifier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search only this note; returns its matching lines."
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search only this folder and its subfolders."
+        },
+        "compact": {
+          "default": false,
+          "description": "Omit note bodies and excerpts; keep identifiers and scores.",
+          "type": "boolean"
+        },
+        "valid_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Specialist: only facts whose authored valid time contains this date."
+        },
+        "valid_overlaps": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Specialist: only facts whose valid range overlaps '[start,end)'."
+        },
+        "time_kind": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Specialist: effective, valid, occurred, due or mentioned."
+        },
+        "min_similarity": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Override the semantic similarity floor (0-1)."
+        },
+        "projects": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search these projects together."
+        },
+        "all_projects": {
+          "default": false,
+          "description": "Search every project you can access.",
+          "type": "boolean"
+        },
+        "page": {
+          "default": 1,
+          "description": "Page number.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "page_size": {
+          "default": 10,
+          "description": "Results per page (1-100).",
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "output_format": {
+          "enum": [
+            "text",
+            "json"
+          ],
+          "type": "string",
+          "default": "text"
+        },
+        "project": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Project name, 'workspace/project', or external id. Required for one-project operations; search may instead use `projects` or `all_projects=true`. Project discovery needs no scope."
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bm_read",
+    "description": "Read a Basic Memory note or file by path, permalink, memory:// URL or exact title. Slice a long note with `section` (a heading), `start_line`/`end_line` or `max_tokens`; line numbers count the whole file, frontmatter included. A text file such as .txt takes start_line/end_line too. `include_content=false` returns only the metadata and the checksum that bm_write and bm_edit take as expected_checksum. Images come back as images and other binary files as documents. A missing note is an error: find notes with bm_search.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "identifier": {
+          "description": "The note or file: a file path ('notes/plan.md'), permalink, memory:// URL, exact title, external id, or '<project>/path'.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "A heading to read: \"Decisions\", \"Auth/Decisions\" for a heading under \"Auth\", or \"Decisions[1]\" for the second \"Decisions\" heading."
+        },
+        "start_line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "end_line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "max_tokens": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Approximate token budget. Longer content is cut at a section or paragraph boundary, and the result says which line to continue from."
+        },
+        "include_frontmatter": {
+          "default": true,
+          "description": "Include the YAML frontmatter in a whole-note read.",
+          "type": "boolean"
+        },
+        "include_content": {
+          "default": true,
+          "description": "False returns only title, paths, checksum and updated_at.",
+          "type": "boolean"
+        },
+        "output_format": {
+          "enum": [
+            "text",
+            "json"
+          ],
+          "type": "string",
+          "default": "text"
+        },
+        "project": {
+          "description": "Required project name, 'workspace/project', or project external id. Discover projects with bm_project(command='list'). Paths are relative to this project; a qualified path must agree with it.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "identifier",
+        "project"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "bm_write",
+    "description": "Create or replace a Basic Memory note. Give a file path as `identifier` ('notes/plan.md'), or `title` plus `directory`. With a path the file lands exactly there and the title comes from the content's frontmatter, then `title`, then the file name. An existing note is an error unless `overwrite=true`; pass `expected_checksum` (from bm_read) to replace only the revision you read. To change part of a note use bm_edit. Content may hold frontmatter, observations ('- [category] fact #tag') and relations ('- relation_type [[Other Note]]').",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "content": {
+          "description": "The note's Markdown. Saved as given; it may start with frontmatter.",
+          "type": "string"
+        },
+        "identifier": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "File path for the note, e.g. 'notes/plan.md'; '.md' is added when missing. '<project>/path' writes into another project. Use instead of title + directory."
+        },
+        "title": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Note title. With `directory`, it also names the file. With `identifier`, it is used when the content has no frontmatter title."
+        },
+        "directory": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Folder for a note addressed by title, e.g. 'meetings'; '/' is the root."
+        },
+        "note_type": {
+          "default": "note",
+          "description": "Frontmatter `type:`. A `type:` in the content wins.",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Tags, as a list or 'a,b,c'."
+        },
+        "metadata": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Extra frontmatter fields, merged into the note's frontmatter."
+        },
+        "overwrite": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Replace a note that already exists. Default: the write_note_overwrite_default setting (false unless changed)."
+        },
+        "expected_checksum": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Replace the note only while it is still this revision (the checksum from bm_read). Implies overwrite=true."
+        },
+        "output_format": {
+          "enum": [
+            "text",
+            "json"
+          ],
+          "type": "string",
+          "default": "text"
+        },
+        "project": {
+          "description": "Required project name, 'workspace/project', or project external id. Discover projects with bm_project(command='list'). Paths are relative to this project; a qualified path must agree with it.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "content",
+        "project"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  }
+]

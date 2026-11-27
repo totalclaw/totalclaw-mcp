@@ -1,0 +1,22 @@
+[
+  {
+    "name": "audit_nodejs_dependencies",
+    "description": "Audit specific dependencies for vulnerabilities",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Dependencies object from package.json"
+        }
+      },
+      "required": [
+        "dependencies"
+      ]
+    }
+  }
+]

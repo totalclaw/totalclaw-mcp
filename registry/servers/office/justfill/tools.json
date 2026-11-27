@@ -1,0 +1,508 @@
+[
+  {
+    "name": "open_pdf",
+    "description": "Open a PDF (or a scanned image: jpg/png/tiff) and detect its fillable fields.\n\nImages are converted to a single-page PDF automatically (deterministically,\nso a template saved for a photo matches the same photo next time).\n\nResolution order (best source wins):\n  1. Saved template matching this exact file (deterministic, confidence 1.0)\n  2. Embedded AcroForm fields (deterministic, confidence 1.0)\n  3. ML detection (each field carries a confidence score)\n\nforce_detect=True skips steps 1-2 and re-runs ML detection from scratch —\nuse it to rebuild a layout when the saved template is wrong or stale.\nmin_confidence drops ML fields scored below it (templates/AcroForm are\nalways kept). Returns a JSON summary + the field list.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "min_confidence": {
+          "default": 0.0,
+          "title": "Min Confidence",
+          "type": "number"
+        },
+        "max_pages": {
+          "default": 10,
+          "title": "Max Pages",
+          "type": "integer"
+        },
+        "force_detect": {
+          "default": false,
+          "title": "Force Detect",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "title": "open_pdfArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_fields",
+    "description": "List the current working fields (optionally one page only).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "page_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Index"
+        }
+      },
+      "title": "list_fieldsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "close_workspace",
+    "description": "Release the current PDF and field data when work is finished.\n\nSaved templates and output PDFs are not deleted. This operation is\nidempotent, which makes it safe to call from automation cleanup blocks.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "close_workspaceArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "render_preview",
+    "description": "Render a page with the working field boxes drawn on it.\n\nLook at this image to VERIFY placement: blue boxes are deterministic\n(template/AcroForm/agent-placed); green/orange/red are ML detections by\nconfidence (>=0.7 / >=0.4 / <0.4). Each box is labeled with its field id.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "page_index": {
+          "default": 0,
+          "title": "Page Index",
+          "type": "integer"
+        }
+      },
+      "title": "render_previewArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "render_filled_preview",
+    "description": "Preview how the filled page will look BEFORE generating the PDF.\n\nDraws `values` (field id -> text; checkboxes get an X) into their boxes on\nthe rendered page. Costs nothing — no fill is consumed. Typography is an\napproximation of the final output (the server typesets the real PDF), so\nuse it to verify placement, alignment and obvious overflow, then fill_pdf.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "values": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Values",
+          "type": "object"
+        },
+        "page_index": {
+          "default": 0,
+          "title": "Page Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "values"
+      ],
+      "title": "render_filled_previewArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "add_field",
+    "description": "Add a field the detector missed (a false negative).\n\nCoordinates are percentages of the page (0-100), top-left origin —\nread them off the render_preview image proportionally.\nalign ('left'|'center'|'right') and vertical_align ('top'|'middle'|'bottom')\ncontrol where the value sits inside the box when the PDF is filled.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "x": {
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "title": "Y",
+          "type": "number"
+        },
+        "w": {
+          "title": "W",
+          "type": "number"
+        },
+        "h": {
+          "title": "H",
+          "type": "number"
+        },
+        "name": {
+          "default": "",
+          "title": "Name",
+          "type": "string"
+        },
+        "page_index": {
+          "default": 0,
+          "title": "Page Index",
+          "type": "integer"
+        },
+        "field_type": {
+          "default": "text",
+          "title": "Field Type",
+          "type": "string"
+        },
+        "align": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Align"
+        },
+        "vertical_align": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vertical Align"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "w",
+        "h"
+      ],
+      "title": "add_fieldArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "update_field",
+    "description": "Move/resize/rename a field, or set its text alignment.\n\nalign: 'left'|'center'|'right'; vertical_align: 'top'|'middle'|'bottom' —\nwhere the value sits inside the box in the filled PDF.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "field_id": {
+          "title": "Field Id",
+          "type": "string"
+        },
+        "x": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "X"
+        },
+        "y": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Y"
+        },
+        "w": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "W"
+        },
+        "h": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "H"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "field_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field Type"
+        },
+        "align": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Align"
+        },
+        "vertical_align": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vertical Align"
+        }
+      },
+      "required": [
+        "field_id"
+      ],
+      "title": "update_fieldArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "update_fields",
+    "description": "Update many fields in one call (batch version of update_field).\n\nEach item: {\"field_id\": \"...\", and any of x, y, w, h, name, field_type,\nalign, vertical_align}. Items with an unknown field_id are reported back,\nthe rest are still applied.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "updates": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Updates",
+          "type": "array"
+        }
+      },
+      "required": [
+        "updates"
+      ],
+      "title": "update_fieldsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "remove_field",
+    "description": "Delete a field that isn't a real input (a false positive).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "field_id": {
+          "title": "Field Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field_id"
+      ],
+      "title": "remove_fieldArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "remove_fields",
+    "description": "Delete many fields in one call (batch version of remove_field).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "field_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Field Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "field_ids"
+      ],
+      "title": "remove_fieldsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "prune_fields",
+    "description": "Bulk-delete fields matching ALL given criteria (e.g. detection noise).\n\nfield_type: exact type match (e.g. 'cell'); confidence_below /\nwidth_below / height_below: strictly-less-than thresholds (w/h in % of\npage); page_index: limit to one page; exclude_ids: always keep these.\nReturns the removed ids so the operation is auditable (and reversible\nvia add_field if it cut too much).\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "field_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field Type"
+        },
+        "confidence_below": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence Below"
+        },
+        "width_below": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Width Below"
+        },
+        "height_below": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Height Below"
+        },
+        "page_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Index"
+        },
+        "exclude_ids": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exclude Ids"
+        }
+      },
+      "title": "prune_fieldsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "fill_pdf",
+    "description": "Fill the PDF and save it.\n\n`values` maps field id -> text value (checkboxes: \"true\"/\"yes\"/\"x\" to tick).\nFields not present in `values` stay empty. AcroForm fields are filled\nnatively inside the PDF; everything else is drawn at its exact box.\nThe response's `warnings` list flags values that will be shrunk or\ntruncated to fit their box — fix those before delivering the document.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "values": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Values",
+          "type": "object"
+        },
+        "output_path": {
+          "title": "Output Path",
+          "type": "string"
+        },
+        "flatten": {
+          "default": true,
+          "title": "Flatten",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "values",
+        "output_path"
+      ],
+      "title": "fill_pdfArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "save_template",
+    "description": "Save the current (reviewed) field layout as a reusable template.\n\nNext time this exact PDF is opened — by you or another agent session on\nthis account — open_pdf returns these fields with confidence 1.0 and no\nML pass at all. This is what makes repeat filling deterministic.\n\nBefore saving, give every field a short semantic name (update_fields with\nname=..., e.g. 'age_score', 'total_abcd2') — names are stored in the\ntemplate, so the next session maps values by meaning instead of guessing\nfrom coordinates. Also remove false positives first (remove_fields).\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "save_templateArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_templates",
+    "description": "List saved templates on this account (name + field count + hash).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "limit": {
+          "default": 50,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "list_templatesArguments",
+      "type": "object"
+    }
+  }
+]

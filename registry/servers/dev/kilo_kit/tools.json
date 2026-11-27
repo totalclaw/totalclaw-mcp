@@ -1,0 +1,1254 @@
+[
+  {
+    "name": "kilo_orchestrate_task",
+    "description": "MANDATORY: Call this tool FIRST before diagnosing, debugging, analyzing, creating, or modifying any code, UI, backend, or project files. Determines task mode, selects required workflow skills, enforces brainstorming gating, and orchestrates the execution flow.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "maxLength": 4000,
+          "description": "Current user request or task summary."
+        },
+        "task": {
+          "type": "string",
+          "maxLength": 4000,
+          "description": "Alias for message."
+        },
+        "prompt": {
+          "type": "string",
+          "maxLength": 4000,
+          "description": "Alias for message."
+        },
+        "context": {
+          "type": "object",
+          "properties": {
+            "files": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 300
+              },
+              "maxItems": 30
+            },
+            "mode": {
+              "type": "string",
+              "maxLength": 80
+            },
+            "previousErrors": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "projectFingerprint": {
+              "type": "string",
+              "maxLength": 200
+            }
+          },
+          "additionalProperties": false
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "brainstormingApproved": {
+          "type": "boolean"
+        },
+        "answers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        },
+        "memoryConfirmations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "rejected"
+            ]
+          }
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_memory_report",
+    "description": "Read global C4 memory facts, decisions, and recent suggestions.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_record_reflection",
+    "description": "Record correct approaches, wrong paths/pitfalls encountered, skill ratings, and lessons learned into SQLite to drive Kilo-Kit's continuous self-improvement across sessions.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "taskMode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Task mode (e.g. 'bug', 'architecture', 'ui', 'feature-build')."
+        },
+        "taskSummary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000,
+          "description": "Summary of the problem solved."
+        },
+        "correctApproach": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "description": "The successful strategy, fix, or architectural pattern used."
+        },
+        "wrongPathsEncountered": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "description": "Mistakes, wrong assumptions, or pitfalls encountered."
+        },
+        "skillsEvaluated": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "skillId": {
+                "type": "string",
+                "maxLength": 120
+              },
+              "score": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "feedback": {
+                "type": "string",
+                "maxLength": 500
+              }
+            },
+            "required": [
+              "skillId",
+              "score"
+            ],
+            "additionalProperties": false
+          },
+          "description": "Ratings and feedback for specific skills used."
+        },
+        "lessonsLearned": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "description": "Key invariant or takeaway for future tasks."
+        },
+        "sessionId": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Optional session ID."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "taskMode",
+        "taskSummary",
+        "correctApproach",
+        "wrongPathsEncountered",
+        "lessonsLearned"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_remember_fact",
+    "description": "Explicitly persist a project operating rule, workflow default, or verification standard into SQLite memory_facts for cross-session enforcement.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 120,
+          "description": "Unique fact identifier, e.g. 'preference:testing:vitest' or 'rule:architecture:dexie'."
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "verification-default",
+            "workflow-default",
+            "task-mode-default",
+            "operating-rule"
+          ],
+          "description": "Fact classification kind."
+        },
+        "value": {
+          "type": "object",
+          "additionalProperties": {},
+          "description": "Fact payload data, e.g. { commands: ['npm test'] } or { library: 'dexie' }."
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence score between 0.0 and 1.0 (default 1.0)."
+        },
+        "source": {
+          "type": "string",
+          "description": "Source of fact (e.g. 'user-instruction', 'architecture-decision')."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "key",
+        "kind",
+        "value"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_search_skills",
+    "description": "Search the Kilo-Kit skill library by natural-language query. Use this for broad discovery before loading a specific skill.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "description": "Natural-language task or keyword query."
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Optional category such as engineering or design."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "description": "Maximum number of skills to return."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_get_skill",
+    "description": "Load a Kilo-Kit skill by name or category/skill. Supports fuzzy aliases (e.g. 'brainstorming', 'diagnose', 'playwright', 'tdd', 'productivity/brainstorming').",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Optional skill category, for example engineering or productivity."
+        },
+        "skill": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Skill name or identifier (e.g. 'brainstorming', 'diagnose', 'playwright', 'productivity/brainstorming')."
+        },
+        "maxChars": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 50000,
+          "description": "Maximum SKILL.md characters to return."
+        },
+        "sessionId": {
+          "type": "string",
+          "description": "Active session ID to register skill delivery"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "skill"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_route_intent",
+    "description": "Recommend the best Kilo-Kit skills for any user request, bug fix, feature, UI task, or coding issue. Call before selecting or executing a workflow skill.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000,
+          "description": "Current user request or task summary."
+        },
+        "context": {
+          "type": "object",
+          "properties": {
+            "files": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 300
+              },
+              "maxItems": 30
+            },
+            "mode": {
+              "type": "string",
+              "maxLength": 80
+            },
+            "previousErrors": {
+              "type": "string",
+              "maxLength": 2000
+            }
+          },
+          "additionalProperties": false
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "message"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_route_report",
+    "description": "Summarize route telemetry: top skills, task modes, workflow chains, score averages, and conflict penalties.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_validate_skills",
+    "description": "Run the Kilo-Kit skill validator and return a concise quality-gate summary. This is read-only and does not modify files.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_read_file",
+    "description": "Read file content safely across workspace boundaries (supports line ranges and byte capping up to 512KB).",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "filePath": {
+          "type": "string",
+          "description": "Path to file (supports relative path, absolute path, and '~')"
+        },
+        "path": {
+          "type": "string",
+          "description": "Alias for filePath"
+        },
+        "file": {
+          "type": "string",
+          "description": "Alias for filePath"
+        },
+        "startLine": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Starting line number (1-indexed)"
+        },
+        "endLine": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Ending line number (1-indexed)"
+        },
+        "maxBytes": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 5242880,
+          "description": "Max bytes to return (default: 512KB)"
+        },
+        "sessionId": {
+          "type": "string",
+          "description": "Active session ID from kilo_orchestrate_task."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_search_files",
+    "description": "Search for files matching a pattern, substring, or glob across the workspace.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "pattern": {
+          "type": "string",
+          "description": "Glob pattern or file search substring (e.g. '*.ts', '**/*.json', 'story')"
+        },
+        "query": {
+          "type": "string",
+          "description": "Alias for pattern"
+        },
+        "glob": {
+          "type": "string",
+          "description": "Alias for pattern"
+        },
+        "rootDir": {
+          "type": "string",
+          "description": "Subdirectory or workspace path to limit search"
+        },
+        "maxResults": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "description": "Maximum file matches"
+        },
+        "sessionId": {
+          "type": "string",
+          "description": "Active session ID from kilo_orchestrate_task."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_grep_code",
+    "description": "Search code snippets and matching lines across workspace files.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Search string or regex pattern"
+        },
+        "pattern": {
+          "type": "string",
+          "description": "Alias for query"
+        },
+        "search": {
+          "type": "string",
+          "description": "Alias for query"
+        },
+        "rootDir": {
+          "type": "string",
+          "description": "Subdirectory or workspace path to limit search"
+        },
+        "isRegex": {
+          "type": "boolean",
+          "description": "Whether query is regex"
+        },
+        "caseSensitive": {
+          "type": "boolean",
+          "description": "Case-sensitive match"
+        },
+        "maxResults": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "description": "Max matches to return"
+        },
+        "sessionId": {
+          "type": "string",
+          "description": "Active session ID from kilo_orchestrate_task."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_write_file",
+    "description": "Create a new file or overwrite an existing file. PROTOCOL HARD-GATE: Requires valid sessionId in 'ready' state.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "filePath": {
+          "type": "string",
+          "description": "Relative or absolute path to file"
+        },
+        "path": {
+          "type": "string",
+          "description": "Alias for filePath"
+        },
+        "file": {
+          "type": "string",
+          "description": "Alias for filePath"
+        },
+        "content": {
+          "type": "string",
+          "description": "Complete file content to write"
+        },
+        "overwrite": {
+          "type": "boolean",
+          "description": "Allow overwriting existing files"
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Active Kilo-Kit session ID (must be in ready state)"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "content",
+        "sessionId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_edit_file",
+    "description": "Perform exact targeted search-and-replace edit on an existing file with AST check. PROTOCOL HARD-GATE: Requires valid sessionId in 'ready' state.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "filePath": {
+          "type": "string",
+          "description": "Relative or absolute path to file"
+        },
+        "path": {
+          "type": "string",
+          "description": "Alias for filePath"
+        },
+        "file": {
+          "type": "string",
+          "description": "Alias for filePath"
+        },
+        "targetContent": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Exact content substring to replace"
+        },
+        "replacementContent": {
+          "type": "string",
+          "description": "Replacement content"
+        },
+        "allowMultiple": {
+          "type": "boolean",
+          "description": "Allow multiple replacements"
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Active Kilo-Kit session ID (must be in ready state)"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "targetContent",
+        "replacementContent",
+        "sessionId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_run_command",
+    "description": "MANDATORY: Execute a terminal command with security guardrails and timeout. Use this INSTEAD OF native Bash/terminal tools. PROTOCOL HARD-GATE: Requires valid sessionId in 'ready' state.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Terminal command to run"
+        },
+        "cwd": {
+          "type": "string",
+          "description": "Working directory relative to repoRoot"
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 120000,
+          "description": "Timeout in milliseconds"
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Active Kilo-Kit session ID (must be in ready state)"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "command",
+        "sessionId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_think_step",
+    "description": "Iterative step-by-step reasoning engine with hypothesis tracking, revision, and solution branching.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 10,
+          "description": "REQUIRED for observability: Describe WHAT you are analyzing, e.g. 'So sánh 3 phương án: LocalStorage vs IndexedDB vs Supabase'. This appears in terminal tool call display so users can monitor agent thinking."
+        },
+        "thought": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Current reasoning thought"
+        },
+        "thoughtNumber": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Current thought step index"
+        },
+        "totalThoughts": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Estimated total thought steps"
+        },
+        "nextThoughtNeeded": {
+          "type": "boolean",
+          "description": "Whether more reasoning steps are needed"
+        },
+        "isRevision": {
+          "type": "boolean",
+          "description": "Whether this thought revises an earlier thought"
+        },
+        "revisesThought": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Which thought index is being revised"
+        },
+        "branchFromThought": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Thought index to branch from"
+        },
+        "branchId": {
+          "type": "string",
+          "description": "Identifier for this reasoning branch"
+        },
+        "hypothesis": {
+          "type": "string",
+          "description": "Explicit hypothesis being tested"
+        },
+        "sessionId": {
+          "type": "string",
+          "description": "Optional session ID"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "thought",
+        "thoughtNumber",
+        "totalThoughts",
+        "nextThoughtNeeded"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_grill_plan",
+    "description": "Automated adversarial stress-testing against Inversion, Simplification Cascades, Blast Radius, and Edge-cases.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 10,
+          "description": "REQUIRED for observability: Describe WHAT plan you are grilling, e.g. 'Phản biện phương án IndexedDB + Dexie cho Bookmark feature'. Displayed in terminal so users monitor agent reasoning."
+        },
+        "plan": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The proposed architecture, implementation plan, or bugfix strategy"
+        },
+        "context": {
+          "type": "string",
+          "description": "Relevant file paths, tech stack, or system constraints"
+        },
+        "depth": {
+          "type": "string",
+          "enum": [
+            "quick",
+            "deep",
+            "hardcore"
+          ],
+          "description": "Grilling depth"
+        },
+        "sessionId": {
+          "type": "string",
+          "description": "Active session ID to register cognitive gate satisfaction"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "plan"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_trace_root_cause",
+    "description": "Recursive causal backward-propagation analysis from crash log to the underlying systemic root cause.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 10,
+          "description": "REQUIRED for observability: Name the bug you are tracing, e.g. 'Truy vết lỗi TypeError: Cannot read property sessionId'. Displayed in terminal so users see what error is being diagnosed."
+        },
+        "errorLog": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Raw error message, stack trace, or failing test output"
+        },
+        "failingFile": {
+          "type": "string",
+          "description": "File where failure occurred"
+        },
+        "expectedBehavior": {
+          "type": "string",
+          "description": "Expected behavior"
+        },
+        "actualBehavior": {
+          "type": "string",
+          "description": "Actual behavior"
+        },
+        "sessionId": {
+          "type": "string",
+          "description": "Active session ID to register cognitive gate satisfaction"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "errorLog"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_compact_context",
+    "description": "Compacts verbose logs, test dumps, and noisy output by 40-70% while preserving architectural invariants.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Verbose content to compact"
+        },
+        "preserveInvariants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Key invariant rules or phrases to lock"
+        },
+        "targetReduction": {
+          "type": "string",
+          "enum": [
+            "moderate",
+            "aggressive"
+          ],
+          "description": "Compaction aggressiveness"
+        },
+        "sessionId": {
+          "type": "string",
+          "description": "Active session ID to register context compaction"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "content"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_synthesize_skill",
+    "description": "Distill a newly solved architectural pattern or bugfix methodology into a reusable, validated SKILL.md.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "skillName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the skill to synthesize"
+        },
+        "category": {
+          "type": "string",
+          "description": "Target skill category (defaults to 'learned')"
+        },
+        "problemDescription": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Description of the problem solved"
+        },
+        "solutionPattern": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Proven solution pattern and code guidelines"
+        },
+        "verificationGuidance": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Verification and testing steps"
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Keywords for discovery"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "skillName",
+        "problemDescription",
+        "solutionPattern",
+        "verificationGuidance"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_sentinel_status",
+    "description": "Inspect real-time Sentinel supervisor telemetry: Circuit breaker state, step budget, failure streaks, and grounded files list.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Active Kilo-Kit session ID"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "sessionId"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_reset_circuit_breaker",
+    "description": "Reset an open Circuit Breaker with justification and root-cause evidence. Transitions breaker to HALF_OPEN.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Active Kilo-Kit session ID"
+        },
+        "justification": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Detailed justification and root cause explanation for reset"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "sessionId",
+        "justification"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_benchmark_solution",
+    "description": "Audit the current session trajectory against open-source GitHub standards and industry best practices. Returns alignment score or triggers re-planning.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Active Kilo-Kit session ID"
+        },
+        "proposedApproach": {
+          "type": "string",
+          "minLength": 10,
+          "description": "The approach, architecture, or code produced in this session"
+        },
+        "industryBestPractice": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Standard pattern, library, or algorithm used by top GitHub repos"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "sessionId",
+        "proposedApproach",
+        "industryBestPractice"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "kilo_triangulate_research",
+    "description": "Execute Triangulated Cognitive Synthesis: Combines Internal SQLite Memory, External GitHub Grounding, 3-Option ToT DAG Trade-Offs, and Low-Confidence Research Escalation. Persists reasoning atomically into SQLite before code modification.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Active Kilo-Kit session ID"
+        },
+        "taskDescription": {
+          "type": "string",
+          "minLength": 10,
+          "description": "The architectural decision, feature spec, or bug to analyze"
+        },
+        "internalMemoryLearned": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "description": "Key facts, reflections, or past pitfalls retrieved from SQLite"
+        },
+        "externalGroundingPatterns": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "description": "Standard patterns, official docs, or 10k+ stars GitHub implementations"
+        },
+        "dagOptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Option name (e.g. 'Option A: In-Memory Map', 'Option B: Full LangGraph Port', 'Option C: SQLite Grounded Synthesis')"
+              },
+              "description": {
+                "type": "string",
+                "minLength": 5,
+                "description": "Detailed architecture and mechanism"
+              },
+              "pros": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "description": "Advantages and strengths"
+              },
+              "cons": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "description": "Disadvantages, dependencies, or trade-offs"
+              },
+              "blastRadius": {
+                "type": "string",
+                "description": "Impact on existing codebase and state"
+              }
+            },
+            "required": [
+              "name",
+              "description",
+              "pros",
+              "cons"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 2,
+          "description": "At least 2 (ideally 3) competing architectural options to compare"
+        },
+        "chosenOption": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The selected option name with rationale"
+        },
+        "confidenceScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence score between 0.0 and 1.0 (if < 0.70, triggers research escalation)"
+        },
+        "requiresResearchEscalation": {
+          "type": "boolean",
+          "description": "Explicitly request deep subagent research fallback"
+        },
+        "researchFindings": {
+          "type": "string",
+          "description": "Synthesized findings from research subagent if research escalation was triggered"
+        },
+        "adversarialRiskScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Adversarial risk score from red-team grilling"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json"
+          ],
+          "default": "markdown"
+        }
+      },
+      "required": [
+        "sessionId",
+        "taskDescription",
+        "dagOptions",
+        "chosenOption",
+        "confidenceScore"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  }
+]

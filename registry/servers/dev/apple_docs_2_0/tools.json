@@ -1,0 +1,369 @@
+[
+  {
+    "name": "search_apple_docs",
+    "description": "Search Apple's developer site the way developer.apple.com/search does, best match first: API reference, articles, sample code, the Human Interface Guidelines, App Store Connect Help and WWDC sessions. Use it to find pages by what they do or are about (\"SwiftUI haptic feedback\", \"TestFlight external testers\"); for a name you already know, search_docs_map answers at once. Returns links, each with its title, framework, kind and one-line summary; read a page with get_apple_doc_content, a session with get_wwdc_video. For sample code, type \"sample\" ranks every sample project on the site, including ones Apple's Sample Code Library doesn't list; for WWDC sessions, type \"video\". Searches run one at a time, 15 s apart, so several in a row are slow.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What you're looking for, in words or by name: \"SwiftUI haptic feedback\", \"NSPredicate\", \"TestFlight external testers\". Every word counts. A full list doesn't mean a match: when little fits, the list fills up with weaker results."
+        },
+        "type": {
+          "description": "Leave out to search everything, as Apple's search page does with no filter; WWDC sessions show only where Apple mixes them in. \"documentation\": API reference and articles; \"design\": the Human Interface Guidelines; \"sample\": sample code projects; \"help\": App Store Connect Help (product page, review, TestFlight, pricing); \"video\": WWDC sessions alone.",
+          "type": "string",
+          "enum": [
+            "documentation",
+            "design",
+            "sample",
+            "help",
+            "video"
+          ]
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "get_apple_doc_content",
+    "description": "Read one page of Apple's developer documentation by its URL: an API, article, sample project, tutorial, Human Interface Guidelines page, App Store Connect Help article or web-service endpoint (App Store Connect API, App Store Server API and the like). Returns the whole page as Markdown: summary, declarations, overview with its code, each member with its declaration and summary, relationships, the versions it's available in on each platform with Apple's notes, and See Also; for a sample, its Download link; for a tutorial, its steps with their code; for an endpoint, its URL, parameters and responses. Use it on a search result's link or a URL you already have; language \"occ\" reads an API's Objective-C version. A view answers one question about an API in less: \"related\" (what it inherits, conforms to and lists, with summaries), \"similar\" (what to use instead, led by the pages its deprecation note names), \"references\" (the pages it links to, with their summaries) or \"availability\" (the versions that introduced and deprecated it on each platform).",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The page's address on developer.apple.com, under /documentation/, /design/human-interface-guidelines/, /tutorials/ or, for view \"page\" only, /help/app-store-connect/ (\"https://developer.apple.com/documentation/swiftui/navigationstack\"). Take it from a result or a link: a guessed one often doesn't exist."
+        },
+        "language": {
+          "default": "swift",
+          "description": "\"swift\": the page in Swift; \"occ\": an API's Objective-C version, its declaration and members as Objective-C writes them. A page Apple writes in Swift alone has none. The views other than \"page\" read the Swift page.",
+          "type": "string",
+          "enum": [
+            "swift",
+            "occ"
+          ]
+        },
+        "view": {
+          "default": "page",
+          "description": "\"page\": the whole page. The others give one part of an API's page, shorter. \"related\": what it inherits from and what inherits from it, the protocols it conforms to and the types that conform to it, and its See Also list, each with its one-line summary, plus the first 3 members of each Topics group. \"similar\": what to use instead or alongside, each with its summary: first the pages its deprecation note names, then its See Also list, then members of its Topics groups; for replacing a deprecated API. \"references\": the pages it links to, from its lists and inside its text, each with its summary and, for an API, its declaration, grouped by Apple's role for each (\"symbol\", \"article\", \"collection\"). \"availability\": the title, tagged Deprecated or Beta as Apple's page tags it, and each platform with the version that introduced it and, where deprecated, the version and Apple's note.",
+          "type": "string",
+          "enum": [
+            "page",
+            "related",
+            "similar",
+            "references",
+            "availability"
+          ]
+        },
+        "searchDepth": {
+          "default": "medium",
+          "description": "similar: \"shallow\", the pages the deprecation note names and the See Also list, up to 5; \"medium\", also the first 4 members of each Topics group, up to 10; \"deep\", also the See Also lists of the first 3 results, up to 15.",
+          "type": "string",
+          "enum": [
+            "shallow",
+            "medium",
+            "deep"
+          ]
+        },
+        "maxReferences": {
+          "default": 20,
+          "description": "references: most linked pages to show, not by relevance: those its lists name (Topics, Relationships, See Also) first, then those its text links to.",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 50
+        },
+        "filterByType": {
+          "default": "all",
+          "description": "references: keeps the linked pages of one role or kind, as Apple names them: \"symbol\" (APIs), \"collection\", \"article\", \"sampleCode\" and the like.",
+          "type": "string",
+          "enum": [
+            "all",
+            "symbol",
+            "containerSymbol",
+            "restRequestSymbol",
+            "dictionarySymbol",
+            "pseudoSymbol",
+            "pseudoCollection",
+            "collection",
+            "collectionGroup",
+            "article",
+            "sampleCode",
+            "overview",
+            "table",
+            "codeListing",
+            "link",
+            "project",
+            "subsection",
+            "task",
+            "section",
+            "root"
+          ]
+        }
+      },
+      "required": [
+        "url"
+      ]
+    }
+  },
+  {
+    "name": "list_technologies",
+    "description": "Browse four of Apple's catalogs. catalog \"technologies\": every Apple framework and technology, grouped by Apple's categories, each with its link, languages, tags and Apple's one-line summary, beta ones marked; use it to see which frameworks fit a task (category \"Machine learning\") or to get a framework's exact name and link. catalog \"samples\": Apple's Sample Code Library, each sample with its framework, sections and summary, featured ones first, then by the library's sections (\"WWDC26\" holds that year's); to find a sample by what it does, search_apple_docs with type \"sample\" ranks every sample on the site, including ones this library leaves out. catalog \"updates\": Apple's Updates page as links with summaries, each framework's updates page (\"SwiftUI updates\"), the release notes of each OS, Xcode and Safari, and each past WWDC's What's new page; use it to find what changed in a framework or a release. catalog \"overviews\": Apple's Technology Overviews, guides to which technologies to use for a goal (app design and UI, Liquid Glass, games, AI and machine learning and more), the collections with their summaries and the articles in each; use it to choose an approach before choosing APIs. Read any entry with get_apple_doc_content. The technologies and samples answers also name a TSV of the whole catalog, one entry a line, for a grep the parameters can't make.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "catalog": {
+          "default": "technologies",
+          "description": "\"technologies\": Apple's frameworks and technologies; \"samples\": Apple's Sample Code Library; \"updates\": Apple's Updates page; \"overviews\": Apple's Technology Overviews.",
+          "type": "string",
+          "enum": [
+            "technologies",
+            "samples",
+            "updates",
+            "overviews"
+          ]
+        },
+        "category": {
+          "description": "Keeps one part of the catalog, in any case: technologies, the ones whose category or one of whose tags contains it (\"Machine learning\" finds Core ML, Create ML and Vision); samples, a library section, by any part of its name (\"WWDC26\" lists that year's samples); updates, a section of the page, by any part of its title (\"Release notes\"); overviews, one collection, by its whole title or the last part of its link. Technologies, updates and overviews answer a value they lack with the ones they have.",
+          "type": "string"
+        },
+        "language": {
+          "description": "technologies only: keeps the technologies available in Swift (\"swift\") or Objective-C (\"occ\").",
+          "type": "string",
+          "enum": [
+            "swift",
+            "occ"
+          ]
+        },
+        "framework": {
+          "description": "samples only: keeps the samples whose framework, title or link names this framework, in any spelling (\"SwiftUI\", \"storekit\", \"Core ML\").",
+          "type": "string"
+        },
+        "technology": {
+          "description": "updates only: keeps the entries whose framework, title or summary contains this name (\"SwiftUI\"), in any case.",
+          "type": "string"
+        },
+        "searchQuery": {
+          "description": "samples: words that must all appear, in any case, in a sample's title, sections, framework, link or summary (\"SwiftData widget\"); the list keeps the library's order. updates: keeps the entries whose title or summary contains this text, in any case. overviews: keeps the collections and articles whose title or link contains this text, in any case; a collection's summary counts too.",
+          "type": "string"
+        },
+        "includeBeta": {
+          "default": true,
+          "description": "false leaves out beta technologies, samples or updates.",
+          "type": "boolean"
+        },
+        "includeSubcategories": {
+          "default": true,
+          "description": "overviews only: false lists only the collections, without their articles.",
+          "type": "boolean"
+        },
+        "limit": {
+          "description": "Most entries to show, in all; if left out, 200 technologies, 50 samples, 50 updates, 50 overview entries.",
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 500
+        }
+      }
+    }
+  },
+  {
+    "name": "search_docs_map",
+    "description": "Find any page of Apple's documentation by its title, at once: API symbols (types, methods, properties, enum cases, macros), articles, samples, web-service endpoints, Info.plist and entitlement keys, Human Interface Guidelines and App Store Connect Help pages. Use it when you know a name or part of one, from code, an error or another page. Returns each match's title, kind, Beta or Deprecated mark, technology, the page it sits under (which tells same-named members apart) and link, shortest titles first; read one with get_apple_doc_content. It matches titles only, so to search by what something does, use search_apple_docs. Pages Apple added after the map's date, given in each answer, are missing: source \"index\" reads one framework's sidebar live and matches a wildcard (\"*View\" structs in SwiftUI, \"*Delegate\" protocols in UIKit), to see a family of APIs or what's newer than the map, without summaries.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "source": {
+          "default": "map",
+          "description": "\"map\": the docs map on disk, every technology at once. \"index\": one framework's sidebar, read live from Apple's site, for pages newer than the map or a family of names by wildcard; technology names the framework.",
+          "type": "string",
+          "enum": [
+            "map",
+            "index"
+          ]
+        },
+        "query": {
+          "type": "string",
+          "minLength": 1,
+          "description": "map: text the title contains, in any case and as typed, without wildcards: a name (\"accessibilityInputLabels(_:)\"), part of one (\"inputlabels\") or a word (\"gauge\"). index: a wildcard for the whole name, in any case: \"*View\" ends in View, \"UI*\" starts with UI, \"*feedback*\" contains it, \"registerForTraitChanges*\" finds a method by its name, \"*\" takes every one."
+        },
+        "technology": {
+          "description": "map: keeps only the pages these technologies' sidebars list (WebKit's WebView is in SwiftUI's), by the names the results show (\"SwiftUI\", \"Human Interface Guidelines\") or IDs (\"swiftui\"), in any case. index: the one framework, by its name in any case and spacing (\"Foundation Models\") or its ID (\"foundationmodels\").",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "kind": {
+          "description": "Keeps one kind of page, as the results name it (\"struct\", \"method\", \"case\", \"protocol\", \"article\"); an unknown one is answered with the kinds there are.",
+          "type": "string",
+          "minLength": 1
+        },
+        "limit": {
+          "description": "Most results: from the map, the shortest titles first (10 if left out); from an index, in its order (50).",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "list_wwdc_videos",
+    "description": "List WWDC sessions, every year since 2014, by year, topic or text in the title or topic names: each with its title, link, topics, and whether it has a transcript and code, newest year first. Use it to browse sessions; search_wwdc_content finds what sessions said or showed, and get_wwdc_video reads one. view \"years\" counts each year's sessions; view \"topics\" lists the WWDC topics with their IDs and session counts, or one topic's sessions.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "view": {
+          "default": "sessions",
+          "description": "\"sessions\": the sessions by year, topic or text in the title or topic names. \"years\": each WWDC year with its number of sessions, then how many sessions in all have code and a transcript. \"topics\": the WWDC topics with their IDs and session counts or, with topic, one topic's sessions, newest year first.",
+          "type": "string",
+          "enum": [
+            "sessions",
+            "years",
+            "topics"
+          ]
+        },
+        "year": {
+          "description": "sessions, and one topic's sessions: keeps one WWDC year (\"2026\"); left out or \"all\", every year.",
+          "type": "string"
+        },
+        "topic": {
+          "description": "sessions: a topic ID, as list_wwdc_videos with view \"topics\" lists them, keeps that topic's sessions; any other text keeps the sessions whose title or topic names contain it, in any case. topics: one topic's ID, to list its sessions.",
+          "type": "string"
+        },
+        "hasCode": {
+          "description": "sessions: true keeps the sessions with code; false, those without.",
+          "type": "boolean"
+        },
+        "includeVideos": {
+          "default": true,
+          "description": "topics: false shows the topic without its sessions.",
+          "type": "boolean"
+        },
+        "limit": {
+          "description": "Most sessions to show: 50 if left out, 20 of one topic's.",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 200
+        }
+      }
+    }
+  },
+  {
+    "name": "search_wwdc_content",
+    "description": "Search what WWDC sessions said and showed, every year since 2014: the full text of their transcripts and their code. Returns the sessions whose transcript or code contains the query, most matches first, each with its count of matches and its first matching passages and code excerpts, with the time each comes up. Use it to find the sessions that cover an API or a technique; read one with get_wwdc_video. view \"examples\" lists the code itself instead: each example that contains query (pass the type or attribute the code uses, \"LanguageModelSession\", \"@Generable\"), with its session, year and time, newest year first. The answer also names a folder of every session as text, for a grep across sessions.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "view": {
+          "default": "sessions",
+          "description": "\"sessions\": the matching sessions, most matches first, each with its count of matches and up to 3 passages or code excerpts, each with its time. \"examples\": the code examples that contain query, each with its session, year and the time it appears, newest year first.",
+          "type": "string",
+          "enum": [
+            "sessions",
+            "examples"
+          ]
+        },
+        "query": {
+          "type": "string",
+          "minLength": 1,
+          "description": "sessions: text a transcript paragraph or a line of code must contain, as typed, in any case (\"@Observable\", \"Vision Pro\"; \"async await\" finds the two words side by side). examples: text the code must contain, in any case: a type, attribute, method or framework name (\"LanguageModelSession\", \"@Generable\"); session code rarely shows its imports, so a framework's name finds fewer."
+        },
+        "searchIn": {
+          "default": "both",
+          "description": "sessions: search the transcripts, the code, or both.",
+          "type": "string",
+          "enum": [
+            "transcript",
+            "code",
+            "both"
+          ]
+        },
+        "year": {
+          "description": "Keeps one WWDC year (\"2025\"); left out, every year.",
+          "type": "string"
+        },
+        "topic": {
+          "description": "examples: a topic ID, as list_wwdc_videos with view \"topics\" lists them, keeps that topic's sessions; any other text keeps the sessions whose title or topic names contain it, in any case.",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Most sessions to show, 20 if left out; examples: most examples, 30.",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "get_wwdc_video",
+    "description": "One WWDC session: its title, year and topics; its links, including the video downloads and the documentation it covers; its chapters; the full transcript, each paragraph with its time; every code example with the time it appears; and the sessions Apple lists as related. Transcripts are long: set includeTranscript to false when you need only the code or the links. view \"related\" lists the sessions related to it instead: those Apple lists, then, across every year, those that share the most of its topics.",
+    "read_only": true,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "view": {
+          "default": "session",
+          "description": "\"session\": the session itself. \"related\": the sessions related to it, first those Apple lists as related, then, across every year, sessions that share its topics, the most shared first; each with its year, link and topics, and whether it has a transcript and code.",
+          "type": "string",
+          "enum": [
+            "session",
+            "related"
+          ]
+        },
+        "year": {
+          "type": "string",
+          "description": "The session's WWDC year (\"2025\")."
+        },
+        "videoId": {
+          "type": "string",
+          "description": "The session's number, from its link: …/wwdc2025/10101/ is \"10101\"."
+        },
+        "includeTranscript": {
+          "default": true,
+          "description": "session: false leaves out the transcript, which runs to tens of KB.",
+          "type": "boolean"
+        },
+        "includeCode": {
+          "default": true,
+          "description": "session: false leaves out the code examples.",
+          "type": "boolean"
+        },
+        "limit": {
+          "default": 15,
+          "description": "related: most sessions to show.",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 50
+        }
+      },
+      "required": [
+        "year",
+        "videoId"
+      ]
+    }
+  }
+]

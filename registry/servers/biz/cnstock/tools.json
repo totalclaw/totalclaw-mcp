@@ -1,0 +1,154 @@
+[
+  {
+    "name": "cnstock_search",
+    "description": "按代码、中文名称或拼音检索 A 股股票，返回候选标的。查询个股前先用它确定 6 位代码。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "description": "关键词，如「茅台」「600519」「NDSD」"
+        }
+      },
+      "required": [
+        "keyword"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "cnstock_quote",
+    "description": "获取单只 A 股的实时行情与估值指标：最新价、涨跌幅、总市值、PE(TTM)、PB、行业与概念。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "6 位 A 股代码，如 600519"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "cnstock_kline",
+    "description": "获取 A 股日 K 线历史数据（前复权），用于判断趋势、区间高低点与波动。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "6 位 A 股代码"
+        },
+        "days": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 250,
+          "description": "取最近多少个交易日，默认 60"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "cnstock_financials",
+    "description": "获取 A 股财报摘要：营收、归母净利、ROE、毛利率、同比增速，并折算 TTM（滚动十二个月）口径。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "6 位 A 股代码"
+        },
+        "periods": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20,
+          "description": "取最近几个报告期，默认 8"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "cnstock_valuation",
+    "description": "对单只 A 股做估值测算。非金融类用两阶段 DCF，银行/保险/证券用 PB-ROE；返回内在价值与现价隐含增速。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "6 位 A 股代码"
+        },
+        "growthRate": {
+          "type": "number",
+          "description": "DCF 前 N 年净利润增速，默认 0.08"
+        },
+        "terminalGrowth": {
+          "type": "number",
+          "description": "永续增速，默认 0.025"
+        },
+        "discountRate": {
+          "type": "number",
+          "description": "折现率，默认 0.10"
+        },
+        "years": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 15,
+          "description": "显式预测年数，默认 5"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  },
+  {
+    "name": "cnstock_report",
+    "description": "生成一只 A 股的完整研究简报（Markdown）：行情快照、经营质量、估值测算、价格走势与风险提示。",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "6 位 A 股代码"
+        },
+        "growthRate": {
+          "type": "number",
+          "description": "净利润增速假设，默认 0.08"
+        },
+        "discountRate": {
+          "type": "number",
+          "description": "折现率假设，默认 0.10"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  }
+]

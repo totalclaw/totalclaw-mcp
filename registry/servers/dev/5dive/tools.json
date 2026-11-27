@@ -1,0 +1,143 @@
+[
+  {
+    "name": "task_create",
+    "description": "Create a task in the shared 5dive task queue. Returns the new task's id (e.g. DIVE-N). Use for filing work for an agent or human on the fleet.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Short task title."
+        },
+        "body": {
+          "type": "string",
+          "description": "Full task description / context."
+        },
+        "priority": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "urgent"
+          ],
+          "description": "Task priority (default: medium)."
+        },
+        "assignee": {
+          "type": "string",
+          "description": "Agent name to assign to."
+        },
+        "parent": {
+          "type": "string",
+          "description": "Parent task id (numeric or DIVE-N) to nest under."
+        },
+        "from": {
+          "type": "string",
+          "description": "Who is filing the task."
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "task_show",
+    "description": "Fetch full detail for one task by id (numeric or DIVE-N): status, priority, body, result, subtasks, and blockers.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Task id, e.g. 923 or DIVE-923."
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "task_list",
+    "description": "List tasks in the shared queue. Defaults to open tasks in priority order; filter by status or assignee.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Filter by status (e.g. todo, in_progress, blocked, done)."
+        },
+        "assignee": {
+          "type": "string",
+          "description": "Filter by assignee agent name."
+        },
+        "all": {
+          "type": "boolean",
+          "description": "Include closed tasks too."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "agent_send",
+    "description": "Send a message to another agent on the fleet by name (inter-agent comms). The recipient receives it in-session.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Recipient agent name."
+        },
+        "message": {
+          "type": "string",
+          "description": "Message text to deliver."
+        },
+        "from": {
+          "type": "string",
+          "description": "Sender label (optional)."
+        }
+      },
+      "required": [
+        "name",
+        "message"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "agent_list",
+    "description": "List every agent on the box: name, type, channels, model, and live state.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "digest_get",
+    "description": "Get the fleet's daily standup digest (activity, token burn, health). Pass window=7d for the weekly view.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "window": {
+          "type": "string",
+          "enum": [
+            "1d",
+            "7d"
+          ],
+          "description": "Digest window: 1d (default) or 7d."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+]

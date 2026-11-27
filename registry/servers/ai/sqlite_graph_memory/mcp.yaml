@@ -46,6 +46,12 @@ optional_env:
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T07:48:35Z'
+  probed_runtime: uvx
+  count: 1
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

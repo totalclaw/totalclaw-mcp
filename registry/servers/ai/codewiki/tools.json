@@ -1,0 +1,99 @@
+[
+  {
+    "name": "codewiki_search_repos",
+    "description": "Search repositories indexed by codewiki.google",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 1
+        },
+        "limit": {
+          "default": 10,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "codewiki_fetch_repo",
+    "description": "Fetch generated wiki content for a repository from codewiki.google",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repo": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "default": "aggregate",
+          "type": "string",
+          "enum": [
+            "aggregate",
+            "pages"
+          ]
+        }
+      },
+      "required": [
+        "repo"
+      ]
+    }
+  },
+  {
+    "name": "codewiki_ask_repo",
+    "description": "Ask a natural-language question about a repository indexed in codewiki.google",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "repo": {
+          "type": "string",
+          "minLength": 1
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "history": {
+          "maxItems": 20,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "type": "string",
+                "enum": [
+                  "user",
+                  "assistant"
+                ]
+              },
+              "content": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "role",
+              "content"
+            ]
+          }
+        }
+      },
+      "required": [
+        "repo",
+        "question"
+      ]
+    }
+  }
+]

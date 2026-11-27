@@ -1,0 +1,322 @@
+[
+  {
+    "name": "connection_request",
+    "description": "Send a TR-069 connection request so a CPE device contacts GenieACS now instead of at its next periodic inform. Use it to run tasks that are already queued, or to apply a preset change without waiting. It queues nothing itself. Succeeds when the device answered; fails with ACS error 504 when the device is unreachable (offline, or behind NAT without STUN). Example: connection_request(device_id=\"202BC1-BM632w-000001\").",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "description": "The GenieACS device id (the _id field), exactly as GenieACS stores it, usually OUI-ProductClass-SerialNumber, e.g. \"202BC1-BM632w-000001\". GenieACS escapes characters other than letters and digits inside the product class and serial as %XX (a \"-\" there becomes \"%2D\"), so copy ids from genieacs://devices/list or search_devices rather than typing them.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "device_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "delete_task",
+    "description": "Remove a task from the GenieACS queue before the device runs it, for example a firmware download or reboot queued by mistake, or a faulted task you do not want retried. GenieACS already deletes a task once the device has run it, so every task you can see in genieacs://tasks/{device_id} is either waiting or faulted. Fails with ACS error 503 while the device is in a session with GenieACS; try again a few seconds later. Use retry_task instead to run a faulted task again. Example: delete_task(task_id=\"67abc123def4560012345678\").",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "task_id": {
+          "description": "The task's _id, from genieacs://tasks/{device_id} or from the task_id a task tool returned.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "download_firmware",
+    "description": "Tell a CPE device to download and apply a file stored on GenieACS: a firmware image, a configuration file or another file the device accepts. A wrong image can leave a device unusable, so check the file's metadata (genieacs://file/{name}: OUI, product class, version) against the device first. GenieACS queues a download task and sends a connection request at once; the transfer itself can take minutes after the tool returns. Check genieacs://tasks/{device_id} and genieacs://faults/{device_id} afterwards. Example: download_firmware(device_id=\"202BC1-BM632w-000001\", file_id=\"firmware-v2.0.bin\").",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "description": "The GenieACS device id (the _id field), exactly as GenieACS stores it, usually OUI-ProductClass-SerialNumber, e.g. \"202BC1-BM632w-000001\". GenieACS escapes characters other than letters and digits inside the product class and serial as %XX (a \"-\" there becomes \"%2D\"), so copy ids from genieacs://devices/list or search_devices rather than typing them.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "file_id": {
+          "description": "The _id of the file on GenieACS, which is its filename, e.g. \"firmware-v2.0.bin\". Check it exists with genieacs://file/{name}.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "filename": {
+          "description": "Optional target file name sent to the device (TR-069 TargetFileName). Omit it to let the device choose.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "device_id",
+        "file_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_parameter",
+    "description": "Read TR-069 parameter values GenieACS has cached for a device, without contacting the device: firmware version, serial number, uptime, WiFi SSID, IP addresses and so on. Values are what the device reported at its last inform or refresh, with a timestamp each; call refresh_parameter first when you need a value from the device now. Give one path or a comma-separated list; an object path such as \"Device.WiFi\" returns every cached leaf under it. Returns found=false for an unknown device id, and lists paths with no cached value under missing.",
+    "read_only": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "description": "The GenieACS device id (the _id field), exactly as GenieACS stores it, usually OUI-ProductClass-SerialNumber, e.g. \"202BC1-BM632w-000001\". GenieACS escapes characters other than letters and digits inside the product class and serial as %XX (a \"-\" there becomes \"%2D\"), so copy ids from genieacs://devices/list or search_devices rather than typing them.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "parameter_path": {
+          "description": "Comma-separated TR-069 paths. Example: \"Device.DeviceInfo.SoftwareVersion\" or \"InternetGatewayDevice.DeviceInfo.SoftwareVersion,InternetGatewayDevice.DeviceInfo.UpTime\".",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "device_id",
+        "parameter_path"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "manage_preset",
+    "description": "Create, replace or delete a GenieACS preset. A preset is a fleet-wide rule: at their next inform, every device matching its precondition gets its configurations applied, so a broad precondition (or an empty one) reconfigures the whole fleet. Confirm the precondition and the devices it matches (search_devices with the same filter) before a put. action=\"put\" creates or overwrites the preset with body; action=\"delete\" removes it. body is a JSON object: weight (integer, higher wins), precondition (a MongoDB-style filter as a JSON string, e.g. \"{\\\"_tags\\\":\\\"office\\\"}\"), and configurations (an array of {type: \"value\" | \"provision\" | \"add_object\" | \"delete_object\", ...}). Example body: {\"weight\":0,\"precondition\":\"{\\\"_tags\\\":\\\"pilot\\\"}\",\"configurations\":[{\"type\":\"provision\",\"name\":\"myScript\"}]}. Read genieacs://presets/list first.",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "description": "\"put\" creates or replaces the preset, \"delete\" removes it.",
+          "enum": [
+            "put",
+            "delete"
+          ],
+          "type": "string"
+        },
+        "body": {
+          "description": "For action=\"put\": the preset document as a JSON object string, with weight, precondition and configurations. Ignored for \"delete\".",
+          "type": "string"
+        },
+        "name": {
+          "description": "The preset name, its id on GenieACS. It cannot contain a dot.",
+          "minLength": 1,
+          "pattern": "^[^.]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "action",
+        "name"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "manage_provision",
+    "description": "Create, replace or delete a GenieACS provision script. A provision is JavaScript that GenieACS runs during the inform session of every device a preset applies it to, so replacing one changes how those devices are configured. Scripts use the GenieACS sandbox API (declare, commit, clear, ext, log); ext() calls extension scripts that run on the ACS host with full privileges, so treat a provision as code running on your ACS. action=\"put\" uploads or overwrites the script (raw JavaScript, not JSON; GenieACS answers 400 on a syntax error); action=\"delete\" removes it. Presets reference provisions by name. Read genieacs://provisions/list first. Example script: log(\"Device \" + DeviceID.ID + \" informed\");",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "description": "\"put\" creates or replaces the script, \"delete\" removes it.",
+          "enum": [
+            "put",
+            "delete"
+          ],
+          "type": "string"
+        },
+        "name": {
+          "description": "The provision name, its id on GenieACS.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "script": {
+          "description": "For action=\"put\": the JavaScript source. Ignored for \"delete\".",
+          "type": "string"
+        }
+      },
+      "required": [
+        "action",
+        "name"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "reboot_device",
+    "description": "Reboot a CPE device through GenieACS. Use it when a device needs a restart, for example after a configuration change or to recover an unresponsive device. The device drops its service while it restarts. GenieACS queues the task and sends a connection request at once: status \"done\" means the device ran it in that session, \"queued\" means it runs at the device's next inform. A reboot does not confirm the device came back; read Device.DeviceInfo.UpTime (or InternetGatewayDevice.DeviceInfo.UpTime) with refresh_parameter afterwards. Example: reboot_device(device_id=\"202BC1-BM632w-000001\").",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "description": "The GenieACS device id (the _id field), exactly as GenieACS stores it, usually OUI-ProductClass-SerialNumber, e.g. \"202BC1-BM632w-000001\". GenieACS escapes characters other than letters and digits inside the product class and serial as %XX (a \"-\" there becomes \"%2D\"), so copy ids from genieacs://devices/list or search_devices rather than typing them.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "device_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "refresh_parameter",
+    "description": "Ask a CPE device for the current value of a TR-069 parameter, or of every parameter under an object path, and store it in GenieACS. Use it when get_parameter's cached value may be stale. It changes nothing on the device. GenieACS queues a getParameterValues task and sends a connection request at once: status \"done\" means the fresh value is already stored, so read it with get_parameter; \"queued\" means it arrives at the device's next inform. Example: refresh_parameter(device_id=\"202BC1-BM632w-000001\", parameter=\"Device.DeviceInfo.SoftwareVersion\").",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "description": "The GenieACS device id (the _id field), exactly as GenieACS stores it, usually OUI-ProductClass-SerialNumber, e.g. \"202BC1-BM632w-000001\". GenieACS escapes characters other than letters and digits inside the product class and serial as %XX (a \"-\" there becomes \"%2D\"), so copy ids from genieacs://devices/list or search_devices rather than typing them.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "parameter": {
+          "description": "Full dotted TR-069 path in the device's data model. Examples: \"Device.DeviceInfo.SoftwareVersion\", \"InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID\", or an object such as \"Device.WiFi.\" for everything under it.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "device_id",
+        "parameter"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "retry_task",
+    "description": "Run a faulted task again: GenieACS clears the task's fault, and the device runs the task at its next session. Read genieacs://faults/{device_id} first to see why it failed; retrying a task whose cause is unchanged faults again. A task that has not faulted is left as it is. Example: retry_task(task_id=\"67abc123def4560012345678\").",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "task_id": {
+          "description": "The faulted task's _id, from genieacs://tasks/{device_id}.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_devices",
+    "description": "Find CPE devices in GenieACS with a MongoDB-style filter: by tag, manufacturer, model, firmware version, last inform time or any TR-069 parameter. It only reads. Examples: {\"_tags\":\"office\"}; {\"InternetGatewayDevice.DeviceInfo.Manufacturer\":\"Huawei\"} (GenieACS adds ._value to parameter paths); {\"_lastInform\":{\"$lt\":\"2026-01-01T00:00:00Z\"}} for devices silent since that date; {\"_id\":{\"$regex\":\"^202BC1-\"}}. Query operators such as $eq, $ne, $gt, $lt, $in, $nin, $exists, $regex, $and and $or work; $where, $function, $accumulator and $expr are refused, and a $regex pattern may be at most 256 characters. By default each device comes back as a summary (id, last inform, tags, manufacturer, product class, serial); ask for other fields with projection. Results come in pages of limit (default 50, at most 200); page with skip.",
+    "read_only": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "limit": {
+          "default": 50,
+          "description": "Most devices to return in this page, 1 to 200. Default 50.",
+          "maximum": 200,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "projection": {
+          "description": "Comma-separated fields to return per device, e.g. \"_id,InternetGatewayDevice.DeviceInfo.SoftwareVersion\". Default: the summary fields. \"all\" returns whole device documents, which can be large (tens of KB each).",
+          "type": "string"
+        },
+        "query": {
+          "description": "The filter, as a JSON object string. Example: {\"_tags\":\"office\"} or {\"_id\":\"202BC1-BM632w-000001\"}.",
+          "minLength": 2,
+          "type": "string"
+        },
+        "skip": {
+          "default": 0,
+          "description": "Matching devices to skip before this page, for paging. Default 0.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "sort": {
+          "description": "Sort order as a JSON object string: 1 ascending, -1 descending. Example: {\"_lastInform\":-1} for the most recent first.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "set_parameter",
+    "description": "Write one or more TR-069 parameter values on a CPE device, overwriting the current values: WiFi SSID or key, periodic inform interval, management server URL, or any writable parameter. A wrong value can cut the device off (a wrong WAN or ACS URL setting, for example). parameter_values is a JSON array of [path, value] or [path, value, xsdType] tuples; xsd types include xsd:string, xsd:boolean, xsd:unsignedInt, xsd:int and xsd:dateTime, and GenieACS infers the type when it is omitted. Example: [[\"InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID\",\"Lab-2\",\"xsd:string\"]]. GenieACS queues the task and sends a connection request at once: status \"done\" means the device applied it, \"queued\" means it runs at the next inform. A read-only or unknown parameter makes the device fault the task; see genieacs://faults/{device_id}. Read the current value with get_parameter first.",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "description": "The GenieACS device id (the _id field), exactly as GenieACS stores it, usually OUI-ProductClass-SerialNumber, e.g. \"202BC1-BM632w-000001\". GenieACS escapes characters other than letters and digits inside the product class and serial as %XX (a \"-\" there becomes \"%2D\"), so copy ids from genieacs://devices/list or search_devices rather than typing them.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "parameter_values": {
+          "description": "JSON array of tuples, each [path, value] or [path, value, xsdType]. Example: [[\"Device.WiFi.SSID.1.SSID\",\"NewName\",\"xsd:string\"],[\"Device.ManagementServer.PeriodicInformInterval\",300,\"xsd:unsignedInt\"]]",
+          "minLength": 2,
+          "type": "string"
+        }
+      },
+      "required": [
+        "device_id",
+        "parameter_values"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "tag_device",
+    "description": "Add a tag to a CPE device or remove one. Tags group devices: presets match on them (precondition {\"_tags\":\"office\"}) and search_devices finds by them. Adding or removing a tag can therefore make a preset apply to the device, or stop applying, at its next inform. Tags are case-sensitive. Use letters, digits, \"-\" and \"_\": GenieACS rejects a tag with other characters (a \".\" for example) with a 404. Fails with ACS error 404 when the device id does not exist. Example: tag_device(device_id=\"202BC1-BM632w-000001\", tag=\"office\", action=\"add\").",
+    "read_only": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "description": "\"add\" tags the device, \"remove\" untags it.",
+          "enum": [
+            "add",
+            "remove"
+          ],
+          "type": "string"
+        },
+        "device_id": {
+          "description": "The GenieACS device id (the _id field), exactly as GenieACS stores it, usually OUI-ProductClass-SerialNumber, e.g. \"202BC1-BM632w-000001\". GenieACS escapes characters other than letters and digits inside the product class and serial as %XX (a \"-\" there becomes \"%2D\"), so copy ids from genieacs://devices/list or search_devices rather than typing them.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "tag": {
+          "description": "The tag, e.g. \"office\", \"floor-2\", \"firmware_pending\".",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "device_id",
+        "tag",
+        "action"
+      ],
+      "type": "object"
+    }
+  }
+]

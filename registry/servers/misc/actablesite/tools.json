@@ -1,0 +1,68 @@
+[
+  {
+    "name": "audit_public_website",
+    "description": "Run ActableSite's free three-signal readiness scan for a public website. Returns observable evidence for business identity, semantic reading path, and explicit action path. This does not guarantee AI crawling, indexing, citation, ranking, recommendation, traffic, or revenue.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Public HTTP or HTTPS website URL. Private, local-network, authenticated, and restricted targets are rejected."
+        }
+      },
+      "required": [
+        "url"
+      ]
+    }
+  },
+  {
+    "name": "check_ai_crawler_policy",
+    "description": "Check the homepage robots.txt rule for eight named OpenAI, Anthropic, Perplexity, and Google AI crawler tokens. The free result stays complete and includes a bounded optional handoff to exact monitoring terms. Results describe robots policy only and do not prove network access, authentic bot identity, crawling, indexing, citation, or ranking.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Public HTTP or HTTPS website URL. Private and local-network targets are rejected."
+        }
+      },
+      "required": [
+        "url"
+      ]
+    }
+  },
+  {
+    "name": "get_crawler_watch_offer",
+    "description": "Return the exact $9 monthly price, one-site scope, 15-minute check cadence, two-check confirmation, delivery and cancellation paths, and synthetic-check limitations. This tool is informational: present the offer and require explicit user confirmation before any separate checkout or purchase action.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    }
+  },
+  {
+    "name": "get_full_report_offer",
+    "description": "Return the exact one-time price, deliverables, delivery path, checkout URL, support contact, and limitations for ActableSite's paid 15-check repair report. Present this information to the user and require explicit user confirmation before opening checkout or attempting any purchase.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    }
+  },
+  {
+    "name": "get_practice_radar_offer",
+    "description": "Return the current Practice Radar weekly-edition receipt, public sample, exact $19 one-time and $39 monthly options, included fields, delivery and cancellation paths, and material NPI limitations. This tool is informational: it cannot open checkout or purchase. Present the offer and require explicit user confirmation before any separate checkout or purchase action.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    }
+  }
+]

@@ -1,0 +1,4178 @@
+[
+  {
+    "name": "wb_check_auth",
+    "description": "Check whether the required credentials are present in the environment.\n\nDoes NOT reveal secret values — only reports which variables are set.\nReturns JSON: {\"ready\": bool, \"missing\": [str], \"required\": [str]}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "check_authArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_list_sections",
+    "description": "List API sections and how many catalog endpoints each contains.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_sectionsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_get_section",
+    "description": "List all endpoints in one section.\n\nArgs:\n    section: section name (see wb_list_sections), e.g. \"statistics\".\nReturns JSON list of {operation_id, method, path, safety, summary}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "section": {
+          "title": "Section",
+          "type": "string"
+        }
+      },
+      "required": [
+        "section"
+      ],
+      "title": "get_sectionArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_search_methods",
+    "description": "Search the endpoint catalog by keyword (works in Russian and English).\n\nArgs:\n    query: free text, e.g. \"остатки\", \"stocks\", \"update price\".\n    limit: max results (1-50).\nReturns JSON list of matching endpoints (best first).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "limit": {
+          "default": 15,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "search_methodsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_map",
+    "description": "The big picture: business entities this API covers and the go-to\nmethods for each. Call with no args to see the whole map (\"you are\nhere\"); pass entity=\"reviews\" (or stocks/prices/orders/…) to list every\nmethod of one entity. Use this before guessing — it orients you fast.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "entity": {
+          "default": "",
+          "title": "Entity",
+          "type": "string"
+        }
+      },
+      "title": "entity_mapArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_describe_method",
+    "description": "Return the full catalog record for one endpoint: method, host, path,\nscope, safety level, pagination style, rate limit, params and doc URL.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "describe_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_call_method",
+    "description": "Execute one READ endpoint from the catalog by operation_id.\n\nTarget API: https://dev.wildberries.ru/en/openapi/api-information.\n\nReads only: nothing here changes data, so it runs without confirmation.\nTo change data use wb_write_method, to delete use wb_delete_method.\n\nArgs:\n    operation_id: id from the catalog (see wb_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body (a few read endpoints take one).\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "call_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_write_method",
+    "description": "Execute one WRITE endpoint from the catalog: create or update data.\n\nTarget API: https://dev.wildberries.ru/en/openapi/api-information.\n\nRequires confirm_write=true; nothing is sent without it. Irreversible\noperations live in wb_delete_method, reads in wb_call_method.\n\nArgs:\n    operation_id: id from the catalog (see wb_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "write_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_delete_method",
+    "description": "Execute one DESTRUCTIVE endpoint: deletes or irreversibly changes data.\n\nTarget API: https://dev.wildberries.ru/en/openapi/api-information.\n\nBoth confirm_write=true and i_understand_this_modifies_data=true are\nrequired; nothing is sent without both.\n\nArgs:\n    operation_id: id from the catalog (see wb_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\n    i_understand_this_modifies_data: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        },
+        "i_understand_this_modifies_data": {
+          "default": false,
+          "title": "I Understand This Modifies Data",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "delete_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_get_raw",
+    "description": "Read ANY endpoint by path, including ones missing from the catalog.\n\nTarget API: https://dev.wildberries.ru/en/openapi/api-information.\n\nSafe verbs only (GET, HEAD, OPTIONS). To change data use\nwb_write_raw, to delete use wb_delete_raw.\n\nArgs:\n    path: full path beginning with '/', e.g. \"/ping\".\n    method: safe verb, GET by default.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body (rare on reads; some APIs want one).\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "method": {
+          "default": "GET",
+          "title": "Method",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "title": "get_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_write_raw",
+    "description": "Create or update data at ANY path, including paths not in the catalog.\n\nTarget API: https://dev.wildberries.ru/en/openapi/api-information.\n\nPOST, PUT and PATCH only; requires confirm_write=true.\n\nArgs:\n    method: POST, PUT or PATCH.\n    path: full path beginning with '/'.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "method": {
+          "title": "Method",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "method",
+        "path"
+      ],
+      "title": "write_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_delete_raw",
+    "description": "Delete data at ANY path, including paths not in the catalog.\n\nTarget API: https://dev.wildberries.ru/en/openapi/api-information.\n\nDELETE only. Both confirm_write=true and\ni_understand_this_modifies_data=true are required.\n\nArgs:\n    path: full path beginning with '/'.\n    method: DELETE.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\n    i_understand_this_modifies_data: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "method": {
+          "default": "DELETE",
+          "title": "Method",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        },
+        "i_understand_this_modifies_data": {
+          "default": false,
+          "title": "I Understand This Modifies Data",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "title": "delete_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_fetch_all",
+    "description": "Auto-paginate a read endpoint and return every row in one response.\n\nHandles offset, last_id, cursor (Ozon v4/v5), page and WB lastChangeDate\nstyles. The array path is taken from the catalog automatically.\n\nArgs:\n    operation_id: a read endpoint from the catalog.\n    query / body / path_values: base parameters (cursor fields are managed).\n    items_path: override the array path (default: the endpoint's own).\n    limit: page size to request.\n    max_items: hard cap to protect context (default 10000).\nReturns JSON: {\"ok\", \"items\", \"total_fetched\", \"pages_fetched\", \"truncated\"}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "items_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Items Path"
+        },
+        "limit": {
+          "default": 1000,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "max_items": {
+          "default": 10000,
+          "title": "Max Items",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "fetch_all_toolArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_list_cabinets",
+    "description": "List configured cabinets for this marketplace and which one is active.\n\nReturns JSON: {\"active\": str|null, \"cabinets\": [names], \"fields_needed\": [...]}.\nSecret values are never returned.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_cabinetsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_add_cabinet",
+    "description": "Add or update a cabinet (a named set of API credentials), from chat.\n\n⚠️ This puts the key into the chat transcript — requires\ni_understand_key_goes_to_chat=true. The terminal-free safe alternative is\nthe installer (install.py / double-click), where the key never enters chat.\n\nArgs:\n    credentials: dict with the required fields for this service\n        ({fields}). For Ozon: {{\"client_id\": \"...\", \"api_key\": \"...\"}};\n        for WB: {{\"token\": \"...\"}}.\n    name: optional label. If omitted, the cabinet is named after the real\n        shop name fetched from the marketplace (falls back to \"main\").\n    i_understand_key_goes_to_chat: must be true to proceed.\nSaved to ~/.marketplace-mcp/cabinets.json (local, chmod 600), never echoed.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "credentials": {
+          "additionalProperties": true,
+          "title": "Credentials",
+          "type": "object"
+        },
+        "name": {
+          "default": "",
+          "title": "Name",
+          "type": "string"
+        },
+        "i_understand_key_goes_to_chat": {
+          "default": false,
+          "title": "I Understand Key Goes To Chat",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "credentials"
+      ],
+      "title": "add_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_set_key",
+    "description": "Change / rotate the API key from chat (e.g. the old one expired or\nleaked).\n\n⚠️ The key goes into the chat transcript — requires\ni_understand_key_goes_to_chat=true. The safe, terminal-free alternative\nis the installer, where the key never enters chat. Use a scoped key and\nrotate it in the seller cabinet if it was exposed.\n\nArgs:\n    credentials: dict with the required fields ({fields}).\n    cabinet: which cabinet to update. Default: the active one (so \"my key\n        expired\" just works). If there is none, the cabinet is named from\n        the marketplace's shop name, else \"main\".\n    i_understand_key_goes_to_chat: must be true to proceed.\nOn success the key is validated against the marketplace and the shop name\nis reported. Saved locally (chmod 600), never echoed back.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "credentials": {
+          "additionalProperties": true,
+          "title": "Credentials",
+          "type": "object"
+        },
+        "cabinet": {
+          "default": "",
+          "title": "Cabinet",
+          "type": "string"
+        },
+        "i_understand_key_goes_to_chat": {
+          "default": false,
+          "title": "I Understand Key Goes To Chat",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "credentials"
+      ],
+      "title": "set_keyArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_use_cabinet",
+    "description": "Switch the active cabinet. Subsequent API calls use its credentials.\n\nArgs:\n    name: the cabinet to activate (see wb_list_cabinets).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "use_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_remove_cabinet",
+    "description": "Delete a stored cabinet. If it was active, another becomes active.\n\nArgs:\n    name: the cabinet to remove.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "remove_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_list_workflows",
+    "description": "List ready-made analytical workflows (recipes) for this marketplace.\n\nReturns JSON: [{name, category, when_to_use}]. Use {svc}_get_workflow\nto fetch the full step-by-step plan for one.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_workflowsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_get_workflow",
+    "description": "Return the full plan for one workflow: ordered steps (each naming a\ncatalog operation_id and why), interpretation guidance, and common\nmistakes to avoid.\n\nArgs:\n    name: workflow name (see {svc}_list_workflows).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "get_workflowArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_get_sales",
+    "description": "Get Wildberries sales and returns since a date (Statistics API, 1 req/min).\n\nArgs:\n    date_from: RFC3339 date/time in MSK, e.g. \"2026-06-01\" or \"2026-06-01T00:00:00\".\n    flag: 0 = rows changed since date_from (incremental); 1 = rows dated on date_from.\nReturns JSON: {\"ok\": true, \"status\", \"data\": [ sale rows ]} or error envelope.\nEach row includes saleID, srid, nmId, totalPrice, forPay, lastChangeDate.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "date_from": {
+          "title": "Date From",
+          "type": "string"
+        },
+        "flag": {
+          "default": 0,
+          "title": "Flag",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "date_from"
+      ],
+      "title": "wb_get_salesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_get_stocks",
+    "description": "Get the current Wildberries stock snapshot (Statistics API, 1 req/min).\n\nStocks have no history — this is a point-in-time snapshot. Use an early\ndate_from to get the full current set.\n\nArgs:\n    date_from: RFC3339 date; default \"2020-01-01\" returns everything in stock now.\nReturns JSON: {\"ok\": true, \"data\": [ stock rows ]} with quantity, warehouseName, nmId.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "date_from": {
+          "default": "2020-01-01",
+          "title": "Date From",
+          "type": "string"
+        }
+      },
+      "title": "wb_get_stocksArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_get_new_orders",
+    "description": "Get new FBS assembly orders awaiting processing (Marketplace API).\n\nReturns JSON: {\"ok\": true, \"data\": {\"orders\": [...]}} — each order has id,\nrid, article, skus, createdAt, warehouseId.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "wb_get_new_ordersArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_get_prices",
+    "description": "Get current prices and discounts for products (Discounts-Prices API).\n\nArgs:\n    limit: page size (<=1000).\n    offset: pagination offset.\n    filter_nm_id: optional single nmID to filter by.\nReturns JSON: {\"ok\": true, \"data\": {\"listGoods\": [{nmID, sizes, discount, ...}]}}.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "limit": {
+          "default": 1000,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "offset": {
+          "default": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "filter_nm_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Filter Nm Id"
+        }
+      },
+      "title": "wb_get_pricesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wb_set_price",
+    "description": "Set price and discount for ONE product (Discounts-Prices API). WRITE.\n\nRequires confirm_write=true (this changes your live price). A new price 3x\nbelow the old one lands the product in WB price quarantine.\n\nArgs:\n    nm_id: product nmID.\n    price: new base price in rubles (integer).\n    discount: discount percent (0-99).\n    confirm_write: must be true to actually send the change.\nReturns JSON: {\"ok\": true, \"data\": {\"id\": uploadID}} — poll wb_prices_history_tasks.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "nm_id": {
+          "title": "Nm Id",
+          "type": "integer"
+        },
+        "price": {
+          "title": "Price",
+          "type": "integer"
+        },
+        "discount": {
+          "default": 0,
+          "title": "Discount",
+          "type": "integer"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "nm_id",
+        "price"
+      ],
+      "title": "wb_set_priceArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_check_auth",
+    "description": "Check whether the required credentials are present in the environment.\n\nDoes NOT reveal secret values — only reports which variables are set.\nReturns JSON: {\"ready\": bool, \"missing\": [str], \"required\": [str]}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "check_authArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_list_sections",
+    "description": "List API sections and how many catalog endpoints each contains.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_sectionsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_get_section",
+    "description": "List all endpoints in one section.\n\nArgs:\n    section: section name (see ozon_list_sections), e.g. \"statistics\".\nReturns JSON list of {operation_id, method, path, safety, summary}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "section": {
+          "title": "Section",
+          "type": "string"
+        }
+      },
+      "required": [
+        "section"
+      ],
+      "title": "get_sectionArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_search_methods",
+    "description": "Search the endpoint catalog by keyword (works in Russian and English).\n\nArgs:\n    query: free text, e.g. \"остатки\", \"stocks\", \"update price\".\n    limit: max results (1-50).\nReturns JSON list of matching endpoints (best first).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "limit": {
+          "default": 15,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "search_methodsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_map",
+    "description": "The big picture: business entities this API covers and the go-to\nmethods for each. Call with no args to see the whole map (\"you are\nhere\"); pass entity=\"reviews\" (or stocks/prices/orders/…) to list every\nmethod of one entity. Use this before guessing — it orients you fast.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "entity": {
+          "default": "",
+          "title": "Entity",
+          "type": "string"
+        }
+      },
+      "title": "entity_mapArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_describe_method",
+    "description": "Return the full catalog record for one endpoint: method, host, path,\nscope, safety level, pagination style, rate limit, params and doc URL.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "describe_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_call_method",
+    "description": "Execute one READ endpoint from the catalog by operation_id.\n\nTarget API: https://docs.ozon.ru/api/seller/.\n\nReads only: nothing here changes data, so it runs without confirmation.\nTo change data use ozon_write_method, to delete use ozon_delete_method.\n\nArgs:\n    operation_id: id from the catalog (see ozon_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body (a few read endpoints take one).\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "call_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_write_method",
+    "description": "Execute one WRITE endpoint from the catalog: create or update data.\n\nTarget API: https://docs.ozon.ru/api/seller/.\n\nRequires confirm_write=true; nothing is sent without it. Irreversible\noperations live in ozon_delete_method, reads in ozon_call_method.\n\nArgs:\n    operation_id: id from the catalog (see ozon_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "write_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_delete_method",
+    "description": "Execute one DESTRUCTIVE endpoint: deletes or irreversibly changes data.\n\nTarget API: https://docs.ozon.ru/api/seller/.\n\nBoth confirm_write=true and i_understand_this_modifies_data=true are\nrequired; nothing is sent without both.\n\nArgs:\n    operation_id: id from the catalog (see ozon_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\n    i_understand_this_modifies_data: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        },
+        "i_understand_this_modifies_data": {
+          "default": false,
+          "title": "I Understand This Modifies Data",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "delete_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_get_raw",
+    "description": "Read ANY endpoint by path, including ones missing from the catalog.\n\nTarget API: https://docs.ozon.ru/api/seller/.\n\nSafe verbs only (GET, HEAD, OPTIONS). To change data use\nozon_write_raw, to delete use ozon_delete_raw.\n\nArgs:\n    path: full path beginning with '/', e.g. \"/v1/actions\".\n    method: safe verb, GET by default.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body (rare on reads; some APIs want one).\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "method": {
+          "default": "GET",
+          "title": "Method",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "title": "get_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_write_raw",
+    "description": "Create or update data at ANY path, including paths not in the catalog.\n\nTarget API: https://docs.ozon.ru/api/seller/.\n\nPOST, PUT and PATCH only; requires confirm_write=true.\n\nArgs:\n    method: POST, PUT or PATCH.\n    path: full path beginning with '/'.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "method": {
+          "title": "Method",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "method",
+        "path"
+      ],
+      "title": "write_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_delete_raw",
+    "description": "Delete data at ANY path, including paths not in the catalog.\n\nTarget API: https://docs.ozon.ru/api/seller/.\n\nDELETE only. Both confirm_write=true and\ni_understand_this_modifies_data=true are required.\n\nArgs:\n    path: full path beginning with '/'.\n    method: DELETE.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\n    i_understand_this_modifies_data: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "method": {
+          "default": "DELETE",
+          "title": "Method",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        },
+        "i_understand_this_modifies_data": {
+          "default": false,
+          "title": "I Understand This Modifies Data",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "title": "delete_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_fetch_all",
+    "description": "Auto-paginate a read endpoint and return every row in one response.\n\nHandles offset, last_id, cursor (Ozon v4/v5), page and WB lastChangeDate\nstyles. The array path is taken from the catalog automatically.\n\nArgs:\n    operation_id: a read endpoint from the catalog.\n    query / body / path_values: base parameters (cursor fields are managed).\n    items_path: override the array path (default: the endpoint's own).\n    limit: page size to request.\n    max_items: hard cap to protect context (default 10000).\nReturns JSON: {\"ok\", \"items\", \"total_fetched\", \"pages_fetched\", \"truncated\"}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "items_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Items Path"
+        },
+        "limit": {
+          "default": 1000,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "max_items": {
+          "default": 10000,
+          "title": "Max Items",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "fetch_all_toolArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_list_cabinets",
+    "description": "List configured cabinets for this marketplace and which one is active.\n\nReturns JSON: {\"active\": str|null, \"cabinets\": [names], \"fields_needed\": [...]}.\nSecret values are never returned.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_cabinetsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_add_cabinet",
+    "description": "Add or update a cabinet (a named set of API credentials), from chat.\n\n⚠️ This puts the key into the chat transcript — requires\ni_understand_key_goes_to_chat=true. The terminal-free safe alternative is\nthe installer (install.py / double-click), where the key never enters chat.\n\nArgs:\n    credentials: dict with the required fields for this service\n        ({fields}). For Ozon: {{\"client_id\": \"...\", \"api_key\": \"...\"}};\n        for WB: {{\"token\": \"...\"}}.\n    name: optional label. If omitted, the cabinet is named after the real\n        shop name fetched from the marketplace (falls back to \"main\").\n    i_understand_key_goes_to_chat: must be true to proceed.\nSaved to ~/.marketplace-mcp/cabinets.json (local, chmod 600), never echoed.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "credentials": {
+          "additionalProperties": true,
+          "title": "Credentials",
+          "type": "object"
+        },
+        "name": {
+          "default": "",
+          "title": "Name",
+          "type": "string"
+        },
+        "i_understand_key_goes_to_chat": {
+          "default": false,
+          "title": "I Understand Key Goes To Chat",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "credentials"
+      ],
+      "title": "add_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_set_key",
+    "description": "Change / rotate the API key from chat (e.g. the old one expired or\nleaked).\n\n⚠️ The key goes into the chat transcript — requires\ni_understand_key_goes_to_chat=true. The safe, terminal-free alternative\nis the installer, where the key never enters chat. Use a scoped key and\nrotate it in the seller cabinet if it was exposed.\n\nArgs:\n    credentials: dict with the required fields ({fields}).\n    cabinet: which cabinet to update. Default: the active one (so \"my key\n        expired\" just works). If there is none, the cabinet is named from\n        the marketplace's shop name, else \"main\".\n    i_understand_key_goes_to_chat: must be true to proceed.\nOn success the key is validated against the marketplace and the shop name\nis reported. Saved locally (chmod 600), never echoed back.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "credentials": {
+          "additionalProperties": true,
+          "title": "Credentials",
+          "type": "object"
+        },
+        "cabinet": {
+          "default": "",
+          "title": "Cabinet",
+          "type": "string"
+        },
+        "i_understand_key_goes_to_chat": {
+          "default": false,
+          "title": "I Understand Key Goes To Chat",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "credentials"
+      ],
+      "title": "set_keyArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_use_cabinet",
+    "description": "Switch the active cabinet. Subsequent API calls use its credentials.\n\nArgs:\n    name: the cabinet to activate (see ozon_list_cabinets).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "use_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_remove_cabinet",
+    "description": "Delete a stored cabinet. If it was active, another becomes active.\n\nArgs:\n    name: the cabinet to remove.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "remove_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_list_workflows",
+    "description": "List ready-made analytical workflows (recipes) for this marketplace.\n\nReturns JSON: [{name, category, when_to_use}]. Use {svc}_get_workflow\nto fetch the full step-by-step plan for one.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_workflowsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_get_workflow",
+    "description": "Return the full plan for one workflow: ordered steps (each naming a\ncatalog operation_id and why), interpretation guidance, and common\nmistakes to avoid.\n\nArgs:\n    name: workflow name (see {svc}_list_workflows).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "get_workflowArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_get_products",
+    "description": "List Ozon products (one page).\n\nArgs:\n    visibility: ALL | VISIBLE | INVISIBLE | ARCHIVED | IN_SALE ...\n    limit: page size (<=1000).\n    last_id: cursor from a previous page (empty for first page).\nReturns JSON: {\"ok\": true, \"data\": {\"result\": {\"items\": [...], \"last_id\": \"...\"}}}.\nFor every product across pages use ozon_fetch_all with ozon_product_list.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "visibility": {
+          "default": "ALL",
+          "title": "Visibility",
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "last_id": {
+          "default": "",
+          "title": "Last Id",
+          "type": "string"
+        }
+      },
+      "title": "ozon_get_productsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_get_stocks",
+    "description": "Get available + reserved stock per product (v4/product/info/stocks).\n\nArgs:\n    visibility: product visibility filter (default ALL).\n    limit: page size (<=1000).\n    last_id: cursor for pagination.\nReturns JSON with stock per product (present, reserved) per warehouse type.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "visibility": {
+          "default": "ALL",
+          "title": "Visibility",
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "last_id": {
+          "default": "",
+          "title": "Last Id",
+          "type": "string"
+        }
+      },
+      "title": "ozon_get_stocksArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_get_prices",
+    "description": "Get prices, commissions and price indexes per product (v5/product/info/prices).\n\nArgs:\n    visibility: product visibility filter (default ALL).\n    limit: page size (<=1000).\n    cursor: pagination cursor from a previous response.\nReturns JSON with price, marketing_seller_price, min_price, commissions, price_indexes.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "visibility": {
+          "default": "ALL",
+          "title": "Visibility",
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "cursor": {
+          "default": "",
+          "title": "Cursor",
+          "type": "string"
+        }
+      },
+      "title": "ozon_get_pricesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_get_fbs_unfulfilled",
+    "description": "List new/unprocessed FBS shipments awaiting assembly (v4/posting/fbs/unfulfilled/list).\n\nArgs:\n    cutoff_from: ISO datetime lower bound, e.g. \"2026-06-01T00:00:00Z\".\n    cutoff_to: ISO datetime upper bound (period must not exceed one year).\n    limit: page size.\n    cursor: pagination cursor from the previous response; empty for the first page.\nReturns JSON: {\"ok\": true, \"data\": {\"postings\": [...], \"cursor\": \"...\", \"has_next\": bool}}.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "cutoff_from": {
+          "title": "Cutoff From",
+          "type": "string"
+        },
+        "cutoff_to": {
+          "title": "Cutoff To",
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "cursor": {
+          "default": "",
+          "title": "Cursor",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cutoff_from",
+        "cutoff_to"
+      ],
+      "title": "ozon_get_fbs_unfulfilledArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_set_price",
+    "description": "Set the price for ONE product by offer_id (v1/product/import/prices). WRITE.\n\nRequires confirm_write=true. Ozon limits price updates to ~10/product/hour.\nPrices are strings. old_price=\"0\" clears the strikethrough old price.\n\nArgs:\n    offer_id: seller's article (offer_id).\n    price: new price as a string, e.g. \"1499\".\n    old_price: pre-discount price as string, or \"0\" to clear.\n    min_price: minimum price as string, or \"0\".\n    currency_code: default \"RUB\".\n    confirm_write: must be true to send.\nReturns JSON: {\"ok\": true, \"data\": {\"result\": [{\"offer_id\", \"updated\", \"errors\"}]}}.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "offer_id": {
+          "title": "Offer Id",
+          "type": "string"
+        },
+        "price": {
+          "title": "Price",
+          "type": "string"
+        },
+        "old_price": {
+          "default": "0",
+          "title": "Old Price",
+          "type": "string"
+        },
+        "min_price": {
+          "default": "0",
+          "title": "Min Price",
+          "type": "string"
+        },
+        "currency_code": {
+          "default": "RUB",
+          "title": "Currency Code",
+          "type": "string"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "offer_id",
+        "price"
+      ],
+      "title": "ozon_set_priceArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_check_auth",
+    "description": "Check whether the required credentials are present in the environment.\n\nDoes NOT reveal secret values — only reports which variables are set.\nReturns JSON: {\"ready\": bool, \"missing\": [str], \"required\": [str]}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "check_authArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_list_sections",
+    "description": "List API sections and how many catalog endpoints each contains.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_sectionsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_get_section",
+    "description": "List all endpoints in one section.\n\nArgs:\n    section: section name (see ozon_perf_list_sections), e.g. \"statistics\".\nReturns JSON list of {operation_id, method, path, safety, summary}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "section": {
+          "title": "Section",
+          "type": "string"
+        }
+      },
+      "required": [
+        "section"
+      ],
+      "title": "get_sectionArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_search_methods",
+    "description": "Search the endpoint catalog by keyword (works in Russian and English).\n\nArgs:\n    query: free text, e.g. \"остатки\", \"stocks\", \"update price\".\n    limit: max results (1-50).\nReturns JSON list of matching endpoints (best first).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "limit": {
+          "default": 15,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "search_methodsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_map",
+    "description": "The big picture: business entities this API covers and the go-to\nmethods for each. Call with no args to see the whole map (\"you are\nhere\"); pass entity=\"reviews\" (or stocks/prices/orders/…) to list every\nmethod of one entity. Use this before guessing — it orients you fast.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "entity": {
+          "default": "",
+          "title": "Entity",
+          "type": "string"
+        }
+      },
+      "title": "entity_mapArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_describe_method",
+    "description": "Return the full catalog record for one endpoint: method, host, path,\nscope, safety level, pagination style, rate limit, params and doc URL.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "describe_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_call_method",
+    "description": "Execute one READ endpoint from the catalog by operation_id.\n\nTarget API: https://docs.ozon.ru/api/performance/.\n\nReads only: nothing here changes data, so it runs without confirmation.\nTo change data use ozon_perf_write_method, to delete use ozon_perf_delete_method.\n\nArgs:\n    operation_id: id from the catalog (see ozon_perf_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body (a few read endpoints take one).\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "call_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_write_method",
+    "description": "Execute one WRITE endpoint from the catalog: create or update data.\n\nTarget API: https://docs.ozon.ru/api/performance/.\n\nRequires confirm_write=true; nothing is sent without it. Irreversible\noperations live in ozon_perf_delete_method, reads in ozon_perf_call_method.\n\nArgs:\n    operation_id: id from the catalog (see ozon_perf_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "write_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_delete_method",
+    "description": "Execute one DESTRUCTIVE endpoint: deletes or irreversibly changes data.\n\nTarget API: https://docs.ozon.ru/api/performance/.\n\nBoth confirm_write=true and i_understand_this_modifies_data=true are\nrequired; nothing is sent without both.\n\nArgs:\n    operation_id: id from the catalog (see ozon_perf_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\n    i_understand_this_modifies_data: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        },
+        "i_understand_this_modifies_data": {
+          "default": false,
+          "title": "I Understand This Modifies Data",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "delete_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_get_raw",
+    "description": "Read ANY endpoint by path, including ones missing from the catalog.\n\nTarget API: https://docs.ozon.ru/api/performance/.\n\nSafe verbs only (GET, HEAD, OPTIONS). To change data use\nozon_perf_write_raw, to delete use ozon_perf_delete_raw.\n\nArgs:\n    path: full path beginning with '/', e.g. \"/api/client/campaign\".\n    method: safe verb, GET by default.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body (rare on reads; some APIs want one).\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "method": {
+          "default": "GET",
+          "title": "Method",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "title": "get_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_write_raw",
+    "description": "Create or update data at ANY path, including paths not in the catalog.\n\nTarget API: https://docs.ozon.ru/api/performance/.\n\nPOST, PUT and PATCH only; requires confirm_write=true.\n\nArgs:\n    method: POST, PUT or PATCH.\n    path: full path beginning with '/'.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "method": {
+          "title": "Method",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "method",
+        "path"
+      ],
+      "title": "write_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_delete_raw",
+    "description": "Delete data at ANY path, including paths not in the catalog.\n\nTarget API: https://docs.ozon.ru/api/performance/.\n\nDELETE only. Both confirm_write=true and\ni_understand_this_modifies_data=true are required.\n\nArgs:\n    path: full path beginning with '/'.\n    method: DELETE.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\n    i_understand_this_modifies_data: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "method": {
+          "default": "DELETE",
+          "title": "Method",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        },
+        "i_understand_this_modifies_data": {
+          "default": false,
+          "title": "I Understand This Modifies Data",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "title": "delete_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_fetch_all",
+    "description": "Auto-paginate a read endpoint and return every row in one response.\n\nHandles offset, last_id, cursor (Ozon v4/v5), page and WB lastChangeDate\nstyles. The array path is taken from the catalog automatically.\n\nArgs:\n    operation_id: a read endpoint from the catalog.\n    query / body / path_values: base parameters (cursor fields are managed).\n    items_path: override the array path (default: the endpoint's own).\n    limit: page size to request.\n    max_items: hard cap to protect context (default 10000).\nReturns JSON: {\"ok\", \"items\", \"total_fetched\", \"pages_fetched\", \"truncated\"}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "items_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Items Path"
+        },
+        "limit": {
+          "default": 1000,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "max_items": {
+          "default": 10000,
+          "title": "Max Items",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "fetch_all_toolArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_list_cabinets",
+    "description": "List configured cabinets for this marketplace and which one is active.\n\nReturns JSON: {\"active\": str|null, \"cabinets\": [names], \"fields_needed\": [...]}.\nSecret values are never returned.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_cabinetsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_add_cabinet",
+    "description": "Add or update a cabinet (a named set of API credentials), from chat.\n\n⚠️ This puts the key into the chat transcript — requires\ni_understand_key_goes_to_chat=true. The terminal-free safe alternative is\nthe installer (install.py / double-click), where the key never enters chat.\n\nArgs:\n    credentials: dict with the required fields for this service\n        ({fields}). For Ozon: {{\"client_id\": \"...\", \"api_key\": \"...\"}};\n        for WB: {{\"token\": \"...\"}}.\n    name: optional label. If omitted, the cabinet is named after the real\n        shop name fetched from the marketplace (falls back to \"main\").\n    i_understand_key_goes_to_chat: must be true to proceed.\nSaved to ~/.marketplace-mcp/cabinets.json (local, chmod 600), never echoed.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "credentials": {
+          "additionalProperties": true,
+          "title": "Credentials",
+          "type": "object"
+        },
+        "name": {
+          "default": "",
+          "title": "Name",
+          "type": "string"
+        },
+        "i_understand_key_goes_to_chat": {
+          "default": false,
+          "title": "I Understand Key Goes To Chat",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "credentials"
+      ],
+      "title": "add_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_set_key",
+    "description": "Change / rotate the API key from chat (e.g. the old one expired or\nleaked).\n\n⚠️ The key goes into the chat transcript — requires\ni_understand_key_goes_to_chat=true. The safe, terminal-free alternative\nis the installer, where the key never enters chat. Use a scoped key and\nrotate it in the seller cabinet if it was exposed.\n\nArgs:\n    credentials: dict with the required fields ({fields}).\n    cabinet: which cabinet to update. Default: the active one (so \"my key\n        expired\" just works). If there is none, the cabinet is named from\n        the marketplace's shop name, else \"main\".\n    i_understand_key_goes_to_chat: must be true to proceed.\nOn success the key is validated against the marketplace and the shop name\nis reported. Saved locally (chmod 600), never echoed back.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "credentials": {
+          "additionalProperties": true,
+          "title": "Credentials",
+          "type": "object"
+        },
+        "cabinet": {
+          "default": "",
+          "title": "Cabinet",
+          "type": "string"
+        },
+        "i_understand_key_goes_to_chat": {
+          "default": false,
+          "title": "I Understand Key Goes To Chat",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "credentials"
+      ],
+      "title": "set_keyArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_use_cabinet",
+    "description": "Switch the active cabinet. Subsequent API calls use its credentials.\n\nArgs:\n    name: the cabinet to activate (see ozon_perf_list_cabinets).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "use_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_remove_cabinet",
+    "description": "Delete a stored cabinet. If it was active, another becomes active.\n\nArgs:\n    name: the cabinet to remove.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "remove_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_list_workflows",
+    "description": "List ready-made analytical workflows (recipes) for this marketplace.\n\nReturns JSON: [{name, category, when_to_use}]. Use {svc}_get_workflow\nto fetch the full step-by-step plan for one.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_workflowsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ozon_perf_get_workflow",
+    "description": "Return the full plan for one workflow: ordered steps (each naming a\ncatalog operation_id and why), interpretation guidance, and common\nmistakes to avoid.\n\nArgs:\n    name: workflow name (see {svc}_list_workflows).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "get_workflowArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_check_auth",
+    "description": "Check whether the required credentials are present in the environment.\n\nDoes NOT reveal secret values — only reports which variables are set.\nReturns JSON: {\"ready\": bool, \"missing\": [str], \"required\": [str]}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "check_authArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_list_sections",
+    "description": "List API sections and how many catalog endpoints each contains.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_sectionsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_get_section",
+    "description": "List all endpoints in one section.\n\nArgs:\n    section: section name (see ym_list_sections), e.g. \"statistics\".\nReturns JSON list of {operation_id, method, path, safety, summary}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "section": {
+          "title": "Section",
+          "type": "string"
+        }
+      },
+      "required": [
+        "section"
+      ],
+      "title": "get_sectionArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_search_methods",
+    "description": "Search the endpoint catalog by keyword (works in Russian and English).\n\nArgs:\n    query: free text, e.g. \"остатки\", \"stocks\", \"update price\".\n    limit: max results (1-50).\nReturns JSON list of matching endpoints (best first).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "limit": {
+          "default": 15,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "search_methodsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_map",
+    "description": "The big picture: business entities this API covers and the go-to\nmethods for each. Call with no args to see the whole map (\"you are\nhere\"); pass entity=\"reviews\" (or stocks/prices/orders/…) to list every\nmethod of one entity. Use this before guessing — it orients you fast.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "entity": {
+          "default": "",
+          "title": "Entity",
+          "type": "string"
+        }
+      },
+      "title": "entity_mapArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_describe_method",
+    "description": "Return the full catalog record for one endpoint: method, host, path,\nscope, safety level, pagination style, rate limit, params and doc URL.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "describe_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_call_method",
+    "description": "Execute one READ endpoint from the catalog by operation_id.\n\nTarget API: https://yandex.ru/dev/market/partner-api/doc/ru/.\n\nReads only: nothing here changes data, so it runs without confirmation.\nTo change data use ym_write_method, to delete use ym_delete_method.\n\nArgs:\n    operation_id: id from the catalog (see ym_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body (a few read endpoints take one).\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "call_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_write_method",
+    "description": "Execute one WRITE endpoint from the catalog: create or update data.\n\nTarget API: https://yandex.ru/dev/market/partner-api/doc/ru/.\n\nRequires confirm_write=true; nothing is sent without it. Irreversible\noperations live in ym_delete_method, reads in ym_call_method.\n\nArgs:\n    operation_id: id from the catalog (see ym_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "write_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_delete_method",
+    "description": "Execute one DESTRUCTIVE endpoint: deletes or irreversibly changes data.\n\nTarget API: https://yandex.ru/dev/market/partner-api/doc/ru/.\n\nBoth confirm_write=true and i_understand_this_modifies_data=true are\nrequired; nothing is sent without both.\n\nArgs:\n    operation_id: id from the catalog (see ym_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\n    i_understand_this_modifies_data: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        },
+        "i_understand_this_modifies_data": {
+          "default": false,
+          "title": "I Understand This Modifies Data",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "delete_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_get_raw",
+    "description": "Read ANY endpoint by path, including ones missing from the catalog.\n\nTarget API: https://yandex.ru/dev/market/partner-api/doc/ru/.\n\nSafe verbs only (GET, HEAD, OPTIONS). To change data use\nym_write_raw, to delete use ym_delete_raw.\n\nArgs:\n    path: full path beginning with '/', e.g. \"/v2/regions\".\n    method: safe verb, GET by default.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body (rare on reads; some APIs want one).\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "method": {
+          "default": "GET",
+          "title": "Method",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "title": "get_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_write_raw",
+    "description": "Create or update data at ANY path, including paths not in the catalog.\n\nTarget API: https://yandex.ru/dev/market/partner-api/doc/ru/.\n\nPOST, PUT and PATCH only; requires confirm_write=true.\n\nArgs:\n    method: POST, PUT or PATCH.\n    path: full path beginning with '/'.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "method": {
+          "title": "Method",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "method",
+        "path"
+      ],
+      "title": "write_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_delete_raw",
+    "description": "Delete data at ANY path, including paths not in the catalog.\n\nTarget API: https://yandex.ru/dev/market/partner-api/doc/ru/.\n\nDELETE only. Both confirm_write=true and\ni_understand_this_modifies_data=true are required.\n\nArgs:\n    path: full path beginning with '/'.\n    method: DELETE.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\n    i_understand_this_modifies_data: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "method": {
+          "default": "DELETE",
+          "title": "Method",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        },
+        "i_understand_this_modifies_data": {
+          "default": false,
+          "title": "I Understand This Modifies Data",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "title": "delete_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_fetch_all",
+    "description": "Auto-paginate a read endpoint and return every row in one response.\n\nHandles offset, last_id, cursor (Ozon v4/v5), page and WB lastChangeDate\nstyles. The array path is taken from the catalog automatically.\n\nArgs:\n    operation_id: a read endpoint from the catalog.\n    query / body / path_values: base parameters (cursor fields are managed).\n    items_path: override the array path (default: the endpoint's own).\n    limit: page size to request.\n    max_items: hard cap to protect context (default 10000).\nReturns JSON: {\"ok\", \"items\", \"total_fetched\", \"pages_fetched\", \"truncated\"}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "items_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Items Path"
+        },
+        "limit": {
+          "default": 1000,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "max_items": {
+          "default": 10000,
+          "title": "Max Items",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "fetch_all_toolArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_list_cabinets",
+    "description": "List configured cabinets for this marketplace and which one is active.\n\nReturns JSON: {\"active\": str|null, \"cabinets\": [names], \"fields_needed\": [...]}.\nSecret values are never returned.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_cabinetsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_add_cabinet",
+    "description": "Add or update a cabinet (a named set of API credentials), from chat.\n\n⚠️ This puts the key into the chat transcript — requires\ni_understand_key_goes_to_chat=true. The terminal-free safe alternative is\nthe installer (install.py / double-click), where the key never enters chat.\n\nArgs:\n    credentials: dict with the required fields for this service\n        ({fields}). For Ozon: {{\"client_id\": \"...\", \"api_key\": \"...\"}};\n        for WB: {{\"token\": \"...\"}}.\n    name: optional label. If omitted, the cabinet is named after the real\n        shop name fetched from the marketplace (falls back to \"main\").\n    i_understand_key_goes_to_chat: must be true to proceed.\nSaved to ~/.marketplace-mcp/cabinets.json (local, chmod 600), never echoed.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "credentials": {
+          "additionalProperties": true,
+          "title": "Credentials",
+          "type": "object"
+        },
+        "name": {
+          "default": "",
+          "title": "Name",
+          "type": "string"
+        },
+        "i_understand_key_goes_to_chat": {
+          "default": false,
+          "title": "I Understand Key Goes To Chat",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "credentials"
+      ],
+      "title": "add_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_set_key",
+    "description": "Change / rotate the API key from chat (e.g. the old one expired or\nleaked).\n\n⚠️ The key goes into the chat transcript — requires\ni_understand_key_goes_to_chat=true. The safe, terminal-free alternative\nis the installer, where the key never enters chat. Use a scoped key and\nrotate it in the seller cabinet if it was exposed.\n\nArgs:\n    credentials: dict with the required fields ({fields}).\n    cabinet: which cabinet to update. Default: the active one (so \"my key\n        expired\" just works). If there is none, the cabinet is named from\n        the marketplace's shop name, else \"main\".\n    i_understand_key_goes_to_chat: must be true to proceed.\nOn success the key is validated against the marketplace and the shop name\nis reported. Saved locally (chmod 600), never echoed back.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "credentials": {
+          "additionalProperties": true,
+          "title": "Credentials",
+          "type": "object"
+        },
+        "cabinet": {
+          "default": "",
+          "title": "Cabinet",
+          "type": "string"
+        },
+        "i_understand_key_goes_to_chat": {
+          "default": false,
+          "title": "I Understand Key Goes To Chat",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "credentials"
+      ],
+      "title": "set_keyArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_use_cabinet",
+    "description": "Switch the active cabinet. Subsequent API calls use its credentials.\n\nArgs:\n    name: the cabinet to activate (see ym_list_cabinets).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "use_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_remove_cabinet",
+    "description": "Delete a stored cabinet. If it was active, another becomes active.\n\nArgs:\n    name: the cabinet to remove.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "remove_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_list_workflows",
+    "description": "List ready-made analytical workflows (recipes) for this marketplace.\n\nReturns JSON: [{name, category, when_to_use}]. Use {svc}_get_workflow\nto fetch the full step-by-step plan for one.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_workflowsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_get_workflow",
+    "description": "Return the full plan for one workflow: ordered steps (each naming a\ncatalog operation_id and why), interpretation guidance, and common\nmistakes to avoid.\n\nArgs:\n    name: workflow name (see {svc}_list_workflows).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "get_workflowArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_get_campaigns",
+    "description": "List the seller's shops (кампании) with their campaignId and businessId.\n\nCall this first: nearly every other Yandex Market method needs a campaignId\n(магазин) or businessId (кабинет продавца). Both are in the response:\ncampaigns[].id and campaigns[].business.id.\n\nArgs:\n    page_token: pageToken from a previous page (empty for the first page).\n    limit: page size (<=100).\nReturns JSON: {\"ok\": true, \"data\": {\"campaigns\": [...], \"paging\": {...}}}.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "page_token": {
+          "default": "",
+          "title": "Page Token",
+          "type": "string"
+        },
+        "limit": {
+          "default": 50,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "ym_get_campaignsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_get_orders",
+    "description": "List orders of one shop (GET /v2/campaigns/{campaignId}/orders).\n\nArgs:\n    campaign_id: shop id from ym_get_campaigns.\n    status: filter, e.g. PROCESSING | DELIVERY | PICKUP | DELIVERED |\n        CANCELLED | UNPAID (comma-separated allowed). Empty = all.\n    from_date: order creation date lower bound, DD-MM-YYYY (Yandex format).\n    to_date: upper bound, DD-MM-YYYY.\n    page_token: pageToken from a previous page.\n    limit: page size (<=50).\nReturns JSON: {\"ok\": true, \"data\": {\"orders\": [...], \"paging\": {...}}}.\nFor every order across pages use ym_fetch_all with ym_get_orders.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "campaign_id": {
+          "title": "Campaign Id",
+          "type": "integer"
+        },
+        "status": {
+          "default": "",
+          "title": "Status",
+          "type": "string"
+        },
+        "from_date": {
+          "default": "",
+          "title": "From Date",
+          "type": "string"
+        },
+        "to_date": {
+          "default": "",
+          "title": "To Date",
+          "type": "string"
+        },
+        "page_token": {
+          "default": "",
+          "title": "Page Token",
+          "type": "string"
+        },
+        "limit": {
+          "default": 50,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "campaign_id"
+      ],
+      "title": "ym_get_ordersArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_get_offers",
+    "description": "List the seller's offers (товары) with their Market card mapping\n(POST /v2/businesses/{businessId}/offer-mappings).\n\nArgs:\n    business_id: cabinet id (campaigns[].business.id).\n    offer_ids: comma-separated offerId (SKU) filter; empty = all.\n    page_token: pageToken from a previous page.\n    limit: page size (<=200).\nReturns JSON: {\"ok\": true, \"data\": {\"result\": {\"offerMappings\": [...], \"paging\": {...}}}}.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "business_id": {
+          "title": "Business Id",
+          "type": "integer"
+        },
+        "offer_ids": {
+          "default": "",
+          "title": "Offer Ids",
+          "type": "string"
+        },
+        "page_token": {
+          "default": "",
+          "title": "Page Token",
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "business_id"
+      ],
+      "title": "ym_get_offersArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_get_stocks",
+    "description": "Stock per offer per warehouse for one shop, with optional turnover\n(POST /v2/campaigns/{campaignId}/offers/stocks).\n\nArgs:\n    campaign_id: shop id.\n    offer_ids: comma-separated offerId filter; empty = all.\n    with_turnover: also return turnover (оборачиваемость) per offer.\n    page_token: pageToken from a previous page.\n    limit: page size (<=200).\nReturns JSON: {\"ok\": true, \"data\": {\"result\": {\"warehouses\": [{\"warehouseId\", \"offers\": [...]}]}}}.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "campaign_id": {
+          "title": "Campaign Id",
+          "type": "integer"
+        },
+        "offer_ids": {
+          "default": "",
+          "title": "Offer Ids",
+          "type": "string"
+        },
+        "with_turnover": {
+          "default": false,
+          "title": "With Turnover",
+          "type": "boolean"
+        },
+        "page_token": {
+          "default": "",
+          "title": "Page Token",
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "campaign_id"
+      ],
+      "title": "ym_get_stocksArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_get_prices",
+    "description": "Base prices set for all shops of the cabinet\n(POST /v2/businesses/{businessId}/offer-prices).\n\nArgs:\n    business_id: cabinet id.\n    offer_ids: comma-separated offerId filter; empty = all.\n    page_token: pageToken from a previous page.\n    limit: page size (<=200).\nReturns JSON with result.offers[].price {value, currencyId, discountBase, updatedAt}.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "business_id": {
+          "title": "Business Id",
+          "type": "integer"
+        },
+        "offer_ids": {
+          "default": "",
+          "title": "Offer Ids",
+          "type": "string"
+        },
+        "page_token": {
+          "default": "",
+          "title": "Page Token",
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "business_id"
+      ],
+      "title": "ym_get_pricesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "ym_set_price",
+    "description": "Set the base price of ONE offer for all shops of the cabinet\n(POST /v2/businesses/{businessId}/offer-prices/updates). WRITE.\n\nRequires confirm_write=true. discount_base is the strikethrough price\n(must be higher than price); 0 = no discount shown.\n\nArgs:\n    business_id: cabinet id.\n    offer_id: seller's SKU (offerId).\n    price: new price, e.g. 1499.\n    discount_base: pre-discount price, or 0 to clear.\n    currency: RUR (default) — Yandex uses \"RUR\", not \"RUB\".\n    confirm_write: must be true to send.\nReturns JSON: {\"ok\": true, \"data\": {\"status\": \"OK\"}} on success.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "business_id": {
+          "title": "Business Id",
+          "type": "integer"
+        },
+        "offer_id": {
+          "title": "Offer Id",
+          "type": "string"
+        },
+        "price": {
+          "title": "Price",
+          "type": "number"
+        },
+        "discount_base": {
+          "default": 0,
+          "title": "Discount Base",
+          "type": "number"
+        },
+        "currency": {
+          "default": "RUR",
+          "title": "Currency",
+          "type": "string"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "business_id",
+        "offer_id",
+        "price"
+      ],
+      "title": "ym_set_priceArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_check_auth",
+    "description": "Check whether the required credentials are present in the environment.\n\nDoes NOT reveal secret values — only reports which variables are set.\nReturns JSON: {\"ready\": bool, \"missing\": [str], \"required\": [str]}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "check_authArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_list_sections",
+    "description": "List API sections and how many catalog endpoints each contains.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_sectionsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_get_section",
+    "description": "List all endpoints in one section.\n\nArgs:\n    section: section name (see avito_list_sections), e.g. \"statistics\".\nReturns JSON list of {operation_id, method, path, safety, summary}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "section": {
+          "title": "Section",
+          "type": "string"
+        }
+      },
+      "required": [
+        "section"
+      ],
+      "title": "get_sectionArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_search_methods",
+    "description": "Search the endpoint catalog by keyword (works in Russian and English).\n\nArgs:\n    query: free text, e.g. \"остатки\", \"stocks\", \"update price\".\n    limit: max results (1-50).\nReturns JSON list of matching endpoints (best first).",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "limit": {
+          "default": 15,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "search_methodsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_map",
+    "description": "The big picture: business entities this API covers and the go-to\nmethods for each. Call with no args to see the whole map (\"you are\nhere\"); pass entity=\"reviews\" (or stocks/prices/orders/…) to list every\nmethod of one entity. Use this before guessing — it orients you fast.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "entity": {
+          "default": "",
+          "title": "Entity",
+          "type": "string"
+        }
+      },
+      "title": "entity_mapArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_describe_method",
+    "description": "Return the full catalog record for one endpoint: method, host, path,\nscope, safety level, pagination style, rate limit, params and doc URL.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "describe_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_call_method",
+    "description": "Execute one READ endpoint from the catalog by operation_id.\n\nTarget API: https://developers.avito.ru/api-catalog.\n\nReads only: nothing here changes data, so it runs without confirmation.\nTo change data use avito_write_method, to delete use avito_delete_method.\n\nArgs:\n    operation_id: id from the catalog (see avito_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body (a few read endpoints take one).\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "call_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_write_method",
+    "description": "Execute one WRITE endpoint from the catalog: create or update data.\n\nTarget API: https://developers.avito.ru/api-catalog.\n\nRequires confirm_write=true; nothing is sent without it. Irreversible\noperations live in avito_delete_method, reads in avito_call_method.\n\nArgs:\n    operation_id: id from the catalog (see avito_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "write_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_delete_method",
+    "description": "Execute one DESTRUCTIVE endpoint: deletes or irreversibly changes data.\n\nTarget API: https://developers.avito.ru/api-catalog.\n\nBoth confirm_write=true and i_understand_this_modifies_data=true are\nrequired; nothing is sent without both.\n\nArgs:\n    operation_id: id from the catalog (see avito_search_methods).\n    path_values: values for {placeholders} in the path.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\n    i_understand_this_modifies_data: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        },
+        "i_understand_this_modifies_data": {
+          "default": false,
+          "title": "I Understand This Modifies Data",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "delete_methodArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_get_raw",
+    "description": "Read ANY endpoint by path, including ones missing from the catalog.\n\nTarget API: https://developers.avito.ru/api-catalog.\n\nSafe verbs only (GET, HEAD, OPTIONS). To change data use\navito_write_raw, to delete use avito_delete_raw.\n\nArgs:\n    path: full path beginning with '/', e.g. \"/core/v1/items\".\n    method: safe verb, GET by default.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body (rare on reads; some APIs want one).\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "method": {
+          "default": "GET",
+          "title": "Method",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "title": "get_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_write_raw",
+    "description": "Create or update data at ANY path, including paths not in the catalog.\n\nTarget API: https://developers.avito.ru/api-catalog.\n\nPOST, PUT and PATCH only; requires confirm_write=true.\n\nArgs:\n    method: POST, PUT or PATCH.\n    path: full path beginning with '/'.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "method": {
+          "title": "Method",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "method",
+        "path"
+      ],
+      "title": "write_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_delete_raw",
+    "description": "Delete data at ANY path, including paths not in the catalog.\n\nTarget API: https://developers.avito.ru/api-catalog.\n\nDELETE only. Both confirm_write=true and\ni_understand_this_modifies_data=true are required.\n\nArgs:\n    path: full path beginning with '/'.\n    method: DELETE.\n    host: host override; defaults to the service's default host.\n    query: query-string parameters.\n    body: JSON request body.\n    confirm_write: must be true.\n    i_understand_this_modifies_data: must be true.\nReturns JSON: {\"ok\": true, \"status\", \"data\"} or the error envelope.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "method": {
+          "default": "DELETE",
+          "title": "Method",
+          "type": "string"
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        },
+        "i_understand_this_modifies_data": {
+          "default": false,
+          "title": "I Understand This Modifies Data",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "title": "delete_rawArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_fetch_all",
+    "description": "Auto-paginate a read endpoint and return every row in one response.\n\nHandles offset, last_id, cursor (Ozon v4/v5), page and WB lastChangeDate\nstyles. The array path is taken from the catalog automatically.\n\nArgs:\n    operation_id: a read endpoint from the catalog.\n    query / body / path_values: base parameters (cursor fields are managed).\n    items_path: override the array path (default: the endpoint's own).\n    limit: page size to request.\n    max_items: hard cap to protect context (default 10000).\nReturns JSON: {\"ok\", \"items\", \"total_fetched\", \"pages_fetched\", \"truncated\"}.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body"
+        },
+        "path_values": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path Values"
+        },
+        "items_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Items Path"
+        },
+        "limit": {
+          "default": 1000,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "max_items": {
+          "default": 10000,
+          "title": "Max Items",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "title": "fetch_all_toolArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_list_cabinets",
+    "description": "List configured cabinets for this marketplace and which one is active.\n\nReturns JSON: {\"active\": str|null, \"cabinets\": [names], \"fields_needed\": [...]}.\nSecret values are never returned.",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_cabinetsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_add_cabinet",
+    "description": "Add or update a cabinet (a named set of API credentials), from chat.\n\n⚠️ This puts the key into the chat transcript — requires\ni_understand_key_goes_to_chat=true. The terminal-free safe alternative is\nthe installer (install.py / double-click), where the key never enters chat.\n\nArgs:\n    credentials: dict with the required fields for this service\n        ({fields}). For Ozon: {{\"client_id\": \"...\", \"api_key\": \"...\"}};\n        for WB: {{\"token\": \"...\"}}.\n    name: optional label. If omitted, the cabinet is named after the real\n        shop name fetched from the marketplace (falls back to \"main\").\n    i_understand_key_goes_to_chat: must be true to proceed.\nSaved to ~/.marketplace-mcp/cabinets.json (local, chmod 600), never echoed.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "credentials": {
+          "additionalProperties": true,
+          "title": "Credentials",
+          "type": "object"
+        },
+        "name": {
+          "default": "",
+          "title": "Name",
+          "type": "string"
+        },
+        "i_understand_key_goes_to_chat": {
+          "default": false,
+          "title": "I Understand Key Goes To Chat",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "credentials"
+      ],
+      "title": "add_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_set_key",
+    "description": "Change / rotate the API key from chat (e.g. the old one expired or\nleaked).\n\n⚠️ The key goes into the chat transcript — requires\ni_understand_key_goes_to_chat=true. The safe, terminal-free alternative\nis the installer, where the key never enters chat. Use a scoped key and\nrotate it in the seller cabinet if it was exposed.\n\nArgs:\n    credentials: dict with the required fields ({fields}).\n    cabinet: which cabinet to update. Default: the active one (so \"my key\n        expired\" just works). If there is none, the cabinet is named from\n        the marketplace's shop name, else \"main\".\n    i_understand_key_goes_to_chat: must be true to proceed.\nOn success the key is validated against the marketplace and the shop name\nis reported. Saved locally (chmod 600), never echoed back.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "credentials": {
+          "additionalProperties": true,
+          "title": "Credentials",
+          "type": "object"
+        },
+        "cabinet": {
+          "default": "",
+          "title": "Cabinet",
+          "type": "string"
+        },
+        "i_understand_key_goes_to_chat": {
+          "default": false,
+          "title": "I Understand Key Goes To Chat",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "credentials"
+      ],
+      "title": "set_keyArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_use_cabinet",
+    "description": "Switch the active cabinet. Subsequent API calls use its credentials.\n\nArgs:\n    name: the cabinet to activate (see avito_list_cabinets).",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "use_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_remove_cabinet",
+    "description": "Delete a stored cabinet. If it was active, another becomes active.\n\nArgs:\n    name: the cabinet to remove.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "remove_cabinetArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_list_workflows",
+    "description": "List ready-made analytical workflows (recipes) for this marketplace.\n\nReturns JSON: [{name, category, when_to_use}]. Use {svc}_get_workflow\nto fetch the full step-by-step plan for one.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "list_workflowsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_get_workflow",
+    "description": "Return the full plan for one workflow: ordered steps (each naming a\ncatalog operation_id and why), interpretation guidance, and common\nmistakes to avoid.\n\nArgs:\n    name: workflow name (see {svc}_list_workflows).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "get_workflowArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_whoami",
+    "description": "Authorized Avito account: id (needed as user_id in many methods), name,\nemail, phone, profile_url. Also the cheapest way to verify the credentials.\nReturns JSON: {\"ok\": true, \"data\": {\"id\": ..., \"name\": ..., ...}}.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "avito_whoamiArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_get_items",
+    "description": "List the seller's listings (объявления): status, category, url\n(GET /core/v1/items). Max 25 requests/min.\n\nArgs:\n    status: active | removed | old | blocked | rejected (comma-separated ok).\n    category: Avito category id filter, 0 = all.\n    updated_from: YYYY-MM-DD lower bound on the listing update date.\n    page: 1-based page number.\n    per_page: page size (<100).\nReturns JSON: {\"ok\": true, \"data\": {\"meta\": {...}, \"resources\": [...]}}.\nFor all pages use avito_fetch_all with avito_get_items_info.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "status": {
+          "default": "active",
+          "title": "Status",
+          "type": "string"
+        },
+        "category": {
+          "default": 0,
+          "title": "Category",
+          "type": "integer"
+        },
+        "updated_from": {
+          "default": "",
+          "title": "Updated From",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "per_page": {
+          "default": 50,
+          "title": "Per Page",
+          "type": "integer"
+        }
+      },
+      "title": "avito_get_itemsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_get_orders",
+    "description": "Orders placed with Авито Доставка (GET /order-management/1/orders).\nBusiness (B2C) sellers only.\n\nArgs:\n    statuses: comma-separated filter: on_confirmation, ready_to_ship,\n        in_transit, canceled, delivered, on_return, in_dispute, closed.\n    date_from: unix timestamp — only orders created after it.\n    page: 1-based page number.\n    limit: page size (<=20).\nReturns JSON: {\"ok\": true, \"data\": {\"orders\": [...], \"hasMore\": bool}}.\nEach order has availableActions (confirm / reject / setTrackNumber …) and\nschedules (deadlines such as confirmTill, shipTill).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "statuses": {
+          "default": "",
+          "title": "Statuses",
+          "type": "string"
+        },
+        "date_from": {
+          "default": 0,
+          "title": "Date From",
+          "type": "integer"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "limit": {
+          "default": 20,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "avito_get_ordersArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_get_stocks",
+    "description": "Stock per listing (POST /stock-management/1/info): quantity,\nis_unlimited, is_out_of_stock. Up to 500 ids per call.\n\nArgs:\n    item_ids: comma-separated Avito listing ids.\nReturns JSON: {\"ok\": true, \"data\": {\"stocks\": [{\"item_id\", \"quantity\", ...}]}}.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "item_ids": {
+          "title": "Item Ids",
+          "type": "string"
+        }
+      },
+      "required": [
+        "item_ids"
+      ],
+      "title": "avito_get_stocksArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_get_item_stats",
+    "description": "Views / contacts / favorites per listing per period\n(POST /stats/v1/accounts/{user_id}/items). Up to 200 ids, 270 days deep.\n\nArgs:\n    item_ids: comma-separated listing ids.\n    date_from: YYYY-MM-DD (inclusive).\n    date_to: YYYY-MM-DD (inclusive).\n    period_grouping: day | week | month.\nReturns JSON with result.items[].stats[] {date, uniqViews, uniqContacts, uniqFavorites}.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "item_ids": {
+          "title": "Item Ids",
+          "type": "string"
+        },
+        "date_from": {
+          "title": "Date From",
+          "type": "string"
+        },
+        "date_to": {
+          "title": "Date To",
+          "type": "string"
+        },
+        "period_grouping": {
+          "default": "day",
+          "title": "Period Grouping",
+          "type": "string"
+        }
+      },
+      "required": [
+        "item_ids",
+        "date_from",
+        "date_to"
+      ],
+      "title": "avito_get_item_statsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_get_reviews",
+    "description": "Published reviews on the seller with score, text, deal stage and the\nseller's answer (GET /ratings/v1/reviews). Use avito_get_ratings_info_v1\nvia avito_call_method for the aggregate rating.\n\nArgs:\n    offset: pagination offset.\n    limit: page size (<=50).\nReturns JSON: {\"ok\": true, \"data\": {\"total\": n, \"reviews\": [...]}}.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "offset": {
+          "default": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "limit": {
+          "default": 50,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "avito_get_reviewsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_get_chats",
+    "description": "Buyer chats (GET /messenger/v2/accounts/{user_id}/chats). Requires the\nMessenger API to be enabled on the seller's Avito plan.\n\nArgs:\n    unread_only: only chats with unread messages.\n    item_ids: comma-separated listing ids to filter chats by.\n    limit: page size (<=100).\n    offset: pagination offset (<=1000).\nReturns JSON: {\"ok\": true, \"data\": {\"chats\": [{\"id\", \"context\", \"last_message\", \"users\"}]}}.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "unread_only": {
+          "default": false,
+          "title": "Unread Only",
+          "type": "boolean"
+        },
+        "item_ids": {
+          "default": "",
+          "title": "Item Ids",
+          "type": "string"
+        },
+        "limit": {
+          "default": 50,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "offset": {
+          "default": 0,
+          "title": "Offset",
+          "type": "integer"
+        }
+      },
+      "title": "avito_get_chatsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_get_balance",
+    "description": "Wallet balance: real money and bonuses (GET /core/v1/accounts/{user_id}/balance/).\nReturns JSON: {\"ok\": true, \"data\": {\"real\": ..., \"bonus\": ...}}.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {},
+      "title": "avito_get_balanceArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_update_price",
+    "description": "Set the price of ONE listing (POST /core/v1/items/{item_id}/update_price). WRITE.\n\nRequires confirm_write=true. Goods, spare parts, cars, real estate only;\nmax 150 requests/min.\n\nArgs:\n    item_id: Avito listing id.\n    price: new price in roubles (integer).\n    confirm_write: must be true to send.\nReturns JSON: {\"ok\": true, \"data\": {\"result\": {\"success\": true}}}.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_id": {
+          "title": "Item Id",
+          "type": "integer"
+        },
+        "price": {
+          "title": "Price",
+          "type": "integer"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "item_id",
+        "price"
+      ],
+      "title": "avito_update_priceArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "avito_update_stock",
+    "description": "Set the available quantity of ONE listing (PUT /stock-management/1/stocks). WRITE.\n\nRequires confirm_write=true. quantity 0 hides the \"buy with delivery\" button.\n\nArgs:\n    item_id: Avito listing id.\n    quantity: units available (0..999999).\n    confirm_write: must be true to send.\nReturns JSON: {\"ok\": true, \"data\": {\"stocks\": [{\"item_id\", \"success\", \"errors\"}]}}.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "item_id": {
+          "title": "Item Id",
+          "type": "integer"
+        },
+        "quantity": {
+          "title": "Quantity",
+          "type": "integer"
+        },
+        "confirm_write": {
+          "default": false,
+          "title": "Confirm Write",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "item_id",
+        "quantity"
+      ],
+      "title": "avito_update_stockArguments",
+      "type": "object"
+    }
+  }
+]
