@@ -772,5 +772,5 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
 - [ ] **F18** qiye-app 查毒代理 `mcpPackageGuard`：拉包体不带客户端 UA，Electron 默认浏览器 UA 被清华 PyPI 镜像 403（国内默认第一优先源）
   → 桌面端所有要现场下载的 uvx 连接器都装不上。修复在 qiye-app 分支 `fix/mcp-package-guard-artifact-ua`（`d57a3c938`），
   单测修复前失败、后通过（含真 npm / uv 装包），最小 Electron 脚本证实 net.fetch 带 uv UA 即 200。
-  **完整应用内未验证**（worktree 只 build:main 的应用起不来 qiye-api），合并后需在完整构建里跑一遍 V3。**已推送分支，待审阅合并**
+  **完整应用内已验证（2026-11-27）**：空 uv 缓存、默认走清华镜像，修复后的构建 V3 13/13 通过；同条件下未修复的构建 uvx 连接器全部失败。（上次起不来 qiye-api 是 worktree 里 `resources/vendor` 是入库目录，`.venv` 没链接过去。）**已推送分支，待审阅合并**
 
