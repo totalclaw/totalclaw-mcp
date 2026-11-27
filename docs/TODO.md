@@ -730,7 +730,8 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
 
 - [x] **F1** 官方参考服务器：PyPI 三条（fetch / git / time）升 2026.11.18，实测探测通过
 - [ ] **F1.1** `@modelcontextprotocol/*` npm 4 条暂缓：2.x 要求 Node ≥24，桌面端内置 22.22.3；内置 Node 升级后再做
-  - 2026-11-26 评估：MCP 的 npx 用 `resources/vendor/node`（`scripts/prepare-vendor-cross.mjs` 默认 22.22.3），Electron 43 内嵌已是 Node 24.21.0；把打包 Node 改到 24.x LTS 技术风险低，但它被 hooks 运行时 / 连接器目录等共用，需要完整打包回归后再升，升完再做这 4 条
+  - 2026-11-26 评估：MCP 的 npx 用 `resources/vendor/node`（`scripts/prepare-vendor-cross.mjs` 默认 22.22.3），Electron 43 内嵌已是 Node 24.21.0；打包 Node 改到 24.x 只是 `prepare-vendor-cross.mjs` 一行默认值，**但 `vendor/zerotoken/node_modules` 里的 sharp / canvas / pty 等原生扩展按 Node 22 ABI 编译，换 24 会加载失败**，必须连同原生依赖各平台重编、打包回归，是一次正式发版工作
+  - 2026-11-27 前置已做：agent 分支 `feat/mcp-render-requires-node`（`90422bdbf`，已推送）—— 安装时按清单 `requires.node` 核对本机 Node，不满足的运行方式判不可用并写明原因（以前 `requires` 只是摆设）。**顺序必须是**：① 该 agent 改动发版 → ② 桌面端内置 Node 升 24 → ③ 注册表这 4 条升 2.x 并写 `requires.node: '>=24'`。反过来先改注册表，没有这个检查的旧 agent 会在 Node 22 上装上起不来的 2.x
 - [x] **F2** agent `mcp_presets.py` 的 mcp-server-time 同步（agent 工作区已改，未提交；合 main / bump submodule 待定）
 - [x] **F3** `stripe` 改官方托管端点 `https://mcp.stripe.com`（OAuth），去掉密钥
 - [x] **F4–F6** 101 条按「满 7 天的最新稳定版」升级，静态审核 + 旧版差分复核全部 allow
@@ -762,7 +763,7 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
   - agent `06a04361d`：`list_installed()` 对注册表条目在有新版本时带 `update_available: {version}`（形状按本仓 API.md 的 InstalledEntry），
     `/v1/mcp/installed` 透传；纯数字点分比较、解析不了不提示；已下架不提示；注册表不可用 / 只有内置目录时不声称有新版本。MCP 相关 79 个用例通过
   - qiye-app `58268b7e0`：已安装页版本列显示「有新版本 x.y.z」、该行「更新」按钮突出；旧 agent 不带字段时不显示；补 en/ar/ms/vi 译文。McpMarketView 31 个用例通过
-- [ ] **F15** U3 发版（5 个分支已推到远端待审阅，未合并）：agent 分支合进 core-kernel → main 并打版；qiye-app 分支合进 master 并 bump agent 子模块（`scripts/check-agent-pointer.mjs`）。
+- [ ] **F15** U3 发版（5 个分支已推送；qiye-app 两个分支已在本地 `integrate/mcp-2026-11-27` 快进合好、测试过，推 master 待用户确认；agent 三个分支按 totalclaw-agent-29 要求等它那一轮落到 origin 后由本会话合进 core-kernel）：agent 分支合进 core-kernel → main 并打版；qiye-app 分支合进 master 并 bump agent 子模块（`scripts/check-agent-pointer.mjs`）。
   合并前在共用的 agent 目录先看 `git diff HEAD -- totalclaw_core/mcp_hub.py totalclaw_qiye_api/mcp_hub_api.py`（另一会话会有并行改动）
 - [ ] **F16** agent `url_safety`：fake-ip 代理回 `::ffff:0:198.18.x.x` 式 AAAA 时整个域名被判私网 —— gitee raw 跳转主机被拦，
   桌面端 MCP 市场静默回落内置 26 条（开着 Clash 类 fake-ip 代理的用户都中）。修复在 agent 分支 `fix/url-safety-fake-ip-translated`（`79331c3e7`，
