@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：包启动时自检要求 Node ≥22.23.4（低于即退出），requires.node 由 >=18 改为 >=22.23.4，agent 安装时会据此提示升级 Node。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: confluent
 display_name: mcp-confluent
 display_name_en: mcp-confluent
-version: 0.1.1
+version: 0.1.2
 description: Confluent MCP Server
 description_zh: Confluent 集成，与 Confluent Kafka 和 Confluent Cloud REST API 交互。
 author: confluentinc
@@ -29,7 +30,7 @@ runtimes:
   - '@confluentinc/mcp-confluent@1.6.1'
   - --init-config
   requires:
-    node: '>=18'
+    node: '>=22.23.4'
 requires_env: []
 optional_env: []
 defaults:

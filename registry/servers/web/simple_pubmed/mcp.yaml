@@ -1,12 +1,14 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：包代码导入 pydantic_settings 却没声明依赖，启动即 ModuleNotFoundError → 前置 `--with pydantic-settings`；依赖的 fastmcp 用 mcp 1.x 的 McpError，再前置 `--with mcp<2`。
+# 2026-11-27：补必填 PUBMED_EMAIL（未设置时启动即退出）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: simple_pubmed
 display_name: mcp-simple-pubmed
 display_name_en: mcp-simple-pubmed
-version: 0.1.1
+version: 0.1.3
 description: An MCP server that provides access to PubMed articles through Entrez API.
 description_zh: 让 LLM 从 PubMed 搜索和阅读医学/生命科学论文的 MCP。
 author: andybrandt
@@ -25,14 +27,32 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --with
+  - mcp<2
+  - --with
+  - pydantic-settings
   - mcp-simple-pubmed==0.1.16
   requires:
     python: '>=3.10'
-requires_env: []
+requires_env:
+- name: PUBMED_EMAIL
+  env_key: PUBMED_EMAIL
+  description: 调用 NCBI E-utilities 时附带的联系邮箱（NCBI 要求）。未设置时服务器启动即退出。
+  prompt: 请输入联系邮箱
+  secret: false
+  required: true
+  doc_url: https://github.com/andybrandt/mcp-simple-pubmed
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:55:03Z'
+  probed_runtime: uvx
+  count: 2
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

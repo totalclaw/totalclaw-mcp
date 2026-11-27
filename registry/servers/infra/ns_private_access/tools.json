@@ -1,0 +1,3227 @@
+[
+  {
+    "name": "listPublishers",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "getPublisher",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "createPublisher",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Display name for the publisher"
+        },
+        "lbrokerconnect": {
+          "description": "Optional local broker connection",
+          "type": "boolean"
+        },
+        "publisher_upgrade_profiles_id": {
+          "description": "Optional upgrade profile assignment",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "replacePublisher",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "Unique identifier of the publisher"
+        },
+        "name": {
+          "type": "string",
+          "description": "New display name"
+        },
+        "lbrokerconnect": {
+          "description": "Optional local broker connection",
+          "type": "boolean"
+        },
+        "tags": {
+          "description": "Optional publisher tags",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_id": {
+                "type": "number",
+                "description": "Unique identifier for the tag"
+              },
+              "tag_name": {
+                "type": "string",
+                "description": "Display name of the tag"
+              }
+            },
+            "required": [
+              "tag_id",
+              "tag_name"
+            ],
+            "description": "Tag with identifier"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "updatePublisher",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Optional display name for the publisher",
+          "type": "string"
+        },
+        "id": {
+          "description": "Optional publisher identifier",
+          "type": "number"
+        },
+        "lbrokerconnect": {
+          "description": "Optional local broker connection",
+          "type": "boolean"
+        },
+        "publisher_upgrade_profiles_id": {
+          "description": "Optional upgrade profile assignment",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "deletePublisher",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "immediateUpgradePublishers",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "publishers": {
+          "type": "object",
+          "properties": {
+            "apply": {
+              "type": "object",
+              "properties": {
+                "upgrade_request": {
+                  "type": "boolean",
+                  "description": "Whether to initiate upgrade"
+                }
+              },
+              "required": [
+                "upgrade_request"
+              ],
+              "description": "Upgrade action to apply"
+            },
+            "id": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Array of publisher IDs to upgrade"
+            }
+          },
+          "required": [
+            "apply",
+            "id"
+          ],
+          "description": "Publishers to upgrade"
+        }
+      },
+      "required": [
+        "publishers"
+      ]
+    }
+  },
+  {
+    "name": "getReleases",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "getPrivateApps",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "publisherId": {
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "required": [
+        "publisherId"
+      ]
+    }
+  },
+  {
+    "name": "generatePublisherRegistrationToken",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "publisherId": {
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "required": [
+        "publisherId"
+      ]
+    }
+  },
+  {
+    "name": "getAlertConfig",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "updateAlertConfig",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "adminUsers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of admin user emails to receive notifications. Use the getAdminUsers tool to validate email addresses exist in the system before adding them."
+        },
+        "eventTypes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "UPGRADE_WILL_START",
+              "UPGRADE_STARTED",
+              "UPGRADE_SUCCEEDED",
+              "UPGRADE_FAILED",
+              "CONNECTION_FAILED"
+            ],
+            "description": "Types of events that can trigger notifications"
+          },
+          "description": "Array of event types to monitor"
+        },
+        "selectedUsers": {
+          "type": "string",
+          "description": "Additional users to receive notifications"
+        }
+      },
+      "required": [
+        "adminUsers",
+        "eventTypes",
+        "selectedUsers"
+      ]
+    }
+  },
+  {
+    "name": "listLocalBrokers",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "createLocalBroker",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name for the new local broker instance"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "getLocalBroker",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "updateLocalBroker",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "New name for the local broker"
+        },
+        "id": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "deleteLocalBroker",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "getLocalBrokerConfig",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "updateLocalBrokerConfig",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "hostname": {
+          "type": "string",
+          "description": "Global hostname configuration affecting all broker instances"
+        }
+      },
+      "required": [
+        "hostname"
+      ]
+    }
+  },
+  {
+    "name": "generateLocalBrokerRegistrationToken",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "createPolicyRule",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "rule_name": {
+          "type": "string",
+          "description": "Name of the policy rule"
+        },
+        "description": {
+          "description": "Optional rule description",
+          "type": "string"
+        },
+        "enabled": {
+          "type": "string",
+          "description": "Whether the rule is enabled (\"1\") or disabled (\"0\")"
+        },
+        "group_id": {
+          "type": "string",
+          "description": "ID of the policy group this rule belongs to"
+        },
+        "group_name": {
+          "description": "Name of the policy group",
+          "type": "string"
+        },
+        "rule_data": {
+          "type": "object",
+          "properties": {
+            "access_method": {
+              "description": "Access methods allowed",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "Client",
+                  "Clientless",
+                  "any"
+                ]
+              }
+            },
+            "b_negateNetLocation": {
+              "description": "Negate network location match",
+              "type": "boolean"
+            },
+            "b_negateSrcCountries": {
+              "description": "Negate source countries match",
+              "type": "boolean"
+            },
+            "classification": {
+              "description": "Classification setting",
+              "type": "string"
+            },
+            "periodic_reauth": {
+              "description": "Periodic reauthentication settings",
+              "type": "object",
+              "properties": {
+                "reauth_interval": {
+                  "type": "string",
+                  "description": "Reauth interval value"
+                },
+                "reauth_interval_unit": {
+                  "type": "string",
+                  "description": "Reauth interval unit (hours, minutes, etc.)"
+                }
+              },
+              "required": [
+                "reauth_interval",
+                "reauth_interval_unit"
+              ]
+            },
+            "dlp_actions": {
+              "description": "DLP action configurations",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "actions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "allow",
+                        "block",
+                        "alert",
+                        "quarantine",
+                        "bypass"
+                      ]
+                    },
+                    "description": "DLP actions"
+                  },
+                  "dlp_profile": {
+                    "type": "string",
+                    "description": "DLP profile name"
+                  }
+                },
+                "required": [
+                  "actions",
+                  "dlp_profile"
+                ]
+              }
+            },
+            "tss_actions": {
+              "description": "TSS action configurations",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "tss_profile": {
+                    "type": "string",
+                    "description": "TSS profile name"
+                  },
+                  "actions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "action_name": {
+                          "type": "string",
+                          "enum": [
+                            "block",
+                            "alert",
+                            "allow"
+                          ],
+                          "description": "TSS action name"
+                        },
+                        "remediation_profile": {
+                          "description": "Remediation profile",
+                          "type": "string"
+                        },
+                        "severity": {
+                          "description": "Severity level",
+                          "type": "string",
+                          "enum": [
+                            "low",
+                            "medium",
+                            "high"
+                          ]
+                        },
+                        "template": {
+                          "description": "Template name",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "action_name"
+                      ]
+                    },
+                    "description": "TSS action configurations"
+                  }
+                },
+                "required": [
+                  "tss_profile",
+                  "actions"
+                ]
+              }
+            },
+            "tss_profile": {
+              "description": "TSS profiles",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "external_dlp": {
+              "description": "External DLP setting",
+              "type": "boolean"
+            },
+            "json_version": {
+              "default": 3,
+              "description": "JSON version for the rule data",
+              "type": "number"
+            },
+            "device_classification_id": {
+              "description": "Device classification IDs",
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "match_criteria_action": {
+              "type": "object",
+              "properties": {
+                "action_name": {
+                  "type": "string",
+                  "enum": [
+                    "allow",
+                    "block"
+                  ],
+                  "description": "Action to take when criteria match"
+                }
+              },
+              "required": [
+                "action_name"
+              ],
+              "description": "Action configuration"
+            },
+            "net_location_obj": {
+              "description": "Network locations",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "organization_units": {
+              "description": "List of organization units",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "policy_type": {
+              "type": "string",
+              "const": "private-app",
+              "description": "Type of policy"
+            },
+            "privateAppTagIds": {
+              "description": "Private app tag IDs",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "privateAppTags": {
+              "description": "Private app tags",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "privateApps": {
+              "description": "List of private application names",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "privateAppsWithActivities": {
+              "description": "Private apps with specific activities",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "activities": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "activity": {
+                          "type": "string",
+                          "enum": [
+                            "any"
+                          ],
+                          "description": "Activity type"
+                        },
+                        "list_of_constraints": {
+                          "description": "Activity constraints",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "activity"
+                      ]
+                    },
+                    "description": "Activities for this app"
+                  },
+                  "appName": {
+                    "type": "string",
+                    "description": "Application name"
+                  }
+                },
+                "required": [
+                  "activities",
+                  "appName"
+                ]
+              }
+            },
+            "show_dlp_profile_action_table": {
+              "description": "Show DLP profile action table",
+              "type": "boolean"
+            },
+            "srcCountries": {
+              "description": "Source countries",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "userGroups": {
+              "description": "List of user groups",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "userType": {
+              "description": "Type of user",
+              "type": "string",
+              "enum": [
+                "user"
+              ]
+            },
+            "users": {
+              "description": "List of individual users",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "version": {
+              "default": 1,
+              "description": "Rule version",
+              "type": "number"
+            }
+          },
+          "required": [
+            "match_criteria_action",
+            "policy_type"
+          ],
+          "description": "Rule data configuration"
+        },
+        "rule_order": {
+          "description": "Rule ordering configuration",
+          "type": "object",
+          "properties": {
+            "order": {
+              "type": "string",
+              "enum": [
+                "top",
+                "bottom",
+                "before",
+                "after"
+              ],
+              "description": "Rule order position"
+            },
+            "position": {
+              "description": "Position number",
+              "type": "number"
+            },
+            "rule_id": {
+              "description": "Reference rule ID",
+              "type": "number"
+            },
+            "rule_name": {
+              "description": "Reference rule name",
+              "type": "string"
+            }
+          },
+          "required": [
+            "order"
+          ]
+        }
+      },
+      "required": [
+        "rule_name",
+        "enabled",
+        "group_id",
+        "rule_data"
+      ]
+    }
+  },
+  {
+    "name": "updatePolicyRule",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "rule_name": {
+              "type": "string",
+              "description": "Name of the policy rule"
+            },
+            "description": {
+              "description": "Optional rule description",
+              "type": "string"
+            },
+            "enabled": {
+              "type": "string",
+              "description": "Whether the rule is enabled (\"1\") or disabled (\"0\")"
+            },
+            "group_id": {
+              "type": "string",
+              "description": "ID of the policy group this rule belongs to"
+            },
+            "group_name": {
+              "description": "Name of the policy group",
+              "type": "string"
+            },
+            "rule_data": {
+              "type": "object",
+              "properties": {
+                "access_method": {
+                  "description": "Access methods allowed",
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "Client",
+                      "Clientless",
+                      "any"
+                    ]
+                  }
+                },
+                "b_negateNetLocation": {
+                  "description": "Negate network location match",
+                  "type": "boolean"
+                },
+                "b_negateSrcCountries": {
+                  "description": "Negate source countries match",
+                  "type": "boolean"
+                },
+                "classification": {
+                  "description": "Classification setting",
+                  "type": "string"
+                },
+                "periodic_reauth": {
+                  "description": "Periodic reauthentication settings",
+                  "type": "object",
+                  "properties": {
+                    "reauth_interval": {
+                      "type": "string",
+                      "description": "Reauth interval value"
+                    },
+                    "reauth_interval_unit": {
+                      "type": "string",
+                      "description": "Reauth interval unit (hours, minutes, etc.)"
+                    }
+                  },
+                  "required": [
+                    "reauth_interval",
+                    "reauth_interval_unit"
+                  ]
+                },
+                "dlp_actions": {
+                  "description": "DLP action configurations",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "actions": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "allow",
+                            "block",
+                            "alert",
+                            "quarantine",
+                            "bypass"
+                          ]
+                        },
+                        "description": "DLP actions"
+                      },
+                      "dlp_profile": {
+                        "type": "string",
+                        "description": "DLP profile name"
+                      }
+                    },
+                    "required": [
+                      "actions",
+                      "dlp_profile"
+                    ]
+                  }
+                },
+                "tss_actions": {
+                  "description": "TSS action configurations",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tss_profile": {
+                        "type": "string",
+                        "description": "TSS profile name"
+                      },
+                      "actions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "action_name": {
+                              "type": "string",
+                              "enum": [
+                                "block",
+                                "alert",
+                                "allow"
+                              ],
+                              "description": "TSS action name"
+                            },
+                            "remediation_profile": {
+                              "description": "Remediation profile",
+                              "type": "string"
+                            },
+                            "severity": {
+                              "description": "Severity level",
+                              "type": "string",
+                              "enum": [
+                                "low",
+                                "medium",
+                                "high"
+                              ]
+                            },
+                            "template": {
+                              "description": "Template name",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "action_name"
+                          ]
+                        },
+                        "description": "TSS action configurations"
+                      }
+                    },
+                    "required": [
+                      "tss_profile",
+                      "actions"
+                    ]
+                  }
+                },
+                "tss_profile": {
+                  "description": "TSS profiles",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "external_dlp": {
+                  "description": "External DLP setting",
+                  "type": "boolean"
+                },
+                "json_version": {
+                  "default": 3,
+                  "description": "JSON version for the rule data",
+                  "type": "number"
+                },
+                "device_classification_id": {
+                  "description": "Device classification IDs",
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "match_criteria_action": {
+                  "type": "object",
+                  "properties": {
+                    "action_name": {
+                      "type": "string",
+                      "enum": [
+                        "allow",
+                        "block"
+                      ],
+                      "description": "Action to take when criteria match"
+                    }
+                  },
+                  "required": [
+                    "action_name"
+                  ],
+                  "description": "Action configuration"
+                },
+                "net_location_obj": {
+                  "description": "Network locations",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "organization_units": {
+                  "description": "List of organization units",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "policy_type": {
+                  "type": "string",
+                  "const": "private-app",
+                  "description": "Type of policy"
+                },
+                "privateAppTagIds": {
+                  "description": "Private app tag IDs",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "privateAppTags": {
+                  "description": "Private app tags",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "privateApps": {
+                  "description": "List of private application names",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "privateAppsWithActivities": {
+                  "description": "Private apps with specific activities",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "activities": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "activity": {
+                              "type": "string",
+                              "enum": [
+                                "any"
+                              ],
+                              "description": "Activity type"
+                            },
+                            "list_of_constraints": {
+                              "description": "Activity constraints",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "required": [
+                            "activity"
+                          ]
+                        },
+                        "description": "Activities for this app"
+                      },
+                      "appName": {
+                        "type": "string",
+                        "description": "Application name"
+                      }
+                    },
+                    "required": [
+                      "activities",
+                      "appName"
+                    ]
+                  }
+                },
+                "show_dlp_profile_action_table": {
+                  "description": "Show DLP profile action table",
+                  "type": "boolean"
+                },
+                "srcCountries": {
+                  "description": "Source countries",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "userGroups": {
+                  "description": "List of user groups",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "userType": {
+                  "description": "Type of user",
+                  "type": "string",
+                  "enum": [
+                    "user"
+                  ]
+                },
+                "users": {
+                  "description": "List of individual users",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "version": {
+                  "default": 1,
+                  "description": "Rule version",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "match_criteria_action",
+                "policy_type"
+              ],
+              "description": "Rule data configuration"
+            },
+            "rule_order": {
+              "description": "Rule ordering configuration",
+              "type": "object",
+              "properties": {
+                "order": {
+                  "type": "string",
+                  "enum": [
+                    "top",
+                    "bottom",
+                    "before",
+                    "after"
+                  ],
+                  "description": "Rule order position"
+                },
+                "position": {
+                  "description": "Position number",
+                  "type": "number"
+                },
+                "rule_id": {
+                  "description": "Reference rule ID",
+                  "type": "number"
+                },
+                "rule_name": {
+                  "description": "Reference rule name",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "order"
+              ]
+            }
+          },
+          "required": [
+            "rule_name",
+            "enabled",
+            "group_id",
+            "rule_data"
+          ],
+          "description": "Request to create a new policy rule"
+        }
+      },
+      "required": [
+        "id",
+        "data"
+      ]
+    }
+  },
+  {
+    "name": "deletePolicyRule",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "getPolicyRule",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "fields": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "listPolicyRules",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "string"
+        },
+        "filter": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "offset": {
+          "type": "number"
+        },
+        "sortby": {
+          "type": "string"
+        },
+        "sortorder": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "listPolicyGroups",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "getPolicyGroup",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "Policy group ID"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "createPolicyGroup",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "group_name": {
+          "type": "string",
+          "description": "Name of the policy group"
+        },
+        "group_order": {
+          "description": "Optional group ordering configuration",
+          "type": "object",
+          "properties": {
+            "group_order": {
+              "type": "object",
+              "properties": {
+                "group_id": {
+                  "type": "string",
+                  "description": "ID of the reference group"
+                },
+                "order": {
+                  "type": "string",
+                  "enum": [
+                    "before",
+                    "after"
+                  ],
+                  "description": "Position relative to reference group"
+                }
+              },
+              "required": [
+                "group_id",
+                "order"
+              ],
+              "description": "Group order specification"
+            }
+          },
+          "required": [
+            "group_order"
+          ]
+        },
+        "modify_by": {
+          "description": "User who modified the group",
+          "type": "string"
+        },
+        "modify_type": {
+          "description": "Type of modification",
+          "type": "string"
+        }
+      },
+      "required": [
+        "group_name"
+      ]
+    }
+  },
+  {
+    "name": "updatePolicyGroup",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "group_name": {
+          "type": "string",
+          "description": "Name of the policy group"
+        },
+        "group_order": {
+          "description": "Optional group ordering configuration",
+          "type": "object",
+          "properties": {
+            "group_order": {
+              "type": "object",
+              "properties": {
+                "group_id": {
+                  "type": "string",
+                  "description": "ID of the reference group"
+                },
+                "order": {
+                  "type": "string",
+                  "enum": [
+                    "before",
+                    "after"
+                  ],
+                  "description": "Position relative to reference group"
+                }
+              },
+              "required": [
+                "group_id",
+                "order"
+              ],
+              "description": "Group order specification"
+            }
+          },
+          "required": [
+            "group_order"
+          ]
+        },
+        "modify_by": {
+          "description": "User who modified the group",
+          "type": "string"
+        },
+        "modify_type": {
+          "description": "Type of modification",
+          "type": "string"
+        }
+      },
+      "required": [
+        "group_name"
+      ]
+    }
+  },
+  {
+    "name": "deletePolicyGroup",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "createPrivateApp",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "app_name": {
+          "type": "string",
+          "description": "Name of the private application"
+        },
+        "app_type": {
+          "description": "Application type - defaults to client for backward compatibility",
+          "type": "string",
+          "enum": [
+            "clientless",
+            "client"
+          ]
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "description": "Host address(es) of the application - can be a single string or array of strings"
+        },
+        "clientless_access": {
+          "type": "boolean",
+          "description": "Enable clientless access"
+        },
+        "is_user_portal_app": {
+          "type": "boolean",
+          "description": "Show in user portal"
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "port": {
+                "type": "string",
+                "pattern": "^\\d+(?:-\\d+)?(?:,\\d+(?:-\\d+)?)*$",
+                "description": "Port specification supporting single ports, ranges, and lists"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "tcp",
+                  "udp",
+                  "http",
+                  "https",
+                  "rdp",
+                  "ssh"
+                ],
+                "description": "Protocol type (TCP/UDP for client apps, HTTP/HTTPS/RDP/SSH for clientless apps)"
+              }
+            },
+            "required": [
+              "port",
+              "type"
+            ],
+            "description": "Network protocol configuration for private applications"
+          },
+          "description": "Network protocols configuration - supports both TCP/UDP and browser protocols"
+        },
+        "publisher_tags": {
+          "description": "Optional publisher tags",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_name": {
+                "type": "string",
+                "description": "Display name for the tag"
+              }
+            },
+            "required": [
+              "tag_name"
+            ],
+            "description": "Tag without identifier for creation requests"
+          }
+        },
+        "publishers": {
+          "description": "Associated publishers (optional)",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "publisher_id": {
+                "type": "string",
+                "description": "Unique identifier of the publisher"
+              }
+            },
+            "required": [
+              "publisher_id"
+            ],
+            "description": "Publisher reference for creating private applications (ID only)"
+          }
+        },
+        "trust_self_signed_certs": {
+          "description": "Trust self-signed certificates",
+          "type": "boolean"
+        },
+        "use_publisher_dns": {
+          "type": "boolean",
+          "description": "Use publisher DNS"
+        },
+        "allow_unauthenticated_cors": {
+          "description": "Optional CORS settings",
+          "type": "boolean"
+        },
+        "allow_uri_bypass": {
+          "description": "Optional URI bypass",
+          "type": "boolean"
+        },
+        "bypass_uris": {
+          "description": "Optional bypass URIs",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "real_host": {
+          "description": "Optional real host",
+          "type": "string"
+        },
+        "app_option": {
+          "description": "Additional options",
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        },
+        "tags": {
+          "description": "Optional tags for the application",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_name": {
+                "type": "string",
+                "description": "Display name for the tag"
+              }
+            },
+            "required": [
+              "tag_name"
+            ],
+            "description": "Tag without identifier for creation requests"
+          }
+        },
+        "private_app_tags": {
+          "description": "Optional private app tags",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_name": {
+                "type": "string",
+                "description": "Display name for the tag"
+              }
+            },
+            "required": [
+              "tag_name"
+            ],
+            "description": "Tag without identifier for creation requests"
+          }
+        },
+        "hostType": {
+          "description": "Host type for clientless apps",
+          "type": "string",
+          "enum": [
+            "http",
+            "https"
+          ]
+        },
+        "isSelfSignedCert": {
+          "description": "Whether to trust self-signed certificates",
+          "type": "boolean"
+        },
+        "isUserPortalApp": {
+          "description": "Whether to show in user portal",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "app_name",
+        "host",
+        "clientless_access",
+        "is_user_portal_app",
+        "protocols",
+        "use_publisher_dns"
+      ]
+    }
+  },
+  {
+    "name": "updatePrivateApp",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "app_name": {
+          "type": "string",
+          "description": "Name of the private application"
+        },
+        "app_type": {
+          "description": "Application type - defaults to client for backward compatibility",
+          "type": "string",
+          "enum": [
+            "clientless",
+            "client"
+          ]
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "description": "Host address(es) of the application - can be a single string or array of strings"
+        },
+        "clientless_access": {
+          "type": "boolean",
+          "description": "Enable clientless access"
+        },
+        "is_user_portal_app": {
+          "type": "boolean",
+          "description": "Show in user portal"
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "port": {
+                "type": "string",
+                "pattern": "^\\d+(?:-\\d+)?(?:,\\d+(?:-\\d+)?)*$",
+                "description": "Port specification supporting single ports, ranges, and lists"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "tcp",
+                  "udp",
+                  "http",
+                  "https",
+                  "rdp",
+                  "ssh"
+                ],
+                "description": "Protocol type (TCP/UDP for client apps, HTTP/HTTPS/RDP/SSH for clientless apps)"
+              }
+            },
+            "required": [
+              "port",
+              "type"
+            ],
+            "description": "Network protocol configuration for private applications"
+          },
+          "description": "Network protocols configuration - supports both TCP/UDP and browser protocols"
+        },
+        "publisher_tags": {
+          "description": "Optional publisher tags",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_name": {
+                "type": "string",
+                "description": "Display name for the tag"
+              }
+            },
+            "required": [
+              "tag_name"
+            ],
+            "description": "Tag without identifier for creation requests"
+          }
+        },
+        "publishers": {
+          "description": "Associated publishers (optional)",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "publisher_id": {
+                "type": "string",
+                "description": "Unique identifier of the publisher"
+              }
+            },
+            "required": [
+              "publisher_id"
+            ],
+            "description": "Publisher reference for creating private applications (ID only)"
+          }
+        },
+        "trust_self_signed_certs": {
+          "description": "Trust self-signed certificates",
+          "type": "boolean"
+        },
+        "use_publisher_dns": {
+          "type": "boolean",
+          "description": "Use publisher DNS"
+        },
+        "allow_unauthenticated_cors": {
+          "description": "Optional CORS settings",
+          "type": "boolean"
+        },
+        "allow_uri_bypass": {
+          "description": "Optional URI bypass",
+          "type": "boolean"
+        },
+        "bypass_uris": {
+          "description": "Optional bypass URIs",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "real_host": {
+          "description": "Optional real host",
+          "type": "string"
+        },
+        "app_option": {
+          "description": "Additional options",
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        },
+        "tags": {
+          "description": "Optional tags for the application",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_name": {
+                "type": "string",
+                "description": "Display name for the tag"
+              }
+            },
+            "required": [
+              "tag_name"
+            ],
+            "description": "Tag without identifier for creation requests"
+          }
+        },
+        "private_app_tags": {
+          "description": "Optional private app tags",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_name": {
+                "type": "string",
+                "description": "Display name for the tag"
+              }
+            },
+            "required": [
+              "tag_name"
+            ],
+            "description": "Tag without identifier for creation requests"
+          }
+        },
+        "hostType": {
+          "description": "Host type for clientless apps",
+          "type": "string",
+          "enum": [
+            "http",
+            "https"
+          ]
+        },
+        "isSelfSignedCert": {
+          "description": "Whether to trust self-signed certificates",
+          "type": "boolean"
+        },
+        "isUserPortalApp": {
+          "description": "Whether to show in user portal",
+          "type": "boolean"
+        },
+        "id": {
+          "type": "number",
+          "description": "Unique identifier of the private application to update"
+        }
+      },
+      "required": [
+        "app_name",
+        "host",
+        "clientless_access",
+        "is_user_portal_app",
+        "protocols",
+        "use_publisher_dns",
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "replacePrivateApp",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "app_name": {
+          "type": "string",
+          "description": "Name of the private application"
+        },
+        "app_type": {
+          "description": "Application type - defaults to client for backward compatibility",
+          "type": "string",
+          "enum": [
+            "clientless",
+            "client"
+          ]
+        },
+        "host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "description": "Host address(es) of the application - can be a single string or array of strings"
+        },
+        "clientless_access": {
+          "type": "boolean",
+          "description": "Enable clientless access"
+        },
+        "is_user_portal_app": {
+          "type": "boolean",
+          "description": "Show in user portal"
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "port": {
+                "type": "string",
+                "pattern": "^\\d+(?:-\\d+)?(?:,\\d+(?:-\\d+)?)*$",
+                "description": "Port specification supporting single ports, ranges, and lists"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "tcp",
+                  "udp",
+                  "http",
+                  "https",
+                  "rdp",
+                  "ssh"
+                ],
+                "description": "Protocol type (TCP/UDP for client apps, HTTP/HTTPS/RDP/SSH for clientless apps)"
+              }
+            },
+            "required": [
+              "port",
+              "type"
+            ],
+            "description": "Network protocol configuration for private applications"
+          },
+          "description": "Network protocols configuration - supports both TCP/UDP and browser protocols"
+        },
+        "publisher_tags": {
+          "description": "Optional publisher tags",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_name": {
+                "type": "string",
+                "description": "Display name for the tag"
+              }
+            },
+            "required": [
+              "tag_name"
+            ],
+            "description": "Tag without identifier for creation requests"
+          }
+        },
+        "publishers": {
+          "description": "Associated publishers (optional)",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "publisher_id": {
+                "type": "string",
+                "description": "Unique identifier of the publisher"
+              }
+            },
+            "required": [
+              "publisher_id"
+            ],
+            "description": "Publisher reference for creating private applications (ID only)"
+          }
+        },
+        "trust_self_signed_certs": {
+          "description": "Trust self-signed certificates",
+          "type": "boolean"
+        },
+        "use_publisher_dns": {
+          "type": "boolean",
+          "description": "Use publisher DNS"
+        },
+        "allow_unauthenticated_cors": {
+          "description": "Optional CORS settings",
+          "type": "boolean"
+        },
+        "allow_uri_bypass": {
+          "description": "Optional URI bypass",
+          "type": "boolean"
+        },
+        "bypass_uris": {
+          "description": "Optional bypass URIs",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "real_host": {
+          "description": "Optional real host",
+          "type": "string"
+        },
+        "app_option": {
+          "description": "Additional options",
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        },
+        "tags": {
+          "description": "Optional tags for the application",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_name": {
+                "type": "string",
+                "description": "Display name for the tag"
+              }
+            },
+            "required": [
+              "tag_name"
+            ],
+            "description": "Tag without identifier for creation requests"
+          }
+        },
+        "private_app_tags": {
+          "description": "Optional private app tags",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_name": {
+                "type": "string",
+                "description": "Display name for the tag"
+              }
+            },
+            "required": [
+              "tag_name"
+            ],
+            "description": "Tag without identifier for creation requests"
+          }
+        },
+        "hostType": {
+          "description": "Host type for clientless apps",
+          "type": "string",
+          "enum": [
+            "http",
+            "https"
+          ]
+        },
+        "isSelfSignedCert": {
+          "description": "Whether to trust self-signed certificates",
+          "type": "boolean"
+        },
+        "isUserPortalApp": {
+          "description": "Whether to show in user portal",
+          "type": "boolean"
+        },
+        "id": {
+          "type": "number",
+          "description": "Unique identifier of the private application to update"
+        }
+      },
+      "required": [
+        "app_name",
+        "host",
+        "clientless_access",
+        "is_user_portal_app",
+        "protocols",
+        "use_publisher_dns",
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "deletePrivateApp",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the private application"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "getPrivateApp",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the private application"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "listPrivateApps",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "number"
+        },
+        "offset": {
+          "type": "number"
+        },
+        "query": {
+          "description": "Search query to find apps by name. Use this to find app IDs when you only have app names. Example: \"LLM-Test-App\" will find \"[LLM-Test-App]\"",
+          "type": "string"
+        },
+        "app_name": {
+          "description": "Exact app name match (use query parameter for flexible searching)",
+          "type": "string"
+        },
+        "publisher_name": {
+          "type": "string"
+        },
+        "reachable": {
+          "type": "boolean"
+        },
+        "clientless_access": {
+          "type": "boolean"
+        },
+        "use_publisher_dns": {
+          "type": "boolean"
+        },
+        "host": {
+          "type": "string"
+        },
+        "in_steering": {
+          "type": "boolean"
+        },
+        "in_policy": {
+          "type": "boolean"
+        },
+        "private_app_protocol": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "name": "listPrivateAppTags",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "query": {
+          "description": "Search query for tags",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Maximum number of tags to return",
+          "type": "number"
+        },
+        "offset": {
+          "description": "Number of tags to skip",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "createPrivateAppTags",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Private app ID"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_name": {
+                "type": "string",
+                "description": "Name of the tag"
+              }
+            },
+            "required": [
+              "tag_name"
+            ]
+          },
+          "description": "Array of tags to create"
+        }
+      },
+      "required": [
+        "id",
+        "tags"
+      ]
+    }
+  },
+  {
+    "name": "updatePrivateAppTags",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of private app IDs"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_name": {
+                "type": "string",
+                "description": "Name of the tag"
+              }
+            },
+            "required": [
+              "tag_name"
+            ]
+          },
+          "description": "Array of tags to update"
+        }
+      },
+      "required": [
+        "ids",
+        "tags"
+      ]
+    }
+  },
+  {
+    "name": "patchPrivateAppTags",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of private app IDs to update with tags. Use private app IDs (not names) - find IDs using listPrivateApps or searchPrivateApps"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag_name": {
+                "type": "string",
+                "description": "Display name for the tag"
+              }
+            },
+            "required": [
+              "tag_name"
+            ],
+            "description": "Tag without identifier for creation requests"
+          },
+          "description": "Array of tags to add/update for the specified apps. Each tag needs only tag_name - the system will handle tag creation if needed"
+        }
+      },
+      "required": [
+        "ids",
+        "tags"
+      ]
+    }
+  },
+  {
+    "name": "updatePrivateAppPublishers",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "private_app_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of private app names"
+        },
+        "publisher_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of publisher IDs"
+        }
+      },
+      "required": [
+        "private_app_names",
+        "publisher_ids"
+      ]
+    }
+  },
+  {
+    "name": "removePrivateAppPublishers",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "private_app_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of private app names"
+        },
+        "publisher_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of publisher IDs"
+        }
+      },
+      "required": [
+        "private_app_names",
+        "publisher_ids"
+      ]
+    }
+  },
+  {
+    "name": "getDiscoverySettings",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "updateDiscoverySettings",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "settings": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Array of host patterns and IP ranges to discover (e.g., [\"*.ec3.internal\", \"*.ec2.internal\", \"192.168.1.0/24\"])"
+            },
+            "organization_units": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Organization units for discovery scope (typically empty)"
+            },
+            "users": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "email",
+                "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+              },
+              "description": "Email addresses of users who can perform discovery operations"
+            },
+            "publishers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "publisher_cn": {
+                    "type": "string",
+                    "description": "Publisher common name identifier"
+                  },
+                  "publisher_id": {
+                    "type": "string",
+                    "description": "Publisher ID (use string format as provided by API)"
+                  },
+                  "publisher_name": {
+                    "type": "string",
+                    "description": "Publisher display name"
+                  }
+                },
+                "required": [
+                  "publisher_cn",
+                  "publisher_id",
+                  "publisher_name"
+                ],
+                "description": "Publisher configuration for private app discovery"
+              },
+              "description": "Publishers to use as discovery agents - find available publishers using listPublishers tool"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "ENABLED",
+                "DISABLED"
+              ],
+              "description": "Discovery feature status - set to ENABLED to activate automatic app discovery"
+            },
+            "userGroups": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "User groups allowed to perform discovery (alternative to individual users)"
+            }
+          },
+          "required": [
+            "host",
+            "organization_units",
+            "users",
+            "publishers",
+            "status",
+            "userGroups"
+          ],
+          "description": "Discovery configuration settings to apply"
+        }
+      },
+      "required": [
+        "settings"
+      ]
+    }
+  },
+  {
+    "name": "getPolicyInUse",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of private app IDs"
+        }
+      },
+      "required": [
+        "ids"
+      ]
+    }
+  },
+  {
+    "name": "getTagPolicyInUse",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "tag_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of private app tag IDs"
+        }
+      },
+      "required": [
+        "tag_ids"
+      ]
+    }
+  },
+  {
+    "name": "getTagPolicyInUseByTagName",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "tag_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of private app tag names"
+        }
+      },
+      "required": [
+        "tag_names"
+      ]
+    }
+  },
+  {
+    "name": "validatePrivateAppDeletion",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the private application"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "analyzePrivateAppPolicyDependencies",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "appName": {
+          "type": "string",
+          "description": "Name of the private application"
+        }
+      },
+      "required": [
+        "appName"
+      ]
+    }
+  },
+  {
+    "name": "deletePrivateAppSmart",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the private application"
+        },
+        "options": {
+          "description": "Smart deletion options",
+          "type": "object",
+          "properties": {
+            "force": {
+              "default": false,
+              "description": "Force deletion even if policy dependencies exist",
+              "type": "boolean"
+            },
+            "cleanupOrphanedPolicies": {
+              "default": true,
+              "description": "Automatically clean up orphaned policies",
+              "type": "boolean"
+            },
+            "dryRun": {
+              "default": false,
+              "description": "Preview changes without executing them",
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "addPublisherAssociation",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "private_app_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of private application names"
+        },
+        "publisher_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of publisher IDs"
+        }
+      },
+      "required": [
+        "private_app_names",
+        "publisher_ids"
+      ]
+    }
+  },
+  {
+    "name": "updatePublisherAssociation",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "private_app_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of private application names"
+        },
+        "publisher_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of publisher IDs"
+        }
+      },
+      "required": [
+        "private_app_names",
+        "publisher_ids"
+      ]
+    }
+  },
+  {
+    "name": "deletePublisherAssociation",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "private_app_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of private application names"
+        },
+        "publisher_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of publisher IDs"
+        }
+      },
+      "required": [
+        "private_app_names",
+        "publisher_ids"
+      ]
+    }
+  },
+  {
+    "name": "validateName",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "resourceType": {
+          "type": "string",
+          "enum": [
+            "publisher",
+            "private_app",
+            "policy",
+            "policy_group",
+            "upgrade_profile"
+          ],
+          "description": "Types of resources that can be validated"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tagType": {
+          "type": "string",
+          "enum": [
+            "publisher",
+            "private_app"
+          ],
+          "description": "Types of resources that can be tagged"
+        }
+      },
+      "required": [
+        "resourceType",
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "validateResource",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "resourceType": {
+          "type": "string",
+          "enum": [
+            "publisher",
+            "private_app",
+            "policy",
+            "policy_group",
+            "upgrade_profile"
+          ],
+          "description": "Types of resources that can be validated"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name to validate"
+            },
+            "tag_type": {
+              "description": "Optional tag type for tag name validation",
+              "type": "string",
+              "enum": [
+                "publisher",
+                "private_app"
+              ]
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "description": "Request to validate a resource name"
+        }
+      },
+      "required": [
+        "resourceType",
+        "data"
+      ]
+    }
+  },
+  {
+    "name": "listUpgradeProfiles",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "getUpgradeProfile",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "External ID (use external_id from list response, not the internal database ID)"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "createUpgradeProfile",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "docker_tag": {
+          "type": "string"
+        },
+        "frequency": {
+          "type": "string",
+          "description": "Cron expression in format \"minute hour * * DAY_OF_WEEK\" (e.g., \"0 2 * * SUN\" for Sunday at 2 AM)"
+        },
+        "timezone": {
+          "type": "string",
+          "enum": [
+            "Africa/Cairo",
+            "Africa/Casablanca",
+            "Africa/Johannesburg",
+            "Africa/Nairobi",
+            "America/Argentina/Buenos_Aires",
+            "America/Caracas",
+            "America/Godthab",
+            "America/Lima",
+            "America/Mazatlan",
+            "America/Santiago",
+            "America/Tijuana",
+            "Asia/Almaty",
+            "Asia/Baghdad",
+            "Asia/Baku",
+            "Asia/Calcutta",
+            "Asia/Dhaka",
+            "Asia/Harbin",
+            "Asia/Jakarta",
+            "Asia/Jerusalem",
+            "Asia/Kabul",
+            "Asia/Karachi",
+            "Asia/Kathmandu",
+            "Asia/Krasnoyarsk",
+            "Asia/Kuala_Lumpur",
+            "Asia/Muscat",
+            "Asia/Rangoon",
+            "Asia/Taipei",
+            "Asia/Tehran",
+            "Asia/Vladivostok",
+            "Asia/Yakutsk",
+            "Asia/Yerevan",
+            "Atlantic/Azores",
+            "Atlantic/Cape_Verde",
+            "Australia/Adelaide",
+            "Australia/Brisbane",
+            "Australia/Darwin",
+            "Australia/Hobart",
+            "Australia/Perth",
+            "Australia/Sydney",
+            "Brazil/East",
+            "Canada/Atlantic",
+            "Canada/Central",
+            "Canada/Newfoundland",
+            "Canada/Saskatchewan",
+            "Europe/Amsterdam",
+            "Europe/Athens",
+            "Europe/Copenhagen",
+            "Europe/Helsinki",
+            "Europe/London",
+            "Europe/Minsk",
+            "Europe/Moscow",
+            "Europe/Paris",
+            "Europe/Prague",
+            "Europe/Sarajevo",
+            "Japan",
+            "Mexico/General",
+            "Pacific/Auckland",
+            "Pacific/Fiji",
+            "Pacific/Guadalcanal",
+            "Pacific/Guam",
+            "Pacific/Samoa",
+            "Pacific/Tongatapu",
+            "US/Alaska",
+            "US/Arizona",
+            "US/East-Indiana",
+            "US/Eastern",
+            "US/Hawaii",
+            "US/Mountain",
+            "US/Pacific"
+          ],
+          "description": "Available timezones for scheduling upgrades"
+        },
+        "release_type": {
+          "type": "string",
+          "enum": [
+            "Beta",
+            "Latest",
+            "Latest-1",
+            "Latest-2"
+          ],
+          "description": "Types of publisher releases available for upgrades"
+        }
+      },
+      "required": [
+        "name",
+        "enabled",
+        "docker_tag",
+        "frequency",
+        "timezone",
+        "release_type"
+      ]
+    }
+  },
+  {
+    "name": "updateUpgradeProfile",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "External ID (not the internal database ID) - use external_id from the profile response"
+        },
+        "name": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "docker_tag": {
+          "type": "string"
+        },
+        "frequency": {
+          "type": "string",
+          "description": "Cron expression in format \"minute hour * * DAY_OF_WEEK\" (e.g., \"0 2 * * SUN\" for Sunday at 2 AM)"
+        },
+        "timezone": {
+          "type": "string",
+          "enum": [
+            "Africa/Cairo",
+            "Africa/Casablanca",
+            "Africa/Johannesburg",
+            "Africa/Nairobi",
+            "America/Argentina/Buenos_Aires",
+            "America/Caracas",
+            "America/Godthab",
+            "America/Lima",
+            "America/Mazatlan",
+            "America/Santiago",
+            "America/Tijuana",
+            "Asia/Almaty",
+            "Asia/Baghdad",
+            "Asia/Baku",
+            "Asia/Calcutta",
+            "Asia/Dhaka",
+            "Asia/Harbin",
+            "Asia/Jakarta",
+            "Asia/Jerusalem",
+            "Asia/Kabul",
+            "Asia/Karachi",
+            "Asia/Kathmandu",
+            "Asia/Krasnoyarsk",
+            "Asia/Kuala_Lumpur",
+            "Asia/Muscat",
+            "Asia/Rangoon",
+            "Asia/Taipei",
+            "Asia/Tehran",
+            "Asia/Vladivostok",
+            "Asia/Yakutsk",
+            "Asia/Yerevan",
+            "Atlantic/Azores",
+            "Atlantic/Cape_Verde",
+            "Australia/Adelaide",
+            "Australia/Brisbane",
+            "Australia/Darwin",
+            "Australia/Hobart",
+            "Australia/Perth",
+            "Australia/Sydney",
+            "Brazil/East",
+            "Canada/Atlantic",
+            "Canada/Central",
+            "Canada/Newfoundland",
+            "Canada/Saskatchewan",
+            "Europe/Amsterdam",
+            "Europe/Athens",
+            "Europe/Copenhagen",
+            "Europe/Helsinki",
+            "Europe/London",
+            "Europe/Minsk",
+            "Europe/Moscow",
+            "Europe/Paris",
+            "Europe/Prague",
+            "Europe/Sarajevo",
+            "Japan",
+            "Mexico/General",
+            "Pacific/Auckland",
+            "Pacific/Fiji",
+            "Pacific/Guadalcanal",
+            "Pacific/Guam",
+            "Pacific/Samoa",
+            "Pacific/Tongatapu",
+            "US/Alaska",
+            "US/Arizona",
+            "US/East-Indiana",
+            "US/Eastern",
+            "US/Hawaii",
+            "US/Mountain",
+            "US/Pacific"
+          ],
+          "description": "Available timezones for scheduling upgrades"
+        },
+        "release_type": {
+          "type": "string",
+          "enum": [
+            "Beta",
+            "Latest",
+            "Latest-1",
+            "Latest-2"
+          ],
+          "description": "Types of publisher releases available for upgrades"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "enabled",
+        "docker_tag",
+        "frequency",
+        "timezone",
+        "release_type"
+      ]
+    }
+  },
+  {
+    "name": "deleteUpgradeProfile",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "External ID (use external_id from list response, not the internal database ID)"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "upgradeProfileSchedule",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "Profile identifier"
+        },
+        "schedule": {
+          "type": "string",
+          "description": "New schedule in human-readable format or cron format"
+        }
+      },
+      "required": [
+        "id",
+        "schedule"
+      ]
+    }
+  },
+  {
+    "name": "assignPublishersToProfile",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "publishers": {
+          "type": "object",
+          "properties": {
+            "apply": {
+              "type": "object",
+              "properties": {
+                "publisher_upgrade_profiles_id": {
+                  "type": "string",
+                  "description": "Profile external_id to assign publishers to"
+                }
+              },
+              "required": [
+                "publisher_upgrade_profiles_id"
+              ],
+              "description": "Profile assignment to apply"
+            },
+            "id": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Array of publisher IDs to assign to the profile"
+            }
+          },
+          "required": [
+            "apply",
+            "id"
+          ],
+          "description": "Publishers to assign to upgrade profile"
+        }
+      },
+      "required": [
+        "publishers"
+      ]
+    }
+  },
+  {
+    "name": "listUsers",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "description": "SCIM filter like userName eq \"user@domain.com\" or externalId eq \"user-123\"",
+          "type": "string"
+        },
+        "startIndex": {
+          "description": "Starting index for pagination",
+          "type": "number"
+        },
+        "count": {
+          "description": "Number of results to return",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "searchUsers",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "userName": {
+          "description": "Search by user name (UPN)",
+          "type": "string"
+        },
+        "externalId": {
+          "description": "Search by external ID",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Search by display name",
+          "type": "string"
+        },
+        "startIndex": {
+          "description": "Starting index for pagination",
+          "type": "number"
+        },
+        "count": {
+          "description": "Number of results to return",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "listGroups",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "description": "SCIM filter like displayName eq \"Admins\" or externalId eq \"group-123\"",
+          "type": "string"
+        },
+        "startIndex": {
+          "description": "Starting index for pagination",
+          "type": "number"
+        },
+        "count": {
+          "description": "Number of results to return",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "searchGroups",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "description": "Search by group display name",
+          "type": "string"
+        },
+        "externalId": {
+          "description": "Search by external ID",
+          "type": "string"
+        },
+        "startIndex": {
+          "description": "Starting index for pagination",
+          "type": "number"
+        },
+        "count": {
+          "description": "Number of results to return",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "getAdminUsers",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "startIndex": {
+          "description": "Starting index for pagination",
+          "type": "number"
+        },
+        "count": {
+          "description": "Number of results to return",
+          "type": "number"
+        }
+      }
+    }
+  },
+  {
+    "name": "searchPrivateApps",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "App name to search for (supports partial matches)"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "searchPublishers",
+    "description": "",
+    "read_only": false,
+    "input_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Publisher name to search for (supports partial matches)"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  }
+]

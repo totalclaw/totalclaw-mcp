@@ -1,0 +1,20 @@
+[
+  {
+    "name": "convert_to_markdown",
+    "description": "Convert a resource described by an http:, https:, file: or data: URI to markdown",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "uri": {
+          "title": "Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri"
+      ],
+      "type": "object",
+      "title": "convert_to_markdownArguments"
+    }
+  }
+]

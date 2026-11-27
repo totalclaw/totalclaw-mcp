@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-27T09:50:46Z",
+  "generated_at": "2026-11-27T10:07:12Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -13150,7 +13150,7 @@
       "display_name_en": "Chroma",
       "description": "Chroma MCP Server - Vector Database Integration for LLM Applications",
       "description_zh": "Chroma 官方集成，用于嵌入、向量搜索、文档存储和全文搜索。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "chroma-core",
       "license": "Apache-2.0",
       "homepage": "https://github.com/chroma-core/chroma-mcp",
@@ -13184,11 +13184,26 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 13,
+      "tools": [
+        "chroma_list_collections",
+        "chroma_create_collection",
+        "chroma_peek_collection",
+        "chroma_get_collection_info",
+        "chroma_get_collection_count",
+        "chroma_modify_collection",
+        "chroma_fork_collection",
+        "chroma_delete_collection",
+        "chroma_add_documents",
+        "chroma_query_documents",
+        "chroma_get_documents",
+        "chroma_update_documents",
+        "chroma_delete_documents"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/chroma",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/chroma",
@@ -13199,11 +13214,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "047c4e09d8da12bf607b40c0aed0f5c23f825d5f42af099d029bf8850b578450",
-          "size": 984
+          "sha256": "45f5188d3123059fe72e33ec68c100145cbc635b47f7e9ab609b5ccc5fa57ceb",
+          "size": 1310
+        },
+        {
+          "path": "tools.json",
+          "sha256": "c9e165752a20277d15bce6e6dd6f024669e943be0d2c0246acf10409b135e80a",
+          "size": 16927
         }
       ],
-      "bundle_sha256": "1422aef6a6964ce806bd134871aba09f9956d391c975f888961bb61e8199dfdc",
+      "bundle_sha256": "0d9b49fd0b7ea6bf924b671425ed619eda68c45933cd059a8b9f3b9c385f816e",
       "popularity": {
         "score": 764,
         "downloads_weekly": 71961,
@@ -13299,7 +13319,7 @@
       "display_name_en": "mcp-confluent",
       "description": "Confluent MCP Server",
       "description_zh": "Confluent 集成，与 Confluent Kafka 和 Confluent Cloud REST API 交互。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "confluentinc",
       "license": "MIT",
       "homepage": "https://github.com/confluentinc/mcp-confluent",
@@ -13348,11 +13368,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "6bca0d5dce3a0317319a404bdedfb0826965c01cadb2b2d67ed9d1d7ee46c9a7",
-          "size": 989
+          "sha256": "ede78e9792049eeee76f3487bc5b25f12b208cd35e53f8ca4ec7e74204f54989",
+          "size": 1160
         }
       ],
-      "bundle_sha256": "a1b9719d830a8ae74774fd75c037234d13fee7c9b326ed029da0f36adbd578a0",
+      "bundle_sha256": "36328fad215c40456ffcd015dda2e82cbc9192bb48195479d311afa76edda2ae",
       "popularity": {
         "score": 306,
         "downloads_weekly": 1158
@@ -15713,7 +15733,7 @@
       "display_name_en": "markitdown",
       "description": "An MCP server for the \"markitdown\" library.",
       "description_zh": "MarkItDown MCP 工具访问 - 一个将多种文件格式（本地或远程）转换为 Markdown 以供 LLM 使用的库。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "microsoft",
       "license": "MIT",
       "homepage": "https://github.com/microsoft/markitdown/tree/main/packages/markitdown-mcp",
@@ -15747,11 +15767,14 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 1,
+      "tools": [
+        "convert_to_markdown"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/data/markitdown",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/data/markitdown",
@@ -15762,11 +15785,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "3d8ca51c3a18691a073052c62308296f7c2a0378bd083836214e0d42dc5d624d",
-          "size": 1073
+          "sha256": "ef9a8090fd619daaff169d2f671d039ee51f42bb22a8e3f28b0222ce1480055a",
+          "size": 1453
+        },
+        {
+          "path": "tools.json",
+          "sha256": "1c81629272f03946596f273f1bb67d84cb9701387ba86328c36ef6294db970e3",
+          "size": 426
         }
       ],
-      "bundle_sha256": "86152e3dc14f7d6ec12a099f18c3fc209b21610acebbe9541e802fd6b6fb6286",
+      "bundle_sha256": "a3a651b00f834bef3eebe56ea6fd37d2cf732611b450c391c6594daa77b75f0f",
       "popularity": {
         "score": 978,
         "downloads_weekly": 31320,
@@ -26004,7 +26032,7 @@
       "display_name_en": "Sidehand",
       "description": "Let your AI agent use Windows apps while you keep working: reads and operates desktop controls without stealing your focus, from Windows or WSL. Zero dependencies.",
       "description_zh": "让 AI Agent 在用户当前窗口后面读取和操作 Windows 应用：通过 UI Automation 把每个控件读成一行短文本，输入、点击、选择都不移动鼠标、不抢键盘和前台；自绘界面的应用用 Windows 自带 OCR 读取；多个 Agent 可同时操作不同应用。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "Blue-B",
       "license": "PolyForm-Shield-1.0.0",
       "homepage": "https://github.com/Blue-B/sidehand",
@@ -26018,9 +26046,8 @@
       ],
       "kind": "mcp_server",
       "platforms": [
-        "darwin",
-        "linux",
-        "win32"
+        "win32",
+        "linux"
       ],
       "transports": [
         "stdio"
@@ -26053,11 +26080,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "a822745ad19df51279faedf11a252c103726f64d66bfc613f9ad737a7c219edf",
-          "size": 1265
+          "sha256": "4632155e467c758d12e1ebb6dbce56b80ae6fb08343ba492550bdcd80edcaacb",
+          "size": 1420
         }
       ],
-      "bundle_sha256": "7f024bc0da2bf9f7d68b555978335a045424228c38a250d6abf085ebac56079d",
+      "bundle_sha256": "0de9066a44131999bfc80928f8ca1aabfade4526bc8e1a31c729108da268636f",
       "popularity": {
         "score": 0
       }
@@ -28385,7 +28412,7 @@
       "display_name_en": "eda-agent",
       "description": "MCP server for EDA tool automation, currently supports Altium Designer. Around 600 tools for schematic, PCB, and library ops via DelphiScript bridge.",
       "description_zh": "让 AI 直接操作正在运行的 Altium Designer（另支持 KiCad 与 EasyEDA Pro）：约 600 个工具，覆盖原理图、PCB、元件库与工程操作、设计审查与检查，修改在编辑器中当场可见。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "salitronic",
       "license": "Apache-2.0",
       "homepage": "https://github.com/salitronic/eda-agent",
@@ -28399,8 +28426,6 @@
       ],
       "kind": "mcp_server",
       "platforms": [
-        "darwin",
-        "linux",
         "win32"
       ],
       "transports": [
@@ -28434,11 +28459,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "f99ae346a971c205ee5b6e1cfffd1e87e4d50b582ed584872ce84c802ffb4d7c",
-          "size": 1171
+          "sha256": "884660041b8c8641c4f846285b1ceeb35820f9aada8e543c92dbc60a1ed7c6a3",
+          "size": 1314
         }
       ],
-      "bundle_sha256": "6b803a1f7fa53fbe004087e3485ff17324a8647db27485650954a6343904e797",
+      "bundle_sha256": "4c3c3b805f58cf7113e4cfd74980af42dd539dad8e309464ef1c736b26c809ec",
       "popularity": {
         "score": 0
       }
@@ -29556,7 +29581,7 @@
       "display_name_en": "netskope-mcp",
       "description": "MCP server for Netskope's Zero Trust Network Access Platform management through LLM's",
       "description_zh": "提供对 Netskope Private Access 环境中所有组件的访问，包括详细设置信息和 LLM 使用示例。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "johnneerdael",
       "license": "ISC",
       "homepage": "https://github.com/johnneerdael/netskope-mcp",
@@ -29588,13 +29613,103 @@
           "package": "@johnneerdael/ns-private-access-mcp@6.3.0"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "NETSKOPE_BASE_URL",
+          "description": "Netskope 租户地址，如 https://<租户>.goskope.com。未设置时服务器启动即退出。",
+          "prompt": "请输入 Netskope 租户地址",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/johnneerdael/netskope-mcp",
+          "doc_label": "查看项目说明（如何获取）"
+        },
+        {
+          "name": "NETSKOPE_API_TOKEN",
+          "description": "Netskope REST API v2 Token。未设置时服务器启动即退出。",
+          "prompt": "请输入 NETSKOPE_API_TOKEN",
+          "secret": true,
+          "required": true,
+          "doc_url": "https://github.com/johnneerdael/netskope-mcp",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 69,
+      "tools": [
+        "listPublishers",
+        "getPublisher",
+        "createPublisher",
+        "replacePublisher",
+        "updatePublisher",
+        "deletePublisher",
+        "immediateUpgradePublishers",
+        "getReleases",
+        "getPrivateApps",
+        "generatePublisherRegistrationToken",
+        "getAlertConfig",
+        "updateAlertConfig",
+        "listLocalBrokers",
+        "createLocalBroker",
+        "getLocalBroker",
+        "updateLocalBroker",
+        "deleteLocalBroker",
+        "getLocalBrokerConfig",
+        "updateLocalBrokerConfig",
+        "generateLocalBrokerRegistrationToken",
+        "createPolicyRule",
+        "updatePolicyRule",
+        "deletePolicyRule",
+        "getPolicyRule",
+        "listPolicyRules",
+        "listPolicyGroups",
+        "getPolicyGroup",
+        "createPolicyGroup",
+        "updatePolicyGroup",
+        "deletePolicyGroup",
+        "createPrivateApp",
+        "updatePrivateApp",
+        "replacePrivateApp",
+        "deletePrivateApp",
+        "getPrivateApp",
+        "listPrivateApps",
+        "listPrivateAppTags",
+        "createPrivateAppTags",
+        "updatePrivateAppTags",
+        "patchPrivateAppTags",
+        "updatePrivateAppPublishers",
+        "removePrivateAppPublishers",
+        "getDiscoverySettings",
+        "updateDiscoverySettings",
+        "getPolicyInUse",
+        "getTagPolicyInUse",
+        "getTagPolicyInUseByTagName",
+        "validatePrivateAppDeletion",
+        "analyzePrivateAppPolicyDependencies",
+        "deletePrivateAppSmart",
+        "addPublisherAssociation",
+        "updatePublisherAssociation",
+        "deletePublisherAssociation",
+        "validateName",
+        "validateResource",
+        "listUpgradeProfiles",
+        "getUpgradeProfile",
+        "createUpgradeProfile",
+        "updateUpgradeProfile",
+        "deleteUpgradeProfile",
+        "upgradeProfileSchedule",
+        "assignPublishersToProfile",
+        "listUsers",
+        "searchUsers",
+        "listGroups",
+        "searchGroups",
+        "getAdminUsers",
+        "searchPrivateApps",
+        "searchPublishers"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/infra/ns_private_access",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/ns_private_access",
@@ -29605,11 +29720,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "4a6504ca94269f7cfc2538b56e5fc5c3ad75509a8424495ddff7b4ec905ee513",
-          "size": 1087
+          "sha256": "122d6f8e8b3673666a15c8a79432e817956452a8f211a7aff29fa41de11fca5f",
+          "size": 2081
+        },
+        {
+          "path": "tools.json",
+          "sha256": "bf3827b6f80d0586efd9887f0c4ead6f6780bda138beb793f8484a21f3e4b891",
+          "size": 89001
         }
       ],
-      "bundle_sha256": "5dcf8be1994021b2b3d719413acef1fe0c0fbe1817270e4aa1de6616abb441a3",
+      "bundle_sha256": "d836f0d8063b83a5dfbc5774f06bce87fdb1d17b1b4c230c97f77e4071572592",
       "popularity": {
         "score": 111,
         "downloads_weekly": 12
@@ -43769,7 +43889,7 @@
       "display_name_en": "md-to-word",
       "description": "Deterministic Markdown to Word (.docx) compiler: declared typography, native equations, tables, cross-references, CSL bibliographies, pre- and post-export quality gates.",
       "description_zh": "确定性 Markdown 转出版级 Word（.docx）编译器：原生公式转 OMML、三线表、GB/T 7714 参考文献与带行号门禁，支持 Claude Desktop / Cursor 免安装（uvx）直接挂载，并附带在线体验站。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "ls-open",
       "license": "MIT",
       "homepage": "https://github.com/ls-open/md-to-word",
@@ -43798,16 +43918,25 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "md-to-word-docx==3.6.0"
+          "package": "md-to-word-docx[mcp]==3.6.0"
         }
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 7,
+      "tools": [
+        "compile_markdown",
+        "validate_manuscript",
+        "get_guide",
+        "get_manual",
+        "extract_format_from_docx",
+        "list_presets",
+        "inspect_preset"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/office/md_to_word_docx",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/office/md_to_word_docx",
@@ -43818,11 +43947,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "05939726b5f8bdb1a2691444c6b9234165ba93802b5a1cf502ed4793f442feff",
-          "size": 1232
+          "sha256": "7c8f8a4a8981526a6a5b16c17c10274f1112baf357784bdf73a9db35e80dd47e",
+          "size": 1464
+        },
+        {
+          "path": "tools.json",
+          "sha256": "d94292b56684bdf0b4ea4b31b1ca971e00afc0a23d5af44145b6e94dc9957d11",
+          "size": 6085
         }
       ],
-      "bundle_sha256": "5a30aa47c86f83fe3150af36b0e1df2715c61829ac92cfb661b9df3fa0ab24a4",
+      "bundle_sha256": "8646353e024b6c828129b3fced7f8138a8c6d1488da80a229d4cf4a875c8ec9a",
       "popularity": {
         "score": 0
       }
@@ -52079,7 +52213,7 @@
       "display_name_en": "mcp-simple-pubmed",
       "description": "An MCP server that provides access to PubMed articles through Entrez API.",
       "description_zh": "让 LLM 从 PubMed 搜索和阅读医学/生命科学论文的 MCP。",
-      "version": "0.1.1",
+      "version": "0.1.3",
       "author": "andybrandt",
       "license": "MIT",
       "homepage": "https://github.com/andybrandt/mcp-simple-pubmed",
@@ -52111,13 +52245,27 @@
           "package": "mcp-simple-pubmed==0.1.16"
         }
       ],
-      "requires_env": [],
+      "requires_env": [
+        {
+          "name": "PUBMED_EMAIL",
+          "description": "调用 NCBI E-utilities 时附带的联系邮箱（NCBI 要求）。未设置时服务器启动即退出。",
+          "prompt": "请输入联系邮箱",
+          "secret": false,
+          "required": true,
+          "doc_url": "https://github.com/andybrandt/mcp-simple-pubmed",
+          "doc_label": "查看项目说明（如何获取）"
+        }
+      ],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 2,
+      "tools": [
+        "search_pubmed",
+        "get_paper_fulltext"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/simple_pubmed",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/simple_pubmed",
@@ -52128,11 +52276,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "160411965da062c12333c1a158539c23877e255345fdf988438c117b40262673",
-          "size": 1015
+          "sha256": "f47a5d461d048a0d022f78f38edfa3ccf5a5287e3c304ca76f16801bf5da1401",
+          "size": 1822
+        },
+        {
+          "path": "tools.json",
+          "sha256": "86863d63813fc6aaa3d0488652ffe0d92a8810bd10e663a0939a9946030f447d",
+          "size": 2052
         }
       ],
-      "bundle_sha256": "5be17e1632646f1bf5ad44b8d8b6491b5a435badbf647ee0381e957982a8de2c",
+      "bundle_sha256": "0ae4a74a21ed214b5fba26e8da6afe75be2797a4badb8c14e9de941a4f779c7d",
       "popularity": {
         "score": 208,
         "downloads_weekly": 120

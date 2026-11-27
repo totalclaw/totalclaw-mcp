@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
 # 人工修改后请同步递增 version。
+# 2026-11-27：MCP 依赖在 [mcp] extra 里，不带会报「MCP Python SDK is not installed」。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: md_to_word_docx
 display_name: md-to-word
 display_name_en: md-to-word
-version: 0.1.1
+version: 0.1.2
 description: 'Deterministic Markdown to Word (.docx) compiler: declared typography, native equations, tables, cross-references,
   CSL bibliographies, pre- and post-export quality gates.'
 description_zh: 确定性 Markdown 转出版级 Word（.docx）编译器：原生公式转 OMML、三线表、GB/T 7714 参考文献与带行号门禁，支持 Claude Desktop / Cursor 免安装（uvx）直接挂载，并附带在线体验站。
@@ -27,7 +28,7 @@ runtimes:
   command: uvx
   args:
   - --from
-  - md-to-word-docx==3.6.0
+  - md-to-word-docx[mcp]==3.6.0
   - md-to-word-mcp
   requires:
     python: '>=3.10'
@@ -36,6 +37,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:55:02Z'
+  probed_runtime: uvx
+  count: 7
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

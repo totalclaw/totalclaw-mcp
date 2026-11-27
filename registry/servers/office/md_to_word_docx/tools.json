@@ -1,0 +1,243 @@
+[
+  {
+    "name": "compile_markdown",
+    "description": "Compile Markdown into a Word (.docx) document. Ensure structures beyond standard Markdown (e.g. captions, TOC, page breaks, abstract, math blocks) follow the contract in get_guide. Uses the provided format file, or defaults to a built-in preset.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "markdown": {
+          "title": "Markdown",
+          "type": "string"
+        },
+        "output_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Output Path"
+        },
+        "format": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Format"
+        },
+        "preset": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Preset"
+        },
+        "generate_pdf": {
+          "default": false,
+          "title": "Generate Pdf",
+          "type": "boolean"
+        },
+        "lang": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lang"
+        },
+        "base_template": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base Template"
+        },
+        "cover_sections": {
+          "default": 0,
+          "title": "Cover Sections",
+          "type": "integer"
+        },
+        "keep_pages": {
+          "default": 0,
+          "title": "Keep Pages",
+          "type": "integer"
+        },
+        "keep_until": {
+          "default": "",
+          "title": "Keep Until",
+          "type": "string"
+        }
+      },
+      "required": [
+        "markdown"
+      ],
+      "type": "object",
+      "title": "compile_markdownArguments"
+    }
+  },
+  {
+    "name": "validate_manuscript",
+    "description": "Validate a Markdown manuscript's syntax and non-standard Markdown structure mappings against the compilation contract before export.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "markdown": {
+          "title": "Markdown",
+          "type": "string"
+        },
+        "format": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Format"
+        },
+        "preset": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Preset"
+        },
+        "lang": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lang"
+        }
+      },
+      "required": [
+        "markdown"
+      ],
+      "type": "object",
+      "title": "validate_manuscriptArguments"
+    }
+  },
+  {
+    "name": "get_guide",
+    "description": "Read this before drafting or compiling. Explains requirements confirmation, non-standard Markdown structure mappings, and the compilation contract.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "get_guideArguments"
+    }
+  },
+  {
+    "name": "get_manual",
+    "description": "Read the full manual when a spelling or behaviour is not certain: every style name, YAML key, equation rule, CSL preset and known limit, plus §9 for custom covers, front matter, section/page numbering, and `--base-template`.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "lang": {
+          "default": "zh",
+          "title": "Lang",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "get_manualArguments"
+    }
+  },
+  {
+    "name": "extract_format_from_docx",
+    "description": "Read a reference .docx template (institution, journal, or organization) and produce a draft format file. The draft lists every value it could determine and a 'to confirm' list it could not; review those before compiling.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "docx_path": {
+          "title": "Docx Path",
+          "type": "string"
+        },
+        "output_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Output Path"
+        },
+        "lang": {
+          "default": "zh",
+          "title": "Lang",
+          "type": "string"
+        }
+      },
+      "required": [
+        "docx_path"
+      ],
+      "type": "object",
+      "title": "extract_format_from_docxArguments"
+    }
+  },
+  {
+    "name": "list_presets",
+    "description": "List all available built-in style presets (Simplified/Traditional Chinese Academic, Tech Report, Nature English Paper) with typography specifications.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "list_presetsArguments"
+    }
+  },
+  {
+    "name": "inspect_preset",
+    "description": "Inspect the full format.txt typography specification for a given preset.",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "preset": {
+          "title": "Preset",
+          "type": "string"
+        }
+      },
+      "required": [
+        "preset"
+      ],
+      "type": "object",
+      "title": "inspect_presetArguments"
+    }
+  }
+]

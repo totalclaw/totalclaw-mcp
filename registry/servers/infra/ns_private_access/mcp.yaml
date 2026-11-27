@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：实探报 Invalid configuration 即退出，原先 requires_env 为空 —— 补必填 NETSKOPE_BASE_URL / NETSKOPE_API_TOKEN（变量名取自包源码 config/netskope-config.js）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: ns_private_access
 display_name: netskope-mcp
 display_name_en: netskope-mcp
-version: 0.1.1
+version: 0.1.2
 description: MCP server for Netskope's Zero Trust Network Access Platform management through LLM's
 description_zh: 提供对 Netskope Private Access 环境中所有组件的访问，包括详细设置信息和 LLM 使用示例。
 author: johnneerdael
@@ -29,11 +30,33 @@ runtimes:
   - '@johnneerdael/ns-private-access-mcp@6.3.0'
   requires:
     node: '>=18'
-requires_env: []
+requires_env:
+- name: NETSKOPE_BASE_URL
+  env_key: NETSKOPE_BASE_URL
+  description: Netskope 租户地址，如 https://<租户>.goskope.com。未设置时服务器启动即退出。
+  prompt: 请输入 Netskope 租户地址
+  secret: false
+  required: true
+  doc_url: https://github.com/johnneerdael/netskope-mcp
+  doc_label: 查看项目说明（如何获取）
+- name: NETSKOPE_API_TOKEN
+  env_key: NETSKOPE_API_TOKEN
+  description: Netskope REST API v2 Token。未设置时服务器启动即退出。
+  prompt: 请输入 NETSKOPE_API_TOKEN
+  secret: true
+  required: true
+  doc_url: https://github.com/johnneerdael/netskope-mcp
+  doc_label: 查看项目说明（如何获取）
 optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T09:55:04Z'
+  probed_runtime: npx
+  count: 69
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

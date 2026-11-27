@@ -823,6 +823,9 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
   - 包本身坏、清单层面修不了：knowlyr_datacheck / knowlyr_modelaudit / knowlyr_sandbox（用 mcp 1.x 低层装饰器，却按另一套签名调 `Server.run()`，mcp 1.x / 2.x 下都起不来）；friday_memory（没有 stdio MCP 入口）、preloop（MCP 只在其 HTTP API 服务里）、cal（npm bin 缺 shebang）→ 建议并入 G1 下架拍板
   - 本机前提：kubernetes_containers 要本机 kubeconfig 配有当前上下文，清单无误
 - 依赖问题 7：python_interpreter、roundtable_ai（mcp 2.x，补 `--with mcp<2`）；chroma、davinci_resolve、markitdown、simple_pubmed、md_to_word_docx（缺依赖 / 版本冲突）
+  - [x] 已修并实探写回工具清单 5 条：chroma（包钉死 mcp 1.6.0，前置 `--with pydantic<2.10`）、simple_pubmed（`--with mcp<2 --with pydantic-settings` + 必填 PUBMED_EMAIL）、md_to_word_docx（`[mcp]` extra）、markitdown（显式钉预发布依赖 azure-ai-contentunderstanding==1.2.0b1，不整体放开 --prerelease）、ns_private_access（必填 NETSKOPE_BASE_URL / NETSKOPE_API_TOKEN）
+  - [x] 平台 / 运行时声明：eda_agent `platforms: [win32]`（导入即用 ctypes.WINFUNCTYPE）、sidehand `platforms: [win32, linux]`（npm os 字段）、confluent `requires.node: '>=22.23.4'`
+  - 本机前提：davinci_resolve 要本机装 DaVinci Resolve
 - 其余 ~30 条 stderr 没有明确原因（静默退出、需本机 bun / IDE / 平台限制等），逐条看
 - [ ] 修完逐条重探；凭据类并入 credentials-needed.md
 
