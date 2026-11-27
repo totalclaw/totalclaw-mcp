@@ -14,6 +14,11 @@
   python3 scripts/probe_server.py mcp_fetch --dry-run   # 只打印将要执行的命令
 
 需要凭据的服务器在没配好环境变量时会连接失败 —— 这是预期的，用 --skip-auth 跳过。
+
+隔离（默认开，--no-sandbox 关）：被探的是第三方包，有的一启动就往 HOME 里装东西
+（往 ~/.claude/skills 装技能、起常驻守护进程、扫本机各客户端的 MCP 配置并落盘）。
+所以每次运行给服务器一个临时 HOME 和临时工作目录，只把包管理器的缓存与镜像配置
+软链接进去；探完列出它新写了什么（「副作用」），并结束仍在沙箱里的后台进程。
 """
 from __future__ import annotations
 
@@ -22,13 +27,90 @@ import asyncio
 import json
 import os
 import re
+import shutil
+import signal
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 SERVERS_DIR = ROOT / "registry" / "servers"
 CONNECT_TIMEOUT = 90.0
+
+# 软链接进沙箱 HOME 的东西：包缓存（免得每条都重下）与包管理器配置（保持用户的镜像源）
+_SHARED_HOME = (".npm", ".npmrc", ".cache/uv", ".local/share/uv", ".config/uv", ".config/pip", ".pip")
+
+
+class _Sandbox:
+    """一次运行共用的临时 HOME + 工作目录；记录每个服务器新写入的路径。"""
+
+    def __init__(self) -> None:
+        self.root = Path(tempfile.mkdtemp(prefix="probe-sbx-")).resolve()
+        self.home = self.root / "home"
+        self.work = self.root / "work"
+        self.home.mkdir()
+        self.work.mkdir()
+        real = Path.home()
+        for rel in _SHARED_HOME:
+            src = real / rel
+            if src.exists():
+                dst = self.home / rel
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                dst.symlink_to(src)
+        self._seen = self._snapshot()
+
+    def _snapshot(self) -> set[str]:
+        out: set[str] = set()
+        for base in (self.home, self.work):
+            for dirpath, dirnames, filenames in os.walk(base):   # 不跟进软链接（共享缓存）
+                for x in dirnames + filenames:
+                    out.add(os.path.relpath(os.path.join(dirpath, x), self.root))
+        return out
+
+    def new_writes(self) -> list[str]:
+        """自上次调用以来新出现的路径，按「home/前两级」「work/第一级」归并。"""
+        now = self._snapshot()
+        fresh = now - self._seen
+        self._seen = now
+        tops: set[str] = set()
+        for p in fresh:
+            parts = Path(p).parts
+            keep = 3 if parts[0] == "home" else 2
+            tops.add("/".join(parts[:keep]).replace("home/", "~/", 1).replace("work/", "./", 1))
+        return sorted(tops)
+
+    def kill_leftovers(self) -> list[int]:
+        """结束仍在沙箱里开着文件 / 以沙箱为工作目录的进程（服务器甩出去的守护进程）。"""
+        try:
+            out = subprocess.run(["lsof", "-F", "pn", "+D", str(self.root)], capture_output=True,
+                                 text=True, timeout=30).stdout
+        except (OSError, subprocess.TimeoutExpired):
+            return []
+        # 只认「报出的路径就在沙箱目录里」的进程：共享缓存是软链接，别因为别的进程
+        # 恰好开着 ~/.npm 里的文件就把它当成残留结束掉
+        pids: set[int] = set()
+        cur = None
+        for ln in out.splitlines():
+            if ln.startswith("p"):
+                cur = int(ln[1:]) if ln[1:].isdigit() else None
+            elif ln.startswith("n") and cur and cur != os.getpid() and ln[1:].startswith(str(self.root)):
+                pids.add(cur)
+        pids = sorted(pids)
+        for pid in pids:
+            try:
+                os.kill(pid, signal.SIGTERM)
+            except OSError:
+                pass
+        return pids
+
+    def close(self) -> None:
+        self.kill_leftovers()
+        shutil.rmtree(self.root, ignore_errors=True)   # 只删软链接本身，不碰共享缓存
+
+
+_SANDBOX: _Sandbox | None = None
 
 # 与 agent totalclaw_core/tools/mcp_tool/helpers.py 同一组模式：
 # 工具描述里出现这些，说明上游试图在描述里给模型下指令
@@ -124,12 +206,16 @@ def _server_params(manifest: dict, runtime_id: str | None):
             env[key] = os.environ[key]
     for k, v in (rt.get("env") or {}).items():
         env[str(k)] = _expand(str(v))
+    cwd = None
+    if _SANDBOX is not None:
+        env["HOME"] = str(_SANDBOX.home)
+        cwd = str(_SANDBOX.work)
     # args 也要展开 —— agent 侧 interpolate_env_vars 是对整个 server 字典递归的，
     # 参数里的 ${VAR} 一样会被代入。这里不展开就跟真实启动行为不一致，
     # 表现为「探测挂了但装上能用」，反过来更糟：探测过了但装上挂。
     return StdioServerParameters(command=str(rt["command"]),
                                  args=[_expand(str(a)) for a in (rt.get("args") or [])],
-                                 env=env), rt
+                                 env=env, cwd=cwd), rt
 
 
 async def _collect(session, tools_out: list) -> None:
@@ -213,14 +299,17 @@ def probe(name: str, *, runtime_id: str | None, dry_run: bool, skip_auth: bool) 
         return f"[dry-run] {name}: {params.command} {' '.join(params.args)}"
 
     try:
-        tools, used_runtime = asyncio.run(probe_one(manifest, runtime_id))
+        try:
+            tools, used_runtime = asyncio.run(probe_one(manifest, runtime_id))
+        finally:
+            side = _side_effects()
     except asyncio.TimeoutError:
-        return f"✗ {name}: 连接超时（{CONNECT_TIMEOUT:.0f}s）"
+        return f"✗ {name}: 连接超时（{CONNECT_TIMEOUT:.0f}s）{side}"
     except Exception as e:  # noqa: BLE001 - 上游千奇百怪，一条失败不该中断整轮
         root = _root_cause(e)
         detail = str(root).splitlines()[0][:120] if str(root) else type(root).__name__
         hint = "（可能缺凭据）" if missing else ""
-        return f"✗ {name}: {type(root).__name__}: {detail}{hint}"
+        return f"✗ {name}: {type(root).__name__}: {detail}{hint}{side}"
 
     findings = scan_tools(tools)
     verdict = "warn" if findings else "allow"
@@ -251,7 +340,21 @@ def probe(name: str, *, runtime_id: str | None, dry_run: bool, skip_auth: bool) 
 
     flag = f"  ⚠ 注入嫌疑 {len(findings)} 处" if findings else ""
     ro = sum(1 for t in tools if t["read_only"])
-    return f"✓ {name}: {len(tools)} 个工具（只读 {ro}）via {used_runtime}{flag}"
+    return f"✓ {name}: {len(tools)} 个工具（只读 {ro}）via {used_runtime}{flag}{side}"
+
+
+def _side_effects() -> str:
+    """沙箱里这个服务器新写的路径 + 甩出去的后台进程，拼成状态行后缀；没开沙箱 / 没有则为空。"""
+    if _SANDBOX is None:
+        return ""
+    writes = _SANDBOX.new_writes()
+    pids = _SANDBOX.kill_leftovers()
+    bits = []
+    if writes:
+        bits.append("写入 " + "、".join(writes[:6]) + (f" 等 {len(writes)} 处" if len(writes) > 6 else ""))
+    if pids:
+        bits.append(f"留下后台进程 {len(pids)} 个（已结束）")
+    return f"  ⚑ 副作用：{'；'.join(bits)}" if bits else ""
 
 
 def _block_span(lines: list[str], key: str) -> tuple[int, int] | None:
@@ -337,25 +440,37 @@ def main() -> int:
     ap.add_argument("--runtime", help="指定 runtime id（默认取第一个 stdio）")
     ap.add_argument("--skip-auth", action="store_true", help="跳过缺凭据的服务器")
     ap.add_argument("--dry-run", action="store_true", help="只打印将执行的命令")
+    ap.add_argument("--no-sandbox", action="store_true",
+                    help="不隔离：服务器用真实 HOME 与当前目录（会让它往本机写东西，慎用）")
     args = ap.parse_args()
 
     names = _all_names() if args.all else args.names
     if not names:
         ap.error("给出服务器名，或用 --all")
 
-    ok = warn = fail = skip = 0
-    for n in names:
-        line = probe(n, runtime_id=args.runtime, dry_run=args.dry_run, skip_auth=args.skip_auth)
-        print(" ", line)
-        if line.startswith("✓"):
-            ok += 1
-            if "⚠" in line:
-                warn += 1
-        elif line.startswith("✗"):
-            fail += 1
-        elif line.startswith("·"):
-            skip += 1
-    print(f"\n探测完成：成功 {ok}（其中 {warn} 个有注入嫌疑）· 失败 {fail} · 跳过 {skip}")
+    global _SANDBOX
+    if not args.no_sandbox and not args.dry_run:
+        _SANDBOX = _Sandbox()
+    ok = warn = fail = skip = side = 0
+    try:
+        for n in names:
+            line = probe(n, runtime_id=args.runtime, dry_run=args.dry_run, skip_auth=args.skip_auth)
+            print(" ", line, flush=True)
+            if line.startswith("✓"):
+                ok += 1
+                if "注入嫌疑" in line:
+                    warn += 1
+            elif line.startswith("✗"):
+                fail += 1
+            elif line.startswith("·"):
+                skip += 1
+            if "⚑ 副作用" in line:
+                side += 1
+    finally:
+        if _SANDBOX is not None:
+            _SANDBOX.close()
+    print(f"\n探测完成：成功 {ok}（其中 {warn} 个有注入嫌疑）· 失败 {fail} · 跳过 {skip}"
+          + (f" · 有副作用 {side} 个（见 ⚑）" if side else ""))
     if ok and not args.dry_run:
         print("接下来运行 python3 scripts/gen_registry.py 更新索引")
     return 1 if fail and not ok else 0

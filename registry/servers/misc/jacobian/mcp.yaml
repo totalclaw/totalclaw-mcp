@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：包名同名可执行是 CLI，MCP 服务器是另一个可执行 jacobian-mcp（取自包 entry_points）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: jacobian
 display_name: jacobian
 display_name_en: jacobian
-version: 0.1.1
+version: 0.1.2
 description: Atomic mathematical tools for agents over MCP and Python
 description_zh: 面向可组合数学的 MCP 服务器、CLI 和 Python 库：支持多项式映射、线性代数与图算法的精确计算和猜想检验。
 author: morluto
@@ -25,7 +26,9 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --from
   - jacobian==0.23.0
+  - jacobian-mcp
   requires:
     python: '>=3.10'
 requires_env: []
@@ -33,6 +36,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T10:15:46Z'
+  probed_runtime: uvx
+  count: 2
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

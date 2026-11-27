@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：可执行是带子命令的 CLI，不带子命令只打印用法（或跑别的功能）就退出；MCP 服务器在 `serve` 子命令（取自包 README / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: jev_use
 display_name: jev-use
 display_name_en: jev-use
-version: 0.1.1
+version: 0.1.2
 description: Claude Code / Codex / pi plugin that hands the agent steps needing no text output to Jev (TypeSafe's judgment
   model) — measured p50 ~230 ms and ~$0.02 per 1,000 judgments, with typed escalation back to the LLM.
 description_zh: 把 Claude Code / Codex / pi 里不需要输出文本的步骤交给 Jev 判断：构建好了吗、点哪个元素、这条命令安不安全，一次调用批量回答，需要写文本或拿不准的按类型化契约退回 LLM。
@@ -28,6 +29,7 @@ runtimes:
   args:
   - -y
   - jev-use@0.8.0
+  - serve
   requires:
     node: '>=18'
 requires_env: []
@@ -35,6 +37,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T10:15:06Z'
+  probed_runtime: npx
+  count: 2
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

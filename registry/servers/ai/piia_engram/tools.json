@@ -1,0 +1,816 @@
+[
+  {
+    "name": "get_user_context",
+    "description": "获取用户的个性化上下文（冷启动，分层延迟可控）。 / Get tiered cold-start user context with latency control.\n\n**Lifecycle: startup** — 对话开始时调用，为 AI 注入用户身份和上下文。\nLifecycle: startup — call at conversation start to inject user identity and context.\n\n用途：在每次新对话开始时调用，了解用户是谁、如何工作、学到了什么、质量标准是什么。\nPurpose: Call at the start of each new conversation to understand who the user is, how they work, what they have learned, and their quality bar.\n\n分层说明 / Tiered behaviour:\n- \"quick\": 仅身份画像 + 工作偏好（纯 JSON 读取，无文件扫描，最低延迟）。\n  Profile + preferences only — pure JSON reads, no filesystem scans. Lowest latency.\n- \"standard\"（默认）: 加上质量标准、经验领域、相关教训/决策、项目快照。\n  Default. Adds quality, domains, top lessons/decisions, project snapshot.\n- \"full\": 完整上下文，含冲突检测、过期/暂存提醒。仅在用户明确要求\"全量回顾\"时使用。\n  Full context including conflict detection and stale/staging warnings. Use only when the user explicitly asks for a comprehensive memory review.\n\n任何级别都只读：不扫描、不导入其它 AI 工具的文件（那是用户在终端运行的 `engram import-memories`）。\nEvery level only reads: other AI tools' files are never scanned or imported here (that is the user's `engram import-memories` command in a terminal).\n\n注意：默认 \"standard\" 已覆盖绝大多数冷启动需求；只有用户问\"我们之前所有决定/经验\"或要做记忆健康检查时才用 \"full\"。\nNote: \"standard\" covers most cold-start needs. Use \"full\" only when the user asks for a comprehensive memory review.\n\nArgs:\n    project_folder: 当前项目文件夹路径（可选）。 / Current project folder path (optional).\n    level: \"quick\" | \"standard\" | \"full\"，默认 \"standard\"。 / Tier — defaults to \"standard\".\n    token_budget: 上下文 token 预算（可选）。设定后按优先级裁剪 section，低优先级 section 先丢弃，末尾一行注明省略了什么。不设则返回全量。\n        Optional token budget. When set, sections are included by priority until budget is exhausted;\n        a cut ends the context with one line naming what was left out.\n    user_prompt: 用户当前提问（可选）。传入后会追加到上下文末尾，并与已存 Playbook 的\n        triggers 关键词匹配，命中时浮现「相关 Playbook」小节（标题 + ID；用 get_playbooks(mode=\"get\") 查看完整步骤）。\n        Optional current user prompt. Appended to the context and matched against stored\n        playbook trigger keywords; hits surface a \"Matched Playbooks\" section (title + id;\n        call get_playbooks(mode=\"get\") for the full steps).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_folder": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Project Folder"
+        },
+        "level": {
+          "default": "standard",
+          "title": "Level",
+          "type": "string"
+        },
+        "token_budget": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Token Budget"
+        },
+        "user_prompt": {
+          "default": "",
+          "title": "User Prompt",
+          "type": "string"
+        }
+      },
+      "title": "get_user_contextArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_identity_card",
+    "description": "导出用户的可携带 AI 身份卡（Markdown 格式）。 / Export the user's portable AI identity card as Markdown.\n\nOwner/export surface: writes exports/identity_card.md and is refused for non-owner callers when governance is enabled.\n\n用途：需要把用户身份、工作方式、质量标准、经验教训分享给其它 AI 工具时调用。\nPurpose: Call when another AI tool needs a self-contained summary of the user's identity, work style, quality standards, and lessons.\n\n注意：如果本会话只需要运行时上下文，用 get_user_context 更合适。\nNote: If the current session only needs runtime context, get_user_context is usually the better choice.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "title": "get_identity_cardArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_project_context",
+    "description": "读取特定项目的知识快照（项目级，只含该项目的历史）。 / Read the knowledge snapshot for a specific project, containing only that project's history.\n\n用途：想了解某个项目之前的技术栈、已知问题、协作次数时调用。\nPurpose: Call when you need a project's previous tech stack, known issues, notes, or collaboration history.\n\n注意：如果想获取用户级完整身份上下文，用 get_user_context；如果想写入项目快照，用 save_project_snapshot。\nNote: Use get_user_context for full user-level context; use save_project_snapshot to write a project snapshot.\n\nArgs:\n    project_folder: 项目文件夹路径。 / Project folder path.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_folder": {
+          "title": "Project Folder",
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_folder"
+      ],
+      "title": "get_project_contextArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_relevant_knowledge",
+    "description": "按项目路径自动推荐最相关的经验教训（无需搜索词）。 / Automatically recommend the most relevant lessons for a project path, without search keywords.\n\n**Lifecycle: retrieval** — 在对话中需要项目相关的历史知识时调用。\nLifecycle: retrieval — call mid-conversation when project-relevant past knowledge is needed.\n\n用途：你知道当前项目路径但不知道该搜什么词时调用，Engram 根据项目技术栈自动筛选。\nPurpose: Call when you know the current project path but not the right search terms; Engram filters by project tech stack.\n\n注意：如果用户给了明确搜索词，用 search_knowledge 更直接。只返回已审核且当前有效的经验（待审、被取代、已归档的不返回）。\nNote: If the user provides explicit search keywords, search_knowledge is more direct. Returns reviewed, current lessons only (no pending, superseded or archived items).\n\nArgs:\n    project_folder: 当前项目文件夹路径。 / Current project folder path.\n    limit: 最多返回多少条（默认 8）。 / Maximum number of items to return (default 8).\n    include_freshness: 为每条结果附加 freshness/新鲜度提示（默认 False，保持旧输出不变）。 / Attach a per-item freshness hint (default False; output is unchanged when omitted).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_folder": {
+          "title": "Project Folder",
+          "type": "string"
+        },
+        "limit": {
+          "default": 8,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "include_freshness": {
+          "default": false,
+          "title": "Include Freshness",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "project_folder"
+      ],
+      "title": "get_relevant_knowledgeArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_knowledge",
+    "description": "搜索知识库（lessons/decisions/playbooks）。 / Search lessons, decisions, and playbooks by keyword.\n\n**Lifecycle: retrieval** — 在对话中需要检索历史知识时调用。\nLifecycle: retrieval — call during conversation when past knowledge is needed.\n\nCall when the user asks to find knowledge about a specific topic,\nor recalls a procedure ('X how to' / 'X steps').\n\nResult groups: \"lessons\" / \"decisions\" / \"playbooks\" hold reviewed, current\nitems only. Items still waiting for the user's review come back separately\nunder \"pending\" (same three lists, each item flagged pending_untrusted=true):\ntreat them as unconfirmed proposals, not as the user's rules. Items replaced\nby a newer version are left out unless include_superseded=true, which adds a\nseparate \"superseded\" group (each item names superseded_by).\n\nIf you only have a project path and no query, use get_relevant_knowledge;\nif you have an existing knowledge ID, use explore_knowledge(mode=\"similar\").\n\nArgs:\n    query: Search query keywords.\n    scope: Search scope: 'all', 'lessons', 'decisions', or 'playbooks'.\n    limit: Maximum number of items to return (default 10).\n    filters_json: Optional JSON string with filter criteria. Supported keys:\n        - \"domain\": str — only items whose domain contains this value\n        - \"tier\": str — only items matching this tier ('staging' or 'verified')\n        - \"date_after\": str — ISO date string, only items created after this date\n        Example: '{\"tier\": \"verified\", \"domain\": \"python\"}'\n    include_freshness: Attach a per-item freshness hint (fresh/aging/stale)\n        to each returned item. Default False keeps the response unchanged.\n    max_field_chars: Per-field size cap. Every string field in each returned\n        item (detail/reasoning/description/steps/...) longer than this is\n        clipped with a \"[+N chars truncated]\" marker so a few large bodies\n        cannot blow up the client. Item shape, ids, and headlines are kept.\n        Set 0 for full untruncated bodies (default 400).\n    include_superseded: Also return items replaced by a newer version, in a\n        separate \"superseded\" group (default False).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "scope": {
+          "default": "all",
+          "title": "Scope",
+          "type": "string"
+        },
+        "limit": {
+          "default": 10,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "filters_json": {
+          "default": "",
+          "title": "Filters Json",
+          "type": "string"
+        },
+        "project_folder": {
+          "default": "",
+          "title": "Project Folder",
+          "type": "string"
+        },
+        "include_freshness": {
+          "default": false,
+          "title": "Include Freshness",
+          "type": "boolean"
+        },
+        "max_field_chars": {
+          "default": 400,
+          "title": "Max Field Chars",
+          "type": "integer"
+        },
+        "include_superseded": {
+          "default": false,
+          "title": "Include Superseded",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "search_knowledgeArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "memory_store",
+    "description": "统一知识写入入口 — 根据 kind 自动路由到 add_lesson / add_decision / add_playbook。\nUnified knowledge write endpoint — routes to add_lesson / add_decision / add_playbook based on kind.\n\n**Lifecycle: writeback** — 对话中产生值得长期保留的知识时调用。\nLifecycle: writeback — call when the conversation produces knowledge worth persisting.\n\n这是 Provider 兼容的统一写入接口。如果你已经明确知道要写 lesson/decision/playbook，\n也可以直接调用对应的专用工具。本工具的优势在于：调用方不需要知道 Engram 内部的分类体系。\nThis is a provider-compatible unified write interface. You may also call the specialized\ntools directly. The advantage here: callers don't need to know Engram's internal taxonomy.\n\nArgs:\n    kind: 知识类型 — 'lesson' | 'decision' | 'playbook'。批量模式下作为各条目的类型（playbook 不支持批量）。 / Knowledge type; in batch mode, the item type for every item (playbook not supported in batch).\n    content_json: 知识内容 JSON 字符串（单条模式必填）。格式因 kind 而异：\n        - lesson: {\"summary\": \"...\", \"detail\": \"...\", \"domain\": \"...\"}\n        - decision: {\"question\": \"...\", \"choice\": \"...\", \"reasoning\": \"...\"}\n        - playbook: {\"title\": \"...\", \"triggers\": \"...\", \"steps_json\": \"[...]\"}\n        Content JSON string (required in single mode). Schema varies by kind (see above).\n    source_tool: 调用来源工具（可选），如 'claude_code', 'cursor'。 / Source tool (optional).\n    items_json: 条目 JSON 数组；给了就走批量写入（一次导入多条 lesson/decision）。 / JSON array of items; when provided, batch-writes multiple lessons/decisions in one call.\n    allow_similar_new: 单条 lesson/playbook：内容相似但不相同、确属新条目时设为 true（可选，默认 false）；不能绕过完全相同内容的拒绝。 / Single lesson/playbook: set true when similar but not identical content is genuinely new (optional, default false); it cannot bypass the refusal of identical content.\n\n取代提案：内容（或批量中的某一条）带 supersedes=<已有条目 ID> 时，必须同时带 supersedes_expected_version=<该条目当前版本>；缺失 → version_required，不匹配 → version_conflict，整次调用零写入。\nSupersede proposals: content (or a batch item) carrying supersedes=<existing id> must also carry supersedes_expected_version=<that entry's current version>; missing -> version_required, mismatch -> version_conflict, and the whole call writes nothing.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "content_json": {
+          "default": "",
+          "title": "Content Json",
+          "type": "string"
+        },
+        "source_tool": {
+          "default": "",
+          "title": "Source Tool",
+          "type": "string"
+        },
+        "items_json": {
+          "default": "",
+          "title": "Items Json",
+          "type": "string"
+        },
+        "project_folder": {
+          "default": "",
+          "title": "Project Folder",
+          "type": "string"
+        },
+        "allow_similar_new": {
+          "default": false,
+          "title": "Allow Similar New",
+          "type": "boolean"
+        },
+        "user_confirmed": {
+          "default": false,
+          "title": "User Confirmed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "memory_storeArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "add_lesson",
+    "description": "记录单条经验教训（你已经知道要记什么）。 / Record one lesson learned when you already know what to save.\n\n**Lifecycle: writeback** — 对话中学到可复用的经验时调用。\nLifecycle: writeback — call when reusable experience is learned during conversation.\n\n用途：用户明确说出一条踩坑经验或技术发现时调用。\nPurpose: Call when the user explicitly states a lesson, pitfall, or technical finding.\n\n注意：如果用户给了一段会话摘要让你自动提取，请用 extract_session_insights 而不是本工具。\nNote: If the user gives a session summary for automatic extraction, use extract_session_insights instead.\n\nArgs:\n    summary: 教训的一行摘要。 / One-line lesson summary.\n    detail: 详细说明（可选）。 / Detailed explanation (optional).\n    domain: 技术领域（可选），可填多个，逗号分隔，如 'python,testing'。 / Technical domain (optional); may contain multiple comma-separated labels such as 'python,testing'.\n    source_tool: 记录来源工具，如 'claude_code', 'codex'（可选，建议填写）。 / Source tool, such as 'claude_code' or 'codex' (optional but recommended).\n    source_url: 如果教训来自外部内容，填写来源 URL（可选）。 / Source URL when the lesson comes from external content (optional).\n    source_agent: 产生/校验此条目的 agent 身份（可选，如 'claude_code'，比 source_tool 更细）。 / Agent identity that produced or validated this entry (optional; finer-grained than source_tool).\n    run_id: 产生此条目的工作流/会话运行 ID（可选）。 / Workflow/session id that produced this entry (optional).\n    last_validated_at: 人/agent 最近确认此条目仍然成立的 ISO-8601 时间（可选）。 / ISO-8601 time this entry was last confirmed to still hold (optional).\n    allow_similar_new: 摘要相似但不相同、确属新条目时设为 true：按相关条目写入并互链，而不是作为重复候选进入待审（可选，默认 false）。不能绕过完全相同（规范化后）内容的拒绝；该拒绝会指向已有条目并给出修订方式。 / Set true when a similar but not identical summary is genuinely a NEW fact: it is stored linked as related instead of queued for review as a duplicate candidate (optional, default false). It cannot bypass the refusal of identical content (after normalization); that refusal names the existing entry and how to revise it.\n    supersedes: 本条修订的已有 lesson ID（可选）。修订提案总是进入待审，主人批准后旧条目才被取代；被主人钉住的条目只能这样修订。 / ID of the existing lesson this one revises (optional). A revision is always a proposal that waits for the Owner; the old lesson is superseded only on approval. An Owner-pinned lesson can only be revised this way.\n    supersedes_expected_version: 填写 supersedes 时必填：旧条目的当前版本号。缺失 → version_required，不匹配 → version_conflict，均零写入。 / Required with supersedes: the old lesson's current version. Missing -> version_required; mismatch -> version_conflict; both write nothing.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "detail": {
+          "default": "",
+          "title": "Detail",
+          "type": "string"
+        },
+        "domain": {
+          "default": "",
+          "title": "Domain",
+          "type": "string"
+        },
+        "source_tool": {
+          "default": "",
+          "title": "Source Tool",
+          "type": "string"
+        },
+        "source_url": {
+          "default": "",
+          "title": "Source Url",
+          "type": "string"
+        },
+        "project_folder": {
+          "default": "",
+          "title": "Project Folder",
+          "type": "string"
+        },
+        "source_agent": {
+          "default": "",
+          "title": "Source Agent",
+          "type": "string"
+        },
+        "run_id": {
+          "default": "",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "last_validated_at": {
+          "default": "",
+          "title": "Last Validated At",
+          "type": "string"
+        },
+        "allow_similar_new": {
+          "default": false,
+          "title": "Allow Similar New",
+          "type": "boolean"
+        },
+        "user_confirmed": {
+          "default": false,
+          "title": "User Confirmed",
+          "type": "boolean"
+        },
+        "supersedes": {
+          "default": "",
+          "title": "Supersedes",
+          "type": "string"
+        },
+        "supersedes_expected_version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supersedes Expected Version"
+        }
+      },
+      "required": [
+        "summary"
+      ],
+      "title": "add_lessonArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "add_decision",
+    "description": "记录单条关键决策（用户明确选了某个方案）。 / Record one key decision when the user explicitly chose an option.\n\n**Lifecycle: writeback** — 对话中做出明确决策时调用。\nLifecycle: writeback — call when an explicit decision is made during conversation.\n\n用途：用户说\"我们决定用 X\"或\"以后都用 Y\"时调用。\nPurpose: Call when the user says they decided to use X or will use Y going forward.\n\n注意：如果用户给了一段会话摘要让你自动提取，请用 extract_session_insights 而不是本工具。\nNote: If the user gives a session summary for automatic extraction, use extract_session_insights instead.\n\n决策链（Decision Thread）：同一问题改选方案时，新决策是取代旧决策的提案\n（pending_supersedes），在任何审批模式下都等主人用 engram review 批准，批准前旧决策照常使用。\n也可显式传 supersedes 参数指定被取代的旧决策 ID。\nDecision thread: when the same question gets a different choice than a reviewed\ndecision, the new one is a proposal to replace it (pending_supersedes) that waits for\nthe Owner's engram review in every approval mode; the old one stays in use until then.\nYou may also explicitly pass supersedes with the old ID.\n\nArgs:\n    question: 决策的问题，如\"数据库选型\"。 / Decision question, such as 'database choice'.\n    choice: 做出的选择，如\"PostgreSQL\"。 / Chosen option, such as 'PostgreSQL'.\n    reasoning: 选择的理由（可选）。 / Reasoning for the choice (optional).\n    source_tool: 记录来源工具，如 'claude_code', 'codex'（可选，建议填写）。 / Source tool, such as 'claude_code' or 'codex' (optional but recommended).\n    project: 关联项目（可选）。 / Related project (optional).\n    domain: 技术领域（可选），可填多个，逗号分隔，如 'architecture,database'。 / Technical domain (optional); may contain multiple comma-separated labels such as 'architecture,database'.\n    supersedes: 被本决策取代的旧决策 ID（可选）。填写后自动在决策链中建立 supersedes 关系。 / ID of the old decision this one replaces (optional). Creates a supersedes edge in the decision thread.\n    supersedes_expected_version: 填写 supersedes 时必填：旧决策的当前版本号（读取结果中的 version）。缺失 → version_required，不匹配 → version_conflict，均零写入。 / Required with supersedes: the old decision's current version (version in a read result). Missing -> version_required; mismatch -> version_conflict; both write nothing.\n    source_agent: 产生/校验此决策的 agent 身份（可选）。 / Agent identity that produced or validated this decision (optional).\n    run_id: 产生此决策的工作流/会话运行 ID（可选）。 / Workflow/session run id that produced this decision (optional).\n    last_validated_at: 最近确认此决策仍然成立的 ISO-8601 时间（可选）。 / ISO-8601 time this decision was last confirmed to still hold (optional).\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "choice": {
+          "title": "Choice",
+          "type": "string"
+        },
+        "reasoning": {
+          "default": "",
+          "title": "Reasoning",
+          "type": "string"
+        },
+        "source_tool": {
+          "default": "",
+          "title": "Source Tool",
+          "type": "string"
+        },
+        "project": {
+          "default": "",
+          "title": "Project",
+          "type": "string"
+        },
+        "project_folder": {
+          "default": "",
+          "title": "Project Folder",
+          "type": "string"
+        },
+        "domain": {
+          "default": "",
+          "title": "Domain",
+          "type": "string"
+        },
+        "supersedes": {
+          "default": "",
+          "title": "Supersedes",
+          "type": "string"
+        },
+        "source_agent": {
+          "default": "",
+          "title": "Source Agent",
+          "type": "string"
+        },
+        "run_id": {
+          "default": "",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "last_validated_at": {
+          "default": "",
+          "title": "Last Validated At",
+          "type": "string"
+        },
+        "user_confirmed": {
+          "default": false,
+          "title": "User Confirmed",
+          "type": "boolean"
+        },
+        "supersedes_expected_version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supersedes Expected Version"
+        }
+      },
+      "required": [
+        "question",
+        "choice"
+      ],
+      "title": "add_decisionArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "add_playbook",
+    "description": "记录操作手册（Playbook）— 结构化的多步骤流程。 / Record an operational playbook — a structured multi-step procedure.\n\n用途：完成一个多步骤操作流程后（如发布到 Registry、上架应用等），将步骤和经验记录为 Playbook，\n方便日后调取复用，避免重复摸索。\nPurpose: After completing a multi-step operational process (publishing to a registry, app deployment, etc.),\nrecord the steps as a Playbook for future retrieval.\n\n每条 Playbook 独立存储为单个文件，通过 triggers（记忆点关键词）快速调取。\nEach Playbook is stored as an individual file, quickly retrievable via trigger keywords.\n\n经 MCP 写入的 Playbook 一律进入待审（任何审批模式），主人用 engram review 批准后才会被使用。\nA playbook written over MCP always waits in the review queue (every approval mode); it is used\nonly after the Owner approves it with engram review.\n\nArgs:\n    title: 流程名称，如 'MCP Registry 发布流程'。 / Playbook name, e.g., 'MCP Registry publish workflow'.\n    triggers: 记忆点关键词，逗号分隔，如 '发布,registry,上架'。 / Trigger keywords (comma-separated) for quick retrieval.\n    steps_json: 步骤 JSON 数组，每个元素含 order/action/detail。 / Steps as a JSON array, each with order/action/detail.\n    required_tools_json: 工具依赖 JSON 数组（可选），只声明工具名/用途，不写本机路径。 / Tool dependencies JSON array (optional); declares names/purposes, not local paths.\n    tool_refs: 简写工具名，逗号分隔（可选）。 / Shorthand tool names, comma-separated (optional).\n    description: 流程概述（可选）。 / Brief description (optional).\n    domain: 技术领域，逗号分隔（可选）。 / Domain labels, comma-separated (optional).\n    preconditions: 前提条件，逗号分隔（可选）。 / Preconditions, comma-separated (optional).\n    pitfalls: 常见陷阱，逗号分隔（可选）。 / Common pitfalls, comma-separated (optional).\n    outcome: 预期结果（可选）。 / Expected outcome (optional).\n    source_tool: 来源工具（可选）。 / Source tool (optional).\n    allow_similar_new: 标题相似但不相同、确属另一份手册时设为 true，写入新条目（可选，默认 false）。不能绕过标题完全相同的拒绝；该拒绝会指向已有手册并给出修订方式。 / Set true when a similar but not identical title is genuinely a DIFFERENT playbook, to store it as a new entry (optional, default false). It cannot bypass the refusal of an identical title; that refusal names the existing playbook and how to revise it.\n    supersedes: 本手册修订的已有 playbook ID（可选）。修订提案总是进入待审，主人批准后旧手册才归档；被主人钉住的手册只能这样修订。 / ID of the existing playbook this one revises (optional). A revision is always a proposal that waits for the Owner; the old playbook is retired only on approval. An Owner-pinned playbook can only be revised this way.\n    supersedes_expected_version: 填写 supersedes 时必填：旧手册的当前版本号。缺失 → version_required，不匹配 → version_conflict，均零写入。 / Required with supersedes: the old playbook's current version. Missing -> version_required; mismatch -> version_conflict; both write nothing.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "triggers": {
+          "title": "Triggers",
+          "type": "string"
+        },
+        "steps_json": {
+          "default": "[]",
+          "title": "Steps Json",
+          "type": "string"
+        },
+        "required_tools_json": {
+          "default": "[]",
+          "title": "Required Tools Json",
+          "type": "string"
+        },
+        "tool_refs": {
+          "default": "",
+          "title": "Tool Refs",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "domain": {
+          "default": "",
+          "title": "Domain",
+          "type": "string"
+        },
+        "preconditions": {
+          "default": "",
+          "title": "Preconditions",
+          "type": "string"
+        },
+        "pitfalls": {
+          "default": "",
+          "title": "Pitfalls",
+          "type": "string"
+        },
+        "outcome": {
+          "default": "",
+          "title": "Outcome",
+          "type": "string"
+        },
+        "source_tool": {
+          "default": "",
+          "title": "Source Tool",
+          "type": "string"
+        },
+        "scope_type": {
+          "default": "global",
+          "title": "Scope Type",
+          "type": "string"
+        },
+        "project_folder": {
+          "default": "",
+          "title": "Project Folder",
+          "type": "string"
+        },
+        "source_agent": {
+          "default": "",
+          "title": "Source Agent",
+          "type": "string"
+        },
+        "run_id": {
+          "default": "",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "last_validated_at": {
+          "default": "",
+          "title": "Last Validated At",
+          "type": "string"
+        },
+        "allow_similar_new": {
+          "default": false,
+          "title": "Allow Similar New",
+          "type": "boolean"
+        },
+        "user_confirmed": {
+          "default": false,
+          "title": "User Confirmed",
+          "type": "boolean"
+        },
+        "supersedes": {
+          "default": "",
+          "title": "Supersedes",
+          "type": "string"
+        },
+        "supersedes_expected_version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supersedes Expected Version"
+        }
+      },
+      "required": [
+        "title",
+        "triggers"
+      ],
+      "title": "add_playbookArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_knowledge_history",
+    "description": "查看一个知识条目（lesson/decision/playbook）的修订历史。 / Return the revision history (superseded snapshots) of one knowledge item.\n\n**Lifecycle: retrieval** — 需要追溯某条知识改过什么、何时改的、改前长什么样时调用。\nLifecycle: retrieval — call when you need what changed on an item, when, and what the prior body looked like.\n\n用途：修订后核对旧行为、审计版本链、或找回被改掉的内容。\nPurpose: verify prior behavior after a revision, audit a version chain, or recover replaced content.\n\nArgs:\n    item_id: 条目 ID（稳定 HEAD id，不是快照 id）。 / Item id (the stable HEAD id, not a snapshot id).\n    include_bodies: 是否在结果里带快照正文（默认 false 只给元数据）。 / Include snapshot bodies in the result (default false returns metadata only).\n    version: 精确按版本号取一个快照（可选）；不存在时返回 version_not_found 而不是近似值。 / Exact by-version snapshot lookup (optional); a miss returns version_not_found, never a nearest match.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "item_id": {
+          "title": "Item Id",
+          "type": "string"
+        },
+        "include_bodies": {
+          "default": false,
+          "title": "Include Bodies",
+          "type": "boolean"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        }
+      },
+      "required": [
+        "item_id"
+      ],
+      "title": "get_knowledge_historyArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "update_identity",
+    "description": "提议修改一个身份字段，等待本地审核。 / Propose an identity change for local review.\n\n用途：需要修改 profile、preferences、trust_boundaries、work_style 或 quality_standards 时调用。\nPurpose: Call when changing profile, preferences, trust_boundaries, work_style, or quality_standards.\n\n所有模式只创建 pending 身份提案；Owner 用 engram review 查看旧值/新值并批准或拒绝。\nAll modes create pending identity proposals only; the Owner compares old/new values in engram review.\n批准前自动上下文继续使用已批准身份。trust_boundaries 的变更也需要审核。\nAutomatic context uses approved identity until approval, including trust_boundaries changes.\n\nArgs:\n    field: 字段名：profile、preferences、trust_boundaries、work_style 或 quality_standards。 / Field name: profile, preferences, trust_boundaries, work_style, or quality_standards.\n    updates_json: 包含要更新字段的 JSON 字符串。 / JSON string containing the fields to update.\n    source_tool: 调用来源工具（如 'claude_code', 'codex', 'cursor'），用于字段级溯源。 / Source tool for field-level provenance tracking.\n\nField-specific keys / 字段专用键:\n    profile: role, language, technical_level, description / role、language、technical_level、description。\n    preferences: work_patterns (dict), communication (str), tool_preferences (dict), playbook_auto_extract (bool, default true) / work_patterns（字典）、communication（字符串）、tool_preferences（字典）、playbook_auto_extract（布尔，默认 true）。\n    trust_boundaries: default_sharing, tool_access, private_fields, restricted_fields / default_sharing、tool_access、private_fields、restricted_fields。\n    work_style: preferences (dict), communication (str) / preferences（字典）、communication（字符串）。\n    quality_standards: acceptance_threshold (1-5), rules (list) / acceptance_threshold（1-5）、rules（列表）。\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "updates_json": {
+          "title": "Updates Json",
+          "type": "string"
+        },
+        "source_tool": {
+          "default": "",
+          "title": "Source Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "updates_json"
+      ],
+      "title": "update_identityArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "save_project_snapshot",
+    "description": "写入或更新项目的知识快照（写操作，不是读取）。 / Write or update a project's knowledge snapshot; this is a write operation, not a read.\n\n用途：保存或更新当前项目的技术栈、已知问题、注释等信息。\nPurpose: Call to save or update a project's tech stack, known issues, notes, and related metadata.\n\n注意：读取项目快照用 get_project_context，不是本工具。\nNote: Use get_project_context to read a project snapshot; this tool writes one.\n\nArgs:\n    project_folder: 项目文件夹路径。 / Project folder path.\n    data_json: JSON 字符串，支持字段 title、tech_stack、known_issues、notes。 / JSON string supporting fields: title, tech_stack, known_issues, and notes.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "project_folder": {
+          "title": "Project Folder",
+          "type": "string"
+        },
+        "data_json": {
+          "title": "Data Json",
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_folder",
+        "data_json"
+      ],
+      "title": "save_project_snapshotArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "wrap_up_session",
+    "description": "会话结束一键收尾：自动提取知识、操作流程并保存项目快照。 / Wrap up a session in one step: extract knowledge, detect playbooks, and save a project snapshot.\n\n**Lifecycle: session-end** — 对话结束时调用，完成知识提取和上下文保存。\nLifecycle: session-end — call at conversation end to extract knowledge and persist session context.\n\n用途：一次对话结束时调用，把会话摘要交给 Engram 自动提取 lessons、decisions 和 Playbook 草稿，并可选更新项目快照。\nPurpose: Call at the end of a conversation to let Engram extract lessons, decisions, and playbook drafts from the summary and optionally update the project snapshot.\n\nPlaybook 自动提取：如果摘要描述了一个多步骤操作流程（3+ 步骤，含顺序标记和操作动词），会自动生成 Playbook 草稿存入 staging。返回值中会包含 playbook_draft 字段（含 confidence: high/medium），AI 工具应根据 confidence 决定是否提示用户。可通过 update_preferences(playbook_auto_extract=false) 关闭此功能。\nPlaybook auto-extraction: If the summary describes a multi-step operational workflow (3+ steps with sequential markers and action verbs), a Playbook draft is auto-generated into staging. The return value includes a playbook_draft field (with confidence: high/medium); AI tools should decide whether to notify the user based on confidence. Disable via update_preferences(playbook_auto_extract=false).\n\n注意：如果只想提取知识不用保存项目，用 extract_session_insights；如果只想保存项目快照，用 save_project_snapshot。\nNote: Use extract_session_insights when you only want extraction, and save_project_snapshot when you only want to save a project snapshot.\n\nArgs:\n    summary: 会话摘要（自由文本，段落或要点列表均可）。 / Session summary in free text; paragraphs or bullet lists both work.\n    project_folder: 项目文件夹路径（可选，不填则只提取知识不保存快照）。 / Project folder path (optional; omit it to extract knowledge without saving a snapshot).\n    source_tool: 调用来源工具，如 'claude_code', 'codex'。 / Calling source tool, such as 'claude_code' or 'codex'.\n    project_title: 项目名称（可选，仅在首次保存快照时需要）。 / Project title (optional; mainly needed when first saving a snapshot).\n    tech_stack: 技术栈（可选，逗号分隔）。 / Tech stack (optional, comma-separated).\n    known_issues: 已知问题（可选，逗号分隔）。 / Known issues (optional, comma-separated).\n    run_reconcile: 兼容保留，不再导入任何内容；其它 AI 工具的记忆只能由用户在终端运行 `engram import-memories` 导入。 / Kept for compatibility and imports nothing; memories in other AI tools are imported only by the user running `engram import-memories` in a terminal.\n    idempotency_key: 可选幂等键；重试同一键只返回既有 operation 状态，不重复写入。 / Optional idempotency key; retrying the same key returns the existing operation status without duplicate writes.\n    reconcile_scope: 兼容保留（只回显在 maintenance.reconcile_scope）。 / Kept for compatibility (echoed in maintenance.reconcile_scope only).\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "project_folder": {
+          "default": "",
+          "title": "Project Folder",
+          "type": "string"
+        },
+        "source_tool": {
+          "default": "",
+          "title": "Source Tool",
+          "type": "string"
+        },
+        "project_title": {
+          "default": "",
+          "title": "Project Title",
+          "type": "string"
+        },
+        "tech_stack": {
+          "default": "",
+          "title": "Tech Stack",
+          "type": "string"
+        },
+        "known_issues": {
+          "default": "",
+          "title": "Known Issues",
+          "type": "string"
+        },
+        "user_confirmed": {
+          "default": false,
+          "title": "User Confirmed",
+          "type": "boolean"
+        },
+        "run_reconcile": {
+          "default": false,
+          "title": "Run Reconcile",
+          "type": "boolean"
+        },
+        "idempotency_key": {
+          "default": "",
+          "title": "Idempotency Key",
+          "type": "string"
+        },
+        "reconcile_scope": {
+          "default": "project",
+          "title": "Reconcile Scope",
+          "type": "string"
+        }
+      },
+      "required": [
+        "summary"
+      ],
+      "title": "wrap_up_sessionArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_wrap_up_session_status",
+    "description": "读取 wrap_up_session 的阶段状态。 / Read metadata-only stage status for a wrap_up_session operation.\n\n用途：当 MCP 客户端在会话收尾时遇到 transport timeout，可用调用前已知的\nidempotency_key，或成功返回过的 operation_id，查询最后阶段和终态。长期未更新的\nrunning 会只读标记为 stale_running。该工具不返回会话摘要正文或项目本地路径。\nPurpose: after a session-closeout transport timeout, query metadata-only\nstate by the caller-known idempotency_key or a returned operation_id.\nLong-unupdated running records are projected as stale_running without\nmutating the record. No summary text or local project path is returned.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "default": "",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "idempotency_key": {
+          "default": "",
+          "title": "Idempotency Key",
+          "type": "string"
+        }
+      },
+      "title": "get_wrap_up_session_statusArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "doctor",
+    "description": "记忆系统自诊断。 / Memory system self-diagnosis.\n\n用途：检查 Engram 记忆系统健康状态，发现潜在问题（数据碎片、过期知识、冲突决策、\n身份层异常等）。这是 MCP doctor；CLI 冲突视图请用 ``engram conflicts list``。\nPurpose: Run a comprehensive health check on the Engram memory system —\ndetects data fragmentation, stale knowledge, conflicting decisions, identity\nissues, and more.\n\nArgs:\n    output_format: \"markdown\" 或 \"json\"。 / \"markdown\" or \"json\".\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "output_format": {
+          "default": "markdown",
+          "title": "Output Format",
+          "type": "string"
+        }
+      },
+      "title": "doctorArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_recent_context",
+    "description": "找回最近的 AI 对话上下文。 / Retrieve the most recent AI conversation context.\n\n用途：上下文丢失时（工具重启、会话断开）调用，找回之前的工作状态。\nPurpose: Call after context loss (tool restart, session disconnect) to recover previous work state.\n\n不会自动加载到新会话 — 只在你需要时才读取。\nDoes NOT auto-load into new sessions — only reads when you ask.\n\nArgs:\n    tool: 工具名（可选）。留空则搜索所有工具的上下文。 / Tool name (optional). Empty searches all tools.\n    limit: 最多返回几个会话（默认 1 = 最近一次）。 / Max sessions to return (default 1 = most recent).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "tool": {
+          "default": "",
+          "title": "Tool",
+          "type": "string"
+        },
+        "project_folder": {
+          "default": "",
+          "title": "Project Folder",
+          "type": "string"
+        },
+        "limit": {
+          "default": 1,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "title": "get_recent_contextArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_resume_brief",
+    "description": "跨会话/跨工具接续简报（v3.30 新增）。 / Cross-session, cross-tool resume brief.\n\n**用途：v3.30 行业首家\"一次调用拿到完整接续简报\"的高层 API。**\n用户切换工具（Claude Code → Codex/Cursor）或开新对话时，AI 调用本工具\n一次即可拿到：用户身份 + 当前项目状态 + 今日日志 + 最近会话上下文 +\n最近经验/决策 + 建议阅读的项目文档清单。结果用\n``<engram-resume priority=\"high\">`` XML 标签包裹，提示客户端 AI 优先遵守。\n\nPurpose (v3.30): the \"what does the next AI need to know in 30 seconds\"\nhigh-level endpoint. When users switch tools or open a new chat,\ncalling this once returns identity + project state + today's daily log\n+ recent context + top lessons/decisions + suggested project docs to\nread. Result is wrapped in ``<engram-resume priority=\"high\">`` so client\nAIs (Claude Code additionalContext, Codex system prompt, etc.) treat\nit as high-priority reference context.\n\nLifecycle: **session start** — call before the first user message in a\nnew session when continuing prior work, or whenever the user says\nthings like \"接着上次\", \"继续之前\", \"what were we doing\".\n\nArgs:\n    project_folder: 项目文件夹路径（可选）。留空只返回身份卡。 /\n        Project folder (optional). Empty returns identity-only.\n    token_budget: 输出 token 软上限（默认 2000，约 8000 字符）。超出时结果带 omitted，正文末尾注明省略了什么。 /\n        Soft cap for output tokens (default 2000 ≈ 8000 chars). When it cuts content,\n        the result carries ``omitted`` and the brief ends with one line naming what was left out.\n    include_resume_pack: Include structured ``project_resume_pack.v1`` in\n        the JSON response. Defaults to false to preserve existing output.\n    include_agent_context_pack: Include structured\n        ``agent_context_pack.v1`` for delegated sub-agent briefing.\n        Defaults to false to preserve existing output.\n    agent_role: Role used to shape the optional agent context pack.\n    task_summary: Current delegated task summary for agent-pack selection.\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_folder": {
+          "default": "",
+          "title": "Project Folder",
+          "type": "string"
+        },
+        "token_budget": {
+          "default": 2000,
+          "title": "Token Budget",
+          "type": "integer"
+        },
+        "include_resume_pack": {
+          "default": false,
+          "title": "Include Resume Pack",
+          "type": "boolean"
+        },
+        "include_agent_context_pack": {
+          "default": false,
+          "title": "Include Agent Context Pack",
+          "type": "boolean"
+        },
+        "agent_role": {
+          "default": "orchestrator",
+          "title": "Agent Role",
+          "type": "string"
+        },
+        "task_summary": {
+          "default": "",
+          "title": "Task Summary",
+          "type": "string"
+        }
+      },
+      "title": "get_resume_briefArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_recall",
+    "description": "获取结构化 Recall Surface v1 载荷。 / Get a structured Recall Surface v1 payload.\n\n用途：在新任务、跨工具接续或需要\"一次拿到可执行记忆包\"时调用。\n返回身份摘要、最近活动、项目/查询相关知识和治理元数据。\nPurpose: Call when a new task or cross-tool handoff needs one structured,\nactionable memory bundle: identity slice, recent activity, relevant\nknowledge, and governance metadata.\n\n只返回已审核且当前有效的知识；预算裁掉内容时 meta.omitted 给出 {omitted_count, ids, sections, reason}。\nReturns reviewed, current knowledge only; when the budget drops items,\nmeta.omitted reports {omitted_count, ids, sections, reason} (no content).\n\n注意：该聚合视图可能组合多类知识和最近上下文，因此治理开启时仅 owner\n(private-self) 可读；非 owner 会在读取前被拒绝，不触发搜索或遥测写入。\nNote: Because this aggregate view can combine multiple knowledge classes and\nrecent context, it is owner-only when governance is enabled. Non-owners are\nrefused before any search or telemetry side effect runs.\n\nArgs:\n    project_folder: 项目文件夹路径（可选）。 / Project folder path (optional).\n    query: 可选搜索焦点。 / Optional search focus.\n    limit: 最多返回多少条知识（默认 8，上限 20）。 / Max knowledge items (default 8, max 20).\n    token_budget: 知识片段的粗略 token 预算（默认 2000）。 / Rough token budget for knowledge items.\n    include_freshness: 是否附加 freshness 提示。 / Attach freshness hints.\n    collapse_versions: 保留兼容；被取代的旧版本、待审和已归档条目一律不进入召回。 / Kept for compatibility; superseded versions, pending and archived items never enter recall.\n    include_playbooks: 是否附带 playbook 指针桶（v4.20，默认 False；元数据+240 字描述预览，完整步骤永不入召回，最多 2 条且 ≤25% 知识预算）。 / Attach the playbook pointer bucket (v4.20, default False; metadata + 240-char description preview, full steps never enter recall, max 2 items and <=25% of the knowledge budget).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_folder": {
+          "default": "",
+          "title": "Project Folder",
+          "type": "string"
+        },
+        "query": {
+          "default": "",
+          "title": "Query",
+          "type": "string"
+        },
+        "limit": {
+          "default": 8,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "token_budget": {
+          "default": 2000,
+          "title": "Token Budget",
+          "type": "integer"
+        },
+        "include_freshness": {
+          "default": true,
+          "title": "Include Freshness",
+          "type": "boolean"
+        },
+        "collapse_versions": {
+          "default": true,
+          "title": "Collapse Versions",
+          "type": "boolean"
+        },
+        "include_playbooks": {
+          "default": false,
+          "title": "Include Playbooks",
+          "type": "boolean"
+        }
+      },
+      "title": "get_recallArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_daily_log",
+    "description": "读取项目的每日日志（人类可读的会话时间线）。 / Read a project's daily log (human-readable session timeline).\n\n用途：v3.30 新增——每次 wrap_up_session 会在 ``~/.engram/daily/<pid>/<YYYY-MM-DD>.md``\n追加一条带时间戳的条目（含 lesson/decision/playbook 计数 + 摘要前 600 字符）。\n新会话需要\"上次到底干了什么\"的快速概览时调本工具，比 search_knowledge 更直观。\nPurpose (v3.30): every wrap_up_session appends a timestamped entry to\n``~/.engram/daily/<pid>/<YYYY-MM-DD>.md`` with a lesson/decision tally\nand the first ~600 chars of the summary. Call this when a new session\nneeds a glance-able \"what happened today\" timeline — faster than\nsearch_knowledge for recall.\n\nArgs:\n    project_folder: 项目文件夹路径。 / Project folder path.\n    date: ISO 日期 ``YYYY-MM-DD``（可选，默认今天）。 / ISO date (optional, defaults to today).\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "project_folder": {
+          "title": "Project Folder",
+          "type": "string"
+        },
+        "date": {
+          "default": "",
+          "title": "Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_folder"
+      ],
+      "title": "get_daily_logArguments",
+      "type": "object"
+    }
+  }
+]

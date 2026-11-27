@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：可执行是带子命令的 CLI，不带子命令只打印用法（或跑别的功能）就退出；MCP 服务器在 `run` 子命令（取自包 README / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: forevervm
 display_name: ForeverVM
 display_name_en: ForeverVM
-version: 0.1.1
+version: 0.1.2
 description: MCP Server for ForeverVM, enabling Claude to execute code in a Python REPL.
 description_zh: 在代码沙盒中运行 Python 代码。
 author: jamsocket
@@ -27,6 +28,7 @@ runtimes:
   args:
   - -y
   - forevervm-mcp@0.1.35
+  - run
   requires:
     node: '>=18'
 requires_env: []

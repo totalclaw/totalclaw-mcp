@@ -1,0 +1,125 @@
+[
+  {
+    "name": "math.find",
+    "description": "Find or inspect public Jacobian MCP operations.\n\nForms:\n- `query`: describe one local mathematical need in ordinary language. `namespace`,\n  `limit`, `cursor`, and `search_mode` are optional search controls.\n  Preserve established mathematical names from the task, the supplied objects and\n  constraints, the requested computation or decision, the full scalar, batch, or\n  exhaustive scope, and whether the requested result is a value, witness,\n  certificate, obstruction, profile, or complete enumeration. Do not replace a\n  supplied named property only with its expanded definition, translate the need into\n  catalog tags, or submit the surrounding proof goal.\n- `operation_id`: pass one exact operation ID to receive its authoritative\n  input and output schemas, operator-authored examples, and current optional\n  backend availability. Matches expose static `runtime_requirements`; inspection\n  checks these runtimes in the server environment.\n\nFor matching, use `namespace` only when the primary operation-ID namespace is already\nknown with high confidence. Matching returns 10 candidates by default; request up to\n20 when a wider first page is useful. Follow `next_cursor` with the same query, namespace, and search_mode\nto continue; the limit may change. Ordered matches are deterministic retrieval candidates, not\napplicability claims; inspect a promising operation before math.run. Read\n`operation://catalog` only when the complete bulk catalog is genuinely needed.\n\nAn unknown operation ID returns `kind: \"error\"` with `error.code: \"UNKNOWN_OPERATION\"`;\ninspect `kind` even when MCP `isError` is false. Search with `query` to find an\ninstalled operation, then inspect its exact ID. Zero matches is a successful search.\n\nExamples:\n- `{\"query\":\"exact determinant of a rational matrix\",\"namespace\":\"matrix\",\"limit\":3}`\n- `{\"operation_id\":\"polynomial.compute.gcd\"}`\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "query": {
+          "anyOf": [
+            {
+              "description": "A concise description of the complete local mathematical result needed. Preserve established mathematical names from the task, the supplied objects and constraints, the requested computation or decision, the full scalar, batch, or exhaustive scope, and whether the requested result is a value, witness, certificate, obstruction, profile, or complete enumeration. Prefer ordinary mathematical language to catalog tags; do not replace a supplied named property only with its expanded definition.",
+              "maxLength": 4096,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        },
+        "operation_id": {
+          "anyOf": [
+            {
+              "description": "Exact public operation ID returned by a prior math.find match or listed in operation://catalog.",
+              "maxLength": 128,
+              "minLength": 3,
+              "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Operation Id"
+        },
+        "namespace": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional exact primary operation-ID namespace. Omit it unless already known with high confidence.",
+          "title": "Namespace"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "description": "Maximum compact matches to return.",
+              "maximum": 20,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Limit"
+        },
+        "cursor": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Opaque continuation cursor from a prior call with the same query, namespace, and search_mode. The page limit may change between calls.",
+          "title": "Cursor"
+        },
+        "search_mode": {
+          "default": "precise",
+          "description": "Precise applicability filtering or broad lexical recall.",
+          "enum": [
+            "precise",
+            "broad"
+          ],
+          "title": "Search Mode",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "title": "math_findArguments"
+    }
+  },
+  {
+    "name": "math.run",
+    "description": "Run one installed math tool by ID with its typed `payload`. A successful call returns\nthe operation-owned canonical mathematical value in `output`; a later inspected\noperation may accept that complete value unchanged. Read its fields to determine what\nthe calculation established. MCP reports malformed payloads, unknown IDs, and host\nfailures as tool errors, not as mathematical results. If the payload shape is unknown,\ninspect the exact operation with math.find. When it publishes an `examples` item, copy\nand adapt that item's `input` object as the `payload`; otherwise, form the payload from\nthe input schema and its field descriptions. Do not call math.run with an empty\n`payload` merely to discover required fields; inspection is authoritative.\n\nTimeout, incomplete search, and missing witnesses appear only in the concrete domain\nresult that owns them; none is a mathematical conclusion by itself.\n\nExamples:\n- `{\"operation_id\":\"integer.compute.extended_gcd\",\"payload\":{\"left\":\"84\",\"right\":\"30\"}}`\n",
+    "read_only": true,
+    "input_schema": {
+      "properties": {
+        "operation_id": {
+          "maxLength": 128,
+          "minLength": 3,
+          "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": true,
+          "title": "Payload",
+          "type": "object"
+        }
+      },
+      "required": [
+        "operation_id",
+        "payload"
+      ],
+      "type": "object",
+      "title": "math_runArguments"
+    }
+  }
+]

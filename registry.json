@@ -4,7 +4,7 @@
   "id_scheme": "<registry>/<category>/<name>",
   "source": "https://gitee.com/jlzdyx/totalclaw-mcp.git",
   "api_base": "https://mcp.taituai.com/api",
-  "generated_at": "2026-11-27T10:07:12Z",
+  "generated_at": "2026-11-27T10:16:46Z",
   "servers": [
     {
       "name": "agent_recall",
@@ -585,7 +585,7 @@
       "display_name_en": "EGC",
       "description": "EGC is a local-first MCP runtime that gives every AI agent the same brain: persistent shared memory, security guardrails, and up to 90% token savings across 29 AI coding tools.",
       "description_zh": "跨会话持久记忆 MCP 服务，支持 Claude Code、Cursor、Gemini CLI、Codex、Windsurf 等多种 AI 编程工具，SQLite 本地存储，上下文重置后状态保持。提供 egc-memory（14 工具）与 egc-guardian（5 工具）。`npm install -g @egchq/egc`",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "Fmarzochi",
       "license": "Apache-2.0",
       "homepage": "https://github.com/Fmarzochi/EGC",
@@ -619,11 +619,37 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 24,
+      "tools": [
+        "get_project_state",
+        "store_decision",
+        "query_history",
+        "search_history",
+        "get_state",
+        "update_state",
+        "session_announce",
+        "claim_path",
+        "release_path",
+        "session_peers",
+        "session_send",
+        "session_events",
+        "session_wait",
+        "working_memory_set",
+        "working_memory_get",
+        "working_memory_list",
+        "lesson_save",
+        "lesson_recall",
+        "lesson_reinforce",
+        "detect_patterns",
+        "compress_observations",
+        "team_init",
+        "team_sync",
+        "team_status"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/ai/egc",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/ai/egc",
@@ -634,11 +660,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "7263c2434acaa26a12cba284d1a5dff471c9108e3483bff0332833c4fd74deaa",
-          "size": 1258
+          "sha256": "ed931a44f79fb396f3ecc316f50480d3471813c68e33eb29dbe17589fb6857f9",
+          "size": 1601
+        },
+        {
+          "path": "tools.json",
+          "sha256": "c97e3d84be1ec760c605c8d8266a679e3dfc599ddc053440442b8cfaccf12264",
+          "size": 24615
         }
       ],
-      "bundle_sha256": "768c020baa052266b3038ab0b48c5fa0ce3ef4dfac4c3264e48e90785662c023",
+      "bundle_sha256": "38b22d667acf6e281929998914ef4113a263f3e3781fc4de0222f8e0ac0b2543",
       "popularity": {
         "score": 243,
         "downloads_weekly": 271
@@ -1561,7 +1592,7 @@
       "display_name_en": "piia-engram",
       "description": "Local-first personal AI identity and memory for MCP-compatible coding tools — lessons, decisions, playbooks, and project context you can see, edit, and override.",
       "description_zh": "跨工具持久化 AI 记忆——你的身份、偏好、经验教训跟随你在 Claude Code、Cursor、Codex 等工具间流转。本地存储，无需云端。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "Patdolitse",
       "license": "AGPL-3.0-or-later",
       "homepage": "https://github.com/Patdolitse/piia-engram",
@@ -1595,11 +1626,32 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 19,
+      "tools": [
+        "get_user_context",
+        "get_identity_card",
+        "get_project_context",
+        "get_relevant_knowledge",
+        "search_knowledge",
+        "memory_store",
+        "add_lesson",
+        "add_decision",
+        "add_playbook",
+        "get_knowledge_history",
+        "update_identity",
+        "save_project_snapshot",
+        "wrap_up_session",
+        "get_wrap_up_session_status",
+        "doctor",
+        "get_recent_context",
+        "get_resume_brief",
+        "get_recall",
+        "get_daily_log"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/ai/piia_engram",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/ai/piia_engram",
@@ -1610,11 +1662,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "550cbf59a456012c7b84c9807276cfe7d6fc383cc68f618818c0df0c332fe456",
-          "size": 1181
+          "sha256": "56c84af5b4152371f54519f67b11256678ed46b1f1039ee52cca97a22079b2f9",
+          "size": 1506
+        },
+        {
+          "path": "tools.json",
+          "sha256": "ae31dfd785201b11f52b4e7e2fef6f29c3530d3d7e1c9ba6a63285f5d1e68bc7",
+          "size": 53224
         }
       ],
-      "bundle_sha256": "9d793c90da30598612eefced607cba350c5570cbcbaf24644dba340d5324503b",
+      "bundle_sha256": "5f5e6a1a91addec7106acbe1d0e5de0eed1c794786fc600bbc3ade42dbe76050",
       "popularity": {
         "score": 256,
         "downloads_weekly": 362
@@ -20264,7 +20321,7 @@
       "display_name_en": "Bernstein",
       "description": "The open-source governance layer for AI agents. No model in the coordination loop, so replaying a plan reproduces its task graph byte-identically, and run receipts are byte-identical across independent builds. Signed lineage plus an opt-in HMAC audit chain a reviewer checks offline, without rerunnin",
       "description_zh": "多智能体编排器，协调 37 个 CLI 编码代理（Claude Code、Codex、Gemini CLI、Cursor、Aider 等）在并行 Git worktree 中运行。内置 MCP 服务器模式（stdio + HTTP/SSE）。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "sipyourdrink-ltd",
       "license": "Apache-2.0",
       "homepage": "https://github.com/sipyourdrink-ltd/bernstein",
@@ -20298,11 +20355,27 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 14,
+      "tools": [
+        "bernstein_run",
+        "bernstein_subscribe",
+        "bernstein_status",
+        "bernstein_claim",
+        "bernstein_create_task",
+        "bernstein_post_message",
+        "bernstein_post_artifact",
+        "bernstein_cancel",
+        "bernstein_shutdown_orchestrator",
+        "bernstein_approve",
+        "bernstein_complete",
+        "bernstein_run_status",
+        "bernstein_task_capsule",
+        "load_skill"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/bernstein",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/bernstein",
@@ -20313,11 +20386,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "2ead4971398db753bcd1557fc909eeb701353af8ccb2b30015b996b00581efce",
-          "size": 1359
+          "sha256": "31501e03c7c5df478eec13037936af3c44cb6f1c5e6d32a9093486f829bbfdad",
+          "size": 1677
+        },
+        {
+          "path": "tools.json",
+          "sha256": "0fd1c88795581b3a67695a86914251fe684bca8f9ca0d956b74956c085291414",
+          "size": 23354
         }
       ],
-      "bundle_sha256": "465f57f239e69ba537b915f8d9d14aeff66a72d90081c579c95eb93118171654",
+      "bundle_sha256": "40aa9f188f39417f99afb61d73d90b7908a9b52f792ef917270f42e05ab56a87",
       "popularity": {
         "score": 448,
         "downloads_weekly": 29923
@@ -20906,7 +20984,7 @@
       "display_name_en": "code-graph-rag",
       "description": "The ultimate RAG for your monorepo. Query, understand, and edit multi-language codebases with the power of AI and knowledge graphs",
       "description_zh": "面向 monorepo 的代码图谱 RAG：把多语言代码库解析成图结构，支持跨语言查询、理解与编辑。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "vitali87",
       "license": "MIT",
       "homepage": "https://github.com/vitali87/code-graph-rag",
@@ -20940,11 +21018,48 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 35,
+      "tools": [
+        "list_projects",
+        "delete_project",
+        "wipe_database",
+        "index_repository",
+        "update_repository",
+        "reingest",
+        "resolve",
+        "definition",
+        "callers",
+        "callees",
+        "implementors",
+        "overrides",
+        "annotate",
+        "glosses",
+        "importers",
+        "tests_reaching",
+        "endpoints",
+        "endpoint_callers",
+        "remote_dependencies",
+        "rename",
+        "change_signature",
+        "move",
+        "context",
+        "query_code_graph",
+        "get_code_snippet",
+        "surgical_replace_code",
+        "read_file",
+        "write_file",
+        "list_directory",
+        "find_duplicate_code",
+        "get_function_source",
+        "ask_agent",
+        "flow_verdict",
+        "explain_traceback",
+        "rank_root_causes"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/code_graph_rag",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/code_graph_rag",
@@ -20955,11 +21070,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "9d25f8ae3da0cf99a5347e2f2fb3a0afbd843f3c7c231470ca8edc3fcb7c0057",
-          "size": 1106
+          "sha256": "5bb5dcc7d10bb33b2eedad52561309301c7a257ee97a4c56a5659e01286833e2",
+          "size": 1376
+        },
+        {
+          "path": "tools.json",
+          "sha256": "447638c554c81d08a9c6661c912172b4a90783a81dd8ef619ffbdda07642b08c",
+          "size": 42811
         }
       ],
-      "bundle_sha256": "ff387601abcfec58a26264c609a2a0203ec65c6d98c3e206ab5257d875674a05",
+      "bundle_sha256": "2b3aefa7fdd0d3d4415411229367e74341b941c634f2b4b2128c0d7d6ffdf7e4",
       "popularity": {
         "score": 674,
         "downloads_weekly": 1042,
@@ -22030,7 +22150,7 @@
       "display_name_en": "flameox",
       "description": "Runtime evidence that helps agents trace, profile, and burn down hotspots in application and native code, GPU kernels, and inference stacks.",
       "description_zh": "面向智能体的性能分析与优化工具包：可采集追踪、对比运行，并保留原生运行时证据，用于定位应用、原生服务、GPU 内核和推理负载中的瓶颈。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "morluto",
       "license": "MIT",
       "homepage": "https://github.com/morluto/flameox",
@@ -22064,11 +22184,64 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 51,
+      "tools": [
+        "summarize_trace",
+        "inspect_trace_call_graph",
+        "summarize_pytorch_trace",
+        "summarize_trace_operations",
+        "summarize_trace_lifecycle",
+        "inspect_trace_window",
+        "rank_cpu_hotspots",
+        "inspect_cpu_callers",
+        "rank_allocation_hotspots",
+        "rank_retained_memory",
+        "summarize_benchmarks",
+        "analyze_benchmark_scaling",
+        "compare_benchmarks",
+        "summarize_inference",
+        "compare_inference",
+        "inspect_gpu_launches",
+        "inspect_gpu_kernel_metrics",
+        "inspect_triton_autotune",
+        "inspect_sanitizer_failures",
+        "inspect_kernel_validation",
+        "compare_kernel_validation",
+        "summarize_failures",
+        "inspect_pytest_fixtures",
+        "summarize_coverage",
+        "inspect_performance_candidates",
+        "preview_artifact",
+        "capture_and_summarize_trace",
+        "capture_and_inspect_trace_call_graph",
+        "capture_and_summarize_pytorch_trace",
+        "capture_and_summarize_trace_operations",
+        "capture_and_summarize_trace_lifecycle",
+        "capture_and_inspect_trace_window",
+        "capture_and_rank_cpu_hotspots",
+        "capture_and_inspect_cpu_callers",
+        "capture_and_rank_allocation_hotspots",
+        "capture_and_rank_retained_memory",
+        "capture_and_summarize_benchmarks",
+        "capture_and_analyze_benchmark_scaling",
+        "capture_and_inspect_gpu_launches",
+        "capture_and_inspect_gpu_kernel_metrics",
+        "capture_and_inspect_triton_autotune",
+        "capture_and_inspect_sanitizer_failures",
+        "capture_and_summarize_failures",
+        "capture_and_inspect_pytest_fixtures",
+        "capture_and_summarize_coverage",
+        "capture_and_preview_artifact",
+        "prepare_providers",
+        "preserve_evidence",
+        "rescue_evidence",
+        "query_evidence",
+        "inspect_evidence"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/flameox",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/flameox",
@@ -22079,11 +22252,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "99716adbea3ec790419cd221f70b43fbaa2106ab9b79982331973f4a8724310b",
-          "size": 1142
+          "sha256": "d8557e03af60392a08db8b6ffde72ef5ce8c2abb202cc15d847c2fb70709c53c",
+          "size": 1466
+        },
+        {
+          "path": "tools.json",
+          "sha256": "602e5ed96dd6ee95777cd8b5bfc12182fac1fe71e5c16abdd18269f11da07007",
+          "size": 465944
         }
       ],
-      "bundle_sha256": "96c1dded044438270c00d4452344df1b783af157f17f089488c221936128c4a5",
+      "bundle_sha256": "15ac06b6f92a21c37bd7f9ba3f9229bf7d1ecdb44cf5256fc5296323cd925851",
       "popularity": {
         "score": 443,
         "downloads_weekly": 119,
@@ -22097,7 +22275,7 @@
       "display_name_en": "ForeverVM",
       "description": "MCP Server for ForeverVM, enabling Claude to execute code in a Python REPL.",
       "description_zh": "在代码沙盒中运行 Python 代码。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "jamsocket",
       "license": "ISC",
       "homepage": "https://github.com/jamsocket/forevervm/tree/main/javascript/mcp-server",
@@ -22146,11 +22324,11 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "40a0e014d2be8bc952cd85c3400d2942cdb2041371606f1c30253ace22a28cdd",
-          "size": 1012
+          "sha256": "abbbd1b8486ba5ca433410b56fd3022c0ebc00d50e769d474753658942c76633",
+          "size": 1202
         }
       ],
-      "bundle_sha256": "e063e20ed6f64bbe7ad232f380400fe47466700b3277d6efffbcf6949495e1c3",
+      "bundle_sha256": "92dc4fd546f4a7933042ed00c6f076ba303f7907bac74280b60a65943805dee3",
       "popularity": {
         "score": 423,
         "downloads_weekly": 72,
@@ -23210,7 +23388,7 @@
       "display_name_en": "jev-use",
       "description": "Claude Code / Codex / pi plugin that hands the agent steps needing no text output to Jev (TypeSafe's judgment model) — measured p50 ~230 ms and ~$0.02 per 1,000 judgments, with typed escalation back to the LLM.",
       "description_zh": "把 Claude Code / Codex / pi 里不需要输出文本的步骤交给 Jev 判断：构建好了吗、点哪个元素、这条命令安不安全，一次调用批量回答，需要写文本或拿不准的按类型化契约退回 LLM。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "shitianfang",
       "license": "MIT",
       "homepage": "https://github.com/shitianfang/jev-use",
@@ -23244,11 +23422,15 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 2,
+      "tools": [
+        "jev_judge",
+        "jev_gate"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/jev_use",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/jev_use",
@@ -23259,11 +23441,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "efbcd8fffb1b740212274a78435ea4f36b9cce3425d431cc7fd67462711cd0b3",
-          "size": 1268
+          "sha256": "f03fe884424d21b6cca786840719896952674011085f0cbc7ff6c8265493f87d",
+          "size": 1589
+        },
+        {
+          "path": "tools.json",
+          "sha256": "7084217309b3d0bfcd4c1d0f695acf6ce71edc6f89d4f51639e606808f94fbad",
+          "size": 6622
         }
       ],
-      "bundle_sha256": "afd9ef218c89b6ed713a21048896c962434ef0b96fd6bfbb150c33bb2d5e3435",
+      "bundle_sha256": "395fcef203e1ead2526ee17b68ce93c15e104cc85b1eef94a929d78af9b1de2f",
       "popularity": {
         "score": 294,
         "downloads_weekly": 860
@@ -24110,7 +24297,7 @@
       "display_name_en": "mcptoon",
       "description": "One zero-dependency CLI to manage every MCP server and agent skill: token optimization for tool discovery (71,929 -> 581 tokens, -99.2% measured, schemas stay out of context), one config for every agent.",
       "description_zh": "零依赖的 MCP 客户端 CLI：自动发现并接管机器上的 MCP server，把上百个工具的清单压缩成 agent 友好的紧凑格式（工具发现 token 省 99.2%，tiktoken 实测）；`mcptoon serve` 让一个 Agent 直连上百个 server，`sync` 把统一配置分发到 Claude/Codex/Cursor 等 agent，`health` 可检出僵尸 server。已上架 MCP Registry 与 numtide/llm-agents.nix。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "activeing123",
       "license": "Apache-2.0",
       "homepage": "https://github.com/activeing123/mcptoon",
@@ -24144,11 +24331,25 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 12,
+      "tools": [
+        "mcptoon_manifest",
+        "mcptoon_servers",
+        "mcptoon_health",
+        "mcptoon_usage",
+        "mcptoon_skills",
+        "mcptoon_resolve_skills",
+        "mcptoon_inspect",
+        "mcptoon_call",
+        "mcptoon_retrieve",
+        "mcptoon_kb_search",
+        "mcptoon_kb_index",
+        "mcptoon_session"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/mcptoon",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/mcptoon",
@@ -24159,11 +24360,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "52f51a243ab649e9409caa008e60e2c94a3c95b015e9b6cbff205618c9a0f846",
-          "size": 1445
+          "sha256": "b00177aff702e859db6847a435f6f6d6b1cf3583c5626117989a90a6573d440e",
+          "size": 1767
+        },
+        {
+          "path": "tools.json",
+          "sha256": "324172728d77703e0236f284ad808babbbe6d52e9496724cb0fd0b20b42cb0cf",
+          "size": 7536
         }
       ],
-      "bundle_sha256": "eb91c0ee849ebe7742ee5f26ef4f1adfb49810ee958c3953ca834b39a9e5eb43",
+      "bundle_sha256": "fdac3b26d8597af40b75652225f139580c5e9989f1f03dc07fca0f702ca54639",
       "popularity": {
         "score": 573,
         "downloads_weekly": 1326,
@@ -25506,7 +25712,7 @@
       "display_name_en": "Semble",
       "description": "Fast and Accurate Code Search for Agents",
       "description_zh": "面向 Agent 的语义代码搜索：号称比 grep + 逐个读文件少用 99% token，为编码 Agent 快速定位相关代码。",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "MinishLab",
       "license": "MIT",
       "homepage": "https://github.com/MinishLab/semble",
@@ -25535,16 +25741,20 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "semble==0.7.3"
+          "package": "semble[mcp]==0.7.3"
         }
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 2,
+      "tools": [
+        "search",
+        "find_related"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/dev/semble",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/dev/semble",
@@ -25555,11 +25765,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "71bce6aac219173c35cae469f59ff88051d8c3b2e80325302e446162714e2876",
-          "size": 978
+          "sha256": "93520d98848b04227d63fd219a0702b11c425dd7c64e722b57b7e178304cd8fa",
+          "size": 1264
+        },
+        {
+          "path": "tools.json",
+          "sha256": "20bb1cdd8a35ba0b6a5a3044ab7e34ad59c5fa2088be5b0d46fe9dbf3f5dd671",
+          "size": 5244
         }
       ],
-      "bundle_sha256": "842ffc2d24c7158ee8131ba37a5cb86a9201fa48e78289a103c6c298f70b2d4e",
+      "bundle_sha256": "102048c4d440b2d322618d18c38be288907fef15da8cd4ef0bea11f04f208a5e",
       "popularity": {
         "score": 380,
         "stars": 6311
@@ -27526,7 +27741,7 @@
       "display_name_en": "Alloy",
       "description": "Alloy: a multi-material, parallel physics engine for robot learning, built on Newton and MuJoCo Warp (Python 3.11 or 3.12)",
       "description_zh": "开源的机器人学习物理引擎，基于 MuJoCo Warp 与 Newton，可把机器人、布料、线缆、液体、沙子和软体放进同一个场景。内置 MCP 服务器（`alloy mcp`），让 AI 智能体无需编写 Python 即可搭建场景、推进仿真、以 JSON 读取状态、渲染画面并检查仿真是否正常。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "argonrobotics-ai",
       "license": "Apache-2.0",
       "homepage": "https://github.com/argonrobotics-ai/alloy",
@@ -27560,11 +27775,38 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 25,
+      "tools": [
+        "list",
+        "scene",
+        "build",
+        "step",
+        "run",
+        "state",
+        "targets",
+        "reset",
+        "drive",
+        "pose",
+        "wrench",
+        "settle",
+        "heater",
+        "controls",
+        "close",
+        "check",
+        "render",
+        "estimate",
+        "import",
+        "export",
+        "vary",
+        "compose",
+        "create",
+        "audit",
+        "fetch"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/infra/alloy_engine",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/alloy_engine",
@@ -27575,11 +27817,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "b4ee11766e2ccb2c129afa4435af1daf3f20db9604e5dd558b5c5bc22f0ab37f",
-          "size": 1269
+          "sha256": "94855b0d2dee56f5b3bbabc69cf05e3a84c7fa050e48741950cfb6cc34833ac8",
+          "size": 1529
+        },
+        {
+          "path": "tools.json",
+          "sha256": "bf874dded2344ea839b7de994f58d80c7c3e476b2880ebc6398a1dfc89e5fceb",
+          "size": 134641
         }
       ],
-      "bundle_sha256": "1d9fb3d6b313524543e5298cc2b90d130dfe6a916245cbf013d9fe8b825982b3",
+      "bundle_sha256": "0198e4d4b322e904e0134982dc696223327218d057920db26dc898e5948e553d",
       "popularity": {
         "score": 0
       }
@@ -29742,7 +29989,7 @@
       "display_name_en": "mcp-observatory",
       "description": "Free, MIT-licensed MCP security testing from ClearFrame. Scan, audit, compare and review MCP evidence locally; continue in ClearFrame CLI or Mac.",
       "description_zh": "MCP 服务器可观测性平台 — 监控和分析 MCP 服务器性能、可用性和使用指标，提供健康检查与告警。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "KryptosAI",
       "license": "MIT",
       "homepage": "https://github.com/KryptosAI/mcp-observatory",
@@ -29776,11 +30023,26 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 13,
+      "tools": [
+        "scan",
+        "check_server",
+        "score_server",
+        "diff_runs",
+        "get_last_run",
+        "suggest_servers",
+        "record",
+        "replay",
+        "verify",
+        "watch",
+        "lock_verify",
+        "get_history",
+        "ci_report"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/infra/observatory",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/observatory",
@@ -29791,11 +30053,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "3eed30df33b29b75ef5b916c9b2e288d6ea277a832687428d491ba9c64303ecf",
-          "size": 1155
+          "sha256": "810da43fd64497d01106b5d38841131b449bf281fa3d7bea75294f61ff3548a4",
+          "size": 1477
+        },
+        {
+          "path": "tools.json",
+          "sha256": "86bb565d986b8744b8c001ff09aff6f3da7a73b728e44d7dec95985cd29055d3",
+          "size": 9721
         }
       ],
-      "bundle_sha256": "29e806a17a8e0bd19f2cfa811111ae880c28b74619890c221c31f785ac105c55",
+      "bundle_sha256": "74d1d2dcdc32d3e7a11d43452693ede5fcbe1adcb0f86bf97c276e2615891e98",
       "popularity": {
         "score": 213,
         "stars": 135
@@ -30866,7 +31133,7 @@
       "display_name_en": "usb-rea",
       "description": "Reverse Engineer any USB gadget: capture, diff, infer, and generate open drivers with evidence",
       "description_zh": "USB 协议逆向 MCP：在使用厂商 Windows 软件（机箱 LCD、RGB、鼠标等）时抓取 USB 流量（usbmon / pcap），按操作对比数据包、推断协议，并生成 Linux 用户态驱动骨架、Wireshark 解析器和 HID 描述符解析；内置离线 VID:PID 已知设备查询。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "emirmrkaljevic",
       "license": "MIT",
       "homepage": "https://github.com/emirmrkaljevic/usb-rea",
@@ -30895,16 +31162,28 @@
           "id": "uvx",
           "type": "stdio",
           "launcher": "uvx",
-          "package": "usb-rea==0.7.14"
+          "package": "usb-rea[mcp]==0.7.14"
         }
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 10,
+      "tools": [
+        "capture_start",
+        "capture_stop",
+        "mark_action",
+        "diff_actions",
+        "report",
+        "scaffold_driver",
+        "wireshark_dissector",
+        "hid_descriptor",
+        "lookup_device",
+        "replay_packet"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/infra/usb_rea",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/infra/usb_rea",
@@ -30915,11 +31194,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "edea557372311f97e94b717f7bd6baa36e33ccce04de424ea77ef223e04331ea",
-          "size": 1189
+          "sha256": "087f43eaef6ef7bae6546df645684e79766beeee1a082a88e97aefb5aca6a3c2",
+          "size": 1484
+        },
+        {
+          "path": "tools.json",
+          "sha256": "62643e31cbbbb38da8e7e1adfed2d50677e67f4145a24ae1eae243a9413779f9",
+          "size": 19842
         }
       ],
-      "bundle_sha256": "2d25daaea2ba00b3227c87e77a1879b1d36c89507ae06ef7db177be38b9115fa",
+      "bundle_sha256": "6b5ce335365d0899e50e565d3884c0de457c98fcc4e9eb3a2223f209bc147577",
       "popularity": {
         "score": 0
       }
@@ -37799,7 +38083,7 @@
       "display_name_en": "jacobian",
       "description": "Atomic mathematical tools for agents over MCP and Python",
       "description_zh": "面向可组合数学的 MCP 服务器、CLI 和 Python 库：支持多项式映射、线性代数与图算法的精确计算和猜想检验。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "morluto",
       "license": "MIT",
       "homepage": "https://github.com/morluto/jacobian",
@@ -37833,11 +38117,15 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 2,
+      "tools": [
+        "math.find",
+        "math.run"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/misc/jacobian",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/misc/jacobian",
@@ -37848,11 +38136,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "ab5541c5c0e6fd2bc2ced04caff1fedfc8a6d4c4b3d431388b494c64137b2fdf",
-          "size": 1015
+          "sha256": "bf1285d8d50c594eb67ad4e40fa5c2b9f7ac039e0bf31cbb4b1aebd8af30b35a",
+          "size": 1295
+        },
+        {
+          "path": "tools.json",
+          "sha256": "8332f95f72f22cb4b5c0792a36f7c2f37ac89e28e9769b5e7ec598556c963de3",
+          "size": 6665
         }
       ],
-      "bundle_sha256": "904441af29f38cac8ea6e7d6989aa1d4167200403ae095ae514a5d6bbc0ea85a",
+      "bundle_sha256": "83a2ea719228cea68f996869242ff345451c3884ccf5c708ca577f19f892cc06",
       "popularity": {
         "score": 470,
         "downloads_weekly": 149,
@@ -46767,7 +47060,7 @@
       "display_name_en": "BeatBrowser",
       "description": "BeatBrowser — a local MCP toolkit for your signed-in Chrome. Use it across compatible agents.",
       "description_zh": "通过 Chrome 扩展和本地桥接，让兼容 Agent 使用现有登录态，读取页面、填写表单，并管理可暂停与人工接管的后台任务。",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "BeatAPI",
       "license": "MIT",
       "homepage": "https://github.com/BeatAPI/BeatBrowser",
@@ -46801,11 +47094,37 @@
       ],
       "requires_env": [],
       "optional_env": [],
-      "tools_count": 0,
-      "tools": [],
+      "tools_count": 24,
+      "tools": [
+        "spaces",
+        "snapshot",
+        "navigate",
+        "click",
+        "type",
+        "select",
+        "fill",
+        "key",
+        "read_text",
+        "screenshot",
+        "tabs",
+        "wait",
+        "network",
+        "fetch",
+        "scroll",
+        "download",
+        "upload",
+        "query",
+        "act",
+        "ask",
+        "status",
+        "eval",
+        "learnings",
+        "reload"
+      ],
       "security": {
         "scan_verdict": "allow",
-        "osv": "clean"
+        "osv": "clean",
+        "prompt_injection_findings": []
       },
       "path": "registry/servers/web/beat_browser",
       "raw_base": "https://gitee.com/jlzdyx/totalclaw-mcp/raw/master/registry/servers/web/beat_browser",
@@ -46816,11 +47135,16 @@
       "files": [
         {
           "path": "mcp.yaml",
-          "sha256": "b94edb75c6ba0ea719f74e2df062213e371011b0448257570467db13559d8019",
-          "size": 1060
+          "sha256": "771870d7b868515d21c97e3006a79773e90888bf0650cd50206dc6ce1a94331a",
+          "size": 1378
+        },
+        {
+          "path": "tools.json",
+          "sha256": "4ed1353215b390747d3783b8e4d2df3e544855c86ebad28e35d05f4d4558e09f",
+          "size": 41066
         }
       ],
-      "bundle_sha256": "afda5fae8b6a5784841f3e2f44efa3904c16e3f687ca5347c4312594d9f12fd9",
+      "bundle_sha256": "5734968860080672c96027ed740655ce00bd321388a0d383e39660f58a92c050",
       "popularity": {
         "score": 0
       }

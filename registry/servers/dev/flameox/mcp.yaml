@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：可执行是带子命令的 CLI，不带子命令只打印用法（或跑别的功能）就退出；MCP 服务器在 `mcp serve`（取自包 README / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: flameox
 display_name: flameox
 display_name_en: flameox
-version: 0.1.1
+version: 0.1.2
 description: Runtime evidence that helps agents trace, profile, and burn down hotspots in application and native code, GPU
   kernels, and inference stacks.
 description_zh: 面向智能体的性能分析与优化工具包：可采集追踪、对比运行，并保留原生运行时证据，用于定位应用、原生服务、GPU 内核和推理负载中的瓶颈。
@@ -27,6 +28,8 @@ runtimes:
   command: uvx
   args:
   - flameox==0.2.9
+  - mcp
+  - serve
   requires:
     python: '>=3.10'
 requires_env: []
@@ -34,6 +37,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T10:15:04Z'
+  probed_runtime: uvx
+  count: 51
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

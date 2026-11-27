@@ -1,0 +1,417 @@
+[
+  {
+    "name": "capture_start",
+    "description": "Start a USB traffic capture into `out` (usbmon on Linux, USBPcap on Windows).\n\nSide effects: launches a background capture process that keeps writing until capture_stop.\nNeeds elevated privileges on Linux (usbmon; typically root or a usbmon group). Does not\ntouch the device itself. Pair every start with capture_stop; do not start a second capture\nwhile one is running. Prefer this over analysis tools when you still need live traffic.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "out": {
+          "default": "capture.pcapng",
+          "description": "Output pcapng path (overwritten if it already exists)",
+          "title": "Out",
+          "type": "string"
+        },
+        "bus": {
+          "default": 0,
+          "description": "usbmon bus number N for /dev/usbmonN; ignored on Windows/USBPcap. Default 0",
+          "title": "Bus",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "capture_startArguments"
+    }
+  },
+  {
+    "name": "capture_stop",
+    "description": "Stop the running capture started by capture_start.\n\nSide effects: terminates the background capture process. The pcapng at the path given to\ncapture_start is left on disk for report/diff_actions/scaffold_driver. Returns\n'no capture running' if nothing was started (not an error). Call this before analysing.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {},
+      "type": "object",
+      "title": "capture_stopArguments"
+    }
+  },
+  {
+    "name": "mark_action",
+    "description": "Record that the human is about to click this action in the vendor app.\n\nSide effects: appends {label, start, end} to <capture>.actions.json (creates the file).\nCall while capture_start is running, immediately before each click; end times are closed\nwhen the next mark arrives. Use the same label stem with different values (brightness 0%,\n50%, 100%) so inference can fit scales. For an already-finished Wireshark capture without\nmarkers, skip this and pass `labels` to report/diff_actions instead.\nA label starting with 'seen' ('seen rpm 1180', 'seen rpm 1180 temp 34') is an observation,\nnot an action: what the vendor app displays right now. It does not end the current action\nand is never diffed; analysis uses it to name and scale the device's reply readings\n(rpm = raw, temp = (raw - 40) / 2). Mark it when the human reads a value off the screen.\nOn/off states ('seen pump on', 'seen pump off, alarm on') name single status-flag bits; words\n('seen mode silent', 'seen mode turbo, rpm 3900': the word last or before a comma) name a mode\nbyte with a value -> word map; negative values ('seen temp -5') allow signed i8/i16 readings.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "label": {
+          "description": "Action label, ideally with a value, e.g. 'brightness 50%' or 'color 255 0 0'; or an observation starting with 'seen', e.g. 'seen rpm 1180 temp 34'",
+          "title": "Label",
+          "type": "string"
+        },
+        "capture": {
+          "default": "capture.pcapng",
+          "description": "Capture path whose sidecar markers file (<capture>.actions.json) is updated",
+          "title": "Capture",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label"
+      ],
+      "type": "object",
+      "title": "mark_actionArguments"
+    }
+  },
+  {
+    "name": "diff_actions",
+    "description": "Diff packets per labelled action and infer the protocol (JSON: byte roles + evidence frames).\n\nThe JSON also has `background` (periodic polls set aside) and `responses`: device replies paired\nwith the query they answer (command, background poll or GET_REPORT), with byte roles\n(const, echo of a query byte, value fitted to the labels, counter, checksum, or reading with\nits observed min/max) and query/reply frame numbers. A reading that 'seen' markers explain\ngets `name`, `scale` and `bias` (raw = value * scale + bias, `signed` for i8/i16) plus the\nobservations in `observed`; a named mode has `table` (raw value -> word the app showed);\n`observations` lists every 'seen' value and which reply bytes it matched. `handshake` lists the\nmessages sent once before the first action (request, reply, `expect` with `??` for token and\nchecksum bytes, `uses`/`tokens` for reply bytes reused later as a session token, checksums,\n`retries`, `reopens`, and `branches` on a step whose reply byte decided what the app sent next).\n`states` lists commands the app only sent after a mode command chose one value (also on the\ncommand as `requires`: state, value, count, other values seen, evidence frames), and with\n`source` \"reply\" those it only sent while a named status reply byte showed one mode or flag\nvalue (`reply`, `where`, `reply_frames`, and `setter`: the command seen to make the reply show it).\n`switches` lists actions where the app sent a state command first (`enter`) and maybe again\nafter (`restore`: \"previous\", a value or null); that command's packets are kept out of the\naction, which carries the same `switch`.\n`streams` lists continuous image streams to a screen (JPEG/PNG/GIF/BMP/WEBP, or raw RGB565/RGB888 pixels\nfound by size with `raw` true): endpoint, `endpoints` (every host->device endpoint the frame bytes\ngo to, with `endpoint_layout` 'alternate' or 'blocks' when there are several) and\n`header_endpoint` (where the draw command goes, when not with the pixels), format, frame and packet counts, chunk size, per-packet\nheader (`nn` packet count, `ii` index, 8 or 16 bit), image size, frame rate, the device's\nper-frame `ack` and for raw streams `header_packet` (the command before each frame, or at the start of its first packet when\n`header_inline` is true), `region`\n(x/y/width/height fields), `byteorder`, `size_alternatives` and `channel_order` ('rgb' or 'bgr',\nnull = unknown; only settled by frames showing the `usb-rea testcard` picture, see\n`channel_evidence`); those packets are kept out of the commands.\n\nRead-only analysis: does not write files or talk to hardware. Requires either markers from\nmark_action or `labels` for a finished capture with pauses between clicks. Prefer report\nwhen the human wants a Markdown evidence write-up; prefer scaffold_driver /\nwireshark_dissector when they want generated code.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "capture": {
+          "description": "Path to a usbmon or USBPcap pcap/pcapng file",
+          "title": "Capture",
+          "type": "string"
+        },
+        "markers": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Markers JSON path; default <capture>.actions.json. Ignored when labels is set",
+          "title": "Markers"
+        },
+        "device": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "USB device address to analyse; default = bus address with the most host→device payloads",
+          "title": "Device"
+        },
+        "labels": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Marker-free mode: ';'-separated labels in click order, or a text file path (one label per line). Splits traffic at the largest pauses between host→device messages",
+          "title": "Labels"
+        }
+      },
+      "required": [
+        "capture"
+      ],
+      "type": "object",
+      "title": "diff_actionsArguments"
+    }
+  },
+  {
+    "name": "report",
+    "description": "Generate a Markdown evidence report: every claim links to frame numbers in the capture.\n\nIncludes a 'Device responses' section when the device answers queries (status polls,\ncommand ACKs, GET_REPORT), saying which reply bytes could not be explained, a 'Handshake'\nsection for messages sent once before the first action (session setup, tokens), and an\n'Observations' section for 'seen' markers (named readings and unmatched observations).\n\nRead-only: returns Markdown text (does not write a file). Same inputs as diff_actions.\nUse after capture_stop (or on an existing pcap). Choose this over diff_actions when the\nhuman should read the protocol; choose scaffold_driver when they need a pyusb driver.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "capture": {
+          "description": "Path to a usbmon or USBPcap pcap/pcapng file",
+          "title": "Capture",
+          "type": "string"
+        },
+        "markers": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Markers JSON path; default <capture>.actions.json. Ignored when labels is set",
+          "title": "Markers"
+        },
+        "device": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "USB device address to analyse; default = bus address with the most host→device payloads",
+          "title": "Device"
+        },
+        "labels": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Marker-free mode: ';'-separated labels in click order, or a text file path (one label per line)",
+          "title": "Labels"
+        }
+      },
+      "required": [
+        "capture"
+      ],
+      "type": "object",
+      "title": "reportArguments"
+    }
+  },
+  {
+    "name": "scaffold_driver",
+    "description": "Generate a standalone Python/pyusb driver source for the inferred protocol.\n\nOne set_<command>() per command; when the device replies, also query_<name>() methods that\nsend the command/poll (or GET_REPORT), read the reply and return it decoded as a dict\n(readings named by 'seen' markers come back scaled and modes as words, e.g.\n{'rpm': 1180, 'temp': 34, 'mode': 'turbo', 'ok': True}). When the capture has a handshake,\nDevice() replays it in open() before any command and checks the fixed reply bytes. A command\nthe app only sent in one mode first calls the mode setter (Device(auto_state=False) raises\nStateError instead). A capture with an image stream to a screen adds send_image(image), which\ntakes JPEG bytes (or, for a raw stream, a Pillow image or RGB565/RGB888 bytes, optionally a\nregion at x, y), chunks it behind the captured header and returns the device's ack.\n\nRead-only analysis that returns driver source as text (does not write a file or open the\ndevice). Same capture/markers/labels inputs as report. Prefer wireshark_dissector when the\ngoal is to keep decoding traffic in Wireshark; use replay_packet only after the human\napproved a specific packet from this driver.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "capture": {
+          "description": "Path to a usbmon or USBPcap pcap/pcapng file",
+          "title": "Capture",
+          "type": "string"
+        },
+        "markers": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Markers JSON path; default <capture>.actions.json. Ignored when labels is set",
+          "title": "Markers"
+        },
+        "device": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "USB device address to analyse; default = bus address with the most host→device payloads",
+          "title": "Device"
+        },
+        "labels": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Marker-free mode: ';'-separated labels in click order, or a text file path (one label per line)",
+          "title": "Labels"
+        }
+      },
+      "required": [
+        "capture"
+      ],
+      "type": "object",
+      "title": "scaffold_driverArguments"
+    }
+  },
+  {
+    "name": "wireshark_dissector",
+    "description": "Generate a Wireshark Lua dissector for the inferred protocol.\n\nRead-only: returns Lua source as text. Labels commands, decodes values/counters/lookups,\nand verifies checksums (usbrea.checksum_ok + expert warning). Load with\n`wireshark -X lua_script:<file>.lua capture.pcapng` or the same flag on tshark. Prefer\nscaffold_driver for a pyusb driver; prefer hid_descriptor to inspect HID report layouts.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "capture": {
+          "description": "Path to a usbmon or USBPcap pcap/pcapng file",
+          "title": "Capture",
+          "type": "string"
+        },
+        "markers": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Markers JSON path; default <capture>.actions.json. Ignored when labels is set",
+          "title": "Markers"
+        },
+        "device": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "USB device address to analyse; default = bus address with the most host→device payloads",
+          "title": "Device"
+        },
+        "name": {
+          "default": "usbrea",
+          "description": "Wireshark protocol/filter prefix (fields become <name>.command, <name>.checksum_ok, …)",
+          "title": "Name",
+          "type": "string"
+        },
+        "labels": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Marker-free mode: ';'-separated labels in click order, or a text file path (one label per line)",
+          "title": "Labels"
+        }
+      },
+      "required": [
+        "capture"
+      ],
+      "type": "object",
+      "title": "wireshark_dissectorArguments"
+    }
+  },
+  {
+    "name": "hid_descriptor",
+    "description": "Decode a HID report descriptor (and optionally one report payload).\n\nRead-only. When `source` is a capture path, finds GET_DESCRIPTOR type 0x22 transfers\n(replug the device while capturing if none are present). When `source` is hex, parses that\ndescriptor directly (e.g. from /sys/class/hidraw/*/device/report_descriptor). Use this to\nunderstand report IDs/sizes before or alongside report/scaffold_driver; it does not infer\nvendor protocol fields from labelled actions.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "source": {
+          "description": "Capture path (searches for GET_DESCRIPTOR 0x22) or raw descriptor hex / hidraw report_descriptor bytes as hex",
+          "title": "Source",
+          "type": "string"
+        },
+        "decode_hex": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional report payload hex to decode with the descriptor",
+          "title": "Decode Hex"
+        },
+        "report_type": {
+          "default": "Input",
+          "description": "Report type for decode_hex: Input, Output, or Feature",
+          "title": "Report Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object",
+      "title": "hid_descriptorArguments"
+    }
+  },
+  {
+    "name": "lookup_device",
+    "description": "Before capturing: is this device's protocol already documented by an open-source project?\n\nReturns JSON per device: `vendor`/`product` names, `status` ('documented', 'unknown', or\n'listed in OpenDeviceDB'), `projects` (liquidctl, rivalcfg, turing-smart-screen-python,\nlinux-thermalright-lcd-control, usb-rea's own case studies, with links and notes), `limits`\n(e.g. a generic chip ID shared by unrelated products), `same_vendor` and with online=true\n`opendevicedb` (matching records and their projects, or `error` when the network is down).\nRead-only: sends only the VID:PID, never capture contents. A matching ID is a hint, not proof\nof the same protocol; an unknown device stays 'unknown'. Use it before capture_start.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "device": {
+          "description": "USB VID:PID as hex, e.g. '1e71:170e', or a capture path (looks up every device whose descriptor it contains)",
+          "title": "Device",
+          "type": "string"
+        },
+        "online": {
+          "default": false,
+          "description": "Also query OpenDeviceDB's read-only public API; default false (offline table and local usb.ids only)",
+          "title": "Online",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "device"
+      ],
+      "type": "object",
+      "title": "lookup_deviceArguments"
+    }
+  },
+  {
+    "name": "replay_packet",
+    "description": "Send one packet to real USB hardware (destructive / irreversible on the device).\n\nSide effects: opens the device via libusb/pyusb and writes the packet. Refuses unless\nuser_confirmed=true after the human approved this exact vid/pid/endpoint/hex_data\n(and setup_hex if any). Needs OS permission to open the device. Prefer scaffold_driver to\ngenerate a driver first; never set user_confirmed from an agent guess.\n",
+    "read_only": false,
+    "input_schema": {
+      "properties": {
+        "vid": {
+          "description": "USB vendor id (integer, e.g. 0x1234 or 4660)",
+          "title": "Vid",
+          "type": "integer"
+        },
+        "pid": {
+          "description": "USB product id (integer)",
+          "title": "Pid",
+          "type": "integer"
+        },
+        "endpoint": {
+          "description": "Endpoint address (e.g. 0x01 OUT); for control transfers use 0 with setup_hex",
+          "title": "Endpoint",
+          "type": "integer"
+        },
+        "hex_data": {
+          "description": "Payload bytes as hex (spaces optional), e.g. 'aa 01 ff 00 00 ab'",
+          "title": "Hex Data",
+          "type": "string"
+        },
+        "user_confirmed": {
+          "default": false,
+          "description": "Must be true only after a human approved this exact packet; otherwise the call is refused",
+          "title": "User Confirmed",
+          "type": "boolean"
+        },
+        "setup_hex": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional 8-byte control setup packet as hex; when set, sends a control transfer instead of bulk/interrupt",
+          "title": "Setup Hex"
+        }
+      },
+      "required": [
+        "vid",
+        "pid",
+        "endpoint",
+        "hex_data"
+      ],
+      "type": "object",
+      "title": "replay_packetArguments"
+    }
+  }
+]

@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-10-27）；2026-11-01 静态审核：通过（详见 docs/review-2026-11-01.md）
 # 人工修改后请同步递增 version。
+# 2026-11-27：可执行是带子命令的 CLI，不带子命令只打印用法（或跑别的功能）就退出；MCP 服务器在 `serve` 子命令（取自包 README / 源码）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: mcptoon
 display_name: mcptoon
 display_name_en: mcptoon
-version: 0.1.2
+version: 0.1.3
 description: 'One zero-dependency CLI to manage every MCP server and agent skill: token optimization for tool discovery (71,929
   -> 581 tokens, -99.2% measured, schemas stay out of context), one config for every agent.'
 description_zh: 零依赖的 MCP 客户端 CLI：自动发现并接管机器上的 MCP server，把上百个工具的清单压缩成 agent 友好的紧凑格式（工具发现 token 省 99.2%，tiktoken 实测）；`mcptoon
@@ -28,6 +29,7 @@ runtimes:
   command: uvx
   args:
   - mcptoon==0.8.40
+  - serve
   requires:
     python: '>=3.10'
 requires_env: []
@@ -35,6 +37,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T10:14:59Z'
+  probed_runtime: uvx
+  count: 12
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []

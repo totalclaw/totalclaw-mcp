@@ -1,0 +1,202 @@
+[
+  {
+    "name": "mcptoon_manifest",
+    "description": "List the upstream tools this gateway currently exposes, grouped by server. Returns names by default; that compact view is what an agent should read instead of pulling every full schema. Pass include_descriptions for a one-line summary per tool.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "server": {
+          "type": "string",
+          "description": "Restrict the listing to one server name. Omit to list every server the gateway has loaded."
+        },
+        "include_descriptions": {
+          "type": "boolean",
+          "description": "Attach each tool's first description sentence to the listing. Costs tokens; the default false keeps the manifest small."
+        }
+      }
+    }
+  },
+  {
+    "name": "mcptoon_servers",
+    "description": "Report the MCP servers configured behind this gateway: transport, tool count and whether their tools loaded. Use it to see what is actually reachable before calling a tool, and to spot a server that configured but published nothing.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "server": {
+          "type": "string",
+          "description": "Report one server by name instead of all of them. Aliases resolve to the canonical server name."
+        }
+      }
+    }
+  },
+  {
+    "name": "mcptoon_health",
+    "description": "Self-check of this gateway process: version, config path, servers configured, tools indexed and uptime. Read this first when a tool you expect is missing; it distinguishes an empty config from a server that failed to load.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "mcptoon_usage",
+    "description": "How much this gateway has saved: tools compressed, tokens saved and the session call count. Call this when you want to tell the user what mcptoon did. Report these numbers verbatim; never estimate them yourself.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "mcptoon_skills",
+    "description": "List the skills mcptoon indexes on this machine: slug and one-line description per skill. Read it once to learn what skills exist, then resolve the one you need with mcptoon_resolve_skills. Offline and read-only; pass include_aliases to also see alias cards.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "include_aliases": {
+          "type": "boolean",
+          "description": "Include alias cards, not only canonical skills. The default false keeps one row per real skill."
+        }
+      }
+    }
+  },
+  {
+    "name": "mcptoon_resolve_skills",
+    "description": "Return the skills that best match a task description, best first. Call this with the user's request before acting, then read the chosen skill's SKILL.md. Offline BM25 ranking, no LLM.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "task": {
+          "type": "string",
+          "description": "What the user wants to do, in their own words. More detail ranks better than a single keyword."
+        },
+        "k": {
+          "type": "integer",
+          "description": "How many candidates to return. The default 5 is enough to pick from; larger only when the top few look wrong."
+        }
+      },
+      "required": [
+        "task"
+      ]
+    }
+  },
+  {
+    "name": "mcptoon_inspect",
+    "description": "Show one upstream tool's full input schema — the parameters to call it with. Read-only; nothing runs. Use it after mcptoon_manifest names a tool.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "tool": {
+          "type": "string",
+          "description": "Namespaced name from mcptoon_manifest, e.g. fetch_fetch. A bare name works when only one server owns it."
+        },
+        "server": {
+          "type": "string",
+          "description": "Server that owns the tool; disambiguates a shared bare name."
+        }
+      },
+      "required": [
+        "tool"
+      ]
+    }
+  },
+  {
+    "name": "mcptoon_call",
+    "description": "Run any upstream tool by its namespaced name (server_tool). Under the default compact exposure the tool list is withheld, so this is how you run one found via mcptoon_manifest. Arguments are validated first.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Namespaced name in server_tool form, e.g. fetch_fetch."
+        },
+        "arguments": {
+          "type": "object",
+          "description": "Arguments object for the tool; see mcptoon_inspect."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "mcptoon_retrieve",
+    "description": "Get back the full, uncompressed text of a tool result mcptoon compressed. When a result ends with a line naming a handle, call this if the summary lacks a detail you need.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "type": "string",
+          "description": "The handle from a result's 'mcptoon_retrieve handle=...' line, e.g. ab12cd34ef56."
+        }
+      },
+      "required": [
+        "handle"
+      ]
+    }
+  },
+  {
+    "name": "mcptoon_kb_search",
+    "description": "Return the PASSAGES in already-indexed documents that match a query, not the whole file. Use it instead of reading a large document whole when you need a few lines from it. Index a document first with mcptoon_kb_index.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Words to find. Substrings and typos are handled."
+        },
+        "k": {
+          "type": "integer",
+          "description": "How many passages to return (default 5)."
+        },
+        "source": {
+          "type": "string",
+          "description": "Restrict to sources whose name contains this text. Omit to search everything indexed."
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  },
+  {
+    "name": "mcptoon_kb_index",
+    "description": "Chunk a local file or a URL into the knowledge base so mcptoon_kb_search can find passages in it. Indexing is what keeps the document out of your context window while staying searchable.",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "A local file path to index."
+        },
+        "url": {
+          "type": "string",
+          "description": "A URL to fetch and index instead of a local path. Reuses the cached copy within its TTL."
+        },
+        "source": {
+          "type": "string",
+          "description": "Optional label for this source in the index."
+        }
+      }
+    }
+  },
+  {
+    "name": "mcptoon_session",
+    "description": "Summarise what has routed through this gateway in this project: tools used, files written, errors, git operations. Call it after a context compaction to catch up on where you were. It is on-demand, not automatic — the gateway cannot inject into your context itself.",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+]

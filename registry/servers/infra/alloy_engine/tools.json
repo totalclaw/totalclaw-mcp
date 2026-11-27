@@ -1,0 +1,3979 @@
+[
+  {
+    "name": "list",
+    "description": "List library scenes, objects, materials or robots, recipe add kinds, or these operations.\nExample arguments: {\"kind\": \"objects\", \"match\": \"peg\"}",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "description": "what to list",
+          "enum": [
+            "scenes",
+            "objects",
+            "materials",
+            "robots",
+            "adds",
+            "ops"
+          ],
+          "default": "scenes"
+        },
+        "match": {
+          "type": "string",
+          "description": "keep names containing this text"
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "at most this many items",
+          "minimum": 1,
+          "default": 200
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "scene",
+    "description": "Check a scene description without building it (fast); optionally save it as JSON or cards.\nExample arguments: {\"scene\": {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"sphere\", \"name\": \"ball\", \"radius\": 0.05, \"pos\": [0, 0, 0.3]}]}}",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "save": {
+          "type": "string",
+          "description": "write the Scene JSON to this path"
+        },
+        "cards": {
+          "type": "string",
+          "description": "write the engine's YAML cards to this folder"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "scene"
+      ]
+    }
+  },
+  {
+    "name": "build",
+    "description": "Build a scene (first build of a new scene compiles kernels: about a minute). Later calls pass the returned id as sim. Names list every body, joint and particle object.\nExample arguments: {\"scene\": \"demo_peg_d12\", \"worlds\": 4}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "description": "id for the simulation (default sim<k>)"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "scene"
+      ]
+    }
+  },
+  {
+    "name": "step",
+    "description": "Advance a simulation some control periods; returns state and health.\nExample arguments: {\"sim\": \"sim1\", \"steps\": 50, \"names\": [\"cube\"]}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "steps": {
+          "type": "integer",
+          "description": "control periods to advance",
+          "minimum": 0,
+          "default": 1
+        },
+        "targets": {
+          "type": "object",
+          "description": "joint position targets {\"joint\": value} (m or rad; a list gives one per world)"
+        },
+        "kind": {
+          "type": "string",
+          "description": "target kind",
+          "enum": [
+            "position",
+            "velocity"
+          ],
+          "default": "position"
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "bodies, joints or particle objects to report (default: all)"
+        },
+        "world": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "const": "all"
+            }
+          ],
+          "description": "which world to report: an index or \"all\"",
+          "default": 0
+        },
+        "points": {
+          "type": "string",
+          "description": "cloth/liquid points: a summary or every point",
+          "enum": [
+            "summary",
+            "full"
+          ],
+          "default": "summary"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "run",
+    "description": "Run some simulated seconds, recording frames; saves them to an .npz and samples a few.\nExample arguments: {\"scene\": \"demo_peg_d12\", \"seconds\": 1.0, \"names\": [\"peg_d12\"], \"out\": \"traj.npz\"}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "seconds": {
+          "type": "number",
+          "description": "simulated seconds",
+          "minimum": 0
+        },
+        "targets": {
+          "type": "object",
+          "description": "joint targets held ({\"j\": 0.1}) or ramped ({\"j\": {\"from\": 0, \"to\": 0.1}})"
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "bodies, joints or particle objects to report (default: all)"
+        },
+        "every": {
+          "type": "integer",
+          "description": "record every n-th control period",
+          "minimum": 1,
+          "default": 1
+        },
+        "out": {
+          "type": "string",
+          "description": "save the frames to this .npz path"
+        },
+        "samples": {
+          "type": "integer",
+          "description": "frames of world `world` to include in the reply",
+          "minimum": 0,
+          "default": 5
+        },
+        "world": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "const": "all"
+            }
+          ],
+          "description": "which world to report: an index or \"all\"",
+          "default": 0
+        },
+        "points": {
+          "type": "string",
+          "description": "cloth/liquid points: a summary or every point",
+          "enum": [
+            "summary",
+            "full"
+          ],
+          "default": "summary"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "seconds"
+      ]
+    }
+  },
+  {
+    "name": "state",
+    "description": "Read the current state of bodies, joints and particle objects.\nExample arguments: {\"sim\": \"sim1\", \"names\": [\"cube\"], \"world\": 0}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "bodies, joints or particle objects to report (default: all)"
+        },
+        "world": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "const": "all"
+            }
+          ],
+          "description": "which world to report: an index or \"all\"",
+          "default": 0
+        },
+        "points": {
+          "type": "string",
+          "description": "cloth/liquid points: a summary or every point",
+          "enum": [
+            "summary",
+            "full"
+          ],
+          "default": "summary"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "targets",
+    "description": "Set joint position or velocity targets (kept until changed).\nExample arguments: {\"sim\": \"sim1\", \"targets\": {\"arm/lift\": 0.1}}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "targets": {
+          "type": "object",
+          "description": "joint position targets {\"joint\": value} (m or rad; a list gives one per world)"
+        },
+        "kind": {
+          "type": "string",
+          "description": "target kind",
+          "enum": [
+            "position",
+            "velocity"
+          ],
+          "default": "position"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "targets"
+      ]
+    }
+  },
+  {
+    "name": "reset",
+    "description": "Put every world of a simulation back to its start state.\nExample arguments: {\"sim\": \"sim1\"}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "drive",
+    "description": "Move a kinematic object at a constant velocity from now (Sim.drive); stop=true ends all drives.\nExample arguments: {\"sim\": \"sim1\", \"name\": \"belt\", \"velocity\": [0.25, 0, 0], \"duration\": 2.0}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "kinematic object or fixture to move"
+        },
+        "velocity": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              }
+            ]
+          },
+          "description": "linear velocity [vx, vy, vz], m/s"
+        },
+        "angular_velocity": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              }
+            ]
+          },
+          "description": "[wx, wy, wz], rad/s"
+        },
+        "pivot": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              }
+            ]
+          },
+          "description": "point [x, y, z] the rotation turns about (default: the object's origin)"
+        },
+        "duration": {
+          "type": "number",
+          "description": "seconds to keep driving (default: until changed)",
+          "minimum": 0
+        },
+        "stop": {
+          "type": "boolean",
+          "description": "end every drive; kinematic objects hold where they are",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pose",
+    "description": "Teleport a free or kinematic body now, at rest (Sim.set_pose).\nExample arguments: {\"sim\": \"sim1\", \"name\": \"cube\", \"pos\": [0, 0, 0.5]}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "body or kinematic object name (from build's names)"
+        },
+        "pos": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              }
+            ]
+          },
+          "description": "[x, y, z] m, or one per world [[x, y, z], ...]"
+        },
+        "quat_wxyz": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              }
+            ]
+          },
+          "description": "[w, x, y, z], or one per world"
+        },
+        "world": {
+          "type": "integer",
+          "description": "only this world (default: every world)",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "wrench",
+    "description": "Hold a force and torque on a body until changed; zeros remove it (Sim.apply_wrench).\nExample arguments: {\"sim\": \"sim1\", \"name\": \"cube\", \"force\": [0, 0, 5]}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "body or kinematic object name (from build's names)"
+        },
+        "force": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              }
+            ]
+          },
+          "description": "[fx, fy, fz] N, world frame (or one per world)"
+        },
+        "torque": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              }
+            ]
+          },
+          "description": "[tx, ty, tz] N m about the centre of mass (or one per world)"
+        },
+        "at": {
+          "type": "string",
+          "description": "a rod's end segment",
+          "enum": [
+            "start",
+            "end"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "settle",
+    "description": "Run some seconds with no new commands; the settled state becomes the one reset returns to.\nExample arguments: {\"sim\": \"sim1\", \"seconds\": 0.5}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "seconds": {
+          "type": "number",
+          "description": "simulated seconds",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "seconds"
+      ]
+    }
+  },
+  {
+    "name": "heater",
+    "description": "Change a heater's temperature (K) or power (W) while running (Sim.set_heater).\nExample arguments: {\"sim\": \"sim1\", \"name\": \"burner\", \"temperature\": 370.0}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "body or kinematic object name (from build's names)"
+        },
+        "temperature": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "K: a number, or a list with one per world"
+        },
+        "power": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "description": "W: a number, or a list with one per world"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "controls",
+    "description": "Set raw actuator inputs by actuator name (Sim.set_controls); targets is the usual way.\nExample arguments: {\"sim\": \"sim1\", \"controls\": {\"arm/actuator1\": 0.5}}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "controls": {
+          "type": "object",
+          "description": "{\"actuator\": value} (a list gives one per world)"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "controls"
+      ]
+    }
+  },
+  {
+    "name": "close",
+    "description": "Close an open simulation.\nExample arguments: {\"sim\": \"sim1\"}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id to close (default: the last)"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "check",
+    "description": "Check a scene: card validation, overlap at load, rest drift, penetration, health events and energy drift, each finding with what to change. With sim (or after build) it checks the open simulation now.\nExample arguments: {\"scene\": \"demo_peg_d12\", \"quick\": true}",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "seconds": {
+          "type": "number",
+          "description": "simulated seconds of the check run (default 2 GPU / 0.5 CPU)"
+        },
+        "quick": {
+          "type": "boolean",
+          "description": "load checks only (cards, overlap), no run",
+          "default": false
+        },
+        "moving": {
+          "type": "boolean",
+          "description": "the scene moves by design (drops, pours)",
+          "default": false
+        },
+        "budget": {
+          "type": "number",
+          "description": "wall seconds the check run may take (0: no limit)",
+          "default": 25.0
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "render",
+    "description": "Render a PNG of one world (auto-framed unless look_at is given).\nExample arguments: {\"scene\": \"demo_peg_d12\", \"out\": \"peg.png\", \"width\": 320, \"height\": 240}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sim": {
+          "type": "string",
+          "description": "id of an open simulation (from build); default: build `scene`, else the last one built"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed of randomized values (same seed, same worlds)"
+        },
+        "profile": {
+          "type": "string",
+          "description": "integration profile",
+          "enum": [
+            "standard",
+            "precision",
+            "fast",
+            "debug"
+          ]
+        },
+        "contacts": {
+          "type": "string",
+          "description": "contact pipeline",
+          "enum": [
+            "auto",
+            "mujoco",
+            "newton"
+          ]
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "steps": {
+          "type": "integer",
+          "description": "control periods to advance first",
+          "minimum": 0,
+          "default": 0
+        },
+        "out": {
+          "type": "string",
+          "description": "PNG path (default: a temporary file)"
+        },
+        "width": {
+          "type": "integer",
+          "description": "pixels",
+          "minimum": 16,
+          "default": 640
+        },
+        "height": {
+          "type": "integer",
+          "description": "pixels",
+          "minimum": 16,
+          "default": 480
+        },
+        "spp": {
+          "type": "integer",
+          "description": "samples per pixel (more: less noise, slower)",
+          "minimum": 1
+        },
+        "fov": {
+          "type": "number",
+          "description": "vertical field of view, degrees"
+        },
+        "look_at": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "camera eye x, y, z then target x, y, z (m)"
+        },
+        "world": {
+          "type": "integer",
+          "description": "world to render",
+          "minimum": 0,
+          "default": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "estimate",
+    "description": "Estimate memory, step time and wall time of a run before running it.\nExample arguments: {\"scene\": \"demo_peg_d12\", \"worlds\": 1024, \"seconds\": 2.0}",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds (default: the scene's)",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu', 'cuda' or 'cuda:<n>' (default: the GPU if there is one)"
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        },
+        "liquid_accuracy": {
+          "type": "string",
+          "description": "liquid particles: default 4 mm apart, super 2 mm (finer openings and streams, about 16x the cost), ultra 1.5 mm (about 50x); sets the scene's liquid_accuracy",
+          "enum": [
+            "default",
+            "super",
+            "ultra"
+          ]
+        },
+        "seconds": {
+          "type": "number",
+          "description": "simulated seconds",
+          "minimum": 0,
+          "default": 1.0
+        },
+        "measure": {
+          "type": "boolean",
+          "description": "time a short real run instead (compiles)",
+          "default": false
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "scene"
+      ]
+    }
+  },
+  {
+    "name": "import",
+    "description": "Import an MJCF, URDF or USD file into object, material and scene cards.\nExample arguments: {\"file\": \"robot.urdf\", \"out\": \"my_library\"}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "MJCF (.xml), URDF (.urdf) or USD file"
+        },
+        "out": {
+          "type": "string",
+          "description": "library folder to write the cards to"
+        },
+        "name": {
+          "type": "string",
+          "description": "scene name (default: the file name)"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "out"
+      ]
+    }
+  },
+  {
+    "name": "export",
+    "description": "Export a scene or a library object to MJCF, URDF and USD (each checked by loading it).\nExample arguments: {\"scene\": \"demo_peg_d12\", \"out\": \"out/peg\", \"formats\": [\"mjcf\", \"usd\"]}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "object": {
+          "type": "string",
+          "description": "a library object name instead of a scene"
+        },
+        "out": {
+          "type": "string",
+          "description": "output folder"
+        },
+        "formats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "any of mjcf, urdf, usd (default: all)"
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "out"
+      ]
+    }
+  },
+  {
+    "name": "vary",
+    "description": "Make n edited copies of one scene for visual and placement diversity, the same for the same seed: each free object (not robots, static, kinematic or held ones) moves within +-pos in x, y and +-yaw degrees, objects that touch move together, and a draw that overlaps or loses its support is redrawn; each look takes another texture of its family plus a small tint. Writes variant_000.json ... (pass one as scene to build, run or render) and variants.json (moves and textures); sheet adds contact_sheet.png.\nExample arguments: {\"scene\": \"demo_peg_d12\", \"n\": 4, \"pos\": 0.01, \"yaw\": 10, \"seed\": 3, \"out\": \"variants\", \"sheet\": true}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "a recipe: Scene.add_* calls as JSON",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "start from this library scene or file"
+                },
+                "worlds": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dt": {
+                  "type": "number",
+                  "description": "control period, s"
+                },
+                "liquid_accuracy": {
+                  "enum": [
+                    "default",
+                    "super",
+                    "ultra"
+                  ],
+                  "description": "liquid particles 4 mm apart (default), 2 mm (super) or 1.5 mm (ultra)"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "add"
+                    ],
+                    "properties": {
+                      "add": {
+                        "enum": [
+                          "block_with_hole",
+                          "box",
+                          "capsule",
+                          "cloth",
+                          "cylinder",
+                          "ground",
+                          "heater",
+                          "liquid",
+                          "mesh",
+                          "object",
+                          "open_box",
+                          "open_cylinder",
+                          "pour",
+                          "push",
+                          "robot",
+                          "rod",
+                          "sphere"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "keyword arguments of Scene.add_<add>: sizes in m (full edges), mass kg, pos [x, y, z], rpy radians, static true/false (alloy list adds); a robot's path is a file or a library robot name (alloy list robots)"
+                  }
+                },
+                "set": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "set"
+                    ],
+                    "properties": {
+                      "set": {
+                        "enum": [
+                          "friction",
+                          "heat",
+                          "heater",
+                          "inertia_floor",
+                          "joint_yield",
+                          "quasi_static_mass_scale",
+                          "temperature"
+                        ]
+                      }
+                    },
+                    "description": "keyword arguments of Scene.set_<set>, e.g. {\"set\": \"heater\", \"name\": \"pan_floor\", \"temperature\": 353.15} or {\"set\": \"heat\", \"time_scale\": 60}"
+                  }
+                },
+                "friction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "randomize": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "description": "Scene JSON (Scene.to_dict())"
+            }
+          ],
+          "description": "a library scene name (alloy list scenes), a .yaml/.json/.xml/.urdf/.usd path, Scene JSON, or a recipe {\"objects\": [{\"add\": \"ground\"}, {\"add\": \"box\", \"name\": \"cube\", \"size\": [0.1, 0.1, 0.1], \"pos\": [0, 0, 0.5], \"mass\": 1.0}]}"
+        },
+        "n": {
+          "type": "integer",
+          "description": "variants to make",
+          "minimum": 1,
+          "default": 4
+        },
+        "pos": {
+          "type": "number",
+          "description": "start jitter of each free object in x and y, +- m",
+          "minimum": 0,
+          "default": 0.005
+        },
+        "yaw": {
+          "type": "number",
+          "description": "yaw jitter of each free object, +- degrees",
+          "minimum": 0,
+          "default": 0.0
+        },
+        "textures": {
+          "type": "string",
+          "description": "texture swaps: any look with a family, textured looks only, or none",
+          "enum": [
+            "same-family",
+            "textured",
+            "keep"
+          ],
+          "default": "same-family"
+        },
+        "tint": {
+          "type": "number",
+          "description": "relative colour jitter (0: none)",
+          "minimum": 0,
+          "default": 0.05
+        },
+        "seed": {
+          "type": "integer",
+          "description": "same seed, same variants",
+          "minimum": 0,
+          "default": 0
+        },
+        "settle": {
+          "type": "number",
+          "description": "also build each variant on the CPU and run alloy.check this many seconds; redraw it on an error (about 2 s per variant)",
+          "minimum": 0
+        },
+        "max_tries": {
+          "type": "integer",
+          "description": "draws per variant before giving up",
+          "minimum": 1,
+          "default": 200
+        },
+        "out": {
+          "type": "string",
+          "description": "folder for variant_000.json ... and variants.json (default: a new temporary folder)"
+        },
+        "sheet": {
+          "type": "boolean",
+          "description": "also render contact_sheet.png with alloy.camera, one tile per variant",
+          "default": false
+        },
+        "sheet_options": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "width": {
+              "type": "integer",
+              "minimum": 16,
+              "description": "tile width, pixels"
+            },
+            "height": {
+              "type": "integer",
+              "minimum": 16,
+              "description": "tile height, pixels"
+            },
+            "spp": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "samples per pixel"
+            },
+            "quality": {
+              "enum": [
+                "full",
+                "fast"
+              ],
+              "description": "full: materials and textures; fast: shape colours only"
+            }
+          },
+          "description": "contact-sheet tiles {\"width\": 240, \"height\": 180, \"spp\": 4, \"quality\": \"full\" | \"fast\"}"
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card library folders, searched first"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "scene"
+      ]
+    }
+  },
+  {
+    "name": "compose",
+    "description": "Pick objects from the card library (Alloy's, alloy-assets, every imported library and your own folders), place them with support, clearance and clutter rules, run alloy.check after every placement and a full check at the end, and fix what the checks flag. Liquids and grains fill containers by volume or mass ('a mug with 200 ml of water'), pour as a stream, or pile at their angle of repose; cloth lies flat, drapes or hangs over the table edge; cables have a length, a gauge and ends plugged into objects. Returns every scene with its objects, soft items (amounts, routes, estimates), check report and metrics.\nExample arguments: {\"sentence\": \"a mug and two cubes on a table\", \"variations\": 1, \"out\": \"my_scenes\"}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "sentence": {
+          "type": "string",
+          "description": "the scene in words, e.g. 'three nuts in a tray on a cluttered table'"
+        },
+        "spec": {
+          "type": "object",
+          "description": "a SceneSpec as JSON instead of a sentence (alloy.compose.parse gives one)"
+        },
+        "variations": {
+          "type": "integer",
+          "description": "extra scenes with new poses and objects",
+          "minimum": 0,
+          "default": 0
+        },
+        "seed": {
+          "type": "integer",
+          "description": "seed (same seed, same scene)",
+          "default": 0
+        },
+        "check": {
+          "type": "string",
+          "description": "full: load checks per placement + a full check; load; none",
+          "enum": [
+            "full",
+            "load",
+            "none"
+          ],
+          "default": "full"
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu' or 'cuda:0' (default: the GPU if there is one)"
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "your card folders, searched first (e.g. from alloy create)"
+        },
+        "robots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "robot files (MJCF) to stand at the table edge"
+        },
+        "area": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "x0 y0 x1 y1 (m): where objects may go"
+        },
+        "jitter": {
+          "type": "boolean",
+          "description": "each world moves the free objects a little"
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "parallel worlds in the saved scene cards",
+          "minimum": 1
+        },
+        "out": {
+          "type": "string",
+          "description": "folder to save scenes/<name>.yaml and compose.json"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "create",
+    "description": "Turn a mesh file, a photo or a text into an object card with a repaired watertight mesh, convex hulls, a visual GLB, and mass, friction and restitution with their sources (USER, CITED, LIBRARY or ESTIMATE with a range). Nothing is refused for a missing citation: estimates are labelled and listed under 'verify'. The card is drop-tested with alloy.check and written to `out` (use it with alloy.compose or Scene.add_object).\nExample arguments: {\"mesh\": \"part.stl\", \"units\": \"mm\", \"material\": \"steel\", \"out\": \"my_objects\"}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "mesh": {
+          "type": "string",
+          "description": "mesh file: OBJ, STL, GLB/GLTF, PLY, or MJCF/URDF/USD"
+        },
+        "photo": {
+          "type": "string",
+          "description": "a photo of the object (needs a 3D generator: $ALLOY_GEN3D_URL or a GPU)"
+        },
+        "text": {
+          "type": "string",
+          "description": "a description, e.g. 'a red ceramic coffee mug' (needs a 3D generator)"
+        },
+        "name": {
+          "type": "string",
+          "description": "card name, snake_case (default: from the file or text)"
+        },
+        "size": {
+          "type": "number",
+          "description": "real longest side in metres (default: inferred, or the category's typical size)"
+        },
+        "units": {
+          "type": "string",
+          "description": "the mesh's units",
+          "enum": [
+            "cm",
+            "ft",
+            "in",
+            "m",
+            "mm"
+          ]
+        },
+        "up": {
+          "type": "string",
+          "description": "the mesh's up axis",
+          "enum": [
+            "z",
+            "y",
+            "-y",
+            "x"
+          ],
+          "default": "z"
+        },
+        "mass": {
+          "type": "number",
+          "description": "mass in kg (default: cited category values or an ESTIMATE)"
+        },
+        "mass_source": {
+          "type": "string",
+          "description": "where the mass comes from (datasheet, scale reading)"
+        },
+        "material": {
+          "type": "string",
+          "description": "library material name or a word: wood, steel, glass, plastic, ceramic..."
+        },
+        "category": {
+          "type": "string",
+          "description": "what it is (mug, bowl, wrench...): improves the estimates"
+        },
+        "out": {
+          "type": "string",
+          "description": "card folder to write to",
+          "default": "my_objects"
+        },
+        "check": {
+          "type": "boolean",
+          "description": "run the alloy.check drop test",
+          "default": true
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu' or 'cuda:0' for the drop test (default: the GPU if there is one)"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "audit",
+    "description": "Audit a scene the way a reviewer would, but automatically and with numbers: alloy.check over `rounds` seeds (each finding with the share of rounds it showed in and the command that replays it) and the bully agent over `episodes` random legal episodes (class, first tick, body, replay handle). Findings come sorted by severity, each with a suggested fix; ok is false when any finding is an error. A scene given as a recipe, Scene JSON, a .json file or a robot file is first written as cards to a folder that stays (`cards` in the reply), so the replays keep working after the call.\nExample arguments: {\"scene\": \"demo_peg_d12\", \"rounds\": 2, \"episodes\": 8}",
+    "read_only": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "scene": {
+          "type": [
+            "string",
+            "object"
+          ],
+          "description": "scene: a library name, a .yaml path, Scene JSON or a recipe"
+        },
+        "rounds": {
+          "type": "integer",
+          "description": "alloy.check rounds, one seed each",
+          "minimum": 1,
+          "default": 3
+        },
+        "episodes": {
+          "type": "integer",
+          "description": "bully agent episodes (random legal actuator commands or pushes)",
+          "minimum": 1,
+          "default": 16
+        },
+        "seed": {
+          "type": "integer",
+          "description": "first seed",
+          "default": 0
+        },
+        "worlds": {
+          "type": "integer",
+          "description": "worlds per check round (default 64 GPU / 2 CPU)",
+          "minimum": 1
+        },
+        "seconds": {
+          "type": "number",
+          "description": "simulated seconds per check round and per bully episode (default: theirs)"
+        },
+        "device": {
+          "type": "string",
+          "description": "'cpu' or 'cuda:0' (default: the GPU if there is one)"
+        },
+        "library": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "extra card folders, searched first (e.g. the folder alloy create wrote to)"
+        },
+        "cards": {
+          "type": "string",
+          "description": "folder to keep the scene's cards in when the scene is a recipe, Scene JSON, a .json file or a robot file (default: a folder per scene under ~/.cache/alloy/audit); the replays read it"
+        },
+        "bully": {
+          "type": "boolean",
+          "description": "run the bully agent too",
+          "default": true
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "scene"
+      ]
+    }
+  },
+  {
+    "name": "fetch",
+    "description": "Files go to $ALLOY_CACHE/imports/<library>/ (default ~/.cache/alloy/imports/<library>/), where scenes, compose and the API find them; files already there with the right sha256 are not downloaded again. An object whose model uses another object's files (a composed cabinet's door panel and handle) brings that object too (`required`). Several fetches can fill one cache at the same time. The library is a public Hugging Face dataset: no login is needed (`hf auth login` or HF_TOKEN raises the Hub's rate limit).\nExample arguments: {\"library\": \"ycb_gso\", \"category\": \"ycb\"}",
+    "read_only": false,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "object names (alloy fetch --list shows them)"
+        },
+        "library": {
+          "type": "string",
+          "description": "a whole library: ycb_gso, robocasa, gymanything, objaverse, alloy"
+        },
+        "category": {
+          "type": "string",
+          "description": "only this category (e.g. blenders, mug)"
+        },
+        "list": {
+          "type": "boolean",
+          "description": "list libraries, categories and names instead of downloading"
+        },
+        "repo": {
+          "type": "string",
+          "description": "dataset repo id (default $ALLOY_ASSETS_REPO, else Alloy's library)"
+        },
+        "workers": {
+          "type": "integer",
+          "description": "parallel downloads",
+          "minimum": 1,
+          "default": 8
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+]

@@ -826,6 +826,17 @@ WorkBuddy 里这些走的是 `cli.json`（命令行封装），不是 MCP 服务
   - [x] 已修并实探写回工具清单 5 条：chroma（包钉死 mcp 1.6.0，前置 `--with pydantic<2.10`）、simple_pubmed（`--with mcp<2 --with pydantic-settings` + 必填 PUBMED_EMAIL）、md_to_word_docx（`[mcp]` extra）、markitdown（显式钉预发布依赖 azure-ai-contentunderstanding==1.2.0b1，不整体放开 --prerelease）、ns_private_access（必填 NETSKOPE_BASE_URL / NETSKOPE_API_TOKEN）
   - [x] 平台 / 运行时声明：eda_agent `platforms: [win32]`（导入即用 ctypes.WINFUNCTYPE）、sidehand `platforms: [win32, linux]`（npm os 字段）、confluent `requires.node: '>=22.23.4'`
   - 本机前提：davinci_resolve 要本机装 DaVinci Resolve
-- 其余 ~30 条 stderr 没有明确原因（静默退出、需本机 bun / IDE / 平台限制等），逐条看
+- 其余 ~30 条 stderr 没有明确原因 → 改用「异常叶子 + 客户端记下的 stdout 非 JSON 行」逐条归因：
+  - [x] 缺 MCP 子命令 / 入口是另一个可执行，已修并实探写回工具清单 13 条：observatory `serve`、mcptoon `serve`、flameox `mcp serve`、beat_browser `mcp`、jev_use `serve`、bernstein `mcp`、jacobian（`jacobian-mcp`）、piia_engram（`piia-engram-mcp`，原入口是等键盘输入的安装向导）、usb_rea（`[mcp]` + `mcp`）、code_graph_rag（`cgr mcp-server`）、alloy_engine（`alloy mcp`）、egc（`npx -p … egc-memory`，原入口是安装器）、semble（`[mcp]` extra）
+  - forevervm：入口改 `run`（已对），需先 `forevervm login` 生成配置；cn_commerce：`start` 要求每个连接只起一个电商平台、包里另有按平台的可执行 → 需拆条目或加平台参数，**待定**（未改）
+  - **不是 stdio MCP 服务器、按清单启动会在用户机器上做别的事** → 建议并入 G1 下架拍板：
+    - ffmpeg_skill：npx 启动即往 `~/.claude/skills` 装 Claude Code 技能，MCP 服务器在装好的技能目录里
+    - local（@awareness.market/local）：启动常驻守护进程（脱离父进程、监听 37800）给当前目录建索引并写 `.awareness/`，还会尝试打开浏览器面板
+    - scan（mcp-scan）、agentgate、fencescan、agentwarden_cli：扫描器 CLI，扫本机各 AI 客户端的 MCP 配置 / 当前目录并打印报告
+    - ws（ws-mcp）：把别的 stdio 服务器包成 WebSocket，默认配置会拉起 wcgw（shell 执行）与 fetch
+    - cli_wong2（@wong2/mcp-cli）：交互式 MCP 客户端，等键盘输入
+  - 本机前提：apple（bin 是 .ts，要本机装 bun）、bear（要 Bear app）、starrocks（要数据库）、proxy（要本机 IDE）；office_word 往 stdout 打纯文本，同 minimax
+- [x] **probe_server 默认隔离**（本轮实探暴露）：上面那些包在实探时真的往本机写了东西（装技能、起守护进程、往仓库写 `.awareness/` `.mcp-observatory/`），其中仓库里的两份被 `git add -A` 带进了本地提交（未推送，已改写历史去掉）。现在每次运行给服务器临时 HOME + 临时工作目录（只软链接包缓存与镜像配置），探完报告新写入的路径（⚑ 副作用）并结束仍在沙箱里的后台进程；`--no-sandbox` 关。验证：ffmpeg_skill / local / observatory 的副作用都被关进沙箱并如实报出，真实目录不变
+- [ ] 本轮实探在本机留下的目录待用户确认后清理（都是今天 02:40–04:57 新建）：`~/.claude/skills/ffmpeg-skill`、`~/.awareness`、`~/.mcptoon`、`~/.bernstein`、`~/.serena`、`~/.mcp-scan`、`~/.mcp-observatory`、`~/EDA Agent` 等约 35 项，及仓库内未跟踪的 `.awareness/`、`.mcp-observatory/`（已加进 .git/info/exclude）
 - [ ] 修完逐条重探；凭据类并入 credentials-needed.md
 

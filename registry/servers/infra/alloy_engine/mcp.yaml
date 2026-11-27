@@ -1,12 +1,13 @@
 # 由 fau-tools/mcp-import 从 Awesome-MCP-ZH 导入（2026-11-26）；待静态安全扫描审核。
 # 人工修改后请同步递增 version。
+# 2026-11-27：可执行是带子命令的 CLI，MCP 服务器是 `alloy mcp`（取自包 README）。
 manifest_version: 1
 requires_protocol_version: '>=1'
 tested_with: '>=0.63.72'
 name: alloy_engine
 display_name: Alloy
 display_name_en: Alloy
-version: 0.1.1
+version: 0.1.2
 description: 'Alloy: a multi-material, parallel physics engine for robot learning, built on Newton and MuJoCo Warp (Python
   3.11 or 3.12)'
 description_zh: 开源的机器人学习物理引擎，基于 MuJoCo Warp 与 Newton，可把机器人、布料、线缆、液体、沙子和软体放进同一个场景。内置 MCP 服务器（`alloy mcp`），让 AI 智能体无需编写 Python
@@ -27,7 +28,10 @@ runtimes:
   launcher: uvx
   command: uvx
   args:
+  - --from
   - alloy-engine==0.1.10
+  - alloy
+  - mcp
   requires:
     python: '>=3.10'
 requires_env: []
@@ -35,6 +39,12 @@ optional_env: []
 defaults:
   enabled: true
   timeout: 120
+tools:
+  probed_at: '2026-11-27T10:16:05Z'
+  probed_runtime: uvx
+  count: 25
+  file: tools.json
 security:
   scan_verdict: allow
   osv: clean
+  prompt_injection_findings: []
